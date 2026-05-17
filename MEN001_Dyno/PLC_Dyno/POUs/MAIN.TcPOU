@@ -4,11 +4,17 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	i: INT;
+	ton_TwinSAFE_ACK_reset: TON;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[i:=i+1;
 
+
+ton_TwinSAFE_ACK_reset(IN:=GVL_Safety.stTwinSAFE_OUT.ErrACK, PT:=T#10S);
+IF ton_TwinSAFE_ACK_reset.Q THEN;
+	GVL_Safety.stTwinSAFE_OUT.ErrACK:=FALSE;
+END_IF
 GVL_Safety.stTwinSAFE_OUT.DoorMonitor:=GVL_Safety.DoorMonitorFromPLC;]]></ST>
     </Implementation>
   </POU>
