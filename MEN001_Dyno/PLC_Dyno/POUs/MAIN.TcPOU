@@ -15,7 +15,10 @@ ton_TwinSAFE_ACK_reset(IN:=GVL_Safety.stTwinSAFE_OUT.ErrACK, PT:=T#10S);
 IF ton_TwinSAFE_ACK_reset.Q THEN;
 	GVL_Safety.stTwinSAFE_OUT.ErrACK:=FALSE;
 END_IF
-GVL_Safety.stTwinSAFE_OUT.DoorMonitor:=GVL_Safety.DoorMonitorFromPLC;]]></ST>
+GVL_Safety.stTwinSAFE_OUT.DoorMonitor:=GVL_Safety.DoorMonitorFromPLC;
+
+GVL_Safety.stTwinSAFE_OUT.act_Velocity_DR1:=GVL_Safety.stTwinSAFE_IN.act_Velocity_DR1=0;
+GVL_Safety.stTwinSAFE_OUT.act_Velocity_DR2:=GVL_Safety.stTwinSAFE_IN.act_Velocity_DR2=0;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
