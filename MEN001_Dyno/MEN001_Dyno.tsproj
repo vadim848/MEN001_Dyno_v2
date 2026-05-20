@@ -1884,12 +1884,12 @@ External Setpoint Generation:
 					<Name>Axis 1</Name>
 					<AxisPara>
 						<General UnitName="°"/>
-						<Dynamic Acceleration="9926.43823242188" Deceleration="9926.43823242188" Jerk="29779.3146972656"/>
-						<Velo RefSearch="66.1762548828125" RefSync="66.1762548828125" SlowManual="330.881274414063" FastManual="1985.28764648437" Fast="6617.62548828125" Maximum="6617.62548828125"/>
+						<Dynamic Acceleration="15000" Deceleration="15000" Jerk="178490.844"/>
+						<Velo RefSearch="396.64632" RefSync="396.64632" SlowManual="1983.2316" FastManual="11899.3896" Fast="39664.632" Maximum="39664.632"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="8">
-						<EncPara ScaleFactorNumerator="60" ScaleFactorDenominator="1048576" MaxCount="#xffffffff"/>
+						<EncPara ScaleFactorNumerator="360" ScaleFactorDenominator="1048576" MaxCount="#xffffffff"/>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
 							<Var>
@@ -1948,7 +1948,7 @@ External Setpoint Generation:
 					</Encoder>
 					<Drive Name="Drive" DrvType="9">
 						<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00030100">
-							<Analog VeloReferenz="7279.38803710938" VeloScale="1.02400649589962" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
+							<Analog VeloReferenz="43631.0952" VeloScale="1.02400649589962" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
 						<Vars VarGrpType="1">
@@ -2026,12 +2026,12 @@ External Setpoint Generation:
 					<Name>Axis 2</Name>
 					<AxisPara>
 						<General UnitName="°"/>
-						<Dynamic Acceleration="13437.441" Deceleration="13437.441" Jerk="40312.323"/>
-						<Velo RefSearch="89.58294" RefSync="89.58294" SlowManual="447.9147" FastManual="2687.4882" Fast="8958.294" Maximum="8958.294"/>
+						<Dynamic Acceleration="2687.4885" Deceleration="2687.4885" Jerk="8062.4655"/>
+						<Velo RefSearch="17.91659" RefSync="17.91659" SlowManual="89.58295" FastManual="537.4977" Fast="1791.659" Maximum="1791.659"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="8">
-						<EncPara ScaleFactorNumerator="360" ScaleFactorDenominator="1048576" MaxCount="#xffffffff"/>
+						<EncPara ScaleFactorNumerator="360" ScaleFactorDenominator="5242880" MaxCount="#xffffffff"/>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
 							<Var>
@@ -2090,7 +2090,7 @@ External Setpoint Generation:
 					</Encoder>
 					<Drive Name="Drive" DrvType="9">
 						<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00030100">
-							<Analog VeloReferenz="9854.1234" VeloScale="1.02400649589962" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
+							<Analog VeloReferenz="1970.8249" VeloScale="1.02400649589962" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
 						<Vars VarGrpType="1">
@@ -9049,7 +9049,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						<DcMode>446353796e6336322e3500000000000053796e63206379636c652074696d653a2036322e35c2b573000000000000000024f400000000000000000000ffff30070000000000000000000000000000000000000000000000000000000000000000</DcMode>
 						<MBoxUserCmdData>00400500100000000d000000000000000000000000000000000000000000000003400a8000000000fffff903000000004665617475726520666c61677300</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000001500000000000000000000000000000000000000000000000340010000000000d007546e637963202d204e43206379636c652074696d6500</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a000000170000000000000000000000000000000000000000000000034002000000000010275473637963202d20436f6d6d206379636c652074696d6500</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a0000001700000000000000000000000000000000000000000000000340020000000000d0075473637963202d20436f6d6d206379636c652074696d6500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000000e000000000000000000000000000000000000000000000003402000000000000b004f7065726174696f6e206d6f646500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000001500000000000000000000000000000000000000000000000340c98000000000a00f4e6f6d696e616c206d61696e7320766f6c7461676500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000002600000000000000000000000000000000000000000000000340ca80000000002c014d61696e7320766f6c7461676520706f73697469766520746f6c6572616e63652072616e676500</MBoxUserCmdData>
@@ -9095,6 +9095,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						<MBoxUserCmdData>02000500ec0000000f00000000000000000000000000000000000000000000000340968000000000e000e0000300000045444d33352d324b4630413053303300000000000000000000000000000000000000000000000000000000000e0000000000000005000e00000000000000000000000000e8030000e803000000000000000000000000000000000000000000000000000007000e000000000018000c000000000002000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000960000007d0000000000000000000000000000000000000000000000466565646261636b2031207479706500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005001800000011000000000000000000000000000000000000000000000003400282000000000c000c0001000000f401e803bc02000056656c6f63697479206f6273657276657200</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000001d000000000000000000000000000000000000000000000003403d800000000007004d6f746f722074656d70657261747572652073656e736f72207479706500</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a0000001800000000000000000000000000000000000000000000000340d087000000000200436f6e6669677572656420736166657479206f7074696f6e00</MBoxUserCmdData>
 						<Pdo Name="AT" Index="#x0010" Flags="#x0001" SyncMan="3">
 							<Entry Name="Drive status word" BitLen="16" Index="#x0087" Flags="#x00000800">
 								<Type>UINT</Type>
@@ -9118,8 +9119,8 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 							</Entry>
 						</Pdo>
 					</EtherCAT>
-					<Box Id="35" Disabled="true" BoxType="9099" BoxFlags="#x00000020">
-						<Name>Term 35 (AX5805)</Name>
+					<Box Id="35" BoxType="9099" BoxFlags="#x00000020">
+						<Name>STO_Drive1 (AX5805)</Name>
 						<ImageId>118</ImageId>
 						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="43" FoeType="1" VendorId="#x00000002" ProductCode="#x16ad6012" RevisionNo="#x00120000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="2" Type="AX5805 (Safety Drive Option)" Desc="AX5805" PortABoxInfo="#x03000022">
 							<SyncMan>001000012600010001000000400000010001001026010000</SyncMan>
@@ -10478,7 +10479,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 											</Parameter>
 											<Parameter>
 												<PropertyName>GearRatioMotorSide</PropertyName>
-												<Value>1</Value>
+												<Value>5</Value>
 											</Parameter>
 											<Parameter>
 												<PropertyName>GearRatioLoadSide</PropertyName>
@@ -10825,7 +10826,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						<MBoxUserCmdData>020005000a0000002600000000000000000000000000000000000000000000000340cb80000000002c014d61696e7320766f6c74616765206e6567617469766520746f6c6572616e63652072616e676500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000002600000000000000000000000000000000000000000000000340ca80000000002c014d61696e7320766f6c7461676520706f73697469766520746f6c6572616e63652072616e676500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000001300000000000000000000000000000000000000000000000340d880000000002e224d6178204443206c696e6b20766f6c7461676500</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a0000001800000000000000000000000000000000000000000000000340d087000000000000436f6e6669677572656420736166657479206f7074696f6e00</MBoxUserCmdData>
+						<MBoxUserCmdData>020005000a0000001800000000000000000000000000000000000000000000000340d087000000000200436f6e6669677572656420736166657479206f7074696f6e00</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a0000001700000000000000000000000000000000000000000000000340d6800000000000004443206c696e6b20636f6e6e656374696f6e206d6f646500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000a00000017000000000000000000000000000000000000000000000003400280000000003e0043757272656e74206374726c206379636c652074696d6500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005000c0000001f000000000000000000000000000000000000000000000003405c8000000000f0a00000436f6e66696775726564206368616e6e656c207065616b2063757272656e7400</MBoxUserCmdData>
@@ -10887,8 +10888,8 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 							</Entry>
 						</Pdo>
 					</EtherCAT>
-					<Box Id="37" Disabled="true" BoxType="9099" BoxFlags="#x00000020">
-						<Name>Term 37 (AX5805)</Name>
+					<Box Id="37" BoxType="9099" BoxFlags="#x00000020">
+						<Name>STO_Drive2 (AX5805)</Name>
 						<ImageId>118</ImageId>
 						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="43" FoeType="1" VendorId="#x00000002" ProductCode="#x16ad6012" RevisionNo="#x00120000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="2" Type="AX5805 (Safety Drive Option)" Desc="AX5805" PortABoxInfo="#x03000024">
 							<SyncMan>001000012600010001000000400000010001001026010000</SyncMan>
@@ -11648,10 +11649,10 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 		<MappingInfo Identifier="{03040010-0010-0304-1000-040310000403}" Id="#x02030020" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIID^Device 2 (EtherCAT)">
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Rack 19 (EK1100 - A0)_1^A1 - SI1 (EL1918)_1">
-				<Link VarA="Drive 1 (AX5112-0000-0216)^Term 35 (AX5805)^Module 1 (Safety Process Data, 1 axis)^Inputs (Statusword)^FSOE" VarB="ConnectionOutputs^Message_71 RxPDO"/>
-				<Link VarA="Drive 1 (AX5112-0000-0216)^Term 35 (AX5805)^Module 1 (Safety Process Data, 1 axis)^Outputs (Controlword)^FSOE" VarB="ConnectionInputs^Message_71 TxPDO"/>
-				<Link VarA="Drive 2 (AX5125-0000-0216)^Term 37 (AX5805)^Module 1 (Safety Process Data, 1 axis)^Inputs (Statusword)^FSOE" VarB="ConnectionOutputs^Message_72 RxPDO"/>
-				<Link VarA="Drive 2 (AX5125-0000-0216)^Term 37 (AX5805)^Module 1 (Safety Process Data, 1 axis)^Outputs (Controlword)^FSOE" VarB="ConnectionInputs^Message_72 TxPDO"/>
+				<Link VarA="Drive 1 (AX5112-0000-0216)^STO_Drive1 (AX5805)^Module 1 (Safety Process Data, 1 axis)^Inputs (Statusword)^FSOE" VarB="ConnectionOutputs^Message_71 RxPDO"/>
+				<Link VarA="Drive 1 (AX5112-0000-0216)^STO_Drive1 (AX5805)^Module 1 (Safety Process Data, 1 axis)^Outputs (Controlword)^FSOE" VarB="ConnectionInputs^Message_71 TxPDO"/>
+				<Link VarA="Drive 2 (AX5125-0000-0216)^STO_Drive2 (AX5805)^Module 1 (Safety Process Data, 1 axis)^Inputs (Statusword)^FSOE" VarB="ConnectionOutputs^Message_72 RxPDO"/>
+				<Link VarA="Drive 2 (AX5125-0000-0216)^STO_Drive2 (AX5805)^Module 1 (Safety Process Data, 1 axis)^Outputs (Controlword)^FSOE" VarB="ConnectionInputs^Message_72 TxPDO"/>
 				<Link VarA="Machine Side - A10 (EK1200)_1^A12 - SI2 (EL1918)_1^Module 1 (FSOE)^FSoE Inputs^FSOE" VarB="ConnectionOutputs^Message_62 RxPDO"/>
 				<Link VarA="Machine Side - A10 (EK1200)_1^A12 - SI2 (EL1918)_1^Module 1 (FSOE)^FSoE Outputs^FSOE" VarB="ConnectionInputs^Message_62 TxPDO"/>
 				<Link VarA="Machine Side - A10 (EK1200)_1^A13 - SO3 (EL2904)_1^Module 1 (FSOES)^RxPDO^FSOE" VarB="ConnectionInputs^Message_51 TxPDO"/>
