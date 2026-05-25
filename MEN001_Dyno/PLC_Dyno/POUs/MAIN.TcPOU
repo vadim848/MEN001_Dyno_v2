@@ -5,6 +5,7 @@
 VAR
 	i: INT;
 	ton_TwinSAFE_ACK_reset: TON;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -18,7 +19,28 @@ END_IF
 GVL_Safety.stTwinSAFE_OUT.DoorMonitor:=GVL_Safety.DoorMonitorFromPLC;
 
 GVL_Safety.stTwinSAFE_OUT.act_Velocity_DR1:=GVL_Safety.stTwinSAFE_IN.act_Velocity_DR1=0;
-GVL_Safety.stTwinSAFE_OUT.act_Velocity_DR2:=GVL_Safety.stTwinSAFE_IN.act_Velocity_DR2=0;]]></ST>
+GVL_Safety.stTwinSAFE_OUT.act_Velocity_DR2:=GVL_Safety.stTwinSAFE_IN.act_Velocity_DR2=0;
+
+IF GVL_Safety.stTwinSAFE_OUT.BatRelay_CMD THEN
+	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_Off:=FALSE;
+	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_On:=TRUE;
+ELSE
+	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_Off:=TRUE;
+	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_On:=FALSE;
+END_IF
+
+
+IF GVL_Safety.stTwinSAFE_OUT.BatBMS_Cmd THEN
+	GVL_Safety.stTwinSAFE_OUT.RB_BatBMS_Manual_Off:=FALSE;
+	GVL_Safety.stTwinSAFE_OUT.RB_BatBMS_Manual_On:=TRUE;
+ELSE
+	GVL_Safety.stTwinSAFE_OUT.RB_BatBMS_Manual_Off:=TRUE;
+	GVL_Safety.stTwinSAFE_OUT.RB_BatBMS_Manual_On:=FALSE;
+
+END_IF
+
+
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
