@@ -1518,8 +1518,8 @@ External Setpoint Generation:
 			</SubItem>
 		</DataType>
 		<DataType>
-			<Name GUID="{F9FE0BFB-009C-0AE0-25E9-AA70A315F6AC}" AutoDeleteType="true">ST_TwinSAFE_OUT</Name>
-			<BitSize>120</BitSize>
+			<Name GUID="{9853B267-7CA8-6D1E-E814-CAC540008290}" AutoDeleteType="true">ST_TwinSAFE_OUT</Name>
+			<BitSize>144</BitSize>
 			<SubItem>
 				<Name>RUN</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
@@ -1615,6 +1615,24 @@ External Setpoint Generation:
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
 				<BitSize>8</BitSize>
 				<BitOffs>112</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>LV_Inhibit_Cmd</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>120</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>HV_Inhibit_cmd</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>128</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Discharge_Cmd</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>136</BitOffs>
 			</SubItem>
 		</DataType>
 		<DataType>
@@ -2218,7 +2236,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{08826ED1-2731-4199-9F57-50138DAEE7D7}" Name="PLC_Dyno" PrjFilePath="PLC_Dyno\PLC_Dyno.plcproj" TmcFilePath="PLC_Dyno\PLC_Dyno.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{7A67B605-6DA8-543C-312B-9B25B865A89D}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{9FD9921C-B601-BC62-D79E-BAF1EDE10B2F}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
 					<Name>PLC_Dyno Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -2230,7 +2248,7 @@ External Setpoint Generation:
 						<Var>
 							<Name>GVL_Safety.stTwinSAFE_OUT</Name>
 							<Comment><![CDATA[ST_TwinSAFE_IN]]></Comment>
-							<Type GUID="{F9FE0BFB-009C-0AE0-25E9-AA70A315F6AC}">ST_TwinSAFE_OUT</Type>
+							<Type GUID="{9853B267-7CA8-6D1E-E814-CAC540008290}">ST_TwinSAFE_OUT</Type>
 						</Var>
 						<Var>
 							<Name>GVL_IO.GreenLED</Name>
@@ -11066,7 +11084,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="3" FoeType="1" VendorId="#x00000002" ProductCode="#x077e3052" RevisionNo="#x00100000" InfoDataAddr="true" RepeatSupport="true" TimeoutStateChange1="5000" TimeoutMailbox2="10000" TComSupport="true" PortPhys="51" DebugMemory="8" SafetyLogicSupported="true" MaxSlotCount="2" Type="EL1918, 8Ch. Safety Input 24V, TwinSAFE" Desc="EL1918" PortABoxInfo="#x01000026">
 							<SyncMan>001000012600010001000000000100010001001026010000</SyncMan>
 							<SyncMan>001100012200010002000000000100010001001122010000</SyncMan>
-							<SyncMan>00122b002400010003000000000000000800001224010000</SyncMan>
+							<SyncMan>00122c002400010003000000000000000800001224010000</SyncMan>
 							<SyncMan>001d3a002000010004000000000000000900001d20010000</SyncMan>
 							<SyncMan>002e00002400000003000000000000000000002e24000000</SyncMan>
 							<SyncMan>002f00002000000004000000000000000000002f20000000</SyncMan>
@@ -11208,8 +11226,17 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 								<Entry Name="Standard In Var 76" Index="#x6000" Sub="#x0f">
 									<Type>BIT</Type>
 								</Entry>
+								<Entry Name="Standard In Var 79" Index="#x6000" Sub="#x10">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="Standard In Var 80" Index="#x6000" Sub="#x11">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="Standard In Var 81" Index="#x6000" Sub="#x12">
+									<Type>BIT</Type>
+								</Entry>
 								<Entry>
-									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000006}">ARRAY [0..5] OF BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Connection Info Data" Index="#x1bf9" Flags="#x2011" SyncMan="3">
@@ -11674,10 +11701,13 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^Speps^step6" VarB="StandardInputs^Standard Out Var 70"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^BatRelay_Manual_Off" VarB="StandardOutputs^Standard In Var 56"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^BatRelay_Manual_On" VarB="StandardOutputs^Standard In Var 55"/>
+				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^Discharge_Cmd" VarB="StandardOutputs^Standard In Var 79"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^DoorMonitor" VarB="StandardOutputs^Standard In Var 16"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^ErrACK" VarB="StandardOutputs^Standard In Var 1"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^EstopPLC" VarB="StandardOutputs^Standard In Var 54"/>
+				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^HV_Inhibit_cmd" VarB="StandardOutputs^Standard In Var 80"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^InitSysytem" VarB="StandardOutputs^Standard In Var 48"/>
+				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^LV_Inhibit_Cmd" VarB="StandardOutputs^Standard In Var 81"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^RB_BatBMS_Manual_Off" VarB="StandardOutputs^Standard In Var 58"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^RB_BatBMS_Manual_On" VarB="StandardOutputs^Standard In Var 57"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^RUN" VarB="StandardOutputs^Standard In Var 50"/>
