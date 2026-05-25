@@ -1464,8 +1464,8 @@ External Setpoint Generation:
 			</SubItem>
 		</DataType>
 		<DataType>
-			<Name GUID="{5D6EAD79-B1FC-A55C-891D-14943C941BE3}" AutoDeleteType="true">ST_TwinSAFE_IN</Name>
-			<BitSize>160</BitSize>
+			<Name GUID="{81DFE10A-3EEA-E3B7-897E-1EAF3CA6D275}" AutoDeleteType="true">ST_TwinSAFE_IN</Name>
+			<BitSize>192</BitSize>
 			<SubItem>
 				<Name>Safety_Armed</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
@@ -1501,6 +1501,20 @@ External Setpoint Generation:
 				<Type GUID="{18071995-0000-0000-0000-000000000009}">DINT</Type>
 				<BitSize>32</BitSize>
 				<BitOffs>128</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>EStop_Ok</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<Comment><![CDATA[SI 2026 05 25]]></Comment>
+				<BitSize>8</BitSize>
+				<BitOffs>160</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>EStop_Status</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<Comment><![CDATA[SI 2026 05 25]]></Comment>
+				<BitSize>8</BitSize>
+				<BitOffs>168</BitOffs>
 			</SubItem>
 		</DataType>
 		<DataType>
@@ -2204,7 +2218,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{08826ED1-2731-4199-9F57-50138DAEE7D7}" Name="PLC_Dyno" PrjFilePath="PLC_Dyno\PLC_Dyno.plcproj" TmcFilePath="PLC_Dyno\PLC_Dyno.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{0E33BD21-1525-1A1B-7A8D-567DDAEBE5CB}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{7A67B605-6DA8-543C-312B-9B25B865A89D}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
 					<Name>PLC_Dyno Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -2235,7 +2249,7 @@ External Setpoint Generation:
 						</Var>
 						<Var>
 							<Name>GVL_Safety.stTwinSAFE_IN</Name>
-							<Type GUID="{5D6EAD79-B1FC-A55C-891D-14943C941BE3}">ST_TwinSAFE_IN</Type>
+							<Type GUID="{81DFE10A-3EEA-E3B7-897E-1EAF3CA6D275}">ST_TwinSAFE_IN</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2026-05-20T17:13:29">
@@ -11138,8 +11152,14 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 								<Entry Name="Standard Out Var 70" Index="#x7000" Sub="#x0a">
 									<Type>BIT</Type>
 								</Entry>
+								<Entry Name="Standard Out Var 77" Index="#x7000" Sub="#x0b">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="Standard Out Var 78" Index="#x7000" Sub="#x0c">
+									<Type>BIT</Type>
+								</Entry>
 								<Entry>
-									<Type GUID="{18071995-0000-0000-0000-002000000007}">ARRAY [0..6] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000005}">ARRAY [0..4] OF BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="StandardOutputs" Index="#x17f0" InOut="1" Flags="#x2011" SyncMan="2">
@@ -11642,6 +11662,8 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^GVL_IO.RedLED" VarB="Channel 9^Output"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Rack 19 (EK1100 - A0)_1^A1 - SI1 (EL1918)_1">
+				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^EStop_Ok" VarB="StandardInputs^Standard Out Var 77"/>
+				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^EStop_Status" VarB="StandardInputs^Standard Out Var 78"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^ReadyForStep2" VarB="StandardInputs^Standard Out Var 52"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^Safety_Armed" VarB="StandardInputs^Standard Out Var 53"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^Speps^step1" VarB="StandardInputs^Standard Out Var 65"/>
