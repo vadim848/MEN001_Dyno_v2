@@ -2236,13 +2236,17 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{08826ED1-2731-4199-9F57-50138DAEE7D7}" Name="PLC_Dyno" PrjFilePath="PLC_Dyno\PLC_Dyno.plcproj" TmcFilePath="PLC_Dyno\PLC_Dyno.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{9FD9921C-B601-BC62-D79E-BAF1EDE10B2F}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{00EE3281-7C03-C3B6-4C94-4B09DE1A7701}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
 					<Name>PLC_Dyno Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
 						<Var>
 							<Name>GVL_IO.RedLED</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.b_MotorCooling</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -11687,6 +11691,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^GVL_IO.BlueLED" VarB="Channel 11^Output"/>
 				<Link VarA="PlcTask Outputs^GVL_IO.GreenLED" VarB="Channel 10^Output"/>
 				<Link VarA="PlcTask Outputs^GVL_IO.RedLED" VarB="Channel 9^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_IO.b_MotorCooling" VarB="Channel 12^Output"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Rack 19 (EK1100 - A0)_1^A1 - SI1 (EL1918)_1">
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^EStop_Ok" VarB="StandardInputs^Standard Out Var 77"/>
