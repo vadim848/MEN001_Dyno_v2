@@ -10,6 +10,8 @@ VAR
 	Pulse_On_TON: TON;
 	Pulse_Off_TON: TON;
 	bPulse	:	BOOL	;
+	
+	t_BlinkTime : TIME	;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -83,7 +85,7 @@ ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE THEN
 END_IF
 
 //Green
-IF GVL_Safety.stTwinSAFE_IN.Speps.step1 AND GVL_Safety.stTwinSAFE_IN.EStop_Ok AND GVL_Safety.stTwinSAFE_OUT.DoorMonitor=TRUE THEN
+IF (GVL_Safety.stTwinSAFE_IN.Speps.step1 AND GVL_Safety.stTwinSAFE_IN.EStop_Ok AND GVL_Safety.stTwinSAFE_OUT.DoorMonitor=TRUE) OR GVL_Safety.stTwinSAFE_IN.Speps.step2 THEN
 	//Green Blink
 	GVL_IO.GreenLED:=bPulse;
 ELSIF GVL_Safety.stTwinSAFE_IN.Safety_Armed THEN
@@ -95,8 +97,14 @@ OR GVL_Safety.stTwinSAFE_IN.Speps.step6 OR GVL_Safety.stTwinSAFE_OUT.DoorMonitor
 	GVL_IO.GreenLED:=FALSE;
 END_IF
 
-Pulse_On_TON(IN:=NOT bPulse , PT:=T#1.5S , Q=> , ET=> );
-Pulse_Off_TON(IN:=bPulse , PT:=T#1.5S , Q=> , ET=> );
+IF GVL_Safety.stTwinSAFE_IN.Speps.step2  THEN
+	t_BlinkTime:=T#0.5S;
+ELSE
+	t_BlinkTime:=T#1.5S;
+END_IF
+
+Pulse_On_TON(IN:=NOT bPulse , PT:=t_BlinkTime , Q=> , ET=> );
+Pulse_Off_TON(IN:=bPulse , PT:=t_BlinkTime , Q=> , ET=> );
 IF Pulse_On_TON.Q AND NOT bPulse THEN bPulse:=TRUE; END_IF;
 IF Pulse_Off_TON.Q AND bPulse THEN bPulse:=FALSE; END_IF;
 
