@@ -24,9 +24,6 @@ IF ton_TwinSAFE_ACK_reset.Q THEN;
 END_IF
 GVL_Safety.stTwinSAFE_OUT.DoorMonitor:=GVL_Safety.DoorMonitorFromPLC;
 
-GVL_Safety.stTwinSAFE_OUT.act_Velocity_DR1:=GVL_Safety.stTwinSAFE_IN.act_Velocity_DR1=0;//??
-GVL_Safety.stTwinSAFE_OUT.act_Velocity_DR2:=GVL_Safety.stTwinSAFE_IN.act_Velocity_DR2=0;//??
-
 //Battery Relay CMD
 IF GVL_Safety.stTwinSAFE_OUT.BatRelay_CMD THEN
 	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_Off:=FALSE;
@@ -112,37 +109,7 @@ IF Pulse_Off_TON.Q AND bPulse THEN bPulse:=FALSE; END_IF;
 
 GVL_Safety.stTwinSAFE_IN.HV_Healthy_Invert:=NOT GVL_Safety.stTwinSAFE_IN.HV_Healthy;
 GVL_Safety.stTwinSAFE_IN.LV_Healthy_Invert:=NOT GVL_Safety.stTwinSAFE_IN.LV_Healthy;
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-(*
-BlinkLED(IN:= GVL_Safety.stTwinSAFE_IN.Speps.step1 AND NOT GVL_IO.GreenLED , PT:=T#1S , Q=> , ET=> );
-
-IF BlinkLED.Q THEN
-	GVL_IO.GreenLED:= NOT GVL_IO.GreenLED;
-END_IF
-
-IF GVL_Safety.stTwinSAFE_IN.Speps.step1 THEN
-	
-	GVL_IO.GreenLED:= NOT GVL_IO.GreenLED;
-	GVL_IO.RedLED:= FALSE;
-	GVL_IO.BlueLED:=NOT GVL_IO.BlueLED;
-	
-ELSIF GVL_Safety.stTwinSAFE_IN.Speps.step3 THEN
-	GVL_IO.GreenLED:=TRUE;
-	GVL_IO.RedLED:= FALSE;
-	GVL_IO.BlueLED:=FALSE;
-	
-ELSIF GVL_Safety.stTwinSAFE_IN.Speps.step4 OR GVL_Safety.stTwinSAFE_IN.Speps.step5 THEN
-	GVL_IO.GreenLED:=FALSE;
-	GVL_IO.RedLED:= TRUE;
-	GVL_IO.BlueLED:=FALSE;
-	
-ELSE
-	GVL_IO.GreenLED:=FALSE;
-	GVL_IO.RedLED:= FALSE;
-	GVL_IO.BlueLED:=FALSE;
-END_IF
-*)]]></ST>
+]]></ST>
       </Implementation>
     </Action>
   </POU>
