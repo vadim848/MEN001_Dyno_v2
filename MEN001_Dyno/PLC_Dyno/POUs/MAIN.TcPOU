@@ -24,9 +24,10 @@ IF ton_TwinSAFE_ACK_reset.Q THEN;
 END_IF
 GVL_Safety.stTwinSAFE_OUT.DoorMonitor:=GVL_Safety.DoorMonitorFromPLC;
 
-GVL_Safety.stTwinSAFE_OUT.act_Velocity_DR1:=GVL_Safety.stTwinSAFE_IN.act_Velocity_DR1=0;
-GVL_Safety.stTwinSAFE_OUT.act_Velocity_DR2:=GVL_Safety.stTwinSAFE_IN.act_Velocity_DR2=0;
+GVL_Safety.stTwinSAFE_OUT.act_Velocity_DR1:=GVL_Safety.stTwinSAFE_IN.act_Velocity_DR1=0;//??
+GVL_Safety.stTwinSAFE_OUT.act_Velocity_DR2:=GVL_Safety.stTwinSAFE_IN.act_Velocity_DR2=0;//??
 
+//Battery Relay CMD
 IF GVL_Safety.stTwinSAFE_OUT.BatRelay_CMD THEN
 	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_Off:=FALSE;
 	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_On:=TRUE;
@@ -35,7 +36,7 @@ ELSE
 	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_On:=FALSE;
 END_IF
 
-
+//Battery BMS Relay CMD
 IF GVL_Safety.stTwinSAFE_OUT.BatBMS_Cmd THEN
 	GVL_Safety.stTwinSAFE_OUT.RB_BatBMS_Manual_Off:=FALSE;
 	GVL_Safety.stTwinSAFE_OUT.RB_BatBMS_Manual_On:=TRUE;
