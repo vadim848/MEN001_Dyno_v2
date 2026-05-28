@@ -108,6 +108,10 @@ Pulse_Off_TON(IN:=bPulse , PT:=t_BlinkTime , Q=> , ET=> );
 IF Pulse_On_TON.Q AND NOT bPulse THEN bPulse:=TRUE; END_IF;
 IF Pulse_Off_TON.Q AND bPulse THEN bPulse:=FALSE; END_IF;
 
+
+GVL_Safety.stTwinSAFE_IN.HV_Healthy_Invert:=NOT GVL_Safety.stTwinSAFE_IN.HV_Healthy;
+GVL_Safety.stTwinSAFE_IN.LV_Healthy_Invert:=NOT GVL_Safety.stTwinSAFE_IN.LV_Healthy;
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 (*
 BlinkLED(IN:= GVL_Safety.stTwinSAFE_IN.Speps.step1 AND NOT GVL_IO.GreenLED , PT:=T#1S , Q=> , ET=> );
