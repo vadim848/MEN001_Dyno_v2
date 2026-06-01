@@ -1953,7 +1953,7 @@ External Setpoint Generation:
 				<Cpu CpuId="1" BaseTime="2500"/>
 			</Settings>
 			<Tasks>
-				<Task Id="3" Priority="20" CycleTime="2500" AmsPort="350" AdtTasks="true">
+				<Task Id="3" Priority="2" CycleTime="2500" AmsPort="350" AdtTasks="true">
 					<Name>PlcTask</Name>
 				</Task>
 				<Task Id="6" Priority="30" CycleTime="2000000" AmsPort="351" DisableFpExceptions="true" AdtTasks="true">
@@ -2266,11 +2266,95 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{08826ED1-2731-4199-9F57-50138DAEE7D7}" Name="PLC_Dyno" PrjFilePath="PLC_Dyno\PLC_Dyno.plcproj" TmcFilePath="PLC_Dyno\PLC_Dyno.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{B97D7B4B-84EA-DB35-48C7-547374CFC770}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{B1752E71-0B68-96BF-6E19-3425CC7F2C35}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
 					<Name>PLC_Dyno Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>PRG_Motion.fbEncoder1.nSetCounterValue_Raw</Name>
+							<Type>DWORD</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbEncoder1.nControlWord_Raw</Name>
+							<Type>WORD</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbEncoder2.nSetCounterValue_Raw</Name>
+							<Type>DWORD</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbEncoder2.nControlWord_Raw</Name>
+							<Type>WORD</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotor.q_kp</Name>
+							<Comment><![CDATA[ 0x7000:01 kp]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotor.q_kd</Name>
+							<Comment><![CDATA[ 0x7000:02 kd]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotor.q_p_des</Name>
+							<Comment><![CDATA[ 0x7000:03 p_des]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotor.q_v_des</Name>
+							<Comment><![CDATA[ 0x7000:04 v_des]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotor.q_torque_feed_forward</Name>
+							<Comment><![CDATA[ 0x7000:05 torque_feed_forward]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotor.q_max_torque</Name>
+							<Comment><![CDATA[ 0x7000:06 max_torque]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.q_control_word</Name>
+							<Comment><![CDATA[ 0x7000:01 control_word]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.q_p_des</Name>
+							<Comment><![CDATA[ 0x7000:02 p_des]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.q_v_des</Name>
+							<Comment><![CDATA[ 0x7000:03 v_des]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.q_kp</Name>
+							<Comment><![CDATA[ 0x7000:04 kp]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.q_kd</Name>
+							<Comment><![CDATA[ 0x7000:05 kd]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.q_torque_ff</Name>
+							<Comment><![CDATA[ 0x7000:06 torque_ff]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.Axis1.PlcToNc</Name>
+							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.Axis2.PlcToNc</Name>
+							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
 						<Var>
 							<Name>GVL_IO.RedLED</Name>
 							<Type>BOOL</Type>
@@ -2296,8 +2380,242 @@ External Setpoint Generation:
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>GVL_Safety.stTwinSAFE_IN</Name>
-							<Type GUID="{20BA9D2C-2EA1-6698-B602-9473CFD89984}">ST_TwinSAFE_IN</Type>
+							<Name>PRG_Motion.fbMotor1.nActTorque_Raw</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMotor2.nActTorque_Raw</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbEncoder1.nStatusWord_Raw</Name>
+							<Type>WORD</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbEncoder1.nCounterValue_Raw</Name>
+							<Type>DWORD</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbEncoder1.nFrequencyValue_Raw</Name>
+							<Type>DWORD</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbEncoder1.nState_Raw</Name>
+							<Type>BYTE</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbEncoder2.nStatusWord_Raw</Name>
+							<Type>WORD</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbEncoder2.nCounterValue_Raw</Name>
+							<Type>DWORD</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbEncoder2.nFrequencyValue_Raw</Name>
+							<Type>DWORD</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbEncoder2.nState_Raw</Name>
+							<Type>BYTE</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn1.nCh1_S1</Name>
+							<Comment><![CDATA[ Ch1 sample 1]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn1.nCh1_S2</Name>
+							<Comment><![CDATA[ Ch1 sample 2]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn1.nCh1_S3</Name>
+							<Comment><![CDATA[ Ch1 sample 3]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn1.nCh1_S4</Name>
+							<Comment><![CDATA[ Ch1 sample 4]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn1.nCh1_S5</Name>
+							<Comment><![CDATA[ Ch1 sample 5]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn1.nCh2_S1</Name>
+							<Comment><![CDATA[ Ch2 sample 1]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn1.nCh2_S2</Name>
+							<Comment><![CDATA[ Ch2 sample 2]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn1.nCh2_S3</Name>
+							<Comment><![CDATA[ Ch2 sample 3]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn1.nCh2_S4</Name>
+							<Comment><![CDATA[ Ch2 sample 4]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn1.nCh2_S5</Name>
+							<Comment><![CDATA[ Ch2 sample 5]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn2.nCh1_S1</Name>
+							<Comment><![CDATA[ Ch1 sample 1]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn2.nCh1_S2</Name>
+							<Comment><![CDATA[ Ch1 sample 2]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn2.nCh1_S3</Name>
+							<Comment><![CDATA[ Ch1 sample 3]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn2.nCh1_S4</Name>
+							<Comment><![CDATA[ Ch1 sample 4]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn2.nCh1_S5</Name>
+							<Comment><![CDATA[ Ch1 sample 5]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn2.nCh2_S1</Name>
+							<Comment><![CDATA[ Ch2 sample 1]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn2.nCh2_S2</Name>
+							<Comment><![CDATA[ Ch2 sample 2]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn2.nCh2_S3</Name>
+							<Comment><![CDATA[ Ch2 sample 3]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn2.nCh2_S4</Name>
+							<Comment><![CDATA[ Ch2 sample 4]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbAnalogIn2.nCh2_S5</Name>
+							<Comment><![CDATA[ Ch2 sample 5]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotor.i_general_error_bits</Name>
+							<Comment><![CDATA[ 0x6000:01 general_error_bits]]></Comment>
+							<Type>BYTE</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotor.i_categorial_error_bits</Name>
+							<Comment><![CDATA[ 0x6000:02 categorial_error_bits]]></Comment>
+							<Type>BYTE</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotor.i_motor_temp</Name>
+							<Comment><![CDATA[ 0x6000:03 motor_temp]]></Comment>
+							<Type>BYTE</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotor.i_theta</Name>
+							<Comment><![CDATA[ 0x6000:04 theta]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotor.i_d_theta</Name>
+							<Comment><![CDATA[ 0x6000:05 d_theta]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotor.i_measured_torque</Name>
+							<Comment><![CDATA[ 0x6000:06 measured_torque]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotor.i_motor_torque_pi_in</Name>
+							<Comment><![CDATA[ 0x6000:07 motor_torque_pi_in]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotor.i_p_des_echo</Name>
+							<Comment><![CDATA[ 0x6000:08 p_des_echo]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.i_status_word</Name>
+							<Comment><![CDATA[ 0x6000:01 status_word]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.i_packet_count</Name>
+							<Comment><![CDATA[ 0x6000:02 packet_count]]></Comment>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.i_timestamp</Name>
+							<Comment><![CDATA[ 0x6000:03 timestamp]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.i_bldc_pos</Name>
+							<Comment><![CDATA[ 0x6000:04 bldc_pos]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.i_filtered_p_des</Name>
+							<Comment><![CDATA[ 0x6000:05 filtered_p_des]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.i_bldc_vel</Name>
+							<Comment><![CDATA[ 0x6000:06 bldc_vel]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.i_v_des</Name>
+							<Comment><![CDATA[ 0x6000:07 v_des]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.i_measured_current</Name>
+							<Comment><![CDATA[ 0x6000:08 measured_current]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.i_p_i_input</Name>
+							<Comment><![CDATA[ 0x6000:09 p_i_input]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbUartBridge.i_impedance_output</Name>
+							<Comment><![CDATA[ 0x6000:0A impedance_output]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.Axis1.NcToPlc</Name>
+							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.Axis2.NcToPlc</Name>
+							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 						</Var>
 						<Var>
 							<Name>GVL_Safety.DoorMonitorFromPLC</Name>
@@ -2306,6 +2624,10 @@ External Setpoint Generation:
 						<Var>
 							<Name>GVL_Safety.SolonoidStatus</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Safety.stTwinSAFE_IN</Name>
+							<Type GUID="{20BA9D2C-2EA1-6698-B602-9473CFD89984}">ST_TwinSAFE_IN</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2026-05-20T17:13:29">
@@ -2346,7 +2668,7 @@ External Setpoint Generation:
 							<ManualConfig>
 								<OTCID>#x02010030</OTCID>
 							</ManualConfig>
-							<Priority>20</Priority>
+							<Priority>2</Priority>
 							<CycleTime>250000</CycleTime>
 						</Context>
 						<Context>
@@ -2360,7 +2682,7 @@ External Setpoint Generation:
 						</Context>
 					</Contexts>
 					<TaskPouOids>
-						<TaskPouOid Prio="20" OTCID="#x08502001"/>
+						<TaskPouOid Prio="2" OTCID="#x08502001"/>
 						<TaskPouOid Prio="30" OTCID="#x08502002"/>
 					</TaskPouOids>
 				</Instance>
@@ -2973,7 +3295,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 							<SyncMan>001080002600010001000000800000018000001026010000</SyncMan>
 							<SyncMan>001180002200010002000000800000018000001122010000</SyncMan>
 							<SyncMan>001206002400010003000000000000000600001224010000</SyncMan>
-							<SyncMan>001310002000010004000000000000001000001320010000</SyncMan>
+							<SyncMan>001314002000010004000000000000001000001320010000</SyncMan>
 							<Fmmu>0000000000000000001200020100000001000000000000000000000000000000</Fmmu>
 							<Fmmu>0000000000000000001300010100000002000000000000000000000000000000</Fmmu>
 							<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
@@ -2982,6 +3304,11 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 							<DcMode>4443000000000000000000000000000044432d53796e6368726f6e000000000000000000000000000000000000000000000000000000000000000000ffff00070100000000000000000000000000000000000000000000000000000000000000</DcMode>
 							<DcMode>4443494e00000000000000000000000044432d53796e6368726f6e2028696e7075742062617365642900000000000000000000000000000000000000ffff00070100000000000000000001000000000000000000000000000000000000000000</DcMode>
 							<MBoxUserCmdData>004003000a00000000000000030010000000000000000000000000000000000020f3100502000000010000</MBoxUserCmdData>
+							<MBoxUserCmdData>020003000c0000000900000003000000000000000000000000000000000000002008f0000400000075736572436f646520776f726400</MBoxUserCmdData>
+							<MBoxUserCmdData>02000300090000000e0000000300000000000000000000000000000000000000200180170100000032537570706c7920766f6c7461676500</MBoxUserCmdData>
+							<MBoxUserCmdData>02000300090000000c00000003000000000000000000000000000000000000002001801d0100000002436f756e746572206d6f646500</MBoxUserCmdData>
+							<MBoxUserCmdData>020003000c0000001500000003000000000000000000000000000000000000002000801e04000000640000004672657175656e63792064656e6f6d696e61746f7200</MBoxUserCmdData>
+							<MBoxUserCmdData>020003000a0000001300000003000000000000000000000000000000000000002000801702000000f4014672657175656e637920776169742074696d6500</MBoxUserCmdData>
 							<Pdo Name="ENC Status Channel 1" Index="#x1a00" Flags="#x0010" SyncMan="3">
 								<ExcludePdo>#x1a01</ExcludePdo>
 								<ExcludePdo>#x1a02</ExcludePdo>
@@ -3498,7 +3825,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 									<Type>UINT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="ENC Frequency Channel 1" Index="#x1a08" Flags="#x0010">
+							<Pdo Name="ENC Frequency Channel 1" Index="#x1a08" Flags="#x0010" SyncMan="3">
 								<ExcludePdo>#x1a09</ExcludePdo>
 								<Entry Name="Frequency value" Index="#x6000" Sub="#x13">
 									<Type>UDINT</Type>
@@ -4236,18 +4563,18 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 					<Box Id="29" BoxType="9099">
 						<Name>A16 - AI  (EL3702)_1</Name>
 						<ImageId>33</ImageId>
-						<EtherCAT SlaveType="1" PdiType="#x0106" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x0e763052" RevisionNo="#x00030000" BIC="1P042718SBTN999lb6fc1KEL3702                        Q1    2P422511170003" InfoDataDcTimes="true" PortPhys="51" PdoOvsFactor="10" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3702 2Ch. Ana. Input +/-10V, DIFF, Oversample" Desc="EL3702" PortABoxInfo="#x01000020">
-							<SyncMan>001016002000010004000000000000000000001020010000</SyncMan>
-							<SyncMan>001416002000010004000000000000000000001420010000</SyncMan>
+						<EtherCAT SlaveType="1" PdiType="#x0106" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x0e763052" RevisionNo="#x00030000" BIC="1P042718SBTN999lb6fc1KEL3702                        Q1    2P422511170003" InfoDataDcTimes="true" PortPhys="51" PdoOvsFactor="5" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3702 2Ch. Ana. Input +/-10V, DIFF, Oversample" Desc="EL3702" PortABoxInfo="#x01000020">
+							<SyncMan>00100c002000010004000000000000000000001020010000</SyncMan>
+							<SyncMan>001400002000000004000000000000000000001420010000</SyncMan>
 							<SyncMan>980900000000000004000000000000000000980900040000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000060000000000000000000000</Fmmu>
-							<Fmmu>0000000000000000001400010100000002000000060000000100000000000000</Fmmu>
+							<Fmmu>0000000000000000001400010000000002000000060000000100000000000000</Fmmu>
 							<Fmmu>0000000000000000980900010000000002000000060000000200000000000000</Fmmu>
 							<SuName></SuName>
 							<SuName></SuName>
 							<SuName></SuName>
 							<SuName></SuName>
-							<DcData>3007000000000000f0d8ffff00000000f6ffffff000100000000000000000000</DcData>
+							<DcData>3007000000000000f0d8ffff00000000fbffffff010100000000000000000000</DcData>
 							<DcMode>446353796e630000000000000000000032204368616e6e656c730000000000000000000000000000000000000000000000000000f0d8ffff00000000ffff3007ffff0400000000000000010a1027000000000000000000000000000000000000001b0000001a0001011b0100801a0101</DcMode>
 							<DcMode>446353796e632d31000000000000000031204368616e6e656c000000000000000000000000000000000000000000000000000000f0d8ffff00000000ffff3007ffff0200000000000000010a8813000000000000000000000000000000000000001b0000001a0001</DcMode>
 							<Pdo Name="Ch1 CycleCount" Index="#x1b00" Flags="#x0011" SyncMan="0">
@@ -4280,27 +4607,27 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch1 Sample 5" Index="#x1a05" Flags="#x0014" SyncMan="0" OverSampleInc="16">
+							<Pdo Name="Ch1 Sample 5" Index="#x1a05" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch1 Value" Index="#x6050" Sub="#x01" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch1 Sample 6" Index="#x1a06" Flags="#x0014" SyncMan="0" OverSampleInc="16">
+							<Pdo Name="Ch1 Sample 6" Index="#x1a06" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch1 Value" Index="#x6060" Sub="#x01" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch1 Sample 7" Index="#x1a07" Flags="#x0014" SyncMan="0" OverSampleInc="16">
+							<Pdo Name="Ch1 Sample 7" Index="#x1a07" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch1 Value" Index="#x6070" Sub="#x01" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch1 Sample 8" Index="#x1a08" Flags="#x0014" SyncMan="0" OverSampleInc="16">
+							<Pdo Name="Ch1 Sample 8" Index="#x1a08" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch1 Value" Index="#x6080" Sub="#x01" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch1 Sample 9" Index="#x1a09" Flags="#x0014" SyncMan="0" OverSampleInc="16">
+							<Pdo Name="Ch1 Sample 9" Index="#x1a09" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch1 Value" Index="#x6090" Sub="#x01" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
@@ -4755,57 +5082,57 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 CycleCount" Index="#x1b01" Flags="#x0011" SyncMan="1">
+							<Pdo Name="Ch2 CycleCount" Index="#x1b01" Flags="#x0011">
 								<Entry Name="Ch2 CycleCount" Index="#x6800" Sub="#x02">
 									<Type>UINT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 0" Index="#x1a80" Flags="#x0011" SyncMan="1" OverSampleFac="1" OverSampleMin="1" OverSampleMax="100" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 0" Index="#x1a80" Flags="#x0011" OverSampleFac="1" OverSampleMin="1" OverSampleMax="100" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6000" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 1" Index="#x1a81" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 1" Index="#x1a81" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6010" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 2" Index="#x1a82" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 2" Index="#x1a82" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6020" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 3" Index="#x1a83" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 3" Index="#x1a83" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6030" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 4" Index="#x1a84" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 4" Index="#x1a84" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6040" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 5" Index="#x1a85" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 5" Index="#x1a85" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6050" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 6" Index="#x1a86" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 6" Index="#x1a86" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6060" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 7" Index="#x1a87" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 7" Index="#x1a87" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6070" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 8" Index="#x1a88" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 8" Index="#x1a88" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6080" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 9" Index="#x1a89" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 9" Index="#x1a89" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6090" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
@@ -5274,7 +5601,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 							<SyncMan>001080002600010001000000800000018000001026010000</SyncMan>
 							<SyncMan>001180002200010002000000800000018000001122010000</SyncMan>
 							<SyncMan>001206002400010003000000000000000600001224010000</SyncMan>
-							<SyncMan>001310002000010004000000000000001000001320010000</SyncMan>
+							<SyncMan>001314002000010004000000000000001000001320010000</SyncMan>
 							<Fmmu>0000000000000000001200020100000001000000000000000000000000000000</Fmmu>
 							<Fmmu>0000000000000000001300010100000002000000000000000000000000000000</Fmmu>
 							<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
@@ -5283,6 +5610,11 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 							<DcMode>4443000000000000000000000000000044432d53796e6368726f6e000000000000000000000000000000000000000000000000000000000000000000ffff00070100000000000000000000000000000000000000000000000000000000000000</DcMode>
 							<DcMode>4443494e00000000000000000000000044432d53796e6368726f6e2028696e7075742062617365642900000000000000000000000000000000000000ffff00070100000000000000000001000000000000000000000000000000000000000000</DcMode>
 							<MBoxUserCmdData>004003000a00000000000000030010000000000000000000000000000000000020f3100502000000010000</MBoxUserCmdData>
+							<MBoxUserCmdData>020003000c0000000900000003000000000000000000000000000000000000002008f0000400000075736572436f646520776f726400</MBoxUserCmdData>
+							<MBoxUserCmdData>02000300090000000e00000003000000000000000000000000000000000000002001801701000000f0537570706c7920766f6c7461676500</MBoxUserCmdData>
+							<MBoxUserCmdData>02000300090000000c00000003000000000000000000000000000000000000002001801d0100000002436f756e746572206d6f646500</MBoxUserCmdData>
+							<MBoxUserCmdData>020003000c0000001500000003000000000000000000000000000000000000002000801e04000000640000004672657175656e63792064656e6f6d696e61746f7200</MBoxUserCmdData>
+							<MBoxUserCmdData>020003000a0000001300000003000000000000000000000000000000000000002000801702000000f4014672657175656e637920776169742074696d6500</MBoxUserCmdData>
 							<Pdo Name="ENC Status Channel 1" Index="#x1a00" Flags="#x0010" SyncMan="3">
 								<ExcludePdo>#x1a01</ExcludePdo>
 								<ExcludePdo>#x1a02</ExcludePdo>
@@ -5799,7 +6131,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 									<Type>UINT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="ENC Frequency Channel 1" Index="#x1a08" Flags="#x0010">
+							<Pdo Name="ENC Frequency Channel 1" Index="#x1a08" Flags="#x0010" SyncMan="3">
 								<ExcludePdo>#x1a09</ExcludePdo>
 								<Entry Name="Frequency value" Index="#x6000" Sub="#x13">
 									<Type>UDINT</Type>
@@ -6537,18 +6869,18 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 					<Box Id="30" BoxType="9099">
 						<Name>A17 - AI  (EL3702)_1</Name>
 						<ImageId>33</ImageId>
-						<EtherCAT SlaveType="1" PdiType="#x0106" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x0e763052" RevisionNo="#x00030000" BIC="1P042718SBTN999lb6ol1KEL3702                        Q1    2P422511170003" InfoDataDcTimes="true" PortPhys="51" PdoOvsFactor="10" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3702 2Ch. Ana. Input +/-10V, DIFF, Oversample" Desc="EL3702" PortABoxInfo="#x0100001f">
-							<SyncMan>001016002000010004000000000000000000001020010000</SyncMan>
-							<SyncMan>001416002000010004000000000000000000001420010000</SyncMan>
+						<EtherCAT SlaveType="1" PdiType="#x0106" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x0e763052" RevisionNo="#x00030000" BIC="1P042718SBTN999lb6ol1KEL3702                        Q1    2P422511170003" InfoDataDcTimes="true" PortPhys="51" PdoOvsFactor="5" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3702 2Ch. Ana. Input +/-10V, DIFF, Oversample" Desc="EL3702" PortABoxInfo="#x0100001f">
+							<SyncMan>00100c002000010004000000000000000000001020010000</SyncMan>
+							<SyncMan>001400002000000004000000000000000000001420010000</SyncMan>
 							<SyncMan>980900000000000004000000000000000000980900040000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000060000000000000000000000</Fmmu>
-							<Fmmu>0000000000000000001400010100000002000000060000000100000000000000</Fmmu>
+							<Fmmu>0000000000000000001400010000000002000000060000000100000000000000</Fmmu>
 							<Fmmu>0000000000000000980900010000000002000000060000000200000000000000</Fmmu>
 							<SuName></SuName>
 							<SuName></SuName>
 							<SuName></SuName>
 							<SuName></SuName>
-							<DcData>3007000000000000f0d8ffff00000000f6ffffff000100000000000000000000</DcData>
+							<DcData>3007000000000000f0d8ffff00000000fbffffff010100000000000000000000</DcData>
 							<DcMode>446353796e630000000000000000000032204368616e6e656c730000000000000000000000000000000000000000000000000000f0d8ffff00000000ffff3007ffff0400000000000000010a1027000000000000000000000000000000000000001b0000001a0001011b0100801a0101</DcMode>
 							<DcMode>446353796e632d31000000000000000031204368616e6e656c000000000000000000000000000000000000000000000000000000f0d8ffff00000000ffff3007ffff0200000000000000010a8813000000000000000000000000000000000000001b0000001a0001</DcMode>
 							<Pdo Name="Ch1 CycleCount" Index="#x1b00" Flags="#x0011" SyncMan="0">
@@ -6581,27 +6913,27 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch1 Sample 5" Index="#x1a05" Flags="#x0014" SyncMan="0" OverSampleInc="16">
+							<Pdo Name="Ch1 Sample 5" Index="#x1a05" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch1 Value" Index="#x6050" Sub="#x01" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch1 Sample 6" Index="#x1a06" Flags="#x0014" SyncMan="0" OverSampleInc="16">
+							<Pdo Name="Ch1 Sample 6" Index="#x1a06" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch1 Value" Index="#x6060" Sub="#x01" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch1 Sample 7" Index="#x1a07" Flags="#x0014" SyncMan="0" OverSampleInc="16">
+							<Pdo Name="Ch1 Sample 7" Index="#x1a07" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch1 Value" Index="#x6070" Sub="#x01" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch1 Sample 8" Index="#x1a08" Flags="#x0014" SyncMan="0" OverSampleInc="16">
+							<Pdo Name="Ch1 Sample 8" Index="#x1a08" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch1 Value" Index="#x6080" Sub="#x01" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch1 Sample 9" Index="#x1a09" Flags="#x0014" SyncMan="0" OverSampleInc="16">
+							<Pdo Name="Ch1 Sample 9" Index="#x1a09" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch1 Value" Index="#x6090" Sub="#x01" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
@@ -7056,57 +7388,57 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 CycleCount" Index="#x1b01" Flags="#x0011" SyncMan="1">
+							<Pdo Name="Ch2 CycleCount" Index="#x1b01" Flags="#x0011">
 								<Entry Name="Ch2 CycleCount" Index="#x6800" Sub="#x02">
 									<Type>UINT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 0" Index="#x1a80" Flags="#x0011" SyncMan="1" OverSampleFac="1" OverSampleMin="1" OverSampleMax="100" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 0" Index="#x1a80" Flags="#x0011" OverSampleFac="1" OverSampleMin="1" OverSampleMax="100" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6000" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 1" Index="#x1a81" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 1" Index="#x1a81" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6010" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 2" Index="#x1a82" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 2" Index="#x1a82" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6020" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 3" Index="#x1a83" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 3" Index="#x1a83" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6030" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 4" Index="#x1a84" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 4" Index="#x1a84" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6040" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 5" Index="#x1a85" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 5" Index="#x1a85" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6050" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 6" Index="#x1a86" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 6" Index="#x1a86" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6060" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 7" Index="#x1a87" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 7" Index="#x1a87" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6070" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 8" Index="#x1a88" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 8" Index="#x1a88" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6080" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
 							</Pdo>
-							<Pdo Name="Ch2 Sample 9" Index="#x1a89" Flags="#x0014" SyncMan="1" OverSampleInc="16">
+							<Pdo Name="Ch2 Sample 9" Index="#x1a89" Flags="#x0014" OverSampleInc="16">
 								<Entry Name="Ch2 Value" Index="#x6090" Sub="#x02" Flags="#x00010000">
 									<Type>INT</Type>
 								</Entry>
@@ -11713,10 +12045,10 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 		</Io>
 	</Project>
 	<Mappings>
-		<MappingInfo Identifier="{00000000-2001-0850-0020-500811000403}" Id="#x02030030"/>
-		<MappingInfo Identifier="{00000000-0040-0304-3000-040340000403}" Id="#x02030010"/>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500840000403}" Id="#x02030020"/>
+		<MappingInfo Identifier="{00000000-0010-0304-3000-040311000403}" Id="#x02030030"/>
 		<MappingInfo Identifier="{00000000-0050-0304-3000-040352000403}" Id="#x02030040"/>
-		<MappingInfo Identifier="{03040010-0010-0304-1000-040310000403}" Id="#x02030020" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{03040040-0010-0304-4000-040310000403}" Id="#x02030010" Watchdog="10000000040000000400000004000000"/>
 		<OwnerA Name="TIID^Device 2 (EtherCAT)">
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Rack 19 (EK1100 - A0)_1^A1 - SI1 (EL1918)_1">
 				<Link VarA="Drive 1 (AX5112-0000-0216)^STO_Drive1 (AX5805)^Module 1 (Safety Process Data, 1 axis)^Inputs (Statusword)^FSOE" VarB="ConnectionOutputs^Message_71 RxPDO"/>

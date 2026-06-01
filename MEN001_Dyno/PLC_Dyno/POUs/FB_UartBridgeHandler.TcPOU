@@ -1,10 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
-  <POU Name="FB_UartBridgeHandler" Id="{b034cc10-e8c2-4ca9-9e55-d900e13c44cd}" SpecialFunc="None">
-    <Declaration><![CDATA[// =====================================================================
-// DECLARATION (top pane)
-// =====================================================================
-FUNCTION_BLOCK FB_UartBridgeHandler
+  <POU Name="FB_UartBridgeHandler" Id="{f7fbeb01-b53c-4c04-9135-bea93e2a6de3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_UartBridgeHandler
 VAR_IN_OUT
     stCmd               : ST_UartBridgeCmd;
     stStatus            : ST_UartBridgeStatus;
@@ -48,11 +45,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// =====================================================================
-// IMPLEMENTATION (bottom pane)
-// =====================================================================
-
-//----------------------------------------------------------------------
+      <ST><![CDATA[//----------------------------------------------------------------------
 // EDGE DETECTION — rising edge commands
 //----------------------------------------------------------------------
 rtArm       (CLK := stCmd.bArm);
@@ -125,7 +118,8 @@ stStatus.nBridgeModeEcho      := UDINT_TO_BYTE((i_status_word / 16#800)  AND 16#
 stStatus.nGeneralErrorBits    := UDINT_TO_BYTE((i_status_word / 16#10000) AND 16#FF);
 stStatus.nCategorialErrorBits := UDINT_TO_BYTE((i_status_word / 16#1000000) AND 16#FF);
 stStatus.bError               := (stStatus.nGeneralErrorBits <> 0)
-                               OR (stStatus.nCategorialErrorBits <> 0);]]></ST>
+                               OR (stStatus.nCategorialErrorBits <> 0);
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

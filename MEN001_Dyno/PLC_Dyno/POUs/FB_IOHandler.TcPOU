@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
-  <POU Name="FB_IOHandler" Id="{52a808bb-61c9-4a1e-bdf5-69eff1ee6cef}" SpecialFunc="None">
-    <Declaration><![CDATA[
-FUNCTION_BLOCK FB_IOHandler
+  <POU Name="FB_IOHandler" Id="{30106440-993a-492d-a097-aab8e340a1ad}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_IOHandler
 VAR_INPUT
     // Raw digital input byte — link this to your EL1008 terminal in XAE
     nRawDigitalIn   : BYTE;
@@ -30,10 +29,10 @@ END_VAR
 VAR_IN_OUT
     // Shared IO struct — same instance passed in from MAIN and GVL_IO
     stIO : ST_IOData;
-END_VAR]]></Declaration>
+END_VAR
+]]></Declaration>
     <Implementation>
-      <ST><![CDATA[
-//======================================================================
+      <ST><![CDATA[//======================================================================
 // DIGITAL INPUTS — unpack raw byte into named booleans
 //======================================================================
 stIO.bDI_EmergencyStop  := nRawDigitalIn.0;
@@ -88,7 +87,8 @@ stIO.nAnalogOut_Raw_Ch2 := LREAL_TO_INT(
           32767.0));
 
 nRawAnalogOut_Ch1 := stIO.nAnalogOut_Raw_Ch1;
-nRawAnalogOut_Ch2 := stIO.nAnalogOut_Raw_Ch2;]]></ST>
+nRawAnalogOut_Ch2 := stIO.nAnalogOut_Raw_Ch2;
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

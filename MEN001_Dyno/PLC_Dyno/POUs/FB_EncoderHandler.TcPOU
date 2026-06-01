@@ -1,10 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
-  <POU Name="FB_EncoderHandler" Id="{b4a29a60-8b96-47cb-b35a-6255d9a7a2e3}" SpecialFunc="None">
-    <Declaration><![CDATA[// =====================================================================
-// DECLARATION (top pane)
-// =====================================================================
-FUNCTION_BLOCK FB_EncoderHandler
+  <POU Name="FB_EncoderHandler" Id="{a139b786-2ef6-416e-8c70-65cddc3145f5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_EncoderHandler
 VAR_IN_OUT
     stEncoder           : ST_EncoderData;
 END_VAR
@@ -24,13 +21,10 @@ VAR
 
     rtSetCounter        : R_TRIG;
     rtZeroPosition      : R_TRIG;
-END_VAR]]></Declaration>
+END_VAR
+]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// =====================================================================
-// IMPLEMENTATION (bottom pane)
-// =====================================================================
-
-//----------------------------------------------------------------------
+      <ST><![CDATA[//----------------------------------------------------------------------
 // READ INPUTS
 //----------------------------------------------------------------------
 stEncoder.nStatusWord     := nStatusWord_Raw;
@@ -65,7 +59,8 @@ ELSIF rtSetCounter.Q THEN
     nControlWord_Raw.2         := TRUE;
 ELSE
     nControlWord_Raw.2         := FALSE;
-END_IF]]></ST>
+END_IF
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

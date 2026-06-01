@@ -1,10 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
-  <POU Name="FB_MenteeMotorHandler" Id="{7c1d8776-793d-4671-800d-08642ea4d155}" SpecialFunc="None">
-    <Declaration><![CDATA[// =====================================================================
-// DECLARATION (top pane)
-// =====================================================================
-FUNCTION_BLOCK FB_MenteeMotorHandler
+  <POU Name="FB_MenteeMotorHandler" Id="{5f4cec97-739d-4d00-b387-9f320e681fe7}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MenteeMotorHandler
 VAR_IN_OUT
     stCmd               : ST_MenteeMotorCmd;    // From GVL_MenteeMotor
     stStatus            : ST_MenteeMotorStatus; // To GVL_MenteeMotor
@@ -28,13 +25,10 @@ VAR
     i_measured_torque       AT %I* : REAL;  // 0x6000:06 measured_torque
     i_motor_torque_pi_in    AT %I* : REAL;  // 0x6000:07 motor_torque_pi_in
     i_p_des_echo            AT %I* : REAL;  // 0x6000:08 p_des_echo
-END_VAR]]></Declaration>
+END_VAR
+]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// =====================================================================
-// IMPLEMENTATION (bottom pane)
-// =====================================================================
-
-//----------------------------------------------------------------------
+      <ST><![CDATA[//----------------------------------------------------------------------
 // WRITE RxPDO — GVL_MenteeMotor.stCmd → device every cycle
 //----------------------------------------------------------------------
 q_kp                  := stCmd.kp;
@@ -54,7 +48,8 @@ stStatus.theta                 := i_theta;
 stStatus.d_theta               := i_d_theta;
 stStatus.measured_torque       := i_measured_torque;
 stStatus.motor_torque_pi_in    := i_motor_torque_pi_in;
-stStatus.p_des_echo            := i_p_des_echo;]]></ST>
+stStatus.p_des_echo            := i_p_des_echo;
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

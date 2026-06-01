@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
-  <POU Name="FB_MotorControl" Id="{1da6e646-ef23-4d60-b26a-39f5aee7a248}" SpecialFunc="None">
+  <POU Name="FB_MotorControl" Id="{de18ef15-dba8-420b-a037-a010c18e4a02}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_MotorControl
 VAR_IN_OUT
     Axis            : AXIS_REF;
@@ -35,7 +35,8 @@ VAR
     eState          : E_MotorState;
     bMoveLatch      : BOOL;
     fPrevVelocity   : LREAL;
-END_VAR]]></Declaration>
+END_VAR
+]]></Declaration>
     <Implementation>
       <ST><![CDATA[//----------------------------------------------------------------------
 // EDGE DETECTION
@@ -246,7 +247,8 @@ END_IF
 stStatus.fActPosition := Axis.NcToPlc.ActPos;
 stStatus.fActVelocity := Axis.NcToPlc.ActVelo;
 stStatus.fActTorque   := INT_TO_LREAL(nActTorque_Raw) / 10.0;
-stStatus.nTimestamp   := ULINT_TO_UDINT(F_GetSystemTime() / 10000);]]></ST>
+stStatus.nTimestamp   := ULINT_TO_UDINT(F_GetSystemTime() / 10000);
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="PRG_Motion" Id="{3bb31b86-8e30-40e5-8f9d-25e9a7578583}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_Motion
+VAR
+    //--- Position/velocity control (one per motor) ---
+    fbMotor1        : FB_MotorControl;
+    fbMotor2        : FB_MotorControl;
+
+    //--- Torque control (one per motor) ---
+    fbTorque1       : FB_TorqueControl;
+    fbTorque2       : FB_TorqueControl;
+
+    //--- I/O handler ---
+    fbIO            : FB_IOHandler;
+
+    //--- Encoder handler ---
+    fbEncoder1      : FB_EncoderHandler;
+    fbEncoder2      : FB_EncoderHandler;
+
+    //--- Analog input handler ---
+    fbAnalogIn1     : FB_AnalogInHandler;
+    fbAnalogIn2     : FB_AnalogInHandler;
+
+    //--- Mentee Motor Slave handler ---
+    fbMenteeMotor   : FB_MenteeMotorHandler;
+
+    //--- Mentee UART Bridge handler ---
+    fbUartBridge    : FB_UartBridgeHandler;
+
+    //--- NC Axis references — link to NC axes in XAE ---
+    Axis1           : AXIS_REF;
+    Axis2           : AXIS_REF;
+
+    //--- Safety ---
+    bEStopActive    : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//----------------------------------------------------------------------
+// 1. SAFETY — runs before everything else
+//----------------------------------------------------------------------
+bEStopActive := GVL_IO.stIO.bDI_EmergencyStop;
+
+IF bEStopActive THEN
+    GVL_Commands.stMotor1_Cmd.bEnable := FALSE;
+    GVL_Commands.stMotor2_Cmd.bEnable := FALSE;
+    GVL_Commands.stMotor1_Cmd.bStop   := TRUE;
+    GVL_Commands.stMotor2_Cmd.bStop   := TRUE;
+END_IF
+
+//----------------------------------------------------------------------
+// 2. I/O HANDLER — fresh sensor data before motion FBs
+//----------------------------------------------------------------------
+fbIO(
+    nRawDigitalIn    := GVL_IO.stIO.nDigitalInputs,
+    nRawAnalogIn_Ch1 := GVL_IO.stIO.nAnalogIn_Raw_Ch1,
+    nRawAnalogIn_Ch2 := GVL_IO.stIO.nAnalogIn_Raw_Ch2,
+    stIO             := GVL_IO.stIO
+);
+
+//----------------------------------------------------------------------
+// 3. ENCODER HANDLER
+//----------------------------------------------------------------------
+fbEncoder1(stEncoder := GVL_Encoder.stEncoder1, fCountsPerUnit := GVL_Encoder.fCountsPerUnit1);
+fbEncoder2(stEncoder := GVL_Encoder.stEncoder2, fCountsPerUnit := GVL_Encoder.fCountsPerUnit2);
+
+//----------------------------------------------------------------------
+// 4. ANALOG INPUT HANDLER
+//----------------------------------------------------------------------
+fbAnalogIn1(stAnalogIn := GVL_AnalogIn.stAnalogIn1);
+fbAnalogIn2(stAnalogIn := GVL_AnalogIn.stAnalogIn2);
+
+//----------------------------------------------------------------------
+// 5. MENTEE MOTOR SLAVE
+//----------------------------------------------------------------------
+fbMenteeMotor(
+    stCmd    := GVL_MenteeMotor.stCmd,
+    stStatus := GVL_MenteeMotor.stStatus
+);
+
+//----------------------------------------------------------------------
+// 6. MENTEE UART BRIDGE
+//----------------------------------------------------------------------
+fbUartBridge(
+    stCmd    := GVL_UartBridge.stCmd,
+    stStatus := GVL_UartBridge.stStatus
+);
+
+//----------------------------------------------------------------------
+// 6. LIMIT SWITCH INTERLOCKS
+//----------------------------------------------------------------------
+IF GVL_IO.stIO.bDI_LimitPos_M1 AND GVL_Commands.stMotor1_Cmd.fTargetVelocity > 0 THEN
+    GVL_Commands.stMotor1_Cmd.bStop := TRUE;
+END_IF
+IF GVL_IO.stIO.bDI_LimitNeg_M1 AND GVL_Commands.stMotor1_Cmd.fTargetVelocity < 0 THEN
+    GVL_Commands.stMotor1_Cmd.bStop := TRUE;
+END_IF
+IF GVL_IO.stIO.bDI_LimitPos_M2 AND GVL_Commands.stMotor2_Cmd.fTargetVelocity > 0 THEN
+    GVL_Commands.stMotor2_Cmd.bStop := TRUE;
+END_IF
+IF GVL_IO.stIO.bDI_LimitNeg_M2 AND GVL_Commands.stMotor2_Cmd.fTargetVelocity < 0 THEN
+    GVL_Commands.stMotor2_Cmd.bStop := TRUE;
+END_IF
+
+//----------------------------------------------------------------------
+// 7. MOTOR 1
+//----------------------------------------------------------------------
+fbMotor1(
+    Axis     := Axis1,
+    stCmd    := GVL_Commands.stMotor1_Cmd,
+    stStatus => GVL_Status.stMotor1_Status
+);
+
+GVL_IO.stIO.bDO_BrakeRelease_M1 :=
+    (GVL_Status.stMotor1_Status.eState = E_MotorState.READY)  OR
+    (GVL_Status.stMotor1_Status.eState = E_MotorState.MOVING) OR
+    (GVL_Status.stMotor1_Status.eState = E_MotorState.HOMING);
+
+//----------------------------------------------------------------------
+// 8. MOTOR 2
+//----------------------------------------------------------------------
+fbMotor2(
+    Axis     := Axis2,
+    stCmd    := GVL_Commands.stMotor2_Cmd,
+    stStatus => GVL_Status.stMotor2_Status
+);
+
+GVL_IO.stIO.bDO_BrakeRelease_M2 :=
+    (GVL_Status.stMotor2_Status.eState = E_MotorState.READY)  OR
+    (GVL_Status.stMotor2_Status.eState = E_MotorState.MOVING) OR
+    (GVL_Status.stMotor2_Status.eState = E_MotorState.HOMING);
+
+//----------------------------------------------------------------------
+// 9. TORQUE CONTROL
+//----------------------------------------------------------------------
+fbTorque1(Axis := Axis1, stCmd := GVL_Commands.stMotor1_Cmd);
+GVL_Status.stMotor1_Status.bTorqueActive   := fbTorque1.stStatus.bTorqueActive;
+GVL_Status.stMotor1_Status.bTorqueInTorque := fbTorque1.stStatus.bTorqueInTorque;
+IF fbTorque1.stStatus.bError THEN
+    GVL_Status.stMotor1_Status.bError   := TRUE;
+    GVL_Status.stMotor1_Status.nErrorID := fbTorque1.stStatus.nErrorID;
+END_IF
+
+fbTorque2(Axis := Axis2, stCmd := GVL_Commands.stMotor2_Cmd);
+GVL_Status.stMotor2_Status.bTorqueActive   := fbTorque2.stStatus.bTorqueActive;
+GVL_Status.stMotor2_Status.bTorqueInTorque := fbTorque2.stStatus.bTorqueInTorque;
+IF fbTorque2.stStatus.bError THEN
+    GVL_Status.stMotor2_Status.bError   := TRUE;
+    GVL_Status.stMotor2_Status.nErrorID := fbTorque2.stStatus.nErrorID;
+END_IF
+
+//----------------------------------------------------------------------
+// 10. STATUS LEDs
+//----------------------------------------------------------------------
+GVL_IO.stIO.bDO_StatusLED_Green :=
+    NOT GVL_Status.stMotor1_Status.bError AND
+    NOT GVL_Status.stMotor2_Status.bError AND
+    NOT bEStopActive;
+
+GVL_IO.stIO.bDO_StatusLED_Red :=
+    GVL_Status.stMotor1_Status.bError OR
+    GVL_Status.stMotor2_Status.bError OR
+    bEStopActive;
+	
+//----------------------------------------------------------------------
+// 11. SYNCHRONIZED SNAPSHOT — all data from this DC cycle
+//     Python reads GVL_Sync.stSnapshot in a single ADS call.
+//     nCycleCount lets Python detect missed or duplicate reads.
+//----------------------------------------------------------------------
+GVL_Sync.stSnapshot.nCycleCount     := GVL_Sync.stSnapshot.nCycleCount + 1;
+GVL_Sync.stSnapshot.nDcTimestamp    := F_GetCurDcTaskTime64();
+
+// UART Bridge (V3.1)
+GVL_Sync.stSnapshot.stBridge        := GVL_UartBridge.stStatus;
+
+// Mentee Motor (V3.2)
+GVL_Sync.stSnapshot.stMotor         := GVL_MenteeMotor.stStatus;
+
+// Encoders
+GVL_Sync.stSnapshot.stEncoder1      := GVL_Encoder.stEncoder1;
+GVL_Sync.stSnapshot.stEncoder2      := GVL_Encoder.stEncoder2;
+
+// Analog inputs
+GVL_Sync.stSnapshot.stAnalogIn1     := GVL_AnalogIn.stAnalogIn1;
+GVL_Sync.stSnapshot.stAnalogIn2     := GVL_AnalogIn.stAnalogIn2;
+
+// Motor control status
+GVL_Sync.stSnapshot.stMotor1Status  := GVL_Status.stMotor1_Status;
+GVL_Sync.stSnapshot.stMotor2Status  := GVL_Status.stMotor2_Status;
+
+// Safety
+GVL_Sync.stSnapshot.bEStopActive    := bEStopActive;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

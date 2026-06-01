@@ -1,10 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
-  <POU Name="FB_AnalogInHandler" Id="{7ad25c70-0cb4-4a3c-932c-05d2a2d73c4e}" SpecialFunc="None">
-    <Declaration><![CDATA[// =====================================================================
-// DECLARATION (top pane)
-// =====================================================================
-FUNCTION_BLOCK FB_AnalogInHandler
+  <POU Name="FB_AnalogInHandler" Id="{e9958b18-b370-47a9-bc59-12b8046c5564}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_AnalogInHandler
 VAR_IN_OUT
     stAnalogIn      : ST_AnalogInData;  // Shared with GVL_AnalogIn
 END_VAR
@@ -29,13 +26,10 @@ VAR
     fCh1_Sum    : LREAL;
     fCh2_Sum    : LREAL;
     fScale      : LREAL;
-END_VAR]]></Declaration>
+END_VAR
+]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// =====================================================================
-// IMPLEMENTATION (bottom pane)
-// =====================================================================
-
-//----------------------------------------------------------------------
+      <ST><![CDATA[//----------------------------------------------------------------------
 // STORE RAW SAMPLES INTO STRUCT
 //----------------------------------------------------------------------
 stAnalogIn.nCh1_Sample[1] := nCh1_S1;
@@ -70,7 +64,8 @@ fCh2_Sum := INT_TO_LREAL(nCh2_S1)
            + INT_TO_LREAL(nCh2_S5);
 
 stAnalogIn.fCh1_Voltage := (fCh1_Sum / 5.0) * fScale;
-stAnalogIn.fCh2_Voltage := (fCh2_Sum / 5.0) * fScale;]]></ST>
+stAnalogIn.fCh2_Voltage := (fCh2_Sum / 5.0) * fScale;
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
