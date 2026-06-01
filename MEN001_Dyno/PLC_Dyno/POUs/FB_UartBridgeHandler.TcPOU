@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_UartBridgeHandler" Id="{b034cc10-e8c2-4ca9-9e55-d900e13c44cd}" SpecialFunc="None">
+    <Declaration><![CDATA[// =====================================================================
+// DECLARATION (top pane)
+// =====================================================================
+FUNCTION_BLOCK FB_UartBridgeHandler
+VAR_IN_OUT
+    stCmd               : ST_UartBridgeCmd;
+    stStatus            : ST_UartBridgeStatus;
+END_VAR
+
+VAR
+    //--- RxPDO outputs — AT %Q* — link to device 0x7000 PDOs in XAE ---
+    q_control_word      AT %Q* : UDINT; // 0x7000:01 control_word
+    q_p_des             AT %Q* : REAL;  // 0x7000:02 p_des
+    q_v_des             AT %Q* : REAL;  // 0x7000:03 v_des
+    q_kp                AT %Q* : REAL;  // 0x7000:04 kp
+    q_kd                AT %Q* : REAL;  // 0x7000:05 kd
+    q_torque_ff         AT %Q* : REAL;  // 0x7000:06 torque_ff
+
+    //--- TxPDO inputs — AT %I* — link to device 0x6000 PDOs in XAE ---
+    i_status_word       AT %I* : UDINT; // 0x6000:01 status_word
+    i_packet_count      AT %I* : UINT;  // 0x6000:02 packet_count
+    i_timestamp         AT %I* : UDINT; // 0x6000:03 timestamp
+    i_bldc_pos          AT %I* : REAL;  // 0x6000:04 bldc_pos
+    i_filtered_p_des    AT %I* : REAL;  // 0x6000:05 filtered_p_des
+    i_bldc_vel          AT %I* : REAL;  // 0x6000:06 bldc_vel
+    i_v_des             AT %I* : REAL;  // 0x6000:07 v_des
+    i_measured_current  AT %I* : REAL;  // 0x6000:08 measured_current
+    i_p_i_input         AT %I* : REAL;  // 0x6000:09 p_i_input
+    i_impedance_output  AT %I* : REAL;  // 0x6000:0A impedance_output
+
+    //--- Edge detectors for rising edge commands ---
+    rtArm           : R_TRIG;
+    rtIdle          : R_TRIG;
+    rtGateBlock     : R_TRIG;
+    rtCalibrate     : R_TRIG;
+    rtBode          : R_TRIG;
+    rtNoodle        : R_TRIG;
+    rtReset         : R_TRIG;
+    rtLedOn         : R_TRIG;
+    rtLedOff        : R_TRIG;
+    rtQueryState    : R_TRIG;
+
+    //--- Internal ---
+    nCtrlWord       : UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// =====================================================================
+// IMPLEMENTATION (bottom pane)
+// =====================================================================
+
+//----------------------------------------------------------------------
+// EDGE DETECTION — rising edge commands
+//----------------------------------------------------------------------
+rtArm       (CLK := stCmd.bArm);
+rtIdle      (CLK := stCmd.bIdle);
+rtGateBlock (CLK := stCmd.bGateBlock);
+rtCalibrate (CLK := stCmd.bCalibrate);
+rtBode      (CLK := stCmd.bBode);
+rtNoodle    (CLK := stCmd.bNoodle);
+rtReset     (CLK := stCmd.bReset);
+rtLedOn     (CLK := stCmd.bLedOn);
+rtLedOff    (CLK := stCmd.bLedOff);
+rtQueryState(CLK := stCmd.bQueryState);
+
+//----------------------------------------------------------------------
+// BUILD CONTROL WORD
+// Rising edge bits — set for one cycle only
+// Level bits — held continuously
+//----------------------------------------------------------------------
+nCtrlWord := 0;
+
+// Rising edge commands — bits 0..9
+IF rtArm.Q        THEN nCtrlWord := nCtrlWord OR 16#0001; END_IF
+IF rtIdle.Q       THEN nCtrlWord := nCtrlWord OR 16#0002; END_IF
+IF rtGateBlock.Q  THEN nCtrlWord := nCtrlWord OR 16#0004; END_IF
+IF rtCalibrate.Q  THEN nCtrlWord := nCtrlWord OR 16#0008; END_IF
+IF rtBode.Q       THEN nCtrlWord := nCtrlWord OR 16#0010; END_IF
+IF rtNoodle.Q     THEN nCtrlWord := nCtrlWord OR 16#0020; END_IF
+IF rtReset.Q      THEN nCtrlWord := nCtrlWord OR 16#0040; END_IF
+IF rtLedOn.Q      THEN nCtrlWord := nCtrlWord OR 16#0080; END_IF
+IF rtLedOff.Q     THEN nCtrlWord := nCtrlWord OR 16#0100; END_IF
+IF rtQueryState.Q THEN nCtrlWord := nCtrlWord OR 16#0200; END_IF
+
+// Level: bridge_mode bits 11:10
+nCtrlWord := nCtrlWord OR (BYTE_TO_UDINT(stCmd.nBridgeMode AND 16#03) * 16#0400);
+
+// Level: motion_mode bits 14:12
+nCtrlWord := nCtrlWord OR (BYTE_TO_UDINT(stCmd.nMotionMode AND 16#07) * 16#1000);
+
+//----------------------------------------------------------------------
+// WRITE RxPDO — to device every cycle
+//----------------------------------------------------------------------
+q_control_word  := nCtrlWord;
+q_p_des         := stCmd.p_des;
+q_v_des         := stCmd.v_des;
+q_kp            := stCmd.kp;
+q_kd            := stCmd.kd;
+q_torque_ff     := stCmd.torque_ff;
+
+//----------------------------------------------------------------------
+// READ TxPDO — from device every cycle
+//----------------------------------------------------------------------
+stStatus.nStatusWord          := i_status_word;
+stStatus.nPacketCount         := i_packet_count;
+stStatus.nTimestamp           := i_timestamp;
+stStatus.bldc_pos             := i_bldc_pos;
+stStatus.filtered_p_des       := i_filtered_p_des;
+stStatus.bldc_vel             := i_bldc_vel;
+stStatus.v_des                := i_v_des;
+stStatus.measured_current     := i_measured_current;
+stStatus.p_i_input            := i_p_i_input;
+stStatus.impedance_output     := i_impedance_output;
+
+//----------------------------------------------------------------------
+// DECODE STATUS WORD
+//----------------------------------------------------------------------
+stStatus.nFsmState            := UDINT_TO_BYTE(i_status_word AND 16#0000000F);
+stStatus.nMainState           := UDINT_TO_BYTE((i_status_word / 16#10)   AND 16#0F);
+stStatus.nOpMode              := UDINT_TO_BYTE((i_status_word / 16#100)  AND 16#07);
+stStatus.nBridgeModeEcho      := UDINT_TO_BYTE((i_status_word / 16#800)  AND 16#03);
+stStatus.nGeneralErrorBits    := UDINT_TO_BYTE((i_status_word / 16#10000) AND 16#FF);
+stStatus.nCategorialErrorBits := UDINT_TO_BYTE((i_status_word / 16#1000000) AND 16#FF);
+stStatus.bError               := (stStatus.nGeneralErrorBits <> 0)
+                               OR (stStatus.nCategorialErrorBits <> 0);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

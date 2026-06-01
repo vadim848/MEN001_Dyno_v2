@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_MotorStatus" Id="{70e91d7c-80e1-4c59-912c-425005736e32}">
+    <Declaration><![CDATA[TYPE ST_MotorStatus :
+STRUCT
+    //------------------------------------------------------------------
+    // State machine
+    //------------------------------------------------------------------
+    eState              : E_MotorState;
+    eControlMode        : E_ControlMode;
+
+    //------------------------------------------------------------------
+    // Status flags
+    //------------------------------------------------------------------
+    bEnabled            : BOOL;     // Drive power is on and ready
+    bMoving             : BOOL;     // Axis is in motion
+    bAtTarget           : BOOL;     // Position/velocity within tolerance
+    bHomingDone         : BOOL;     // Homing completed successfully
+    bZeroDone           : BOOL;     // Zero position completed successfully
+    bTorqueActive       : BOOL;     // Torque control is active
+    bTorqueInTorque     : BOOL;     // Target torque reached
+    bError              : BOOL;     // Fault active
+    nErrorID            : UDINT;    // TwinCAT NC error code (0 = no error)
+
+    //------------------------------------------------------------------
+    // Actual values
+    //------------------------------------------------------------------
+    fActPosition        : LREAL;    // [units]
+    fActVelocity        : LREAL;    // [units/s]
+    fActTorque          : LREAL;    // [% of rated torque]
+
+    //------------------------------------------------------------------
+    // Diagnostics
+    //------------------------------------------------------------------
+    fDcBusVoltage       : LREAL;    // [V]  — requires drive PDO mapping
+    fDriveTemp          : LREAL;    // [°C] — requires drive PDO mapping
+    nTimestamp          : UDINT;    // [ms since PLC start]
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

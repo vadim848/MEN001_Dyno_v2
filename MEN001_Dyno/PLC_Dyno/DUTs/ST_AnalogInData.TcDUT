@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_AnalogInData" Id="{a072a74b-d2b7-43a9-afe3-323b4b2d5402}">
+    <Declaration><![CDATA[// EL3702 2-channel analog input with oversampling x5
+// Written by FB_AnalogInHandler every cycle, read by Python via GVL_AnalogIn
+TYPE ST_AnalogInData :
+STRUCT
+    //------------------------------------------------------------------
+    // Raw oversampled inputs — 5 samples per channel per cycle
+    // Linked to EL3702 PDOs in XAE (AT %I* in FB_AnalogInHandler)
+    //------------------------------------------------------------------
+
+    // Channel 1 — 5 oversamples [raw INT, -32768 to 32767]
+    nCh1_Sample         : ARRAY[1..5] OF INT;
+
+    // Channel 2 — 5 oversamples [raw INT, -32768 to 32767]
+    nCh2_Sample         : ARRAY[1..5] OF INT;
+
+    //------------------------------------------------------------------
+    // Processed outputs — computed by FB_AnalogInHandler
+    //------------------------------------------------------------------
+
+    // Averaged value after oversampling processing [V]
+    fCh1_Voltage        : LREAL;
+    fCh2_Voltage        : LREAL;
+
+    // Full scale range [V] — set once from MAIN (default ±10V)
+    fFullScale          : LREAL := 10.0;
+
+    // Status
+    bError              : BOOL;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

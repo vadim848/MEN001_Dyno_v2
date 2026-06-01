@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_SyncSnapshot" Id="{92cf0de0-8b91-4174-b152-c2217fdadc46}">
+    <Declaration><![CDATA[TYPE ST_SyncSnapshot :
+STRUCT
+    // Cycle identification
+    nCycleCount             : UDINT;    // Increments each PLC cycle
+    nDcTimestamp            : ULINT;    // DC time in 100ns ticks (F_GetCurDcTaskTime64)
+
+    // UART Bridge — V3.1 status + live data
+    stBridge                : ST_UartBridgeStatus;
+
+    // Mentee Motor — V3.2 direct motor status
+    stMotor                 : ST_MenteeMotorStatus;
+
+    // Encoders
+    stEncoder1              : ST_EncoderData;
+    stEncoder2              : ST_EncoderData;
+
+    // Analog inputs
+    stAnalogIn1             : ST_AnalogInData;
+    stAnalogIn2             : ST_AnalogInData;
+
+    // Motor control status
+    stMotor1Status          : ST_MotorStatus;
+    stMotor2Status          : ST_MotorStatus;
+
+    // Safety
+    bEStopActive            : BOOL;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_MenteeMotorHandler" Id="{7c1d8776-793d-4671-800d-08642ea4d155}" SpecialFunc="None">
+    <Declaration><![CDATA[// =====================================================================
+// DECLARATION (top pane)
+// =====================================================================
+FUNCTION_BLOCK FB_MenteeMotorHandler
+VAR_IN_OUT
+    stCmd               : ST_MenteeMotorCmd;    // From GVL_MenteeMotor
+    stStatus            : ST_MenteeMotorStatus; // To GVL_MenteeMotor
+END_VAR
+
+VAR
+    //--- RxPDO outputs — AT %Q* — link to device 0x7000 PDOs in XAE ---
+    q_kp                    AT %Q* : REAL;  // 0x7000:01 kp
+    q_kd                    AT %Q* : REAL;  // 0x7000:02 kd
+    q_p_des                 AT %Q* : REAL;  // 0x7000:03 p_des
+    q_v_des                 AT %Q* : REAL;  // 0x7000:04 v_des
+    q_torque_feed_forward   AT %Q* : REAL;  // 0x7000:05 torque_feed_forward
+    q_max_torque            AT %Q* : REAL;  // 0x7000:06 max_torque
+
+    //--- TxPDO inputs — AT %I* — link to device 0x6000 PDOs in XAE ---
+    i_general_error_bits    AT %I* : BYTE;  // 0x6000:01 general_error_bits
+    i_categorial_error_bits AT %I* : BYTE;  // 0x6000:02 categorial_error_bits
+    i_motor_temp            AT %I* : BYTE;  // 0x6000:03 motor_temp
+    i_theta                 AT %I* : REAL;  // 0x6000:04 theta
+    i_d_theta               AT %I* : REAL;  // 0x6000:05 d_theta
+    i_measured_torque       AT %I* : REAL;  // 0x6000:06 measured_torque
+    i_motor_torque_pi_in    AT %I* : REAL;  // 0x6000:07 motor_torque_pi_in
+    i_p_des_echo            AT %I* : REAL;  // 0x6000:08 p_des_echo
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// =====================================================================
+// IMPLEMENTATION (bottom pane)
+// =====================================================================
+
+//----------------------------------------------------------------------
+// WRITE RxPDO — GVL_MenteeMotor.stCmd → device every cycle
+//----------------------------------------------------------------------
+q_kp                  := stCmd.kp;
+q_kd                  := stCmd.kd;
+q_p_des               := stCmd.p_des;
+q_v_des               := stCmd.v_des;
+q_torque_feed_forward := stCmd.torque_feed_forward;
+q_max_torque          := stCmd.max_torque;
+
+//----------------------------------------------------------------------
+// READ TxPDO — device → GVL_MenteeMotor.stStatus every cycle
+//----------------------------------------------------------------------
+stStatus.general_error_bits    := i_general_error_bits;
+stStatus.categorial_error_bits := i_categorial_error_bits;
+stStatus.motor_temp            := i_motor_temp;
+stStatus.theta                 := i_theta;
+stStatus.d_theta               := i_d_theta;
+stStatus.measured_torque       := i_measured_torque;
+stStatus.motor_torque_pi_in    := i_motor_torque_pi_in;
+stStatus.p_des_echo            := i_p_des_echo;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

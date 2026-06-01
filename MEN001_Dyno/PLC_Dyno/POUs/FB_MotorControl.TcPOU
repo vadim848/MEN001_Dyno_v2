@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_MotorControl" Id="{1da6e646-ef23-4d60-b26a-39f5aee7a248}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MotorControl
+VAR_IN_OUT
+    Axis            : AXIS_REF;
+END_VAR
+
+VAR_INPUT
+    stCmd           : ST_MotorCommand;
+END_VAR
+
+VAR_OUTPUT
+    stStatus        : ST_MotorStatus;
+END_VAR
+
+VAR
+    nActTorque_Raw  AT %I* : INT;
+
+    fbPower         : MC_Power;
+    fbMoveAbs       : MC_MoveAbsolute;
+    fbMoveRel       : MC_MoveRelative;
+    fbMoveVel       : MC_MoveVelocity;
+    fbStop          : MC_Stop;
+    fbReset         : MC_Reset;
+    fbHome          : MC_Home;
+    fbSetPosition   : MC_SetPosition;
+
+    rtExecuteMove   : R_TRIG;
+    rtStop          : R_TRIG;
+    rtResetError    : R_TRIG;
+    rtHome          : R_TRIG;
+    rtZeroPosition  : R_TRIG;
+
+    eState          : E_MotorState;
+    bMoveLatch      : BOOL;
+    fPrevVelocity   : LREAL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//----------------------------------------------------------------------
+// EDGE DETECTION
+//----------------------------------------------------------------------
+rtExecuteMove (CLK := stCmd.bExecuteMove);
+rtStop        (CLK := stCmd.bStop);
+rtResetError  (CLK := stCmd.bResetError);
+rtHome        (CLK := stCmd.bHome);
+rtZeroPosition(CLK := stCmd.bZeroPosition);
+
+//----------------------------------------------------------------------
+// POWER — called every cycle
+//----------------------------------------------------------------------
+fbPower(
+    Axis            := Axis,
+    Enable          := (eState = E_MotorState.ENABLING
+                     OR eState = E_MotorState.READY
+                     OR eState = E_MotorState.MOVING
+                     OR eState = E_MotorState.STOPPING
+                     OR eState = E_MotorState.HOMING),
+    Enable_Positive := (eState = E_MotorState.ENABLING
+                     OR eState = E_MotorState.READY
+                     OR eState = E_MotorState.MOVING
+                     OR eState = E_MotorState.STOPPING
+                     OR eState = E_MotorState.HOMING),
+    Enable_Negative := (eState = E_MotorState.ENABLING
+                     OR eState = E_MotorState.READY
+                     OR eState = E_MotorState.MOVING
+                     OR eState = E_MotorState.STOPPING
+                     OR eState = E_MotorState.HOMING),
+    Override        := 100.0,
+    BufferMode      := MC_Aborting);
+
+//----------------------------------------------------------------------
+// SET POSITION — zero axis on rising edge, only in READY state
+//----------------------------------------------------------------------
+fbSetPosition(
+    Axis     := Axis,
+    Execute  := rtZeroPosition.Q,
+    Position := 0.0,
+    Mode     := FALSE);
+
+IF fbSetPosition.Done  THEN stStatus.bZeroDone := TRUE; END_IF
+IF fbSetPosition.Error THEN stStatus.bError    := TRUE;
+                             stStatus.nErrorID  := fbSetPosition.ErrorID; END_IF
+
+//----------------------------------------------------------------------
+// STOP FB — called every cycle, Execute held TRUE only in STOPPING
+//----------------------------------------------------------------------
+fbStop(
+    Axis         := Axis,
+    Execute      := (eState = E_MotorState.STOPPING),
+    Deceleration := SEL(stCmd.fDeceleration > 0, 500.0, stCmd.fDeceleration),
+    Jerk         := stCmd.fJerk);
+
+//----------------------------------------------------------------------
+// MOVE FBs — called every cycle, Execute driven by state + latch
+//----------------------------------------------------------------------
+fbMoveAbs(
+    Axis         := Axis,
+    Execute      := bMoveLatch AND (eState = E_MotorState.MOVING)
+                   AND (stCmd.eControlMode = E_ControlMode.POSITION)
+                   AND NOT stCmd.bRelative,
+    Position     := stCmd.fTargetPosition,
+    Velocity     := SEL(stCmd.fTargetVelocity > 0,
+                        stCmd.fMaxVelocity, stCmd.fTargetVelocity),
+    Acceleration := stCmd.fAcceleration,
+    Deceleration := stCmd.fDeceleration,
+    Jerk         := stCmd.fJerk,
+    BufferMode   := MC_Aborting);
+
+fbMoveRel(
+    Axis         := Axis,
+    Execute      := bMoveLatch AND (eState = E_MotorState.MOVING)
+                   AND (stCmd.eControlMode = E_ControlMode.POSITION)
+                   AND stCmd.bRelative,
+    Distance     := stCmd.fTargetPosition * stCmd.fDirection,
+    Velocity     := SEL(stCmd.fTargetVelocity > 0,
+                        stCmd.fMaxVelocity, stCmd.fTargetVelocity),
+    Acceleration := stCmd.fAcceleration,
+    Deceleration := stCmd.fDeceleration,
+    Jerk         := stCmd.fJerk,
+    BufferMode   := MC_Aborting);
+
+fbMoveVel(
+    Axis         := Axis,
+    Execute      := bMoveLatch AND (eState = E_MotorState.MOVING)
+                   AND (stCmd.eControlMode = E_ControlMode.VELOCITY),
+    Velocity     := ABS(stCmd.fTargetVelocity),
+    Direction    := SEL(stCmd.fTargetVelocity >= 0,
+                        MC_Negative_Direction, MC_Positive_Direction),
+    Acceleration := stCmd.fAcceleration,
+    Deceleration := stCmd.fDeceleration,
+    Jerk         := stCmd.fJerk,
+    BufferMode   := MC_Aborting);
+
+//----------------------------------------------------------------------
+// STATE MACHINE
+//----------------------------------------------------------------------
+CASE eState OF
+
+    E_MotorState.DISABLED:
+        IF stCmd.bEnable THEN
+            eState := E_MotorState.ENABLING;
+        END_IF
+
+    E_MotorState.ENABLING:
+        IF NOT stCmd.bEnable THEN
+            eState := E_MotorState.DISABLED;
+        ELSIF fbPower.Error THEN
+            eState := E_MotorState.ERROR;
+        ELSIF fbPower.Status THEN
+            eState := E_MotorState.READY;
+        END_IF
+
+    E_MotorState.READY:
+        bMoveLatch    := FALSE;
+        fPrevVelocity := 0.0;
+        stCmd.bStop   := FALSE;
+
+        IF NOT stCmd.bEnable THEN
+            eState := E_MotorState.DISABLED;
+        ELSIF fbPower.Error THEN
+            eState := E_MotorState.ERROR;
+        ELSIF rtStop.Q THEN
+            eState := E_MotorState.STOPPING;
+        ELSIF rtHome.Q THEN
+            eState := E_MotorState.HOMING;
+        ELSIF rtExecuteMove.Q THEN
+            bMoveLatch := TRUE;
+            eState     := E_MotorState.MOVING;
+        END_IF
+
+    E_MotorState.MOVING:
+        IF NOT stCmd.bEnable OR rtStop.Q THEN
+            bMoveLatch := FALSE;
+            eState     := E_MotorState.STOPPING;
+
+        ELSIF stCmd.eControlMode = E_ControlMode.POSITION THEN
+            IF stCmd.bRelative THEN
+                IF fbMoveRel.Busy  THEN bMoveLatch := FALSE; END_IF
+                IF fbMoveRel.Done  THEN eState := E_MotorState.READY; END_IF
+                IF fbMoveRel.Error THEN eState := E_MotorState.ERROR; END_IF
+            ELSE
+                IF fbMoveAbs.Busy  THEN bMoveLatch := FALSE; END_IF
+                IF fbMoveAbs.Done  THEN eState := E_MotorState.READY; END_IF
+                IF fbMoveAbs.Error THEN eState := E_MotorState.ERROR; END_IF
+            END_IF
+
+        ELSIF stCmd.eControlMode = E_ControlMode.VELOCITY THEN
+            IF stCmd.fTargetVelocity <> fPrevVelocity THEN
+                fPrevVelocity := stCmd.fTargetVelocity;
+                bMoveLatch    := TRUE;
+            END_IF
+            IF fbMoveVel.Busy  THEN bMoveLatch := FALSE; END_IF
+            IF fbMoveVel.Error THEN eState := E_MotorState.ERROR; END_IF
+
+        ELSE
+            eState := E_MotorState.READY;
+        END_IF
+
+    E_MotorState.STOPPING:
+        IF fbStop.Error THEN
+            eState := E_MotorState.ERROR;
+        ELSIF fbStop.Done THEN
+            eState := SEL(stCmd.bEnable, E_MotorState.DISABLED, E_MotorState.READY);
+        END_IF
+
+    E_MotorState.HOMING:
+        fbHome(Axis := Axis, Execute := TRUE, HomingMode := MC_DefaultHoming);
+        IF fbHome.Error THEN
+            eState := E_MotorState.ERROR;
+        ELSIF fbHome.Done THEN
+            stStatus.bHomingDone := TRUE;
+            eState               := E_MotorState.READY;
+        END_IF
+
+    E_MotorState.ERROR:
+        IF rtResetError.Q THEN
+            fbReset(Axis := Axis, Execute := TRUE);
+            stStatus.bError   := FALSE;
+            stStatus.nErrorID := 0;
+            eState            := E_MotorState.DISABLED;
+        END_IF
+
+END_CASE
+
+//----------------------------------------------------------------------
+// STATUS OUTPUTS
+//----------------------------------------------------------------------
+stStatus.eState       := eState;
+stStatus.eControlMode := stCmd.eControlMode;
+stStatus.bEnabled     := fbPower.Status;
+stStatus.bMoving      := fbMoveAbs.Busy OR fbMoveRel.Busy OR fbMoveVel.Busy;
+stStatus.bAtTarget    := fbMoveAbs.Done OR fbMoveRel.Done OR fbMoveVel.InVelocity;
+stStatus.bError       := fbPower.Error   OR fbMoveAbs.Error OR fbMoveRel.Error
+                      OR fbMoveVel.Error OR fbStop.Error    OR fbHome.Error;
+
+IF stStatus.bError AND stStatus.nErrorID = 0 THEN
+    stStatus.nErrorID := SEL(fbPower.Error,   0, fbPower.ErrorID)
+                       + SEL(fbMoveAbs.Error, 0, fbMoveAbs.ErrorID)
+                       + SEL(fbMoveRel.Error, 0, fbMoveRel.ErrorID)
+                       + SEL(fbMoveVel.Error, 0, fbMoveVel.ErrorID)
+                       + SEL(fbStop.Error,    0, fbStop.ErrorID)
+                       + SEL(fbHome.Error,    0, fbHome.ErrorID);
+END_IF
+
+stStatus.fActPosition := Axis.NcToPlc.ActPos;
+stStatus.fActVelocity := Axis.NcToPlc.ActVelo;
+stStatus.fActTorque   := INT_TO_LREAL(nActTorque_Raw) / 10.0;
+stStatus.nTimestamp   := ULINT_TO_UDINT(F_GetSystemTime() / 10000);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

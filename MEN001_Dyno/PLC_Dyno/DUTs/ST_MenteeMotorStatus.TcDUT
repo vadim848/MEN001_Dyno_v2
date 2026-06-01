@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_MenteeMotorStatus" Id="{74d9b9f9-e0b8-4a78-a737-38d2d8820a7d}">
+    <Declaration><![CDATA[// TxPDO — read by TwinCAT from Mentee Motor Slave (0x6000)
+// Written by FB_MenteeMotorHandler, read by Python via GVL_MenteeMotor
+TYPE ST_MenteeMotorStatus :
+STRUCT
+    general_error_bits      : BYTE;     // General error flags
+    categorial_error_bits   : BYTE;     // Categorical error flags
+    motor_temp              : BYTE;     // Motor temperature [°C]
+    theta                   : REAL;     // Actual position [rad or units]
+    d_theta                 : REAL;     // Actual velocity [rad/s or units/s]
+    measured_torque         : REAL;     // Measured torque [Nm or %]
+    motor_torque_pi_in      : REAL;     // Torque PI controller input
+    p_des_echo              : REAL;     // Echo of desired position setpoint
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

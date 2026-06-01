@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_EncoderData" Id="{de4ae25a-636b-4dcf-b398-100668ea00ca}">
+    <Declaration><![CDATA[TYPE ST_EncoderData :
+STRUCT
+    //------------------------------------------------------------------
+    // Inputs — from EL5112 PDOs
+    //------------------------------------------------------------------
+    nStatusWord         : WORD;
+    bInputA             : BOOL;
+    bInputB             : BOOL;
+    bInputC             : BOOL;
+    bCounterUnderflow   : BOOL;
+    bCounterOverflow    : BOOL;
+    bLatchValid         : BOOL;
+    bError              : BOOL;
+    nCounterValue       : DWORD;
+    nFrequencyValue     : DWORD;
+    nState              : BYTE;
+    fPosition           : LREAL;    // Scaled position [engineering units]
+
+    //------------------------------------------------------------------
+    // Outputs — written to EL5112 PDOs
+    //------------------------------------------------------------------
+    nSetCounterValue    : DWORD;    // Value to write to counter
+    bSetCounter         : BOOL;     // Rising edge = write nSetCounterValue
+    bZeroPosition       : BOOL;     // Rising edge = set counter to 0
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

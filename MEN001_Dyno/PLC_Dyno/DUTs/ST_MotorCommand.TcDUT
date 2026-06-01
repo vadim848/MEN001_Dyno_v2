@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_MotorCommand" Id="{0e582940-7bac-457e-a71d-fc9326aef51d}">
+    <Declaration><![CDATA[TYPE ST_MotorCommand :
+STRUCT
+    //------------------------------------------------------------------
+    // Control
+    //------------------------------------------------------------------
+    bEnable             : BOOL;         // TRUE = enable drive power
+    bResetError         : BOOL;         // Rising edge = reset active fault
+    bHome               : BOOL;         // Rising edge = start homing sequence
+    bStop               : BOOL;         // Rising edge = decelerate to standstill
+    bZeroPosition       : BOOL;         // Rising edge = set current position to 0
+    eControlMode        : E_ControlMode;
+
+    //------------------------------------------------------------------
+    // Position mode  (eControlMode = POSITION)
+    //------------------------------------------------------------------
+    fTargetPosition     : LREAL;        // Target position [units]
+    fDirection          : LREAL := 1.0; // Move direction for relative moves
+    bRelative           : BOOL;         // TRUE = relative, FALSE = absolute
+    bExecuteMove        : BOOL;         // Rising edge = execute move
+
+    //------------------------------------------------------------------
+    // Velocity mode  (eControlMode = VELOCITY)
+    //------------------------------------------------------------------
+    fTargetVelocity     : LREAL;        // Target velocity [units/s] sign = direction
+
+    //------------------------------------------------------------------
+    // Torque mode  (FB_TorqueControl)
+    //------------------------------------------------------------------
+    bTorqueExecute      : BOOL;         // Hold TRUE = torque active, FALSE = stop
+    fTargetTorque       : LREAL;        // Target torque [% of rated, -100 to 100]
+    fTorqueRamp         : LREAL := 100.0; // Torque ramp [% / s]
+    fTorqueVelLimitHigh : LREAL := 50.0;  // Velocity safety limit [units/s]
+    fTorqueVelLimitLow  : LREAL := -50.0;
+
+    //------------------------------------------------------------------
+    // Motion profile (shared across position and velocity modes)
+    //------------------------------------------------------------------
+    fAcceleration       : LREAL := 500.0;
+    fDeceleration       : LREAL := 500.0;
+    fJerk               : LREAL := 0.0;
+    fMaxVelocity        : LREAL := 100.0;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

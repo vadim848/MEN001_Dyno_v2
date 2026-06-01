@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_TorqueControl" Id="{d16c411f-9ec1-496c-90a0-540bd20e7b10}" SpecialFunc="None">
+    <Declaration><![CDATA[// =====================================================================
+// DECLARATION (top pane)
+// =====================================================================
+FUNCTION_BLOCK FB_TorqueControl
+VAR_IN_OUT
+    Axis            : AXIS_REF;         // Must be VAR_IN_OUT — passed by reference
+END_VAR
+
+VAR_INPUT
+    stCmd           : ST_MotorCommand;  // Read from GVL_Commands
+END_VAR
+
+VAR_OUTPUT
+    stStatus        : ST_MotorStatus;   // Written to GVL_Status
+END_VAR
+
+VAR
+    fbTorqueCtrl    : MC_TorqueControl;
+    rtExecute       : R_TRIG;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// =====================================================================
+// IMPLEMENTATION (bottom pane)
+// =====================================================================
+
+// Rising edge on bTorqueExecute triggers MC_TorqueControl
+rtExecute(CLK := stCmd.bTorqueExecute);
+
+fbTorqueCtrl(
+    Axis              := Axis,
+    Execute           := stCmd.bTorqueExecute,
+    ContinuousUpdate  := TRUE,
+    Relative          := FALSE,
+    Torque            := stCmd.fTargetTorque,
+    TorqueRamp        := stCmd.fTorqueRamp,
+    VelocityLimitHigh := stCmd.fTorqueVelLimitHigh,
+    VelocityLimitLow  := stCmd.fTorqueVelLimitLow,
+    BufferMode        := MC_Aborting
+);
+
+// Write ONLY torque fields back — do not overwrite position/velocity status
+stStatus.bTorqueActive   := fbTorqueCtrl.Active;
+stStatus.bTorqueInTorque := fbTorqueCtrl.InTorque;
+
+IF fbTorqueCtrl.Error THEN
+    stStatus.bError   := TRUE;
+    stStatus.nErrorID := fbTorqueCtrl.ErrorId;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

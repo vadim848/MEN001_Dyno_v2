@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_UartBridgeCmd" Id="{1963e4b5-c23f-4d00-b3be-5a6751f15598}">
+    <Declaration><![CDATA[// RxPDO — written by TwinCAT to UART Bridge Slave (0x7000)
+TYPE ST_UartBridgeCmd :
+STRUCT
+    //------------------------------------------------------------------
+    // Control word — packed by FB_UartBridgeHandler from named bits below
+    // Bit 0:     arm           (rising edge)
+    // Bit 1:     idle          (rising edge)
+    // Bit 2:     gate_block    (rising edge)
+    // Bit 3:     calibrate     (rising edge)
+    // Bit 4:     bode          (rising edge)
+    // Bit 5:     noodle        (rising edge)
+    // Bit 6:     reset         (rising edge)
+    // Bit 7:     led_on        (rising edge)
+    // Bit 8:     led_off       (rising edge)
+    // Bit 9:     query_state   (rising edge)
+    // Bits 11:10 bridge_mode   (level: 0=OFF, 1=MONITOR, 2=RECORDING)
+    // Bits 14:12 motion_mode   (level: 0=Noodle, 1=Pos, 2=Vel, 3=Torque, 4=Impedance)
+    //------------------------------------------------------------------
+
+    // Rising edge commands — pulse TRUE then FALSE from Python
+    bArm            : BOOL;
+    bIdle           : BOOL;
+    bGateBlock      : BOOL;
+    bCalibrate      : BOOL;
+    bBode           : BOOL;
+    bNoodle         : BOOL;
+    bReset          : BOOL;
+    bLedOn          : BOOL;
+    bLedOff         : BOOL;
+    bQueryState     : BOOL;
+
+    // Level commands
+    nBridgeMode     : BYTE := 1;    // 0=OFF, 1=MONITOR, 2=RECORDING — default MONITOR
+    nMotionMode     : BYTE;     // 0=Noodle, 1=Pos, 2=Vel, 3=Torque, 4=Impedance
+
+    // Motion parameters
+    p_des           : REAL;     // Desired position
+    v_des           : REAL;     // Desired velocity
+    kp              : REAL;     // Position gain
+    kd              : REAL;     // Velocity gain
+    torque_ff       : REAL;     // Feed forward torque
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>
