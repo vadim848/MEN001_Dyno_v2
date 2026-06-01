@@ -12144,6 +12144,32 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^GVL_IO.RedLED" VarB="Channel 9^Output"/>
 				<Link VarA="PlcTask Outputs^GVL_IO.b_MotorCooling" VarB="Channel 12^Output"/>
 			</OwnerB>
+			<OwnerB Name="TIID^Device 2 (EtherCAT)^Machine Side - A10 (EK1200)_1^A16 - AI  (EL3702)_1">
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbAnalogIn1.nCh1_S1" VarB="Ch1 Sample 0^Ch1 Value"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbAnalogIn1.nCh1_S2" VarB="Ch1 Sample 1^Ch1 Value"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbAnalogIn1.nCh1_S3" VarB="Ch1 Sample 2^Ch1 Value"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbAnalogIn1.nCh1_S4" VarB="Ch1 Sample 3^Ch1 Value"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbAnalogIn1.nCh1_S5" VarB="Ch1 Sample 4^Ch1 Value"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 2 (EtherCAT)^Machine Side - A10 (EK1200)_1^A17 - AI  (EL3702)_1">
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbAnalogIn2.nCh1_S1" VarB="Ch1 Sample 0^Ch1 Value"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbAnalogIn2.nCh1_S2" VarB="Ch1 Sample 1^Ch1 Value"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbAnalogIn2.nCh1_S3" VarB="Ch1 Sample 2^Ch1 Value"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbAnalogIn2.nCh1_S4" VarB="Ch1 Sample 3^Ch1 Value"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbAnalogIn2.nCh1_S5" VarB="Ch1 Sample 4^Ch1 Value"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 2 (EtherCAT)^Machine Side - A10 (EK1200)_1^A18 - Enc  (EL5112)_1">
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbEncoder2.nCounterValue_Raw" VarB="ENC Status Channel 1^Counter value"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbEncoder2.nFrequencyValue_Raw" VarB="ENC Frequency Channel 1^Frequency value"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbEncoder2.nControlWord_Raw" VarB="ENC Control Channel 1^Control"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbEncoder2.nSetCounterValue_Raw" VarB="ENC Control Channel 1^Set counter value"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 2 (EtherCAT)^Machine Side - A10 (EK1200)_1^A19 - Enc (EL5112)_1">
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbEncoder1.nCounterValue_Raw" VarB="ENC Status Channel 1^Counter value"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbEncoder1.nFrequencyValue_Raw" VarB="ENC Frequency Channel 1^Frequency value"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbEncoder1.nControlWord_Raw" VarB="ENC Control Channel 1^Control"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbEncoder1.nSetCounterValue_Raw" VarB="ENC Control Channel 1^Set counter value"/>
+			</OwnerB>
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Rack 19 (EK1100 - A0)_1^A1 - SI1 (EL1918)_1">
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^C1_FBK" VarB="StandardInputs^Standard Out Var 87"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^C2_FBK" VarB="StandardInputs^Standard Out Var 88"/>
@@ -12175,6 +12201,14 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^RB_BatBMS_Manual_On" VarB="StandardOutputs^Standard In Var 57"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^RUN" VarB="StandardOutputs^Standard In Var 50"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^SolenoedMonitor" VarB="StandardOutputs^Standard In Var 15"/>
+			</OwnerB>
+			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
+				<Link VarA="PlcTask Inputs^PRG_Motion.Axis1.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.Axis1.PlcToNc" VarB="Inputs^FromPlc"/>
+			</OwnerB>
+			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 2">
+				<Link VarA="PlcTask Inputs^PRG_Motion.Axis2.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.Axis2.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 		</OwnerA>
 	</Mappings>
