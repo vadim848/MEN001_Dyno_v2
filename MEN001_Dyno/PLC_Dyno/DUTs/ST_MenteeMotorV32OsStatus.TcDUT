@@ -16,6 +16,12 @@ STRUCT
     nGeneralErrorBits       : BYTE;     // bits 23:16
     nCategorialErrorBits    : BYTE;     // bits 31:24
     bError                  : BOOL;     // TRUE if any error bit set
+
+    // EtherCAT AL state of the Motor Slave (from InfoData.State, set in
+    // PRG_Motion). NOT from the TxPDO — it's the master's view of the slave.
+    // Low nibble = AL state: 1=INIT, 2=PREOP, 4=SAFEOP, 8=OP; bit 4 (0x10) =
+    // state error. The app treats (nAlState AND 16#000F) = 8 (OP) as connected.
+    nAlState                : UINT;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

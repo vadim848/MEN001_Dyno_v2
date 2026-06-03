@@ -191,6 +191,9 @@ GVL_Sync.stSnapshot.stMotor         := GVL_MenteeMotor.stStatus;
 
 // Mentee Motor (V3.2, slot-2 oversample)
 GVL_Sync.stSnapshot.stMotorV32_OS   := GVL_MenteeMotorV32_OS.stStatus;
+// EtherCAT AL state (Motor Slave InfoData.State, linked to nSlaveState) — the
+// master's authoritative online view: (nAlState AND 16#000F) = 8 means OP.
+GVL_Sync.stSnapshot.stMotorV32_OS.nAlState := GVL_MenteeMotorV32_OS.nSlaveState;
 
 // Encoders
 GVL_Sync.stSnapshot.stEncoder1      := GVL_Encoder.stEncoder1;

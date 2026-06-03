@@ -7,6 +7,12 @@ VAR_GLOBAL
     stCmd    : ST_MenteeMotorV32OsCmd;
     // ADS symbol: GVL_MenteeMotorV32_OS.stStatus
     stStatus : ST_MenteeMotorV32OsStatus;
+
+    // EtherCAT AL state of the Motor Slave V3.2 ("Box 1 (Motor Slave)").
+    // >>> LINK IN XAE: <Motor Slave> > InfoData > State  ->  this variable. <<<
+    // The EtherCAT master updates it every cycle (no ADS/FB needed). Decode:
+    // low nibble = AL state (1=INIT, 2=PREOP, 4=SAFEOP, 8=OP), bit 4 = error.
+    nSlaveState AT %I* : UINT;
 END_VAR
 ]]></Declaration>
   </GVL>
