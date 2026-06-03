@@ -2266,7 +2266,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{08826ED1-2731-4199-9F57-50138DAEE7D7}" Name="PLC_Dyno" PrjFilePath="PLC_Dyno\PLC_Dyno.plcproj" TmcFilePath="PLC_Dyno\PLC_Dyno.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{3B3C9F3C-8CE2-F8C1-9E16-5A7AE2C6CE81}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{ECDD3051-1422-BB32-F24B-15B2A35B2F80}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
 					<Name>PLC_Dyno Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -2883,6 +2883,14 @@ External Setpoint Generation:
 						<Var>
 							<Name>GVL_Safety.stTwinSAFE_IN</Name>
 							<Type GUID="{20BA9D2C-2EA1-6698-B602-9473CFD89984}">ST_TwinSAFE_IN</Type>
+						</Var>
+						<Var>
+							<Name>GVL_MenteeMotorV32_OS.nSlaveState</Name>
+							<Comment><![CDATA[ EtherCAT AL state of the Motor Slave V3.2 ("Box 1 (Motor Slave)").
+ >>> LINK IN XAE: <Motor Slave> > InfoData > State  ->  this variable. <<<
+ The EtherCAT master updates it every cycle (no ADS/FB needed). Decode:
+ low nibble = AL state (1=INIT, 2=PREOP, 4=SAFEOP, 8=OP), bit 4 = error.]]></Comment>
+							<Type>UINT</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2026-05-20T17:13:29">
@@ -12616,6 +12624,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 		</OwnerA>
 		<OwnerA Name="TIPC^PLC_Dyno^PLC_Dyno Instance">
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Box 1 (Motor Slave)">
+				<Link VarA="PlcTask Inputs^GVL_MenteeMotorV32_OS.nSlaveState" VarB="InfoData^State"/>
 				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s0_current" VarB="Motor Response OS^s0_current"/>
 				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s0_pos" VarB="Motor Response OS^s0_pos"/>
 				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s0_sample_idx" VarB="Motor Response OS^s0_sample_idx"/>
