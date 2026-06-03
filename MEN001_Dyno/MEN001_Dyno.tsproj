@@ -2266,7 +2266,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{08826ED1-2731-4199-9F57-50138DAEE7D7}" Name="PLC_Dyno" PrjFilePath="PLC_Dyno\PLC_Dyno.plcproj" TmcFilePath="PLC_Dyno\PLC_Dyno.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{D1B8253F-DBD4-2D37-3862-6C74D5B7339B}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{4EE845D9-E147-7426-4530-8E9BA66D1148}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
 					<Name>PLC_Dyno Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -2315,6 +2315,51 @@ External Setpoint Generation:
 						<Var>
 							<Name>PRG_Motion.fbMenteeMotor.q_max_torque</Name>
 							<Comment><![CDATA[ 0x7000:06 max_torque]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_control_word</Name>
+							<Comment><![CDATA[ 0x7001:01 control_word]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_impedance_p_des</Name>
+							<Comment><![CDATA[ 0x7001:02 impedance_p_des]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_impedance_v_des</Name>
+							<Comment><![CDATA[ 0x7001:03 impedance_v_des]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_impedance_kp</Name>
+							<Comment><![CDATA[ 0x7001:04 impedance_kp]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_impedance_kd</Name>
+							<Comment><![CDATA[ 0x7001:05 impedance_kd]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_impedance_torque_ff</Name>
+							<Comment><![CDATA[ 0x7001:06 impedance_torque_ff]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_position</Name>
+							<Comment><![CDATA[ 0x7001:07 setpoint_position]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_velocity</Name>
+							<Comment><![CDATA[ 0x7001:08 setpoint_velocity]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_current</Name>
+							<Comment><![CDATA[ 0x7001:09 setpoint_current]]></Comment>
 							<Type>REAL</Type>
 						</Var>
 						<Var>
@@ -2557,6 +2602,216 @@ External Setpoint Generation:
 						<Var>
 							<Name>PRG_Motion.fbMenteeMotor.i_p_des_echo</Name>
 							<Comment><![CDATA[ 0x6000:08 p_des_echo]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_status_word</Name>
+							<Comment><![CDATA[ 0x6001:01 status_word]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_sample_count</Name>
+							<Comment><![CDATA[ 0x6001:02 sample_count]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s0_sample_idx</Name>
+							<Comment><![CDATA[ 0x6001:03]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s0_pos</Name>
+							<Comment><![CDATA[ 0x6001:04]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s0_vel</Name>
+							<Comment><![CDATA[ 0x6001:05]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s0_current</Name>
+							<Comment><![CDATA[ 0x6001:06]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s1_sample_idx</Name>
+							<Comment><![CDATA[ 0x6001:07]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s1_pos</Name>
+							<Comment><![CDATA[ 0x6001:08]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s1_vel</Name>
+							<Comment><![CDATA[ 0x6001:09]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s1_current</Name>
+							<Comment><![CDATA[ 0x6001:0A]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s2_sample_idx</Name>
+							<Comment><![CDATA[ 0x6001:0B]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s2_pos</Name>
+							<Comment><![CDATA[ 0x6001:0C]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s2_vel</Name>
+							<Comment><![CDATA[ 0x6001:0D]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s2_current</Name>
+							<Comment><![CDATA[ 0x6001:0E]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s3_sample_idx</Name>
+							<Comment><![CDATA[ 0x6001:0F]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s3_pos</Name>
+							<Comment><![CDATA[ 0x6001:10]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s3_vel</Name>
+							<Comment><![CDATA[ 0x6001:11]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s3_current</Name>
+							<Comment><![CDATA[ 0x6001:12]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s4_sample_idx</Name>
+							<Comment><![CDATA[ 0x6001:13]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s4_pos</Name>
+							<Comment><![CDATA[ 0x6001:14]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s4_vel</Name>
+							<Comment><![CDATA[ 0x6001:15]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s4_current</Name>
+							<Comment><![CDATA[ 0x6001:16]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s5_sample_idx</Name>
+							<Comment><![CDATA[ 0x6001:17]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s5_pos</Name>
+							<Comment><![CDATA[ 0x6001:18]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s5_vel</Name>
+							<Comment><![CDATA[ 0x6001:19]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s5_current</Name>
+							<Comment><![CDATA[ 0x6001:1A]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s6_sample_idx</Name>
+							<Comment><![CDATA[ 0x6001:1B]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s6_pos</Name>
+							<Comment><![CDATA[ 0x6001:1C]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s6_vel</Name>
+							<Comment><![CDATA[ 0x6001:1D]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s6_current</Name>
+							<Comment><![CDATA[ 0x6001:1E]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s7_sample_idx</Name>
+							<Comment><![CDATA[ 0x6001:1F]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s7_pos</Name>
+							<Comment><![CDATA[ 0x6001:20]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s7_vel</Name>
+							<Comment><![CDATA[ 0x6001:21]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s7_current</Name>
+							<Comment><![CDATA[ 0x6001:22]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s8_sample_idx</Name>
+							<Comment><![CDATA[ 0x6001:23]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s8_pos</Name>
+							<Comment><![CDATA[ 0x6001:24]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s8_vel</Name>
+							<Comment><![CDATA[ 0x6001:25]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s8_current</Name>
+							<Comment><![CDATA[ 0x6001:26]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s9_sample_idx</Name>
+							<Comment><![CDATA[ 0x6001:27]]></Comment>
+							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s9_pos</Name>
+							<Comment><![CDATA[ 0x6001:28]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s9_vel</Name>
+							<Comment><![CDATA[ 0x6001:29]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s9_current</Name>
+							<Comment><![CDATA[ 0x6001:2A]]></Comment>
 							<Type>REAL</Type>
 						</Var>
 						<Var>
@@ -12359,6 +12614,59 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 			</OwnerB>
 		</OwnerA>
 		<OwnerA Name="TIPC^PLC_Dyno^PLC_Dyno Instance">
+			<OwnerB Name="TIID^Device 2 (EtherCAT)^Box 1 (Motor Slave)">
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s0_current" VarB="Motor Response OS^s0_current"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s0_pos" VarB="Motor Response OS^s0_pos"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s0_sample_idx" VarB="Motor Response OS^s0_sample_idx"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s0_vel" VarB="Motor Response OS^s0_vel"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s1_current" VarB="Motor Response OS^s1_current"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s1_pos" VarB="Motor Response OS^s1_pos"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s1_sample_idx" VarB="Motor Response OS^s1_sample_idx"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s1_vel" VarB="Motor Response OS^s1_vel"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s2_current" VarB="Motor Response OS^s2_current"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s2_pos" VarB="Motor Response OS^s2_pos"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s2_sample_idx" VarB="Motor Response OS^s2_sample_idx"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s2_vel" VarB="Motor Response OS^s2_vel"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s3_current" VarB="Motor Response OS^s3_current"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s3_pos" VarB="Motor Response OS^s3_pos"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s3_sample_idx" VarB="Motor Response OS^s3_sample_idx"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s3_vel" VarB="Motor Response OS^s3_vel"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s4_current" VarB="Motor Response OS^s4_current"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s4_pos" VarB="Motor Response OS^s4_pos"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s4_sample_idx" VarB="Motor Response OS^s4_sample_idx"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s4_vel" VarB="Motor Response OS^s4_vel"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s5_current" VarB="Motor Response OS^s5_current"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s5_pos" VarB="Motor Response OS^s5_pos"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s5_sample_idx" VarB="Motor Response OS^s5_sample_idx"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s5_vel" VarB="Motor Response OS^s5_vel"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s6_current" VarB="Motor Response OS^s6_current"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s6_pos" VarB="Motor Response OS^s6_pos"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s6_sample_idx" VarB="Motor Response OS^s6_sample_idx"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s6_vel" VarB="Motor Response OS^s6_vel"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s7_current" VarB="Motor Response OS^s7_current"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s7_pos" VarB="Motor Response OS^s7_pos"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s7_sample_idx" VarB="Motor Response OS^s7_sample_idx"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s7_vel" VarB="Motor Response OS^s7_vel"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s8_current" VarB="Motor Response OS^s8_current"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s8_pos" VarB="Motor Response OS^s8_pos"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s8_sample_idx" VarB="Motor Response OS^s8_sample_idx"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s8_vel" VarB="Motor Response OS^s8_vel"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s9_current" VarB="Motor Response OS^s9_current"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s9_pos" VarB="Motor Response OS^s9_pos"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s9_sample_idx" VarB="Motor Response OS^s9_sample_idx"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s9_vel" VarB="Motor Response OS^s9_vel"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_sample_count" VarB="Motor Response OS^sample_count"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_status_word" VarB="Motor Response OS^status_word"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_control_word" VarB="Motor Command OS^control_word"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_impedance_kd" VarB="Motor Command OS^impedance_kd"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_impedance_kp" VarB="Motor Command OS^impedance_kp"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_impedance_p_des" VarB="Motor Command OS^impedance_p_des"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_impedance_torque_ff" VarB="Motor Command OS^impedance_torque_ff"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_impedance_v_des" VarB="Motor Command OS^impedance_v_des"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_current" VarB="Motor Command OS^setpoint_current"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_position" VarB="Motor Command OS^setpoint_position"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_velocity" VarB="Motor Command OS^setpoint_velocity"/>
+			</OwnerB>
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Machine Side - A10 (EK1200)_1^A14 - D-I/O (EL1859)_1">
 				<Link VarA="PlcTask Inputs^GVL_Safety.DoorMonitorFromPLC" VarB="Channel 2^Input"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.SolonoidStatus" VarB="Channel 1^Input"/>

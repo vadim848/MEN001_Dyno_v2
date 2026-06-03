@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_MenteeMotorV32OsCmd" Id="{a00674d0-aa71-4d21-baee-fa5259042d7c}">
+    <Declaration><![CDATA[// RxPDO 0x1601 "Motor Command OS" — written by TwinCAT to Motor Slave V3.2 (0x7001)
+// Written by Python via GVL_MenteeMotorV32_OS, consumed by FB_MenteeMotorV32OsHandler
+TYPE ST_MenteeMotorV32OsCmd :
+STRUCT
+    nControlWord        : UDINT;    // 0x7001:01 control_word (raw 32-bit; packed per motor FW)
+    impedance_p_des     : REAL;     // 0x7001:02 impedance_p_des
+    impedance_v_des     : REAL;     // 0x7001:03 impedance_v_des
+    impedance_kp        : REAL;     // 0x7001:04 impedance_kp
+    impedance_kd        : REAL;     // 0x7001:05 impedance_kd
+    impedance_torque_ff : REAL;     // 0x7001:06 impedance_torque_ff
+    setpoint_position   : REAL;     // 0x7001:07 setpoint_position
+    setpoint_velocity   : REAL;     // 0x7001:08 setpoint_velocity
+    setpoint_current    : REAL;     // 0x7001:09 setpoint_current
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

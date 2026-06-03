@@ -22,10 +22,13 @@ VAR
     fbAnalogIn1     : FB_AnalogInHandler;
     fbAnalogIn2     : FB_AnalogInHandler;
 
-    //--- Mentee Motor Slave handler ---
+    //--- Mentee Motor Slave handler (V3.2, slot-1 simple PDO 0x1600/0x1A00) ---
     fbMenteeMotor   : FB_MenteeMotorHandler;
 
-    //--- Mentee UART Bridge handler ---
+    //--- Mentee Motor V3.2 slot-2 oversample handler (EtherCAT, distinct device, 0x1601/0x1A01) ---
+    fbMenteeMotorV32_OS : FB_MenteeMotorV32OsHandler;
+
+    //--- Mentee UART Bridge handler (V3.1) ---
     fbUartBridge    : FB_UartBridgeHandler;
 
     //--- NC Axis references — link to NC axes in XAE ---
@@ -72,7 +75,7 @@ fbAnalogIn1(stAnalogIn := GVL_AnalogIn.stAnalogIn1);
 fbAnalogIn2(stAnalogIn := GVL_AnalogIn.stAnalogIn2);
 
 //----------------------------------------------------------------------
-// 5. MENTEE MOTOR SLAVE
+// 5. MENTEE MOTOR SLAVE — V3.2, slot-1 (simple PDO 0x1600/0x1A00)
 //----------------------------------------------------------------------
 fbMenteeMotor(
     stCmd    := GVL_MenteeMotor.stCmd,
@@ -80,7 +83,16 @@ fbMenteeMotor(
 );
 
 //----------------------------------------------------------------------
-// 6. MENTEE UART BRIDGE
+// 5b. MENTEE MOTOR V3.2 — slot-2 oversample (EtherCAT, distinct device,
+//     PDO 0x1601/0x1A01). Commanded via control_word; do NOT auto-arm.
+//----------------------------------------------------------------------
+fbMenteeMotorV32_OS(
+    stCmd    := GVL_MenteeMotorV32_OS.stCmd,
+    stStatus := GVL_MenteeMotorV32_OS.stStatus
+);
+
+//----------------------------------------------------------------------
+// 6. MENTEE UART BRIDGE — V3.1
 //----------------------------------------------------------------------
 fbUartBridge(
     stCmd    := GVL_UartBridge.stCmd,
@@ -162,7 +174,7 @@ GVL_IO.stIO.bDO_StatusLED_Red :=
     GVL_Status.stMotor1_Status.bError OR
     GVL_Status.stMotor2_Status.bError OR
     bEStopActive;
-	
+
 //----------------------------------------------------------------------
 // 11. SYNCHRONIZED SNAPSHOT — all data from this DC cycle
 //     Python reads GVL_Sync.stSnapshot in a single ADS call.
@@ -174,8 +186,11 @@ GVL_Sync.stSnapshot.nDcTimestamp    := F_GetCurDcTaskTime64();
 // UART Bridge (V3.1)
 GVL_Sync.stSnapshot.stBridge        := GVL_UartBridge.stStatus;
 
-// Mentee Motor (V3.2)
+// Mentee Motor (V3.2, slot-1)
 GVL_Sync.stSnapshot.stMotor         := GVL_MenteeMotor.stStatus;
+
+// Mentee Motor (V3.2, slot-2 oversample)
+GVL_Sync.stSnapshot.stMotorV32_OS   := GVL_MenteeMotorV32_OS.stStatus;
 
 // Encoders
 GVL_Sync.stSnapshot.stEncoder1      := GVL_Encoder.stEncoder1;
