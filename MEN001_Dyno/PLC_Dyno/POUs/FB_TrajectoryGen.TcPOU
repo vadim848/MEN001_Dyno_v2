@@ -6,6 +6,10 @@
 // the field PRG_Motion routes by nField. Shapes ported from the Cheetah
 // ProfileGenerator: Sinusoidal / Trapezoidal / Step / S-Curve / Ramp.
 //
+// On Start the command is LATCHED into 'cfg' (a local copy of stTraj). The
+// generator + the valueAt method read 'cfg' only -- so mid-run parameter
+// changes are ignored, and the method never touches the VAR_IN_OUT (no C0371).
+//
 // Anchoring: for position-target fields (nField 0/1) the profile rides on the
 // rotor's position captured at Start -> out = startPos + (value(t) - value(0)),
 // so it begins exactly where the motor is (no jump). Velocity/current (2/3) use
@@ -24,6 +28,7 @@ VAR_OUTPUT
     fSetpoint       : REAL;
 END_VAR
 VAR
+    cfg             : ST_MenteeTrajCmd;   // latched command (read by body + valueAt)
     rStart          : R_TRIG;
     rStop           : R_TRIG;
     eState          : INT;      // see ST_* constants
@@ -58,18 +63,19 @@ IF rStop.Q THEN
     eState := ST_IDLE;
 END_IF
 
-// Start a new run.
+// Start a new run -> latch the command into cfg; everything below reads cfg.
 IF rStart.Q AND (stTraj.nShape <= SH_RAMP) AND (stTraj.nField <= 3) THEN
+    cfg      := stTraj;
     fElapsed := 0.0;
     nRepDone := 0;
     // total duration of one run, per shape
-    IF (stTraj.nShape = SH_TRAP) OR (stTraj.nShape = SH_SCURVE) THEN
-        fTotalDur := stTraj.fAccelTime + stTraj.fSteadyTime + stTraj.fDecelTime;
+    IF (cfg.nShape = SH_TRAP) OR (cfg.nShape = SH_SCURVE) THEN
+        fTotalDur := cfg.fAccelTime + cfg.fSteadyTime + cfg.fDecelTime;
     ELSE
-        fTotalDur := stTraj.fDuration;
+        fTotalDur := cfg.fDuration;
     END_IF
     // position-target fields ride on the current position (no jump)
-    bAnchor := (stTraj.nField = 0) OR (stTraj.nField = 1);
+    bAnchor := (cfg.nField = 0) OR (cfg.nField = 1);
     IF bAnchor THEN
         fStartPos := fMeasuredPos;
         fValue0   := valueAt(0.0);
@@ -102,14 +108,14 @@ ST_RUN:
         ELSE
             stTraj.fSetpoint := fRaw;
         END_IF
-        IF NOT stTraj.bRepetitive THEN
+        IF NOT cfg.bRepetitive THEN
             eState := ST_DONE;
         ELSE
             nRepDone := nRepDone + 1;
-            IF (stTraj.nReps > 0) AND (nRepDone >= stTraj.nReps) THEN
+            IF (cfg.nReps > 0) AND (nRepDone >= cfg.nReps) THEN
                 eState := ST_DONE;
             ELSE
-                fRest  := stTraj.fRestS;
+                fRest  := cfg.fRestS;
                 eState := ST_REST;
             END_IF
         END_IF
@@ -138,6 +144,7 @@ stTraj.bRunning := bRunning;
     </Implementation>
     <Method Name="valueAt" Id="{d3a9e2c4-6f53-4b8c-9e4a-7c2d3f4b5e61}">
       <Declaration><![CDATA[// Shape value at time fT [s] — closed-form, mirrors the Cheetah ProfileGenerator.
+// Reads the latched 'cfg' (FB-local), never the VAR_IN_OUT.
 METHOD valueAt : REAL
 VAR_INPUT
     fT  : REAL;
@@ -149,48 +156,48 @@ VAR CONSTANT
     TWO_PI : REAL := 6.2831853;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[CASE stTraj.nShape OF
+        <ST><![CDATA[CASE cfg.nShape OF
 
 0:  // Sinusoidal: offset + A * sin(2*pi*f*t)
-    valueAt := stTraj.fOffset + stTraj.fAmplitude * SIN(TWO_PI * stTraj.fFrequency * fT);
+    valueAt := cfg.fOffset + cfg.fAmplitude * SIN(TWO_PI * cfg.fFrequency * fT);
 
 1:  // Trapezoidal: ramp start->peak / hold / ramp peak->start
-    IF fT < stTraj.fAccelTime THEN
-        valueAt := stTraj.fStartValue
-                 + (stTraj.fPeakValue - stTraj.fStartValue) * (fT / MAX(stTraj.fAccelTime, 1E-6));
-    ELSIF fT < (stTraj.fAccelTime + stTraj.fSteadyTime) THEN
-        valueAt := stTraj.fPeakValue;
+    IF fT < cfg.fAccelTime THEN
+        valueAt := cfg.fStartValue
+                 + (cfg.fPeakValue - cfg.fStartValue) * (fT / MAX(cfg.fAccelTime, 1E-6));
+    ELSIF fT < (cfg.fAccelTime + cfg.fSteadyTime) THEN
+        valueAt := cfg.fPeakValue;
     ELSE
-        fU := (fT - stTraj.fAccelTime - stTraj.fSteadyTime) / MAX(stTraj.fDecelTime, 1E-6);
+        fU := (fT - cfg.fAccelTime - cfg.fSteadyTime) / MAX(cfg.fDecelTime, 1E-6);
         IF fU > 1.0 THEN fU := 1.0; END_IF
-        valueAt := stTraj.fPeakValue - (stTraj.fPeakValue - stTraj.fStartValue) * fU;
+        valueAt := cfg.fPeakValue - (cfg.fPeakValue - cfg.fStartValue) * fU;
     END_IF
 
 2:  // Step: start until step time, then end
-    IF fT < stTraj.fStepTime THEN
-        valueAt := stTraj.fStartValue;
+    IF fT < cfg.fStepTime THEN
+        valueAt := cfg.fStartValue;
     ELSE
-        valueAt := stTraj.fEndValue;
+        valueAt := cfg.fEndValue;
     END_IF
 
 3:  // S-Curve: quintic smoothstep start->peak / hold / peak->start
-    IF fT < stTraj.fAccelTime THEN
-        fU := fT / MAX(stTraj.fAccelTime, 1E-6);
-        valueAt := stTraj.fStartValue
-                 + (stTraj.fPeakValue - stTraj.fStartValue) * (fU*fU*fU*(10.0 + fU*(-15.0 + fU*6.0)));
-    ELSIF fT < (stTraj.fAccelTime + stTraj.fSteadyTime) THEN
-        valueAt := stTraj.fPeakValue;
+    IF fT < cfg.fAccelTime THEN
+        fU := fT / MAX(cfg.fAccelTime, 1E-6);
+        valueAt := cfg.fStartValue
+                 + (cfg.fPeakValue - cfg.fStartValue) * (fU*fU*fU*(10.0 + fU*(-15.0 + fU*6.0)));
+    ELSIF fT < (cfg.fAccelTime + cfg.fSteadyTime) THEN
+        valueAt := cfg.fPeakValue;
     ELSE
-        fU := (fT - stTraj.fAccelTime - stTraj.fSteadyTime) / MAX(stTraj.fDecelTime, 1E-6);
+        fU := (fT - cfg.fAccelTime - cfg.fSteadyTime) / MAX(cfg.fDecelTime, 1E-6);
         IF fU > 1.0 THEN fU := 1.0; END_IF
-        valueAt := stTraj.fPeakValue
-                 - (stTraj.fPeakValue - stTraj.fStartValue) * (fU*fU*fU*(10.0 + fU*(-15.0 + fU*6.0)));
+        valueAt := cfg.fPeakValue
+                 - (cfg.fPeakValue - cfg.fStartValue) * (fU*fU*fU*(10.0 + fU*(-15.0 + fU*6.0)));
     END_IF
 
 4:  // Ramp: linear start->end over duration
-    fU := fT / MAX(stTraj.fDuration, 1E-6);
+    fU := fT / MAX(cfg.fDuration, 1E-6);
     IF fU > 1.0 THEN fU := 1.0; END_IF
-    valueAt := stTraj.fStartValue + (stTraj.fEndValue - stTraj.fStartValue) * fU;
+    valueAt := cfg.fStartValue + (cfg.fEndValue - cfg.fStartValue) * fU;
 
 ELSE
     valueAt := 0.0;
