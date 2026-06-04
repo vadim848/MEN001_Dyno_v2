@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_TrajectoryGen" Id="{c2f8d1b3-5e42-4a7b-8d3f-6b1c2e3a4d50}" SpecialFunc="None">
+    <Declaration><![CDATA[// Generic 1 kHz motion-profile generator for the V3.2 motor. Evaluates the
+// selected shape as value(t) online (no precomputed array) and streams it to
+// the field PRG_Motion routes by nField. Shapes ported from the Cheetah
+// ProfileGenerator: Sinusoidal / Trapezoidal / Step / S-Curve / Ramp.
+//
+// Anchoring: for position-target fields (nField 0/1) the profile rides on the
+// rotor's position captured at Start -> out = startPos + (value(t) - value(0)),
+// so it begins exactly where the motor is (no jump). Velocity/current (2/3) use
+// the value directly. Repetitive loops the whole profile (nReps; 0 = infinite),
+// resting fRestS between reps.
+FUNCTION_BLOCK FB_TrajectoryGen
+VAR_IN_OUT
+    stTraj          : ST_MenteeTrajCmd;
+END_VAR
+VAR_INPUT
+    fMeasuredPos    : REAL;     // current measured output position [rad]
+    fDt             : REAL;     // task cycle time [s]
+END_VAR
+VAR_OUTPUT
+    bRunning        : BOOL;
+    fSetpoint       : REAL;
+END_VAR
+VAR
+    rStart          : R_TRIG;
+    rStop           : R_TRIG;
+    eState          : INT;      // see ST_* constants
+    fElapsed        : REAL;     // time into the current run [s]
+    fTotalDur       : REAL;     // total duration of one run [s]
+    fStartPos       : REAL;     // anchor position (captured at Start)
+    fValue0         : REAL;     // value(0) for anchoring
+    bAnchor         : BOOL;     // position-target field -> anchor at current pos
+    nRepDone        : UDINT;
+    fRest           : REAL;     // rest countdown [s]
+    fRaw            : REAL;
+    bWasActive      : BOOL;
+END_VAR
+VAR CONSTANT
+    ST_IDLE         : INT := 0;
+    ST_RUN          : INT := 1;
+    ST_REST         : INT := 2;
+    ST_DONE         : INT := 3;
+    SH_SINE         : BYTE := 0;
+    SH_TRAP         : BYTE := 1;
+    SH_STEP         : BYTE := 2;
+    SH_SCURVE       : BYTE := 3;
+    SH_RAMP         : BYTE := 4;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[rStart(CLK := stTraj.bStart);
+rStop(CLK := stTraj.bStop);
+
+// Stop -> hold current position (idle; PRG_Motion stops overriding the field).
+IF rStop.Q THEN
+    eState := ST_IDLE;
+END_IF
+
+// Start a new run.
+IF rStart.Q AND (stTraj.nShape <= SH_RAMP) AND (stTraj.nField <= 3) THEN
+    fElapsed := 0.0;
+    nRepDone := 0;
+    // total duration of one run, per shape
+    IF (stTraj.nShape = SH_TRAP) OR (stTraj.nShape = SH_SCURVE) THEN
+        fTotalDur := stTraj.fAccelTime + stTraj.fSteadyTime + stTraj.fDecelTime;
+    ELSE
+        fTotalDur := stTraj.fDuration;
+    END_IF
+    // position-target fields ride on the current position (no jump)
+    bAnchor := (stTraj.nField = 0) OR (stTraj.nField = 1);
+    IF bAnchor THEN
+        fStartPos := fMeasuredPos;
+        fValue0   := valueAt(0.0);
+    ELSE
+        fStartPos := 0.0;
+        fValue0   := 0.0;
+    END_IF
+    eState := ST_RUN;
+END_IF
+
+// "Active this cycle" is latched BEFORE transitions so the cycle that ends the
+// run still writes the final value.
+bWasActive := (eState = ST_RUN) OR (eState = ST_REST);
+
+CASE eState OF
+
+ST_RUN:
+    fRaw := valueAt(fElapsed);
+    IF bAnchor THEN
+        stTraj.fSetpoint := fStartPos + (fRaw - fValue0);
+    ELSE
+        stTraj.fSetpoint := fRaw;
+    END_IF
+    fElapsed := fElapsed + fDt;
+    IF fElapsed >= fTotalDur THEN
+        // land on the exact end value
+        fRaw := valueAt(fTotalDur);
+        IF bAnchor THEN
+            stTraj.fSetpoint := fStartPos + (fRaw - fValue0);
+        ELSE
+            stTraj.fSetpoint := fRaw;
+        END_IF
+        IF NOT stTraj.bRepetitive THEN
+            eState := ST_DONE;
+        ELSE
+            nRepDone := nRepDone + 1;
+            IF (stTraj.nReps > 0) AND (nRepDone >= stTraj.nReps) THEN
+                eState := ST_DONE;
+            ELSE
+                fRest  := stTraj.fRestS;
+                eState := ST_REST;
+            END_IF
+        END_IF
+    END_IF
+
+ST_REST:
+    fRest := fRest - fDt;                   // hold last setpoint during the rest
+    IF fRest <= 0.0 THEN
+        fElapsed := 0.0;
+        eState   := ST_RUN;
+    END_IF
+
+ST_DONE:
+    ;                                       // hold fSetpoint
+
+ST_IDLE:
+    ;                                       // not running
+
+END_CASE
+
+stTraj.fElapsed := fElapsed;
+bRunning        := bWasActive;
+fSetpoint       := stTraj.fSetpoint;
+stTraj.bRunning := bRunning;
+]]></ST>
+    </Implementation>
+    <Method Name="valueAt" Id="{d3a9e2c4-6f53-4b8c-9e4a-7c2d3f4b5e61}">
+      <Declaration><![CDATA[// Shape value at time fT [s] — closed-form, mirrors the Cheetah ProfileGenerator.
+METHOD valueAt : REAL
+VAR_INPUT
+    fT  : REAL;
+END_VAR
+VAR
+    fU  : REAL;
+END_VAR
+VAR CONSTANT
+    TWO_PI : REAL := 6.2831853;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE stTraj.nShape OF
+
+0:  // Sinusoidal: offset + A * sin(2*pi*f*t)
+    valueAt := stTraj.fOffset + stTraj.fAmplitude * SIN(TWO_PI * stTraj.fFrequency * fT);
+
+1:  // Trapezoidal: ramp start->peak / hold / ramp peak->start
+    IF fT < stTraj.fAccelTime THEN
+        valueAt := stTraj.fStartValue
+                 + (stTraj.fPeakValue - stTraj.fStartValue) * (fT / MAX(stTraj.fAccelTime, 1E-6));
+    ELSIF fT < (stTraj.fAccelTime + stTraj.fSteadyTime) THEN
+        valueAt := stTraj.fPeakValue;
+    ELSE
+        fU := (fT - stTraj.fAccelTime - stTraj.fSteadyTime) / MAX(stTraj.fDecelTime, 1E-6);
+        IF fU > 1.0 THEN fU := 1.0; END_IF
+        valueAt := stTraj.fPeakValue - (stTraj.fPeakValue - stTraj.fStartValue) * fU;
+    END_IF
+
+2:  // Step: start until step time, then end
+    IF fT < stTraj.fStepTime THEN
+        valueAt := stTraj.fStartValue;
+    ELSE
+        valueAt := stTraj.fEndValue;
+    END_IF
+
+3:  // S-Curve: quintic smoothstep start->peak / hold / peak->start
+    IF fT < stTraj.fAccelTime THEN
+        fU := fT / MAX(stTraj.fAccelTime, 1E-6);
+        valueAt := stTraj.fStartValue
+                 + (stTraj.fPeakValue - stTraj.fStartValue) * (fU*fU*fU*(10.0 + fU*(-15.0 + fU*6.0)));
+    ELSIF fT < (stTraj.fAccelTime + stTraj.fSteadyTime) THEN
+        valueAt := stTraj.fPeakValue;
+    ELSE
+        fU := (fT - stTraj.fAccelTime - stTraj.fSteadyTime) / MAX(stTraj.fDecelTime, 1E-6);
+        IF fU > 1.0 THEN fU := 1.0; END_IF
+        valueAt := stTraj.fPeakValue
+                 - (stTraj.fPeakValue - stTraj.fStartValue) * (fU*fU*fU*(10.0 + fU*(-15.0 + fU*6.0)));
+    END_IF
+
+4:  // Ramp: linear start->end over duration
+    fU := fT / MAX(stTraj.fDuration, 1E-6);
+    IF fU > 1.0 THEN fU := 1.0; END_IF
+    valueAt := stTraj.fStartValue + (stTraj.fEndValue - stTraj.fStartValue) * fU;
+
+ELSE
+    valueAt := 0.0;
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

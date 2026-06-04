@@ -13,6 +13,11 @@ VAR_GLOBAL
     // The EtherCAT master updates it every cycle (no ADS/FB needed). Decode:
     // low nibble = AL state (1=INIT, 2=PREOP, 4=SAFEOP, 8=OP), bit 4 = error.
     nSlaveState AT %I* : UINT;
+
+    // V3.2 motion-profile command/status (FB_TrajectoryGen). The app writes the
+    // params + pulses bStart; the FB streams the profile at 1 kHz into stCmd.
+    // ADS symbol: GVL_MenteeMotorV32_OS.stTraj
+    stTraj   : ST_MenteeTrajCmd;
 END_VAR
 ]]></Declaration>
   </GVL>
