@@ -108,7 +108,7 @@ END_IF
 
 fbMenteeTraj(
     stTraj       := GVL_MenteeMotorV32_OS.stTraj,
-    fMeasuredPos := GVL_MenteeMotorV32_OS.stStatus.aSamples[9].pos,
+    fMeasuredPos := GVL_MenteeMotorV32_OS.stStatus.fLatestPos,  // decoded theta (REAL)
     fDt          := fTaskCycleS    // auto-tracks the PlcTask cycle (1 ms / 250 us)
 );
 IF fbMenteeTraj.bRunning THEN

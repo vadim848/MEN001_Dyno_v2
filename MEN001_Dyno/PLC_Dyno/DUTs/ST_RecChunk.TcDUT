@@ -38,11 +38,14 @@ STRUCT
     aMnSW    : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF UDINT;   // Mentee status word (bus-rate)
     aMnCnt   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF UDINT;   // fresh oversamples this frame (0..REC_OVERSAMPLE)
 
-    // ── Mentee oversamples (REC_OVERSAMPLE per frame) ──────────────────
+    // ── Mentee oversamples (REC_OVERSAMPLE per frame) — raw slot words ──
+    // w0/w1/w2 are raw 32-bit words; the app reinterprets them per the group_id
+    // carried in aMnSW (status word bits 14:12). Storing raw words keeps the
+    // recorder generic across both oversample groups.
     aMnIdx   : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT; // sample_idx
-    aMnPos   : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF REAL;
-    aMnVel   : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF REAL;
-    aMnCur   : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF REAL;
+    aMnW0    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
+    aMnW1    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
+    aMnW2    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

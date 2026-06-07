@@ -13,9 +13,17 @@ STRUCT
     nFsmState               : BYTE;     // status_word bits 3:0
     nMainState              : BYTE;     // bits 7:4
     nOpMode                 : BYTE;     // bits 10:8
+    nGroupId                : BYTE;     // bits 14:12 — active oversample group (0=STANDARD, 1=TORQUE)
     nGeneralErrorBits       : BYTE;     // bits 23:16
     nCategorialErrorBits    : BYTE;     // bits 31:24
     bError                  : BOOL;     // TRUE if any error bit set
+
+    // Newest slot decoded as REAL (GROUP 0 / STANDARD semantics: w0/w1/w2 =
+    // theta/d_theta/iq). Convenience for the trajectory anchor + the app's live
+    // pos/vel/current readout (the app decodes the full slot stream per group).
+    fLatestPos              : REAL;
+    fLatestVel              : REAL;
+    fLatestCurrent          : REAL;
 
     // EtherCAT AL state of the Motor Slave (from InfoData.State, set in
     // PRG_Motion). NOT from the TxPDO — it's the master's view of the slave.

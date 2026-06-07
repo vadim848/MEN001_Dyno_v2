@@ -3,10 +3,15 @@
   <DUT Name="ST_MenteeMotorV32OsSample" Id="{8d32101a-96bd-4154-848c-aeb8105ad132}">
     <Declaration><![CDATA[TYPE ST_MenteeMotorV32OsSample :
 STRUCT
+    // Generic oversample slot (flex-PDO 0x6001). w0/w1/w2 are RAW 32-bit words;
+    // the master reinterprets them per GROUP_ID (status_word [14:12]):
+    //   GROUP 0 STANDARD: w0=theta(F)  w1=d_theta(F)   w2=iq(F)
+    //   GROUP 1 TORQUE   : per 3-slot capture — see MASTER_INTERFACE.md / the app
+    //                      decoder (theta/d_theta/dd_theta, torque_raw_1..4, iq, measured_torque)
     sample_idx  : UDINT;    // sN_sample_idx — device oversample index
-    pos         : REAL;     // sN_pos        — output position
-    vel         : REAL;     // sN_vel        — output velocity
-    current     : REAL;     // sN_current    — measured current
+    w0          : UDINT;    // sN_w0 — raw word (float-bits or uint32 per group)
+    w1          : UDINT;    // sN_w1
+    w2          : UDINT;    // sN_w2
 END_STRUCT
 END_TYPE
 ]]></Declaration>

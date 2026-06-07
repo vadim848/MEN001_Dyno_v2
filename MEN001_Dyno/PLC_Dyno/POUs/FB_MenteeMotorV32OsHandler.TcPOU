@@ -23,46 +23,51 @@ VAR
     i_status_word           AT %I* : UDINT; // 0x6001:01 status_word
     i_sample_count          AT %I* : UDINT; // 0x6001:02 sample_count
 
+    // Generic slots { sample_idx, w0, w1, w2 } — all UDINT raw words. Re-link to
+    // box 0x1A01 entries sN_sample_idx / sN_w0 / sN_w1 / sN_w2 after importing the
+    // flex-PDO ESI; the master reinterprets w0/w1/w2 per GROUP_ID.
     i_s0_sample_idx         AT %I* : UDINT; // 0x6001:03
-    i_s0_pos                AT %I* : REAL;  // 0x6001:04
-    i_s0_vel                AT %I* : REAL;  // 0x6001:05
-    i_s0_current            AT %I* : REAL;  // 0x6001:06
+    i_s0_w0                 AT %I* : UDINT; // 0x6001:04
+    i_s0_w1                 AT %I* : UDINT; // 0x6001:05
+    i_s0_w2                 AT %I* : UDINT; // 0x6001:06
     i_s1_sample_idx         AT %I* : UDINT; // 0x6001:07
-    i_s1_pos                AT %I* : REAL;  // 0x6001:08
-    i_s1_vel                AT %I* : REAL;  // 0x6001:09
-    i_s1_current            AT %I* : REAL;  // 0x6001:0A
+    i_s1_w0                 AT %I* : UDINT; // 0x6001:08
+    i_s1_w1                 AT %I* : UDINT; // 0x6001:09
+    i_s1_w2                 AT %I* : UDINT; // 0x6001:0A
     i_s2_sample_idx         AT %I* : UDINT; // 0x6001:0B
-    i_s2_pos                AT %I* : REAL;  // 0x6001:0C
-    i_s2_vel                AT %I* : REAL;  // 0x6001:0D
-    i_s2_current            AT %I* : REAL;  // 0x6001:0E
+    i_s2_w0                 AT %I* : UDINT; // 0x6001:0C
+    i_s2_w1                 AT %I* : UDINT; // 0x6001:0D
+    i_s2_w2                 AT %I* : UDINT; // 0x6001:0E
     i_s3_sample_idx         AT %I* : UDINT; // 0x6001:0F
-    i_s3_pos                AT %I* : REAL;  // 0x6001:10
-    i_s3_vel                AT %I* : REAL;  // 0x6001:11
-    i_s3_current            AT %I* : REAL;  // 0x6001:12
+    i_s3_w0                 AT %I* : UDINT; // 0x6001:10
+    i_s3_w1                 AT %I* : UDINT; // 0x6001:11
+    i_s3_w2                 AT %I* : UDINT; // 0x6001:12
     i_s4_sample_idx         AT %I* : UDINT; // 0x6001:13
-    i_s4_pos                AT %I* : REAL;  // 0x6001:14
-    i_s4_vel                AT %I* : REAL;  // 0x6001:15
-    i_s4_current            AT %I* : REAL;  // 0x6001:16
+    i_s4_w0                 AT %I* : UDINT; // 0x6001:14
+    i_s4_w1                 AT %I* : UDINT; // 0x6001:15
+    i_s4_w2                 AT %I* : UDINT; // 0x6001:16
     i_s5_sample_idx         AT %I* : UDINT; // 0x6001:17
-    i_s5_pos                AT %I* : REAL;  // 0x6001:18
-    i_s5_vel                AT %I* : REAL;  // 0x6001:19
-    i_s5_current            AT %I* : REAL;  // 0x6001:1A
+    i_s5_w0                 AT %I* : UDINT; // 0x6001:18
+    i_s5_w1                 AT %I* : UDINT; // 0x6001:19
+    i_s5_w2                 AT %I* : UDINT; // 0x6001:1A
     i_s6_sample_idx         AT %I* : UDINT; // 0x6001:1B
-    i_s6_pos                AT %I* : REAL;  // 0x6001:1C
-    i_s6_vel                AT %I* : REAL;  // 0x6001:1D
-    i_s6_current            AT %I* : REAL;  // 0x6001:1E
+    i_s6_w0                 AT %I* : UDINT; // 0x6001:1C
+    i_s6_w1                 AT %I* : UDINT; // 0x6001:1D
+    i_s6_w2                 AT %I* : UDINT; // 0x6001:1E
     i_s7_sample_idx         AT %I* : UDINT; // 0x6001:1F
-    i_s7_pos                AT %I* : REAL;  // 0x6001:20
-    i_s7_vel                AT %I* : REAL;  // 0x6001:21
-    i_s7_current            AT %I* : REAL;  // 0x6001:22
+    i_s7_w0                 AT %I* : UDINT; // 0x6001:20
+    i_s7_w1                 AT %I* : UDINT; // 0x6001:21
+    i_s7_w2                 AT %I* : UDINT; // 0x6001:22
     i_s8_sample_idx         AT %I* : UDINT; // 0x6001:23
-    i_s8_pos                AT %I* : REAL;  // 0x6001:24
-    i_s8_vel                AT %I* : REAL;  // 0x6001:25
-    i_s8_current            AT %I* : REAL;  // 0x6001:26
+    i_s8_w0                 AT %I* : UDINT; // 0x6001:24
+    i_s8_w1                 AT %I* : UDINT; // 0x6001:25
+    i_s8_w2                 AT %I* : UDINT; // 0x6001:26
     i_s9_sample_idx         AT %I* : UDINT; // 0x6001:27
-    i_s9_pos                AT %I* : REAL;  // 0x6001:28
-    i_s9_vel                AT %I* : REAL;  // 0x6001:29
-    i_s9_current            AT %I* : REAL;  // 0x6001:2A
+    i_s9_w0                 AT %I* : UDINT; // 0x6001:28
+    i_s9_w1                 AT %I* : UDINT; // 0x6001:29
+    i_s9_w2                 AT %I* : UDINT; // 0x6001:2A
+
+    uReinterpret            : U_WordReal;   // UDINT-bits -> REAL for fLatest* decode
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -86,45 +91,45 @@ stStatus.nStatusWord  := i_status_word;
 stStatus.nSampleCount := i_sample_count;
 
 stStatus.aSamples[0].sample_idx := i_s0_sample_idx;
-stStatus.aSamples[0].pos        := i_s0_pos;
-stStatus.aSamples[0].vel        := i_s0_vel;
-stStatus.aSamples[0].current    := i_s0_current;
+stStatus.aSamples[0].w0         := i_s0_w0;
+stStatus.aSamples[0].w1         := i_s0_w1;
+stStatus.aSamples[0].w2         := i_s0_w2;
 stStatus.aSamples[1].sample_idx := i_s1_sample_idx;
-stStatus.aSamples[1].pos        := i_s1_pos;
-stStatus.aSamples[1].vel        := i_s1_vel;
-stStatus.aSamples[1].current    := i_s1_current;
+stStatus.aSamples[1].w0         := i_s1_w0;
+stStatus.aSamples[1].w1         := i_s1_w1;
+stStatus.aSamples[1].w2         := i_s1_w2;
 stStatus.aSamples[2].sample_idx := i_s2_sample_idx;
-stStatus.aSamples[2].pos        := i_s2_pos;
-stStatus.aSamples[2].vel        := i_s2_vel;
-stStatus.aSamples[2].current    := i_s2_current;
+stStatus.aSamples[2].w0         := i_s2_w0;
+stStatus.aSamples[2].w1         := i_s2_w1;
+stStatus.aSamples[2].w2         := i_s2_w2;
 stStatus.aSamples[3].sample_idx := i_s3_sample_idx;
-stStatus.aSamples[3].pos        := i_s3_pos;
-stStatus.aSamples[3].vel        := i_s3_vel;
-stStatus.aSamples[3].current    := i_s3_current;
+stStatus.aSamples[3].w0         := i_s3_w0;
+stStatus.aSamples[3].w1         := i_s3_w1;
+stStatus.aSamples[3].w2         := i_s3_w2;
 stStatus.aSamples[4].sample_idx := i_s4_sample_idx;
-stStatus.aSamples[4].pos        := i_s4_pos;
-stStatus.aSamples[4].vel        := i_s4_vel;
-stStatus.aSamples[4].current    := i_s4_current;
+stStatus.aSamples[4].w0         := i_s4_w0;
+stStatus.aSamples[4].w1         := i_s4_w1;
+stStatus.aSamples[4].w2         := i_s4_w2;
 stStatus.aSamples[5].sample_idx := i_s5_sample_idx;
-stStatus.aSamples[5].pos        := i_s5_pos;
-stStatus.aSamples[5].vel        := i_s5_vel;
-stStatus.aSamples[5].current    := i_s5_current;
+stStatus.aSamples[5].w0         := i_s5_w0;
+stStatus.aSamples[5].w1         := i_s5_w1;
+stStatus.aSamples[5].w2         := i_s5_w2;
 stStatus.aSamples[6].sample_idx := i_s6_sample_idx;
-stStatus.aSamples[6].pos        := i_s6_pos;
-stStatus.aSamples[6].vel        := i_s6_vel;
-stStatus.aSamples[6].current    := i_s6_current;
+stStatus.aSamples[6].w0         := i_s6_w0;
+stStatus.aSamples[6].w1         := i_s6_w1;
+stStatus.aSamples[6].w2         := i_s6_w2;
 stStatus.aSamples[7].sample_idx := i_s7_sample_idx;
-stStatus.aSamples[7].pos        := i_s7_pos;
-stStatus.aSamples[7].vel        := i_s7_vel;
-stStatus.aSamples[7].current    := i_s7_current;
+stStatus.aSamples[7].w0         := i_s7_w0;
+stStatus.aSamples[7].w1         := i_s7_w1;
+stStatus.aSamples[7].w2         := i_s7_w2;
 stStatus.aSamples[8].sample_idx := i_s8_sample_idx;
-stStatus.aSamples[8].pos        := i_s8_pos;
-stStatus.aSamples[8].vel        := i_s8_vel;
-stStatus.aSamples[8].current    := i_s8_current;
+stStatus.aSamples[8].w0         := i_s8_w0;
+stStatus.aSamples[8].w1         := i_s8_w1;
+stStatus.aSamples[8].w2         := i_s8_w2;
 stStatus.aSamples[9].sample_idx := i_s9_sample_idx;
-stStatus.aSamples[9].pos        := i_s9_pos;
-stStatus.aSamples[9].vel        := i_s9_vel;
-stStatus.aSamples[9].current    := i_s9_current;
+stStatus.aSamples[9].w0         := i_s9_w0;
+stStatus.aSamples[9].w1         := i_s9_w1;
+stStatus.aSamples[9].w2         := i_s9_w2;
 
 //----------------------------------------------------------------------
 // DECODE STATUS WORD (mirrors FB_UartBridgeHandler — VERIFY vs motor FW)
@@ -132,8 +137,14 @@ stStatus.aSamples[9].current    := i_s9_current;
 stStatus.nFsmState            := UDINT_TO_BYTE(i_status_word AND 16#0000000F);
 stStatus.nMainState           := UDINT_TO_BYTE((i_status_word / 16#10)       AND 16#0F);
 stStatus.nOpMode              := UDINT_TO_BYTE((i_status_word / 16#100)      AND 16#07);
+stStatus.nGroupId             := UDINT_TO_BYTE((i_status_word / 16#1000)     AND 16#07);  // bits 14:12
 stStatus.nGeneralErrorBits    := UDINT_TO_BYTE((i_status_word / 16#10000)    AND 16#FF);
 stStatus.nCategorialErrorBits := UDINT_TO_BYTE((i_status_word / 16#1000000)  AND 16#FF);
+
+// Newest slot, reinterpreted as REAL (GROUP 0 semantics: w0/w1/w2 = theta/d_theta/iq).
+uReinterpret.u := i_s9_w0; stStatus.fLatestPos     := uReinterpret.f;
+uReinterpret.u := i_s9_w1; stStatus.fLatestVel     := uReinterpret.f;
+uReinterpret.u := i_s9_w2; stStatus.fLatestCurrent := uReinterpret.f;
 stStatus.bError               := (stStatus.nGeneralErrorBits <> 0)
                                OR (stStatus.nCategorialErrorBits <> 0);
 ]]></ST>
