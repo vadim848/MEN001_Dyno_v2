@@ -2266,7 +2266,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{08826ED1-2731-4199-9F57-50138DAEE7D7}" Name="PLC_Dyno" PrjFilePath="PLC_Dyno\PLC_Dyno.plcproj" TmcFilePath="PLC_Dyno\PLC_Dyno.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{ECDD3051-1422-BB32-F24B-15B2A35B2F80}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{40380905-FEEC-A51C-B486-C39A8F0BCB50}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
 					<Name>PLC_Dyno Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -2873,6 +2873,14 @@ External Setpoint Generation:
 							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 						</Var>
 						<Var>
+							<Name>GVL_MenteeMotorV32_OS.nSlaveState</Name>
+							<Comment><![CDATA[ EtherCAT AL state of the Motor Slave V3.2 ("Box 1 (Motor Slave)").
+ >>> LINK IN XAE: <Motor Slave> > InfoData > State  ->  this variable. <<<
+ The EtherCAT master updates it every cycle (no ADS/FB needed). Decode:
+ low nibble = AL state (1=INIT, 2=PREOP, 4=SAFEOP, 8=OP), bit 4 = error.]]></Comment>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
 							<Name>GVL_Safety.DoorMonitorFromPLC</Name>
 							<Type>BOOL</Type>
 						</Var>
@@ -2883,14 +2891,6 @@ External Setpoint Generation:
 						<Var>
 							<Name>GVL_Safety.stTwinSAFE_IN</Name>
 							<Type GUID="{20BA9D2C-2EA1-6698-B602-9473CFD89984}">ST_TwinSAFE_IN</Type>
-						</Var>
-						<Var>
-							<Name>GVL_MenteeMotorV32_OS.nSlaveState</Name>
-							<Comment><![CDATA[ EtherCAT AL state of the Motor Slave V3.2 ("Box 1 (Motor Slave)").
- >>> LINK IN XAE: <Motor Slave> > InfoData > State  ->  this variable. <<<
- The EtherCAT master updates it every cycle (no ADS/FB needed). Decode:
- low nibble = AL state (1=INIT, 2=PREOP, 4=SAFEOP, 8=OP), bit 4 = error.]]></Comment>
-							<Type>UINT</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2026-05-20T17:13:29">
