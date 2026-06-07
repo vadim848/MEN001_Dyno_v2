@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_RecChunk" Id="{a1f4c7e2-1d33-4b8a-9c64-7e2a5f1b9d40}">
+    <Declaration><![CDATA[// High-rate recording chunk — struct-of-arrays (SoA) so the app can bulk-read
+// each channel as a flat typed array over ADS (no struct packing/alignment).
+//
+// One CHUNK = REC_CHUNK EtherCAT frames. The recorder FB fills the active chunk
+// one frame per cycle; when full it advances to the next chunk in the ring and
+// bumps GVL_Recording.nChunkSeq. The app reads each completed chunk's arrays in
+// one bulk ADS read per channel, then writes them to the recording file.
+//
+// Two rates share one DC timebase:
+//   * bus-rate  (one value per frame): aDcTs + load motors / Futek / Mentee status
+//   * Mentee    (REC_OVERSAMPLE per frame, 40 kHz): aMn* arrays, length REC_CHUNK*REC_OVERSAMPLE
+//
+// Sizes are compile-time constants in GVL_Recording — keep them in lock-step
+// with the FB and the backend reader (chunk length + oversample count).
+TYPE ST_RecChunk :
+STRUCT
+    nCount   : UDINT;   // frames actually filled in this chunk (= REC_CHUNK when complete)
+
+    // ── bus-rate channels (one element per frame) ──────────────────────
+    aDcTs    : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF ULINT;   // DC time, 100 ns ticks
+    aM1Pos   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;    // load motor 1
+    aM1Vel   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;
+    aM1Trq   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;
+    aM2Pos   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;    // load motor 2
+    aM2Vel   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;
+    aM2Trq   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;
+    aEnc1Cnt : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF DINT;    // Futek 1 encoder
+    aEnc1Frq : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF DINT;
+    aEnc2Cnt : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF DINT;    // Futek 2 encoder
+    aEnc2Frq : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF DINT;
+    aAin1V   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;    // Futek 1 analog (V)
+    aAin2V   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;    // Futek 2 analog (V)
+    aMnSW    : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF UDINT;   // Mentee status word (bus-rate)
+    aMnCnt   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF UDINT;   // fresh oversamples this frame (0..REC_OVERSAMPLE)
+
+    // ── Mentee 40 kHz oversamples (REC_OVERSAMPLE per frame) ───────────
+    aMnIdx   : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT; // sample_idx
+    aMnPos   : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF REAL;
+    aMnVel   : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF REAL;
+    aMnCur   : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF REAL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

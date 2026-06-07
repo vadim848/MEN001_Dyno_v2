@@ -31,6 +31,9 @@ VAR
     //--- Mentee Motor V3.2 trajectory generator (1 kHz trapezoid) ---
     fbMenteeTraj        : FB_TrajectoryGen;
 
+    //--- High-rate recorder (buffers every frame into GVL_Recording.aChunks) ---
+    fbRecorder          : FB_HighRateRecorder;
+
     //--- Mentee UART Bridge handler (V3.1) ---
     fbUartBridge    : FB_UartBridgeHandler;
 
@@ -40,6 +43,11 @@ VAR
 
     //--- Safety ---
     bEStopActive    : BOOL;
+
+    //--- Task cycle period [s], read live from the running task config so the
+    //    trajectory generator timestep auto-tracks any PlcTask CycleTime change
+    //    (1 ms <-> 250 us) with no code edit here. ---
+    fTaskCycleS     : REAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -91,10 +99,17 @@ fbMenteeMotor(
 //     field (by nField) BEFORE the handler below forwards stCmd to the RxPDO.
 //     Measured position = latest OS sub-sample (anchor for position profiles).
 //----------------------------------------------------------------------
+// Live task cycle [s] from the running task config (100 ns units -> s), so the
+// profile timestep auto-tracks PlcTask CycleTime (1 ms <-> 250 us) — no edit here.
+fTaskCycleS := UDINT_TO_REAL(_TaskInfo[GETCURTASKINDEXEX()].CycleTime) * 1.0E-7;
+IF fTaskCycleS <= 0.0 THEN
+    fTaskCycleS := 0.001;    // safety fallback if the system var reads 0
+END_IF
+
 fbMenteeTraj(
     stTraj       := GVL_MenteeMotorV32_OS.stTraj,
     fMeasuredPos := GVL_MenteeMotorV32_OS.stStatus.aSamples[9].pos,
-    fDt          := 0.001    // PlcTask cycle = 1 ms (1 kHz)
+    fDt          := fTaskCycleS    // auto-tracks the PlcTask cycle (1 ms / 250 us)
 );
 IF fbMenteeTraj.bRunning THEN
     CASE GVL_MenteeMotorV32_OS.stTraj.nField OF
@@ -235,6 +250,12 @@ GVL_Sync.stSnapshot.stMotor2Status  := GVL_Status.stMotor2_Status;
 
 // Safety
 GVL_Sync.stSnapshot.bEStopActive    := bEStopActive;
+
+//----------------------------------------------------------------------
+// 12. HIGH-RATE RECORDER — append this frame to the recording ring while
+//     GVL_Recording.bEnable. Runs last, on the freshly-assembled snapshot.
+//----------------------------------------------------------------------
+fbRecorder(stSnap := GVL_Sync.stSnapshot);
 ]]></ST>
     </Implementation>
   </POU>
