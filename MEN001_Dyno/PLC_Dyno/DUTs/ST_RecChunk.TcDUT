@@ -11,7 +11,7 @@
 //
 // Two rates share one DC timebase:
 //   * bus-rate  (one value per frame): aDcTs + load motors / Futek / Mentee status
-//   * Mentee    (REC_OVERSAMPLE per frame, 40 kHz): aMn* arrays, length REC_CHUNK*REC_OVERSAMPLE
+//   * Mentee    (REC_OVERSAMPLE per frame): aMn* arrays, length REC_CHUNK*REC_OVERSAMPLE
 //
 // Sizes are compile-time constants in GVL_Recording — keep them in lock-step
 // with the FB and the backend reader (chunk length + oversample count).
@@ -38,7 +38,7 @@ STRUCT
     aMnSW    : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF UDINT;   // Mentee status word (bus-rate)
     aMnCnt   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF UDINT;   // fresh oversamples this frame (0..REC_OVERSAMPLE)
 
-    // ── Mentee 40 kHz oversamples (REC_OVERSAMPLE per frame) ───────────
+    // ── Mentee oversamples (REC_OVERSAMPLE per frame) ──────────────────
     aMnIdx   : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT; // sample_idx
     aMnPos   : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF REAL;
     aMnVel   : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF REAL;

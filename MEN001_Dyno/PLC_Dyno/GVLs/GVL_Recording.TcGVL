@@ -15,7 +15,7 @@
 //
 // The app reads a COMPLETED chunk (one the FB has already advanced past), so with
 // REC_RING slots it has (REC_RING-1)*REC_CHUNK/rate seconds to read before the FB
-// laps back to that slot. At 4 kHz, REC_CHUNK=2000, REC_RING=4 → ~1.5 s of slack.
+// laps back to that slot — REC_RING-1 chunks of read slack (REC_CHUNK frames each).
 VAR_GLOBAL CONSTANT
     REC_CHUNK      : UDINT := 2000;   // EtherCAT frames per chunk (chunk period = REC_CHUNK / task-rate)
     REC_RING       : UDINT := 4;      // number of chunks in the ring (read slack)
