@@ -38,8 +38,18 @@ IF rEnable.Q THEN
     GVL_Recording.bRunning  := TRUE;
 END_IF
 
+// Falling edge: flush the partial chunk in progress so the app can capture the
+// last (< REC_CHUNK) frames instead of losing them. Publish nFill as nCount and
+// bump the sequence exactly like a full chunk; the app honours nCount.
 IF fEnable.Q THEN
     GVL_Recording.bRunning := FALSE;
+    IF nFill > 0 THEN
+        GVL_Recording.aChunks[nChunk].nCount := nFill;
+        GVL_Recording.nReadyIdx := TO_BYTE(nChunk);
+        GVL_Recording.nChunkSeq := GVL_Recording.nChunkSeq + 1;
+        nChunk := (nChunk + 1) MOD GVL_Recording.REC_RING;
+        nFill  := 0;
+    END_IF
 END_IF
 
 IF NOT GVL_Recording.bEnable THEN

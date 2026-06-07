@@ -20,19 +20,21 @@ STRUCT
     nCount   : UDINT;   // frames actually filled in this chunk (= REC_CHUNK when complete)
 
     // ── bus-rate channels (one element per frame) ──────────────────────
+    // Types match the source snapshot fields exactly (no implicit conversion):
+    // load motors / analog are LREAL; encoder counters are DWORD.
     aDcTs    : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF ULINT;   // DC time, 100 ns ticks
-    aM1Pos   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;    // load motor 1
-    aM1Vel   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;
-    aM1Trq   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;
-    aM2Pos   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;    // load motor 2
-    aM2Vel   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;
-    aM2Trq   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;
-    aEnc1Cnt : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF DINT;    // Futek 1 encoder
-    aEnc1Frq : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF DINT;
-    aEnc2Cnt : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF DINT;    // Futek 2 encoder
-    aEnc2Frq : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF DINT;
-    aAin1V   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;    // Futek 1 analog (V)
-    aAin2V   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF REAL;    // Futek 2 analog (V)
+    aM1Pos   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF LREAL;   // load motor 1
+    aM1Vel   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF LREAL;
+    aM1Trq   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF LREAL;
+    aM2Pos   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF LREAL;   // load motor 2
+    aM2Vel   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF LREAL;
+    aM2Trq   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF LREAL;
+    aEnc1Cnt : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF DWORD;   // Futek 1 encoder
+    aEnc1Frq : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF DWORD;
+    aEnc2Cnt : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF DWORD;   // Futek 2 encoder
+    aEnc2Frq : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF DWORD;
+    aAin1V   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF LREAL;   // Futek 1 analog (V)
+    aAin2V   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF LREAL;   // Futek 2 analog (V)
     aMnSW    : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF UDINT;   // Mentee status word (bus-rate)
     aMnCnt   : ARRAY[0..GVL_Recording.REC_CHUNK - 1] OF UDINT;   // fresh oversamples this frame (0..REC_OVERSAMPLE)
 

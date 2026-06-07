@@ -101,7 +101,7 @@ fbMenteeMotor(
 //----------------------------------------------------------------------
 // Live task cycle [s] from the running task config (100 ns units -> s), so the
 // profile timestep auto-tracks PlcTask CycleTime (1 ms <-> 250 us) — no edit here.
-fTaskCycleS := UDINT_TO_REAL(_TaskInfo[GETCURTASKINDEXEX()].CycleTime) * 1.0E-7;
+fTaskCycleS := LREAL_TO_REAL(UDINT_TO_LREAL(_TaskInfo[GETCURTASKINDEXEX()].CycleTime) * 1.0E-7);
 IF fTaskCycleS <= 0.0 THEN
     fTaskCycleS := 0.001;    // safety fallback if the system var reads 0
 END_IF
