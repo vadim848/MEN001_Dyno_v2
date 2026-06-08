@@ -141,10 +141,21 @@ stStatus.nGroupId             := UDINT_TO_BYTE((i_status_word / 16#1000)     AND
 stStatus.nGeneralErrorBits    := UDINT_TO_BYTE((i_status_word / 16#10000)    AND 16#FF);
 stStatus.nCategorialErrorBits := UDINT_TO_BYTE((i_status_word / 16#1000000)  AND 16#FF);
 
-// Newest slot, reinterpreted as REAL (GROUP 0 semantics: w0/w1/w2 = theta/d_theta/iq).
-uReinterpret.u := i_s9_w0; stStatus.fLatestPos     := uReinterpret.f;
-uReinterpret.u := i_s9_w1; stStatus.fLatestVel     := uReinterpret.f;
-uReinterpret.u := i_s9_w2; stStatus.fLatestCurrent := uReinterpret.f;
+// Newest VALID slot, reinterpreted as REAL — which slot holds the freshest
+// pos/vel/iq depends on the active group, so the live readout stays correct
+// in either group (the recorder keeps the raw words and decodes per group):
+//   GROUP 0 (STANDARD): newest sample = slot 9 -> w0/w1/w2 = theta/d_theta/iq.
+//   GROUP 1 (TORQUE):   slot 9 is unused; newest capture = slots 6..8 ->
+//                       theta = s6.w0, d_theta = s6.w1, iq = s8.w1.
+IF stStatus.nGroupId = 1 THEN
+    uReinterpret.u := i_s6_w0; stStatus.fLatestPos     := uReinterpret.f;
+    uReinterpret.u := i_s6_w1; stStatus.fLatestVel     := uReinterpret.f;
+    uReinterpret.u := i_s8_w1; stStatus.fLatestCurrent := uReinterpret.f;
+ELSE
+    uReinterpret.u := i_s9_w0; stStatus.fLatestPos     := uReinterpret.f;
+    uReinterpret.u := i_s9_w1; stStatus.fLatestVel     := uReinterpret.f;
+    uReinterpret.u := i_s9_w2; stStatus.fLatestCurrent := uReinterpret.f;
+END_IF
 stStatus.bError               := (stStatus.nGeneralErrorBits <> 0)
                                OR (stStatus.nCategorialErrorBits <> 0);
 ]]></ST>
