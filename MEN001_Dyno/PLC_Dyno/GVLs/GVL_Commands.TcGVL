@@ -1,14 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
   <GVL Name="GVL_Commands" Id="{67f475e7-5589-4147-a30a-2039bcf36f3f}">
-    <Declaration><![CDATA[{attribute 'TcGvlVarFlags' := 'OPC'}
-VAR_GLOBAL
-    // Command structs written by Python over ADS
-    // ADS symbol: GVL_Commands.stMotor1_Cmd
-    //             GVL_Commands.stMotor2_Cmd
+    <Declaration><![CDATA[VAR_GLOBAL
+    // GVL_Commands — motor command interface written by Python over ADS, plus the
+    // AX5000 current/torque-limit PDO outputs. ADS symbols: GVL_Commands.stMotor1_Cmd
+    //                                                        GVL_Commands.stMotor2_Cmd
     stMotor1_Cmd    : ST_MotorCommand;
     stMotor2_Cmd    : ST_MotorCommand;
+
+    // AX5000 current/torque limit  ->  SoE IDN S-0-0092 "Bipolar torque limit value".
+    // *** MAP THESE AS PDO ***: add IDN 92 (hex #x005C, UINT16) to each drive's MDT,
+    //   then link:  nMotor1_CurrentLimit_Raw -> Drive 1 (AX5112) S-0-0092
+    //               nMotor2_CurrentLimit_Raw -> Drive 2 (AX5125) S-0-0092
+    // Raw = 0.1 % per LSB (1000 = 100.0 %); scaled from stMotorX_Cmd.fCurrentLimit_pct
+    // in PRG_Motion. Bipolar (limits both +/- torque), active in position mode (11).
+    nMotor1_CurrentLimit_Raw AT %Q* : UINT;
+    nMotor2_CurrentLimit_Raw AT %Q* : UINT;
 END_VAR
+
 ]]></Declaration>
   </GVL>
 </TcPlcObject>

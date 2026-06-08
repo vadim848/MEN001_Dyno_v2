@@ -181,6 +181,18 @@ GVL_IO.stIO.bDO_BrakeRelease_M2 :=
     (GVL_Status.stMotor2_Status.eState = E_MotorState.READY)  OR
     (GVL_Status.stMotor2_Status.eState = E_MotorState.MOVING) OR
     (GVL_Status.stMotor2_Status.eState = E_MotorState.HOMING);
+	
+//----------------------------------------------------------------------
+// 8b. CURRENT / TORQUE LIMIT  ->  AX5000 SoE S-0-0092 (mapped MDT PDO)
+//     % setpoint -> raw IDN units. 0.1 % per LSB => 1000 = 100.0 %.
+//     VERIFY the S-0-0092 weighting in Drive Manager; if it is 0.01 %, use 100.0.
+//     NOTE: 0 % = no torque -> the axis cannot hold or move.
+//----------------------------------------------------------------------
+GVL_Commands.nMotor1_CurrentLimit_Raw :=
+    LREAL_TO_UINT(LIMIT(0.0, GVL_Commands.stMotor1_Cmd.fCurrentLimit_pct, 100.0) * 10.0);
+GVL_Commands.nMotor2_CurrentLimit_Raw :=
+    LREAL_TO_UINT(LIMIT(0.0, GVL_Commands.stMotor2_Cmd.fCurrentLimit_pct, 100.0) * 10.0);
+
 
 //----------------------------------------------------------------------
 // 9. TORQUE CONTROL

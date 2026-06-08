@@ -2266,7 +2266,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{08826ED1-2731-4199-9F57-50138DAEE7D7}" Name="PLC_Dyno" PrjFilePath="PLC_Dyno\PLC_Dyno.plcproj" TmcFilePath="PLC_Dyno\PLC_Dyno.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{C014491E-A134-0503-F987-B9445B28E544}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{1384B8FF-CEF4-0BDB-4ED6-E465140B2C86}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
 					<Name>PLC_Dyno Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -2401,12 +2401,26 @@ External Setpoint Generation:
 							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 						<Var>
+							<Name>GVL_Commands.nMotor1_CurrentLimit_Raw</Name>
+							<Comment><![CDATA[ AX5000 current/torque limit  ->  SoE IDN S-0-0092 "Bipolar torque limit value".
+ *** MAP THESE AS PDO ***: add IDN 92 (hex #x005C, UINT16) to each drive's MDT,
+   then link:  nMotor1_CurrentLimit_Raw -> Drive 1 (AX5112) S-0-0092
+               nMotor2_CurrentLimit_Raw -> Drive 2 (AX5125) S-0-0092
+ Raw = 0.1 % per LSB (1000 = 100.0 %); scaled from stMotorX_Cmd.fCurrentLimit_pct
+ in PRG_Motion. Bipolar (limits both +/- torque), active in position mode (11).]]></Comment>
+							<Type>UINT</Type>
+						</Var>
+						<Var>
 							<Name>GVL_IO.RedLED</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>GVL_IO.GreenLED</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Commands.nMotor2_CurrentLimit_Raw</Name>
+							<Type>UINT</Type>
 						</Var>
 						<Var>
 							<Name>GVL_IO.BlueLED</Name>
@@ -2885,12 +2899,12 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Safety.SolonoidStatus</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>GVL_Safety.stTwinSAFE_IN</Name>
 							<Type GUID="{20BA9D2C-2EA1-6698-B602-9473CFD89984}">ST_TwinSAFE_IN</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Safety.SolonoidStatus</Name>
+							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2026-05-20T17:13:29">
@@ -2998,9 +3012,6 @@ External Setpoint Generation:
 				</AddressInfo>
 				<Image Id="4" AddrType="9" ImageType="3">
 					<Name>Image</Name>
-				</Image>
-				<Image Id="1" AddrType="10" ImageType="3">
-					<Name>Image-2</Name>
 				</Image>
 				<Box Id="23" BoxType="9099">
 					<Name>Machine Side - A10 (EK1200)_1</Name>
@@ -12686,6 +12697,12 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_current" VarB="Motor Command OS^setpoint_current"/>
 				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_position" VarB="Motor Command OS^setpoint_position"/>
 				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_velocity" VarB="Motor Command OS^setpoint_velocity"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 2 (EtherCAT)^Drive 1 (AX5112-0000-0216)">
+				<Link VarA="PlcTask Outputs^GVL_Commands.nMotor1_CurrentLimit_Raw" VarB="MDT^Bipolar torque/force limit value"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 2 (EtherCAT)^Drive 2 (AX5125-0000-0216)">
+				<Link VarA="PlcTask Outputs^GVL_Commands.nMotor2_CurrentLimit_Raw" VarB="MDT^Bipolar torque/force limit value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Machine Side - A10 (EK1200)_1^A14 - D-I/O (EL1859)_1">
 				<Link VarA="PlcTask Inputs^GVL_Safety.DoorMonitorFromPLC" VarB="Channel 2^Input"/>

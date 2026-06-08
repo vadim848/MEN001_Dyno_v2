@@ -42,6 +42,12 @@ STRUCT
     fDeceleration       : LREAL := 500.0;
     fJerk               : LREAL := 0.0;
     fMaxVelocity        : LREAL := 100.0;
+
+    //------------------------------------------------------------------
+    // Drive current/torque limit -> AX5000 SoE S-0-0092 (applies in all modes,
+    // incl. position mode S-0-0032 = 11). Scaled to the PDO in PRG_Motion.
+    //------------------------------------------------------------------
+    fCurrentLimit_pct   : LREAL := 100.0; // [%] 0..100 of motor peak (P-0-0092)
 END_STRUCT
 END_TYPE
 ]]></Declaration>
