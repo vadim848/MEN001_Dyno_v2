@@ -12578,11 +12578,11 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 	</Project>
 	<Mappings>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500840000403}" Id="#x02030020"/>
-		<MappingInfo Identifier="{00000000-2001-0850-0020-500852000403}" Id="#x02030040"/>
-		<MappingInfo Identifier="{00000000-0010-0304-3000-040311000403}" Id="#x02030030"/>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500851000403}" Id="#x02030040"/>
 		<MappingInfo Identifier="{08502001-0010-0500-0020-500830000403}" Id="#x02030050" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{05000010-0040-0304-3000-040340000403}" Id="#x02030030" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{05000010-0050-0304-3000-040350000403}" Id="#x02030060" Watchdog="00000000000000000000000000000000"/>
-		<MappingInfo Identifier="{03040040-0010-0304-4000-040310000403}" Id="#x02030010" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{03040040-0040-0304-4000-040340000403}" Id="#x02030010" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIID^Device 2 (EtherCAT)">
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Rack 19 (EK1100 - A0)_1^A1 - SI1 (EL1918)_1">
 				<Link VarA="Drive 1 (AX5112-0000-0216)^STO_Drive1 (AX5805)^Module 1 (Safety Process Data, 1 axis)^Inputs (Statusword)^FSOE" VarB="ConnectionOutputs^Message_71 RxPDO"/>
@@ -12606,7 +12606,6 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Drive 1 (AX5112-0000-0216)">
 				<Link VarA="Drive^Inputs^In^nDataIn1" VarB="AT^Following distance"/>
-				<Link VarA="Drive^Inputs^In^nDataIn3[0]" VarB="AT^Torque/force feedback value"/>
 				<Link VarA="Drive^Inputs^In^nDcOutputTime" VarB="InfoData^DcOutputShift"/>
 				<Link VarA="Drive^Inputs^In^nState1" VarB="AT^Drive status word" Size="8" OffsB="8"/>
 				<Link VarA="Drive^Inputs^In^nState2" VarB="AT^Drive status word"/>
@@ -12626,7 +12625,6 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Axis 2">
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Drive 2 (AX5125-0000-0216)">
 				<Link VarA="Drive^Inputs^In^nDataIn1" VarB="AT^Following distance"/>
-				<Link VarA="Drive^Inputs^In^nDataIn3[0]" VarB="AT^Torque/force feedback value"/>
 				<Link VarA="Drive^Inputs^In^nDcOutputTime" VarB="InfoData^DcOutputShift"/>
 				<Link VarA="Drive^Inputs^In^nState1" VarB="AT^Drive status word" Size="8" OffsB="8"/>
 				<Link VarA="Drive^Inputs^In^nState2" VarB="AT^Drive status word"/>
@@ -12699,9 +12697,11 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_velocity" VarB="Motor Command OS^setpoint_velocity"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Drive 1 (AX5112-0000-0216)">
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMotor1.nActTorque_Raw" VarB="AT^Torque/force feedback value"/>
 				<Link VarA="PlcTask Outputs^GVL_Commands.nMotor1_CurrentLimit_Raw" VarB="MDT^Bipolar torque/force limit value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Drive 2 (AX5125-0000-0216)">
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMotor2.nActTorque_Raw" VarB="AT^Torque/force feedback value"/>
 				<Link VarA="PlcTask Outputs^GVL_Commands.nMotor2_CurrentLimit_Raw" VarB="MDT^Bipolar torque/force limit value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Machine Side - A10 (EK1200)_1^A14 - D-I/O (EL1859)_1">
