@@ -9,11 +9,11 @@ STRUCT
     nSampleCount    : UDINT;                                    // 0x6001:02 sample_count (rolling)
     aSamples        : ARRAY[0..9] OF ST_MenteeMotorV32OsSample; // 0x6001:03..2A  s0..s9 buffer
 
-    // Decoded status — decode convention mirrors FB_UartBridgeHandler (VERIFY vs motor FW)
-    nFsmState               : BYTE;     // status_word bits 3:0
-    nMainState              : BYTE;     // bits 7:4
-    nOpMode                 : BYTE;     // bits 10:8
-    nGroupId                : BYTE;     // bits 14:12 — active oversample group (0=STANDARD, 1=TORQUE)
+    // Decoded status — V3.2 layout per MASTER_INTERFACE §4.4 (NOT the 3.1 bridge's)
+    nFsmState               : BYTE;     // status_word bits 4:0  (fsm_state_e 0..19)
+    nMainState              : BYTE;     // bits 8:5
+    nOpMode                 : BYTE;     // bits 11:9 (MotionMode)
+    nGroupId                : BYTE;     // bits 15:13 — active oversample group (0=STANDARD, 1=TORQUE)
     nGeneralErrorBits       : BYTE;     // bits 23:16
     nCategorialErrorBits    : BYTE;     // bits 31:24
     bError                  : BOOL;     // TRUE if any error bit set

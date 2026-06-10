@@ -132,14 +132,17 @@ stStatus.aSamples[9].w1         := i_s9_w1;
 stStatus.aSamples[9].w2         := i_s9_w2;
 
 //----------------------------------------------------------------------
-// DECODE STATUS WORD (mirrors FB_UartBridgeHandler — VERIFY vs motor FW)
+// DECODE STATUS WORD  (MASTER_INTERFACE §4.4 layout):
+//   FSM [4:0] · main [8:5] · MotionMode [11:9] · enabled [12] ·
+//   GROUP_ID [15:13] · general err [23:16] · categorial err [31:24].
+// (Division = right-shift: /16#20 = >>5, /16#200 = >>9, /16#2000 = >>13.)
 //----------------------------------------------------------------------
-stStatus.nFsmState            := UDINT_TO_BYTE(i_status_word AND 16#0000000F);
-stStatus.nMainState           := UDINT_TO_BYTE((i_status_word / 16#10)       AND 16#0F);
-stStatus.nOpMode              := UDINT_TO_BYTE((i_status_word / 16#100)      AND 16#07);
-stStatus.nGroupId             := UDINT_TO_BYTE((i_status_word / 16#1000)     AND 16#07);  // bits 14:12
-stStatus.nGeneralErrorBits    := UDINT_TO_BYTE((i_status_word / 16#10000)    AND 16#FF);
-stStatus.nCategorialErrorBits := UDINT_TO_BYTE((i_status_word / 16#1000000)  AND 16#FF);
+stStatus.nFsmState            := UDINT_TO_BYTE(i_status_word AND 16#0000001F);          // [4:0]
+stStatus.nMainState           := UDINT_TO_BYTE((i_status_word / 16#20)       AND 16#0F); // [8:5]
+stStatus.nOpMode              := UDINT_TO_BYTE((i_status_word / 16#200)      AND 16#07);  // [11:9]
+stStatus.nGroupId             := UDINT_TO_BYTE((i_status_word / 16#2000)     AND 16#07);  // [15:13]
+stStatus.nGeneralErrorBits    := UDINT_TO_BYTE((i_status_word / 16#10000)    AND 16#FF);  // [23:16]
+stStatus.nCategorialErrorBits := UDINT_TO_BYTE((i_status_word / 16#1000000)  AND 16#FF);  // [31:24]
 
 // Newest VALID slot, reinterpreted as REAL — which slot holds the freshest
 // pos/vel/iq depends on the active group, so the live readout stays correct
