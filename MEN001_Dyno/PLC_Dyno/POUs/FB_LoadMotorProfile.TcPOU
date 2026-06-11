@@ -29,7 +29,7 @@ VAR_IN_OUT
     Axis            : AXIS_REF;          // used for POSITION/VELOCITY external setpoint
 END_VAR
 VAR_INPUT
-    fMeasuredPos    : REAL;     // axis actual position [deg] (Axis.NcToPlc.ActPos) for anchoring
+    fMeasuredPos    : LREAL;    // axis actual position [deg] (Axis.NcToPlc.ActPos, LREAL) for anchoring
     fDt             : REAL;     // task cycle time [s]
     bStartSync      : BOOL;     // shared synchronized start (self-gated by stProfile.bEnable)
     bStopSync       : BOOL;     // shared synchronized stop
@@ -45,14 +45,14 @@ VAR
     eState          : INT;
     fElapsed        : REAL;
     fTotalDur       : REAL;
-    fStartPos       : REAL;     // anchor (POSITION) / integrator base (VELOCITY) [deg]
-    fValue0         : REAL;     // value(0) for POSITION anchoring
+    fStartPos       : LREAL;    // anchor (POSITION) / integrator base (VELOCITY) [deg] — LREAL to match the NC axis
+    fValue0         : REAL;     // value(0) for POSITION anchoring (small shape value)
     bAnchor         : BOOL;     // POSITION domain -> anchor at current pos
     nRepDone        : UDINT;
     fRest           : REAL;
     fRaw            : REAL;
     bWasActive      : BOOL;
-    fPosAccum       : REAL;     // VELOCITY domain: integral of velocity [deg]
+    fPosAccum       : LREAL;    // VELOCITY domain: integral of velocity [deg] — LREAL (large absolute)
 
     // external setpoint generation (POSITION / VELOCITY only)
     fbExtEnable     : MC_ExtSetPointGenEnable;
@@ -60,9 +60,9 @@ VAR
     bExtWant        : BOOL;     // this cycle wants the external generator engaged
     rExtOn          : R_TRIG;
     fExtOff         : F_TRIG;
-    fExtPos         : REAL;     // position fed to the generator [deg]
-    fExtVel         : REAL;     // velocity fed [deg/s]
-    fPrevExtPos     : REAL;     // for POSITION numeric velocity feed-forward
+    fExtPos         : LREAL;    // position fed to the generator [deg] — LREAL (NC interface)
+    fExtVel         : LREAL;    // velocity fed [deg/s]
+    fPrevExtPos     : LREAL;    // for POSITION numeric velocity feed-forward
     nExtDir         : DINT;     // 1 = +, -1 = -, 0 = standstill
 END_VAR
 VAR CONSTANT
@@ -125,13 +125,11 @@ bWasActive := (eState = ST_RUN) OR (eState = ST_REST);
 CASE eState OF
 
 ST_RUN:
+    // fSetpoint = the raw generated value (REAL telemetry / torque %). The absolute
+    // POSITION/VELOCITY commands fed to the NC are built in LREAL below so a small
+    // shape delta isn't swallowed when added to a large absolute axis position.
     fRaw := valueAt(fElapsed);
-    IF cfg.nDomain = DOM_POSITION THEN
-        stProfile.fSetpoint := fStartPos + (fRaw - fValue0);
-    ELSE
-        // TORQUE: absolute % ; VELOCITY: deg/s (integrated below for the feed)
-        stProfile.fSetpoint := fRaw;
-    END_IF
+    stProfile.fSetpoint := fRaw;
     IF cfg.nDomain = DOM_VELOCITY THEN
         fPosAccum := fPosAccum + fRaw * fDt;
     END_IF
@@ -139,11 +137,7 @@ ST_RUN:
     IF fElapsed >= fTotalDur THEN
         // land on the exact end value
         fRaw := valueAt(fTotalDur);
-        IF cfg.nDomain = DOM_POSITION THEN
-            stProfile.fSetpoint := fStartPos + (fRaw - fValue0);
-        ELSE
-            stProfile.fSetpoint := fRaw;
-        END_IF
+        stProfile.fSetpoint := fRaw;
         IF NOT cfg.bRepetitive THEN
             eState := ST_DONE;
         ELSE
@@ -198,13 +192,14 @@ fbExtEnable(
 
 IF fbExtEnable.Enabled AND bExtWant THEN
     IF cfg.nDomain = DOM_POSITION THEN
-        fExtPos := stProfile.fSetpoint;
+        // LREAL anchor + small REAL shape delta -> the delta survives the add
+        fExtPos := fStartPos + (fRaw - fValue0);
         fExtVel := (fExtPos - fPrevExtPos) / MAX(fDt, 1E-6);   // numeric feed-forward
     ELSE
         // VELOCITY: position = start + integral; velocity = the value (0 in REST)
         fExtPos := fStartPos + fPosAccum;
         IF eState = ST_RUN THEN
-            fExtVel := stProfile.fSetpoint;
+            fExtVel := fRaw;
         ELSE
             fExtVel := 0.0;
         END_IF
