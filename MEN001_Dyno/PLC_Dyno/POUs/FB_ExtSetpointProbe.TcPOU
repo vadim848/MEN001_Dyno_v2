@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_ExtSetpointProbe" Id="{7f4c1a92-3d6b-4e08-9a17-2c5b8e0f4d31}" SpecialFunc="None">
+    <Declaration><![CDATA[// ============================================================================
+// FB_ExtSetpointProbe  --  TEMPORARY de-risk probe (delete after verification)
+// ----------------------------------------------------------------------------
+// Confirms an NC PTP axis accepts EXTERNAL SETPOINT GENERATION (Tc2_MC2):
+//   MC_ExtSetPointGenEnable -> MC_ExtSetPointGenFeed (cyclic) -> MC_ExtSetPointGenDisable.
+// Setpoints are fed each cycle into Axis.PlcToNc (fExtSetPos/fExtSetVelo/...).
+//
+// HOW TO RUN (on the bench, motor free / app NOT commanding this axis):
+//   1. Instantiate ONE per axis in the active motion program (PRG_Motion):
+//        fbProbe1 : FB_ExtSetpointProbe;   // and call fbProbe1(Axis := Axis1);
+//      While probing an axis, do NOT also call fbMotor1 for it (two owners
+//      of one axis conflict) -- comment that fbMotor call out for the test.
+//   2. Set fCycleTime_s to your PLC task period (default 1 ms).
+//   3. Online -> write bEnablePower := TRUE, watch bPowered = TRUE.
+//   4. Write bRun := TRUE (bFeedSine FALSE). Watch:
+//        bExtEnabled = TRUE, bError = FALSE  ==>  EXTERNAL SETPOINT WORKS.
+//        bError = TRUE                        ==>  read nErrorID (tells why).
+//      (Position is held, so the motor does NOT move in this step.)
+//   5. OPTIONAL motion check: write bFeedSine := TRUE -- a slow small sine
+//      (fAmplitude / fFrequency) is fed; fActPos should track fSetPos.
+//   6. Write bRun := FALSE to hand control back to the NC, then bEnablePower
+//      := FALSE. Delete this FB once both axes are confirmed.
+// ============================================================================
+FUNCTION_BLOCK FB_ExtSetpointProbe
+VAR_IN_OUT
+    Axis            : AXIS_REF;
+END_VAR
+
+VAR_INPUT
+    bEnablePower    : BOOL;             // hold TRUE to power the axis (MC_Power)
+    bRun            : BOOL;             // TRUE: engage ext-setpoint gen + feed (rising=enable, falling=disable)
+    bFeedSine       : BOOL;             // TRUE: feed a slow test sine (MOVES axis); FALSE: hold position
+    fAmplitude      : LREAL := 0.5;     // test sine amplitude [axis units]
+    fFrequency      : LREAL := 0.2;     // test sine frequency  [Hz]
+    fCycleTime_s    : LREAL := 0.001;   // PLC task cycle [s] -- SET to your task period
+END_VAR
+
+VAR_OUTPUT
+    bPowered        : BOOL;             // MC_Power.Status
+    bExtEnabled     : BOOL;             // MC_ExtSetPointGenEnable.Enabled  <-- THE ANSWER
+    bError          : BOOL;
+    nErrorID        : UDINT;
+    fSetPos         : LREAL;            // setpoint position fed (watch vs fActPos)
+    fSetVel         : LREAL;            // setpoint velocity fed
+    fActPos         : LREAL;            // Axis.NcToPlc.ActPos
+END_VAR
+
+VAR
+    fbPower         : MC_Power;
+    fbExtEnable     : MC_ExtSetPointGenEnable;
+    fbExtDisable    : MC_ExtSetPointGenDisable;
+
+    rtRun           : R_TRIG;
+    ftRun           : F_TRIG;
+
+    fT              : LREAL;            // elapsed time since enable [s]
+    fP0             : LREAL;            // seed position at enable (no jump)
+    fW              : LREAL;            // 2*pi*f
+    fAcc            : LREAL;            // setpoint acceleration fed
+    nDir            : DINT;             // feed direction: 1=+, -1=-, 0=standstill
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//----------------------------------------------------------------------
+// POWER -- called every cycle
+//----------------------------------------------------------------------
+fbPower(
+    Axis            := Axis,
+    Enable          := bEnablePower,
+    Enable_Positive := bEnablePower,
+    Enable_Negative := bEnablePower,
+    Override        := 100.0,
+    BufferMode      := MC_Aborting);
+
+rtRun(CLK := bRun);
+ftRun(CLK := bRun);
+
+//----------------------------------------------------------------------
+// ENABLE external setpoint generation on Run rising edge.
+// Seed the profile at the current actual position so there is no jump.
+// (Position/PositionType here only arm the optional InTargetPosition
+//  monitor; the real setpoints come from MC_ExtSetPointGenFeed below.)
+//----------------------------------------------------------------------
+IF rtRun.Q THEN
+    fP0 := Axis.NcToPlc.ActPos;
+    fT  := 0.0;
+END_IF
+
+fbExtEnable(
+    Axis         := Axis,
+    Execute      := rtRun.Q,
+    Position     := Axis.NcToPlc.ActPos,
+    PositionType := POSITIONTYPE_ABSOLUTE);
+
+//----------------------------------------------------------------------
+// FEED the cyclic setpoint while the generator is enabled.
+//   bFeedSine = FALSE -> hold fP0 (engage WITHOUT moving the motor).
+//   bFeedSine = TRUE  -> slow sine about fP0, with vel/acc feed-forward.
+//----------------------------------------------------------------------
+IF fbExtEnable.Enabled THEN
+    IF bFeedSine THEN
+        fT  := fT + fCycleTime_s;
+        fW  := 2.0 * 3.14159265358979 * fFrequency;
+        fSetPos :=  fP0 + fAmplitude * SIN(fW * fT);
+        fSetVel :=  fAmplitude * fW * COS(fW * fT);
+        fAcc    := -fAmplitude * fW * fW * SIN(fW * fT);
+    ELSE
+        fSetPos := fP0;
+        fSetVel := 0.0;
+        fAcc    := 0.0;
+    END_IF
+
+    IF   fSetVel > 0.0 THEN nDir := 1;
+    ELSIF fSetVel < 0.0 THEN nDir := -1;
+    ELSE                    nDir := 0;
+    END_IF
+
+    // Function: copies the values into Axis.PlcToNc (fExtSetPos/Velo/Acc/Dir).
+    MC_ExtSetPointGenFeed(
+        Position     := fSetPos,
+        Velocity     := fSetVel,
+        Acceleration := fAcc,
+        Direction    := nDir,
+        Axis         := Axis);
+END_IF
+
+//----------------------------------------------------------------------
+// DISABLE on Run falling edge -- hand control back to the NC generator.
+//----------------------------------------------------------------------
+fbExtDisable(Axis := Axis, Execute := ftRun.Q);
+
+//----------------------------------------------------------------------
+// OUTPUTS TO WATCH
+//----------------------------------------------------------------------
+bPowered    := fbPower.Status;
+bExtEnabled := fbExtEnable.Enabled;
+bError      := fbPower.Error OR fbExtEnable.Error OR fbExtDisable.Error;
+
+IF fbExtEnable.Error THEN
+    nErrorID := fbExtEnable.ErrorID;
+ELSIF fbPower.Error THEN
+    nErrorID := fbPower.ErrorID;
+ELSIF fbExtDisable.Error THEN
+    nErrorID := fbExtDisable.ErrorID;
+ELSE
+    nErrorID := 0;
+END_IF
+
+fActPos := Axis.NcToPlc.ActPos;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

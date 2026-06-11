@@ -23,6 +23,7 @@ VAR
     fbMoveVel       : MC_MoveVelocity;
     fbStop          : MC_Stop;
     fbReset         : MC_Reset;
+    fbSoeReset      : FB_SoEReset;     // Tc2_MC2_Drive — SoE drive reset (S-0-0099)
     fbHome          : MC_Home;
     fbSetPosition   : MC_SetPosition;
 
@@ -31,9 +32,11 @@ VAR
     rtResetError    : R_TRIG;
     rtHome          : R_TRIG;
     rtZeroPosition  : R_TRIG;
+    ftSoeBusy       : F_TRIG;          // SoE-reset Busy falling edge -> clear the latch
 
     eState          : E_MotorState;
     bMoveLatch      : BOOL;
+    bSoeResetExec   : BOOL;            // latch: SoE drive reset requested / in progress
     fPrevVelocity   : LREAL;
 END_VAR
 ]]></Declaration>
@@ -134,6 +137,18 @@ fbMoveVel(
     BufferMode   := MC_Aborting);
 
 //----------------------------------------------------------------------
+// SoE DRIVE RESET (FB_SoEReset, Tc2_MC2_Drive) — resets the AX5000 drive via
+// S-0-0099 (a separate action from MC_Reset's NC reset). Called every cycle;
+// triggered (latched) from the ERROR-state reset and runs to completion in the
+// background. NetId '' = local controller; set it if the drive's NC is remote.
+//----------------------------------------------------------------------
+fbSoeReset(Axis := Axis, NetId := '', Execute := bSoeResetExec, Timeout := T#10S);
+ftSoeBusy(CLK := fbSoeReset.Busy);
+IF ftSoeBusy.Q THEN
+    bSoeResetExec := FALSE;          // Busy 1->0: SoE reset finished (Error/SercosErrId valid)
+END_IF
+
+//----------------------------------------------------------------------
 // STATE MACHINE
 //----------------------------------------------------------------------
 CASE eState OF
@@ -216,7 +231,8 @@ CASE eState OF
 
     E_MotorState.ERROR:
         IF rtResetError.Q THEN
-            fbReset(Axis := Axis, Execute := TRUE);
+            fbReset(Axis := Axis, Execute := TRUE);   // NC reset (MC_Reset)
+            bSoeResetExec     := TRUE;                 // + SoE drive reset (FB_SoEReset, S-0-0099)
             stStatus.bError   := FALSE;
             stStatus.nErrorID := 0;
             eState            := E_MotorState.DISABLED;
