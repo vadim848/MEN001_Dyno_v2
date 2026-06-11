@@ -22,6 +22,8 @@ END_VAR
 VAR_INPUT
     fMeasuredPos    : REAL;     // current measured output position [rad]
     fDt             : REAL;     // task cycle time [s]
+    bStartSync      : BOOL;     // shared synchronized start (PRG_Motion gates with the Mentee enable)
+    bStopSync       : BOOL;     // shared synchronized stop
 END_VAR
 VAR_OUTPUT
     bRunning        : BOOL;
@@ -55,8 +57,8 @@ VAR CONSTANT
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[rStart(CLK := stTraj.bStart);
-rStop(CLK := stTraj.bStop);
+      <ST><![CDATA[rStart(CLK := stTraj.bStart OR bStartSync);
+rStop(CLK := stTraj.bStop OR bStopSync);
 
 // Stop -> hold current position (idle; PRG_Motion stops overriding the field).
 IF rStop.Q THEN

@@ -31,6 +31,11 @@ VAR
     //--- Mentee Motor V3.2 trajectory generator (1 kHz trapezoid) ---
     fbMenteeTraj        : FB_TrajectoryGen;
 
+    //--- Load-motor (Beckhoff) profile generators, synchronized with the Mentee
+    //    profile via GVL_Profiles.bStartSync (torque waveform or ext-setpoint pos/vel) ---
+    fbLoadProfile1      : FB_LoadMotorProfile;
+    fbLoadProfile2      : FB_LoadMotorProfile;
+
     //--- High-rate recorder (buffers every frame into GVL_Recording.aChunks) ---
     fbRecorder          : FB_HighRateRecorder;
 
@@ -109,7 +114,9 @@ END_IF
 fbMenteeTraj(
     stTraj       := GVL_MenteeMotorV32_OS.stTraj,
     fMeasuredPos := GVL_MenteeMotorV32_OS.stStatus.fLatestPos,  // decoded theta (REAL)
-    fDt          := fTaskCycleS    // auto-tracks the PlcTask cycle (1 ms / 250 us)
+    fDt          := fTaskCycleS,   // auto-tracks the PlcTask cycle (1 ms / 250 us)
+    bStartSync   := GVL_Profiles.bStartSync AND GVL_Profiles.bMenteeEnable,
+    bStopSync    := GVL_Profiles.bStopSync
 );
 IF fbMenteeTraj.bRunning THEN
     CASE GVL_MenteeMotorV32_OS.stTraj.nField OF
@@ -193,6 +200,41 @@ GVL_Commands.nMotor1_CurrentLimit_Raw :=
 GVL_Commands.nMotor2_CurrentLimit_Raw :=
     LREAL_TO_UINT(LIMIT(0.0, GVL_Commands.stMotor2_Cmd.fCurrentLimit_pct, 100.0) * 10.0);
 
+//----------------------------------------------------------------------
+// 8c. LOAD-MOTOR PROFILES (Beckhoff) — synchronized with the Mentee profile via
+//     GVL_Profiles.bStartSync. Placed AFTER MC_Power (so the external-setpoint
+//     feed acts on an already-powered axis) and BEFORE torque control (so a
+//     TORQUE-domain profile overrides fTargetTorque before FB_TorqueControl
+//     streams it). fMeasuredPos = axis actual position [deg] for anchoring.
+//       nDomain 0 TORQUE  : override stMotorN_Cmd.fTargetTorque while running.
+//                           The app must already be in torque mode
+//                           (eControlMode=TORQUE, bTorqueExecute=TRUE).
+//       nDomain 1/2 POS/VEL: the FB feeds the NC axis via external setpoint; the
+//                           motor must be ENABLED/READY and NOT executing a move.
+//----------------------------------------------------------------------
+fbLoadProfile1(
+    stProfile    := GVL_Profiles.stLoadProfile1,
+    Axis         := Axis1,
+    fMeasuredPos := Axis1.NcToPlc.ActPos,
+    fDt          := fTaskCycleS,
+    bStartSync   := GVL_Profiles.bStartSync,
+    bStopSync    := GVL_Profiles.bStopSync
+);
+IF fbLoadProfile1.bRunning AND (GVL_Profiles.stLoadProfile1.nDomain = 0) THEN
+    GVL_Commands.stMotor1_Cmd.fTargetTorque := fbLoadProfile1.fSetpoint;
+END_IF
+
+fbLoadProfile2(
+    stProfile    := GVL_Profiles.stLoadProfile2,
+    Axis         := Axis2,
+    fMeasuredPos := Axis2.NcToPlc.ActPos,
+    fDt          := fTaskCycleS,
+    bStartSync   := GVL_Profiles.bStartSync,
+    bStopSync    := GVL_Profiles.bStopSync
+);
+IF fbLoadProfile2.bRunning AND (GVL_Profiles.stLoadProfile2.nDomain = 0) THEN
+    GVL_Commands.stMotor2_Cmd.fTargetTorque := fbLoadProfile2.fSetpoint;
+END_IF
 
 //----------------------------------------------------------------------
 // 9. TORQUE CONTROL
