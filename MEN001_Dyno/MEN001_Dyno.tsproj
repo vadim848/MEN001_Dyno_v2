@@ -2266,7 +2266,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{08826ED1-2731-4199-9F57-50138DAEE7D7}" Name="PLC_Dyno" PrjFilePath="PLC_Dyno\PLC_Dyno.plcproj" TmcFilePath="PLC_Dyno\PLC_Dyno.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{1384B8FF-CEF4-0BDB-4ED6-E465140B2C86}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{EBA0C00E-8550-D069-1B87-9B84AA7F804C}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
 					<Name>PLC_Dyno Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -2401,6 +2401,18 @@ External Setpoint Generation:
 							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 						<Var>
+							<Name>GVL_IO.RedLED</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.GreenLED</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.BlueLED</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>GVL_Commands.nMotor1_CurrentLimit_Raw</Name>
 							<Comment><![CDATA[ AX5000 current/torque limit  ->  SoE IDN S-0-0092 "Bipolar torque limit value".
  *** MAP THESE AS PDO ***: add IDN 92 (hex #x005C, UINT16) to each drive's MDT,
@@ -2411,20 +2423,8 @@ External Setpoint Generation:
 							<Type>UINT</Type>
 						</Var>
 						<Var>
-							<Name>GVL_IO.RedLED</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_IO.GreenLED</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>GVL_Commands.nMotor2_CurrentLimit_Raw</Name>
 							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_IO.BlueLED</Name>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>GVL_IO.b_MotorCooling</Name>
@@ -2899,12 +2899,12 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Safety.stTwinSAFE_IN</Name>
-							<Type GUID="{20BA9D2C-2EA1-6698-B602-9473CFD89984}">ST_TwinSAFE_IN</Type>
-						</Var>
-						<Var>
 							<Name>GVL_Safety.SolonoidStatus</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Safety.stTwinSAFE_IN</Name>
+							<Type GUID="{20BA9D2C-2EA1-6698-B602-9473CFD89984}">ST_TwinSAFE_IN</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2026-05-20T17:13:29">
@@ -12579,9 +12579,9 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 	<Mappings>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500840000403}" Id="#x02030020"/>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500851000403}" Id="#x02030040"/>
-		<MappingInfo Identifier="{08502001-0010-0500-0020-500830000403}" Id="#x02030050" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{08502001-0010-0500-0020-500830000403}" Id="#x02030060" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{05000010-0040-0304-3000-040340000403}" Id="#x02030030" Watchdog="04000000040000000400000004000000"/>
-		<MappingInfo Identifier="{05000010-0050-0304-3000-040350000403}" Id="#x02030060" Watchdog="00000000000000000000000000000000"/>
+		<MappingInfo Identifier="{05000010-0050-0304-3000-040350000403}" Id="#x02030050" Watchdog="00000000000000000000000000000000"/>
 		<MappingInfo Identifier="{03040040-0040-0304-4000-040340000403}" Id="#x02030010" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIID^Device 2 (EtherCAT)">
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Rack 19 (EK1100 - A0)_1^A1 - SI1 (EL1918)_1">
