@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_CsvPlayer" Id="{5d3b8e16-7c41-4a90-b2e7-6f1a9c3d2b58}" SpecialFunc="None">
+    <Declaration><![CDATA[// Replays a CSV trajectory buffer (GVL_CsvProfile.stCsv) at the task rate. Each
+// cycle it advances elapsed time, linearly interpolates BOTH channels at the same
+// time index, and applies them -> the Mentee and the selected Beckhoff load motor
+// stay synchronized (one player, one clock). Values are ABSOLUTE (no anchoring).
+//
+//   Mentee:   emits fMenteeOut; PRG_Motion routes it into the selected stCmd field
+//             (setpoint_position | impedance_p_des | setpoint_velocity | setpoint_current).
+//   Beckhoff: TORQUE   -> emits fLoadOut; PRG_Motion writes it to the selected
+//                         motor's fTargetTorque (FB_TorqueControl streams it; the app
+//                         must already be in torque mode).
+//             POS/VEL  -> feeds the selected NC axis via external setpoint generation
+//                         (MC_ExtSetPointGen*); the motor must be ENABLED/READY and not
+//                         executing a move. VELOCITY integrates to position from the
+//                         axis position captured at start.
+//
+// The scalar config is latched on the bStart edge; the sample arrays are read live
+// (the app uploads them fully before pulsing bStart, and doesn't change them mid-run).
+FUNCTION_BLOCK FB_CsvPlayer
+VAR_IN_OUT
+    stCsv           : ST_CsvProfile;
+    AxisLoad1       : AXIS_REF;
+    AxisLoad2       : AXIS_REF;
+END_VAR
+VAR_INPUT
+    fLoad1Pos       : LREAL;    // Axis1.NcToPlc.ActPos [deg]
+    fLoad2Pos       : LREAL;    // Axis2.NcToPlc.ActPos [deg]
+    fDt             : REAL;     // task cycle time [s]
+END_VAR
+VAR_OUTPUT
+    bRunning        : BOOL;
+    fMenteeOut      : REAL;     // routed by PRG into the mentee field (while bRunning + enabled)
+    fLoadOut        : REAL;     // routed by PRG into fTargetTorque (TORQUE domain, while bRunning + enabled)
+END_VAR
+VAR
+    rStart          : R_TRIG;
+    rStop           : R_TRIG;
+    eState          : INT;
+    fElapsed        : REAL;     // time into the current pass [s]
+    fIdxR           : LREAL;    // fractional sample index
+    iIdx            : DINT;
+    fFrac           : REAL;
+    fMenteeRaw      : REAL;
+    fLoadRaw        : REAL;
+    bWasActive      : BOOL;
+    nRepDone        : UDINT;
+    fRest           : REAL;
+
+    // latched scalar config (read by the body; arrays read live from stCsv)
+    nCountL         : UDINT;
+    nLastIdx        : DINT;     // nCount-1
+    fSampleDtL      : REAL;
+    bMenteeEnL      : BOOL;
+    nMenteeFieldL   : BYTE;
+    bLoadEnL        : BOOL;
+    nLoadMotorL     : BYTE;
+    nLoadDomainL    : BYTE;
+    bRepetitiveL    : BOOL;
+    nRepsL          : UDINT;
+    fRestSL         : REAL;
+
+    // external setpoint generation (POSITION / VELOCITY) — instances per axis,
+    // only the selected one is ever Execute'd.
+    fbExt1On        : MC_ExtSetPointGenEnable;
+    fbExt2On        : MC_ExtSetPointGenEnable;
+    fbExt1Off       : MC_ExtSetPointGenDisable;
+    fbExt2Off       : MC_ExtSetPointGenDisable;
+    rExtOn          : R_TRIG;
+    fExtOff         : F_TRIG;
+    bExtWant        : BOOL;
+    bExtEnabled     : BOOL;
+    fLoadStartPos   : LREAL;    // axis pos captured at start (VELOCITY integral base)
+    fLoadPosAccum   : LREAL;    // VELOCITY: integral of velocity [deg]
+    fExtPos         : LREAL;
+    fExtVel         : LREAL;
+    fPrevExtPos     : LREAL;
+    nExtDir         : DINT;
+END_VAR
+VAR CONSTANT
+    ST_IDLE         : INT := 0;
+    ST_RUN          : INT := 1;
+    ST_REST         : INT := 2;
+    ST_DONE         : INT := 3;
+    DOM_TORQUE      : BYTE := 0;
+    DOM_POSITION    : BYTE := 1;
+    DOM_VELOCITY    : BYTE := 2;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[rStart(CLK := stCsv.bStart);
+rStop (CLK := stCsv.bStop);
+
+IF rStop.Q THEN
+    eState := ST_IDLE;
+END_IF
+
+// Start -> latch the scalar config; arrays are read live from stCsv.
+IF rStart.Q AND (stCsv.nCount > 0) AND (stCsv.fSampleDt > 0.0) THEN
+    nCountL       := stCsv.nCount;
+    nLastIdx      := UDINT_TO_DINT(stCsv.nCount) - 1;
+    fSampleDtL    := stCsv.fSampleDt;
+    bMenteeEnL    := stCsv.bMenteeEnable;
+    nMenteeFieldL := stCsv.nMenteeField;
+    bLoadEnL      := stCsv.bLoadEnable;
+    nLoadMotorL   := stCsv.nLoadMotor;
+    nLoadDomainL  := stCsv.nLoadDomain;
+    bRepetitiveL  := stCsv.bRepetitive;
+    nRepsL        := stCsv.nReps;
+    fRestSL       := stCsv.fRestS;
+    fElapsed      := 0.0;
+    nRepDone      := 0;
+    fLoadPosAccum := 0.0;
+    IF nLoadMotorL = 1 THEN fLoadStartPos := fLoad1Pos; ELSE fLoadStartPos := fLoad2Pos; END_IF
+    fPrevExtPos   := fLoadStartPos;
+    eState        := ST_RUN;
+END_IF
+
+bWasActive := (eState = ST_RUN) OR (eState = ST_REST);
+
+CASE eState OF
+
+ST_RUN:
+    fIdxR := fElapsed / fSampleDtL;
+    iIdx  := LREAL_TO_DINT(fIdxR);          // floor (fElapsed >= 0)
+    IF iIdx >= nLastIdx THEN
+        // reached the end of the table -> hold the last sample, then rep / done
+        fMenteeRaw := stCsv.aMentee[nLastIdx];
+        fLoadRaw   := stCsv.aLoad[nLastIdx];
+        IF nLoadDomainL = DOM_VELOCITY THEN
+            fLoadPosAccum := fLoadPosAccum + fLoadRaw * fDt;   // include the final sample
+        END_IF
+        IF NOT bRepetitiveL THEN
+            eState := ST_DONE;
+        ELSE
+            nRepDone := nRepDone + 1;
+            IF (nRepsL > 0) AND (nRepDone >= nRepsL) THEN
+                eState := ST_DONE;
+            ELSE
+                fRest  := fRestSL;
+                eState := ST_REST;
+            END_IF
+        END_IF
+    ELSE
+        fFrac      := LREAL_TO_REAL(fIdxR - DINT_TO_LREAL(iIdx));
+        fMenteeRaw := stCsv.aMentee[iIdx] + fFrac * (stCsv.aMentee[iIdx + 1] - stCsv.aMentee[iIdx]);
+        fLoadRaw   := stCsv.aLoad[iIdx]   + fFrac * (stCsv.aLoad[iIdx + 1]   - stCsv.aLoad[iIdx]);
+        IF nLoadDomainL = DOM_VELOCITY THEN
+            fLoadPosAccum := fLoadPosAccum + fLoadRaw * fDt;     // integrate velocity -> position
+        END_IF
+        fElapsed := fElapsed + fDt;
+    END_IF
+
+ST_REST:
+    fRest := fRest - fDt;                   // hold last sample during the rest
+    IF fRest <= 0.0 THEN
+        fElapsed := 0.0;
+        IF nLoadDomainL = DOM_VELOCITY THEN     // re-anchor so rest-drift doesn't compound
+            fLoadStartPos := SEL(nLoadMotorL = 1, fLoad2Pos, fLoad1Pos);
+            fLoadPosAccum := 0.0;
+        END_IF
+        eState := ST_RUN;
+    END_IF
+
+ST_DONE:
+    ;                                       // hold last values
+
+ST_IDLE:
+    ;                                       // not running
+
+END_CASE
+
+//----------------------------------------------------------------------
+// BECKHOFF external setpoint generation (POSITION / VELOCITY domains only).
+//----------------------------------------------------------------------
+bExtWant := bLoadEnL
+            AND ((nLoadDomainL = DOM_POSITION) OR (nLoadDomainL = DOM_VELOCITY))
+            AND ((eState = ST_RUN) OR (eState = ST_REST));
+rExtOn(CLK := bExtWant);
+fExtOff(CLK := bExtWant);
+
+fbExt1On(Axis := AxisLoad1, Execute := rExtOn.Q AND (nLoadMotorL = 1),
+         Position := fLoad1Pos, PositionType := POSITIONTYPE_ABSOLUTE);
+fbExt2On(Axis := AxisLoad2, Execute := rExtOn.Q AND (nLoadMotorL = 2),
+         Position := fLoad2Pos, PositionType := POSITIONTYPE_ABSOLUTE);
+bExtEnabled := SEL(nLoadMotorL = 1, fbExt2On.Enabled, fbExt1On.Enabled);  // selected axis
+
+IF bExtWant AND bExtEnabled THEN
+    IF nLoadDomainL = DOM_POSITION THEN
+        fExtPos := fLoadRaw;                                  // absolute position [deg]
+        fExtVel := (fExtPos - fPrevExtPos) / MAX(fDt, 1E-6);  // numeric feed-forward
+    ELSE
+        fExtPos := fLoadStartPos + fLoadPosAccum;             // VELOCITY: start + integral
+        IF eState = ST_RUN THEN fExtVel := fLoadRaw; ELSE fExtVel := 0.0; END_IF
+    END_IF
+    fPrevExtPos := fExtPos;
+
+    IF   fExtVel > 0.0 THEN nExtDir := 1;
+    ELSIF fExtVel < 0.0 THEN nExtDir := -1;
+    ELSE                    nExtDir := 0;
+    END_IF
+
+    IF nLoadMotorL = 1 THEN
+        MC_ExtSetPointGenFeed(Position := fExtPos, Velocity := fExtVel,
+                              Acceleration := 0.0, Direction := nExtDir, Axis := AxisLoad1);
+    ELSE
+        MC_ExtSetPointGenFeed(Position := fExtPos, Velocity := fExtVel,
+                              Acceleration := 0.0, Direction := nExtDir, Axis := AxisLoad2);
+    END_IF
+ELSE
+    fPrevExtPos := SEL(nLoadMotorL = 1, fLoad2Pos, fLoad1Pos);   // keep the FF seed fresh
+END_IF
+
+fbExt1Off(Axis := AxisLoad1, Execute := fExtOff.Q AND (nLoadMotorL = 1));
+fbExt2Off(Axis := AxisLoad2, Execute := fExtOff.Q AND (nLoadMotorL = 2));
+
+//----------------------------------------------------------------------
+// OUTPUTS / STATUS
+//----------------------------------------------------------------------
+fMenteeOut           := fMenteeRaw;
+fLoadOut             := fLoadRaw;
+bRunning             := bWasActive;
+stCsv.bRunning       := bRunning;
+stCsv.fElapsed       := fElapsed;
+stCsv.fMenteeOut     := fMenteeRaw;
+stCsv.fLoadOut       := fLoadRaw;
+stCsv.bLoadExtActive := bExtWant AND bExtEnabled;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_CsvProfile" Id="{4e9a1c83-2d57-4f60-b918-7a3c5e2d6b09}">
+    <Declaration><![CDATA[// Generic CSV-trajectory buffer + config, replayed by FB_CsvPlayer at the task
+// rate. The app parses a CSV (time, mentee setpoint, beckhoff setpoint), resamples
+// it to a uniform period, converts each USED channel to PLC-native units, uploads
+// the sample arrays here, sets nCount/fSampleDt + the per-motor selectors, then
+// pulses bStart. FB_CsvPlayer steps through the buffer by elapsed time (linear
+// interpolation), emitting BOTH setpoints from the same time index -> the two
+// motors are inherently synchronized (one player, one clock).
+//
+// Values are ABSOLUTE (no anchoring): mentee position/velocity/current and beckhoff
+// torque/position/velocity are commanded as the literal (converted) sample values.
+// => a position run jumps to sample 0 at start if the motor isn't already there.
+//
+// CSV_MAX (20000) is mirrored in the backend (symbols.CSV_MAX_SAMPLES). 20000
+// samples = 20 s @ 1 kHz, or longer at a coarser fSampleDt (the player interpolates
+// back up to the task rate). aMentee/aLoad are REAL (native units after conversion).
+TYPE ST_CsvProfile :
+STRUCT
+    // --- sample buffers (filled by the app BEFORE bStart) ---
+    aMentee       : ARRAY[0..19999] OF REAL;   // mentee setpoint samples (native units)
+    aLoad         : ARRAY[0..19999] OF REAL;   // beckhoff setpoint samples (native units)
+    nCount        : UDINT;     // number of valid samples in each array (<= 20000)
+    fSampleDt     : REAL;      // uniform sample period [s]
+
+    // --- mentee selection ---
+    bMenteeEnable : BOOL;      // drive the Mentee from aMentee
+    nMenteeField  : BYTE;      // 0 setpoint_position | 1 impedance_p_des | 2 setpoint_velocity | 3 setpoint_current
+
+    // --- beckhoff selection ---
+    bLoadEnable   : BOOL;      // drive a load motor from aLoad
+    nLoadMotor    : BYTE;      // 1 or 2 (which load axis)
+    nLoadDomain   : BYTE;      // 0 TORQUE (-> fTargetTorque) | 1 POSITION | 2 VELOCITY (ext-setpoint)
+
+    // --- repeat (loop the whole table) ---
+    bRepetitive   : BOOL;
+    nReps         : UDINT;     // 0 = infinite
+    fRestS        : REAL;      // rest between reps [s]
+
+    // --- control ---
+    bStart        : BOOL;      // rising edge -> (re)play from sample 0 (latches the scalar config)
+    bStop         : BOOL;      // rising edge -> abort + hold
+
+    // --- status (written by FB_CsvPlayer) ---
+    bRunning      : BOOL;
+    bLoadExtActive: BOOL;      // POSITION/VELOCITY: external setpoint generator engaged
+    fElapsed      : REAL;      // elapsed time in the current pass [s]
+    fMenteeOut    : REAL;      // current interpolated mentee value (native units)
+    fLoadOut      : REAL;      // current interpolated load value (native units)
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

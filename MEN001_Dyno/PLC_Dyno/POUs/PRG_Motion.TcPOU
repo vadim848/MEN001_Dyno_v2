@@ -36,6 +36,9 @@ VAR
     fbLoadProfile1      : FB_LoadMotorProfile;
     fbLoadProfile2      : FB_LoadMotorProfile;
 
+    //--- Generic CSV-trajectory player (uploaded buffer; both motors synchronized) ---
+    fbCsvPlayer         : FB_CsvPlayer;
+
     //--- High-rate recorder (buffers every frame into GVL_Recording.aChunks) ---
     fbRecorder          : FB_HighRateRecorder;
 
@@ -126,6 +129,44 @@ IF fbMenteeTraj.bRunning THEN
     ELSE
         GVL_MenteeMotorV32_OS.stCmd.setpoint_position := fbMenteeTraj.fSetpoint;
     END_CASE
+END_IF
+
+//----------------------------------------------------------------------
+// 5a2. CSV TRAJECTORY PLAYER (generic uploaded buffer, both motors synchronized).
+//      Called here so its Mentee output reaches the RxPDO forward (5b) THIS cycle
+//      and its Beckhoff torque override precedes torque control (9). For a Beckhoff
+//      POS/VEL run the FB feeds the NC axis via external setpoint — the motor must
+//      already be ENABLED/READY (its MC_Power is maintained from prior cycles by
+//      fbMotor1/2 in 7/8). Mutually exclusive with the closed-form profiles.
+//----------------------------------------------------------------------
+fbCsvPlayer(
+    stCsv     := GVL_CsvProfile.stCsv,
+    AxisLoad1 := Axis1,
+    AxisLoad2 := Axis2,
+    fLoad1Pos := Axis1.NcToPlc.ActPos,
+    fLoad2Pos := Axis2.NcToPlc.ActPos,
+    fDt       := fTaskCycleS
+);
+// The CSV player and the closed-form generators are mutually exclusive by design;
+// the guards below enforce it (the CSV player YIELDS) so that if a closed-form
+// profile is somehow still running it keeps ownership of the shared command field
+// instead of both writing it (last-write-wins glitch).
+IF fbCsvPlayer.bRunning AND GVL_CsvProfile.stCsv.bMenteeEnable AND NOT fbMenteeTraj.bRunning THEN
+    CASE GVL_CsvProfile.stCsv.nMenteeField OF
+        1:  GVL_MenteeMotorV32_OS.stCmd.impedance_p_des   := fbCsvPlayer.fMenteeOut;
+        2:  GVL_MenteeMotorV32_OS.stCmd.setpoint_velocity := fbCsvPlayer.fMenteeOut;
+        3:  GVL_MenteeMotorV32_OS.stCmd.setpoint_current  := fbCsvPlayer.fMenteeOut;
+    ELSE
+        GVL_MenteeMotorV32_OS.stCmd.setpoint_position := fbCsvPlayer.fMenteeOut;
+    END_CASE
+END_IF
+IF fbCsvPlayer.bRunning AND GVL_CsvProfile.stCsv.bLoadEnable
+   AND (GVL_CsvProfile.stCsv.nLoadDomain = 0) THEN   // TORQUE domain -> override fTargetTorque
+    IF (GVL_CsvProfile.stCsv.nLoadMotor = 1) AND NOT fbLoadProfile1.bRunning THEN
+        GVL_Commands.stMotor1_Cmd.fTargetTorque := fbCsvPlayer.fLoadOut;
+    ELSIF (GVL_CsvProfile.stCsv.nLoadMotor = 2) AND NOT fbLoadProfile2.bRunning THEN
+        GVL_Commands.stMotor2_Cmd.fTargetTorque := fbCsvPlayer.fLoadOut;
+    END_IF
 END_IF
 
 //----------------------------------------------------------------------
