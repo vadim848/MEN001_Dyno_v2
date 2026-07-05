@@ -25,8 +25,11 @@ VAR
     //--- Mentee Motor Slave handler (V3.2, slot-1 simple PDO 0x1600/0x1A00) ---
     fbMenteeMotor   : FB_MenteeMotorHandler;
 
-    //--- Mentee Motor V3.2 slot-2 oversample handler (EtherCAT, distinct device, 0x1601/0x1A01) ---
-    fbMenteeMotorV32_OS : FB_MenteeMotorV32OsHandler;
+    //--- Mentee Motor V3.2 slot-2: GENERIC DEBUG-PDO PIPE (new pipeline; replaces the
+    //    legacy fixed oversample handler — same GVL contract, new transport). FSM/mode
+    //    commands ride CoE SDO 0x2000 via fbMenteeSdo (GVL_Slot2 request channel). ---
+    fbSlot2Pipe         : FB_Slot2PipeHandler;
+    fbMenteeSdo         : FB_MenteeSdoCmd;
 
     //--- Mentee Motor V3.2 trajectory generator (1 kHz trapezoid) ---
     fbMenteeTraj        : FB_TrajectoryGen;
@@ -170,13 +173,18 @@ IF fbCsvPlayer.bRunning AND GVL_CsvProfile.stCsv.bLoadEnable
 END_IF
 
 //----------------------------------------------------------------------
-// 5b. MENTEE MOTOR V3.2 — slot-2 oversample (EtherCAT, distinct device,
-//     PDO 0x1601/0x1A01). Commanded via control_word; do NOT auto-arm.
+// 5b. MENTEE MOTOR V3.2 — slot-2 GENERIC DEBUG PIPE (new pipeline).
+//     Same GVL contract as the legacy handler: stCmd setpoints stream via the
+//     bound inject slots; stStatus (incl. synthesized status word + oversample
+//     view) is rebuilt from the debug TxPDO. FSM/main/mode commands go via
+//     fbMenteeSdo (CoE SDO 0x2000; GVL_Slot2 channel) — stCmd.nControlWord is
+//     no longer consumed. Bindings: app writes GVL_Slot2.stCfg + bConfigure.
 //----------------------------------------------------------------------
-fbMenteeMotorV32_OS(
+fbSlot2Pipe(
     stCmd    := GVL_MenteeMotorV32_OS.stCmd,
     stStatus := GVL_MenteeMotorV32_OS.stStatus
 );
+fbMenteeSdo();
 
 //----------------------------------------------------------------------
 // 6. MENTEE UART BRIDGE — V3.1

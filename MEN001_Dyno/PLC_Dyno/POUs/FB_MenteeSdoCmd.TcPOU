@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_MenteeSdoCmd" Id="{3e7c1f95-8b42-4d60-a219-5c8e0d3b6a47}" SpecialFunc="None">
+    <Declaration><![CDATA[// CoE SDO command channel to the Mentee Motor Slave V3.2: writes one ec_command_id_e
+// opcode byte to object 0x2000:01 (the slave's command interface — FSM/main/mode/
+// enable; opcodes in cmd/cmd_handler.h). Replaces the legacy slot-2 control_word
+// path: the generic debug RxPDO carries no control word.
+//
+// Driven via GVL_Slot2: app writes nSdoOpcode + pulses bSdoExecute; results come back
+// on bSdoDone/bSdoError/nSdoErrId. One command in flight at a time.
+//
+// >>> LINK IN XAE: <Motor Slave box> > InfoData > AdsAddr  ->  stAdsAddr. <<<
+// (EtherCAT master NetId + the slave's fixed address arrive automatically — no
+// hardcoded NetId. Enable "Include ADS Address" in the slave's InfoData if hidden.)
+FUNCTION_BLOCK FB_MenteeSdoCmd
+VAR
+    stAdsAddr    AT %I* : AMSADDR;      // Motor Slave InfoData.AdsAddr (NetId + port)
+
+    fbSdoWrite   : FB_EcCoESdoWrite;
+    rExec        : R_TRIG;
+    byOpcode     : BYTE;                // latched opcode for the in-flight write
+    bRunning     : BOOL;
+    bPending     : BOOL;                // execute edge arrived while busy/cooling — run next
+    bCooldown    : BOOL;                // one cycle with bExecute=FALSE so the FB re-arms
+    sNetId       : T_AmsNetId;          // dotted string built from stAdsAddr.netId
+    i            : INT;
+END_VAR
+VAR CONSTANT
+    CMD_INDEX    : WORD := 16#2000;
+    CMD_SUBINDEX : BYTE := 1;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Build the master NetId string from the linked AMS address (e.g. '5.69.55.234.2.1').
+// Manual concat -> no extra library dependency.
+sNetId := '';
+FOR i := 0 TO 5 DO
+    sNetId := CONCAT(sNetId, BYTE_TO_STRING(stAdsAddr.netId[i]));
+    IF i < 5 THEN
+        sNetId := CONCAT(sNetId, '.');
+    END_IF
+END_FOR
+
+rExec(CLK := GVL_Slot2.bSdoExecute);
+
+// An execute edge while a write is in flight (or during the re-arm cycle) is
+// LATCHED, not lost — it starts as soon as the FB has re-armed.
+IF rExec.Q AND (bRunning OR bCooldown) THEN
+    bPending := TRUE;
+END_IF
+
+// Start a new write on the rising edge (or a latched pending one) — only when idle
+// AND after >=1 cycle with bExecute=FALSE (bCooldown) so the FB sees a clean edge.
+IF (rExec.Q OR bPending) AND NOT bRunning AND NOT bCooldown THEN
+    bPending          := FALSE;
+    byOpcode          := GVL_Slot2.nSdoOpcode;
+    GVL_Slot2.bSdoDone  := FALSE;
+    GVL_Slot2.bSdoError := FALSE;
+    GVL_Slot2.nSdoErrId := 0;
+    bRunning          := TRUE;
+END_IF
+
+fbSdoWrite(
+    sNetId     := sNetId,
+    nSlaveAddr := stAdsAddr.port,       // slave's fixed EtherCAT address (from AdsAddr)
+    nIndex     := CMD_INDEX,
+    nSubIndex  := CMD_SUBINDEX,
+    pSrcBuf    := ADR(byOpcode),
+    cbBufLen   := 1,
+    bExecute   := bRunning,
+    tTimeout   := T#1S
+);
+
+// The FB raises bBusy on the same call that sees the bExecute rising edge, so once
+// bRunning is set, "NOT bBusy" after the call above means the write finished.
+bCooldown := FALSE;
+IF bRunning AND NOT fbSdoWrite.bBusy THEN
+    IF fbSdoWrite.bError THEN
+        GVL_Slot2.bSdoError := TRUE;
+        GVL_Slot2.nSdoErrId := fbSdoWrite.nErrId;
+    ELSE
+        GVL_Slot2.bSdoDone := TRUE;
+    END_IF
+    bRunning  := FALSE;                 // drop bExecute -> FB re-arms
+    bCooldown := TRUE;                  // next cycle runs the FB with bExecute=FALSE first
+END_IF
+
+GVL_Slot2.bSdoBusy := bRunning OR bPending;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_Slot2PipeHandler" Id="{6a2d8c53-9e17-4b40-b7f2-1d5e3a8c4b96}" SpecialFunc="None">
+    <Declaration><![CDATA[// Generic slot-2 debug-PDO pipe (SLOT2_DEBUG_PDO_PROTOCOL.md) presented through the
+// LEGACY contract: consumes/produces the same ST_MenteeMotorV32OsCmd / *OsStatus as the
+// old fixed pipe, so everything above (profiles, CSV player, recorder, snapshot, app)
+// keeps working unchanged. Three jobs:
+//
+//   1. BINDING ENGINE — on GVL_Slot2.bConfigure, walks ST_Slot2Cfg over the op/strobe
+//      protocol: CLEAR_ALL, then BIND_MON_OUT per monitor lane and BIND_MON_IN per
+//      inject slot (addr<>0 = used). One command per ~6 cycles; fault -> error + stop.
+//   2. INJECT — while RUN, streams the 8 legacy command fields into inject slots 0..7
+//      (values written by the slave to the bound RAM addrs every cycle):
+//      0 impedance_p_des | 1 impedance_v_des | 2 impedance_kp | 3 impedance_kd |
+//      4 impedance_torque_ff | 5 setpoint_position | 6 setpoint_velocity | 7 setpoint_current
+//      (stCmd.nControlWord is IGNORED — FSM/mode go via FB_MenteeSdoCmd / SDO 0x2000.)
+//   3. STATUS ADAPTER — fills ST_MenteeMotorV32OsStatus from the debug TxPDO:
+//      discrete fsm/main/mode/errors (+ a SYNTHESIZED nStatusWord in the legacy bit
+//      layout), and the aSamples[0..9] oversample view rebuilt from the monitor lanes
+//      with sample_idx SYNTHESIZED from capture_count (0x0A, new FW semantics: value =
+//      stamp of newest delivered sample) so the recorder's dedup/timing math is exact:
+//        idx40(k) = (capture_count - (n-1-k)) * prescaler      [40 kHz-equivalent]
+//
+// >>> LINK IN XAE (new ESI, slot-2 0x1601/0x1A01): q_* -> 0x7001:01..10 entries,
+//     i_* -> 0x6001:01..0B, i_samples -> 0x6001:0C..6F (multi-select -> array link). <<<
+FUNCTION_BLOCK FB_Slot2PipeHandler
+VAR_IN_OUT
+    stCmd       : ST_MenteeMotorV32OsCmd;      // legacy command contract (setpoints used)
+    stStatus    : ST_MenteeMotorV32OsStatus;   // legacy status contract (fully populated)
+END_VAR
+VAR
+    //--- RxPDO 0x1601 outputs — AT %Q* — link to box 0x7001 entries ---
+    q_op        AT %Q* : UDINT;   // 0x7001:01
+    q_slot      AT %Q* : UDINT;   // 0x7001:02
+    q_size      AT %Q* : UDINT;   // 0x7001:03
+    q_strobe    AT %Q* : UDINT;   // 0x7001:04
+    q_prescaler AT %Q* : UDINT;   // 0x7001:05
+    q_addr      AT %Q* : UDINT;   // 0x7001:06
+    q_inject    AT %Q* : ARRAY[0..9] OF UDINT;   // 0x7001:07..10
+
+    //--- TxPDO 0x1A01 inputs — AT %I* — link to box 0x6001 entries ---
+    i_fsm_state       AT %I* : UDINT;   // 0x6001:01
+    i_main_state      AT %I* : UDINT;   // 0x6001:02
+    i_motion_mode     AT %I* : UDINT;   // 0x6001:03
+    i_motor_enabled   AT %I* : UDINT;   // 0x6001:04
+    i_general_error   AT %I* : UDINT;   // 0x6001:05
+    i_categorial_error AT %I* : UDINT;  // 0x6001:06
+    i_last_op         AT %I* : UDINT;   // 0x6001:07
+    i_fault           AT %I* : UDINT;   // 0x6001:08
+    i_sample_count    AT %I* : UDINT;   // 0x6001:09
+    i_capture_count   AT %I* : UDINT;   // 0x6001:0A (capture counter, new FW semantics)
+    i_var_count       AT %I* : UDINT;   // 0x6001:0B
+    i_samples         AT %I* : ARRAY[0..99] OF UDINT;   // 0x6001:0C..6F (lane-major, [lane*10+k])
+
+    //--- binding engine state ---
+    rConfigure  : R_TRIG;
+    rClearAll   : R_TRIG;
+    eState      : BYTE;      // mirrors GVL_Slot2.nBindState: 0 idle|1 clear|2 bind|3 run|4 error
+    nStep       : INT;       // walk: 0 CLEAR_ALL | 1..10 mon lanes 0..9 | 11..20 inj slots 0..9
+    nPhase      : INT;       // per-command: 0 arm+strobe | 1 wait | 2 settle
+    nWait       : INT;
+    nOpSent     : UDINT;
+    bClearOnly  : BOOL;            // bClearAll path: stop after CLEAR_ALL (don't bind)
+    cfg         : ST_Slot2Cfg;     // latched on bConfigure (walk reads the latch)
+
+    //--- adapters ---
+    uW          : U_WordReal;
+    nPre        : UDINT;     // effective prescaler (>=1)
+    n           : UDINT;     // valid samples this cycle (0..10)
+    nCap        : UDINT;     // torque-view captures represented (<=3)
+    k           : UDINT;
+    c           : UDINT;
+    s           : UDINT;
+    kk          : UDINT;
+END_VAR
+VAR CONSTANT
+    BS_IDLE     : BYTE := 0;
+    BS_CLEAR    : BYTE := 1;
+    BS_BIND     : BYTE := 2;
+    BS_RUN      : BYTE := 3;
+    BS_ERROR    : BYTE := 4;
+    OP_NOP      : UDINT := 0;
+    OP_BIND_OUT : UDINT := 1;
+    OP_BIND_IN  : UDINT := 2;
+    OP_CLEAR_ALL: UDINT := 5;
+    WAIT_CYCLES : INT := 5;    // cycles after strobe before checking fault (1 kHz bus, 4 kHz slave)
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//----------------------------------------------------------------------
+// CONFIGURE / CLEAR triggERS
+//----------------------------------------------------------------------
+rConfigure(CLK := GVL_Slot2.bConfigure);
+rClearAll (CLK := GVL_Slot2.bClearAll);
+
+IF rConfigure.Q THEN
+    cfg    := GVL_Slot2.stCfg;      // latch — the walk must not see mid-write edits
+    nStep  := 0;
+    nPhase := 0;
+    bClearOnly := FALSE;
+    GVL_Slot2.bBindError  := FALSE;
+    GVL_Slot2.nFailedSlot := 16#FF;
+    eState := BS_CLEAR;
+ELSIF rClearAll.Q THEN
+    nStep  := 0;
+    nPhase := 0;
+    bClearOnly := TRUE;             // CLEAR_ALL, then stop (idle)
+    eState := BS_CLEAR;
+END_IF
+
+nPre := MAX(1, cfg.nPrescaler);
+q_prescaler := nPre;
+
+//----------------------------------------------------------------------
+// BINDING ENGINE — one op/strobe command at a time
+//----------------------------------------------------------------------
+CASE eState OF
+
+BS_CLEAR, BS_BIND:
+    CASE nPhase OF
+    0:  // arm the current command (strobe still low from the settle phase)
+        IF eState = BS_CLEAR THEN
+            q_op := OP_CLEAR_ALL; q_slot := 0; q_size := 0; q_addr := 0;
+        ELSE
+            // nStep 1..10 -> monitor lane (nStep-1); 11..20 -> inject slot (nStep-11)
+            IF nStep <= 10 THEN
+                q_op   := OP_BIND_OUT;
+                q_slot := TO_UDINT(nStep - 1);
+                q_size := cfg.aMonSize[nStep - 1];
+                q_addr := cfg.aMonAddr[nStep - 1];
+            ELSE
+                q_op   := OP_BIND_IN;
+                q_slot := TO_UDINT(nStep - 11);
+                q_size := cfg.aInjSize[nStep - 11];
+                q_addr := cfg.aInjAddr[nStep - 11];
+            END_IF
+        END_IF
+        nOpSent  := q_op;
+        q_strobe := 1;
+        nWait    := 0;
+        nPhase   := 1;
+
+    1:  // rising edge fired — give the slave a few cycles, then check the echo
+        nWait := nWait + 1;
+        IF nWait >= WAIT_CYCLES THEN
+            q_strobe := 0;
+            IF (i_fault <> 0) OR (i_last_op <> nOpSent) THEN
+                GVL_Slot2.bBindError  := TRUE;
+                GVL_Slot2.nFailedSlot := TO_BYTE(nStep);
+                eState := BS_ERROR;
+            ELSE
+                nPhase := 2;
+                nWait  := 0;
+            END_IF
+        END_IF
+
+    2:  // settle one cycle with strobe low, then advance to the next used entry
+        nPhase := 0;
+        REPEAT
+            nStep := nStep + 1;
+        UNTIL nStep > 20
+           OR (nStep <= 10  AND cfg.aMonAddr[nStep - 1]  <> 0)
+           OR (nStep >= 11 AND nStep <= 20 AND cfg.aInjAddr[nStep - 11] <> 0)
+        END_REPEAT;
+        IF eState = BS_CLEAR THEN
+            // CLEAR done. bConfigure walk continues into BIND; bClearAll stops here.
+            IF bClearOnly THEN
+                eState := BS_IDLE;
+            ELSIF nStep > 20 THEN
+                eState := BS_RUN;       // nothing to bind (all addrs 0) — pipe runs bare
+            ELSE
+                eState := BS_BIND;
+            END_IF
+        ELSIF nStep > 20 THEN
+            eState := BS_RUN;           // walk complete
+        END_IF
+    END_CASE
+
+BS_RUN, BS_IDLE, BS_ERROR:
+    q_op := OP_NOP; q_strobe := 0;
+
+END_CASE
+
+//----------------------------------------------------------------------
+// INJECT — stream the legacy command fields into the bound write slots
+//----------------------------------------------------------------------
+IF eState = BS_RUN THEN
+    uW.f := stCmd.impedance_p_des;     q_inject[0] := uW.u;
+    uW.f := stCmd.impedance_v_des;     q_inject[1] := uW.u;
+    uW.f := stCmd.impedance_kp;        q_inject[2] := uW.u;
+    uW.f := stCmd.impedance_kd;        q_inject[3] := uW.u;
+    uW.f := stCmd.impedance_torque_ff; q_inject[4] := uW.u;
+    uW.f := stCmd.setpoint_position;   q_inject[5] := uW.u;
+    uW.f := stCmd.setpoint_velocity;   q_inject[6] := uW.u;
+    uW.f := stCmd.setpoint_current;    q_inject[7] := uW.u;
+END_IF
+
+//----------------------------------------------------------------------
+// STATUS ADAPTER — legacy struct from the debug TxPDO
+//----------------------------------------------------------------------
+stStatus.nFsmState            := UDINT_TO_BYTE(i_fsm_state);
+stStatus.nMainState           := UDINT_TO_BYTE(i_main_state);
+stStatus.nOpMode              := UDINT_TO_BYTE(i_motion_mode);
+stStatus.nGroupId             := cfg.nProfileId;    // group == active binding profile now
+stStatus.nGeneralErrorBits    := UDINT_TO_BYTE(i_general_error AND 16#FF);
+stStatus.nCategorialErrorBits := UDINT_TO_BYTE(i_categorial_error AND 16#FF);
+stStatus.bError               := (stStatus.nGeneralErrorBits <> 0)
+                               OR (stStatus.nCategorialErrorBits <> 0);
+// Synthesized legacy status word (MASTER_INTERFACE §4.4 layout) so recordings and any
+// raw-word consumer decode exactly as before:
+//   FSM[4:0] | main[8:5] | mode[11:9] | enabled[12] | GROUP_ID[15:13] | gen[23:16] | cat[31:24]
+stStatus.nStatusWord :=
+      (i_fsm_state AND 16#1F)
+    + (i_main_state AND 16#0F)       * 16#20
+    + (i_motion_mode AND 16#07)      * 16#200
+    + (i_motor_enabled AND 16#01)    * 16#1000
+    + (TO_UDINT(cfg.nProfileId) AND 16#07) * 16#2000
+    + (i_general_error AND 16#FF)    * 16#10000
+    + (i_categorial_error AND 16#FF) * 16#1000000;
+
+// Rolling counter: capture_count IS the new free-running counter (liveness = advancing).
+stStatus.nSampleCount := i_capture_count;
+
+// Oversample view: rebuild aSamples[] from the monitor lanes; sample_idx synthesized in
+// 40 kHz units (stamp*prescaler) so the app/recorder timing math (idx/40kHz) is exact.
+n := MIN(i_sample_count, 10);
+IF eState = BS_RUN AND n > 0 THEN
+    IF cfg.nProfileId = 1 THEN
+        // TORQUE view parity: newest <=3 captures -> slots (c*3+s); slot c*3+s carries
+        // vars 3s..3s+2 of capture c (matches the legacy 3-slot capture layout).
+        nCap := MIN(n, 3);
+        FOR c := 0 TO nCap - 1 DO
+            kk := n - nCap + c;                       // lane sample column of capture c
+            FOR s := 0 TO 2 DO
+                stStatus.aSamples[c*3 + s].sample_idx :=
+                    (i_capture_count - (nCap - 1 - c)) * nPre;
+                stStatus.aSamples[c*3 + s].w0 := i_samples[(3*s + 0)*10 + kk];
+                stStatus.aSamples[c*3 + s].w1 := i_samples[(3*s + 1)*10 + kk];
+                stStatus.aSamples[c*3 + s].w2 := i_samples[(3*s + 2)*10 + kk];
+            END_FOR
+        END_FOR
+        uW.u := i_samples[0*10 + (n-1)]; stStatus.fLatestPos     := uW.f;   // var0 = theta
+        uW.u := i_samples[1*10 + (n-1)]; stStatus.fLatestVel     := uW.f;   // var1 = d_theta
+        uW.u := i_samples[7*10 + (n-1)]; stStatus.fLatestCurrent := uW.f;   // var7 = iq
+    ELSE
+        // STANDARD view: lanes 0/1/2 = theta/d_theta/iq -> w0/w1/w2 per sample.
+        FOR k := 0 TO n - 1 DO
+            stStatus.aSamples[k].sample_idx := (i_capture_count - (n - 1 - k)) * nPre;
+            stStatus.aSamples[k].w0 := i_samples[0*10 + k];
+            stStatus.aSamples[k].w1 := i_samples[1*10 + k];
+            stStatus.aSamples[k].w2 := i_samples[2*10 + k];
+        END_FOR
+        // Legacy invariant: slot 9 = the NEWEST sample (the app's live pos/vel/current
+        // + liveness read aSamples[9]). n < 10 at prescaler 5, so mirror the newest
+        // into slot 9; the recorder's monotonic-idx dedup drops the duplicate stamp.
+        IF n < 10 THEN
+            stStatus.aSamples[9] := stStatus.aSamples[n - 1];
+        END_IF
+        uW.u := i_samples[0*10 + (n-1)]; stStatus.fLatestPos     := uW.f;
+        uW.u := i_samples[1*10 + (n-1)]; stStatus.fLatestVel     := uW.f;
+        uW.u := i_samples[2*10 + (n-1)]; stStatus.fLatestCurrent := uW.f;
+    END_IF
+END_IF
+
+//----------------------------------------------------------------------
+// PIPE STATUS -> GVL (app diagnostics)
+//----------------------------------------------------------------------
+GVL_Slot2.nBindState    := eState;
+GVL_Slot2.bPipeActive   := (eState = BS_RUN);
+GVL_Slot2.nCaptureCount := i_capture_count;
+GVL_Slot2.nVarCount     := i_var_count;
+GVL_Slot2.nLastOp       := i_last_op;
+GVL_Slot2.nFault        := i_fault;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
