@@ -185,13 +185,22 @@ END_CASE
 // INJECT — stream the legacy command fields into the bound write slots
 //----------------------------------------------------------------------
 IF eState = BS_RUN THEN
+    // Slots 0/1 carry the raw impedance_p_des/v_des but stay UNBOUND: the firmware
+    // merged them with setpoint_position/velocity into ONE variable each
+    // (target_p_des / v_des). Slots 5/6 are the bound ones, fed MODE-AWARE below —
+    // otherwise a stale twin field would overwrite the active one every cycle.
     uW.f := stCmd.impedance_p_des;     q_inject[0] := uW.u;
     uW.f := stCmd.impedance_v_des;     q_inject[1] := uW.u;
     uW.f := stCmd.impedance_kp;        q_inject[2] := uW.u;
     uW.f := stCmd.impedance_kd;        q_inject[3] := uW.u;
     uW.f := stCmd.impedance_torque_ff; q_inject[4] := uW.u;
-    uW.f := stCmd.setpoint_position;   q_inject[5] := uW.u;
-    uW.f := stCmd.setpoint_velocity;   q_inject[6] := uW.u;
+    IF i_motion_mode = 4 THEN          // Impedance mode -> the impedance_* fields
+        uW.f := stCmd.impedance_p_des;   q_inject[5] := uW.u;   // -> target_p_des
+        uW.f := stCmd.impedance_v_des;   q_inject[6] := uW.u;   // -> v_des
+    ELSE                               // Position/Velocity/... -> the setpoint_* fields
+        uW.f := stCmd.setpoint_position; q_inject[5] := uW.u;   // -> target_p_des
+        uW.f := stCmd.setpoint_velocity; q_inject[6] := uW.u;   // -> v_des
+    END_IF
     uW.f := stCmd.setpoint_current;    q_inject[7] := uW.u;
 END_IF
 
