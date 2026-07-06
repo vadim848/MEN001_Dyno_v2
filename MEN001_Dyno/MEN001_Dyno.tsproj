@@ -1424,6 +1424,69 @@ External Setpoint Generation:
 			</Relations>
 		</DataType>
 		<DataType>
+			<Name GUID="{F48DD1AE-926D-27C8-165F-E9F7EFE4F9A0}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..99] OF UDINT</Name>
+			<BitSize>3200</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>100</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-000000000041}" TcBaseType="true" HideSubItems="true" CName="AmsNetId">AMSNETID</Name>
+			<BitSize>48</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>6</Elements>
+			</ArrayInfo>
+			<Format>
+				<Printf>%d.%d.%d.%d.%d.%d</Printf>
+				<Parameter>[0]</Parameter>
+				<Parameter>[1]</Parameter>
+				<Parameter>[2]</Parameter>
+				<Parameter>[3]</Parameter>
+				<Parameter>[4]</Parameter>
+				<Parameter>[5]</Parameter>
+			</Format>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-000000000042}" TcBaseType="true" CName="AmsAddr">AMSADDR</Name>
+			<BitSize>64</BitSize>
+			<SubItem>
+				<Name>netId</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000041}">AMSNETID</Type>
+				<BitSize>48</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>port</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000004}">WORD</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>48</BitOffs>
+			</SubItem>
+			<Format>
+				<Printf>%d.%d.%d.%d.%d.%d:%d</Printf>
+				<Parameter>.netId[0]</Parameter>
+				<Parameter>.netId[1]</Parameter>
+				<Parameter>.netId[2]</Parameter>
+				<Parameter>.netId[3]</Parameter>
+				<Parameter>.netId[4]</Parameter>
+				<Parameter>.netId[5]</Parameter>
+				<Parameter>.port</Parameter>
+			</Format>
+			<Format Name="Iec">
+				<Printf>(netId:=[%d.%d.%d.%d.%d.%d], port :=%d)</Printf>
+				<Parameter>.netId[0]</Parameter>
+				<Parameter>.netId[1]</Parameter>
+				<Parameter>.netId[2]</Parameter>
+				<Parameter>.netId[3]</Parameter>
+				<Parameter>.netId[4]</Parameter>
+				<Parameter>.netId[5]</Parameter>
+				<Parameter>.port</Parameter>
+			</Format>
+		</DataType>
+		<DataType>
 			<Name GUID="{6D569228-DFB2-85EC-C388-8058AFEA5247}" AutoDeleteType="true">ST_Safety_Speps</Name>
 			<BitSize>48</BitSize>
 			<SubItem>
@@ -1576,6 +1639,15 @@ External Setpoint Generation:
 				<BitSize>8</BitSize>
 				<BitOffs>176</BitOffs>
 			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{3BE1C7C4-E5EB-9326-437C-7B0152A3C5D7}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..9] OF UDINT</Name>
+			<BitSize>320</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>10</Elements>
+			</ArrayInfo>
 		</DataType>
 		<DataType>
 			<Name GUID="{4CC27C2E-4EF1-7FBC-33C7-168EC6B63BA5}" AutoDeleteType="true">ST_TwinSAFE_OUT</Name>
@@ -1950,7 +2022,7 @@ External Setpoint Generation:
 	<Project ProjectGUID="{9EAF3803-1174-4140-BC81-11FA2B84C7CD}" TargetNetId="192.168.1.50.1.1" Target64Bit="true" ShowHideConfigurations="#x346">
 		<System>
 			<Settings MaxCpus="2" NonWinCpus="1">
-				<Cpu CpuId="1" BaseTime="2500"/>
+				<Cpu CpuId="1"/>
 			</Settings>
 			<Licenses IgnoreProjectLicenses="true">
 				<Target BkhfOrder="01850616">
@@ -2271,7 +2343,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{08826ED1-2731-4199-9F57-50138DAEE7D7}" Name="PLC_Dyno" PrjFilePath="PLC_Dyno\PLC_Dyno.plcproj" TmcFilePath="PLC_Dyno\PLC_Dyno.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{FC4BDE62-0CDD-A902-ED75-4DA6688257F8}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{0820C555-0FCC-AFFA-B725-27299E02BA18}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
 					<Name>PLC_Dyno Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -2323,49 +2395,39 @@ External Setpoint Generation:
 							<Type>REAL</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_control_word</Name>
-							<Comment><![CDATA[ 0x7001:01 control_word]]></Comment>
+							<Name>PRG_Motion.fbSlot2Pipe.q_op</Name>
+							<Comment><![CDATA[ 0x7001:01]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_impedance_p_des</Name>
-							<Comment><![CDATA[ 0x7001:02 impedance_p_des]]></Comment>
-							<Type>REAL</Type>
+							<Name>PRG_Motion.fbSlot2Pipe.q_slot</Name>
+							<Comment><![CDATA[ 0x7001:02]]></Comment>
+							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_impedance_v_des</Name>
-							<Comment><![CDATA[ 0x7001:03 impedance_v_des]]></Comment>
-							<Type>REAL</Type>
+							<Name>PRG_Motion.fbSlot2Pipe.q_size</Name>
+							<Comment><![CDATA[ 0x7001:03]]></Comment>
+							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_impedance_kp</Name>
-							<Comment><![CDATA[ 0x7001:04 impedance_kp]]></Comment>
-							<Type>REAL</Type>
+							<Name>PRG_Motion.fbSlot2Pipe.q_strobe</Name>
+							<Comment><![CDATA[ 0x7001:04]]></Comment>
+							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_impedance_kd</Name>
-							<Comment><![CDATA[ 0x7001:05 impedance_kd]]></Comment>
-							<Type>REAL</Type>
+							<Name>PRG_Motion.fbSlot2Pipe.q_prescaler</Name>
+							<Comment><![CDATA[ 0x7001:05]]></Comment>
+							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_impedance_torque_ff</Name>
-							<Comment><![CDATA[ 0x7001:06 impedance_torque_ff]]></Comment>
-							<Type>REAL</Type>
+							<Name>PRG_Motion.fbSlot2Pipe.q_addr</Name>
+							<Comment><![CDATA[ 0x7001:06]]></Comment>
+							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_position</Name>
-							<Comment><![CDATA[ 0x7001:07 setpoint_position]]></Comment>
-							<Type>REAL</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_velocity</Name>
-							<Comment><![CDATA[ 0x7001:08 setpoint_velocity]]></Comment>
-							<Type>REAL</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_current</Name>
-							<Comment><![CDATA[ 0x7001:09 setpoint_current]]></Comment>
-							<Type>REAL</Type>
+							<Name>PRG_Motion.fbSlot2Pipe.q_inject</Name>
+							<Comment><![CDATA[ 0x7001:07..10]]></Comment>
+							<Type GUID="{3BE1C7C4-E5EB-9326-437C-7B0152A3C5D7}">ARRAY [0..9] OF UDINT</Type>
 						</Var>
 						<Var>
 							<Name>PRG_Motion.fbUartBridge.q_control_word</Name>
@@ -2624,214 +2686,69 @@ External Setpoint Generation:
 							<Type>REAL</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_status_word</Name>
-							<Comment><![CDATA[ 0x6001:01 status_word]]></Comment>
+							<Name>PRG_Motion.fbSlot2Pipe.i_fsm_state</Name>
+							<Comment><![CDATA[ 0x6001:01]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_sample_count</Name>
-							<Comment><![CDATA[ 0x6001:02 sample_count]]></Comment>
+							<Name>PRG_Motion.fbSlot2Pipe.i_main_state</Name>
+							<Comment><![CDATA[ 0x6001:02]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s0_sample_idx</Name>
+							<Name>PRG_Motion.fbSlot2Pipe.i_motion_mode</Name>
 							<Comment><![CDATA[ 0x6001:03]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s0_w0</Name>
+							<Name>PRG_Motion.fbSlot2Pipe.i_motor_enabled</Name>
 							<Comment><![CDATA[ 0x6001:04]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s0_w1</Name>
+							<Name>PRG_Motion.fbSlot2Pipe.i_general_error</Name>
 							<Comment><![CDATA[ 0x6001:05]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s0_w2</Name>
+							<Name>PRG_Motion.fbSlot2Pipe.i_categorial_error</Name>
 							<Comment><![CDATA[ 0x6001:06]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s1_sample_idx</Name>
+							<Name>PRG_Motion.fbSlot2Pipe.i_last_op</Name>
 							<Comment><![CDATA[ 0x6001:07]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s1_w0</Name>
+							<Name>PRG_Motion.fbSlot2Pipe.i_fault</Name>
 							<Comment><![CDATA[ 0x6001:08]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s1_w1</Name>
+							<Name>PRG_Motion.fbSlot2Pipe.i_sample_count</Name>
 							<Comment><![CDATA[ 0x6001:09]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s1_w2</Name>
-							<Comment><![CDATA[ 0x6001:0A]]></Comment>
+							<Name>PRG_Motion.fbSlot2Pipe.i_capture_count</Name>
+							<Comment><![CDATA[ 0x6001:0A (capture counter, new FW semantics)]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s2_sample_idx</Name>
+							<Name>PRG_Motion.fbSlot2Pipe.i_var_count</Name>
 							<Comment><![CDATA[ 0x6001:0B]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s2_w0</Name>
-							<Comment><![CDATA[ 0x6001:0C]]></Comment>
-							<Type>UDINT</Type>
+							<Name>PRG_Motion.fbSlot2Pipe.i_samples</Name>
+							<Comment><![CDATA[ 0x6001:0C..6F (lane-major, [lane*10+k])]]></Comment>
+							<Type GUID="{F48DD1AE-926D-27C8-165F-E9F7EFE4F9A0}">ARRAY [0..99] OF UDINT</Type>
 						</Var>
 						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s2_w1</Name>
-							<Comment><![CDATA[ 0x6001:0D]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s2_w2</Name>
-							<Comment><![CDATA[ 0x6001:0E]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s3_sample_idx</Name>
-							<Comment><![CDATA[ 0x6001:0F]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s3_w0</Name>
-							<Comment><![CDATA[ 0x6001:10]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s3_w1</Name>
-							<Comment><![CDATA[ 0x6001:11]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s3_w2</Name>
-							<Comment><![CDATA[ 0x6001:12]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s4_sample_idx</Name>
-							<Comment><![CDATA[ 0x6001:13]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s4_w0</Name>
-							<Comment><![CDATA[ 0x6001:14]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s4_w1</Name>
-							<Comment><![CDATA[ 0x6001:15]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s4_w2</Name>
-							<Comment><![CDATA[ 0x6001:16]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s5_sample_idx</Name>
-							<Comment><![CDATA[ 0x6001:17]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s5_w0</Name>
-							<Comment><![CDATA[ 0x6001:18]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s5_w1</Name>
-							<Comment><![CDATA[ 0x6001:19]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s5_w2</Name>
-							<Comment><![CDATA[ 0x6001:1A]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s6_sample_idx</Name>
-							<Comment><![CDATA[ 0x6001:1B]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s6_w0</Name>
-							<Comment><![CDATA[ 0x6001:1C]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s6_w1</Name>
-							<Comment><![CDATA[ 0x6001:1D]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s6_w2</Name>
-							<Comment><![CDATA[ 0x6001:1E]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s7_sample_idx</Name>
-							<Comment><![CDATA[ 0x6001:1F]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s7_w0</Name>
-							<Comment><![CDATA[ 0x6001:20]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s7_w1</Name>
-							<Comment><![CDATA[ 0x6001:21]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s7_w2</Name>
-							<Comment><![CDATA[ 0x6001:22]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s8_sample_idx</Name>
-							<Comment><![CDATA[ 0x6001:23]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s8_w0</Name>
-							<Comment><![CDATA[ 0x6001:24]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s8_w1</Name>
-							<Comment><![CDATA[ 0x6001:25]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s8_w2</Name>
-							<Comment><![CDATA[ 0x6001:26]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s9_sample_idx</Name>
-							<Comment><![CDATA[ 0x6001:27]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s9_w0</Name>
-							<Comment><![CDATA[ 0x6001:28]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s9_w1</Name>
-							<Comment><![CDATA[ 0x6001:29]]></Comment>
-							<Type>UDINT</Type>
-						</Var>
-						<Var>
-							<Name>PRG_Motion.fbMenteeMotorV32_OS.i_s9_w2</Name>
-							<Comment><![CDATA[ 0x6001:2A]]></Comment>
-							<Type>UDINT</Type>
+							<Name>PRG_Motion.fbMenteeSdo.stAdsAddr</Name>
+							<Comment><![CDATA[ Motor Slave InfoData.AdsAddr (NetId + port)]]></Comment>
+							<Type GUID="{18071995-0000-0000-0000-000000000042}">AMSADDR</Type>
 						</Var>
 						<Var>
 							<Name>PRG_Motion.fbUartBridge.i_status_word</Name>
@@ -2900,16 +2817,16 @@ External Setpoint Generation:
 							<Type>UINT</Type>
 						</Var>
 						<Var>
+							<Name>GVL_Safety.stTwinSAFE_IN</Name>
+							<Type GUID="{20BA9D2C-2EA1-6698-B602-9473CFD89984}">ST_TwinSAFE_IN</Type>
+						</Var>
+						<Var>
 							<Name>GVL_Safety.DoorMonitorFromPLC</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>GVL_Safety.SolonoidStatus</Name>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Safety.stTwinSAFE_IN</Name>
-							<Type GUID="{20BA9D2C-2EA1-6698-B602-9473CFD89984}">ST_TwinSAFE_IN</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2026-05-20T17:13:29">
@@ -12354,11 +12271,11 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Box Id="1" BoxType="9099" BoxFlags="#x00000020">
 					<Name>Box 1 (Motor Slave)</Name>
 					<ImageId>65</ImageId>
-					<EtherCAT SlaveType="2" PdiType="#x0680" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="23" FoeType="1" VendorId="#x004d4e54" ProductCode="#x00000001" RevisionNo="#x00010001" InfoDataAddr="true" InfoDataDcTimes="true" TimeoutMailbox2="5000" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="Motor Slave" Desc="Motor Slave" PortABoxInfo="#x02000026">
+					<EtherCAT SlaveType="2" PdiType="#x0680" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="55" FoeType="1" VendorId="#x004d4e54" ProductCode="#x00000001" RevisionNo="#x00010001" InfoDataAddr="true" InfoDataDcTimes="true" TimeoutMailbox2="5000" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="Motor Slave" Desc="Motor Slave" PortABoxInfo="#x02000026">
 						<SyncMan>001000022600010001000000000000000002001026010000</SyncMan>
 						<SyncMan>001200022200010002000000000000000002001222010000</SyncMan>
-						<SyncMan>001624002400010003000000000000020000001624010000</SyncMan>
-						<SyncMan>001aa8002000010004000000000000020000001a20010000</SyncMan>
+						<SyncMan>001640002400010003000000000000020000001624010000</SyncMan>
+						<SyncMan>001abc012000010004000000000000020000001a20010000</SyncMan>
 						<Fmmu>0000000000000000001600020100000001000000000000000000000000000000</Fmmu>
 						<Fmmu>0000000000000000001a00010100000002000000000000000000000000000000</Fmmu>
 						<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
@@ -12366,12 +12283,10 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 						<SuName>box1</SuName>
 						<DcData>0003000040420f0090d003000000000001000000000000000000000000000000</DcData>
 						<DcMode>44432d53796e6330000000000000000044432053796e6368726f6e6f757320776974682053594e43300000000000000040420f0090d0030000000000000000030100000000000000000000000000000000000000000000000000000000000000</DcMode>
-						<DcMode>44432d53796e63302d3235307573000044432053796e6368726f6e6f757320776974682053594e43302c20323530750090d003000000000000000000000000030100000000000000000000000000000000000000000000000000000000000000</DcMode>
 						<DcMode>4672656552756e0000000000000000004672656552756e204d6f64650000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
-						<MBoxUserCmdData>020003000c000000150000000300000000000000000000000000000000000000200a80120400000000000000636f6d6d756e69636174696f6e5f74696d656f757400</MBoxUserCmdData>
-						<MBoxUserCmdData>020003000c00000002000000030000000000000000000000000000000000000020007001040000000000c8426b7000</MBoxUserCmdData>
-						<MBoxUserCmdData>020003000c00000002000000030000000000000000000000000000000000000020007002040000000000a0406b6400</MBoxUserCmdData>
+						<MBoxUserCmdData>10000300090000001a000000030000000000000000000000000000000000000020002001010000000852657365742043414e205761746368646f672054696d656f757400</MBoxUserCmdData>
 						<Pdo Name="Motor Response" Index="#x1a00" Flags="#x0000">
+							<ExcludePdo>#x1a01</ExcludePdo>
 							<Entry Name="general_error_bits" Index="#x6000" Sub="#x01">
 								<Type>USINT</Type>
 							</Entry>
@@ -12397,135 +12312,344 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 								<Type>REAL</Type>
 							</Entry>
 						</Pdo>
-						<Pdo Name="Motor Response OS" Index="#x1a01" Flags="#x0000" SyncMan="3">
-							<Entry Name="status_word" Index="#x6001" Sub="#x01">
+						<Pdo Name="Motor Response TB" Index="#x1a01" Flags="#x0000" SyncMan="3">
+							<ExcludePdo>#x1a00</ExcludePdo>
+							<Entry Name="fsm_state" Index="#x6001" Sub="#x01">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="sample_count" Index="#x6001" Sub="#x02">
+							<Entry Name="main_state" Index="#x6001" Sub="#x02">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s0_sample_idx" Index="#x6001" Sub="#x03">
+							<Entry Name="motion_mode" Index="#x6001" Sub="#x03">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s0_w0" Index="#x6001" Sub="#x04">
+							<Entry Name="motor_enabled" Index="#x6001" Sub="#x04">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s0_w1" Index="#x6001" Sub="#x05">
+							<Entry Name="general_error" Index="#x6001" Sub="#x05">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s0_w2" Index="#x6001" Sub="#x06">
+							<Entry Name="categorial_error" Index="#x6001" Sub="#x06">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s1_sample_idx" Index="#x6001" Sub="#x07">
+							<Entry Name="last_op" Index="#x6001" Sub="#x07">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s1_w0" Index="#x6001" Sub="#x08">
+							<Entry Name="fault" Index="#x6001" Sub="#x08">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s1_w1" Index="#x6001" Sub="#x09">
+							<Entry Name="sample_count" Index="#x6001" Sub="#x09">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s1_w2" Index="#x6001" Sub="#x0a">
+							<Entry Name="capture_count" Index="#x6001" Sub="#x0a">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s2_sample_idx" Index="#x6001" Sub="#x0b">
+							<Entry Name="var_count" Index="#x6001" Sub="#x0b">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s2_w0" Index="#x6001" Sub="#x0c">
+							<Entry Name="sample_0" Index="#x6001" Sub="#x0c">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s2_w1" Index="#x6001" Sub="#x0d">
+							<Entry Name="sample_1" Index="#x6001" Sub="#x0d">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s2_w2" Index="#x6001" Sub="#x0e">
+							<Entry Name="sample_2" Index="#x6001" Sub="#x0e">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s3_sample_idx" Index="#x6001" Sub="#x0f">
+							<Entry Name="sample_3" Index="#x6001" Sub="#x0f">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s3_w0" Index="#x6001" Sub="#x10">
+							<Entry Name="sample_4" Index="#x6001" Sub="#x10">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s3_w1" Index="#x6001" Sub="#x11">
+							<Entry Name="sample_5" Index="#x6001" Sub="#x11">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s3_w2" Index="#x6001" Sub="#x12">
+							<Entry Name="sample_6" Index="#x6001" Sub="#x12">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s4_sample_idx" Index="#x6001" Sub="#x13">
+							<Entry Name="sample_7" Index="#x6001" Sub="#x13">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s4_w0" Index="#x6001" Sub="#x14">
+							<Entry Name="sample_8" Index="#x6001" Sub="#x14">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s4_w1" Index="#x6001" Sub="#x15">
+							<Entry Name="sample_9" Index="#x6001" Sub="#x15">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s4_w2" Index="#x6001" Sub="#x16">
+							<Entry Name="sample_10" Index="#x6001" Sub="#x16">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s5_sample_idx" Index="#x6001" Sub="#x17">
+							<Entry Name="sample_11" Index="#x6001" Sub="#x17">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s5_w0" Index="#x6001" Sub="#x18">
+							<Entry Name="sample_12" Index="#x6001" Sub="#x18">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s5_w1" Index="#x6001" Sub="#x19">
+							<Entry Name="sample_13" Index="#x6001" Sub="#x19">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s5_w2" Index="#x6001" Sub="#x1a">
+							<Entry Name="sample_14" Index="#x6001" Sub="#x1a">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s6_sample_idx" Index="#x6001" Sub="#x1b">
+							<Entry Name="sample_15" Index="#x6001" Sub="#x1b">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s6_w0" Index="#x6001" Sub="#x1c">
+							<Entry Name="sample_16" Index="#x6001" Sub="#x1c">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s6_w1" Index="#x6001" Sub="#x1d">
+							<Entry Name="sample_17" Index="#x6001" Sub="#x1d">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s6_w2" Index="#x6001" Sub="#x1e">
+							<Entry Name="sample_18" Index="#x6001" Sub="#x1e">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s7_sample_idx" Index="#x6001" Sub="#x1f">
+							<Entry Name="sample_19" Index="#x6001" Sub="#x1f">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s7_w0" Index="#x6001" Sub="#x20">
+							<Entry Name="sample_20" Index="#x6001" Sub="#x20">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s7_w1" Index="#x6001" Sub="#x21">
+							<Entry Name="sample_21" Index="#x6001" Sub="#x21">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s7_w2" Index="#x6001" Sub="#x22">
+							<Entry Name="sample_22" Index="#x6001" Sub="#x22">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s8_sample_idx" Index="#x6001" Sub="#x23">
+							<Entry Name="sample_23" Index="#x6001" Sub="#x23">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s8_w0" Index="#x6001" Sub="#x24">
+							<Entry Name="sample_24" Index="#x6001" Sub="#x24">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s8_w1" Index="#x6001" Sub="#x25">
+							<Entry Name="sample_25" Index="#x6001" Sub="#x25">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s8_w2" Index="#x6001" Sub="#x26">
+							<Entry Name="sample_26" Index="#x6001" Sub="#x26">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s9_sample_idx" Index="#x6001" Sub="#x27">
+							<Entry Name="sample_27" Index="#x6001" Sub="#x27">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s9_w0" Index="#x6001" Sub="#x28">
+							<Entry Name="sample_28" Index="#x6001" Sub="#x28">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s9_w1" Index="#x6001" Sub="#x29">
+							<Entry Name="sample_29" Index="#x6001" Sub="#x29">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="s9_w2" Index="#x6001" Sub="#x2a">
+							<Entry Name="sample_30" Index="#x6001" Sub="#x2a">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_31" Index="#x6001" Sub="#x2b">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_32" Index="#x6001" Sub="#x2c">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_33" Index="#x6001" Sub="#x2d">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_34" Index="#x6001" Sub="#x2e">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_35" Index="#x6001" Sub="#x2f">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_36" Index="#x6001" Sub="#x30">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_37" Index="#x6001" Sub="#x31">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_38" Index="#x6001" Sub="#x32">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_39" Index="#x6001" Sub="#x33">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_40" Index="#x6001" Sub="#x34">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_41" Index="#x6001" Sub="#x35">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_42" Index="#x6001" Sub="#x36">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_43" Index="#x6001" Sub="#x37">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_44" Index="#x6001" Sub="#x38">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_45" Index="#x6001" Sub="#x39">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_46" Index="#x6001" Sub="#x3a">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_47" Index="#x6001" Sub="#x3b">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_48" Index="#x6001" Sub="#x3c">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_49" Index="#x6001" Sub="#x3d">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_50" Index="#x6001" Sub="#x3e">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_51" Index="#x6001" Sub="#x3f">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_52" Index="#x6001" Sub="#x40">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_53" Index="#x6001" Sub="#x41">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_54" Index="#x6001" Sub="#x42">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_55" Index="#x6001" Sub="#x43">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_56" Index="#x6001" Sub="#x44">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_57" Index="#x6001" Sub="#x45">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_58" Index="#x6001" Sub="#x46">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_59" Index="#x6001" Sub="#x47">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_60" Index="#x6001" Sub="#x48">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_61" Index="#x6001" Sub="#x49">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_62" Index="#x6001" Sub="#x4a">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_63" Index="#x6001" Sub="#x4b">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_64" Index="#x6001" Sub="#x4c">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_65" Index="#x6001" Sub="#x4d">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_66" Index="#x6001" Sub="#x4e">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_67" Index="#x6001" Sub="#x4f">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_68" Index="#x6001" Sub="#x50">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_69" Index="#x6001" Sub="#x51">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_70" Index="#x6001" Sub="#x52">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_71" Index="#x6001" Sub="#x53">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_72" Index="#x6001" Sub="#x54">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_73" Index="#x6001" Sub="#x55">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_74" Index="#x6001" Sub="#x56">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_75" Index="#x6001" Sub="#x57">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_76" Index="#x6001" Sub="#x58">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_77" Index="#x6001" Sub="#x59">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_78" Index="#x6001" Sub="#x5a">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_79" Index="#x6001" Sub="#x5b">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_80" Index="#x6001" Sub="#x5c">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_81" Index="#x6001" Sub="#x5d">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_82" Index="#x6001" Sub="#x5e">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_83" Index="#x6001" Sub="#x5f">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_84" Index="#x6001" Sub="#x60">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_85" Index="#x6001" Sub="#x61">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_86" Index="#x6001" Sub="#x62">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_87" Index="#x6001" Sub="#x63">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_88" Index="#x6001" Sub="#x64">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_89" Index="#x6001" Sub="#x65">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_90" Index="#x6001" Sub="#x66">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_91" Index="#x6001" Sub="#x67">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_92" Index="#x6001" Sub="#x68">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_93" Index="#x6001" Sub="#x69">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_94" Index="#x6001" Sub="#x6a">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_95" Index="#x6001" Sub="#x6b">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_96" Index="#x6001" Sub="#x6c">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_97" Index="#x6001" Sub="#x6d">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_98" Index="#x6001" Sub="#x6e">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="sample_99" Index="#x6001" Sub="#x6f">
 								<Type>UDINT</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="Motor Command" Index="#x1600" InOut="1" Flags="#x0000">
+							<ExcludePdo>#x1601</ExcludePdo>
 							<Entry Name="kp" Index="#x7000" Sub="#x01">
 								<Type>REAL</Type>
 							</Entry>
@@ -12545,33 +12669,55 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 								<Type>REAL</Type>
 							</Entry>
 						</Pdo>
-						<Pdo Name="Motor Command OS" Index="#x1601" InOut="1" Flags="#x0000" SyncMan="2">
-							<Entry Name="control_word" Index="#x7001" Sub="#x01">
+						<Pdo Name="Motor Command TB" Index="#x1601" InOut="1" Flags="#x0000" SyncMan="2">
+							<ExcludePdo>#x1600</ExcludePdo>
+							<Entry Name="op" Index="#x7001" Sub="#x01">
 								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="impedance_p_des" Index="#x7001" Sub="#x02">
-								<Type>REAL</Type>
+							<Entry Name="slot" Index="#x7001" Sub="#x02">
+								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="impedance_v_des" Index="#x7001" Sub="#x03">
-								<Type>REAL</Type>
+							<Entry Name="size" Index="#x7001" Sub="#x03">
+								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="impedance_kp" Index="#x7001" Sub="#x04">
-								<Type>REAL</Type>
+							<Entry Name="strobe" Index="#x7001" Sub="#x04">
+								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="impedance_kd" Index="#x7001" Sub="#x05">
-								<Type>REAL</Type>
+							<Entry Name="prescaler" Index="#x7001" Sub="#x05">
+								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="impedance_torque_ff" Index="#x7001" Sub="#x06">
-								<Type>REAL</Type>
+							<Entry Name="addr_payload" Index="#x7001" Sub="#x06">
+								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="setpoint_position" Index="#x7001" Sub="#x07">
-								<Type>REAL</Type>
+							<Entry Name="inject_0" Index="#x7001" Sub="#x07">
+								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="setpoint_velocity" Index="#x7001" Sub="#x08">
-								<Type>REAL</Type>
+							<Entry Name="inject_1" Index="#x7001" Sub="#x08">
+								<Type>UDINT</Type>
 							</Entry>
-							<Entry Name="setpoint_current" Index="#x7001" Sub="#x09">
-								<Type>REAL</Type>
+							<Entry Name="inject_2" Index="#x7001" Sub="#x09">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="inject_3" Index="#x7001" Sub="#x0a">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="inject_4" Index="#x7001" Sub="#x0b">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="inject_5" Index="#x7001" Sub="#x0c">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="inject_6" Index="#x7001" Sub="#x0d">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="inject_7" Index="#x7001" Sub="#x0e">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="inject_8" Index="#x7001" Sub="#x0f">
+								<Type>UDINT</Type>
+							</Entry>
+							<Entry Name="inject_9" Index="#x7001" Sub="#x10">
+								<Type>UDINT</Type>
 							</Entry>
 						</Pdo>
 						<CoeProfile/>
@@ -12649,57 +12795,134 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 		<OwnerA Name="TIPC^PLC_Dyno^PLC_Dyno Instance">
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Box 1 (Motor Slave)">
 				<Link VarA="PlcTask Inputs^GVL_MenteeMotorV32_OS.nSlaveState" VarB="InfoData^State"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s0_sample_idx" VarB="Motor Response OS^s0_sample_idx"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s0_w0" VarB="Motor Response OS^s0_w0"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s0_w1" VarB="Motor Response OS^s0_w1"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s0_w2" VarB="Motor Response OS^s0_w2"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s1_sample_idx" VarB="Motor Response OS^s1_sample_idx"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s1_w0" VarB="Motor Response OS^s1_w0"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s1_w1" VarB="Motor Response OS^s1_w1"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s1_w2" VarB="Motor Response OS^s1_w2"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s2_sample_idx" VarB="Motor Response OS^s2_sample_idx"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s2_w0" VarB="Motor Response OS^s2_w0"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s2_w1" VarB="Motor Response OS^s2_w1"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s2_w2" VarB="Motor Response OS^s2_w2"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s3_sample_idx" VarB="Motor Response OS^s3_sample_idx"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s3_w0" VarB="Motor Response OS^s3_w0"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s3_w1" VarB="Motor Response OS^s3_w1"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s3_w2" VarB="Motor Response OS^s3_w2"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s4_sample_idx" VarB="Motor Response OS^s4_sample_idx"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s4_w0" VarB="Motor Response OS^s4_w0"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s4_w1" VarB="Motor Response OS^s4_w1"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s4_w2" VarB="Motor Response OS^s4_w2"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s5_sample_idx" VarB="Motor Response OS^s5_sample_idx"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s5_w0" VarB="Motor Response OS^s5_w0"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s5_w1" VarB="Motor Response OS^s5_w1"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s5_w2" VarB="Motor Response OS^s5_w2"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s6_sample_idx" VarB="Motor Response OS^s6_sample_idx"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s6_w0" VarB="Motor Response OS^s6_w0"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s6_w1" VarB="Motor Response OS^s6_w1"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s6_w2" VarB="Motor Response OS^s6_w2"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s7_sample_idx" VarB="Motor Response OS^s7_sample_idx"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s7_w0" VarB="Motor Response OS^s7_w0"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s7_w1" VarB="Motor Response OS^s7_w1"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s7_w2" VarB="Motor Response OS^s7_w2"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s8_sample_idx" VarB="Motor Response OS^s8_sample_idx"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s8_w0" VarB="Motor Response OS^s8_w0"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s8_w1" VarB="Motor Response OS^s8_w1"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s8_w2" VarB="Motor Response OS^s8_w2"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s9_sample_idx" VarB="Motor Response OS^s9_sample_idx"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s9_w0" VarB="Motor Response OS^s9_w0"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s9_w1" VarB="Motor Response OS^s9_w1"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_s9_w2" VarB="Motor Response OS^s9_w2"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_sample_count" VarB="Motor Response OS^sample_count"/>
-				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeMotorV32_OS.i_status_word" VarB="Motor Response OS^status_word"/>
-				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_control_word" VarB="Motor Command OS^control_word"/>
-				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_impedance_kd" VarB="Motor Command OS^impedance_kd"/>
-				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_impedance_kp" VarB="Motor Command OS^impedance_kp"/>
-				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_impedance_p_des" VarB="Motor Command OS^impedance_p_des"/>
-				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_impedance_torque_ff" VarB="Motor Command OS^impedance_torque_ff"/>
-				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_impedance_v_des" VarB="Motor Command OS^impedance_v_des"/>
-				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_current" VarB="Motor Command OS^setpoint_current"/>
-				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_position" VarB="Motor Command OS^setpoint_position"/>
-				<Link VarA="PlcTask Outputs^PRG_Motion.fbMenteeMotorV32_OS.q_setpoint_velocity" VarB="Motor Command OS^setpoint_velocity"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbMenteeSdo.stAdsAddr" VarB="InfoData^AdsAddr"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_capture_count" VarB="Motor Response TB^capture_count"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_categorial_error" VarB="Motor Response TB^categorial_error"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_fault" VarB="Motor Response TB^fault"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_fsm_state" VarB="Motor Response TB^fsm_state"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_general_error" VarB="Motor Response TB^general_error"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_last_op" VarB="Motor Response TB^last_op"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_main_state" VarB="Motor Response TB^main_state"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_motion_mode" VarB="Motor Response TB^motion_mode"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_motor_enabled" VarB="Motor Response TB^motor_enabled"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_sample_count" VarB="Motor Response TB^sample_count"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[0]" VarB="Motor Response TB^sample_0"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[10]" VarB="Motor Response TB^sample_10"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[11]" VarB="Motor Response TB^sample_11"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[12]" VarB="Motor Response TB^sample_12"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[13]" VarB="Motor Response TB^sample_13"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[14]" VarB="Motor Response TB^sample_14"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[15]" VarB="Motor Response TB^sample_15"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[16]" VarB="Motor Response TB^sample_16"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[17]" VarB="Motor Response TB^sample_17"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[18]" VarB="Motor Response TB^sample_18"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[19]" VarB="Motor Response TB^sample_19"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[1]" VarB="Motor Response TB^sample_1"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[20]" VarB="Motor Response TB^sample_20"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[21]" VarB="Motor Response TB^sample_21"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[22]" VarB="Motor Response TB^sample_22"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[23]" VarB="Motor Response TB^sample_23"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[24]" VarB="Motor Response TB^sample_24"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[25]" VarB="Motor Response TB^sample_25"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[26]" VarB="Motor Response TB^sample_26"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[27]" VarB="Motor Response TB^sample_27"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[28]" VarB="Motor Response TB^sample_28"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[29]" VarB="Motor Response TB^sample_29"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[2]" VarB="Motor Response TB^sample_2"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[30]" VarB="Motor Response TB^sample_30"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[31]" VarB="Motor Response TB^sample_31"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[32]" VarB="Motor Response TB^sample_32"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[33]" VarB="Motor Response TB^sample_33"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[34]" VarB="Motor Response TB^sample_34"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[35]" VarB="Motor Response TB^sample_35"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[36]" VarB="Motor Response TB^sample_36"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[37]" VarB="Motor Response TB^sample_37"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[38]" VarB="Motor Response TB^sample_38"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[39]" VarB="Motor Response TB^sample_39"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[3]" VarB="Motor Response TB^sample_3"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[40]" VarB="Motor Response TB^sample_40"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[41]" VarB="Motor Response TB^sample_41"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[42]" VarB="Motor Response TB^sample_42"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[43]" VarB="Motor Response TB^sample_43"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[44]" VarB="Motor Response TB^sample_44"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[45]" VarB="Motor Response TB^sample_45"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[46]" VarB="Motor Response TB^sample_46"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[47]" VarB="Motor Response TB^sample_47"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[48]" VarB="Motor Response TB^sample_48"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[49]" VarB="Motor Response TB^sample_49"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[4]" VarB="Motor Response TB^sample_4"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[50]" VarB="Motor Response TB^sample_50"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[51]" VarB="Motor Response TB^sample_51"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[52]" VarB="Motor Response TB^sample_52"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[53]" VarB="Motor Response TB^sample_53"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[54]" VarB="Motor Response TB^sample_54"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[55]" VarB="Motor Response TB^sample_55"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[56]" VarB="Motor Response TB^sample_56"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[57]" VarB="Motor Response TB^sample_57"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[58]" VarB="Motor Response TB^sample_58"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[59]" VarB="Motor Response TB^sample_59"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[5]" VarB="Motor Response TB^sample_5"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[60]" VarB="Motor Response TB^sample_60"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[61]" VarB="Motor Response TB^sample_61"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[62]" VarB="Motor Response TB^sample_62"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[63]" VarB="Motor Response TB^sample_63"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[64]" VarB="Motor Response TB^sample_64"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[65]" VarB="Motor Response TB^sample_65"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[66]" VarB="Motor Response TB^sample_66"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[67]" VarB="Motor Response TB^sample_67"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[68]" VarB="Motor Response TB^sample_68"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[69]" VarB="Motor Response TB^sample_69"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[6]" VarB="Motor Response TB^sample_6"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[70]" VarB="Motor Response TB^sample_70"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[71]" VarB="Motor Response TB^sample_71"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[72]" VarB="Motor Response TB^sample_72"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[73]" VarB="Motor Response TB^sample_73"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[74]" VarB="Motor Response TB^sample_74"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[75]" VarB="Motor Response TB^sample_75"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[76]" VarB="Motor Response TB^sample_76"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[77]" VarB="Motor Response TB^sample_77"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[78]" VarB="Motor Response TB^sample_78"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[79]" VarB="Motor Response TB^sample_79"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[7]" VarB="Motor Response TB^sample_7"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[80]" VarB="Motor Response TB^sample_80"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[81]" VarB="Motor Response TB^sample_81"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[82]" VarB="Motor Response TB^sample_82"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[83]" VarB="Motor Response TB^sample_83"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[84]" VarB="Motor Response TB^sample_84"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[85]" VarB="Motor Response TB^sample_85"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[86]" VarB="Motor Response TB^sample_86"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[87]" VarB="Motor Response TB^sample_87"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[88]" VarB="Motor Response TB^sample_88"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[89]" VarB="Motor Response TB^sample_89"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[8]" VarB="Motor Response TB^sample_8"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[90]" VarB="Motor Response TB^sample_90"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[91]" VarB="Motor Response TB^sample_91"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[92]" VarB="Motor Response TB^sample_92"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[93]" VarB="Motor Response TB^sample_93"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[94]" VarB="Motor Response TB^sample_94"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[95]" VarB="Motor Response TB^sample_95"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[96]" VarB="Motor Response TB^sample_96"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[97]" VarB="Motor Response TB^sample_97"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[98]" VarB="Motor Response TB^sample_98"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[99]" VarB="Motor Response TB^sample_99"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_samples[9]" VarB="Motor Response TB^sample_9"/>
+				<Link VarA="PlcTask Inputs^PRG_Motion.fbSlot2Pipe.i_var_count" VarB="Motor Response TB^var_count"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_addr" VarB="Motor Command TB^addr_payload"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_inject[0]" VarB="Motor Command TB^inject_0"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_inject[1]" VarB="Motor Command TB^inject_1"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_inject[2]" VarB="Motor Command TB^inject_2"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_inject[3]" VarB="Motor Command TB^inject_3"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_inject[4]" VarB="Motor Command TB^inject_4"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_inject[5]" VarB="Motor Command TB^inject_5"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_inject[6]" VarB="Motor Command TB^inject_6"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_inject[7]" VarB="Motor Command TB^inject_7"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_inject[8]" VarB="Motor Command TB^inject_8"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_inject[9]" VarB="Motor Command TB^inject_9"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_op" VarB="Motor Command TB^op"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_prescaler" VarB="Motor Command TB^prescaler"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_size" VarB="Motor Command TB^size"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_slot" VarB="Motor Command TB^slot"/>
+				<Link VarA="PlcTask Outputs^PRG_Motion.fbSlot2Pipe.q_strobe" VarB="Motor Command TB^strobe"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Drive 1 (AX5112-0000-0216)">
 				<Link VarA="PlcTask Inputs^PRG_Motion.fbMotor1.nActTorque_Raw" VarB="AT^Torque/force feedback value"/>
