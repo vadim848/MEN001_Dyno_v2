@@ -70,7 +70,7 @@ VAR
     nCap        : UDINT;     // torque-view captures represented (<=3)
     k           : UDINT;
     c           : UDINT;
-    s           : UDINT;
+    j           : UDINT;     // slot-within-capture (NOT 's' — S is a reserved IL operator)
     kk          : UDINT;
 END_VAR
 VAR CONSTANT
@@ -231,12 +231,12 @@ IF eState = BS_RUN AND n > 0 THEN
         nCap := MIN(n, 3);
         FOR c := 0 TO nCap - 1 DO
             kk := n - nCap + c;                       // lane sample column of capture c
-            FOR s := 0 TO 2 DO
-                stStatus.aSamples[c*3 + s].sample_idx :=
+            FOR j := 0 TO 2 DO
+                stStatus.aSamples[c*3 + j].sample_idx :=
                     (i_capture_count - (nCap - 1 - c)) * nPre;
-                stStatus.aSamples[c*3 + s].w0 := i_samples[(3*s + 0)*10 + kk];
-                stStatus.aSamples[c*3 + s].w1 := i_samples[(3*s + 1)*10 + kk];
-                stStatus.aSamples[c*3 + s].w2 := i_samples[(3*s + 2)*10 + kk];
+                stStatus.aSamples[c*3 + j].w0 := i_samples[(3*j + 0)*10 + kk];
+                stStatus.aSamples[c*3 + j].w1 := i_samples[(3*j + 1)*10 + kk];
+                stStatus.aSamples[c*3 + j].w2 := i_samples[(3*j + 2)*10 + kk];
             END_FOR
         END_FOR
         uW.u := i_samples[0*10 + (n-1)]; stStatus.fLatestPos     := uW.f;   // var0 = theta
