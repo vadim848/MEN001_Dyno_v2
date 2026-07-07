@@ -4,7 +4,13 @@
     <Declaration><![CDATA[// Generic 1 kHz motion-profile generator for the V3.2 motor. Evaluates the
 // selected shape as value(t) online (no precomputed array) and streams it to
 // the field PRG_Motion routes by nField. Shapes ported from the Cheetah
-// ProfileGenerator: Sinusoidal / Trapezoidal / Step / S-Curve / Ramp.
+// ProfileGenerator: Sinusoidal / Trapezoidal / Step / S-Curve / Ramp, plus
+// two point-to-point shapes (velocity-trapezoid displacement, planned by the
+// app from v_max/a_max): P2P moves one leg and holds at the end; P2P_RT goes
+// out and back (v = 0 at the turnaround), so repetitive reps chain without a
+// jump. For both, fPeakValue is the SIGNED cruise velocity, fAccelTime/
+// fSteadyTime/fDecelTime are the leg's segment times, and fStartValue is the
+// ABSOLUTE anchor position the app planned from (exact landing on target).
 //
 // On Start the command is LATCHED into 'cfg' (a local copy of stTraj). The
 // generator + the valueAt method read 'cfg' only -- so mid-run parameter
@@ -28,6 +34,9 @@ END_VAR
 VAR_OUTPUT
     bRunning        : BOOL;
     fSetpoint       : REAL;
+    nFieldOut       : BYTE;     // LATCHED field of the running profile — route by
+                                // this, not the live stTraj.nField, so an ADS
+                                // reconfig mid-run can't misroute the output
 END_VAR
 VAR
     cfg             : ST_MenteeTrajCmd;   // latched command (read by body + valueAt)
@@ -54,6 +63,8 @@ VAR CONSTANT
     SH_STEP         : BYTE := 2;
     SH_SCURVE       : BYTE := 3;
     SH_RAMP         : BYTE := 4;
+    SH_P2P          : BYTE := 5;
+    SH_P2P_RT       : BYTE := 6;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -66,20 +77,36 @@ IF rStop.Q THEN
 END_IF
 
 // Start a new run -> latch the command into cfg; everything below reads cfg.
-IF rStart.Q AND (stTraj.nShape <= SH_RAMP) AND (stTraj.nField <= 3) THEN
+IF rStart.Q AND (stTraj.nShape <= SH_P2P_RT) AND (stTraj.nField <= 3) THEN
     cfg      := stTraj;
+    nFieldOut := cfg.nField;
     fElapsed := 0.0;
     nRepDone := 0;
+    // P2P ends AWAY from its start, so replaying it would jump the setpoint
+    // back -> one-way moves are never repetitive (oscillation uses SH_P2P_RT).
+    IF cfg.nShape = SH_P2P THEN
+        cfg.bRepetitive := FALSE;
+    END_IF
     // total duration of one run, per shape
-    IF (cfg.nShape = SH_TRAP) OR (cfg.nShape = SH_SCURVE) THEN
+    IF (cfg.nShape = SH_TRAP) OR (cfg.nShape = SH_SCURVE) OR (cfg.nShape = SH_P2P) THEN
         fTotalDur := cfg.fAccelTime + cfg.fSteadyTime + cfg.fDecelTime;
+    ELSIF cfg.nShape = SH_P2P_RT THEN
+        fTotalDur := 2.0 * (cfg.fAccelTime + cfg.fSteadyTime + cfg.fDecelTime);
     ELSE
         fTotalDur := cfg.fDuration;
     END_IF
-    // position-target fields ride on the current position (no jump)
+    // position-target fields ride on the current position (no jump). The P2P
+    // shapes anchor on the app's PLANNED start (fStartValue) instead, so the
+    // move lands EXACTLY on the planned target; any drift accrued since
+    // planning shows as a small initial step the servo absorbs (identical to
+    // the app-side streamer these shapes replace).
     bAnchor := (cfg.nField = 0) OR (cfg.nField = 1);
     IF bAnchor THEN
-        fStartPos := fMeasuredPos;
+        IF (cfg.nShape = SH_P2P) OR (cfg.nShape = SH_P2P_RT) THEN
+            fStartPos := cfg.fStartValue;
+        ELSE
+            fStartPos := fMeasuredPos;
+        END_IF
         fValue0   := valueAt(0.0);
     ELSE
         fStartPos := 0.0;
@@ -144,6 +171,45 @@ fSetpoint       := stTraj.fSetpoint;
 stTraj.bRunning := bRunning;
 ]]></ST>
     </Implementation>
+    <Method Name="p2pLeg" Id="{a7c4e5f6-2b83-4d1a-9c5e-8f3a4b6d7e92}">
+      <Declaration><![CDATA[// Signed displacement along one point-to-point velocity-trapezoid leg at
+// time fT [s]: accelerate 0 -> fPeakValue over fAccelTime, cruise for
+// fSteadyTime, decelerate back to 0 over fDecelTime. Clamps past the end, so
+// leg(end) = fPeakValue * (fAccelTime/2 + fSteadyTime + fDecelTime/2) = the
+// leg distance. Mirrors the app's TrapezoidProfile (trajectory.py) exactly.
+METHOD p2pLeg : REAL
+VAR_INPUT
+    fT  : REAL;
+END_VAR
+VAR
+    fTa : REAL;     // accel time [s]
+    fTc : REAL;     // cruise time [s]
+    fTd : REAL;     // decel time [s]
+    fV  : REAL;     // signed cruise velocity
+    fU  : REAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fTa := MAX(cfg.fAccelTime, 1E-6);
+fTc := cfg.fSteadyTime;
+fTd := MAX(cfg.fDecelTime, 1E-6);
+fV  := cfg.fPeakValue;
+
+IF fT <= 0.0 THEN
+    p2pLeg := 0.0;
+ELSIF fT < fTa THEN
+    // accelerating: 1/2 * a * t^2 with a = fV / fTa
+    p2pLeg := 0.5 * fV * fT * fT / fTa;
+ELSIF fT < (fTa + fTc) THEN
+    // cruising
+    p2pLeg := fV * (0.5 * fTa + (fT - fTa));
+ELSE
+    // decelerating (clamped at the leg end)
+    fU := fT - fTa - fTc;
+    IF fU > fTd THEN fU := fTd; END_IF
+    p2pLeg := fV * (0.5 * fTa + fTc + fU - 0.5 * fU * fU / fTd);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="valueAt" Id="{d3a9e2c4-6f53-4b8c-9e4a-7c2d3f4b5e61}">
       <Declaration><![CDATA[// Shape value at time fT [s] — closed-form, mirrors the Cheetah ProfileGenerator.
 // Reads the latched 'cfg' (FB-local), never the VAR_IN_OUT.
@@ -200,6 +266,17 @@ END_VAR]]></Declaration>
     fU := fT / MAX(cfg.fDuration, 1E-6);
     IF fU > 1.0 THEN fU := 1.0; END_IF
     valueAt := cfg.fStartValue + (cfg.fEndValue - cfg.fStartValue) * fU;
+
+5:  // P2P: one-way velocity-trapezoid displacement; ends at the leg distance
+    valueAt := p2pLeg(fT);
+
+6:  // P2P round trip: leg out, then the same leg mirrored back to the start
+    fU := cfg.fAccelTime + cfg.fSteadyTime + cfg.fDecelTime;   // one leg [s]
+    IF fT < fU THEN
+        valueAt := p2pLeg(fT);
+    ELSE
+        valueAt := p2pLeg(fU) - p2pLeg(fT - fU);
+    END_IF
 
 ELSE
     valueAt := 0.0;

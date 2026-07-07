@@ -125,7 +125,10 @@ fbMenteeTraj(
     bStopSync    := GVL_Profiles.bStopSync
 );
 IF fbMenteeTraj.bRunning THEN
-    CASE GVL_MenteeMotorV32_OS.stTraj.nField OF
+    // route by the FB's LATCHED field (nFieldOut) — the live stTraj.nField can
+    // already hold the NEXT run's field while the app rewrites the config over
+    // ADS, and routing by it would inject this run's value into the wrong lane
+    CASE fbMenteeTraj.nFieldOut OF
         1:  GVL_MenteeMotorV32_OS.stCmd.impedance_p_des   := fbMenteeTraj.fSetpoint;
         2:  GVL_MenteeMotorV32_OS.stCmd.setpoint_velocity := fbMenteeTraj.fSetpoint;
         3:  GVL_MenteeMotorV32_OS.stCmd.setpoint_current  := fbMenteeTraj.fSetpoint;
