@@ -46,6 +46,17 @@ STRUCT
     aMnW0    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
     aMnW1    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
     aMnW2    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
+    // ── extended lanes 3..9 — ELF-picked debug variables (slot-2 pipe) ──
+    // Same flat index as aMnIdx/aMnW0..2 (frame*REC_OVERSAMPLE + slot), so
+    // element i of EVERY aMn* array is the same synchronized capture instant.
+    // Kept LAST so the app can skip reading them when nothing is selected.
+    aMnW3    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
+    aMnW4    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
+    aMnW5    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
+    aMnW6    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
+    aMnW7    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
+    aMnW8    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
+    aMnW9    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

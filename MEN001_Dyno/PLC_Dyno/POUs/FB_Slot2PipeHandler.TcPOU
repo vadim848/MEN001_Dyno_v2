@@ -252,12 +252,22 @@ IF eState = BS_RUN AND n > 0 THEN
         uW.u := i_samples[1*10 + (n-1)]; stStatus.fLatestVel     := uW.f;   // var1 = d_theta
         uW.u := i_samples[7*10 + (n-1)]; stStatus.fLatestCurrent := uW.f;   // var7 = iq
     ELSE
-        // STANDARD view: lanes 0/1/2 = theta/d_theta/iq -> w0/w1/w2 per sample.
+        // STANDARD view: lanes 0/1/2 = theta/d_theta/iq -> w0/w1/w2 per sample;
+        // lanes 3..9 = ELF-picked debug variables -> w3..w9. Every lane shares
+        // the same capture index k (the FW samples all bound lanes on one
+        // prescaler tick), so one aSamples[k] is one synchronized instant.
         FOR k := 0 TO n - 1 DO
             stStatus.aSamples[k].sample_idx := (i_capture_count - (n - 1 - k)) * nPre;
             stStatus.aSamples[k].w0 := i_samples[0*10 + k];
             stStatus.aSamples[k].w1 := i_samples[1*10 + k];
             stStatus.aSamples[k].w2 := i_samples[2*10 + k];
+            stStatus.aSamples[k].w3 := i_samples[3*10 + k];
+            stStatus.aSamples[k].w4 := i_samples[4*10 + k];
+            stStatus.aSamples[k].w5 := i_samples[5*10 + k];
+            stStatus.aSamples[k].w6 := i_samples[6*10 + k];
+            stStatus.aSamples[k].w7 := i_samples[7*10 + k];
+            stStatus.aSamples[k].w8 := i_samples[8*10 + k];
+            stStatus.aSamples[k].w9 := i_samples[9*10 + k];
         END_FOR
         // Legacy invariant: slot 9 = the NEWEST sample (the app's live pos/vel/current
         // + liveness read aSamples[9]). n < 10 at prescaler 5, so mirror the newest

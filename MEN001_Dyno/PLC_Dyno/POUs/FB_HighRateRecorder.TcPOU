@@ -80,6 +80,15 @@ FOR i := 0 TO GVL_Recording.REC_OVERSAMPLE - 1 DO
     GVL_Recording.aChunks[nChunk].aMnW0[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w0;
     GVL_Recording.aChunks[nChunk].aMnW1[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w1;
     GVL_Recording.aChunks[nChunk].aMnW2[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w2;
+    // extended lanes 3..9 (ELF-picked debug vars): same slot i, same snapshot,
+    // same nBase -> element-aligned with aMnIdx/aMnW0..2 by construction
+    GVL_Recording.aChunks[nChunk].aMnW3[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w3;
+    GVL_Recording.aChunks[nChunk].aMnW4[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w4;
+    GVL_Recording.aChunks[nChunk].aMnW5[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w5;
+    GVL_Recording.aChunks[nChunk].aMnW6[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w6;
+    GVL_Recording.aChunks[nChunk].aMnW7[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w7;
+    GVL_Recording.aChunks[nChunk].aMnW8[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w8;
+    GVL_Recording.aChunks[nChunk].aMnW9[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w9;
 END_FOR
 
 nFill := nFill + 1;

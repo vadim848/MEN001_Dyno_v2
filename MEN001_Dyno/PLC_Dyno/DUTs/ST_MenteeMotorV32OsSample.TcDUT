@@ -12,6 +12,18 @@ STRUCT
     w0          : UDINT;    // sN_w0 — raw word (float-bits or uint32 per group)
     w1          : UDINT;    // sN_w1
     w2          : UDINT;    // sN_w2
+    // Extended lanes 3..9 — ELF-picked debug variables on the slot-2 debug
+    // pipe. Filled by FB_Slot2PipeHandler's STANDARD view from the SAME
+    // capture index k as w0..w2 (the FW samples every bound lane on one
+    // shared prescaler tick), so one aSamples[k] is one synchronized instant
+    // stamped by sample_idx. Stay 0 on the legacy fixed PDO / TORQUE view.
+    w3          : UDINT;
+    w4          : UDINT;
+    w5          : UDINT;
+    w6          : UDINT;
+    w7          : UDINT;
+    w8          : UDINT;
+    w9          : UDINT;
 END_STRUCT
 END_TYPE
 ]]></Declaration>
