@@ -29,6 +29,7 @@ VAR_IN_OUT
     stStatus    : ST_MenteeMotorV32OsStatus;   // legacy status contract (fully populated)
 END_VAR
 VAR
+    stEmptySample   : ST_MenteeMotorV32OsSample;   // all-zero (never written)
     //--- RxPDO 0x1601 outputs — AT %Q* — link to box 0x7001 entries ---
     q_op        AT %Q* : UDINT;   // 0x7001:01
     q_slot      AT %Q* : UDINT;   // 0x7001:02
@@ -100,6 +101,11 @@ IF rConfigure.Q THEN
     bClearOnly := FALSE;
     GVL_Slot2.bBindError  := FALSE;
     GVL_Slot2.nFailedSlot := 16#FF;
+    // Reset the oversample view so no slot carries values from the PREVIOUS
+    // binding profile (e.g. STANDARD w3..w9 leaking into a TORQUE session).
+    FOR k := 0 TO 9 DO
+        stStatus.aSamples[k] := stEmptySample;
+    END_FOR
     eState := BS_CLEAR;
 ELSIF rClearAll.Q THEN
     nStep  := 0;
@@ -270,10 +276,17 @@ IF eState = BS_RUN AND n > 0 THEN
             stStatus.aSamples[k].w9 := i_samples[9*10 + k];
         END_FOR
         // Legacy invariant: slot 9 = the NEWEST sample (the app's live pos/vel/current
-        // + liveness read aSamples[9]). n < 10 at prescaler 5, so mirror the newest
-        // into slot 9; the recorder's monotonic-idx dedup drops the duplicate stamp.
+        // + liveness read aSamples[9]). Mirror the newest into EVERY unwritten slot
+        // (n..9), not just slot 9: a slot that never refreshes would keep a stale
+        // sample_idx from PLC start (raw 0) forever, and once the live index enters
+        // the top quarter of u32 the recorder's wrap heuristic reads that stale 0 as
+        // a 2^32 wrap EVERY frame — runaway timestamps + garbage rows. Mirrored
+        // slots carry the newest stamp, so the recorder's monotonic-idx dedup drops
+        // them exactly like the old slot-9 mirror.
         IF n < 10 THEN
-            stStatus.aSamples[9] := stStatus.aSamples[n - 1];
+            FOR k := n TO 9 DO
+                stStatus.aSamples[k] := stStatus.aSamples[n - 1];
+            END_FOR
         END_IF
         uW.u := i_samples[0*10 + (n-1)]; stStatus.fLatestPos     := uW.f;
         uW.u := i_samples[1*10 + (n-1)]; stStatus.fLatestVel     := uW.f;
