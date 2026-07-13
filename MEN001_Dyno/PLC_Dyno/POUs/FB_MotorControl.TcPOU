@@ -30,6 +30,8 @@ VAR
     rtExecuteMove   : R_TRIG;
     rtStop          : R_TRIG;
     rtResetError    : R_TRIG;
+    rtSoeReset      : R_TRIG;          // diagnostic: SoE drive reset only
+    rtNcReset       : R_TRIG;          // diagnostic: NC axis reset only
     rtHome          : R_TRIG;
     rtZeroPosition  : R_TRIG;
     ftSoeBusy       : F_TRIG;          // SoE-reset Busy falling edge -> clear the latch
@@ -37,7 +39,15 @@ VAR
     eState          : E_MotorState;
     bMoveLatch      : BOOL;
     bSoeResetExec   : BOOL;            // latch: SoE drive reset requested / in progress
+    bNcResetExec    : BOOL;            // latch: NC axis reset requested / in progress
+    nResetStage     : BYTE;            // RESETTING sequence: 1 SoE | 2 settle | 3 NC
+    tonSettle       : TON;             // drive-settle gap between SoE and NC reset
+    tonResetGuard   : TON;             // whole-sequence watchdog -> back to ERROR
     fPrevVelocity   : LREAL;
+END_VAR
+VAR CONSTANT
+    T_RESET_SETTLE  : TIME := T#250MS; // drive settle after the SoE reset completes
+    T_RESET_GUARD   : TIME := T#15S;   // > FB_SoEReset's 10 s timeout + NC reset
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -47,8 +57,25 @@ END_VAR
 rtExecuteMove (CLK := stCmd.bExecuteMove);
 rtStop        (CLK := stCmd.bStop);
 rtResetError  (CLK := stCmd.bResetError);
+rtSoeReset    (CLK := stCmd.bSoeReset);
+rtNcReset     (CLK := stCmd.bNcReset);
 rtHome        (CLK := stCmd.bHome);
 rtZeroPosition(CLK := stCmd.bZeroPosition);
+
+// Diagnostic single-shot resets — latch the respective background FB. Gated
+// to non-motion states: MC_Reset on a MOVING axis hard-aborts the travel
+// command (no deceleration ramp) and an SoE reset is comparably disruptive
+// at the drive level — on a coupled bench that is a mechanical hazard, not a
+// diagnostic. (The full sequenced recovery is the bResetError path below.)
+IF (eState = E_MotorState.DISABLED) OR (eState = E_MotorState.READY)
+        OR (eState = E_MotorState.ERROR) THEN
+    IF rtSoeReset.Q THEN
+        bSoeResetExec := TRUE;
+    END_IF
+    IF rtNcReset.Q THEN
+        bNcResetExec := TRUE;
+    END_IF
+END_IF
 
 //----------------------------------------------------------------------
 // POWER — called every cycle
@@ -147,6 +174,21 @@ ftSoeBusy(CLK := fbSoeReset.Busy);
 IF ftSoeBusy.Q THEN
     bSoeResetExec := FALSE;          // Busy 1->0: SoE reset finished (Error/SercosErrId valid)
 END_IF
+IF bSoeResetExec AND fbSoeReset.Error THEN
+    bSoeResetExec := FALSE;          // immediate error (Busy never rose) -> don't hang the latch
+END_IF
+
+//----------------------------------------------------------------------
+// NC AXIS RESET (MC_Reset) — called every cycle; latched from the sequenced
+// recovery (RESETTING stage 3) or the diagnostic bNcReset command. The latch
+// drops Execute back to FALSE on Done/Error, so every request produces a
+// fresh rising edge (a one-shot Execute:=TRUE call would fire only once per
+// PLC run — MC blocks trigger on the Execute edge).
+//----------------------------------------------------------------------
+fbReset(Axis := Axis, Execute := bNcResetExec);
+IF bNcResetExec AND (fbReset.Done OR fbReset.Error) THEN
+    bNcResetExec := FALSE;
+END_IF
 
 //----------------------------------------------------------------------
 // STATE MACHINE
@@ -231,12 +273,51 @@ CASE eState OF
 
     E_MotorState.ERROR:
         IF rtResetError.Q THEN
-            fbReset(Axis := Axis, Execute := TRUE);   // NC reset (MC_Reset)
-            bSoeResetExec     := TRUE;                 // + SoE drive reset (FB_SoEReset, S-0-0099)
-            stStatus.bError   := FALSE;
-            stStatus.nErrorID := 0;
-            eState            := E_MotorState.DISABLED;
+            // Sequenced recovery: clear the DRIVE fault first (SoE S-0-0099),
+            // give the drive a settle gap, THEN reset the NC axis against the
+            // healthy drive. Sequenced on COMPLETION (Busy/Done), not timers.
+            bSoeResetExec := TRUE;
+            nResetStage   := 1;
+            eState        := E_MotorState.RESETTING;
         END_IF
+
+    E_MotorState.RESETTING:
+        // Whole-sequence watchdog: if any stage hangs (e.g. a latch that never
+        // clears), give up and go BACK TO ERROR — visible failure, another
+        // reset press retries. Without this a stuck stage is unrecoverable
+        // until a PLC restart.
+        tonResetGuard(IN := TRUE, PT := T_RESET_GUARD);
+        IF tonResetGuard.Q THEN
+            tonResetGuard(IN := FALSE);
+            bSoeResetExec := FALSE;
+            bNcResetExec  := FALSE;
+            nResetStage   := 0;
+            eState        := E_MotorState.ERROR;
+        END_IF
+        CASE nResetStage OF
+            1:  // SoE drive reset running — the latch self-clears when the
+                // FB's Busy falls (done) or it errors/times out (10 s)
+                IF NOT bSoeResetExec THEN
+                    tonSettle(IN := FALSE);
+                    nResetStage := 2;
+                END_IF
+            2:  // settle: let the drive's state machine come back up before
+                // the NC touches it
+                tonSettle(IN := TRUE, PT := T_RESET_SETTLE);
+                IF tonSettle.Q THEN
+                    tonSettle(IN := FALSE);
+                    bNcResetExec := TRUE;
+                    nResetStage  := 3;
+                END_IF
+            3:  // NC axis reset — latch self-clears on Done/Error
+                IF NOT bNcResetExec THEN
+                    tonResetGuard(IN := FALSE);
+                    stStatus.bError   := FALSE;
+                    stStatus.nErrorID := 0;
+                    nResetStage       := 0;
+                    eState            := E_MotorState.DISABLED;
+                END_IF
+        END_CASE
 
 END_CASE
 
@@ -245,6 +326,7 @@ END_CASE
 //----------------------------------------------------------------------
 stStatus.eState       := eState;
 stStatus.eControlMode := stCmd.eControlMode;
+stStatus.nResetStage  := nResetStage;
 stStatus.bEnabled     := fbPower.Status;
 stStatus.bMoving      := fbMoveAbs.Busy OR fbMoveRel.Busy OR fbMoveVel.Busy;
 stStatus.bAtTarget    := fbMoveAbs.Done OR fbMoveRel.Done OR fbMoveVel.InVelocity;

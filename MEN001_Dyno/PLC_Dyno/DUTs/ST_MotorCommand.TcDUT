@@ -7,7 +7,12 @@ STRUCT
     // Control
     //------------------------------------------------------------------
     bEnable             : BOOL;         // TRUE = enable drive power
-    bResetError         : BOOL;         // Rising edge = reset active fault
+    bResetError         : BOOL;         // Rising edge = reset active fault (sequenced:
+                                        // SoE drive reset -> 250 ms settle -> NC reset)
+    bSoeReset           : BOOL;         // Rising edge = SoE drive reset ONLY (S-0-0099,
+                                        // diagnostic; runs in background from any state)
+    bNcReset            : BOOL;         // Rising edge = NC axis reset ONLY (MC_Reset,
+                                        // diagnostic; runs in background from any state)
     bHome               : BOOL;         // Rising edge = start homing sequence
     bStop               : BOOL;         // Rising edge = decelerate to standstill
     bZeroPosition       : BOOL;         // Rising edge = set current position to 0
