@@ -192,11 +192,19 @@ bExtWant := ((cfg.nDomain = DOM_POSITION) OR (cfg.nDomain = DOM_VELOCITY))
 rExtOn(CLK := bExtWant);
 fExtOff(CLK := bExtWant);
 
-// Engagement chain (POSITION/VELOCITY): wait-standstill -> sync -> enable ->
-// re-anchor at first feed. Rationale: after a TORQUE run the NC setpoint is
-// stale AND the shaft may still be creeping (coast / coupled Mentee). A
-// stale setpoint or a stale anchor makes the first fed position command step
-// by the whole gap in ONE cycle -> AX5000 F324/F321.
+// Engagement chain (POSITION/VELOCITY): scrub mailbox -> wait-standstill ->
+// sync -> enable -> re-anchor at first feed.
+// ROOT CAUSE of the F324 on profile sequences (bench-proven 2026-07-14):
+// MC_ExtSetPointGenFeed writes a PERSISTENT PlcToNc image (ExtSetPos/Velo/
+// Direction). Nothing cleared it after a run, so it kept the LAST run's
+// sample armed (Direction<>0). At the next MC_ExtSetPointGenEnable the NC
+// consumes that image in the 1..2-cycle window before the PLC can see
+// Enabled and feed fresh values -> the drive command steps by the whole
+// shaft displacement of the intervening torque run in ONE cycle -> F324
+// (window ~5 deg / 250us on Axis 2). The scrub below (feed actual pos,
+// vel 0, Direction 0 = "do not apply" while engagement is pending, plus a
+// disarm sample at run end) closes that window. Standstill wait + sync stay
+// as defense in depth against a stale NC setpoint.
 IF rExtOn.Q THEN
     bWaitStill  := TRUE;                // stage 0: let residual creep die out
     bSyncExec   := FALSE;
@@ -208,6 +216,10 @@ IF fExtOff.Q THEN                       // run ended/stopped mid-sequence
     bSyncExec   := FALSE;
     bEnableExec := FALSE;
     tonStill(IN := FALSE);
+    // disarm the mailbox: leave the last commanded position with vel 0 and
+    // Direction 0, so a later engagement can never replay this run's sample
+    MC_ExtSetPointGenFeed(Position := fPrevExtPos, Velocity := 0.0,
+                          Acceleration := 0.0, Direction := 0, Axis := Axis);
 END_IF
 // stage 0: NC-side standstill (position hold kills coast quickly); a
 // SUSTAINED external drive can prevent it -> timeout proceeds anyway (the
@@ -281,6 +293,13 @@ IF fbExtEnable.Enabled AND bExtWant THEN
         Acceleration := 0.0,
         Direction    := nExtDir,
         Axis         := Axis);
+ELSIF bExtWant THEN
+    // engagement pending (standstill wait / sync / enable in flight): scrub
+    // the mailbox every cycle so the NC's activation window can only ever
+    // see (current actual position, vel 0, Direction 0 = do not apply)
+    MC_ExtSetPointGenFeed(Position := fMeasuredPos, Velocity := 0.0,
+                          Acceleration := 0.0, Direction := 0, Axis := Axis);
+    fPrevExtPos := fMeasuredPos;
 ELSE
     fPrevExtPos := fMeasuredPos;        // keep the derivative seed fresh while idle
 END_IF

@@ -191,11 +191,11 @@ bExtWant := bLoadEnL
 rExtOn(CLK := bExtWant);
 fExtOff(CLK := bExtWant);
 
-// Re-sync the NC setpoint to the ACTUAL position BEFORE engaging the external
-// generator: after a TORQUE run the setpoint is stale (torque moves the shaft
-// while the setpoint stays frozen) and feeding from it steps the drive command
-// by the whole gap in one cycle -> AX5000 F324/F321. MC_SetPosition moves a
-// number, not the motor; no-op when set and actual already match.
+// Engagement chain: scrub mailbox -> wait-standstill -> sync -> enable ->
+// re-anchor. See FB_LoadMotorProfile for the full F324 root-cause note:
+// the PlcToNc ExtSetPos/Velo/Direction image persists between runs and the
+// NC consumes it at generator activation before the first PLC feed; the
+// Direction-0 scrub while engagement is pending closes that window.
 IF rExtOn.Q THEN
     bWaitStill  := TRUE;                // stage 0: let the shaft settle first
     bSyncExec   := FALSE;
@@ -207,6 +207,15 @@ IF fExtOff.Q THEN                       // run ended/stopped mid-sequence
     bSyncExec   := FALSE;
     bEnableExec := FALSE;
     tonStill(IN := FALSE);
+    // disarm the mailbox: leave the last commanded position with vel 0 and
+    // Direction 0, so a later engagement can never replay this run's sample
+    IF nLoadMotorL = 1 THEN
+        MC_ExtSetPointGenFeed(Position := fPrevExtPos, Velocity := 0.0,
+                              Acceleration := 0.0, Direction := 0, Axis := AxisLoad1);
+    ELSE
+        MC_ExtSetPointGenFeed(Position := fPrevExtPos, Velocity := 0.0,
+                              Acceleration := 0.0, Direction := 0, Axis := AxisLoad2);
+    END_IF
 END_IF
 
 // stage 0: wait for NC standstill. After a high-amplitude TORQUE run the shaft
@@ -280,6 +289,18 @@ IF bExtWant AND bExtEnabled THEN
         MC_ExtSetPointGenFeed(Position := fExtPos, Velocity := fExtVel,
                               Acceleration := 0.0, Direction := nExtDir, Axis := AxisLoad2);
     END_IF
+ELSIF bExtWant THEN
+    // engagement pending (standstill wait / sync / enable in flight): scrub
+    // the mailbox every cycle so the NC's activation window can only ever
+    // see (current actual position, vel 0, Direction 0 = do not apply)
+    IF nLoadMotorL = 1 THEN
+        MC_ExtSetPointGenFeed(Position := fLoad1Pos, Velocity := 0.0,
+                              Acceleration := 0.0, Direction := 0, Axis := AxisLoad1);
+    ELSE
+        MC_ExtSetPointGenFeed(Position := fLoad2Pos, Velocity := 0.0,
+                              Acceleration := 0.0, Direction := 0, Axis := AxisLoad2);
+    END_IF
+    fPrevExtPos := SEL(nLoadMotorL = 1, fLoad2Pos, fLoad1Pos);
 ELSE
     fPrevExtPos := SEL(nLoadMotorL = 1, fLoad2Pos, fLoad1Pos);   // keep the FF seed fresh
 END_IF
