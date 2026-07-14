@@ -67,6 +67,11 @@ VAR
     fbExt2On        : MC_ExtSetPointGenEnable;
     fbExt1Off       : MC_ExtSetPointGenDisable;
     fbExt2Off       : MC_ExtSetPointGenDisable;
+    fbSync1         : MC_SetPosition;   // set := actual before engaging (F324/F321 guard)
+    fbSync2         : MC_SetPosition;
+    bSyncExec       : BOOL;     // latch: set-position sync requested / running
+    bEnableExec     : BOOL;     // latch: ext-generator enable requested / running
+    bSyncDone       : BOOL;
     rExtOn          : R_TRIG;
     fExtOff         : F_TRIG;
     bExtWant        : BOOL;
@@ -180,11 +185,41 @@ bExtWant := bLoadEnL
 rExtOn(CLK := bExtWant);
 fExtOff(CLK := bExtWant);
 
-fbExt1On(Axis := AxisLoad1, Execute := rExtOn.Q AND (nLoadMotorL = 1),
+// Re-sync the NC setpoint to the ACTUAL position BEFORE engaging the external
+// generator: after a TORQUE run the setpoint is stale (torque moves the shaft
+// while the setpoint stays frozen) and feeding from it steps the drive command
+// by the whole gap in one cycle -> AX5000 F324/F321. MC_SetPosition moves a
+// number, not the motor; no-op when set and actual already match.
+IF rExtOn.Q THEN
+    bSyncExec   := TRUE;
+    bEnableExec := FALSE;
+END_IF
+IF fExtOff.Q THEN                       // run ended/stopped mid-sequence
+    bSyncExec   := FALSE;
+    bEnableExec := FALSE;
+END_IF
+fbSync1(Axis := AxisLoad1, Execute := bSyncExec AND (nLoadMotorL = 1),
+        Position := fLoad1Pos, Mode := FALSE);
+fbSync2(Axis := AxisLoad2, Execute := bSyncExec AND (nLoadMotorL = 2),
+        Position := fLoad2Pos, Mode := FALSE);
+bSyncDone := SEL(nLoadMotorL = 1,
+                 fbSync2.Done OR fbSync2.Error,
+                 fbSync1.Done OR fbSync1.Error);
+IF bSyncExec AND bSyncDone THEN
+    bSyncExec := FALSE;
+    IF bExtWant THEN
+        bEnableExec := TRUE;            // sync done -> now engage the generator
+    END_IF
+END_IF
+
+fbExt1On(Axis := AxisLoad1, Execute := bEnableExec AND (nLoadMotorL = 1),
          Position := fLoad1Pos, PositionType := POSITIONTYPE_ABSOLUTE);
-fbExt2On(Axis := AxisLoad2, Execute := rExtOn.Q AND (nLoadMotorL = 2),
+fbExt2On(Axis := AxisLoad2, Execute := bEnableExec AND (nLoadMotorL = 2),
          Position := fLoad2Pos, PositionType := POSITIONTYPE_ABSOLUTE);
 bExtEnabled := SEL(nLoadMotorL = 1, fbExt2On.Enabled, fbExt1On.Enabled);  // selected axis
+IF bEnableExec AND bExtEnabled THEN
+    bEnableExec := FALSE;               // one-shot: drop Execute once engaged
+END_IF
 
 IF bExtWant AND bExtEnabled THEN
     IF nLoadDomainL = DOM_POSITION THEN

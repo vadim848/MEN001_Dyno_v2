@@ -57,6 +57,9 @@ VAR
     // external setpoint generation (POSITION / VELOCITY only)
     fbExtEnable     : MC_ExtSetPointGenEnable;
     fbExtDisable    : MC_ExtSetPointGenDisable;
+    fbSyncPos       : MC_SetPosition;   // set := actual BEFORE engaging (see below)
+    bSyncExec       : BOOL;     // latch: set-position sync requested / running
+    bEnableExec     : BOOL;     // latch: ext-generator enable requested / running
     bExtWant        : BOOL;     // this cycle wants the external generator engaged
     rExtOn          : R_TRIG;
     fExtOff         : F_TRIG;
@@ -184,11 +187,37 @@ bExtWant := ((cfg.nDomain = DOM_POSITION) OR (cfg.nDomain = DOM_VELOCITY))
 rExtOn(CLK := bExtWant);
 fExtOff(CLK := bExtWant);
 
+// Re-sync the NC setpoint to the ACTUAL position BEFORE engaging the external
+// generator: after a TORQUE run the setpoint is stale (torque moves the shaft
+// while the NC setpoint stays frozen), and feeding position commands anchored
+// on a stale setpoint steps the drive command by the whole gap in one cycle ->
+// AX5000 F324/F321. MC_SetPosition(set := actual) moves a number, not the
+// motor, and is a no-op when set and actual already match.
+IF rExtOn.Q THEN
+    bSyncExec   := TRUE;
+    bEnableExec := FALSE;
+END_IF
+IF fExtOff.Q THEN                       // run ended/stopped mid-sequence
+    bSyncExec   := FALSE;
+    bEnableExec := FALSE;
+END_IF
+fbSyncPos(Axis := Axis, Execute := bSyncExec,
+          Position := fMeasuredPos, Mode := FALSE);
+IF bSyncExec AND (fbSyncPos.Done OR fbSyncPos.Error) THEN
+    bSyncExec := FALSE;
+    IF bExtWant THEN
+        bEnableExec := TRUE;            // sync done -> now engage the generator
+    END_IF
+END_IF
+
 fbExtEnable(
     Axis         := Axis,
-    Execute      := rExtOn.Q,
+    Execute      := bEnableExec,
     Position     := fMeasuredPos,
     PositionType := POSITIONTYPE_ABSOLUTE);
+IF bEnableExec AND (fbExtEnable.Enabled OR fbExtEnable.Error) THEN
+    bEnableExec := FALSE;               // one-shot: drop Execute once engaged
+END_IF
 
 IF fbExtEnable.Enabled AND bExtWant THEN
     IF cfg.nDomain = DOM_POSITION THEN
