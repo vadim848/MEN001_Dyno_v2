@@ -72,6 +72,10 @@ VAR
     bSyncExec       : BOOL;     // latch: set-position sync requested / running
     bEnableExec     : BOOL;     // latch: ext-generator enable requested / running
     bSyncDone       : BOOL;
+    bWaitStill      : BOOL;     // latch: waiting for NC standstill before the sync
+    tonStill        : TON;      // standstill-wait timeout (proceed anyway)
+    rFeedOn         : R_TRIG;   // first feed cycle -> re-anchor at engagement
+    fActVelSel      : LREAL;    // selected load axis NC velocity [deg/s]
     rExtOn          : R_TRIG;
     fExtOff         : F_TRIG;
     bExtWant        : BOOL;
@@ -84,6 +88,8 @@ VAR
     nExtDir         : DINT;
 END_VAR
 VAR CONSTANT
+    F_STILL_VELO    : LREAL := 1.0;    // NC standstill threshold [deg/s] before engaging
+    T_STILL_TIMEOUT : TIME := T#2S;    // give up waiting for standstill -> proceed anyway
     ST_IDLE         : INT := 0;
     ST_RUN          : INT := 1;
     ST_REST         : INT := 2;
@@ -191,12 +197,30 @@ fExtOff(CLK := bExtWant);
 // by the whole gap in one cycle -> AX5000 F324/F321. MC_SetPosition moves a
 // number, not the motor; no-op when set and actual already match.
 IF rExtOn.Q THEN
-    bSyncExec   := TRUE;
-    bEnableExec := FALSE;
-END_IF
-IF fExtOff.Q THEN                       // run ended/stopped mid-sequence
+    bWaitStill  := TRUE;                // stage 0: let the shaft settle first
     bSyncExec   := FALSE;
     bEnableExec := FALSE;
+    tonStill(IN := FALSE);
+END_IF
+IF fExtOff.Q THEN                       // run ended/stopped mid-sequence
+    bWaitStill  := FALSE;
+    bSyncExec   := FALSE;
+    bEnableExec := FALSE;
+    tonStill(IN := FALSE);
+END_IF
+
+// stage 0: wait for NC standstill. After a high-amplitude TORQUE run the shaft
+// is still creeping when the next profile starts; syncing/engaging on a moving
+// shaft leaves the anchor stale by the time the first feed lands (F324).
+// Timeout proceeds anyway so a slowly-drifting axis can't block the run.
+IF bWaitStill THEN
+    fActVelSel := SEL(nLoadMotorL = 1, AxisLoad2.NcToPlc.ActVelo, AxisLoad1.NcToPlc.ActVelo);
+    tonStill(IN := TRUE, PT := T_STILL_TIMEOUT);
+    IF (ABS(fActVelSel) <= F_STILL_VELO) OR tonStill.Q THEN
+        tonStill(IN := FALSE);
+        bWaitStill := FALSE;
+        bSyncExec  := TRUE;
+    END_IF
 END_IF
 fbSync1(Axis := AxisLoad1, Execute := bSyncExec AND (nLoadMotorL = 1),
         Position := fLoad1Pos, Mode := FALSE);
@@ -219,6 +243,19 @@ fbExt2On(Axis := AxisLoad2, Execute := bEnableExec AND (nLoadMotorL = 2),
 bExtEnabled := SEL(nLoadMotorL = 1, fbExt2On.Enabled, fbExt1On.Enabled);  // selected axis
 IF bEnableExec AND bExtEnabled THEN
     bEnableExec := FALSE;               // one-shot: drop Execute once engaged
+END_IF
+
+// stage 3: re-anchor at the ACTUAL engagement instant. The start-edge anchor
+// is stale by the standstill-wait + sync + enable cycles; on a shaft that
+// crept meanwhile the first VELOCITY command would step by that drift (F324).
+// POSITION feeds absolute table values, so only the feed-forward seed applies.
+rFeedOn(CLK := bExtWant AND bExtEnabled);
+IF rFeedOn.Q THEN
+    IF nLoadDomainL = DOM_VELOCITY THEN
+        fLoadStartPos := SEL(nLoadMotorL = 1, fLoad2Pos, fLoad1Pos);
+        fLoadPosAccum := 0.0;
+    END_IF
+    fPrevExtPos := SEL(nLoadMotorL = 1, fLoad2Pos, fLoad1Pos);
 END_IF
 
 IF bExtWant AND bExtEnabled THEN

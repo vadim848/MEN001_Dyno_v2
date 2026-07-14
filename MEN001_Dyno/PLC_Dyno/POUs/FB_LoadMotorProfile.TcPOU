@@ -60,6 +60,9 @@ VAR
     fbSyncPos       : MC_SetPosition;   // set := actual BEFORE engaging (see below)
     bSyncExec       : BOOL;     // latch: set-position sync requested / running
     bEnableExec     : BOOL;     // latch: ext-generator enable requested / running
+    bWaitStill      : BOOL;     // latch: waiting for NC standstill before the sync
+    tonStill        : TON;      // standstill-wait timeout (proceed anyway)
+    rFeedOn         : R_TRIG;   // first feed cycle -> re-anchor at engagement
     bExtWant        : BOOL;     // this cycle wants the external generator engaged
     rExtOn          : R_TRIG;
     fExtOff         : F_TRIG;
@@ -69,6 +72,8 @@ VAR
     nExtDir         : DINT;     // 1 = +, -1 = -, 0 = standstill
 END_VAR
 VAR CONSTANT
+    F_STILL_VELO    : LREAL := 1.0;    // NC standstill threshold [deg/s] before engaging
+    T_STILL_TIMEOUT : TIME := T#2S;    // give up waiting for standstill -> proceed anyway
     ST_IDLE         : INT := 0;
     ST_RUN          : INT := 1;
     ST_REST         : INT := 2;
@@ -187,26 +192,42 @@ bExtWant := ((cfg.nDomain = DOM_POSITION) OR (cfg.nDomain = DOM_VELOCITY))
 rExtOn(CLK := bExtWant);
 fExtOff(CLK := bExtWant);
 
-// Re-sync the NC setpoint to the ACTUAL position BEFORE engaging the external
-// generator: after a TORQUE run the setpoint is stale (torque moves the shaft
-// while the NC setpoint stays frozen), and feeding position commands anchored
-// on a stale setpoint steps the drive command by the whole gap in one cycle ->
-// AX5000 F324/F321. MC_SetPosition(set := actual) moves a number, not the
-// motor, and is a no-op when set and actual already match.
+// Engagement chain (POSITION/VELOCITY): wait-standstill -> sync -> enable ->
+// re-anchor at first feed. Rationale: after a TORQUE run the NC setpoint is
+// stale AND the shaft may still be creeping (coast / coupled Mentee). A
+// stale setpoint or a stale anchor makes the first fed position command step
+// by the whole gap in ONE cycle -> AX5000 F324/F321.
 IF rExtOn.Q THEN
-    bSyncExec   := TRUE;
-    bEnableExec := FALSE;
-END_IF
-IF fExtOff.Q THEN                       // run ended/stopped mid-sequence
+    bWaitStill  := TRUE;                // stage 0: let residual creep die out
     bSyncExec   := FALSE;
     bEnableExec := FALSE;
+    tonStill(IN := FALSE);
 END_IF
+IF fExtOff.Q THEN                       // run ended/stopped mid-sequence
+    bWaitStill  := FALSE;
+    bSyncExec   := FALSE;
+    bEnableExec := FALSE;
+    tonStill(IN := FALSE);
+END_IF
+// stage 0: NC-side standstill (position hold kills coast quickly); a
+// SUSTAINED external drive can prevent it -> timeout proceeds anyway (the
+// re-anchor below keeps the command step-free even then).
+IF bWaitStill THEN
+    tonStill(IN := TRUE, PT := T_STILL_TIMEOUT);
+    IF (ABS(Axis.NcToPlc.ActVelo) <= F_STILL_VELO) OR tonStill.Q THEN
+        tonStill(IN := FALSE);
+        bWaitStill := FALSE;
+        bSyncExec  := TRUE;             // stage 1: set := actual
+    END_IF
+END_IF
+// stage 1: MC_SetPosition(set := actual) — moves a number, not the motor;
+// no-op when set and actual already match.
 fbSyncPos(Axis := Axis, Execute := bSyncExec,
           Position := fMeasuredPos, Mode := FALSE);
 IF bSyncExec AND (fbSyncPos.Done OR fbSyncPos.Error) THEN
     bSyncExec := FALSE;
     IF bExtWant THEN
-        bEnableExec := TRUE;            // sync done -> now engage the generator
+        bEnableExec := TRUE;            // stage 2: engage the generator
     END_IF
 END_IF
 
@@ -217,6 +238,19 @@ fbExtEnable(
     PositionType := POSITIONTYPE_ABSOLUTE);
 IF bEnableExec AND (fbExtEnable.Enabled OR fbExtEnable.Error) THEN
     bEnableExec := FALSE;               // one-shot: drop Execute once engaged
+END_IF
+
+// stage 3: re-anchor at the ACTUAL engagement instant. The start-edge anchor
+// is stale by the standstill-wait + sync + enable cycles; on a shaft that
+// crept meanwhile, feeding from the old anchor would step the command by the
+// drift in one cycle (F324). Anchoring here makes the first command exactly
+// the current position — step-free even on a still-moving shaft.
+rFeedOn(CLK := fbExtEnable.Enabled AND bExtWant);
+IF rFeedOn.Q THEN
+    fStartPos   := fMeasuredPos;
+    fValue0     := fRaw;        // shape continues from its current value
+    fPosAccum   := 0.0;         // VELOCITY: restart the integral here
+    fPrevExtPos := fMeasuredPos;
 END_IF
 
 IF fbExtEnable.Enabled AND bExtWant THEN
