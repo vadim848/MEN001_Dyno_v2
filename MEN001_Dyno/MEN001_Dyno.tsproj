@@ -2201,12 +2201,12 @@ External Setpoint Generation:
 					<Name>Axis 2</Name>
 					<AxisPara>
 						<General UnitName="°"/>
-						<Dynamic Acceleration="2687.4885" Deceleration="2687.4885" Jerk="8062.4655"/>
-						<Velo RefSearch="17.91659" RefSync="17.91659" SlowManual="89.58295" FastManual="537.4977" Fast="1791.659" Maximum="1791.659"/>
+						<Dynamic Acceleration="13437.441" Deceleration="13437.441" Jerk="40312.323"/>
+						<Velo RefSearch="89.58294" RefSync="89.58294" SlowManual="447.9147" FastManual="2687.4882" Fast="8958.294" Maximum="8958.294"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="8">
-						<EncPara ScaleFactorNumerator="360" ScaleFactorDenominator="5242880" MaxCount="#xffffffff"/>
+						<EncPara ScaleFactorNumerator="360" ScaleFactorDenominator="1048576" MaxCount="#xffffffff"/>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
 							<Var>
@@ -2265,7 +2265,7 @@ External Setpoint Generation:
 					</Encoder>
 					<Drive Name="Drive" DrvType="9">
 						<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00030100">
-							<Analog VeloReferenz="1970.8249" VeloScale="1.02400649589962" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
+							<Analog VeloReferenz="9854.1234" VeloScale="1.02400649589962" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
 						<Vars VarGrpType="1">
@@ -2343,7 +2343,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{08826ED1-2731-4199-9F57-50138DAEE7D7}" Name="PLC_Dyno" PrjFilePath="PLC_Dyno\PLC_Dyno.plcproj" TmcFilePath="PLC_Dyno\PLC_Dyno.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{4498548B-A876-8A23-B077-FA3B0054479E}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{C7C41BF0-EB99-59B3-06C2-588C47D89EA3}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
 					<Name>PLC_Dyno Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -2476,6 +2476,10 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>GVL_IO.BlueLED</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>GVL_Commands.nMotor1_CurrentLimit_Raw</Name>
 							<Comment><![CDATA[ AX5000 current/torque limit  ->  SoE IDN S-0-0092 "Bipolar torque limit value".
  *** MAP THESE AS PDO ***: add IDN 92 (hex #x005C, UINT16) to each drive's MDT,
@@ -2488,10 +2492,6 @@ External Setpoint Generation:
 						<Var>
 							<Name>GVL_Commands.nMotor2_CurrentLimit_Raw</Name>
 							<Type>UINT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_IO.BlueLED</Name>
-							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>GVL_IO.b_MotorCooling</Name>
@@ -2817,16 +2817,16 @@ External Setpoint Generation:
 							<Type>UINT</Type>
 						</Var>
 						<Var>
+							<Name>GVL_Safety.stTwinSAFE_IN</Name>
+							<Type GUID="{20BA9D2C-2EA1-6698-B602-9473CFD89984}">ST_TwinSAFE_IN</Type>
+						</Var>
+						<Var>
 							<Name>GVL_Safety.DoorMonitorFromPLC</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>GVL_Safety.SolonoidStatus</Name>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Safety.stTwinSAFE_IN</Name>
-							<Type GUID="{20BA9D2C-2EA1-6698-B602-9473CFD89984}">ST_TwinSAFE_IN</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2026-05-20T17:13:29">
@@ -11116,7 +11116,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 											</Parameter>
 											<Parameter>
 												<PropertyName>GearRatioMotorSide</PropertyName>
-												<Value>5</Value>
+												<Value>1</Value>
 											</Parameter>
 											<Parameter>
 												<PropertyName>GearRatioLoadSide</PropertyName>
@@ -11363,6 +11363,75 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 									<Block Id="7">
 										<Controller/>
 									</Block>
+									<WatchLog ChnId="0" UpdateIntervalInMs="500">
+										<WatchLogItem>
+											<WatchLogParaSoE Index="32821"/>
+											<Alias>Motor type</Alias>
+										</WatchLogItem>
+										<WatchLogItem>
+											<DependOn>
+												<WatchLogItem>
+													<WatchLogParaSoE Index="32866" SubItemPath="eNamePlateType"/>
+												</WatchLogItem>
+												<Condition Value="1">
+													<WatchLogItem>
+														<WatchLogParaSoE Index="32866" SubItemPath="uData.eNamePlateType.stMotorPara.lSerialNumber"/>
+													</WatchLogItem>
+												</Condition>
+												<Condition Value="2">
+													<WatchLogItem>
+														<WatchLogParaSoE Index="32866" SubItemPath="uData.stElecDataSheet.stMotorDataElecDataSheet.strSerialNumber"/>
+													</WatchLogItem>
+												</Condition>
+											</DependOn>
+											<Alias>Motor SN</Alias>
+										</WatchLogItem>
+										<WatchLogItem>
+											<WatchLogParaSoE Index="32919" SubItemPath="stParaCh.llSerialNumber"/>
+											<Alias>Feedback SN</Alias>
+										</WatchLogItem>
+										<WatchLogItem>
+											<WatchLogParaSoE Index="135"/>
+											<Alias>Axis state</Alias>
+											<ValueMask>57352</ValueMask>
+										</WatchLogItem>
+										<WatchLogItem>
+											<WatchLogParaSoE Index="135" SubItemPath="ActualOperationMode"/>
+											<Alias>Actual operation mode</Alias>
+										</WatchLogItem>
+										<WatchLogItem>
+											<WatchLogParaSoE Index="32831"/>
+											<Alias>Motor I²T</Alias>
+										</WatchLogItem>
+										<WatchLogItem>
+											<WatchLogParaSoE Index="383"/>
+											<Alias>Motor temperature</Alias>
+										</WatchLogItem>
+										<WatchLogItem>
+											<WatchLogParaSoE Index="32833"/>
+											<Alias>Thermistor resistor</Alias>
+										</WatchLogItem>
+										<WatchLogItem>
+											<WatchLogParaSoE Index="384"/>
+											<Alias>Amplifier temperature</Alias>
+										</WatchLogItem>
+										<WatchLogItem>
+											<WatchLogParaSoE Index="33229"/>
+											<Alias>Motor current</Alias>
+										</WatchLogItem>
+										<WatchLogItem>
+											<WatchLogParaSoE Index="36"/>
+											<Alias>Velocity command</Alias>
+										</WatchLogItem>
+										<WatchLogItem>
+											<WatchLogParaSoE Index="40"/>
+											<Alias>Actual velocity</Alias>
+										</WatchLogItem>
+										<WatchLogItem>
+											<WatchLogParaSoE Index="51"/>
+											<Alias>Motor ratation angle</Alias>
+										</WatchLogItem>
+									</WatchLog>
 								</Channel>
 							</Inverter>
 						</TcDMDrive>
@@ -12728,8 +12797,11 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 		</Io>
 	</Project>
 	<Mappings>
-		<MappingInfo Identifier="{00000000-0040-0304-3000-040340000403}" Id="#x02030020"/>
-		<MappingInfo Identifier="{00000000-0050-0304-3000-040351000403}" Id="#x02030030"/>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500840000403}" Id="#x02030020"/>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500851000403}" Id="#x02030040"/>
+		<MappingInfo Identifier="{08502001-0010-0500-0020-500830000403}" Id="#x02030060" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{05000010-0040-0304-3000-040340000403}" Id="#x02030030" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{05000010-0050-0304-3000-040350000403}" Id="#x02030050" Watchdog="00000000000000000000000000000000"/>
 		<MappingInfo Identifier="{03040040-0040-0304-4000-040340000403}" Id="#x02030010" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIID^Device 2 (EtherCAT)">
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Rack 19 (EK1100 - A0)_1^A1 - SI1 (EL1918)_1">
