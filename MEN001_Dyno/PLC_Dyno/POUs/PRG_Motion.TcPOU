@@ -291,7 +291,8 @@ END_IF
 //----------------------------------------------------------------------
 // 9. TORQUE CONTROL
 //----------------------------------------------------------------------
-fbTorque1(Axis := Axis1, stCmd := GVL_Commands.stMotor1_Cmd);
+fbTorque1(Axis := Axis1, stCmd := GVL_Commands.stMotor1_Cmd,
+          bAxisReady := (GVL_Status.stMotor1_Status.eState = E_MotorState.READY));
 GVL_Status.stMotor1_Status.bTorqueActive   := fbTorque1.stStatus.bTorqueActive;
 GVL_Status.stMotor1_Status.bTorqueInTorque := fbTorque1.stStatus.bTorqueInTorque;
 IF fbTorque1.stStatus.bError THEN
@@ -299,7 +300,8 @@ IF fbTorque1.stStatus.bError THEN
     GVL_Status.stMotor1_Status.nErrorID := fbTorque1.stStatus.nErrorID;
 END_IF
 
-fbTorque2(Axis := Axis2, stCmd := GVL_Commands.stMotor2_Cmd);
+fbTorque2(Axis := Axis2, stCmd := GVL_Commands.stMotor2_Cmd,
+          bAxisReady := (GVL_Status.stMotor2_Status.eState = E_MotorState.READY));
 GVL_Status.stMotor2_Status.bTorqueActive   := fbTorque2.stStatus.bTorqueActive;
 GVL_Status.stMotor2_Status.bTorqueInTorque := fbTorque2.stStatus.bTorqueInTorque;
 IF fbTorque2.stStatus.bError THEN
