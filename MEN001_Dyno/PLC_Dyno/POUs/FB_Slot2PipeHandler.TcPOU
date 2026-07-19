@@ -191,15 +191,18 @@ END_CASE
 // INJECT — stream the legacy command fields into the bound write slots
 //----------------------------------------------------------------------
 IF eState = BS_RUN THEN
-    // Slots 0/1 carry the raw impedance_p_des/v_des but stay UNBOUND: the firmware
-    // merged them with setpoint_position/velocity into ONE variable each
-    // (target_p_des / v_des). Slots 5/6 are the bound ones, fed MODE-AWARE below —
-    // otherwise a stale twin field would overwrite the active one every cycle.
-    uW.f := stCmd.impedance_p_des;     q_inject[0] := uW.u;
-    uW.f := stCmd.impedance_v_des;     q_inject[1] := uW.u;
+    // All 10 inject slots are written every cycle. Slots 2..7 are the default
+    // command set (FW self-bound). Slots 0/1/8/9 are SPARE raw lanes: the app
+    // streams bit-encoded values (via GVL_MenteeMotorV32_OS.stCmd.nRawInjectN)
+    // for ELF-picked inject targets; copied VERBATIM (no float union) so integer
+    // picks are not reinterpreted as floats. Unbound spares are ignored by the FW.
+    q_inject[0] := stCmd.nRawInject0;                          // spare
+    q_inject[1] := stCmd.nRawInject1;                          // spare
     uW.f := stCmd.impedance_kp;        q_inject[2] := uW.u;
     uW.f := stCmd.impedance_kd;        q_inject[3] := uW.u;
     uW.f := stCmd.impedance_torque_ff; q_inject[4] := uW.u;
+    // Slots 5/6 fed MODE-AWARE (impedance_* in Impedance mode, else setpoint_*) —
+    // the FW merged the twin pairs into one var each (target_p_des / v_des).
     IF i_motion_mode = 4 THEN          // Impedance mode -> the impedance_* fields
         uW.f := stCmd.impedance_p_des;   q_inject[5] := uW.u;   // -> target_p_des
         uW.f := stCmd.impedance_v_des;   q_inject[6] := uW.u;   // -> v_des
@@ -208,6 +211,8 @@ IF eState = BS_RUN THEN
         uW.f := stCmd.setpoint_velocity; q_inject[6] := uW.u;   // -> v_des
     END_IF
     uW.f := stCmd.setpoint_current;    q_inject[7] := uW.u;
+    q_inject[8] := stCmd.nRawInject8;                          // spare
+    q_inject[9] := stCmd.nRawInject9;                          // spare
 END_IF
 
 //----------------------------------------------------------------------

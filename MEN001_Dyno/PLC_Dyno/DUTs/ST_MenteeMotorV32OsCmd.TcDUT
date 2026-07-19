@@ -14,6 +14,15 @@ STRUCT
     setpoint_position   : REAL;     // 0x7001:07 setpoint_position
     setpoint_velocity   : REAL;     // 0x7001:08 setpoint_velocity
     setpoint_current    : REAL;     // 0x7001:09 setpoint_current
+    // Spare inject lanes 0/1/8/9 — RAW 32-bit values the app streams into the
+    // matching q_inject slots (the FB copies them verbatim, NOT via the float
+    // union). The app bit-encodes per the ELF-picked var's dtype (float bits vs
+    // int). Slots 2..7 are the default command set (FW self-bound); these 4 are
+    // free for ELF-picked inject targets.
+    nRawInject0         : UDINT;    // -> q_inject[0]  (spare)
+    nRawInject1         : UDINT;    // -> q_inject[1]  (spare)
+    nRawInject8         : UDINT;    // -> q_inject[8]  (spare)
+    nRawInject9         : UDINT;    // -> q_inject[9]  (spare)
 END_STRUCT
 END_TYPE
 ]]></Declaration>
