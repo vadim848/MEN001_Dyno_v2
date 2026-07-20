@@ -37,8 +37,8 @@ STRUCT
     bTorqueExecute      : BOOL;         // Hold TRUE = torque active, FALSE = stop
     fTargetTorque       : LREAL;        // Target torque [% of rated, -100 to 100]
     fTorqueRamp         : LREAL := 100.0; // Torque ramp [% / s]
-    fTorqueVelLimitHigh : LREAL := 50.0;  // Velocity safety limit [units/s]
-    fTorqueVelLimitLow  : LREAL := -50.0;
+    fTorqueVelLimitHigh : LREAL := 859.437;  // Velocity safety limit [deg/s] = 15 rad/s
+    fTorqueVelLimitLow  : LREAL := -859.437; // = -15 rad/s
 
     //------------------------------------------------------------------
     // Motion profile (shared across position and velocity modes)
