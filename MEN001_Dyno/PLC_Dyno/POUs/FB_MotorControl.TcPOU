@@ -339,16 +339,28 @@ stStatus.nResetStage  := nResetStage;
 stStatus.bEnabled     := fbPower.Status;
 stStatus.bMoving      := fbMoveAbs.Busy OR fbMoveRel.Busy OR fbMoveVel.Busy;
 stStatus.bAtTarget    := fbMoveAbs.Done OR fbMoveRel.Done OR fbMoveVel.InVelocity;
-stStatus.bError       := fbPower.Error   OR fbMoveAbs.Error OR fbMoveRel.Error
-                      OR fbMoveVel.Error OR fbStop.Error    OR fbHome.Error;
+// Error status sourced from the NC axis ErrorCode — the authoritative, PERSISTENT
+// fault: set on any axis fault and HELD until MC_Reset. The MC-block .Error outputs
+// are transient (they clear the moment a block's Execute drops or the axis
+// disables), so the old MC-block-only bError usually went FALSE before the app
+// polled and the error never reached the GUI (nErrorID lingered with bError=FALSE).
+// Keep the block errors OR'd in; fall back to their ErrorID only when the axis has
+// no code of its own; clear when truly error-free so a stale code can't linger.
+stStatus.bError := (Axis.NcToPlc.ErrorCode <> 0)
+                OR fbPower.Error   OR fbMoveAbs.Error OR fbMoveRel.Error
+                OR fbMoveVel.Error OR fbStop.Error    OR fbHome.Error;
 
-IF stStatus.bError AND stStatus.nErrorID = 0 THEN
+IF Axis.NcToPlc.ErrorCode <> 0 THEN
+    stStatus.nErrorID := Axis.NcToPlc.ErrorCode;
+ELSIF stStatus.bError THEN
     stStatus.nErrorID := SEL(fbPower.Error,   0, fbPower.ErrorID)
                        + SEL(fbMoveAbs.Error, 0, fbMoveAbs.ErrorID)
                        + SEL(fbMoveRel.Error, 0, fbMoveRel.ErrorID)
                        + SEL(fbMoveVel.Error, 0, fbMoveVel.ErrorID)
                        + SEL(fbStop.Error,    0, fbStop.ErrorID)
                        + SEL(fbHome.Error,    0, fbHome.ErrorID);
+ELSE
+    stStatus.nErrorID := 0;
 END_IF
 
 stStatus.fActPosition := Axis.NcToPlc.ActPos;
