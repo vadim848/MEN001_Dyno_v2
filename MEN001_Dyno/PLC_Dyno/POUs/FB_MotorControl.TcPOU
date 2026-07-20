@@ -215,7 +215,16 @@ CASE eState OF
         stCmd.bStop   := FALSE;
 
         IF NOT stCmd.bEnable THEN
-            eState := E_MotorState.DISABLED;
+            // Route disable through STOPPING so MC_Stop runs first. If torque was
+            // applied the axis is still in CST (torque) mode after Stop Torque;
+            // MC_Stop performs the CST->position changeover and decelerates to a
+            // real standstill BEFORE MC_Power drops. Withdrawing controller enable
+            // straight from CST tripped NC 0x4260 (enable removed while the axis
+            // was still positioning). STOPPING -> fbStop.Done -> DISABLED (SEL on
+            // bEnable). Brief position hold during the decel, then power-off leaves
+            // the motor free. (MOVING already disables via STOPPING; this makes
+            // READY consistent. A normal idle disable just no-op-stops through it.)
+            eState := E_MotorState.STOPPING;
         ELSIF fbPower.Error THEN
             eState := E_MotorState.ERROR;
         ELSIF rtStop.Q THEN
