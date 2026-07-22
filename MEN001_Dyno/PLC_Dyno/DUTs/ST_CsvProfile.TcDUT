@@ -13,15 +13,18 @@
 // torque/position/velocity are commanded as the literal (converted) sample values.
 // => a position run jumps to sample 0 at start if the motor isn't already there.
 //
-// CSV_MAX (20000) is mirrored in the backend (symbols.CSV_MAX_SAMPLES). 20000
-// samples = 20 s @ 1 kHz, or longer at a coarser fSampleDt (the player interpolates
-// back up to the task rate). aMentee/aLoad are REAL (native units after conversion).
+// The array bound below is the SINGLE SOURCE OF TRUTH for the buffer capacity: the
+// app reads this array's byte size live over ADS (backend motor_service._csv_capacity)
+// and adapts its row cap + duration preview automatically, so resizing here needs NO
+// app-code change. 300000 samples = 300 s @ 1 kHz (or longer at a coarser fSampleDt;
+// the player interpolates back up to the task rate). aMentee/aLoad are REAL (native
+// units after conversion); at 300000 the two buffers are ~2.4 MB (fits the data area).
 TYPE ST_CsvProfile :
 STRUCT
     // --- sample buffers (filled by the app BEFORE bStart) ---
-    aMentee       : ARRAY[0..19999] OF REAL;   // mentee setpoint samples (native units)
-    aLoad         : ARRAY[0..19999] OF REAL;   // beckhoff setpoint samples (native units)
-    nCount        : UDINT;     // number of valid samples in each array (<= 20000)
+    aMentee       : ARRAY[0..299999] OF REAL;  // mentee setpoint samples (native units)
+    aLoad         : ARRAY[0..299999] OF REAL;  // beckhoff setpoint samples (native units)
+    nCount        : UDINT;     // number of valid samples in each array (<= array bound)
     fSampleDt     : REAL;      // uniform sample period [s]
 
     // --- mentee selection ---
