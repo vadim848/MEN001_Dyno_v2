@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <GVL Name="GVL_MenteeFoe" Id="{b1f6c2a4-9d3e-4c71-8a25-3f7e6b1d40c9}">
+    <Declaration><![CDATA[// Mentee V3.2 config-over-FoE command channel (FB_MenteeFoeFlash / PRG_Motion).
+// The app writes the mtb_config_tool "config.bin" bytes into aData + nLen and
+// pulses bExecute; the FB sends them to the motor slave over FoE (File access
+// over EtherCAT), and — only on a validated download — writes CoE 0x1010:01
+// = "save" so the firmware persists to flash and self-resets.
+//
+// config.bin = 32-byte header (magic 0x4D4F5452 / size / CRC32-IEEE) + payload
+// (<= sizeof(Obj.params), max 2048). So the file is <= 2080 bytes. The app
+// validates the header before writing here; the slave re-validates during FoE.
+VAR_GLOBAL
+    // ── command (written by the app over ADS) ──
+    aData       : ARRAY[0..2079] OF BYTE;   // config.bin bytes (header + payload)
+    nLen        : UDINT;                     // number of valid bytes in aData
+    bExecute    : BOOL;                      // rising edge -> run FoE download (+ auto-save on success)
+
+    // ── status (read by the app) ──
+    nState      : INT;      // 0 IDLE | 1 OPEN | 2 WRITE | 3 CLOSE | 4 SAVE | 5 DONE | 6 ERROR
+    bBusy       : BOOL;      // a flash sequence is in progress
+    bDownloadOk : BOOL;      // FoE transfer accepted + validated by the slave (BEFORE the save)
+    bDone       : BOOL;      // save command sent OK -> motor is self-resetting with the new config
+    bError      : BOOL;      // sequence failed
+    nErrId      : UDINT;     // ADS/FoE/CoE error id (when bError)
+    nStage      : UDINT;     // stage that failed: 1 open | 2 write | 3 close | 4 save
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

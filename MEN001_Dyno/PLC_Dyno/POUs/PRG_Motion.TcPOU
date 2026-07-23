@@ -30,6 +30,8 @@ VAR
     //    commands ride CoE SDO 0x2000 via fbMenteeSdo (GVL_Slot2 request channel). ---
     fbSlot2Pipe         : FB_Slot2PipeHandler;
     fbMenteeSdo         : FB_MenteeSdoCmd;
+    //--- Mentee config-over-FoE flash (config.bin -> slave, then CoE save-to-flash) ---
+    fbMenteeFoe         : FB_MenteeFoeFlash;
 
     //--- Mentee Motor V3.2 trajectory generator (1 kHz trapezoid) ---
     fbMenteeTraj        : FB_TrajectoryGen;
@@ -188,6 +190,7 @@ fbSlot2Pipe(
     stStatus := GVL_MenteeMotorV32_OS.stStatus
 );
 fbMenteeSdo();
+fbMenteeFoe();   // FoE config.bin download + auto-save on success (GVL_MenteeFoe channel)
 
 //----------------------------------------------------------------------
 // 6. MENTEE UART BRIDGE — V3.1
