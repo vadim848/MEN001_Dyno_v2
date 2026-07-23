@@ -20,6 +20,7 @@ VAR_GLOBAL CONSTANT
     REC_CHUNK      : UDINT := 2000;   // EtherCAT frames per chunk (chunk period = REC_CHUNK / task-rate)
     REC_RING       : UDINT := 4;      // number of chunks in the ring (read slack)
     REC_OVERSAMPLE : UDINT := 10;     // Mentee oversamples per frame — MUST match firmware OVERSAMPLE_SAMPLES_PER_CYCLE
+    REC_FUTEK_OS   : UDINT := 5;      // Futek analog oversamples per frame (EL3702 x5) — MUST match ST_AnalogInData nChx_Sample len
 END_VAR
 
 VAR_GLOBAL

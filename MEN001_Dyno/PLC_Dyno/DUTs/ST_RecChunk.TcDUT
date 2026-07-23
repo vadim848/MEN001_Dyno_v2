@@ -57,6 +57,12 @@ STRUCT
     aMnW7    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
     aMnW8    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
     aMnW9    : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_OVERSAMPLE - 1] OF UDINT;
+
+    // ── Futek analog oversamples (REC_FUTEK_OS per frame) — EL3702 x5, in Volts ──
+    // Flat index frame*REC_FUTEK_OS + slot. Stored as V (same scale as aAin1V) so
+    // the backend's volts->Nm calibration path handles them identically, at 5x rate.
+    aFut1V   : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_FUTEK_OS - 1] OF LREAL;   // Futek 1 (stAnalogIn1 ch1)
+    aFut2V   : ARRAY[0..GVL_Recording.REC_CHUNK * GVL_Recording.REC_FUTEK_OS - 1] OF LREAL;   // Futek 2 (stAnalogIn2 ch1)
 END_STRUCT
 END_TYPE
 ]]></Declaration>

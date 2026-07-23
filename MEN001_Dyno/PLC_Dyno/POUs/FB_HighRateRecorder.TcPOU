@@ -91,6 +91,15 @@ FOR i := 0 TO GVL_Recording.REC_OVERSAMPLE - 1 DO
     GVL_Recording.aChunks[nChunk].aMnW9[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w9;
 END_FOR
 
+// Futek analog oversamples (EL3702 x5) — raw INT -> V using the same scale as the
+// averaged fCh1_Voltage, so the 5 kHz trace is consistent with the 1 kHz average.
+FOR i := 1 TO GVL_Recording.REC_FUTEK_OS DO
+    GVL_Recording.aChunks[nChunk].aFut1V[nFill * GVL_Recording.REC_FUTEK_OS + (i - 1)] :=
+        INT_TO_LREAL(stSnap.stAnalogIn1.nCh1_Sample[i]) / 32767.0 * stSnap.stAnalogIn1.fFullScale;
+    GVL_Recording.aChunks[nChunk].aFut2V[nFill * GVL_Recording.REC_FUTEK_OS + (i - 1)] :=
+        INT_TO_LREAL(stSnap.stAnalogIn2.nCh1_Sample[i]) / 32767.0 * stSnap.stAnalogIn2.fFullScale;
+END_FOR
+
 nFill := nFill + 1;
 
 // ── chunk complete → publish + advance ──
