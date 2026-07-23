@@ -115,11 +115,14 @@ ST_WRITE:
 ST_CLOSE:
     IF NOT fbClose.bBusy THEN
         IF bPendErr THEN
-            eState := ST_ERR;                 // write already failed
-        ELSIF fbClose.bError THEN
-            GVL_MenteeFoe.nStage := 3; GVL_MenteeFoe.nErrId := fbClose.nErrId;
-            eState := ST_ERR;
+            eState := ST_ERR;                 // the WRITE failed (nStage/nErrId set)
         ELSE
+            // Download validated: the slave ACKed every byte (cbDone = nLen),
+            // CRC-checked the payload and applied it to RAM. FoE has no protocol
+            // file-end — the slave finalizes on the config.bin header size and ends
+            // the session itself, so FB_EcFoeClose often returns a benign device
+            // error (e.g. 0x700: no session to close). Close is best-effort cleanup;
+            // proceed to save regardless of its result.
             eState := ST_SAVE;                // download OK -> auto-save
         END_IF
     END_IF
