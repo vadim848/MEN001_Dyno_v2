@@ -68,11 +68,7 @@ VAR
     uW          : U_WordReal;
     nPre        : UDINT;     // effective prescaler (>=1)
     n           : UDINT;     // valid samples this cycle (0..10)
-    nCap        : UDINT;     // torque-view captures represented (<=3)
     k           : UDINT;
-    c           : UDINT;
-    j           : UDINT;     // slot-within-capture (NOT 's' — S is a reserved IL operator)
-    kk          : UDINT;
 END_VAR
 VAR CONSTANT
     BS_IDLE     : BYTE := 0;
@@ -101,8 +97,8 @@ IF rConfigure.Q THEN
     bClearOnly := FALSE;
     GVL_Slot2.bBindError  := FALSE;
     GVL_Slot2.nFailedSlot := 16#FF;
-    // Reset the oversample view so no slot carries values from the PREVIOUS
-    // binding profile (e.g. STANDARD w3..w9 leaking into a TORQUE session).
+    // Reset the oversample view so no slot carries values bound to the PREVIOUS
+    // lane selection (e.g. a dropped ELF debug var leaking into the new session).
     FOR k := 0 TO 9 DO
         stStatus.aSamples[k] := stEmptySample;
     END_FOR
@@ -221,20 +217,20 @@ END_IF
 stStatus.nFsmState            := UDINT_TO_BYTE(i_fsm_state);
 stStatus.nMainState           := UDINT_TO_BYTE(i_main_state);
 stStatus.nOpMode              := UDINT_TO_BYTE(i_motion_mode);
-stStatus.nGroupId             := cfg.nProfileId;    // group == active binding profile now
 stStatus.nGeneralErrorBits    := UDINT_TO_BYTE(i_general_error AND 16#FF);
 stStatus.nCategorialErrorBits := UDINT_TO_BYTE(i_categorial_error AND 16#FF);
 stStatus.bError               := (stStatus.nGeneralErrorBits <> 0)
                                OR (stStatus.nCategorialErrorBits <> 0);
 // Synthesized legacy status word (MASTER_INTERFACE §4.4 layout) so recordings and any
 // raw-word consumer decode exactly as before:
-//   FSM[4:0] | main[8:5] | mode[11:9] | enabled[12] | GROUP_ID[15:13] | gen[23:16] | cat[31:24]
+//   FSM[4:0] | main[8:5] | mode[11:9] | enabled[12] | (15:13 unused) | gen[23:16] | cat[31:24]
+// Bits 15:13 used to carry the oversample GROUP_ID; that mechanism is gone (the
+// ELF debug-var lanes replaced it), so they are simply left 0.
 stStatus.nStatusWord :=
       (i_fsm_state AND 16#1F)
     + (i_main_state AND 16#0F)       * 16#20
     + (i_motion_mode AND 16#07)      * 16#200
     + (i_motor_enabled AND 16#01)    * 16#1000
-    + (TO_UDINT(cfg.nProfileId) AND 16#07) * 16#2000
     + (i_general_error AND 16#FF)    * 16#10000
     + (i_categorial_error AND 16#FF) * 16#1000000;
 
@@ -245,58 +241,39 @@ stStatus.nSampleCount := i_capture_count;
 // 40 kHz units (stamp*prescaler) so the app/recorder timing math (idx/40kHz) is exact.
 n := MIN(i_sample_count, 10);
 IF eState = BS_RUN AND n > 0 THEN
-    IF cfg.nProfileId = 1 THEN
-        // TORQUE view parity: newest <=3 captures -> slots (c*3+s); slot c*3+s carries
-        // vars 3s..3s+2 of capture c (matches the legacy 3-slot capture layout).
-        nCap := MIN(n, 3);
-        FOR c := 0 TO nCap - 1 DO
-            kk := n - nCap + c;                       // lane sample column of capture c
-            FOR j := 0 TO 2 DO
-                stStatus.aSamples[c*3 + j].sample_idx :=
-                    (i_capture_count - (nCap - 1 - c)) * nPre;
-                stStatus.aSamples[c*3 + j].w0 := i_samples[(3*j + 0)*10 + kk];
-                stStatus.aSamples[c*3 + j].w1 := i_samples[(3*j + 1)*10 + kk];
-                stStatus.aSamples[c*3 + j].w2 := i_samples[(3*j + 2)*10 + kk];
-            END_FOR
+    // Lanes 0/1/2 = theta/d_theta/iq -> w0/w1/w2 per sample;
+    // lanes 3..9 = ELF-picked debug variables -> w3..w9. Every lane shares
+    // the same capture index k (the FW samples all bound lanes on one
+    // prescaler tick), so one aSamples[k] is one synchronized instant.
+    FOR k := 0 TO n - 1 DO
+        stStatus.aSamples[k].sample_idx := (i_capture_count - (n - 1 - k)) * nPre;
+        stStatus.aSamples[k].w0 := i_samples[0*10 + k];
+        stStatus.aSamples[k].w1 := i_samples[1*10 + k];
+        stStatus.aSamples[k].w2 := i_samples[2*10 + k];
+        stStatus.aSamples[k].w3 := i_samples[3*10 + k];
+        stStatus.aSamples[k].w4 := i_samples[4*10 + k];
+        stStatus.aSamples[k].w5 := i_samples[5*10 + k];
+        stStatus.aSamples[k].w6 := i_samples[6*10 + k];
+        stStatus.aSamples[k].w7 := i_samples[7*10 + k];
+        stStatus.aSamples[k].w8 := i_samples[8*10 + k];
+        stStatus.aSamples[k].w9 := i_samples[9*10 + k];
+    END_FOR
+    // Legacy invariant: slot 9 = the NEWEST sample (the app's live pos/vel/current
+    // + liveness read aSamples[9]). Mirror the newest into EVERY unwritten slot
+    // (n..9), not just slot 9: a slot that never refreshes would keep a stale
+    // sample_idx from PLC start (raw 0) forever, and once the live index enters
+    // the top quarter of u32 the recorder's wrap heuristic reads that stale 0 as
+    // a 2^32 wrap EVERY frame — runaway timestamps + garbage rows. Mirrored
+    // slots carry the newest stamp, so the recorder's monotonic-idx dedup drops
+    // them exactly like the old slot-9 mirror.
+    IF n < 10 THEN
+        FOR k := n TO 9 DO
+            stStatus.aSamples[k] := stStatus.aSamples[n - 1];
         END_FOR
-        uW.u := i_samples[0*10 + (n-1)]; stStatus.fLatestPos     := uW.f;   // var0 = theta
-        uW.u := i_samples[1*10 + (n-1)]; stStatus.fLatestVel     := uW.f;   // var1 = d_theta
-        uW.u := i_samples[7*10 + (n-1)]; stStatus.fLatestCurrent := uW.f;   // var7 = iq
-    ELSE
-        // STANDARD view: lanes 0/1/2 = theta/d_theta/iq -> w0/w1/w2 per sample;
-        // lanes 3..9 = ELF-picked debug variables -> w3..w9. Every lane shares
-        // the same capture index k (the FW samples all bound lanes on one
-        // prescaler tick), so one aSamples[k] is one synchronized instant.
-        FOR k := 0 TO n - 1 DO
-            stStatus.aSamples[k].sample_idx := (i_capture_count - (n - 1 - k)) * nPre;
-            stStatus.aSamples[k].w0 := i_samples[0*10 + k];
-            stStatus.aSamples[k].w1 := i_samples[1*10 + k];
-            stStatus.aSamples[k].w2 := i_samples[2*10 + k];
-            stStatus.aSamples[k].w3 := i_samples[3*10 + k];
-            stStatus.aSamples[k].w4 := i_samples[4*10 + k];
-            stStatus.aSamples[k].w5 := i_samples[5*10 + k];
-            stStatus.aSamples[k].w6 := i_samples[6*10 + k];
-            stStatus.aSamples[k].w7 := i_samples[7*10 + k];
-            stStatus.aSamples[k].w8 := i_samples[8*10 + k];
-            stStatus.aSamples[k].w9 := i_samples[9*10 + k];
-        END_FOR
-        // Legacy invariant: slot 9 = the NEWEST sample (the app's live pos/vel/current
-        // + liveness read aSamples[9]). Mirror the newest into EVERY unwritten slot
-        // (n..9), not just slot 9: a slot that never refreshes would keep a stale
-        // sample_idx from PLC start (raw 0) forever, and once the live index enters
-        // the top quarter of u32 the recorder's wrap heuristic reads that stale 0 as
-        // a 2^32 wrap EVERY frame — runaway timestamps + garbage rows. Mirrored
-        // slots carry the newest stamp, so the recorder's monotonic-idx dedup drops
-        // them exactly like the old slot-9 mirror.
-        IF n < 10 THEN
-            FOR k := n TO 9 DO
-                stStatus.aSamples[k] := stStatus.aSamples[n - 1];
-            END_FOR
-        END_IF
-        uW.u := i_samples[0*10 + (n-1)]; stStatus.fLatestPos     := uW.f;
-        uW.u := i_samples[1*10 + (n-1)]; stStatus.fLatestVel     := uW.f;
-        uW.u := i_samples[2*10 + (n-1)]; stStatus.fLatestCurrent := uW.f;
     END_IF
+    uW.u := i_samples[0*10 + (n-1)]; stStatus.fLatestPos     := uW.f;
+    uW.u := i_samples[1*10 + (n-1)]; stStatus.fLatestVel     := uW.f;
+    uW.u := i_samples[2*10 + (n-1)]; stStatus.fLatestCurrent := uW.f;
 END_IF
 
 //----------------------------------------------------------------------

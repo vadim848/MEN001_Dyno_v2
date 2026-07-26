@@ -2,7 +2,7 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
   <DUT Name="ST_MenteeMotorV32OsStatus" Id="{6b6c7ce0-c484-4e6d-9706-e7f57144e2fa}">
     <Declaration><![CDATA[// TxPDO 0x1A01 "Motor Response OS" — read by TwinCAT from Motor Slave V3.2 (0x6001)
-// Written by FB_MenteeMotorV32OsHandler, read by Python via GVL_MenteeMotorV32_OS / GVL_Sync snapshot
+// Written by FB_Slot2PipeHandler, read by Python via GVL_MenteeMotorV32_OS / GVL_Sync snapshot
 TYPE ST_MenteeMotorV32OsStatus :
 STRUCT
     nStatusWord     : UDINT;                                    // 0x6001:01 status_word (raw)
@@ -13,12 +13,17 @@ STRUCT
     nFsmState               : BYTE;     // status_word bits 4:0  (fsm_state_e 0..19)
     nMainState              : BYTE;     // bits 8:5
     nOpMode                 : BYTE;     // bits 11:9 (MotionMode)
-    nGroupId                : BYTE;     // bits 15:13 — active oversample group (0=STANDARD, 1=TORQUE)
+    nGroupId                : BYTE;     // DEPRECATED, always 0. The oversample-group
+                                        // mechanism is gone (ELF debug-var lanes replaced
+                                        // it) so nothing writes this. KEPT so the app's
+                                        // by-name snapshot sum-read (which still lists the
+                                        // field) can't break on activation order; drop it
+                                        // together with that read.
     nGeneralErrorBits       : BYTE;     // bits 23:16
     nCategorialErrorBits    : BYTE;     // bits 31:24
     bError                  : BOOL;     // TRUE if any error bit set
 
-    // Newest slot decoded as REAL (GROUP 0 / STANDARD semantics: w0/w1/w2 =
+    // Newest slot decoded as REAL (fixed lanes: w0/w1/w2 =
     // theta/d_theta/iq). Convenience for the trajectory anchor + the app's live
     // pos/vel/current readout (the app decodes the full slot stream per group).
     fLatestPos              : REAL;

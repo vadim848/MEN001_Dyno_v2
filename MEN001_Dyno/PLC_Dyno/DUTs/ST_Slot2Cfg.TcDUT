@@ -7,9 +7,7 @@
 // the table over the op/strobe protocol (CLEAR_ALL, then one bind per entry with addr<>0).
 //
 // Fixed conventions (mirror the app config + the old fixed pipe):
-//   monitor lanes, profile 0 (STANDARD): 0=theta  1=d_theta  2=iq
-//   monitor lanes, profile 1 (TORQUE):   0..8 = the 9 torque-view variables (old 3-slot
-//                                        capture order: vars 0..2 -> old slot s6-style, etc.)
+//   monitor lanes: 0=theta  1=d_theta  2=iq  |  3..9 = ELF-picked debug variables
 //   inject slots: 0=impedance_p_des 1=impedance_v_des 2=impedance_kp 3=impedance_kd
 //                 4=impedance_torque_ff 5=setpoint_position 6=setpoint_velocity 7=setpoint_current
 TYPE ST_Slot2Cfg :
@@ -20,7 +18,12 @@ STRUCT
     aInjSize    : ARRAY[0..9] OF UDINT;
     nPrescaler  : UDINT := 5;             // capture decimation (40 kHz / prescaler; 5 -> 8 kHz,
                                           // 8 samples per 1 ms cycle = 20% headroom, no drops)
-    nProfileId  : BYTE;                   // 0 STANDARD | 1 TORQUE (drives the status synthesis)
+    nProfileId  : BYTE;                   // DEPRECATED, unused. Was the oversample-group
+                                          // selector; that mechanism is gone. KEPT because
+                                          // the app still writes 0 here (pinning the group
+                                          // off on older PLC builds) — deleting it before
+                                          // that write would fail every bind. Drop both
+                                          // together.
 END_STRUCT
 END_TYPE
 ]]></Declaration>
