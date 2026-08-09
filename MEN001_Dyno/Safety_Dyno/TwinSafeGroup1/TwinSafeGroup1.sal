@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<safetyApplication Crc="293601894" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.5.0.0" Id="6823955a-593d-4ebf-aa5d-14367a519244" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
+<safetyApplication Crc="1449801531" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.5.0.0" Id="6823955a-593d-4ebf-aa5d-14367a519244" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
   <networks>
     <safetyApplicationHasNetworks Id="5ee8e231-50e4-407f-b1b8-8929f921b9a8">
       <Network Id="2bb6248c-4964-4b2b-8f86-ef04d9247170" name="Network1" networkName="Network1" intId="1" networkOrderId="0">
@@ -1921,10 +1921,22 @@
                   </inPort>
                 </functioBlockHasInPorts>
                 <functioBlockHasInPorts Id="27fdf9d1-b6b9-4258-ba99-7c3cbf6fd362">
-                  <inPort Id="75c6ccb5-ecc6-46eb-a760-fbf96349d3b9" name="OrIn5" portName="OrIn5" portNum="6" objectIndex="12" varId="6" filter="2" portDataType="1" channelInterface="Deactivated" maxDeviation="0" resetTime="0" />
+                  <inPort Id="75c6ccb5-ecc6-46eb-a760-fbf96349d3b9" name="OrIn5" portName="OrIn5" portNum="6" objectIndex="12" varId="6" filter="2" portDataType="1" channelInterface="Activated" deactivate1="Make Contact (NO)" maxDeviation="0" resetTime="0">
+                    <fbPortGlobalVariableReferences>
+                      <functionBlockPortHasFbPortGlobalVariableReferences Id="e8d4afb9-2d99-4379-a6b5-d375fd690d17">
+                        <fbPortGlobalVariableReference Id="adea5c62-029c-4acc-b0db-3fd6e5da3c1f" variableId="568a049f-428e-420d-96e3-0b094afadcbc" lastKnownPath="GVL1.b_Step12" />
+                      </functionBlockPortHasFbPortGlobalVariableReferences>
+                    </fbPortGlobalVariableReferences>
+                  </inPort>
                 </functioBlockHasInPorts>
                 <functioBlockHasInPorts Id="01389691-4883-457b-b2f2-bfae0e777a3a">
-                  <inPort Id="1e3949d9-e2e9-4c3d-b04a-3f6141122daa" name="OrIn6" portName="OrIn6" portNum="7" objectIndex="13" varId="7" filter="2" portDataType="1" channelInterface="Deactivated" maxDeviation="0" resetTime="0" />
+                  <inPort Id="1e3949d9-e2e9-4c3d-b04a-3f6141122daa" name="OrIn6" portName="OrIn6" portNum="7" objectIndex="13" varId="7" filter="2" portDataType="1" channelInterface="Activated" deactivate1="Make Contact (NO)" maxDeviation="0" resetTime="0">
+                    <fbPortGlobalVariableReferences>
+                      <functionBlockPortHasFbPortGlobalVariableReferences Id="2cbd2cef-2a95-4037-8eea-dccf527291dd">
+                        <fbPortGlobalVariableReference Id="bea6bc1d-2c8e-4c3d-a1c0-6d77a69d0bbf" variableId="3aea9d1f-844c-4284-95af-77a8e9bd559c" lastKnownPath="GVL1.b_Step_RnD" />
+                      </functionBlockPortHasFbPortGlobalVariableReferences>
+                    </fbPortGlobalVariableReferences>
+                  </inPort>
                 </functioBlockHasInPorts>
                 <functioBlockHasInPorts Id="1ddea40d-29e1-4c1a-a31c-0ddf02100c67">
                   <inPort Id="024faf3d-78a9-4364-aee7-0cf0cbbfbd80" name="OrIn7" portName="OrIn7" portNum="8" objectIndex="14" varId="8" filter="2" portDataType="1" channelInterface="Deactivated" maxDeviation="0" resetTime="0" />
@@ -3143,7 +3155,7 @@
       </Network>
     </safetyApplicationHasNetworks>
     <safetyApplicationHasNetworks Id="c05bf5ef-2684-4c2f-a56e-7c07fcd61bb4">
-      <Network Id="53cc63b5-1106-4765-880c-6f3731ff8eaa" name="Network5" networkName="Network4" intId="5" networkOrderId="5">
+      <Network Id="53cc63b5-1106-4765-880c-6f3731ff8eaa" name="Network5" networkName="Step2" intId="5" networkOrderId="5">
         <functionBlocks>
           <networkHasFunctionBlocks Id="0c1c684c-44e3-46ba-bca0-f05da05145c6">
             <fBAnd Id="e84e7643-175d-4291-ba12-fc0501cc3143" name="FBAnd1" instanceName="FBAnd6" orderOfExecution="23" mapState="false" mapDiag="false" functionName="safeAnd">
