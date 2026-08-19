@@ -44,7 +44,7 @@ ELSE
 END_IF
 
 act_LED_Control();
-
+act_LogicMap();
 
 
 
@@ -110,6 +110,25 @@ IF Pulse_Off_TON.Q AND bPulse THEN bPulse:=FALSE; END_IF;
 GVL_Safety.stTwinSAFE_IN.HV_Healthy_Invert:=NOT GVL_Safety.stTwinSAFE_IN.HV_Healthy;
 GVL_Safety.stTwinSAFE_IN.LV_Healthy_Invert:=NOT GVL_Safety.stTwinSAFE_IN.LV_Healthy;
 ]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="act_LogicMap" Id="{0f0c44db-ccbd-41ab-9cfc-1e821c520f71}">
+      <Implementation>
+        <ST><![CDATA[(*
+_________________________________________________________________________________________
+Function				|	Bit 1 (RnD Mode)			|	Bit 2 (RnD Mode 2)			|
+________________________|_______________________________|_______________________________|
+From Safe to RnD		|	1							|	0							|
+________________________|_______________________________|_______________________________|
+From RnD to Armed		|	1							|	1							|
+________________________|_______________________________|_______________________________|
+From RnD to Safe		|	0							|	0							|
+________________________|_______________________________|_______________________________|
+From Armed to RnD		|	0							|	1							|
+________________________|_______________________________|_______________________________|
+
+*)
+;]]></ST>
       </Implementation>
     </Action>
   </POU>
