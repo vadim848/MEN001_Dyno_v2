@@ -79,16 +79,16 @@ IF GVL_Safety.stTwinSAFE_OUT.DoorMonitor AND GVL_Safety.stTwinSAFE_IN.Speps.step
 ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor AND GVL_Safety.stTwinSAFE_OUT.SolenoedMonitor=FALSE THEN
 	//Blue Off
 	GVL_IO.BlueLED:=FALSE;
-ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE OR (GVL_Safety.stTwinSAFE_IN.Speps.stepRnD AND GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode) THEN
+ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE OR (GVL_Safety.stTwinSAFE_IN.Speps.stepRnD) THEN
 	//Blue On
 	GVL_IO.BlueLED:=TRUE;
 END_IF
 
 //Green
-IF (GVL_Safety.stTwinSAFE_IN.Speps.step1 AND GVL_Safety.stTwinSAFE_IN.EStop_Ok AND GVL_Safety.stTwinSAFE_OUT.DoorMonitor=TRUE) OR GVL_Safety.stTwinSAFE_IN.Speps.step2 THEN
+IF (GVL_Safety.stTwinSAFE_IN.Speps.step1 AND GVL_Safety.stTwinSAFE_IN.EStop_Ok AND GVL_Safety.stTwinSAFE_OUT.DoorMonitor=TRUE) OR GVL_Safety.stTwinSAFE_IN.TransitionStep THEN
 	//Green Blink
 	GVL_IO.GreenLED:=bPulse;
-ELSIF GVL_Safety.stTwinSAFE_IN.Safety_Armed OR (GVL_Safety.stTwinSAFE_IN.Speps.stepRnD AND GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode) THEN
+ELSIF GVL_Safety.stTwinSAFE_IN.Safety_Armed OR (GVL_Safety.stTwinSAFE_IN.Speps.stepRnD) OR GVL_Safety.stTwinSAFE_IN.Speps.step2 THEN
 	//Green On
 	GVL_IO.GreenLED:=TRUE;
 ELSIF GVL_Safety.stTwinSAFE_IN.Speps.step4 OR GVL_Safety.stTwinSAFE_IN.Speps.step5 
@@ -97,7 +97,7 @@ OR GVL_Safety.stTwinSAFE_IN.Speps.step6 OR GVL_Safety.stTwinSAFE_OUT.DoorMonitor
 	GVL_IO.GreenLED:=FALSE;
 END_IF
 
-IF GVL_Safety.stTwinSAFE_IN.Speps.step2  THEN
+IF GVL_Safety.stTwinSAFE_IN.Speps.step2 OR GVL_Safety.stTwinSAFE_IN.TransitionStep THEN
 	t_BlinkTime:=T#0.5S;
 ELSE
 	t_BlinkTime:=T#1.5S;
