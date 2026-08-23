@@ -1656,8 +1656,8 @@ External Setpoint Generation:
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{E543FBA8-0E00-4776-A745-F7C9FF6D0056}" AutoDeleteType="true">ST_TwinSAFE_OUT</Name>
-			<BitSize>104</BitSize>
+			<Name GUID="{D098D191-253A-D203-DDBE-9FC6509EC9F0}" AutoDeleteType="true">ST_TwinSAFE_OUT</Name>
+			<BitSize>112</BitSize>
 			<SubItem>
 				<Name>RUN</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
@@ -1719,28 +1719,34 @@ External Setpoint Generation:
 				<BitOffs>64</BitOffs>
 			</SubItem>
 			<SubItem>
-				<Name>EstopPLC</Name>
+				<Name>Set_RnD_Mode2</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
 				<BitSize>8</BitSize>
 				<BitOffs>72</BitOffs>
 			</SubItem>
 			<SubItem>
-				<Name>BatBMS_Cmd</Name>
+				<Name>EstopPLC</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
 				<BitSize>8</BitSize>
 				<BitOffs>80</BitOffs>
 			</SubItem>
 			<SubItem>
-				<Name>RB_BatBMS_Manual_Off</Name>
+				<Name>BatBMS_Cmd</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
 				<BitSize>8</BitSize>
 				<BitOffs>88</BitOffs>
 			</SubItem>
 			<SubItem>
-				<Name>RB_BatBMS_Manual_On</Name>
+				<Name>RB_BatBMS_Manual_Off</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
 				<BitSize>8</BitSize>
 				<BitOffs>96</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>RB_BatBMS_Manual_On</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>104</BitOffs>
 			</SubItem>
 		</DataType>
 		<DataType>
@@ -2360,7 +2366,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{08826ED1-2731-4199-9F57-50138DAEE7D7}" Name="PLC_Dyno" PrjFilePath="PLC_Dyno\PLC_Dyno.plcproj" TmcFilePath="PLC_Dyno\PLC_Dyno.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{8930B5D0-9892-0CE3-4791-81E8BBE7C350}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{64426DE3-334F-728B-AB7D-672E580B47FB}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
 					<Name>PLC_Dyno Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -2517,7 +2523,7 @@ External Setpoint Generation:
 						<Var>
 							<Name>GVL_Safety.stTwinSAFE_OUT</Name>
 							<Comment><![CDATA[ST_TwinSAFE_IN]]></Comment>
-							<Type GUID="{E543FBA8-0E00-4776-A745-F7C9FF6D0056}">ST_TwinSAFE_OUT</Type>
+							<Type GUID="{D098D191-253A-D203-DDBE-9FC6509EC9F0}">ST_TwinSAFE_OUT</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="1">
@@ -2843,12 +2849,12 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Safety.SolonoidStatus</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>GVL_Safety.stTwinSAFE_IN</Name>
 							<Type GUID="{C301B06E-C1F4-3D5F-96FE-82C9CAAD9779}">ST_TwinSAFE_IN</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Safety.SolonoidStatus</Name>
+							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2026-05-20T17:13:29">
@@ -13110,6 +13116,7 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^RB_BatBMS_Manual_On" VarB="StandardOutputs^Standard In Var 57"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^RUN" VarB="StandardOutputs^Standard In Var 50"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^Set_RnD_Mode" VarB="StandardOutputs^Standard In Var 94"/>
+				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^Set_RnD_Mode2" VarB="StandardOutputs^Standard In Var 97"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^SolenoedMonitor" VarB="StandardOutputs^Standard In Var 15"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">

@@ -12,6 +12,8 @@ VAR
 	bPulse	:	BOOL	;
 	
 	t_BlinkTime : TIME	;
+	
+	n_SafeSate	:	INT	;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -115,8 +117,8 @@ GVL_Safety.stTwinSAFE_IN.LV_Healthy_Invert:=NOT GVL_Safety.stTwinSAFE_IN.LV_Heal
     <Action Name="act_LogicMap" Id="{0f0c44db-ccbd-41ab-9cfc-1e821c520f71}">
       <Implementation>
         <ST><![CDATA[(*
-_________________________________________________________________________________________
-Function				|	Bit 1 (RnD Mode)			|	Bit 2 (RnD Mode 2)			|
+_________________________________________________________________________________________________________________________________________________________________
+Function				|	Bit 1 (RnD Mode) GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode		|	Bit 2 (RnD Mode 2)		GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode2	|
 ________________________|_______________________________|_______________________________|
 From Safe to RnD		|	1							|	0							|
 ________________________|_______________________________|_______________________________|
@@ -128,7 +130,27 @@ From Armed to RnD		|	0							|	1							|
 ________________________|_______________________________|_______________________________|
 
 *)
-;]]></ST>
+;
+
+GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode;
+GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode2;
+
+CASE n_SafeSate OF
+	E_SafetyState.enum_RnD_2_Safe://From RnD to Safe	
+		GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode:=FALSE;
+		GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode2:=FALSE;
+	E_SafetyState.enum_Safe_2_RnD://From Safe to RnD
+		GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode:=TRUE;
+		GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode2:=FALSE;
+	
+	E_SafetyState.enum_RnD_2_Armed://From RnD to Armed
+		GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode:=TRUE;
+		GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode2:=TRUE;
+	
+	E_SafetyState.enum_Armed_2_RnD://From Armed to RnD
+		GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode:=TRUE;
+		GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode2:=FALSE;
+END_CASE]]></ST>
       </Implementation>
     </Action>
   </POU>
