@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.19">
   <POU Name="MAIN" Id="{0726ba31-cfa3-4f4b-8cfa-b894f8445811}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
@@ -73,13 +73,14 @@ ELSIF GVL_Safety.stTwinSAFE_IN.EStop_Ok=FALSE AND GVL_Safety.stTwinSAFE_IN.EStop
 END_IF
 
 //Blue
-IF GVL_Safety.stTwinSAFE_OUT.DoorMonitor AND GVL_Safety.stTwinSAFE_IN.Speps.step1 THEN
+IF (GVL_Safety.stTwinSAFE_OUT.DoorMonitor AND GVL_Safety.stTwinSAFE_IN.Speps.step1) 
+OR (GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE AND GVL_Safety.stTwinSAFE_IN.Speps.stepRnD) THEN
 	//Blue Blink
 	GVL_IO.BlueLED:=bPulse;
-ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor AND GVL_Safety.stTwinSAFE_OUT.SolenoedMonitor=FALSE THEN
+ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor AND GVL_Safety.stTwinSAFE_OUT.SolenoedMonitor=FALSE AND NOT GVL_Safety.stTwinSAFE_IN.Speps.stepRnD THEN
 	//Blue Off
 	GVL_IO.BlueLED:=FALSE;
-ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE OR (GVL_Safety.stTwinSAFE_IN.Speps.stepRnD) THEN
+ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE OR (GVL_Safety.stTwinSAFE_IN.Speps.stepRnD AND GVL_Safety.stTwinSAFE_OUT.DoorMonitor) THEN
 	//Blue On
 	GVL_IO.BlueLED:=TRUE;
 END_IF
@@ -150,7 +151,12 @@ CASE n_SafeSate OF
 	E_SafetyState.enum_Armed_2_RnD://From Armed to RnD
 		GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode:=TRUE;
 		GVL_Safety.stTwinSAFE_OUT.Set_RnD_Mode2:=FALSE;
-END_CASE]]></ST>
+END_CASE
+
+
+(*IF GVL_Safety.stTwinSAFE_OUT.Bypass_C1C2 THEN
+	
+END_IF*)]]></ST>
       </Implementation>
     </Action>
   </POU>
