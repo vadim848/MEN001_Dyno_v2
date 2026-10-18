@@ -45,7 +45,7 @@ const mutations = [
 ];
 
 function runTests(cwd) {
-  return spawnSync(process.execPath, ["--test"], { cwd, encoding: "utf8" });
+  return spawnSync(process.execPath, ["--test", "test/button-recognizer.test.js", "test/safety-model.test.js"], { cwd, encoding: "utf8" });
 }
 
 const baseline = runTests(root);
@@ -65,13 +65,16 @@ for (const mutation of mutations) {
     fs.copyFileSync(path.join(root, "package.json"), path.join(temp, "package.json"));
 
     const target = path.join(temp, mutation.file);
-    const original = fs.readFileSync(target, "utf8");
+    const original = fs.readFileSync(target, "utf8").replace(/\r\n/g, "\n");
     if (!original.includes(mutation.from)) throw new Error(`${mutation.id}: mutation anchor not found`);
     fs.writeFileSync(target, original.replace(mutation.from, mutation.to));
 
     const testRun = runTests(temp);
-    const detected = testRun.status !== 0;
     const failedTests = [...testRun.stdout.matchAll(/^not ok \d+ - (.+)$/gm)].map(match => match[1]);
+    if (testRun.error || testRun.status === null || /ERR_MODULE_NOT_FOUND|ENOENT|SyntaxError/.test(testRun.stderr)) {
+      throw new Error(`${mutation.id}: test infrastructure failed: ${testRun.error?.message ?? testRun.stderr}`);
+    }
+    const detected = testRun.status !== 0 && failedTests.length > 0;
     results.push({ id: mutation.id, name: mutation.name, detected, failedTests });
   } finally {
     fs.rmSync(temp, { recursive: true, force: true });

@@ -1,5 +1,11 @@
 # TwinSAFE v2 baseline report
 
+**Latest update:** `SAL_ADAPTER_SEMANTICS.md` corrects adapter block ordering.
+The legacy R&D-down lost handoff is withdrawn under corrected order; the
+selected chain instead reaches Step2 and raises LV/HV commands. 94 tests pass,
+none skipped; model mutations 5/5. Earlier scan timing is historical unless
+asserted by current tests. Unconnected-port assumptions remain unvalidated.
+
 Date: 2026-10-17  
 Source: `MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal`  
 Source CRC recorded by SAL: `872783435`  
@@ -80,6 +86,12 @@ scenario is bound to actual SAL inputs, internal states and outputs.
 
 ## Preliminary state mapping
 
+Resume update (2026-10-18): see `V2_STATE_MAPPING.md` and the four
+`sal-state-baseline` tests. Step12 is shared by entry and return to R&D;
+Step2 also participates in R&D exit. The simplified roles in the table below
+must not be treated as a complete state map. Internal-request execution confirms
+settled latch handoffs, not the complete physical sequence.
+
 | SAL latch/output | Interpreted role | Evidence |
 |---|---|---|
 | `b_Step1` / `out_Step1` | Safe/base step | Network2 resets energy permits and contains Safe cover controls |
@@ -104,6 +116,16 @@ approve and validate a time-based discharge procedure.
 
 ## Energy-removal baseline
 
+Resume update (2026-10-18): the separate Network6 return-to-R&D path is now
+partially executed in four tests; see `V2_RUN_TO_RND_REPORT.md`. It raises STO
+reset, HV discharge and C2 reset requests together, and has a PLC mode-bit
+entry path. The Step4/5 findings below do not cover this alternate route.
+Four further output-chain tests now connect selected Networks1/3/6/11:
+C2/STO output commands drop without discharge completion, and early green
+release can strand Step3/Armed. See the output-chain section of that report
+for scope, raw input levels and seeded initial conditions. Current suite:
+81 passed, 0 skipped; model mutations detected 5/5.
+
 | Requirement | Actual v2 | Result |
 |---|---|---|
 | Step3 -> stop initiates SS1 | SS1 outputs depend on Step2/Step3; leaving the armed step changes them | Structural PASS; physical polarity requires runtime confirmation |
@@ -120,11 +142,17 @@ TwinSAFE runtime scan behavior and the power-supply discharge specification.
 
 ## Emergency-input baseline
 
+Dynamic update: CHAIN05–10 in `EMERGENCY_CHAIN_REPORT.md` confirm that NC2,
+Mentee, connector and external-interlock events select Step4 through separate
+protective paths while `b_EStop_Ok` remains TRUE. The direct FBEstop port
+findings below must not be read as absence of overall protection. Channel
+redundancy, diagnostic semantics and hardware behavior remain unvalidated.
+
 | Input | Actual v2 connection | Result |
 |---|---|---|
 | `in_ES_NC_1` | Active `FBEstop1/EStopIn1`, configured `Single-Channel Both Activated` | Active path confirmed |
 | `in_ES_NC_2` | Assigned to `FBEstop1/EStopIn2`, but that port is `Both Deactivated` | REVIEW REQUIRED |
-| `in_Mentee_EStop` | Assigned to `FBEstop1/EStopIn4`, but that port is `Both Deactivated` | FAIL if this signal is expected to initiate E-Stop |
+| `in_Mentee_EStop` | Assigned to deactivated `FBEstop1/EStopIn4`; independent Network6 protective path | Direct FBEstop gap; separate Step4 reaction dynamically confirmed |
 | `in_Estop_PLC` | Active AND path into `FBEstop1/EStopIn3` | Active path confirmed |
 | External interlock NC1/NC2 | Active in STO/energy-permit networks, not direct FBEstop inputs | Active protective paths confirmed; state response still needs runtime validation |
 | LV/HV connector interlocks | Active in STO/energy-permit networks | Active paths to both drive STO reset chains confirmed |
@@ -147,6 +175,17 @@ active path through the E-Stop function according to the current SAL graph.
 6. Reissue this report with every scenario classified PASS, FAIL or NOT VERIFIED.
 
 ## Validation boundary
+
+Linked R&D-down update: `V2_RND_TO_SAFE_REPORT.md` distinguishes the held
+internal Step2 request from the short physical-button path. The latter loses
+the state handoff in the current adapter instead of proving re-energization.
+Audit execution order and unconnected inputs before extending runtime claims.
+
+Resume continuation: see `V2_SAFE_EXIT_REPORT.md` for Step2/Step6 exit checks.
+Both tested Step1-return requests require raw `in_False_SI2_CH8` TRUE;
+this is an alias input, not a proved software constant. The tested Step2
+path raises LV/HV set requests when that input is FALSE and EStop OK is TRUE.
+Full-project command arbitration and physical outputs remain unverified.
 
 This adapter is an independent regression aid. Final acceptance still requires
 Beckhoff Verify/Build, CRC review, TwinSAFE runtime observation and hardware

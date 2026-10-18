@@ -7,9 +7,15 @@ function activePorts(ports) {
 }
 
 export class SalRuntime {
-  constructor(model, { scanMs = 10 } = {}) {
+  constructor(model, { scanMs = 10, executionOrder = "global", unconnectedInput = true } = {}) {
+    if (!["global", "legacy-network"].includes(executionOrder)) throw new Error("Unknown execution order");
+    if (typeof unconnectedInput !== "boolean") throw new Error("unconnectedInput must be an explicit Boolean assumption");
     this.model = model;
     this.scanMs = scanMs;
+    this.executionOrder = executionOrder;
+    this.unconnectedInput = unconnectedInput;
+    this.assumedUnconnectedPorts = new Set();
+    this.limitations = new Set();
     this.values = new Map();
     this.memory = new Map();
     this.variableSources = new Map();
@@ -43,8 +49,12 @@ export class SalRuntime {
     const variable = this.variableTargets.get(port.path);
     if (raw === undefined && variable) raw = this.get(`var:${variable}`);
     if (raw === undefined && this.values.has(port.path)) raw = this.get(port.path);
-    // An unconnected activated input is stored as its neutral TRUE value.
-    if (raw === undefined) raw = true;
+    // SAL does not establish a universal value for unconnected ports. Record
+    // the assumption so partial execution cannot be mistaken for validation.
+    if (raw === undefined) {
+      this.assumedUnconnectedPorts.add(port.path);
+      raw = this.unconnectedInput;
+    }
     // In this SAL encoding "Make Contact (NO)" is the negated contact. This is
     // observable in Network12: it prevents the single-button branch while the
     // other physical button is active.
@@ -95,19 +105,26 @@ export class SalRuntime {
         break;
       }
       case "safeEstop": {
+        const edmPorts = block.inputs.filter(port => port.name.startsWith("EDM"));
+        if (edmPorts.some(port => port.channelInterface === "Activated" || port.sources.length ||
+          port.globals.length || this.variableTargets.has(port.path))) {
+          throw new Error(`${block.path}: active/connected EDM is not implemented by this partial adapter`);
+        }
+        this.limitations.add(`${block.path}: EDM activation absent from parsed configuration; no-EDM assumption, group lifecycle/discrepancy unmodeled`);
         const safetyInputs = block.inputs.filter(port =>
           port.name.startsWith("EStopIn") && !["Deactivated", "Both Deactivated"].includes(port.channelInterface)
         );
         const safe = safetyInputs.every(port => this.read(port));
         const restart = this.read(block.inputs.find(port => port.name === "Restart"));
-        const previous = this.memory.get(block.path) ?? { enabled: false, delayMs: 0 };
-        const enabled = safe && (previous.enabled || restart);
+        const previous = this.memory.get(block.path) ?? { enabled: false, restartArmed: false, delayed: false, offElapsedMs: 0 };
+        const enabled = safe && (previous.enabled || (previous.restartArmed && !restart));
         const configuredDelay = Number(block.parameters.find(p => p.timing)?.timing ?? 0);
-        const delayMs = enabled ? previous.delayMs + dtMs : 0;
-        this.memory.set(block.path, { enabled, delayMs });
+        const offElapsedMs = enabled ? 0 : previous.offElapsedMs + dtMs;
+        const delayed = enabled || (previous.delayed && offElapsedMs < configuredDelay);
+        this.memory.set(block.path, { enabled, restartArmed: safe && restart, delayed, offElapsedMs });
         this.write(block.outputs.find(port => port.name === "Error"), false);
         this.write(block.outputs.find(port => port.name === "EStopOut"), enabled);
-        this.write(block.outputs.find(port => port.name === "EStopDelOut"), enabled && delayMs >= configuredDelay);
+        this.write(block.outputs.find(port => port.name === "EStopDelOut"), delayed);
         break;
       }
       default:
@@ -116,6 +133,12 @@ export class SalRuntime {
   }
 
   scan(dtMs = this.scanMs) {
+    if (this.executionOrder === "global") {
+      const ordered = this.model.networks.flatMap(network => network.blocks)
+        .sort((a, b) => a.orderOfExecution - b.orderOfExecution);
+      for (const block of ordered) this.evaluate(block, dtMs);
+      return this;
+    }
     for (const network of this.model.networks) {
       const ordered = [...network.blocks].sort((a, b) => a.orderOfExecution - b.orderOfExecution);
       for (const block of ordered) this.evaluate(block, dtMs);

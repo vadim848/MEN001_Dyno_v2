@@ -1,19 +1,24 @@
+// Historical pinned SAL reproduction; this is not candidate acceptance.
+import { baselineSalPath } from "../src/baseline-fixture.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import path from "node:path";
+import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import { parseSalFile, buildDependencyGraph, findPath } from "../src/sal-parser.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const v2Sal = path.resolve(here, "../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal");
-const originalSal = path.resolve(here, "../../../MEN001_Dyno/MEN001_Dyno/MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal");
+const v2Sal = baselineSalPath;
+const originalSal = path.resolve(here, "../../../MEN001_Dyno/MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal");
 const model = parseSalFile(v2Sal);
-const original = parseSalFile(originalSal);
 const graph = buildDependencyGraph(model);
 const estop = source => source.networks.flatMap(network => network.blocks).find(block => block.functionName === "safeEstop");
 const variableAt = (source, portPath) => source.variables.find(variable => variable.targetPorts.includes(portPath))?.name;
 
-test("V2-EMG01 active E-Stop block input assignments match the original stable SAL", () => {
+test("V2-EMG01 active E-Stop block input assignments match the original stable SAL", {
+  skip: !fs.existsSync(originalSal) && "Original stable SAL is not included in this checkout; historical comparison is not verified."
+}, () => {
+  const original = parseSalFile(originalSal);
   const signature = source => estop(source).inputs.map(port => ({
     name: port.name,
     channelInterface: port.channelInterface,

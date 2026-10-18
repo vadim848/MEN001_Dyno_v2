@@ -1,6 +1,14 @@
 # TwinSAFE v2 — proposed change plan
 
+> Current authorization includes local SAL logic corrections under WORKFLOW.md.
+> Follow ../AGENTS.md and ../WORK_STATUS_AND_PLAN.md. Hardware is accepted;
+> physical investigation/validation gates below do not block software testing.
+
 Status: proposal only. No TwinSAFE source has been changed.
+
+2026-10-18 refinement: see `V2_IMPLEMENTATION_GROUPS.md` for exact network
+scope, prerequisite evidence and baseline-versus-candidate test separation.
+`EMERGENCY_REQUIREMENTS.md` binds EMG-001–012 to actual observations and gaps.
 
 ## Entry criteria before editing
 

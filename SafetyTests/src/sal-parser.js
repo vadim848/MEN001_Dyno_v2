@@ -56,7 +56,8 @@ export function parseSalFile(file) {
       id: variable.attr.Id,
       alias: alias ? attrs(alias[1]) : null,
       sourcePorts: [...variable.body.matchAll(/<outPortMoniker\b[^>]*name="([^"]+)"/g)].map(m => m[1]),
-      targetPorts: [...variable.body.matchAll(/<inPortMoniker\b[^>]*name="([^"]+)"/g)].map(m => m[1])
+      targetPorts: [...variable.body.matchAll(/<inPortMoniker\b[^>]*name="([^"]+)"/g)].map(m => m[1]),
+      groupPorts: [...variable.body.matchAll(/<twinSAFEGroupAliasPortMoniker\b[^>]*name="([^"]+)"/g)].map(m => m[1])
     };
   });
 

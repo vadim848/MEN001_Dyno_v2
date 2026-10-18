@@ -1,3 +1,5 @@
+// Historical pinned SAL reproduction; this is not candidate acceptance.
+import { baselineSalPath } from "../src/baseline-fixture.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import path from "node:path";
@@ -6,7 +8,7 @@ import { parseSalFile, buildDependencyGraph, findPath } from "../src/sal-parser.
 import { SalRuntime } from "../src/sal-runtime.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const sal = path.resolve(here, "../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal");
+const sal = baselineSalPath;
 const model = parseSalFile(sal);
 const graph = buildDependencyGraph(model);
 
