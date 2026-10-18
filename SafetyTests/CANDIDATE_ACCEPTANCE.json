@@ -1,11 +1,11 @@
 {
   "source": "working v2 SAL, not pinned fixture",
   "crc": "872783435",
-  "sha256": "b1fa361f5647eba2a5bb8436e4853d8773ba7f6b0acbf1e7f96c519196251daa",
-  "scope": "Selected block chains with external mode preconditions; timing values preliminary; PASS applies only to sampled scenario, not entire requirement or hardware",
+  "sha256": "85b99f594117b6752ff8ea84d6d24db0c5cb79e86003d2a2dc94510f2cc40323",
+  "scope": "Selected block chains with external mode preconditions; user-approved single 0.5s/both 1s, chord delta<=250ms symmetrically; PASS applies only to sampled scenario, not entire requirement or hardware",
   "summary": {
-    "PASS": 2,
-    "FAIL": 14,
+    "PASS": 12,
+    "FAIL": 13,
     "NOT VERIFIED": 3
   },
   "cases": [
@@ -72,31 +72,45 @@
         "BTN-006",
         "BTN-008"
       ],
-      "title": "Second button at 490 ms",
-      "status": "FAIL",
+      "title": "GREEN first; second at 240 ms; chord window inclusive 250 ms",
+      "status": "PASS",
       "scope": [
+        "Network1",
         "Network12"
       ],
       "observations": [
         {
+          "signal": "//Network12/FBTon4/TonOut",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "single TON qualification before second button; not a visible unlock pulse"
+        },
+        {
+          "signal": "unlock while green present",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "every scan after second button"
+        },
+        {
           "signal": "b_Set_Transition_3",
           "expected": false,
-          "actual": true,
-          "checkpoint": "1900 ms of both held"
+          "actual": false,
+          "checkpoint": "990 ms of both held"
         },
         {
           "signal": "b_Set_Transition_3",
           "expected": true,
           "actual": true,
-          "checkpoint": "2100 ms of both held"
+          "checkpoint": "1000 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": true,
+          "actual": true,
+          "checkpoint": "1010 ms of both held"
         }
       ],
-      "firstViolation": {
-        "signal": "b_Set_Transition_3",
-        "expected": false,
-        "actual": true,
-        "checkpoint": "1900 ms of both held"
-      },
+      "firstViolation": null,
       "assumedUnconnectedPorts": [
         "//Network12/FBAnd2/AndIn2",
         "//Network12/FBAnd2/AndIn4",
@@ -130,31 +144,45 @@
         "BTN-006",
         "BTN-008"
       ],
-      "title": "Second button at 500 ms",
-      "status": "FAIL",
+      "title": "GREEN first; second at 250 ms; chord window inclusive 250 ms",
+      "status": "PASS",
       "scope": [
+        "Network1",
         "Network12"
       ],
       "observations": [
         {
+          "signal": "//Network12/FBTon4/TonOut",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "single TON qualification before second button; not a visible unlock pulse"
+        },
+        {
+          "signal": "unlock while green present",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "every scan after second button"
+        },
+        {
           "signal": "b_Set_Transition_3",
           "expected": false,
-          "actual": true,
-          "checkpoint": "1900 ms of both held"
+          "actual": false,
+          "checkpoint": "990 ms of both held"
         },
         {
           "signal": "b_Set_Transition_3",
           "expected": true,
           "actual": true,
-          "checkpoint": "2100 ms of both held"
+          "checkpoint": "1000 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": true,
+          "actual": true,
+          "checkpoint": "1010 ms of both held"
         }
       ],
-      "firstViolation": {
-        "signal": "b_Set_Transition_3",
-        "expected": false,
-        "actual": true,
-        "checkpoint": "1900 ms of both held"
-      },
+      "firstViolation": null,
       "assumedUnconnectedPorts": [
         "//Network12/FBAnd2/AndIn2",
         "//Network12/FBAnd2/AndIn4",
@@ -188,30 +216,732 @@
         "BTN-006",
         "BTN-008"
       ],
-      "title": "Second button at 510 ms",
+      "title": "GREEN first; second at 260 ms; chord window inclusive 250 ms",
       "status": "FAIL",
       "scope": [
+        "Network1",
         "Network12"
       ],
       "observations": [
         {
+          "signal": "//Network12/FBTon4/TonOut",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "single TON qualification before second button; not a visible unlock pulse"
+        },
+        {
+          "signal": "unlock while green present",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "every scan after second button"
+        },
+        {
           "signal": "b_Set_Transition_3",
           "expected": false,
-          "actual": true,
-          "checkpoint": "1900 ms of both held"
+          "actual": false,
+          "checkpoint": "990 ms of both held"
         },
         {
           "signal": "b_Set_Transition_3",
           "expected": false,
           "actual": true,
-          "checkpoint": "2100 ms of both held"
+          "checkpoint": "1000 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1010 ms of both held"
         }
       ],
       "firstViolation": {
         "signal": "b_Set_Transition_3",
         "expected": false,
         "actual": true,
-        "checkpoint": "1900 ms of both held"
+        "checkpoint": "1000 ms of both held"
+      },
+      "assumedUnconnectedPorts": [
+        "//Network12/FBAnd2/AndIn2",
+        "//Network12/FBAnd2/AndIn4",
+        "//Network12/FBAnd3/AndIn2",
+        "//Network12/FBAnd4/AndIn2",
+        "//Network12/FBAnd4/AndIn3",
+        "//Network12/FBAnd5/AndIn4",
+        "//Network12/FBDecouple2/DecIn5",
+        "//Network12/FBDecouple2/DecIn6",
+        "//Network12/FBDecouple2/DecIn7",
+        "//Network12/FBDecouple2/DecIn8",
+        "//Network12/FBAnd7/AndIn2",
+        "//Network12/FBAnd7/AndIn4",
+        "//Network12/FBOr1/OrIn2",
+        "//Network12/FBDecouple1/DecIn6",
+        "//Network12/FBDecouple1/DecIn7",
+        "//Network12/FBDecouple1/DecIn8",
+        "//Network12/FBDecouple3/DecIn3",
+        "//Network12/FBDecouple3/DecIn4",
+        "//Network12/FBDecouple3/DecIn5",
+        "//Network12/FBDecouple3/DecIn6",
+        "//Network12/FBDecouple3/DecIn7",
+        "//Network12/FBDecouple3/DecIn8"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "ACC-B03-490",
+      "requirements": [
+        "BTN-005",
+        "BTN-006",
+        "BTN-008"
+      ],
+      "title": "GREEN first; second at 490 ms; chord window inclusive 250 ms",
+      "status": "FAIL",
+      "scope": [
+        "Network1",
+        "Network12"
+      ],
+      "observations": [
+        {
+          "signal": "//Network12/FBTon4/TonOut",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "single TON qualification before second button; not a visible unlock pulse"
+        },
+        {
+          "signal": "unlock while green present",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "every scan after second button"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "990 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1000 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1010 ms of both held"
+        }
+      ],
+      "firstViolation": {
+        "signal": "b_Set_Transition_3",
+        "expected": false,
+        "actual": true,
+        "checkpoint": "1000 ms of both held"
+      },
+      "assumedUnconnectedPorts": [
+        "//Network12/FBAnd2/AndIn2",
+        "//Network12/FBAnd2/AndIn4",
+        "//Network12/FBAnd3/AndIn2",
+        "//Network12/FBAnd4/AndIn2",
+        "//Network12/FBAnd4/AndIn3",
+        "//Network12/FBAnd5/AndIn4",
+        "//Network12/FBDecouple2/DecIn5",
+        "//Network12/FBDecouple2/DecIn6",
+        "//Network12/FBDecouple2/DecIn7",
+        "//Network12/FBDecouple2/DecIn8",
+        "//Network12/FBAnd7/AndIn2",
+        "//Network12/FBAnd7/AndIn4",
+        "//Network12/FBOr1/OrIn2",
+        "//Network12/FBDecouple1/DecIn6",
+        "//Network12/FBDecouple1/DecIn7",
+        "//Network12/FBDecouple1/DecIn8",
+        "//Network12/FBDecouple3/DecIn3",
+        "//Network12/FBDecouple3/DecIn4",
+        "//Network12/FBDecouple3/DecIn5",
+        "//Network12/FBDecouple3/DecIn6",
+        "//Network12/FBDecouple3/DecIn7",
+        "//Network12/FBDecouple3/DecIn8"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "ACC-B03-500",
+      "requirements": [
+        "BTN-005",
+        "BTN-006",
+        "BTN-008"
+      ],
+      "title": "GREEN first; second at 500 ms; chord window inclusive 250 ms",
+      "status": "FAIL",
+      "scope": [
+        "Network1",
+        "Network12"
+      ],
+      "observations": [
+        {
+          "signal": "//Network12/FBTon4/TonOut",
+          "expected": true,
+          "actual": true,
+          "checkpoint": "single TON qualification before second button; not a visible unlock pulse"
+        },
+        {
+          "signal": "unlock while green present",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "every scan after second button"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "990 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1000 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1010 ms of both held"
+        }
+      ],
+      "firstViolation": {
+        "signal": "b_Set_Transition_3",
+        "expected": false,
+        "actual": true,
+        "checkpoint": "1000 ms of both held"
+      },
+      "assumedUnconnectedPorts": [
+        "//Network12/FBAnd2/AndIn2",
+        "//Network12/FBAnd2/AndIn4",
+        "//Network12/FBAnd3/AndIn2",
+        "//Network12/FBAnd4/AndIn2",
+        "//Network12/FBAnd4/AndIn3",
+        "//Network12/FBAnd5/AndIn4",
+        "//Network12/FBDecouple2/DecIn5",
+        "//Network12/FBDecouple2/DecIn6",
+        "//Network12/FBDecouple2/DecIn7",
+        "//Network12/FBDecouple2/DecIn8",
+        "//Network12/FBAnd7/AndIn2",
+        "//Network12/FBAnd7/AndIn4",
+        "//Network12/FBOr1/OrIn2",
+        "//Network12/FBDecouple1/DecIn6",
+        "//Network12/FBDecouple1/DecIn7",
+        "//Network12/FBDecouple1/DecIn8",
+        "//Network12/FBDecouple3/DecIn3",
+        "//Network12/FBDecouple3/DecIn4",
+        "//Network12/FBDecouple3/DecIn5",
+        "//Network12/FBDecouple3/DecIn6",
+        "//Network12/FBDecouple3/DecIn7",
+        "//Network12/FBDecouple3/DecIn8"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "ACC-B03-510",
+      "requirements": [
+        "BTN-005",
+        "BTN-006",
+        "BTN-008"
+      ],
+      "title": "GREEN first; second at 510 ms; chord window inclusive 250 ms",
+      "status": "FAIL",
+      "scope": [
+        "Network1",
+        "Network12"
+      ],
+      "observations": [
+        {
+          "signal": "//Network12/FBTon4/TonOut",
+          "expected": true,
+          "actual": true,
+          "checkpoint": "single TON qualification before second button; not a visible unlock pulse"
+        },
+        {
+          "signal": "unlock while green present",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "every scan after second button"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "990 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1000 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1010 ms of both held"
+        }
+      ],
+      "firstViolation": {
+        "signal": "b_Set_Transition_3",
+        "expected": false,
+        "actual": true,
+        "checkpoint": "1000 ms of both held"
+      },
+      "assumedUnconnectedPorts": [
+        "//Network12/FBAnd2/AndIn2",
+        "//Network12/FBAnd2/AndIn4",
+        "//Network12/FBAnd3/AndIn2",
+        "//Network12/FBAnd4/AndIn2",
+        "//Network12/FBAnd4/AndIn3",
+        "//Network12/FBAnd5/AndIn4",
+        "//Network12/FBDecouple2/DecIn5",
+        "//Network12/FBDecouple2/DecIn6",
+        "//Network12/FBDecouple2/DecIn7",
+        "//Network12/FBDecouple2/DecIn8",
+        "//Network12/FBAnd7/AndIn2",
+        "//Network12/FBAnd7/AndIn4",
+        "//Network12/FBOr1/OrIn2",
+        "//Network12/FBDecouple1/DecIn6",
+        "//Network12/FBDecouple1/DecIn7",
+        "//Network12/FBDecouple1/DecIn8",
+        "//Network12/FBDecouple3/DecIn3",
+        "//Network12/FBDecouple3/DecIn4",
+        "//Network12/FBDecouple3/DecIn5",
+        "//Network12/FBDecouple3/DecIn6",
+        "//Network12/FBDecouple3/DecIn7",
+        "//Network12/FBDecouple3/DecIn8"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "ACC-B03-IN-BLUE",
+      "requirements": [
+        "BTN-005",
+        "BTN-006",
+        "BTN-008"
+      ],
+      "title": "BLUE first; second at 240 ms; chord window inclusive 250 ms",
+      "status": "PASS",
+      "scope": [
+        "Network1",
+        "Network12"
+      ],
+      "observations": [
+        {
+          "signal": "//Network12/FBTon2/TonOut",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "single TON qualification before second button; not a visible unlock pulse"
+        },
+        {
+          "signal": "unlock while green present",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "every scan after second button"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "990 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": true,
+          "actual": true,
+          "checkpoint": "1000 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": true,
+          "actual": true,
+          "checkpoint": "1010 ms of both held"
+        }
+      ],
+      "firstViolation": null,
+      "assumedUnconnectedPorts": [
+        "//Network12/FBAnd2/AndIn2",
+        "//Network12/FBAnd2/AndIn4",
+        "//Network12/FBAnd3/AndIn2",
+        "//Network12/FBAnd4/AndIn2",
+        "//Network12/FBAnd4/AndIn3",
+        "//Network12/FBAnd5/AndIn4",
+        "//Network12/FBDecouple2/DecIn5",
+        "//Network12/FBDecouple2/DecIn6",
+        "//Network12/FBDecouple2/DecIn7",
+        "//Network12/FBDecouple2/DecIn8",
+        "//Network12/FBAnd7/AndIn2",
+        "//Network12/FBAnd7/AndIn4",
+        "//Network12/FBOr1/OrIn2",
+        "//Network12/FBDecouple1/DecIn6",
+        "//Network12/FBDecouple1/DecIn7",
+        "//Network12/FBDecouple1/DecIn8",
+        "//Network12/FBDecouple3/DecIn3",
+        "//Network12/FBDecouple3/DecIn4",
+        "//Network12/FBDecouple3/DecIn5",
+        "//Network12/FBDecouple3/DecIn6",
+        "//Network12/FBDecouple3/DecIn7",
+        "//Network12/FBDecouple3/DecIn8"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "ACC-B03-EDGE-BLUE",
+      "requirements": [
+        "BTN-005",
+        "BTN-006",
+        "BTN-008"
+      ],
+      "title": "BLUE first; second at 250 ms; chord window inclusive 250 ms",
+      "status": "PASS",
+      "scope": [
+        "Network1",
+        "Network12"
+      ],
+      "observations": [
+        {
+          "signal": "//Network12/FBTon2/TonOut",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "single TON qualification before second button; not a visible unlock pulse"
+        },
+        {
+          "signal": "unlock while green present",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "every scan after second button"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "990 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": true,
+          "actual": true,
+          "checkpoint": "1000 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": true,
+          "actual": true,
+          "checkpoint": "1010 ms of both held"
+        }
+      ],
+      "firstViolation": null,
+      "assumedUnconnectedPorts": [
+        "//Network12/FBAnd2/AndIn2",
+        "//Network12/FBAnd2/AndIn4",
+        "//Network12/FBAnd3/AndIn2",
+        "//Network12/FBAnd4/AndIn2",
+        "//Network12/FBAnd4/AndIn3",
+        "//Network12/FBAnd5/AndIn4",
+        "//Network12/FBDecouple2/DecIn5",
+        "//Network12/FBDecouple2/DecIn6",
+        "//Network12/FBDecouple2/DecIn7",
+        "//Network12/FBDecouple2/DecIn8",
+        "//Network12/FBAnd7/AndIn2",
+        "//Network12/FBAnd7/AndIn4",
+        "//Network12/FBOr1/OrIn2",
+        "//Network12/FBDecouple1/DecIn6",
+        "//Network12/FBDecouple1/DecIn7",
+        "//Network12/FBDecouple1/DecIn8",
+        "//Network12/FBDecouple3/DecIn3",
+        "//Network12/FBDecouple3/DecIn4",
+        "//Network12/FBDecouple3/DecIn5",
+        "//Network12/FBDecouple3/DecIn6",
+        "//Network12/FBDecouple3/DecIn7",
+        "//Network12/FBDecouple3/DecIn8"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "ACC-B03-LATE-BLUE",
+      "requirements": [
+        "BTN-005",
+        "BTN-006",
+        "BTN-008"
+      ],
+      "title": "BLUE first; second at 260 ms; chord window inclusive 250 ms",
+      "status": "FAIL",
+      "scope": [
+        "Network1",
+        "Network12"
+      ],
+      "observations": [
+        {
+          "signal": "//Network12/FBTon2/TonOut",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "single TON qualification before second button; not a visible unlock pulse"
+        },
+        {
+          "signal": "unlock while green present",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "every scan after second button"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "990 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1000 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1010 ms of both held"
+        }
+      ],
+      "firstViolation": {
+        "signal": "b_Set_Transition_3",
+        "expected": false,
+        "actual": true,
+        "checkpoint": "1000 ms of both held"
+      },
+      "assumedUnconnectedPorts": [
+        "//Network12/FBAnd2/AndIn2",
+        "//Network12/FBAnd2/AndIn4",
+        "//Network12/FBAnd3/AndIn2",
+        "//Network12/FBAnd4/AndIn2",
+        "//Network12/FBAnd4/AndIn3",
+        "//Network12/FBAnd5/AndIn4",
+        "//Network12/FBDecouple2/DecIn5",
+        "//Network12/FBDecouple2/DecIn6",
+        "//Network12/FBDecouple2/DecIn7",
+        "//Network12/FBDecouple2/DecIn8",
+        "//Network12/FBAnd7/AndIn2",
+        "//Network12/FBAnd7/AndIn4",
+        "//Network12/FBOr1/OrIn2",
+        "//Network12/FBDecouple1/DecIn6",
+        "//Network12/FBDecouple1/DecIn7",
+        "//Network12/FBDecouple1/DecIn8",
+        "//Network12/FBDecouple3/DecIn3",
+        "//Network12/FBDecouple3/DecIn4",
+        "//Network12/FBDecouple3/DecIn5",
+        "//Network12/FBDecouple3/DecIn6",
+        "//Network12/FBDecouple3/DecIn7",
+        "//Network12/FBDecouple3/DecIn8"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "ACC-B03-490-BLUE",
+      "requirements": [
+        "BTN-005",
+        "BTN-006",
+        "BTN-008"
+      ],
+      "title": "BLUE first; second at 490 ms; chord window inclusive 250 ms",
+      "status": "FAIL",
+      "scope": [
+        "Network1",
+        "Network12"
+      ],
+      "observations": [
+        {
+          "signal": "//Network12/FBTon2/TonOut",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "single TON qualification before second button; not a visible unlock pulse"
+        },
+        {
+          "signal": "unlock while green present",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "every scan after second button"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "990 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1000 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1010 ms of both held"
+        }
+      ],
+      "firstViolation": {
+        "signal": "b_Set_Transition_3",
+        "expected": false,
+        "actual": true,
+        "checkpoint": "1000 ms of both held"
+      },
+      "assumedUnconnectedPorts": [
+        "//Network12/FBAnd2/AndIn2",
+        "//Network12/FBAnd2/AndIn4",
+        "//Network12/FBAnd3/AndIn2",
+        "//Network12/FBAnd4/AndIn2",
+        "//Network12/FBAnd4/AndIn3",
+        "//Network12/FBAnd5/AndIn4",
+        "//Network12/FBDecouple2/DecIn5",
+        "//Network12/FBDecouple2/DecIn6",
+        "//Network12/FBDecouple2/DecIn7",
+        "//Network12/FBDecouple2/DecIn8",
+        "//Network12/FBAnd7/AndIn2",
+        "//Network12/FBAnd7/AndIn4",
+        "//Network12/FBOr1/OrIn2",
+        "//Network12/FBDecouple1/DecIn6",
+        "//Network12/FBDecouple1/DecIn7",
+        "//Network12/FBDecouple1/DecIn8",
+        "//Network12/FBDecouple3/DecIn3",
+        "//Network12/FBDecouple3/DecIn4",
+        "//Network12/FBDecouple3/DecIn5",
+        "//Network12/FBDecouple3/DecIn6",
+        "//Network12/FBDecouple3/DecIn7",
+        "//Network12/FBDecouple3/DecIn8"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "ACC-B03-500-BLUE",
+      "requirements": [
+        "BTN-005",
+        "BTN-006",
+        "BTN-008"
+      ],
+      "title": "BLUE first; second at 500 ms; chord window inclusive 250 ms",
+      "status": "FAIL",
+      "scope": [
+        "Network1",
+        "Network12"
+      ],
+      "observations": [
+        {
+          "signal": "//Network12/FBTon2/TonOut",
+          "expected": true,
+          "actual": true,
+          "checkpoint": "single TON qualification before second button; not a visible unlock pulse"
+        },
+        {
+          "signal": "unlock while green present",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "every scan after second button"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "990 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1000 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1010 ms of both held"
+        }
+      ],
+      "firstViolation": {
+        "signal": "b_Set_Transition_3",
+        "expected": false,
+        "actual": true,
+        "checkpoint": "1000 ms of both held"
+      },
+      "assumedUnconnectedPorts": [
+        "//Network12/FBAnd2/AndIn2",
+        "//Network12/FBAnd2/AndIn4",
+        "//Network12/FBAnd3/AndIn2",
+        "//Network12/FBAnd4/AndIn2",
+        "//Network12/FBAnd4/AndIn3",
+        "//Network12/FBAnd5/AndIn4",
+        "//Network12/FBDecouple2/DecIn5",
+        "//Network12/FBDecouple2/DecIn6",
+        "//Network12/FBDecouple2/DecIn7",
+        "//Network12/FBDecouple2/DecIn8",
+        "//Network12/FBAnd7/AndIn2",
+        "//Network12/FBAnd7/AndIn4",
+        "//Network12/FBOr1/OrIn2",
+        "//Network12/FBDecouple1/DecIn6",
+        "//Network12/FBDecouple1/DecIn7",
+        "//Network12/FBDecouple1/DecIn8",
+        "//Network12/FBDecouple3/DecIn3",
+        "//Network12/FBDecouple3/DecIn4",
+        "//Network12/FBDecouple3/DecIn5",
+        "//Network12/FBDecouple3/DecIn6",
+        "//Network12/FBDecouple3/DecIn7",
+        "//Network12/FBDecouple3/DecIn8"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "ACC-B03-510-BLUE",
+      "requirements": [
+        "BTN-005",
+        "BTN-006",
+        "BTN-008"
+      ],
+      "title": "BLUE first; second at 510 ms; chord window inclusive 250 ms",
+      "status": "FAIL",
+      "scope": [
+        "Network1",
+        "Network12"
+      ],
+      "observations": [
+        {
+          "signal": "//Network12/FBTon2/TonOut",
+          "expected": true,
+          "actual": true,
+          "checkpoint": "single TON qualification before second button; not a visible unlock pulse"
+        },
+        {
+          "signal": "unlock while green present",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "every scan after second button"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": false,
+          "checkpoint": "990 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1000 ms of both held"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": false,
+          "actual": true,
+          "checkpoint": "1010 ms of both held"
+        }
+      ],
+      "firstViolation": {
+        "signal": "b_Set_Transition_3",
+        "expected": false,
+        "actual": true,
+        "checkpoint": "1000 ms of both held"
       },
       "assumedUnconnectedPorts": [
         "//Network12/FBAnd2/AndIn2",
@@ -246,7 +976,7 @@
         "BTN-007"
       ],
       "title": "Chord timer restarts fully after one button flickers",
-      "status": "FAIL",
+      "status": "PASS",
       "scope": [
         "Network12"
       ],
@@ -254,22 +984,23 @@
         {
           "signal": "b_Set_Transition_3",
           "expected": false,
-          "actual": true,
-          "checkpoint": "1900 ms since restored chord"
+          "actual": false,
+          "checkpoint": "990 ms since restored chord"
         },
         {
           "signal": "b_Set_Transition_3",
           "expected": true,
           "actual": true,
-          "checkpoint": "2100 ms since restored chord"
+          "checkpoint": "1000 ms since restored chord"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": true,
+          "actual": true,
+          "checkpoint": "1010 ms since restored chord"
         }
       ],
-      "firstViolation": {
-        "signal": "b_Set_Transition_3",
-        "expected": false,
-        "actual": true,
-        "checkpoint": "1900 ms since restored chord"
-      },
+      "firstViolation": null,
       "assumedUnconnectedPorts": [
         "//Network12/FBAnd2/AndIn2",
         "//Network12/FBAnd2/AndIn4",
@@ -301,8 +1032,8 @@
       "requirements": [
         "BTN-003"
       ],
-      "title": "Green: no down at 900 ms; down by 1100 ms",
-      "status": "FAIL",
+      "title": "Green: TON at 500 ms; downstream down by 510 ms",
+      "status": "PASS",
       "scope": [
         "Network12"
       ],
@@ -310,22 +1041,23 @@
         {
           "signal": "b_Set_Transition_2",
           "expected": false,
+          "actual": false,
+          "checkpoint": "490 ms"
+        },
+        {
+          "signal": "//Network12/FBTon4/TonOut",
+          "expected": true,
           "actual": true,
-          "checkpoint": "900 ms"
+          "checkpoint": "500 ms timer threshold; consumer precedes TON in global scan"
         },
         {
           "signal": "b_Set_Transition_2",
           "expected": true,
           "actual": true,
-          "checkpoint": "1100 ms"
+          "checkpoint": "510 ms"
         }
       ],
-      "firstViolation": {
-        "signal": "b_Set_Transition_2",
-        "expected": false,
-        "actual": true,
-        "checkpoint": "900 ms"
-      },
+      "firstViolation": null,
       "assumedUnconnectedPorts": [
         "//Network12/FBAnd2/AndIn2",
         "//Network12/FBAnd2/AndIn4",
@@ -357,8 +1089,8 @@
       "requirements": [
         "BTN-004"
       ],
-      "title": "Blue: no unlock at 900 ms; unlock by 1100 ms",
-      "status": "FAIL",
+      "title": "Blue: TON at 500 ms; downstream unlock by 510 ms",
+      "status": "PASS",
       "scope": [
         "Network12"
       ],
@@ -366,22 +1098,23 @@
         {
           "signal": "b_Set_Door_Unlock_1",
           "expected": false,
+          "actual": false,
+          "checkpoint": "490 ms"
+        },
+        {
+          "signal": "//Network12/FBTon2/TonOut",
+          "expected": true,
           "actual": true,
-          "checkpoint": "900 ms"
+          "checkpoint": "500 ms timer threshold; consumer precedes TON in global scan"
         },
         {
           "signal": "b_Set_Door_Unlock_1",
           "expected": true,
           "actual": true,
-          "checkpoint": "1100 ms"
+          "checkpoint": "510 ms"
         }
       ],
-      "firstViolation": {
-        "signal": "b_Set_Door_Unlock_1",
-        "expected": false,
-        "actual": true,
-        "checkpoint": "900 ms"
-      },
+      "firstViolation": null,
       "assumedUnconnectedPorts": [
         "//Network12/FBAnd2/AndIn2",
         "//Network12/FBAnd2/AndIn4",
@@ -413,8 +1146,8 @@
       "requirements": [
         "BTN-006"
       ],
-      "title": "Both: no up at 1900 ms; up by 2100 ms",
-      "status": "FAIL",
+      "title": "Both: no up at 990 ms; up at 1000 ms",
+      "status": "PASS",
       "scope": [
         "Network12"
       ],
@@ -422,22 +1155,23 @@
         {
           "signal": "b_Set_Transition_3",
           "expected": false,
-          "actual": true,
-          "checkpoint": "1900 ms"
+          "actual": false,
+          "checkpoint": "990 ms"
         },
         {
           "signal": "b_Set_Transition_3",
           "expected": true,
           "actual": true,
-          "checkpoint": "2100 ms"
+          "checkpoint": "1000 ms"
+        },
+        {
+          "signal": "b_Set_Transition_3",
+          "expected": true,
+          "actual": true,
+          "checkpoint": "1010 ms"
         }
       ],
-      "firstViolation": {
-        "signal": "b_Set_Transition_3",
-        "expected": false,
-        "actual": true,
-        "checkpoint": "1900 ms"
-      },
+      "firstViolation": null,
       "assumedUnconnectedPorts": [
         "//Network12/FBAnd2/AndIn2",
         "//Network12/FBAnd2/AndIn4",
@@ -571,7 +1305,7 @@
         "CVR-002"
       ],
       "title": "Safe unlock removed after blue release",
-      "status": "FAIL",
+      "status": "PASS",
       "scope": [
         "Network1",
         "Network2"
@@ -586,16 +1320,11 @@
         {
           "signal": "out_Door_Unlock_Solonoeid",
           "expected": false,
-          "actual": true,
+          "actual": false,
           "checkpoint": "50 ms after release"
         }
       ],
-      "firstViolation": {
-        "signal": "out_Door_Unlock_Solonoeid",
-        "expected": false,
-        "actual": true,
-        "checkpoint": "50 ms after release"
-      },
+      "firstViolation": null,
       "assumedUnconnectedPorts": [
         "//Network2/FBDecouple3/DecIn2",
         "//Network2/FBDecouple3/DecIn3",
@@ -646,7 +1375,7 @@
         "CVR-005"
       ],
       "title": "Unlock cannot coexist with upward command after open/reclose",
-      "status": "FAIL",
+      "status": "PASS",
       "scope": [
         "Network1",
         "Network12"
@@ -655,16 +1384,11 @@
         {
           "signal": "Unlock AND StepUp",
           "expected": false,
-          "actual": true,
+          "actual": false,
           "checkpoint": "after reclose and qualified chord"
         }
       ],
-      "firstViolation": {
-        "signal": "Unlock AND StepUp",
-        "expected": false,
-        "actual": true,
-        "checkpoint": "after reclose and qualified chord"
-      },
+      "firstViolation": null,
       "assumedUnconnectedPorts": [
         "//Network12/FBAnd2/AndIn2",
         "//Network12/FBAnd2/AndIn4",
@@ -749,7 +1473,6 @@
         "//Network2/FBAnd1/AndIn2",
         "//Network2/FBAnd1/AndIn7",
         "//Network1/FBRs1/Reset",
-        "//Network1/FBRs1/Set",
         "//Network1/FBRs2/Reset",
         "//Network1/FBRs2/Set",
         "//Network2/FBDecouple1/DecIn1",
@@ -1024,7 +1747,6 @@
         "//Network2/FBAnd1/AndIn2",
         "//Network2/FBAnd1/AndIn7",
         "//Network1/FBRs1/Reset",
-        "//Network1/FBRs1/Set",
         "//Network1/FBRs2/Reset",
         "//Network1/FBRs2/Set",
         "//Network2/FBDecouple1/DecIn1",
@@ -1294,7 +2016,6 @@
         "//Network2/FBAnd1/AndIn2",
         "//Network2/FBAnd1/AndIn7",
         "//Network1/FBRs1/Reset",
-        "//Network1/FBRs1/Set",
         "//Network1/FBRs2/Reset",
         "//Network1/FBRs2/Set",
         "//Network2/FBDecouple1/DecIn1",
@@ -1528,7 +2249,7 @@
         "CVR-006"
       ],
       "status": "NOT VERIFIED",
-      "reason": "Separate closed/locked feedback and physical energy polarity are not established"
+      "reason": "Software binding and behavior of closed/locked conditions are not yet fully covered; hardware inputs are accepted"
     },
     {
       "id": "ACC-C01-E",
@@ -1536,7 +2257,7 @@
         "EMG-007"
       ],
       "status": "NOT VERIFIED",
-      "reason": "All transition phases, emergency sources and physical unlock polarity are not yet verified"
+      "reason": "Software coverage of all transition phases and emergency source/button combinations is incomplete"
     }
   ]
 }

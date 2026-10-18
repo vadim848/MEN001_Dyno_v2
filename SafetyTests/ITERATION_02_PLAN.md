@@ -1,75 +1,82 @@
-# Iteration 02 — актуальное разрешение запроса LV из Step12
+# Iteration02 r2 — актуальный LV Set permission
 
-Предложение архитектора, 2026-10-18; выполнять после приёмки Iteration01.
-Никаких изменений кода этим документом не внесено.
+READY редактору, 2026-10-18. r1 late gate113 отменён после editor preflight.
+Iteration01 принята, checkpoint f7b4f7e. Прочитаны актуальные SPEC, DECISIONS,
+FULL_NORMAL_CYCLE, SOFTWARE_ACCEPTANCE_SCOPE и REFERENCE_PHASE_MAPPING.
+D-STO-LAUNCH/D-REFERENCE-BASE не меняют независимое EMG-011.
 
-## Основание
+## Почему другой подход
 
-EMG-011 и §5.1 спецификации однозначно требуют приоритета EStop/external
-interlock и актуальных connector interlock при повышении энергии. Reference
-Prodoction 4495a1f не имеет Step12 и writer b_Set_LV_C1_1; новая ветвь v2
-Network11/FBAnd1(order112) добавляет этот запрос по Step12 и второму условию,
-без проверки этих разрешений. Поэтому reference не оправдывает обход.
-Текущий отчёт содержит PRIORITY:Step12:* контрпримеры; они условны и сами по
-себе не доказывают достижимость Step12. План проверяет отдельный реальный
-producer и его место в цепи, не объявляет исправленной всю emergency систему.
+Реальный ordering: LV FBRs1 order2 читает FBOr17 order172 прошлого скана.
+EStop18, Step12 producer112 и предложенный gate113 слишком поздние: stale
+TRUE уже потреблён. Ожидание100ms в тесте это не исправляет. Также producer112
+имеет существующий target Network11/FBTon1/TonIn, который сохраняется.
 
-## Разрешённый маленький diff
+Пакет теперь защищает ВСЕ LV Set requests на latch boundary. Это обосновано
+EMG-011: текущие EStop/interlocks имеют приоритет над любым повышением.
+Не перестраивается исходная последовательность reference; сохраняются её
+действия, относительный ordering всех старых блоков и latency старого aggregate.
+Никакого принудительного сброса уже включённого LV этим пакетом.
 
-Сохранить Network11/FBAnd1 и его прежние входы. После него добавить один
-safeAnd `FBAndLvPermit`, order113; сдвинуть прежние orders>=113 на +1,
-включая добавленный Iteration01 final unlock gate, сохранив относительный
-порядок всех прежних блоков. Новые GUID/instanceName уникальны.
+## Точный diff
 
-Активные входы нового AND:
+1. Добавить Network1/safeAnd FBAndLvCurrentPermit order2, восемь входов:
+   b_EStop_Ok, in_ES_NC_1, in_ES_NC_2, in_InterLock_NC_1, in_InterLock_NC_2,
+   in_LV_Connector_Interlock, in_HV_Connector_Interlock — прямые;
+   in_Estop_PLC — инвертированный. Existing variableId globals/inputs.
+   Прямой контакт SAL Break Contact(NC), инвертированный Make Contact(NO).
+   EStopOK предыдущего скана удерживает restart inhibition; текущие raw inputs
+   блокируют новую аварию ДО позднего EStop execution.
+2. Добавить safeAnd FBAndLvSetPermit order3: AndIn1=старый FBOr17/OrOut,
+   AndIn2=новый currentPermit.AndOut; output → Network1/FBRs1/Set.
+   Остальные входы деактивированы. GUID/instanceName уникальны.
+3. Старый FBOr17/OrOut target FBRs1/Set заменить новым SetPermit/AndIn1;
+   обхода не оставить. Все три старых входа OR17 сохранить без изменений.
+4. Прежние orders>=2 сдвинуть +2: FBRs1=4, EStop=20, oldProducer=114,
+   FBOr17=174, iteration01 finalgate=208. Прежний order1 сохраняется1.
+   Относительный порядок всех старых блоков и их контакты неизменны.
+5. Network11/FBAnd1 НЕ менять: сохранить global writer b_Set_LV_C1_1 И
+   существующий target Network11/FBTon1/TonIn. Не добавлять late gate113.
+   Не менять Reset LV, остальные writers, timers, aliases/configuration.
 
-1. old Network11/FBAnd1/AndOut (прямой контакт).
-2. b_EStop_Ok (прямой; реальный FBEstop1 order18 исполняется раньше).
-3. in_ES_NC_2 (прямой).
-4. in_InterLock_NC_1 (прямой).
-5. in_InterLock_NC_2 (прямой).
-6. in_LV_Connector_Interlock (прямой).
-7. in_HV_Connector_Interlock (прямой).
+Итог SetLV=oldAggregatePreviousScan AND currentPermit. При здоровых разрешениях
+это прежняя Set-последовательность без добавочной скановой задержки: aggregate
+прежде читался RS2, теперь gate3/RS4 того же следующего скана. При уже TRUE
+LV запрет Set не создаёт Reset; аварийное снятие остаётся существующей цепи.
 
-Восьмой вход деактивирован. Связи globals используют existing variableId;
-никакие aliases/global parameters/TON не меняются. Единственный writer
-GVL1.b_Set_LV_C1_1 перенести с старого AND на новый AND; прежний AND теперь
-пишет только в новый AndIn1. Проверить обе XML-стороны связи и отсутствие
-старого глобального writer. Старые b_Set_LV_C1 из Network5 и команды HV
-не менять: это независимые следующие итерации, не скрывать их FAIL.
+## Приёмка фактического SAL
 
-При b_EStop_Ok TRUE и всех шести разрешениях TRUE логика запроса LV остаётся
-побитно oldProducer. При любом FALSE новый запрос FALSE. Это не немедленный
-сброс уже включённого LV, не разрешение доступа и не новое правило emergency
-completion. Полярности указанных входов заданы §5.1 и существующим EStop
-контрактом; иных полярностей, включая Mentee, не выводить по названию.
+- Sole incoming RS.Set=новый gate; oldOR17 sole target=newgate. Проверить
+  все port.globals/targets, не только model.variables. Старые input/writer/
+  Reset/output bindings сохранены. GUID/order1..208 без коллизий.
+- Hardcoded iteration01 metadata206→208; смысл проверки прежнего relative
+  ordering и sole writer сохраняется. Partial selectors включают обаAND.
+- Таблица permissions: oldAggregate FALSE/TRUE при healthy → прежний Set;
+  каждый permission fault при aggregate TRUE → Set FALSE. EStopOK FALSE при
+  остальных raw healthy запрещает автоматический restart.
+- Обязательный paired stale trace: предыдущий scan выдал OR17 TRUE, LV latch
+  ещё FALSE; перед следующим scan один raw fault. В первом fault scan LV
+  остаётся FALSE. При ИДЕНТИЧНОМ prehistory безfault LV становится TRUE.
+  Каждый перечисленный permission отдельно, включая EStopOK. Не подменять
+  этот trace инъекцией выхода нового gate или ожиданием100ms.
+- Реальные producers отдельно Step12 и унаследованный LV route, реальный
+  OR17→gate→RS→out_LV_C1; healthy positive действительно включает LV.
+  Scoped injection внутренних requests явно указать: это не доказательство
+  принятия внешнего жеста/достижимости Step12.
+- Компонент: LV уже TRUE, Reset явно FALSE, permission потерян → latch TRUE.
+  Полная аварийная цепь вправе снять LV своим Reset; не задавать противоположный
+  oracle полному fault scenario. Не форсировать outputs в целях зелени.
+- Полный npm run check:software, регрессия iteration01, прежние PRIORITY с
+  двумя fallback и явными пределами seeded phases/Network4/group lifecycle.
+  Все TON и аппаратные секции неизменны. Остаточные FAIL не скрывать.
+- Независимое ревью diff и positive/negative traces без существенных замечаний.
 
-## Приёмка и недопустимые упрощения
+## Пределы
 
-- Сначала подтвердить полный writer/readers inventory b_Set_LV_C1_1 и
-  downstream RS set/reset. Если старый writer больше одного или другой
-  тракт пишет тот же сигнал, вернуть архитектору уточнение до редактирования.
-- Компонент: фактический producer Network11, old condition FALSE/TRUE,
-  все разрешения TRUE → прежние результаты. Каждый permission FALSE отдельно
-  при old condition TRUE → запрос FALSE; восстановление возвращает прежний
-  producer. Это проверка комбинационного permission, не state recovery oracle.
-- Реальная цепь с фиксированными явно записанными состоянием и feedback:
-  healthy positive control действительно поднимает LV; при NC1/PLC/NC2,
-  external и connector loss в том же входном скане новая LV команда не
-  возникает. Проверить до/после boundary и order18→112→113→LV RS consumer.
-  Если consumer раньше113, разобрать и поменять ordering плана, а не
-  добавлять произвольное ожидание в тест ради PASS.
-- Не требовать снятия уже включённого LV этим AND и не заменять аварийную
-  последовательность прямым обнулением outputs.
-- Проверить сохранение Iteration01, XML GUID/order/sole writer, все TON и
-  аппаратные секции; полный npm run check:software. Не менять ожидаемые
-  значения в старых сценариях. Partial selectors обновлять явно.
-
-Mentee и другие upstream completion/restart ожидания не включены в oracle
-этой итерации. Если от них требуется конкретное поведение, сначала reference
-и требования, затем вопрос через владельца при неустранённой неоднозначности.
-Не тестировать выдуманное поведение как согласованный контракт.
-
-Native CRC остаётся требующим regeneration; native Verify/Build вне объёма.
-Network4/group lifecycle остаются пределами адаптера. Отчёт фиксирует SHA,
-seeded начальное состояние, fallback assumptions и positive controls.
+Закрывается часть EMG-011 по перечисленным условиям на LV Set boundary.
+Mentee/иныеfaults, HV producers, принятый launch, completion и вся emergency
+последовательность не объявляются закрытыми. Unknown oracle → аналитику после
+reference/requirements. Все41ID обязательны для общего задания, этот scoped
+PASS не заменяет их. Снятие STO/StartingRun отдельны от этой итерации.
+Программные входы заданы, физические источники не исследуются. Native CRC
+требует regeneration; Verify/Build/CRC вне scope, аппаратная validation не заявляется.

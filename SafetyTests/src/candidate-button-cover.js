@@ -40,15 +40,25 @@ export function candidateButtonCoverChecks(model) {
     r.runFor(1200, { in_Relase_Door_PB: true });
     e("b_Set_Door_Unlock_1", false, "second hold after only 100 ms neutral");
   });
-  for (const [suffix, stagger] of [["IN", 490], ["EDGE", 500], ["LATE", 510]]) {
-    check(`ACC-B03-${suffix}`, ["BTN-005", "BTN-006", "BTN-008"], `Second button at ${stagger} ms`, rnd, (r, e) => {
+  for (const [first, input, timer] of [["GREEN", "in_Reset_PB", "FBTon4"], ["BLUE", "in_Relase_Door_PB", "FBTon2"]])
+    for (const [suffix, stagger] of [["IN", 240], ["EDGE", 250], ["LATE", 260], ["490", 490], ["500", 500], ["510", 510]]) {
+    const id = `ACC-B03-${suffix}${first === "BLUE" ? "-BLUE" : ""}`;
+    check(id, ["BTN-005", "BTN-006", "BTN-008"], `${first} first; second at ${stagger} ms; chord window inclusive 250 ms`, { ...cover, ...rnd }, (r, e) => {
+      // Full neutral interval precedes the attempt. Network12 has no complete
+      // Armed state: this is an input precondition, not proof of its recognizer.
       r.runFor(2100);
-      r.runFor(stagger, { in_Reset_PB: true });
-      r.runFor(990, { in_Relase_Door_PB: true });
+      r.runFor(stagger, { [input]: true });
+      e(`//Network12/${timer}/TonOut`, stagger >= 500, "single TON qualification before second button; not a visible unlock pulse");
+      let forbiddenUnlock = false;
+      r.setInputs({ in_Reset_PB: true, in_Relase_Door_PB: true });
+      for (let i = 0; i < 99; i++) {
+        r.scan(); forbiddenUnlock ||= r.get("out_Door_Unlock_Solonoeid");
+      }
+      e("unlock while green present", false, "every scan after second button", forbiddenUnlock);
       e("b_Set_Transition_3", false, "990 ms of both held");
       r.runFor(10);
-      e("b_Set_Transition_3", stagger <= 500, "1000 ms of both held");
-      r.runFor(10); e("b_Set_Transition_3", stagger <= 500, "1010 ms of both held");
+      e("b_Set_Transition_3", stagger <= 250, "1000 ms of both held");
+      r.runFor(10); e("b_Set_Transition_3", stagger <= 250, "1010 ms of both held");
     });
   }
   check("ACC-B03-FLICKER", ["BTN-006", "BTN-007"], "Chord timer restarts fully after one button flickers", rnd, (r, e) => {
@@ -61,22 +71,26 @@ export function candidateButtonCoverChecks(model) {
     r.runFor(10); e("b_Set_Transition_3", true, "1010 ms since restored chord");
   });
   check("ACC-B02-G", ["BTN-003"], "Green: TON at 500 ms; downstream down by 510 ms", rnd, (r, e) => {
+    r.runFor(2100);
     r.runFor(490, { in_Reset_PB: true }); e("b_Set_Transition_2", false, "490 ms");
     r.runFor(10); e("//Network12/FBTon4/TonOut", true, "500 ms timer threshold; consumer precedes TON in global scan");
     r.runFor(10); e("b_Set_Transition_2", true, "510 ms");
   });
   check("ACC-B02-B", ["BTN-004"], "Blue: TON at 500 ms; downstream unlock by 510 ms", rnd, (r, e) => {
+    r.runFor(2100);
     r.runFor(490, { in_Relase_Door_PB: true }); e("b_Set_Door_Unlock_1", false, "490 ms");
     r.runFor(10); e("//Network12/FBTon2/TonOut", true, "500 ms timer threshold; consumer precedes TON in global scan");
     r.runFor(10); e("b_Set_Door_Unlock_1", true, "510 ms");
   });
   check("ACC-B03-T", ["BTN-006"], "Both: no up at 990 ms; up at 1000 ms", rnd, (r, e) => {
+    r.runFor(2100);
     r.runFor(990, { in_Reset_PB: true, in_Relase_Door_PB: true }); e("b_Set_Transition_3", false, "990 ms");
     r.runFor(10); e("b_Set_Transition_3", true, "1000 ms");
     r.runFor(10); e("b_Set_Transition_3", true, "1010 ms");
   });
   for (const [suffix, released, signal] of [["B", "in_Reset_PB", "b_Set_Door_Unlock_1"], ["G", "in_Relase_Door_PB", "b_Set_Transition_2"]]) {
     check(`ACC-B03-${suffix}`, ["BTN-007"], "Failed chord must not become a single command", rnd, (r, e) => {
+      r.runFor(2100);
       r.runFor(300, { in_Reset_PB: true, in_Relase_Door_PB: true });
       r.runFor(1200, { [released]: false }); e(signal, false, "remaining button held 1200 ms");
     });
@@ -130,8 +144,8 @@ export function candidateButtonCoverChecks(model) {
   }
   for (const [id, req, reason] of [
     ["ACC-B01", ["BTN-001", "BTN-002", "BOOT-002"], "Complete recognizer/reset ownership is not yet bound across Safe/R&D/Run"],
-    ["ACC-C02-F", ["CVR-004", "CVR-006"], "Separate closed/locked feedback and physical energy polarity are not established"],
-    ["ACC-C01-E", ["EMG-007"], "All transition phases, emergency sources and physical unlock polarity are not yet verified"]
+    ["ACC-C02-F", ["CVR-004", "CVR-006"], "Software binding and behavior of closed/locked conditions are not yet fully covered; hardware inputs are accepted"],
+    ["ACC-C01-E", ["EMG-007"], "Software coverage of all transition phases and emergency source/button combinations is incomplete"]
   ]) results.push({ id, requirements: req, status: "NOT VERIFIED", reason });
   return results;
 }

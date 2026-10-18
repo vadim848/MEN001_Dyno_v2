@@ -150,4 +150,3 @@ SAL assembly must not replace unresolved proof inputs with constants.
 Аппаратная конфигурация принята как исходное условие; физическая трассировка
 и аппаратные gates ниже не продолжаются и не блокируют программные проверки.
 Сначала искать существующее поведение в reference (REFERENCE_BEHAVIOR.md).
-

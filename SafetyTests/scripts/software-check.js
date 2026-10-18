@@ -44,7 +44,7 @@ const report = { generatedAt: new Date().toISOString(), source: path.relative(pa
   sha256: crypto.createHash("sha256").update(fs.readFileSync(sal)).digest("hex"),
   crcRecordedInSource: model.crc, hardwareConfiguration: "accepted existing system; not tested or modified",
   scope: "Software only; partial SAL adapter, selected chains/components and seeded phases. No hardware safety claim.",
-  timingPolicy: "Configured SAL times unchanged; user approved single 0.5s / both 1s, superseding preliminary 1s/2s. Chord-boundary priority remains an open scenario.",
+  timingPolicy: "User approved single 0.5s / both 1s; chord delta <=250ms symmetrically, both time starts at second press. Only this window change is authorized. At 500ms the single already wins; no retrospective StepUp or invented visible unlock pulse.",
   stages, excluded: groups.excluded, reference, summary, cases,
   gaps: ["Full group startup/restart and Network4 semantics not modeled", "Full upstream transition permission/completion coverage incomplete",
     "Distinct locked-feedback software binding requires agreed program contract", "Energy completion/timeout behavior requires explicit software expectations where not specified"] };

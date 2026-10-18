@@ -1,14 +1,14 @@
 # Результаты программных проверок
 
-Дата: 2026-10-18T20:22:39.670Z
-SAL SHA256: 74896fb6b3c08d829cb3bea8e7a7c0452ffde4b09ad262043f463f9ff4b10a5c
+Дата: 2026-10-18T20:48:21.711Z
+SAL SHA256: 85b99f594117b6752ff8ea84d6d24db0c5cb79e86003d2a2dc94510f2cc40323
 
 Аппаратная конфигурация принята как исходное условие. Файлы проекта не изменяются этим запуском.
 
 - harness: PASS; 71/71, ошибок 0, пропусков 0.
-- historical: PASS; 74/74, ошибок 0, пропусков 0.
-- current: PASS; 6/6, ошибок 0, пропусков 0.
-- Текущий код: {"PASS":116,"FAIL":54,"NOT VERIFIED":3,"ERROR":0}.
+- historical: PASS; 75/75, ошибок 0, пропусков 0.
+- current: PASS; 9/9, ошибок 0, пропусков 0.
+- Текущий код: {"PASS":144,"FAIL":35,"NOT VERIFIED":3,"ERROR":0}.
 
 PASS относится только к указанному компоненту/сценарию. Прототипы и исторические воспроизведения не являются приёмкой текущего SAL.
 
@@ -22,6 +22,13 @@ BUTTON/STATE проверяют границу отдельной ветви: в
 
 - ACC-B01-R: {"signal":"b_Set_Door_Unlock_1","expected":false,"actual":true,"checkpoint":"second hold after only 100 ms neutral"}.
 - ACC-B03-LATE: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
+- ACC-B03-490: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
+- ACC-B03-500: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
+- ACC-B03-510: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
+- ACC-B03-LATE-BLUE: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
+- ACC-B03-490-BLUE: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
+- ACC-B03-500-BLUE: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
+- ACC-B03-510-BLUE: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
 - ACC-B03-B: {"signal":"b_Set_Door_Unlock_1","expected":false,"actual":true,"checkpoint":"remaining button held 1200 ms"}.
 - ACC-B03-G: {"signal":"b_Set_Transition_2","expected":false,"actual":true,"checkpoint":"remaining button held 1200 ms"}.
 - ACC-C01-E-Step1: {"signal":"out_Door_Unlock_Solonoeid","expected":false,"actual":true,"checkpoint":"blue held during NC1 fault"}.
@@ -30,28 +37,9 @@ BUTTON/STATE проверяют границу отдельной ветви: в
 - BUTTON:held-blue-at-start: {"label":"no unlock without valid release attempt","actual":true,"expected":false}.
 - BUTTON:held-chord-at-start: {"label":"no up without valid cover/release attempt","actual":true,"expected":false}.
 - STATE:conflicting-set-requests: {"label":"conflicting requests cannot report simultaneous Safe and Run","actual":true,"expected":false}.
-- PRIORITY:Step1:NC1:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step1:PLC:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step1:NC2:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
 - PRIORITY:Step1:Mentee:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step1:ExternalNC1:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step1:ExternalNC2:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:NC1:fallback=false: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:NC1:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:PLC:fallback=false: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:PLC:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:NC2:fallback=false: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:NC2:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
 - PRIORITY:Step12:Mentee:fallback=false: {"label":"no new LV command during fault","actual":true,"expected":false}.
 - PRIORITY:Step12:Mentee:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:LVConnector:fallback=false: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:LVConnector:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:HVConnector:fallback=false: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:HVConnector:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:ExternalNC1:fallback=false: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:ExternalNC1:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:ExternalNC2:fallback=false: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:ExternalNC2:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
 - PRIORITY:Step2:PLC:fallback=false: {"label":"no new HV command during fault","actual":true,"expected":false}.
 - PRIORITY:Step2:PLC:fallback=true: {"label":"no new HV command during fault","actual":true,"expected":false}.
 - PRIORITY:Step2:NC2:fallback=false: {"label":"no new HV command during fault","actual":true,"expected":false}.
@@ -66,14 +54,7 @@ BUTTON/STATE проверяют границу отдельной ветви: в
 - PRIORITY:Step2:ExternalNC1:fallback=true: {"label":"no new HV command during fault","actual":true,"expected":false}.
 - PRIORITY:Step2:ExternalNC2:fallback=false: {"label":"no new HV command during fault","actual":true,"expected":false}.
 - PRIORITY:Step2:ExternalNC2:fallback=true: {"label":"no new HV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step6:NC1:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step6:PLC:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step6:NC2:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
 - PRIORITY:Step6:Mentee:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step6:LVConnector:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step6:HVConnector:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step6:ExternalNC1:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step6:ExternalNC2:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
 
 ## Пробелы и ошибки
 

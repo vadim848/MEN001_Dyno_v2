@@ -1,8 +1,49 @@
 # Safety evidence and input bindings — 2026-10-18
 
-> Scope update: hardware configuration is accepted, not investigated.
-> Physical evidence gates below are historical. Current software evidence:
-> SOFTWARE_CHECK_RESULTS.md / .json; rules: ../AGENTS.md.
+> Current acceptance: SOFTWARE_ACCEPTANCE_SCOPE.md lists all 41 mandatory
+> software IDs, current coverage and remaining candidate checks. Current
+> results: SOFTWARE_CHECK_RESULTS.md/.json; decisions: SCENARIO_DECISIONS.md.
+> Hardware configuration is accepted. Physical/native validation is outside
+> this task, never a gate for software checks. Sections below the current
+> synchronization note retain historical observations, not the current plan.
+
+## Current synchronization — 2026-10-18
+
+The full original working sequence is the foundation of v2. R&D adds a stable
+intermediate stop/continuation; it does not authorize a redesign. Match reference
+phases by code rather than searching only for the new name. Intentional changes
+and preserved behavior must be traced separately.
+
+- D-TIMING: user approved single blue/green0.5s, both1s; configured SAL timers
+  remain unchanged. Historical prototype1/2s is not the current oracle.
+- D-STO-LAUNCH: accepted R&D→Run launch releases STO without waiting for
+  C2/HV Healthy feedback. Run confirmation remains separate; EStop/interlocks
+  and other launch permissions remain. SPEC§7 and FULL_NORMAL_CYCLE now agree.
+- Iteration01 covers hold/green exclusion, not the entire cover/recognizer ID.
+  Iteration02 targets new LV request permission, not emergency completion.
+- Latest D-CHORD250: second-button delta<=250ms accepts chord, both held
+  continuously1s from the second button. Test before/exactly/after250ms for
+  both first-button orders. SINGLE500ms remains. Changing this software
+  window is explicitly approved; no silent quantization/rounding is allowed.
+  D-Q500 remains closed and does not allow chord500ms or retrospective StepUp
+  after single. Green still suppresses Unlock; no same-scan pulse duration
+  is prescribed. Old inclusive500ms chord evidence is historical.
+- D-LATE-SECOND: late second (>250ms) before single acceptance ignores the
+  entire attempt without fault. After single acceptance (including500ms
+  priority), preserve accepted command/started transition, no rollback or
+  interruption due to that button, no new command before bothOFF+filter.
+  Green still removes Unlock as output hold. Six symmetric before/at/after
+  single scenarios are listed in SCENARIO_DECISIONS; actual SAL coverage pending.
+- Technical scoped assumptions may be explicit; unknown expected behavior may
+  not. Test actual SAL; models and pinned reproductions remain separate.
+
+Source precedence within the scenario: latest explicit user decision, approved
+intentional requirement change, preserved reference behavior, then preliminary
+historical material. Remaining contradictions go to the user. Current software
+variables/wires may change by plan; hardware/group configuration, mappings,
+physical timing and specified timer values may not.
+
+## Historical structural snapshot and evidence
 
 This is a scenario-family matrix, not the final per-requirement traceability
 matrix. Emergency IDs EMG-001–012 now appear in specification section 19;
@@ -57,7 +98,7 @@ wired producer and an omitted global producer.
 | Restart / state conflicts | Model and selected latch tests | Seeded ownership checks only | Full TwinSAFE initialization not established |
 | Adapter semantics | Model mutations 5/5 | Global order, RS truth/state tests, unconnected-input sensitivity | Global ordering corrected; constants, group state, E-Stop and timing still partial |
 
-## Next decisions and work
+## Historical next decisions — superseded, not current execution instructions
 
 1. Review E-Stop EDM configuration and restart semantics from the existing SAL
    before extending emergency execution. Do not infer active monitoring from
@@ -68,5 +109,6 @@ wired producer and an omitted global producer.
 4. Expand emergency/interlock traces only with explicit scope and established
    preconditions, then assign individual requirement IDs and complete coverage.
 
-Until those runtime facts are established, independent model tests and structural
-analysis can continue; full-project adapter results remain non-acceptance evidence.
+Those old physical/native dependencies do not block current software checks.
+Current work follows SOFTWARE_ACCEPTANCE_SCOPE.md and the approved workflow;
+adapter coverage limitations remain visible and require software evidence.

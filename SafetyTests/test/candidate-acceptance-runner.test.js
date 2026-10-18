@@ -34,6 +34,22 @@ test("ACCEPT-RUN04 approved timings do not satisfy the independent late-chord ru
   assert.equal(late.firstViolation.checkpoint, "1000 ms of both held");
 });
 
+test("ACCEPT-RUN06 CHORD250 oracle covers both orders and preserves qualification/output distinction", () => {
+  const rows = candidateButtonCoverChecks(baseline);
+  for (const suffix of ["", "-BLUE"]) {
+    for (const boundary of ["IN", "EDGE", "LATE", "490", "500", "510"]) {
+      const row = rows.find(r => r.id === `ACC-B03-${boundary}${suffix}`);
+      assert.ok(row);
+      const qualification = row.observations.find(o => o.signal.endsWith("/TonOut"));
+      assert.equal(qualification.expected, ["500", "510"].includes(boundary));
+      const up = row.observations.find(o => o.checkpoint === "1000 ms of both held");
+      assert.equal(up.expected, ["IN", "EDGE"].includes(boundary));
+      assert.equal(up.actual, true); // The historical defect is exposed, not accepted.
+      assert.ok(row.observations.some(o => o.signal === "unlock while green present" && !o.expected));
+    }
+  }
+});
+
 test("ACCEPT-RUN05 seeded emergency cover results retain the no-EDM limitation", () => {
   const rows = candidateButtonCoverChecks(baseline);
   const safe = rows.find(r => r.id === "ACC-C01-E-Step1");
