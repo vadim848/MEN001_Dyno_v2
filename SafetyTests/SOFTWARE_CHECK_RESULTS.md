@@ -1,7 +1,7 @@
 # Результаты программных проверок
 
-Дата: 2026-10-19T07:10:42.987Z
-SAL SHA256: 23cb1dd91d983b309294936fa8563cf9d669427401d38337c6b3c9647875adf2
+Дата: 2026-10-19T07:34:25.760Z
+SAL SHA256: ea2443b0ea92f95584496360e103f4f9a8b5fd61bb2f492f88a9a9d60628564e
 
 Clock: observed-fixed-scan-v1; first observed edge age0; fixed scan per scenario. Generic runFor durations describe scheduled scan advance, not an implicit event timestamp.
 
@@ -9,8 +9,8 @@ Clock: observed-fixed-scan-v1; first observed edge age0; fixed scan per scenario
 
 - harness: PASS; 174/174, ошибок 0, пропусков 0.
 - historical: PASS; 75/75, ошибок 0, пропусков 0.
-- current: PASS; 69/69, ошибок 0, пропусков 0.
-- Текущий код: {"PASS":166,"FAIL":35,"NOT VERIFIED":5,"ERROR":0}.
+- current: PASS; 84/84, ошибок 0, пропусков 0.
+- Текущий код: {"PASS":170,"FAIL":31,"NOT VERIFIED":5,"ERROR":0}.
 
 PASS относится только к указанному компоненту/сценарию. Прототипы и исторические воспроизведения не являются приёмкой текущего SAL.
 
@@ -53,10 +53,6 @@ BUTTON/STATE проверяют границу отдельной ветви: в
 - BUTTON:held-blue-at-start: {"label":"no unlock without valid release attempt","actual":true,"expected":false}.
 - BUTTON:held-chord-at-start: {"label":"no up without a new released/armed attempt; DoorMonitor is not an energy guard","actual":true,"expected":false}.
 - STATE:conflicting-set-requests: {"label":"conflicting requests cannot report simultaneous Safe and Run","actual":true,"expected":false}.
-- PRIORITY:Step12:Mentee:fallback=false: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step12:Mentee:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step2:Mentee:fallback=false: {"label":"no new HV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step2:Mentee:fallback=true: {"label":"no new HV command during fault","actual":true,"expected":false}.
 
 ## Пробелы и ошибки
 

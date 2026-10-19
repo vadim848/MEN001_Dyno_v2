@@ -17,7 +17,8 @@ test("LV current SAL: sole Set binding, preserved producers/fanout and relative 
   assert.deepEqual(rs.inputs.find(p => p.name === "Set").sources,[set.outputs[0].path]);
   assert.deepEqual(or.outputs[0].targets,[set.inputs[0].path]);
   assert.deepEqual(set.outputs[0].targets,[rs.inputs.find(p => p.name === "Set").path]);
-  assert.deepEqual(set.inputs.map(p => p.channelInterface),["Activated","Activated",...Array(6).fill("Deactivated")]);
+  assert.deepEqual(set.inputs.map(p => p.channelInterface),["Activated","Activated","Activated",...Array(5).fill("Deactivated")]);
+  assert.equal(set.inputs[2].deactivate1,"Make Contact (NO)");
   assert.equal(permit.inputs.every(p => p.channelInterface === "Activated"),true);
   assert.deepEqual(permit.inputs.map(p => p.globals[0]?.resolvedName ??
     model.variables.find(v=>v.targetPorts.includes(p.path))?.name),Object.keys(healthy));

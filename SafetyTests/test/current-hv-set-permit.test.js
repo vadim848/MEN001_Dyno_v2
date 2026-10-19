@@ -23,7 +23,8 @@ test("HV current SAL: sole canonical Set path, preserved aggregate inputs and co
   assert.equal(model.bindingAudit.edges.filter(e=>e.to===rs.inputs.find(p=>p.name==="Set").path).length,1);
   assert.deepEqual(or.inputs.slice(0,3).map(p=>p.globals[0]?.resolvedName??p.sources[0]),
     ["b_Set_HV_C2","//Network1/FBAnd6/AndOut","b_Set_HV_C2_1"]);
-  assert.deepEqual(gate.inputs.map(p=>p.channelInterface),["Activated","Activated",...Array(6).fill("Deactivated")]);
+  assert.deepEqual(gate.inputs.map(p=>p.channelInterface),["Activated","Activated","Activated",...Array(5).fill("Deactivated")]);
+  assert.equal(gate.inputs[2].deactivate1,"Make Contact (NO)");
   assert.equal(permit.outputs[0].targets.includes("//Network1/FBAndLvSetPermit/AndIn2"),true);
   const xml=fs.readFileSync(file,"utf8"),sgvl=fs.readFileSync(new URL("../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl",import.meta.url),"utf8");
   const missing=xml.replace(/<wiredLink\b[^>]*>\s*<inPortMoniker name="\/\/Network1\/FBAndHvSetPermit\/AndIn2"\s*\/>\s*<\/wiredLink>/,"");

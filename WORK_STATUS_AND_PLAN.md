@@ -12,8 +12,13 @@ in_InterLock_NC_1/2 (другие сигналы, чем in_ES_NC_1/2). Трас
 174/174 harness,75/75 historical,69/69 current;166PASS35FAIL5NV.
 SAL23cb1dd91d983b309294936fa8563cf9d669427401d38337c6b3c9647875adf2.
 Отчёт о выполнении отправлен в координирующий чат.
-Следующий05: red tests15=9PASS6FAIL на старом SAL; ревью и checkpoint
-перед добавлением Mentee к двум существующим Set gates.
+Iteration05 реализована и принята: Mentee TRUE блокирует новый LV/HV Set;
+15/15 targeted,174/174 harness75/75 historical84/84 current;
+170PASS31FAIL5NV, exact4 старых FAIL закрыты,0 новых.
+SALea2443b0ea92f95584496360e103f4f9a8b5fd61bb2f492f88a9a9d60628564e.
+Следующий07: финальный Unlock EStopOK+прямой rawPLC inhibit,
+поскольку PLC producer95 вычисляется после EStop21. Red tests до SAL;
+общий energyPermit для Unlock не использовать.
 Hardware validation не подтверждена этим решением.
 
 ## Текущий шаг
@@ -136,6 +141,7 @@ commit4495a1f6049f6a58ebfd436761faa84d17c8d643. R&D — устойчивая о�
 - 0e4ab09 — принятый HV Set guard iteration04 и полный результат166/35/5.
 - b0184eb — проверенные red tests03C до изменения runtime.
 - e6ee0db — принятая03C, требования Door/Interlock и проверенные red tests06.
+- 930d6a1 — принятое исправление06 и проверенные red tests05.
 
 Baseline до исправлений неизменяемо сохранён в
 SafetyTests/checkpoints/workflow-2026-10-18/ (manifest/архив/результаты/fixture).
