@@ -18,7 +18,7 @@ const noReset=r=>{for(const source of rs.inputs.find(p=>p.name==="Reset").source
 
 test("HV current SAL: sole canonical Set path, preserved aggregate inputs and complete binding audit",()=>{
   assert.equal(model.bindingAudit.status,"PASS");
-  assert.deepEqual([permit.orderOfExecution,gate.orderOfExecution,rs.orderOfExecution,or.orderOfExecution],[2,5,6,220]);
+  assert.deepEqual([permit.orderOfExecution,gate.orderOfExecution,rs.orderOfExecution,or.orderOfExecution],[2,5,6,222]);
   assert.deepEqual(rs.inputs.find(p=>p.name==="Set").sources,[gate.outputs[0].path]);
   assert.deepEqual(or.outputs[0].targets,[gate.inputs[0].path]);
   assert.deepEqual(gate.inputs[1].sources,[permit.outputs[0].path]);

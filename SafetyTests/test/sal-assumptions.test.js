@@ -22,7 +22,7 @@ test("SAL-INPUT02 deleting a wired producer is reported rather than becoming an 
   const n = broken.networks.find(n => n.name === "Network1");
   n.blocks = n.blocks.filter(b => b.name !== "FBOr8");
   const report = auditAssumptions(broken);
-  assert.ok(report.unresolved.some(x => x.port === "//Network1/FBRs3/Set" &&
+  assert.ok(report.unresolved.some(x => x.port === "//Network1/FBAndSto1SetPermit/AndIn1" &&
     x.reason === "missing-port-producer" && x.reference === "//Network1/FBOr8/OrOut"));
 });
 

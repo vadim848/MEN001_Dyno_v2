@@ -19,7 +19,7 @@ test("DOOR06 exact alias targets separate solenoid consumers from energy InterLo
   assert.ok(targets("in_False_SI2_CH8").includes("//Network12/FBAnd16/AndIn2"));
   assert.deepEqual(and16.inputs.slice(0,3).map(p=>[p.channelInterface,p.deactivate1]),[
     ["Activated","Break Contact (NC)"],["Activated","Make Contact (NO)"],["Activated","Break Contact (NC)"]]);
-  assert.equal(all.length,253);
+  assert.equal(all.length,255);
 });
 
 for(const door of [false,true])for(const nc1 of [false,true])for(const nc2 of [false,true])for(const inhibit of [false,true])

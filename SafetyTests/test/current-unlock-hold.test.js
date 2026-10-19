@@ -33,8 +33,8 @@ test("CVR current SAL: sole final writer, normalized single wire, native port ID
   const ids = [...xml.matchAll(/\bId="([^"]+)"/g)].map(m => m[1]);
   assert.equal(new Set(ids).size, ids.length);
   assert.deepEqual(model.networks.flatMap(n => n.blocks).map(b => b.orderOfExecution).sort((a,b) => a-b),
-    Array.from({ length: 253 }, (_,i) => i+1));
-  assert.equal(gate.orderOfExecution, 253);
+    Array.from({ length: 255 }, (_,i) => i+1));
+  assert.equal(gate.orderOfExecution, 255);
   for (const previous of old.networks.flatMap(n => n.blocks)) {
     const current = model.networks.flatMap(n => n.blocks).find(b => b.path === movedPath(previous.path));
     const afterLV=previous.orderOfExecution >= 2 ? previous.orderOfExecution + 2 : 1;

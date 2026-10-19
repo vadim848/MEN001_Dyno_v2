@@ -22,10 +22,10 @@ SINGLE0.5/BOTH1 утверждены D-TIMING; последнее D-CHORD250 у�
 
 ## Матрица обязательных проверок
 
-Актуализация2026-10-19 после принятого scoped PLC pulse follow-up: SAL
-`dd9fd938fd5493795a7eea7b29cb027d7e994e2a55e2ad02d2ca66cb4beb6923`, SGVL
+Актуализация2026-10-19 после принятого scoped earlySTO: SAL
+`0fc39751781cf9525765b223e08c909f31353b976ad4c796881268b39f0fa909`, SGVL
 `06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5`.
-Сохранённый отчёт:178 harness/75 historical/321 current tests PASS;
+Сохранённый отчёт:178 harness/75 historical/413 current tests PASS;
 сценарии201PASS/1FAIL/5NV/0ERROR. Эти числа прочитаны из отчёта, а не новый
 запуск аналитика. Все41ID по-прежнему обязательны, весь проект не принят.
 
@@ -54,7 +54,14 @@ PASS. PLC_PULSE_CURRENT_RESULTS.json содержит44 непрерывных c
 producer truth rows, ровно12 recoveryFAIL→PASS. См. PLC_PULSE_IMPLEMENTATION_REVIEW.md.
 Нет forceReset уже latched outputs; main EStop/SGVL/runtime/timers/orders
 не менялись. Это закрывает узкую pulse/recovery границу, не allEMG/fullBOOT/
-достижимость. EarlySTO и полная исходная последовательность не завершены;
+достижимость. [EarlySTO review](EARLY_STO_IMPLEMENTATION_REVIEW.md) принимает
+physical SU→actual torque permission N+2 без C2/HVHealthy ожидания: immutable88
+baseline32PASS/56FAIL→unchanged88PASS. Два новых per-drive all-producer
+4-input Set guards; исходный confirmation сохранён. Старые253 FB relativeorder,
+Reset paths и восемь полных waveform traces сохранены; теперь255FB, SGVL/runtime
+не менялись, default69 physical cases неизменны. Это не full accepted external
+launch/groupowner/reachability proof. Полная исходная последовательность ещё
+не завершена;
 PLC-only policy/conflict destination/transition-down/discharge вопросы остаются.
 
 «Частично» означает ограниченный исполняемый сценарий реального SAL либо
@@ -75,7 +82,7 @@ SHA: SOFTWARE_CHECK_RESULTS.md/.json. Исторические fixture и отд
 | EMG-008 | Исторические трассы не закрывают candidate | Healthy loss во время SS1: непосредственный выбор STO без предварительного общего ожидания |
 | EMG-009 | Нет полной candidate проверки | Возврат Healthy после аварийного выбора не возвращает SS1 и не сокращает заданный coast wait |
 | EMG-010 | Исторические Run-down трассы | Разряд до C2 OFF, completion/отказная процедура и feedback до R&D; недостающий oracle через аналитика |
-| EMG-011 | Приняты02/04/05: LV/HV new Set guards, девять текущих разрешений, реальные producers и firstscan positive/fault controls | STO и остальные raises/полная emergency ownership/recovery не закрыты; проверить все источники повышения, не только LV/HVSet |
+| EMG-011 | Приняты02/04/05/PLC pulse LV/HV guards; earlySTO два all-producer per-drive4input guards, actual fault/restore controls | Полная emergency ownership/recovery, все фазовые/entry paths и остальные raises не закрыты; component guard не full41 proof |
 | EMG-012 | Частично STATE conflicting-set | Все недопустимые комбинации; запрет неоднозначного владения. Точный destination Q-FAULT-DESTINATION |
 | BTN-001 | Принята03B actual R&D release/rearm | Другие режимы/full lifecycle/owner handoffs |
 | BTN-002 | Принята03B R&D held-at-start/prematurepress | Полный group startup и другие режимы, cut не reachability |
@@ -92,7 +99,7 @@ SHA: SOFTWARE_CHECK_RESULTS.md/.json. Исторические fixture и отд
 | CVR-005 | ACC-C02-X, iteration01 gate | Unlock и фактическое повышение не сосуществуют; внутренний request не считать энергией |
 | CVR-006 | 06 сохранила три Door solenoid consumers,04/05 сохраняют обаNC в energy Set guards | Полная реакция на InterLock loss EMG-002/все фазы ещё не закрыта; Door только unlock, отдельный locked-loss не вводить |
 | MOD-001 | STATE Safe-RnD-Run ownership only | Сохранённая исходная LV последовательность, каждый feedback/прерывание, R&D лишь после подтверждений |
-| MOD-002 | STATE ownership; StartingRun oracle обновлён | Accepted launch снимает STO без C2/Healthy ожидания; Run только после подтверждений; авария/failure не обходятся |
+| MOD-002 | Принят earlySTO: physical SU→actualSTO N+2 без C2/HVHealthy wait, старый Runconfirmation/Reset сохранены;88 checks | Полная достижимость acceptedlaunch/owner, feedback/failure во всех фазах и PLC-only policy не закрыты; N+2 не физическое нулевое время |
 | MOD-003 | Частично held commands; Q-PLC-REQUEST | Новый жест/handshake для каждого шага, удерживаемый PLC уровень не повторяет; самостоятельный новый PLC запрос без физического жеста требует решения |
 | MOD-004 | Нет полного candidate покрытия | Новые up в переходах отклонены; down поведение Q-TRANSITION-DOWN |
 | MOD-005 | Исторические RnD-Safe traces | Сопоставить исходную LV/battery/BMS последовательность и вставку R&D, завершение перед Safe |

@@ -14,7 +14,7 @@ const fixture=new URL("../fixtures/v2-4bb8703/TwinSafeGroup1.sal",import.meta.ur
 const walk=n=>[n,...n.children.flatMap(walk)];
 const compact=JSON.parse(fs.readFileSync(new URL("../03B_COMPACT_OPTIMIZED_PLAN.json",import.meta.url)));
 const additions={in_Relase_Door_PB:["FBOr3/OrIn3","FBAndUnlockHold/AndIn2"],in_Reset_PB:["FBOr3/OrIn4","FBAndUnlockHold/AndIn3"],
-  in_Mentee_EStop:["FBAndLvSetPermit/AndIn3","FBAndHvSetPermit/AndIn3"],
+  in_Mentee_EStop:["FBAndLvSetPermit/AndIn3","FBAndHvSetPermit/AndIn3","FBAndSto1SetPermit/AndIn3","FBAndSto2SetPermit/AndIn3"],
   in_ES_NC_1:["FBAndLvCurrentPermit/AndIn2"],in_ES_NC_2:["FBAndLvCurrentPermit/AndIn3"],in_InterLock_NC_1:["FBAndLvCurrentPermit/AndIn4","../Network12/FBAnd16/AndIn1"],
   in_InterLock_NC_2:["FBAndLvCurrentPermit/AndIn5","../Network12/FBAnd16/AndIn3"],in_LV_Connector_Interlock:["FBAndLvCurrentPermit/AndIn6"],
   in_HV_Connector_Interlock:["FBAndLvCurrentPermit/AndIn7"],in_Estop_PLC:["FBAndLvCurrentPermit/AndIn8","FBAndUnlockHold/AndIn5"]};
@@ -31,7 +31,7 @@ test("B1 current source and unchanged historical wire roles pass structural audi
     assert.deepEqual(current.alias,old.alias);
     assert.deepEqual(current.sourcePorts,old.name==="out_Door_Unlock_Solonoeid"?["//Network1/FBAndUnlockHold/AndOut"]:old.sourcePorts);
   }
-  assert.equal(count,34); // B1 eleven +06 two NC +05 two Mentee +07 one PLC consumer; only06 Door energy usage removed.
+  assert.equal(count,36); // B1 eleven +06 two NC +05 two Mentee +07 one PLC consumer; only06 Door energy usage removed.
   const requiredEdges=[
     ["FBAnd1/AndOut","FBAndLvSetPermit/AndIn4"], ["FBAnd1/AndOut","FBAndHvSetPermit/AndIn4"],
     ["FBRs6/RsOut","FBAndUnlockHold/AndIn1"], ["FBOr17/OrOut","FBAndLvSetPermit/AndIn1"],
@@ -126,9 +126,9 @@ test("B1 plus07 SGVL delta is exactly two program usages; declarations and other
 
 test("PLC pulse guards preserve producer fanout and use exactly four direct/inverted native inputs",()=>{
  const model=parseSalFile(salUrl),all=model.networks.flatMap(n=>n.blocks),get=p=>all.find(b=>b.path===p);
- assert.equal(all.length,253);
- const source=get('//Network1/FBAnd1');assert.equal(source.orderOfExecution,95);
- assert.deepEqual([...source.outputs[0].targets].sort(),['//Network1/FBEstop1/EStopIn3','//Network1/FBAndLvSetPermit/AndIn4','//Network1/FBAndHvSetPermit/AndIn4'].sort());
+ assert.equal(all.length,255);
+ const source=get('//Network1/FBAnd1');assert.equal(source.orderOfExecution,97);
+ assert.deepEqual([...source.outputs[0].targets].sort(),['//Network1/FBEstop1/EStopIn3','//Network1/FBAndLvSetPermit/AndIn4','//Network1/FBAndHvSetPermit/AndIn4','//Network1/FBAndSto1SetPermit/AndIn4','//Network1/FBAndSto2SetPermit/AndIn4'].sort());
  for(const domain of ['Lv','Hv']){const gate=get('//Network1/FBAnd'+domain+'SetPermit');
   assert.deepEqual(gate.inputs.map(p=>p.channelInterface),[...Array(4).fill('Activated'),...Array(4).fill('Deactivated')]);
   assert.deepEqual(gate.inputs[3].sources,[source.outputs[0].path]);assert.equal(gate.inputs[3].deactivate1,'Break Contact (NC)');

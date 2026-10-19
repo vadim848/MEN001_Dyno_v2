@@ -1,5 +1,12 @@
 # Следующие проверки всех41 обязательных ID
 
+> Исторический worklist после07: утверждения ниже о непринятой03B/ещё не
+> реализованном earlySTO относятся к старому baseline, не к текущему статусу.
+> Сейчас scoped03B/R3, PLC pulse и physical earlySTO приняты. Актуальные
+> source SHA, результаты и границы покрытия — SOFTWARE_ACCEPTANCE_SCOPE.md
+> и SAFETY_EVIDENCE_MATRIX.md. Матрица41ID ниже сохраняет backlog сценариев;
+> принятие отдельных ветвей не закрывает full groupowner/достижимость/все ID.
+
 2026-10-19. Срез ПОСЛЕ принятой07, checkpoint c69bc32. Прочитаны актуальные
 WORK_STATUS_AND_PLAN, SOFTWARE_ACCEPTANCE_SCOPE, SPEC, SCENARIO_DECISIONS,
 OPEN_SCENARIO_SOURCE_REVIEW, DISCHARGE_PROGRAM_CONTRACT и reference phase

@@ -2,19 +2,20 @@
 
 ## Последний принятый результат
 
-03B/R3 и последующий PLC pulse LV/HV fix приняты независимым ревью
+03B/R3, PLC pulse LV/HV fix и earlySTO приняты независимым ревью
 в ограниченном программном объёме.
-**178/178 harness,75/75 historical,321/321 current;
+**178/178 harness,75/75 historical,413/413 current;
 201PASS/1FAIL/5NOT VERIFIED/0ERROR.** Проект в целом НЕ принят.
 
-SAL SHA256: dd9fd938fd5493795a7eea7b29cb027d7e994e2a55e2ad02d2ca66cb4beb6923.
+SAL SHA256:0fc39751781cf9525765b223e08c909f31353b976ad4c796881268b39f0fa909.
 GVL1.sgvl SHA256:06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5.
-253 блока из255; прежние timer values сохранены. Checkpointb5692c3 содержит
+255 блоков из255; прежние timer values сохранены. Checkpointb5692c3 содержит
 принятые03B/R3 и reviewed PLC pulse red tests; принятое исправление
-PLC pulse сохранено в a9f809b вместе с reviewed earlySTO fixture plan.
-Ревью:PLC_PULSE_IMPLEMENTATION_REVIEW.md,
+PLC pulse сохранено в a9f809b, red earlySTO — в2ddafef. Принятый earlySTO пока
+рабочий diff. Ревью:EARLY_STO_IMPLEMENTATION_REVIEW.md, PLC_PULSE_IMPLEMENTATION_REVIEW.md,
 03B_R3_REVIEW.md и ITERATION_03B_REVIEW.md. PLC_PULSE_CURRENT_RESULTS.json
-связывает текущие source/model/artifact hashes и48 тестов; R3_CURRENT_RESULTS.json
+связывает предыдущий source и48 тестов; EARLY_STO_CURRENT_RESULTS.json связывает
+актуальные source/model/artifact hashes и88 тестов. R3_CURRENT_RESULTS.json
 сохраняет предыдущие86+69 трасс. Прежний03B_INTEGRATED_ACCEPTANCE.json
 исторический, с ограничением старой pair-модели.
 
@@ -86,28 +87,23 @@ fault и возврат входа без Restart проверены в Safe/R&D
 
 ## Следующие шаги
 
-1. EarlySTO: действующие EARLY_STO_ORDER_REVIEW_PLAN.md и
-   EARLY_STO_TEST_FIXTURE_PLAN.md. Два четырёхвходовых per-drive Set guard
-   дадут255, сохраняют относительный прежний порядок и передают SU за два
-   скана без C2/Healthy ожидания. Старый tail-перенос — альтернатива;
-   same-scan не требование пользователя. Fixture расширяет наблюдения опцией,
-   исходные69 сценариев неизменны; реальные STO/PLC/confirmation outputs и
-   acceptedSU дают163-block dependency closure с явными phase cuts.
-2. После технического ревью fixture — actual red tests: реальный жест/SU,
-   C2FALSE и оба Healthy значения, no STO before N+2, дальнейшие сохранённые
-   feedback/confirmation действия, oldSet/Reset/PLC waveforms и fault/pulse.
-   Тесты/review/checkpoint до дальнейшего изменения SAL; no seed SU/STO latch.
-   Fixture принят ревью, редактору передан только red-test этап послеa9f809b.
-   Red stage готов:88tests32PASS/56FAIL, no infrastructure errors;
-   16missing earlySTO,32firstfault,8pulse/recovery. Default69 сценариев и трасс
-   идентичны принятой базе. Completion-only tests явно изолируют только два
-   параллельных early consumer inputs; physical/fullcompletion — без изоляции.
-   SAL/SGVL/runtime не менялись. Нужны финальное review тестов и checkpoint.
-3. Затем реализация двух guards/двух SU inputs по плану, целевые/полные проверки,
-   независимое ревью. Не менять mainEStop/таймеры/legacy actions ради зелени.
-4. Полные Safe↔R&D↔Run, emergency owner/recovery, startup/Network4,
-   Safe/Run recognizer и остальные41 mandatory ID. Branch PASS не закрывает
-   full reachability; неизвестную реакцию не выдумывать.
+1. Сохранить принятый earlySTO checkpoint после остановки writers.255 блоков,
+   исходные253 relative order,Reset/confirmation сохранены.88tests32/56→88PASS;
+   independent88+native4/7PASS,8Resetwaveforms/default69exactlybaseline.
+2. BOOT_SOFTWARE_MODEL_PLAN.md — план программной строгости, не выполненнаяBOOT
+   приёмка. Review whole-source preflight без phase cuts/unknown fallback:
+   Network4 unbound data sources и неучтённый group lifecycle должны быть явно
+   unsupported, а не давать ложный PASS. Уточнить программные источники/контракт
+   по workingreference и первичным описаниям; hardware scope не расширять.
+3. Проверить точный no-EDM EStop Restart contract по vendor sample4: возможное
+   отличие host restartArmed=safe&&restart при одновременном safetyrestore/fall.
+   Это пока проверяемая гипотеза, не новый принятый дефект. До фактов код не менять.
+4. Полные Safe↔R&D↔Run, emergency owner/recovery, startup и Safe/Run recognizer.
+   Все41 ID обязательны; branch PASS не закрывает full reachability. Известные
+   сценарии разрабатывать независимо, неизвестные реакции не закреплять.
+5. Ожидаются ответы по новым PLC requests, conflict destination, discharge
+   completion, новомуGreenвStartingRun и BOTHвRun. Только зависимые сценарии
+   ждут ответа; отсутствие ответа не согласие.
 
 ## Принятый03B/R3 и границы доказательства
 
@@ -157,8 +153,9 @@ f7b4f7e исходный пакет+01; c024651 пакет02;
 e6ee0db принятая03C+red06;930d6a1 принятая06+red05;
 d86925a принятая05+red07; c69bc32 принятая07+red03B;
 218dde5 непринятая03B+reviewedR3red; b5692c3 принятая03B/R3+reviewed PLC pulse red;
-a9f809b принятый PLC pulse fix+reviewed earlySTO fixture plan.
-Текущий рабочий diff — earlySTO red tests/наблюдения, не изменение SAL.
+a9f809b принятый PLC pulse fix+reviewed earlySTO fixture plan;
+2ddafef reviewed earlySTO red tests до изменения SAL.
+Текущий рабочий diff — реализация earlySTO, ещё не принятая.
 
 Baseline workflow-2026-10-18 (manifest/архив/результаты/fixture) неизменяем.
 UpgradeLog3/4 посторонние, никогда не включать. Не реконструировать историю

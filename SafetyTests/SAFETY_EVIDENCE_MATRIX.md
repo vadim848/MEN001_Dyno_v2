@@ -9,11 +9,12 @@
 
 ## Current synchronization — 2026-10-18
 
-Latest accepted refresh2026-10-19:03B/R3 plus scoped PLC pulse correction,
-see PLC_PULSE_IMPLEMENTATION_REVIEW.md. SAL
-`dd9fd938fd5493795a7eea7b29cb027d7e994e2a55e2ad02d2ca66cb4beb6923`, SGVL
+Latest accepted refresh2026-10-19:03B/R3, PLC pulse and scoped physical earlySTO,
+see EARLY_STO_IMPLEMENTATION_REVIEW.md. SAL
+`0fc39751781cf9525765b223e08c909f31353b976ad4c796881268b39f0fa909`, SGVL
 `06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5`.
-Saved178/75/321 test suites PASS;201PASS/1FAIL/5NV cases, no new run here.
+Saved178/75/413 test suites PASS;201PASS/1FAIL/5NV cases, standalone47/0/5;
+no new run here.
 Actual physical R&D timing/late/rearm recognizer now covered in145-block
 branch with26 given inputs and typed Network3 ownership cuts. R3 uses native
 first-only WINDOW and effective master pair selection/inversion for four
@@ -29,8 +30,12 @@ producer, while current raw checks remain. Immutable48=36PASS/12FAIL red
 baseline preserved; unchanged48 nowPASS. Matching PLC_PULSE_CURRENT_RESULTS.json
 contains44 continuously observed cases+4 truth rows, exactly12 recovery deltas.
 No forceReset, new blocks/orders/timers/mainEStop/SGVL/runtime changes.
-This is not allEMG/fullreachability/BOOT acceptance. EarlySTO/full original
-sequence and PLC request/conflict/
+Accepted earlySTO: physical SU→actualSTO atN+2 without waiting C2/HVHealthy,
+old Runconfirmation/Reset preserved. Immutable88 red32/56→88PASS, eight
+preservation waveform traces and default69 physical cases unchanged.255FB,
+old253 relativeorder preserved, two all-producer4input per-drive Set guards;
+SGVL/runtime unchanged. This is not allEMG/fullreachability/BOOT/groupowner
+or native Error proof. Full original sequence and PLC request/conflict/
 transition-down/discharge behavior questions remain separate unfinished work.
 
 Coverage refresh2026-10-19: reviewed04/03C/06/05 and accepted07r2 are reflected

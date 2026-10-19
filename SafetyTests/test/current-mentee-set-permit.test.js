@@ -64,6 +64,6 @@ test("MENTEE05 original Safe/Run protections, diagnostic alias and inactive main
       r.scan();assert.equal(r.get(block.outputs[0].path),!mentee);
     }
   }
-  assert.equal(model.bindingAudit.status,"PASS");assert.equal(all.length,253);
+  assert.equal(model.bindingAudit.status,"PASS");assert.equal(all.length,255);
   assert.ok(fs.readFileSync(file,"utf8").includes('Crc="872783435"'));
 });

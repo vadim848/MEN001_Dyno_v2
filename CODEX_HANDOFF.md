@@ -14,32 +14,30 @@ WORKFLOW.md с архитектором, редактором и независ�
 **Latest status and next-step order:** read `WORK_STATUS_AND_PLAN.md` first.
 Historical entries below preserve earlier checkpoints and superseded findings.
 
-Earlier local checkpoint2026-10-19: `218dde5`, unaccepted03B integration plus
-independently reviewed R3 red tests (86 tests,56PASS/30FAIL). Native pair
-activation/contact semantics were confirmed from the local SDK; the old host
-model incorrectly filtered each slave's own fields. That checkpoint precedes
-the R3 first-only WINDOW and shared runtime/dependency-closure pair resolver repair.
-Read SafetyTests/03B_NATIVE_PAIR_FIX_PLAN.md,03B_NATIVE_PAIR_PLAN_REVIEW.md and
-03B_R3_TEST_REVIEW.md before resuming. No whole-project acceptance or push.
-After that checkpoint R3 and whole03B were independently ACCEPTED within their
-component scope. Accepted source is a50e24af66c755f00001e3bd2eed70ba4d30526df8dfa427b5d37bc6dcebb413;
+Current accepted program2026-10-19:03B/R3 recognizer, PLC pulse LV/HV guards,
+and earlySTO; source0fc39751781cf9525765b223e08c909f31353b976ad4c796881268b39f0fa909,
 SGVL06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5.
-Current accepted work is checkpointed at b5692c3:178/75/272 tests PASS,
-201PASS/1FAIL/5NV. See03B_R3_REVIEW.md and R3_CURRENT_RESULTS.json for current
-evidence; old integration results retain their old-model limitation. Keep red
-baselines intact. b5692c3 also includes reviewed PLC pulse LV/HV red tests:
-48 tests36PASS/12FAIL. That follow-up is now independently accepted:48/48 PASS,
-source dd9fd938fd5493795a7eea7b29cb027d7e994e2a55e2ad02d2ca66cb4beb6923;
-178/75/321 test stages PASS,201/1/5 cases. It adds only two existing AndIn4
-bindings. See PLC_PULSE_IMPLEMENTATION_REVIEW.md and PLC_PULSE_CURRENT_RESULTS.json.
-Next is earlySTO real red tests after fixture-plan review; no full41 acceptance.
-Latest checkpoint is a9f809b: accepted PLC pulse repair and reviewed earlySTO
-fixture plan. Editor is authorized ONLY for earlySTO red-test/observation stage;
-no new STO program implementation before independent test review/checkpoint.
-EarlySTO red package is prepared:88 tests32PASS/56FAIL; default69 traces remain
-byte-identical. Read EARLY_STO_TESTS_READY.md and pending EARLY_STO_TEST_REVIEW.md.
-Completion guard tests have explicit two-consumer isolation; full physical
-acceptance/completion tests are uncut. Program source/runtime remain unchanged.
+255 blocks. Full178/75/413 test stages PASS;201PASS/1FAIL/5NV cases.
+No full41 acceptance. Latest local checkpoint2ddafef contains accepted PLC fix
+and reviewed earlySTO red tests; subsequent accepted earlySTO is still a diff.
+
+Current reviews/evidence: EARLY_STO_IMPLEMENTATION_REVIEW.md and
+EARLY_STO_CURRENT_RESULTS.json; PLC_PULSE_IMPLEMENTATION_REVIEW.md and
+PLC_PULSE_CURRENT_RESULTS.json;03B_R3_REVIEW.md and R3_CURRENT_RESULTS.json.
+Original red baselines remain immutable:03B61, R3 native-pairs86, PLC pulse48,
+earlySTO88. Latest88pass;8Resetwaveforms/default69 unchanged. Historical
+03B_INTEGRATED_ACCEPTANCE.json used the older, incomplete pair model.
+
+Native pair activation/contact was established from local SDK: master controls
+both channels. Only new WINDOW became first-only; legacy mainESTOP/SGVL stayed
+unchanged. Runtime/closure/staticgraph/inventory use one native pair resolver.
+ErrorFALSE remains a stub; group/EDM/lifecycle proof is not claimed.
+
+Next: reviewed software BOOT/lifecycle preflight and no-EDM Restart-contract
+investigation, then remaining full sequences/ownership. Several behavior-policy
+questions await user answers; do not guess. No new program edit without the
+requirements/plan/redtests/independentreview/checkpoint workflow. No push.
+Read WORK_STATUS_AND_PLAN.md and SOFTWARE_ACCEPTANCE_SCOPE.md for current scope.
 
 Emergency checkpoint created on 2026-10-18 before moving to another workstation.
 

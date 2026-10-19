@@ -52,7 +52,7 @@ test("UNLOCK07 existing Door solenoid consumers and EStop configuration are pres
   assert.deepEqual([...model.variables.find(v=>v.name==="in_Door_Monitor").targetPorts].sort(),[
     "//Network2/FBAnd8/AndIn1","//Network12/FBAnd11/AndIn1","//Network12/FBAnd17/AndIn1"].sort());
   for(const name of ["EStopIn2","EStopIn4"])assert.equal(get("//Network1/FBEstop1").inputs.find(p=>p.name===name).channelInterface,"Both Deactivated");
-  assert.equal(all.length,253);assert.equal(model.bindingAudit.status,"PASS");
+  assert.equal(all.length,255);assert.equal(model.bindingAudit.status,"PASS");
 });
 test("UNLOCK07 global permission is a resolved SGVL reference with usage index",()=>{
   assert.deepEqual(gate.inputs.map(p=>p.channelInterface),[...Array(5).fill("Activated"),...Array(3).fill("Deactivated")]);

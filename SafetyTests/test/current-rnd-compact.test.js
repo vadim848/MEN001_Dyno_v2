@@ -4,15 +4,15 @@ import fs from 'node:fs';
 import {spawnSync} from 'node:child_process';
 import {parseSalFile} from '../src/sal-parser.js';
 import {readBindingXml} from '../src/sal-binding-validator.js';
-import {compact,removeCompactGvl} from './helpers/compact-expectations.js';
+import {compact,removeCompactGvl,afterEarlyStoOrder} from './helpers/compact-expectations.js';
 const sf=new URL('../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',import.meta.url);
 const model=parseSalFile(sf),all=model.networks.flatMap(n=>n.blocks),get=path=>all.find(b=>b.path===path);
 const gvl=fs.readFileSync(new URL('../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl',import.meta.url),'utf8');
 const walk=n=>[n,...n.children.flatMap(walk)];
-test('RNDCOMPACT full native audit and exact253 block budget/order map',()=>{
- assert.equal(model.bindingAudit.status,'PASS');assert.equal(all.length,253);assert.ok(all.length<=255);
- assert.deepEqual(all.map(b=>b.orderOfExecution).sort((a,b)=>a-b),Array.from({length:253},(_,i)=>i+1));
- for(const row of compact.sequence){const path=row.newPath??row.oldPath,b=get(path);assert.ok(b,path);assert.equal(b.orderOfExecution,row.newOrder,path);}
+test('RNDCOMPACT full native audit and exact255 block budget/order map',()=>{
+ assert.equal(model.bindingAudit.status,'PASS');assert.equal(all.length,255);assert.ok(all.length<=255);
+ assert.deepEqual(all.map(b=>b.orderOfExecution).sort((a,b)=>a-b),Array.from({length:255},(_,i)=>i+1));
+ for(const row of compact.sequence){const path=row.newPath??row.oldPath,b=get(path);assert.ok(b,path);assert.equal(b.orderOfExecution,afterEarlyStoOrder(row.newOrder),path);}
 });
 test('RNDCOMPACT every native port/parameter identity and typed producer matches the reviewed graph',()=>{
  for(const planned of compact.blocks){const path=`//${compact.network}/${planned.name}`,b=get(path);assert.ok(b,path);assert.equal(b.functionName,planned.type);
