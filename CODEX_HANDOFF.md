@@ -14,7 +14,7 @@ WORKFLOW.md с архитектором, редактором и независ�
 **Latest status and next-step order:** read `WORK_STATUS_AND_PLAN.md` first.
 Historical entries below preserve earlier checkpoints and superseded findings.
 
-Latest local checkpoint2026-10-19: `218dde5`, unaccepted03B integration plus
+Earlier local checkpoint2026-10-19: `218dde5`, unaccepted03B integration plus
 independently reviewed R3 red tests (86 tests,56PASS/30FAIL). Native pair
 activation/contact semantics were confirmed from the local SDK; the old host
 model incorrectly filtered each slave's own fields. That checkpoint precedes
@@ -24,11 +24,15 @@ Read SafetyTests/03B_NATIVE_PAIR_FIX_PLAN.md,03B_NATIVE_PAIR_PLAN_REVIEW.md and
 After that checkpoint R3 and whole03B were independently ACCEPTED within their
 component scope. Accepted source is a50e24af66c755f00001e3bd2eed70ba4d30526df8dfa427b5d37bc6dcebb413;
 SGVL06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5.
-Current accepted work is not yet checkpointed:178/75/272 tests PASS,
+Current accepted work is checkpointed at b5692c3:178/75/272 tests PASS,
 201PASS/1FAIL/5NV. See03B_R3_REVIEW.md and R3_CURRENT_RESULTS.json for current
 evidence; old integration results retain their old-model limitation. Keep red
-baselines intact. Next stage is ONLY PLC pulse LV/HV red tests before another
-checkpoint/code repair; earlySTO remains a reviewed plan. No full41 acceptance.
+baselines intact. b5692c3 also includes reviewed PLC pulse LV/HV red tests:
+48 tests36PASS/12FAIL. That follow-up is now independently accepted:48/48 PASS,
+source dd9fd938fd5493795a7eea7b29cb027d7e994e2a55e2ad02d2ca66cb4beb6923;
+178/75/321 test stages PASS,201/1/5 cases. It adds only two existing AndIn4
+bindings. See PLC_PULSE_IMPLEMENTATION_REVIEW.md and PLC_PULSE_CURRENT_RESULTS.json.
+Next is earlySTO fixture-plan review and real red tests; no full41 acceptance.
 
 Emergency checkpoint created on 2026-10-18 before moving to another workstation.
 

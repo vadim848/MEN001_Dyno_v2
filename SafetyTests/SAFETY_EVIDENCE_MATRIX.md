@@ -9,11 +9,11 @@
 
 ## Current synchronization — 2026-10-18
 
-Latest accepted refresh2026-10-19:03B and scopedR3 accepted, see
-ITERATION_03B_REVIEW.md and03B_R3_REVIEW.md. SAL
-`a50e24af66c755f00001e3bd2eed70ba4d30526df8dfa427b5d37bc6dcebb413`, SGVL
+Latest accepted refresh2026-10-19:03B/R3 plus scoped PLC pulse correction,
+see PLC_PULSE_IMPLEMENTATION_REVIEW.md. SAL
+`dd9fd938fd5493795a7eea7b29cb027d7e994e2a55e2ad02d2ca66cb4beb6923`, SGVL
 `06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5`.
-Saved178/75/272 test suites PASS;201PASS/1FAIL/5NV cases, no new run here.
+Saved178/75/321 test suites PASS;201PASS/1FAIL/5NV cases, no new run here.
 Actual physical R&D timing/late/rearm recognizer now covered in145-block
 branch with26 given inputs and typed Network3 ownership cuts. R3 uses native
 first-only WINDOW and effective master pair selection/inversion for four
@@ -23,9 +23,14 @@ complete emergency owner and accepted-transition rollback remain open.
 
 All41 mandatory IDs remain; models/prototypes do not close full requirements.
 Older snapshots below are historical and superseded by this accepted source.
-One-sample PLCstop/raw restore LV/HV new-Set gap remains an explicit scoped
-follow-up (PLC_PULSE_SET_REQUIREMENTS.md), not closed by03B or normal guard
-truth tables. EarlySTO/full original sequence and PLC request/conflict/
+One-sample PLCstop/raw restore LV/HV new-Set gap is now closed in scoped
+follow-up: two existing SetPermit.AndIn4 inputs read previous existing PLC
+producer, while current raw checks remain. Immutable48=36PASS/12FAIL red
+baseline preserved; unchanged48 nowPASS. Matching PLC_PULSE_CURRENT_RESULTS.json
+contains44 continuously observed cases+4 truth rows, exactly12 recovery deltas.
+No forceReset, new blocks/orders/timers/mainEStop/SGVL/runtime changes.
+This is not allEMG/fullreachability/BOOT acceptance. EarlySTO/full original
+sequence and PLC request/conflict/
 transition-down/discharge behavior questions remain separate unfinished work.
 
 Coverage refresh2026-10-19: reviewed04/03C/06/05 and accepted07r2 are reflected

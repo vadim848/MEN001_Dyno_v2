@@ -12,7 +12,8 @@ const get=p=>blocks.find(b=>b.path===p);
 const permit=get("//Network1/FBAndLvCurrentPermit"),gate=get("//Network1/FBAndHvSetPermit"),rs=get("//Network1/FBRs2"),or=get("//Network1/FBOr18");
 const healthy={b_EStop_Ok:true,in_ES_NC_1:true,in_ES_NC_2:true,in_InterLock_NC_1:true,in_InterLock_NC_2:true,
   in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,in_Estop_PLC:false};
-const make=extra=>new SalRuntime({...model,networks:[{blocks:[permit,gate,rs,or,...extra,...(extra.some(b=>b.path.startsWith("//Network12/"))?model.networks.find(n=>n.name==="RndPhysicalCompact").blocks:[])]}]}, {unconnectedInput:false}).setInputs(healthy);
+const make=extra=>{const r=new SalRuntime({...model,networks:[{blocks:[permit,gate,rs,or,...extra,...(extra.some(b=>b.path.startsWith("//Network12/"))?model.networks.find(n=>n.name==="RndPhysicalCompact").blocks:[])]}]}, {unconnectedInput:false}).setInputs(healthy);r.values.set("//Network1/FBAnd1/AndOut",true); // Explicit healthy excluded PLCproducer boundary, exercised dynamically by PLC pulse suite.
+return r;};
 const noReset=r=>{for(const source of rs.inputs.find(p=>p.name==="Reset").sources)r.values.set(source,false);r.values.set(rs.inputs.find(p=>p.name==="Reset").path,false);};
 
 test("HV current SAL: sole canonical Set path, preserved aggregate inputs and complete binding audit",()=>{
@@ -24,7 +25,7 @@ test("HV current SAL: sole canonical Set path, preserved aggregate inputs and co
   assert.equal(model.bindingAudit.edges.filter(e=>e.to===rs.inputs.find(p=>p.name==="Set").path).length,1);
   assert.deepEqual(or.inputs.slice(0,3).map(p=>p.globals[0]?.resolvedName??p.sources[0]),
     ["b_Set_HV_C2","//Network1/FBAnd6/AndOut","b_Set_HV_C2_1"]);
-  assert.deepEqual(gate.inputs.map(p=>p.channelInterface),["Activated","Activated","Activated",...Array(5).fill("Deactivated")]);
+  assert.deepEqual(gate.inputs.map(p=>p.channelInterface),["Activated","Activated","Activated","Activated",...Array(4).fill("Deactivated")]);
   assert.equal(gate.inputs[2].deactivate1,"Make Contact (NO)");
   assert.equal(permit.outputs[0].targets.includes("//Network1/FBAndLvSetPermit/AndIn2"),true);
   const xml=fs.readFileSync(file,"utf8"),sgvl=fs.readFileSync(new URL("../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl",import.meta.url),"utf8");

@@ -9,7 +9,8 @@ const permit = get("//Network1/FBAndLvCurrentPermit"), set = get("//Network1/FBA
 const rs = get("//Network1/FBRs1"), or = get("//Network1/FBOr17");
 const healthy = { b_EStop_Ok:true,in_ES_NC_1:true,in_ES_NC_2:true,in_InterLock_NC_1:true,in_InterLock_NC_2:true,
   in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,in_Estop_PLC:false };
-function make(blocks) { return new SalRuntime({ ...model, networks:[{ blocks }] }, { unconnectedInput:false }).setInputs(healthy); }
+function make(blocks) { const r = new SalRuntime({ ...model, networks:[{ blocks }] }, { unconnectedInput:false }).setInputs(healthy); r.values.set("//Network1/FBAnd1/AndOut",true); // Explicit excluded PLCproducer healthy boundary; pulse suite executes the actual producer.
+ return r; }
 function noReset(r) { r.values.set(rs.inputs.find(p => p.name === "Reset").path,false); }
 function seed(r,value) { r.memory.set(rs.path,{ value }); r.write(rs.outputs[0],value); }
 
@@ -17,7 +18,7 @@ test("LV current SAL: sole Set binding, preserved producers/fanout and relative 
   assert.deepEqual(rs.inputs.find(p => p.name === "Set").sources,[set.outputs[0].path]);
   assert.deepEqual(or.outputs[0].targets,[set.inputs[0].path]);
   assert.deepEqual(set.outputs[0].targets,[rs.inputs.find(p => p.name === "Set").path]);
-  assert.deepEqual(set.inputs.map(p => p.channelInterface),["Activated","Activated","Activated",...Array(5).fill("Deactivated")]);
+  assert.deepEqual(set.inputs.map(p => p.channelInterface),["Activated","Activated","Activated","Activated",...Array(4).fill("Deactivated")]);
   assert.equal(set.inputs[2].deactivate1,"Make Contact (NO)");
   assert.equal(permit.inputs.every(p => p.channelInterface === "Activated"),true);
   assert.deepEqual(permit.inputs.map(p => p.globals[0]?.resolvedName ??

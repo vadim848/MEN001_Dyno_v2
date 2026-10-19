@@ -22,10 +22,10 @@ SINGLE0.5/BOTH1 утверждены D-TIMING; последнее D-CHORD250 у�
 
 ## Матрица обязательных проверок
 
-Актуализация2026-10-19 после принятой03B и scopedR3: SAL
-`a50e24af66c755f00001e3bd2eed70ba4d30526df8dfa427b5d37bc6dcebb413`, SGVL
+Актуализация2026-10-19 после принятого scoped PLC pulse follow-up: SAL
+`dd9fd938fd5493795a7eea7b29cb027d7e994e2a55e2ad02d2ca66cb4beb6923`, SGVL
 `06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5`.
-Сохранённый отчёт:178 harness/75 historical/272 current tests PASS;
+Сохранённый отчёт:178 harness/75 historical/321 current tests PASS;
 сценарии201PASS/1FAIL/5NV/0ERROR. Эти числа прочитаны из отчёта, а не новый
 запуск аналитика. Все41ID по-прежнему обязательны, весь проект не принят.
 
@@ -47,10 +47,14 @@ SINGLE0.5/BOTH1 утверждены D-TIMING; последнее D-CHORD250 у�
   текущим PLCstop, первый fault scan и отсутствие reopen после raw restore
   без reset проверены для Safe/R&D. NC2/Mentee/all transitions не закрыты.
 
-Открыт scoped LV/HV gap: one-sample PLCstop/raw restore без Restart может
-дать новый Set по предыдущим значениям producer/EStopOK.04/05 не закрывают
-эту recovery границу. Follow-up: PLC_PULSE_SET_REQUIREMENTS.md; red tests
-готовятся отдельно. EarlySTO и полная исходная последовательность не завершены;
+Принят scoped LV/HV PLC pulse follow-up: два existing SetPermit.AndIn4
+получают предыдущий FBAnd1 PLC producer, текущие raw проверки сохраняются.
+Исторический immutable baseline48=36PASS/12FAIL; unchanged48 checks теперь
+PASS. PLC_PULSE_CURRENT_RESULTS.json содержит44 непрерывных chain cases и4
+producer truth rows, ровно12 recoveryFAIL→PASS. См. PLC_PULSE_IMPLEMENTATION_REVIEW.md.
+Нет forceReset уже latched outputs; main EStop/SGVL/runtime/timers/orders
+не менялись. Это закрывает узкую pulse/recovery границу, не allEMG/fullBOOT/
+достижимость. EarlySTO и полная исходная последовательность не завершены;
 PLC-only policy/conflict destination/transition-down/discharge вопросы остаются.
 
 «Частично» означает ограниченный исполняемый сценарий реального SAL либо

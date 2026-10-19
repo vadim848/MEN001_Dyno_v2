@@ -31,6 +31,7 @@ for(const door of [false,true])for(const nc1 of [false,true])for(const nc2 of [f
 function runEnergy(route,door,nc1,nc2,extra={}) {
   const r=make([...model.networks.find(n=>n.name==="Network12").blocks,...model.networks.find(n=>n.name==="RndPhysicalCompact").blocks,...[
     "//Network1/FBAndLvCurrentPermit","//Network1/FBAndHvSetPermit","//Network1/FBRs2","//Network1/FBOr18"].map(get)]);
+  r.values.set("//Network1/FBAnd1/AndOut",true); // Explicit healthy excluded PLCproducer boundary.
   const rs=get("//Network1/FBRs2");for(const source of rs.inputs.find(p=>p.name==="Reset").sources)r.values.set(source,false);
   r.setInputs({...healthy,b_Step_RnD:true,b_ResetPB_Lock:false,in_False_SI2_CH8:false,
     in_Door_Monitor:door,in_InterLock_NC_1:nc1,in_InterLock_NC_2:nc2,

@@ -10,6 +10,7 @@ const healthy={b_EStop_Ok:true,in_ES_NC_1:true,in_ES_NC_2:true,in_InterLock_NC_1
 function make(domain,extra=[]) {
   const hv=domain==="HV",rs=get(`//Network1/FBRs${hv?2:1}`),gate=get(`//Network1/FBAnd${hv?'Hv':'Lv'}SetPermit`),aggregate=get(`//Network1/FBOr${hv?18:17}`);
   const r=new SalRuntime({...model,networks:[{blocks:[permit,gate,rs,aggregate,...extra,...(extra.some(b=>b.path.startsWith("//Network12/"))?model.networks.find(n=>n.name==="RndPhysicalCompact").blocks:[])]}]},{scanMs:1,unconnectedInput:false}).setInputs({...healthy,in_Mentee_EStop:false});
+  r.values.set("//Network1/FBAnd1/AndOut",true); // Explicit healthy excluded PLCproducer boundary.
   for(const source of rs.inputs.find(p=>p.name==="Reset").sources)r.values.set(source,false);
   return {r,rs,gate,aggregate,output:hv?"out_HV_C2":"out_LV_C1"};
 }

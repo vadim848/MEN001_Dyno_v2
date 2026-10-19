@@ -2,23 +2,26 @@
 
 ## Последний принятый результат
 
-03B и R3 приняты независимым ревью в ограниченном программном объёме.
-**178/178 harness,75/75 historical,272/272 current;
+03B/R3 и последующий PLC pulse LV/HV fix приняты независимым ревью
+в ограниченном программном объёме.
+**178/178 harness,75/75 historical,321/321 current;
 201PASS/1FAIL/5NOT VERIFIED/0ERROR.** Проект в целом НЕ принят.
 
-SAL SHA256: a50e24af66c755f00001e3bd2eed70ba4d30526df8dfa427b5d37bc6dcebb413.
+SAL SHA256: dd9fd938fd5493795a7eea7b29cb027d7e994e2a55e2ad02d2ca66cb4beb6923.
 GVL1.sgvl SHA256:06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5.
-253 блока из255; прежние timer values сохранены. Текущая принятая реализация
-пока рабочий diff после checkpoint218dde5. Ревью:03B_R3_REVIEW.md и
-ITERATION_03B_REVIEW.md. R3_CURRENT_RESULTS.json связывает актуальные
-source/model/plan hashes и86+69 трасс; прежний03B_INTEGRATED_ACCEPTANCE.json
+253 блока из255; прежние timer values сохранены. Checkpointb5692c3 содержит
+принятые03B/R3 и reviewed PLC pulse red tests; последующее принятое исправление
+PLC pulse пока рабочий diff. Ревью:PLC_PULSE_IMPLEMENTATION_REVIEW.md,
+03B_R3_REVIEW.md и ITERATION_03B_REVIEW.md. PLC_PULSE_CURRENT_RESULTS.json
+связывает текущие source/model/artifact hashes и48 тестов; R3_CURRENT_RESULTS.json
+сохраняет предыдущие86+69 трасс. Прежний03B_INTEGRATED_ACCEPTANCE.json
 исторический, с ограничением старой pair-модели.
 
 Остался прежний STATE:conflicting-set-requests и5NV; все41 требования обязательны.
-Повторно открыт узкий LV/HV Set recovery gap: один наблюдённый PLCstop и
-rawrestore без Restart могут разрешить сохранённый Set до обновления памяти
-EStop. Реальные producer/guard/RS со state cuts воспроизведены; полная
-достижимость не заявляется. Это отдельный следующий пакет, не регрессия03B.
+Узкий LV/HV Set recovery gap закрыт: прежний PLC permission producer подключён
+к AndIn4 обоих Set guards.48 тестов36PASS/12FAIL→48PASS;0 новых блоков,
+Reset/timers/order/SGVL/runtime неизменны. Реальные producer/guard/RS с явными
+state cuts; полная достижимость и все emergency owners этим не доказаны.
 
 ## Объём и источники
 
@@ -82,28 +85,22 @@ fault и возврат входа без Restart проверены в Safe/R&D
 
 ## Следующие шаги
 
-1. PLC pulse LV/HV: редактору переданы ТОЛЬКО новые red tests на принятомR3.
-   Основа PLC_PULSE_SET_REQUIREMENTS.md, PLC_PULSE_SET_GUARD_REVIEW.md и
-   PLC_PULSE_AND_STO_PLAN_REVIEW.md. Реальные producers, paired healthy/fault,
-   first recovery scan, noRestart/manualRestart, latched outputs; scoped cuts
-   и scan-by-scan observation явны. SAL/runtime до review/checkpoint не менять.
-   Тесты готовы и приняты независимым ревью:48tests36PASS/12FAIL/0skip.
-   Все12FAIL — first rawrestore безRestart; healthy/manualRestart/latched
-   controls PASS. Source/R3 model не менялись. PLC_PULSE_RED_BASELINE.json
-   сохраняется; checkpoint до исправления — следующий шаг.
-2. После независимой приёмки тестов сохранить checkpoint: принятые03B/R3 и
-   честный новый red baseline. Затем добавить previous PLC permission producer
-   к свободному AndIn4 обоих существующих Set guards;0 новых блоков,
-   Reset/timers/order неизменны. Повторить целевые/полные тесты и независимое ревью.
-3. EarlySTO: действующий EARLY_STO_ORDER_REVIEW_PLAN.md — reviewed conditional
-   план, ещё не реализация. Два четырёхвходовых per-drive Set guard дают255,
-   сохраняют относительный старый порядок и передают SU за два скана без C2/
-   Healthy ожидания. Нужны реальные red tests, доказательство lifetime SU при
-   handoff, old Reset/PLC waveforms и fault/pulse/recovery. Старый tail-перенос
-   альтернативный, не выбранная инструкция; same-scan не требование пользователя.
-4. Полные Safe↔R&D↔Run sequences, emergency owner/recovery, startup/Network4,
-   Safe/Run recognizer и остальные обязательные ID по NEXT_REQUIREMENTS_WORKLIST.
-   Не закрывать ID одним branch test; не выдумывать ожидаемую реакцию.
+1. EarlySTO: действующие EARLY_STO_ORDER_REVIEW_PLAN.md и
+   EARLY_STO_TEST_FIXTURE_PLAN.md. Два четырёхвходовых per-drive Set guard
+   дадут255, сохраняют относительный прежний порядок и передают SU за два
+   скана без C2/Healthy ожидания. Старый tail-перенос — альтернатива;
+   same-scan не требование пользователя. Fixture расширяет наблюдения опцией,
+   исходные69 сценариев неизменны; реальные STO/PLC/confirmation outputs и
+   acceptedSU дают163-block dependency closure с явными phase cuts.
+2. После технического ревью fixture — actual red tests: реальный жест/SU,
+   C2FALSE и оба Healthy значения, no STO before N+2, дальнейшие сохранённые
+   feedback/confirmation действия, oldSet/Reset/PLC waveforms и fault/pulse.
+   Тесты/review/checkpoint до дальнейшего изменения SAL; no seed SU/STO latch.
+3. Затем реализация двух guards/двух SU inputs по плану, целевые/полные проверки,
+   независимое ревью. Не менять mainEStop/таймеры/legacy actions ради зелени.
+4. Полные Safe↔R&D↔Run, emergency owner/recovery, startup/Network4,
+   Safe/Run recognizer и остальные41 mandatory ID. Branch PASS не закрывает
+   full reachability; неизвестную реакцию не выдумывать.
 
 ## Принятый03B/R3 и границы доказательства
 
@@ -148,8 +145,8 @@ f7b4f7e исходный пакет+01; c024651 пакет02;
 9ef945c B1/R2+03A;0e4ab09 HV04;b0184eb red03C;
 e6ee0db принятая03C+red06;930d6a1 принятая06+red05;
 d86925a принятая05+red07; c69bc32 принятая07+red03B;
-218dde5 непринятая03B+reviewedR3red.
-Текущий рабочий diff содержит принятые03B/R3 и новые red tests PLC pulse в работе.
+218dde5 непринятая03B+reviewedR3red; b5692c3 принятая03B/R3+reviewed PLC pulse red.
+Текущий рабочий diff — исправление PLC pulse Set guards, ещё не принятое.
 
 Baseline workflow-2026-10-18 (manifest/архив/результаты/fixture) неизменяем.
 UpgradeLog3/4 посторонние, никогда не включать. Не реконструировать историю

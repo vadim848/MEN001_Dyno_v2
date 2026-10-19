@@ -33,6 +33,7 @@ test("B1 current source and unchanged historical wire roles pass structural audi
   }
   assert.equal(count,34); // B1 eleven +06 two NC +05 two Mentee +07 one PLC consumer; only06 Door energy usage removed.
   const requiredEdges=[
+    ["FBAnd1/AndOut","FBAndLvSetPermit/AndIn4"], ["FBAnd1/AndOut","FBAndHvSetPermit/AndIn4"],
     ["FBRs6/RsOut","FBAndUnlockHold/AndIn1"], ["FBOr17/OrOut","FBAndLvSetPermit/AndIn1"],
     ["FBAndLvCurrentPermit/AndOut","FBAndLvSetPermit/AndIn2"], ["FBAndLvSetPermit/AndOut","FBRs1/Set"]
   ];
@@ -120,4 +121,17 @@ test("B1 plus07 SGVL delta is exactly two program usages; declarations and other
   assert.equal([...gvl.matchAll(removal)].length,2);
   const normalize=s=>s.replace(/>\s+</g,"><").trim();
   assert.equal(normalize(removeCompactGvl(gvl).replace(removal,"")),normalize(baseline.stdout));
+});
+
+
+test("PLC pulse guards preserve producer fanout and use exactly four direct/inverted native inputs",()=>{
+ const model=parseSalFile(salUrl),all=model.networks.flatMap(n=>n.blocks),get=p=>all.find(b=>b.path===p);
+ assert.equal(all.length,253);
+ const source=get('//Network1/FBAnd1');assert.equal(source.orderOfExecution,95);
+ assert.deepEqual([...source.outputs[0].targets].sort(),['//Network1/FBEstop1/EStopIn3','//Network1/FBAndLvSetPermit/AndIn4','//Network1/FBAndHvSetPermit/AndIn4'].sort());
+ for(const domain of ['Lv','Hv']){const gate=get('//Network1/FBAnd'+domain+'SetPermit');
+  assert.deepEqual(gate.inputs.map(p=>p.channelInterface),[...Array(4).fill('Activated'),...Array(4).fill('Deactivated')]);
+  assert.deepEqual(gate.inputs[3].sources,[source.outputs[0].path]);assert.equal(gate.inputs[3].deactivate1,'Break Contact (NC)');
+  assert.deepEqual(gate.inputs[3].globals,[]);
+ }
 });

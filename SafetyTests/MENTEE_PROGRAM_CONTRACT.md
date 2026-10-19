@@ -6,6 +6,14 @@
 
 ## Исправление native pair семантики — 2026-10-19
 
+Последующий принятый PLC pulse follow-up, source
+dd9fd938fd5493795a7eea7b29cb027d7e994e2a55e2ad02d2ca66cb4beb6923:
+оба LV/HV SetPermit сохраняют !Mentee и дополнены previous PLC producer
+на existing AndIn4. Это узкая защита one-sample PLCstop/raw restore без
+Restart,48 unchanged checks теперьPASS вместо36PASS/12FAIL. Она не является
+новым Mentee recovery контрактом и не закрывает всю аварийную процедуру.
+См. PLC_PULSE_IMPLEMENTATION_REVIEW.md/PLC_PULSE_CURRENT_RESULTS.json.
+
 Первичные SDK metadata/IL свидетельства в 03B_NATIVE_PAIR_FIX_PLAN.md
 исправляют прежний вывод этого отчёта: собственная строка slave порта
 `Both Deactivated` НЕ означает его effective неактивность. Master
