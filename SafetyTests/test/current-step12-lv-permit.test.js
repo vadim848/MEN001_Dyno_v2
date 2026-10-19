@@ -19,7 +19,8 @@ test("LV current SAL: sole Set binding, preserved producers/fanout and relative 
   assert.deepEqual(set.outputs[0].targets,[rs.inputs.find(p => p.name === "Set").path]);
   assert.deepEqual(set.inputs.map(p => p.channelInterface),["Activated","Activated",...Array(6).fill("Deactivated")]);
   assert.equal(permit.inputs.every(p => p.channelInterface === "Activated"),true);
-  assert.deepEqual(permit.inputs.map(p => p.globals[0].lastKnownPath.slice(5)),Object.keys(healthy));
+  assert.deepEqual(permit.inputs.map(p => p.globals[0]?.resolvedName ??
+    model.variables.find(v=>v.targetPorts.includes(p.path))?.name),Object.keys(healthy));
   assert.deepEqual([permit.orderOfExecution,set.orderOfExecution,rs.orderOfExecution],[2,3,4]);
   const producer = get("//Network11/FBAnd1");
   assert.ok(producer.outputs[0].targets.includes("//Network11/FBTon1/TonIn"));

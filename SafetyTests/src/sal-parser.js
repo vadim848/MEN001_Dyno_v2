@@ -1,4 +1,7 @@
 import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { assertSalBindings } from "./sal-binding-validator.js";
 
 function attrs(text) {
   return Object.fromEntries([...text.matchAll(/([\w:.-]+)="([^"]*)"/g)].map(m => [m[1], m[2]]));
@@ -23,7 +26,11 @@ function ports(body, tag) {
   });
 }
 
-export function parseSalFile(file) {
+export function parseSalFile(file, { bindingMode = "auto" } = {}) {
+  const absolute = path.resolve(file instanceof URL ? fileURLToPath(file) : file);
+  const working = fileURLToPath(new URL("../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal",import.meta.url));
+  const current = bindingMode === "current" || (bindingMode === "auto" && absolute.toLowerCase() === working.toLowerCase());
+  const bindingAudit = current ? assertSalBindings(file,new URL("../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl",import.meta.url)) : null;
   const xml = fs.readFileSync(file, "utf8");
   const networks = [];
   for (const network of elements(xml, "Network")) {
@@ -61,7 +68,24 @@ export function parseSalFile(file) {
     };
   });
 
-  return { file, crc: attrs(xml.match(/<safetyApplication\b([^>]*)>/)?.[1] ?? "").Crc, networks, variables };
+  // A DSL wire is serialized at one endpoint. Normalize either representation
+  // once before scoped selections so input/output readers see the same edge.
+  const allPorts = new Map(networks.flatMap(n => n.blocks.flatMap(b => [...b.inputs,...b.outputs])).map(p => [p.path,p]));
+  for (const n of networks) for (const b of n.blocks) {
+    for (const out of b.outputs) for (const target of out.targets) {
+      const input = allPorts.get(target); if(input && !input.sources.includes(out.path)) input.sources.push(out.path);
+    }
+    for (const input of b.inputs) for (const source of input.sources) {
+      const out = allPorts.get(source); if(out && !out.targets.includes(input.path)) out.targets.push(input.path);
+    }
+  }
+  if(current)for(const port of allPorts.values())for(const g of port.globals) {
+    const symbol=bindingAudit.globalRefs.find(r=>r.portId===port.Id&&r.variableId===g.variableId);
+    if(!symbol)throw Error(`Unvalidated current global reference ${port.path}`);
+    g.resolvedName=symbol.name;
+  }
+  return { file, bindingMode:current?"current":"fixture-or-explicit-injection", bindingAudit,
+    crc: attrs(xml.match(/<safetyApplication\b([^>]*)>/)?.[1] ?? "").Crc, networks, variables };
 }
 
 export function buildDependencyGraph(model) {

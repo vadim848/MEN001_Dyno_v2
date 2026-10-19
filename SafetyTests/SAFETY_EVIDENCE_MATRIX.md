@@ -9,6 +9,25 @@
 
 ## Current synchronization — 2026-10-18
 
+PLC request policy update2026-10-19: actual v2 MAIN act_LogicMap emits held
+codes10/11/00, while Network12 merges PLC paths with button paths. Reference
+MAIN has no corresponding R&D action. SPEC§14 requires a new event/handshake,
+but independent PLC acceptance without physical gesture remains Q-PLC-REQUEST
+in SCENARIO_DECISIONS. No held-level bypass or invented handshake acceptance
+is permitted. Only that dependent policy waits; B1/HV work continues.
+
+Update2026-10-19: targeted read-only declarations/program mappings trace is
+LOCK_FEEDBACK_SOFTWARE_TRACE.md. Separate SolonoidStatus input and mapped
+SolenoedMonitor field exist in reference/v2, but no copy or SAL SDS15 consumer
+was found. Locked meaning/polarity/qualification is not established. Latest
+conditional D-LOCK-CHECK was superseded by D-DOOR-CURRENT: preserve ordinary
+digital DoorMonitor via PLC and original program permissions now. Separate
+locked feedback is deferred until engineer discussion/new user decision;
+Q-LOCK-CONTRACT does not block workflow or form mandatory NV. Do not remove
+existing EStop/interlocks or claim DoorMonitor is safe/closedANDlocked proof.
+Existing conditions still require actual-code checks. Binding repair B1 is
+independent and remains. No hardware facts or safe status are inferred.
+
 The full original working sequence is the foundation of v2. R&D adds a stable
 intermediate stop/continuation; it does not authorize a redesign. Match reference
 phases by code rather than searching only for the new name. Intentional changes

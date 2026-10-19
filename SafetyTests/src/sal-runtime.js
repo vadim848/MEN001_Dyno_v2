@@ -1,5 +1,5 @@
 function variableName(reference) {
-  return reference?.lastKnownPath?.split(".").at(-1);
+  return reference?.resolvedName ?? reference?.lastKnownPath?.split(".").at(-1);
 }
 
 function activePorts(ports) {
@@ -11,6 +11,11 @@ export class SalRuntime {
     if (!["global", "legacy-network"].includes(executionOrder)) throw new Error("Unknown execution order");
     if (typeof unconnectedInput !== "boolean") throw new Error("unconnectedInput must be an explicit Boolean assumption");
     this.model = model;
+    if (model.bindingMode === "current") {
+      if(model.bindingAudit?.status !== "PASS")throw Error("Current SAL requires namespace/relationship validation before execution");
+      for(const block of model.networks.flatMap(n=>n.blocks))for(const port of [...block.inputs,...block.outputs])
+        for(const global of port.globals)if(!global.resolvedName)throw Error(`Unresolved current global namespace at ${port.path}`);
+    }
     this.scanMs = scanMs;
     this.executionOrder = executionOrder;
     this.unconnectedInput = unconnectedInput;

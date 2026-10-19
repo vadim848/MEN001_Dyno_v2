@@ -1,4 +1,5 @@
 import { SalRuntime } from "./sal-runtime.js";
+import { currentGestureBoundaryChecks } from "./current-gesture-boundaries.js";
 
 const ready = { b_Step_RnD: true, b_ResetPB_Lock: false, in_False_SI2_CH8: false,
   in_Door_Monitor: true, inPLC_RnD_Mode: false, inPLC_RnD_Mode_2: false,
@@ -144,8 +145,8 @@ export function candidateButtonCoverChecks(model) {
   }
   for (const [id, req, reason] of [
     ["ACC-B01", ["BTN-001", "BTN-002", "BOOT-002"], "Complete recognizer/reset ownership is not yet bound across Safe/R&D/Run"],
-    ["ACC-C02-F", ["CVR-004", "CVR-006"], "Software binding and behavior of closed/locked conditions are not yet fully covered; hardware inputs are accepted"],
+    ["ACC-C02-F", ["CVR-004", "CVR-006"], "Preservation of existing DoorMonitor conditions and cover reactions not fully covered; no new separate locked-feedback guard is required"],
     ["ACC-C01-E", ["EMG-007"], "Software coverage of all transition phases and emergency source/button combinations is incomplete"]
   ]) results.push({ id, requirements: req, status: "NOT VERIFIED", reason });
-  return results;
+  return [...results, ...currentGestureBoundaryChecks(model)];
 }

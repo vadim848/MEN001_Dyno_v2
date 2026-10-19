@@ -19,7 +19,7 @@ function runtime(extra = {}) {
     ({ ...n, blocks: n.blocks.filter(b => selection[n.name].includes(b.name)) })) }, { unconnectedInput: false });
 }
 
-test("CVR current SAL: sole final writer, reciprocal wire, native port IDs and contiguous execution", () => {
+test("CVR current SAL: sole final writer, normalized single wire, native port IDs and contiguous execution", () => {
   assert.deepEqual(model.variables.find(v => v.name === output).sourcePorts, [gate.outputs[0].path]);
   assert.equal(model.networks.flatMap(n => n.blocks).flatMap(b => b.outputs).filter(p =>
     p.globals.some(g => g.lastKnownPath === `GVL1.${output}`)).length, 0);
@@ -44,10 +44,14 @@ test("CVR current SAL: sole final writer, reciprocal wire, native port IDs and c
   const params = m => m.networks.flatMap(n => n.blocks).map(b => [b.path, b.parameters]).filter(([,p]) => p.length);
   assert.deepEqual(params(model), params(old));
   assert.equal(xml.match(/<safetyApplication\b[^>]*>/)[0], oldXml.match(/<safetyApplication\b[^>]*>/)[0]);
-  // Apart from the relocated sole output producer, the entire variable section is unchanged.
-  const variableSection = s => s.slice(s.indexOf("<variables>"));
-  assert.ok(xml.includes("<variables>"));
-  assert.equal(variableSection(xml).replace("//Network1/FBAndUnlockHold/AndOut", "//Network1/FBRs6/RsOut"), variableSection(oldXml));
+  // B1 intentionally adds logical consumers through SAL alias usage roles.
+  // Preserve descriptors and old consumers; exact allowed fanout is audited in
+  // current-native-bindings.test.js rather than forbidding logical connections.
+  for(const previous of old.variables) {
+    const current=model.variables.find(v=>v.name===previous.name);
+    for(const target of previous.targetPorts)assert.ok(current.targetPorts.includes(target));
+    assert.deepEqual(current.sourcePorts, previous.name===output ? [gate.outputs[0].path] : previous.sourcePorts);
+  }
 });
 
 test("CVR current SAL: eight final gate combinations use the actual parsed block", () => {

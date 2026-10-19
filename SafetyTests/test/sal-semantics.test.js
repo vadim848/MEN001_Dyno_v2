@@ -27,6 +27,9 @@ test("SAL-SEM02 real RS holds, sets and resets with Reset dominant", () => {
   function apply(set, reset, expected) {
     r.values.set(`${block.path}/Set`, set);
     r.values.set(`${block.path}/Reset`, reset);
+    // Explicitly drive the cut wire sources of this isolated RS component.
+    for(const source of block.inputs.find(p=>p.name==="Set").sources)r.values.set(source,set);
+    for(const source of block.inputs.find(p=>p.name==="Reset").sources)r.values.set(source,reset);
     r.scan();
     assert.equal(r.get("out_HV_C2"), expected);
   }

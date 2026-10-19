@@ -44,6 +44,9 @@ test("V2-BTN02 blue alone sets door-unlock request after 0.5 s", () => {
 
 test("V2-BTN03 both buttons produce the upward transition request after 1 s", () => {
   const runtime = new SalRuntime(buttonModel, { scanMs: 10 })
+    // Establish connected feedback-wire initial values before timing the hold.
+    // It is a neutral component prehistory, not a new release-filter rule.
+    .setInputs(ready).runFor(20)
     .setInputs({ ...ready, in_Reset_PB: true, in_Relase_Door_PB: true })
     .runFor(990);
   assert.equal(runtime.get("b_Set_Transition_3"), false);

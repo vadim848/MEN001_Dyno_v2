@@ -17,6 +17,15 @@ const connectorModel = {
       blocks: network.blocks.filter(block => ["FBAnd1", "FBTon1"].includes(block.name))
     }))
 };
+function runtimeAtConnectorBoundary() {
+  const runtime = new SalRuntime(connectorModel);
+  // This component deliberately cuts the Step1 Decouple producer. Establish
+  // its output explicitly instead of relying on unconnectedInput=TRUE.
+  runtime.values.set("//Network2/FBDecouple3/DecOut1",true);
+  runtime.values.set("//Network2/FBAnd6/AndOut",true);
+  runtime.values.set("//Network2/FBAnd5/AndOut",true);
+  return runtime;
+}
 
 test("SAL-RUN01 runtime supports every function block present in v2", () => {
   const runtime = new SalRuntime(model).scan();
@@ -24,7 +33,7 @@ test("SAL-RUN01 runtime supports every function block present in v2", () => {
 });
 
 test("SAL-RUN02 Network2 connector qualification drops immediately", () => {
-  const runtime = new SalRuntime(connectorModel);
+  const runtime = runtimeAtConnectorBoundary();
   runtime.setInputs({
     in_ES_NC_1: true,
     in_ES_NC_2: true,
@@ -59,7 +68,7 @@ test("SAL-RUN03 connector recovery requires the configured 100 ms TON", () => {
     in_InterLock_NC_1: true,
     in_InterLock_NC_2: true
   };
-  const runtime = new SalRuntime(connectorModel).setInputs({ ...healthy, in_HV_Connector_Interlock: false }).scan();
+  const runtime = runtimeAtConnectorBoundary().setInputs({ ...healthy, in_HV_Connector_Interlock: false }).scan();
   runtime.setInputs(healthy).runFor(90);
   assert.equal(runtime.get("//Network2/FBTon1/TonOut"), false);
   runtime.runFor(10);

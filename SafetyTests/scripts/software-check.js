@@ -35,12 +35,15 @@ for (const name of ["harness", "historical", "current"]) {
 }
 // Keep physical validation outside this scope; software coverage gaps stay visible.
 const requirements = candidateButtonCoverChecks(model).map(row => ({ ...row,
-  ...(row.id === "ACC-C02-F" ? { reason: "Software cover-feedback binding/behavior not yet covered; physical origin is an accepted input condition, not a blocker" } : {}),
+  ...(row.id === "ACC-C02-F" ? { reason: "Preservation of existing DoorMonitor conditions and cover reactions not fully covered; no new separate locked-feedback guard is required" } : {}),
   ...(row.id === "ACC-C01-E" ? { reason: "Software coverage of all transition phases and fault/button combinations remains incomplete" } : {}) }));
 const reference = referenceBehavior(path.resolve(root, "../../MEN001_Dyno/MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal"), model);
 const cases = [...requirements, ...currentCodeChecks(model), ...reference.cases];
 const summary = Object.fromEntries(["PASS", "FAIL", "NOT VERIFIED", "ERROR"].map(s => [s, cases.filter(c => c.status === s).length]));
 const report = { generatedAt: new Date().toISOString(), source: path.relative(path.resolve(root, ".."), sal).replaceAll("\\", "/"),
+  bindingAudit: { status:model.bindingAudit.status, errors:model.bindingAudit.errors,
+    globalReferences:model.bindingAudit.globalRefs.length, canonicalWires:model.bindingAudit.edges.length,
+    scope:"Full working SAL + GVL1 namespace/relationship validation before any component selection; software structural evidence only" },
   sha256: crypto.createHash("sha256").update(fs.readFileSync(sal)).digest("hex"),
   crcRecordedInSource: model.crc, hardwareConfiguration: "accepted existing system; not tested or modified",
   scope: "Software only; partial SAL adapter, selected chains/components and seeded phases. No hardware safety claim.",

@@ -10,7 +10,7 @@ const report = { source: "working v2 SAL, not pinned fixture", crc: model.crc,
   sha256: crypto.createHash("sha256").update(fs.readFileSync(sal)).digest("hex"),
   scope: "Selected block chains with external mode preconditions; user-approved single 0.5s/both 1s, chord delta<=250ms symmetrically; PASS applies only to sampled scenario, not entire requirement or hardware",
   summary: Object.fromEntries(["PASS", "FAIL", "NOT VERIFIED"].map(s => [s, cases.filter(c => c.status === s).length])), cases };
-if (process.argv.includes("--write")) fs.writeFileSync(new URL("../CANDIDATE_ACCEPTANCE.json", import.meta.url), JSON.stringify(report, null, 2) + "\n");
+if (process.argv.includes("--write")) fs.writeFileSync(new URL("../CANDIDATE_ACCEPTANCE.json", import.meta.url), JSON.stringify(report) + "\n");
 for (const c of cases) console.log(`${c.status}: ${c.id} [${c.requirements.join(", ")}] ${c.firstViolation ? JSON.stringify(c.firstViolation) : c.reason ?? c.title}`);
 console.log(JSON.stringify(report.summary));
 if (cases.some(c => c.status === "FAIL")) process.exitCode = 1;
