@@ -105,7 +105,7 @@ export function validateSalBindings(salXml, sgvlXml, { globalName="GVL1" }={}) {
   // compete with direct wires. Unconnected original inputs are reported elsewhere.
   for(const [target,sources]of producers)if(sources.size>1)errors.push(`Conflicting producers ${target}: ${[...sources].join(",")}`);
   for(const [path,port]of ports)if(port.tag==="inPort" &&
-    (/\/FBAnd(?:UnlockHold|LvCurrentPermit|LvSetPermit)\//.test(path)||/\/FBOr3\/OrIn[34]$/.test(path)) &&
+    (/\/FBAnd(?:UnlockHold|LvCurrentPermit|LvSetPermit|HvSetPermit)\//.test(path)||/\/FBOr3\/OrIn[34]$/.test(path)) &&
     port.attr.channelInterface==="Activated" && !producers.has(path))errors.push(`Missing binding on introduced active input ${path}`);
   return { status:errors.length?"ERROR":"PASS",errors,warnings,globalRefs,edges,portCount:ports.size };
 }

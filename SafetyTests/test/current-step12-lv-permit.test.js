@@ -25,7 +25,7 @@ test("LV current SAL: sole Set binding, preserved producers/fanout and relative 
   const producer = get("//Network11/FBAnd1");
   assert.ok(producer.outputs[0].targets.includes("//Network11/FBTon1/TonIn"));
   assert.equal(producer.outputs[0].globals[0].lastKnownPath,"GVL1.b_Set_LV_C1_1");
-  assert.equal(or.orderOfExecution,174);
+  assert.equal(or.orderOfExecution,175);
   const incoming = all.flatMap(b => b.outputs.flatMap(o => o.targets.filter(t => t === rs.inputs.find(p => p.name === "Set").path)));
   assert.equal(incoming.length,1);
 });

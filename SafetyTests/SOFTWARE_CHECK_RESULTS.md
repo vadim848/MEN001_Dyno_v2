@@ -1,14 +1,14 @@
 # Результаты программных проверок
 
-Дата: 2026-10-18T21:40:47.250Z
-SAL SHA256: 1fe206892664e46f8a8aa974c78d90eff2764cf0a664355b740974a9042fbfc9
+Дата: 2026-10-19T05:36:36.851Z
+SAL SHA256: 6ed0c79094a2530be3ab9323abb832d88e56d60c9bb19773f03a32367b6d7ad5
 
 Аппаратная конфигурация принята как исходное условие. Файлы проекта не изменяются этим запуском.
 
 - harness: PASS; 73/73, ошибок 0, пропусков 0.
 - historical: PASS; 75/75, ошибок 0, пропусков 0.
-- current: PASS; 29/29, ошибок 0, пропусков 0.
-- Текущий код: {"PASS":154,"FAIL":47,"NOT VERIFIED":5,"ERROR":0}.
+- current: PASS; 33/33, ошибок 0, пропусков 0.
+- Текущий код: {"PASS":166,"FAIL":35,"NOT VERIFIED":5,"ERROR":0}.
 
 PASS относится только к указанному компоненту/сценарию. Прототипы и исторические воспроизведения не являются приёмкой текущего SAL.
 
@@ -53,20 +53,8 @@ BUTTON/STATE проверяют границу отдельной ветви: в
 - STATE:conflicting-set-requests: {"label":"conflicting requests cannot report simultaneous Safe and Run","actual":true,"expected":false}.
 - PRIORITY:Step12:Mentee:fallback=false: {"label":"no new LV command during fault","actual":true,"expected":false}.
 - PRIORITY:Step12:Mentee:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step2:PLC:fallback=false: {"label":"no new HV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step2:PLC:fallback=true: {"label":"no new HV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step2:NC2:fallback=false: {"label":"no new HV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step2:NC2:fallback=true: {"label":"no new HV command during fault","actual":true,"expected":false}.
 - PRIORITY:Step2:Mentee:fallback=false: {"label":"no new HV command during fault","actual":true,"expected":false}.
 - PRIORITY:Step2:Mentee:fallback=true: {"label":"no new HV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step2:LVConnector:fallback=false: {"label":"no new HV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step2:LVConnector:fallback=true: {"label":"no new HV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step2:HVConnector:fallback=false: {"label":"no new HV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step2:HVConnector:fallback=true: {"label":"no new HV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step2:ExternalNC1:fallback=false: {"label":"no new HV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step2:ExternalNC1:fallback=true: {"label":"no new HV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step2:ExternalNC2:fallback=false: {"label":"no new HV command during fault","actual":true,"expected":false}.
-- PRIORITY:Step2:ExternalNC2:fallback=true: {"label":"no new HV command during fault","actual":true,"expected":false}.
 
 ## Пробелы и ошибки
 
