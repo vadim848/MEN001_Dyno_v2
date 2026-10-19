@@ -50,7 +50,10 @@ test("CVR current SAL: sole final writer, normalized single wire, native port ID
   // current-native-bindings.test.js rather than forbidding logical connections.
   for(const previous of old.variables) {
     const current=model.variables.find(v=>v.name===previous.name);
-    for(const target of previous.targetPorts)assert.ok(current.targetPorts.includes(target));
+    for(const target of previous.targetPorts) {
+      if(previous.name==="in_Door_Monitor"&&target==="//Network12/FBAnd16/AndIn1")continue; // deliberate06 energy guard change
+      assert.ok(current.targetPorts.includes(target));
+    }
     assert.deepEqual(current.sourcePorts, previous.name===output ? [gate.outputs[0].path] : previous.sourcePorts);
   }
 });

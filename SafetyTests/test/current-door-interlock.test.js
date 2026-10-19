@@ -10,6 +10,18 @@ const healthy={b_EStop_Ok:true,in_ES_NC_1:true,in_ES_NC_2:true,in_InterLock_NC_1
   in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,in_Estop_PLC:false};
 const make=blocks=>new SalRuntime({...model,networks:[{blocks}]},{scanMs:1,unconnectedInput:false});
 
+test("DOOR06 exact alias targets separate solenoid consumers from energy InterLocks",()=>{
+  const targets=name=>model.variables.find(v=>v.name===name).targetPorts;
+  assert.deepEqual([...targets("in_Door_Monitor")].sort(),[
+    "//Network2/FBAnd8/AndIn1","//Network12/FBAnd11/AndIn1","//Network12/FBAnd17/AndIn1"].sort());
+  assert.ok(targets("in_InterLock_NC_1").includes("//Network12/FBAnd16/AndIn1"));
+  assert.ok(targets("in_InterLock_NC_2").includes("//Network12/FBAnd16/AndIn3"));
+  assert.ok(targets("in_False_SI2_CH8").includes("//Network12/FBAnd16/AndIn2"));
+  assert.deepEqual(and16.inputs.slice(0,3).map(p=>[p.channelInterface,p.deactivate1]),[
+    ["Activated","Break Contact (NC)"],["Activated","Make Contact (NO)"],["Activated","Break Contact (NC)"]]);
+  assert.equal(all.length,209);
+});
+
 for(const door of [false,true])for(const nc1 of [false,true])for(const nc2 of [false,true])for(const inhibit of [false,true])
   test(`DOOR06 component Door${door}/NC1${nc1}/NC2${nc2}/False${inhibit}`,()=>{
     const r=make([and16]).setInputs({in_Door_Monitor:door,in_InterLock_NC_1:nc1,in_InterLock_NC_2:nc2,in_False_SI2_CH8:inhibit}).scan();

@@ -61,7 +61,7 @@ export function currentCodeChecks(model) {
     ["Emergency-removal", [["b_Step3_Set_3", "b_Step3"], ["b_Step4_Set", "b_Step4"], ["b_Step5_Set", "b_Step5"], ["b_Step6_Set", "b_Step6"], ["b_Step1_Set_2", "b_Step1"]]]
   ];
   for (const [name, inputs, expectedUp, expectedUnlock] of [
-    ["open-cover-chord", { in_Door_Monitor: false, in_Reset_PB: true, in_Relase_Door_PB: true }, false, false],
+    ["open-cover-chord", { in_Door_Monitor: false, in_Reset_PB: true, in_Relase_Door_PB: true }, false, false], // Held-at-start rejection; Door alone is no longer an energy prohibition.
     ["held-blue-at-start", { in_Door_Monitor: true, in_Reset_PB: false, in_Relase_Door_PB: true }, false, false],
     ["held-chord-at-start", { in_Door_Monitor: true, in_Reset_PB: true, in_Relase_Door_PB: true }, false, false]
   ]) check(`BUTTON:${name}`, "Working Network12 R&D branch; startup means first sample of this branch, not full group restart", e => {
@@ -69,9 +69,10 @@ export function currentCodeChecks(model) {
     if (!n) throw new Error("Missing Network12");
     const r = new SalRuntime({ ...model, networks: [n] }).setInputs({ b_Step_RnD: true, b_ResetPB_Lock: false,
       in_False_SI2_CH8: false, inPLC_RnD_Mode: false, inPLC_RnD_Mode_2: false,
+      in_InterLock_NC_1:true,in_InterLock_NC_2:true,
       in_HV_C2_FBK: false, in_HV_Healthy_FBK: true, ...inputs });
     r.runFor(2500);
-    e("no up without valid cover/release attempt", r.get("b_Set_Transition_3"), expectedUp);
+    e("no up without a new released/armed attempt; DoorMonitor is not an energy guard", r.get("b_Set_Transition_3"), expectedUp);
     e("no unlock without valid release attempt", r.get("b_Set_Door_Unlock_1"), expectedUnlock);
     return { assumedUnconnectedPorts: [...r.assumedUnconnectedPorts], limitations: [...r.limitations] };
   });

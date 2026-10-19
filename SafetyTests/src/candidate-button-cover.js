@@ -3,6 +3,7 @@ import { currentGestureBoundaryChecks } from "./current-gesture-boundaries.js";
 import { ObservedSamples } from "./observed-samples.js";
 
 const ready = { b_Step_RnD: true, b_ResetPB_Lock: false, in_False_SI2_CH8: false,
+  in_InterLock_NC_1:true,in_InterLock_NC_2:true,
   in_Door_Monitor: true, inPLC_RnD_Mode: false, inPLC_RnD_Mode_2: false,
   in_HV_C2_FBK: false, in_HV_Healthy_FBK: true, in_Reset_PB: false, in_Relase_Door_PB: false };
 
@@ -147,7 +148,7 @@ export function candidateButtonCoverChecks(model) {
   }
   for (const [id, req, reason] of [
     ["ACC-B01", ["BTN-001", "BTN-002", "BOOT-002"], "Complete recognizer/reset ownership is not yet bound across Safe/R&D/Run"],
-    ["ACC-C02-F", ["CVR-004", "CVR-006"], "Preservation of existing DoorMonitor conditions and cover reactions not fully covered; no new separate locked-feedback guard is required"],
+    ["ACC-C02-F", ["CVR-004", "CVR-006"], "Full-phase coverage of both InterLock NC energy guards and separate DoorMonitor solenoid reactions remains incomplete; no locked-feedback gate is required"],
     ["ACC-C01-E", ["EMG-007"], "Software coverage of all transition phases and emergency source/button combinations is incomplete"]
   ]) results.push({ id, requirements: req, status: "NOT VERIFIED", reason });
   return [...results, ...currentGestureBoundaryChecks(model)];

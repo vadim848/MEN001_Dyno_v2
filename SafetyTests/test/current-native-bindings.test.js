@@ -12,8 +12,8 @@ const sal=fs.readFileSync(salUrl,"utf8"),gvl=fs.readFileSync(new URL("../../MEN0
 const fixture=new URL("../fixtures/v2-4bb8703/TwinSafeGroup1.sal",import.meta.url),original=fs.readFileSync(fixture,"utf8");
 const walk=n=>[n,...n.children.flatMap(walk)];
 const additions={in_Relase_Door_PB:["FBOr3/OrIn3","FBAndUnlockHold/AndIn2"],in_Reset_PB:["FBOr3/OrIn4","FBAndUnlockHold/AndIn3"],
-  in_ES_NC_1:["FBAndLvCurrentPermit/AndIn2"],in_ES_NC_2:["FBAndLvCurrentPermit/AndIn3"],in_InterLock_NC_1:["FBAndLvCurrentPermit/AndIn4"],
-  in_InterLock_NC_2:["FBAndLvCurrentPermit/AndIn5"],in_LV_Connector_Interlock:["FBAndLvCurrentPermit/AndIn6"],
+  in_ES_NC_1:["FBAndLvCurrentPermit/AndIn2"],in_ES_NC_2:["FBAndLvCurrentPermit/AndIn3"],in_InterLock_NC_1:["FBAndLvCurrentPermit/AndIn4","../Network12/FBAnd16/AndIn1"],
+  in_InterLock_NC_2:["FBAndLvCurrentPermit/AndIn5","../Network12/FBAnd16/AndIn3"],in_LV_Connector_Interlock:["FBAndLvCurrentPermit/AndIn6"],
   in_HV_Connector_Interlock:["FBAndLvCurrentPermit/AndIn7"],in_Estop_PLC:["FBAndLvCurrentPermit/AndIn8"]};
 
 test("B1 current source and unchanged historical wire roles pass structural audit",()=>{
@@ -22,12 +22,13 @@ test("B1 current source and unchanged historical wire roles pass structural audi
   const now=parseSalFile(salUrl),before=parseSalFile(fixture);
   let count=0;
   for(const old of before.variables) {
-    const current=now.variables.find(v=>v.name===old.name),extra=(additions[old.name]??[]).map(p=>`//Network1/${p}`);
-    assert.deepEqual([...current.targetPorts].sort(),[...old.targetPorts,...extra].sort());count+=extra.length;
+    const current=now.variables.find(v=>v.name===old.name),extra=(additions[old.name]??[]).map(p=>p.startsWith("../")?`//${p.slice(3)}`:`//Network1/${p}`);
+    const retained=old.targetPorts.filter(p=>!(old.name==="in_Door_Monitor"&&p==="//Network12/FBAnd16/AndIn1")); // explicit user-approved06 energy guard replacement
+    assert.deepEqual([...current.targetPorts].sort(),[...retained,...extra].sort());count+=extra.length;
     assert.deepEqual(current.alias,old.alias);
     assert.deepEqual(current.sourcePorts,old.name==="out_Door_Unlock_Solonoeid"?["//Network1/FBAndUnlockHold/AndOut"]:old.sourcePorts);
   }
-  assert.equal(count,11);
+  assert.equal(count,13); // B1 eleven plus06 two NC logical consumers; Door energy usage removed above.
   const requiredEdges=[
     ["FBRs6/RsOut","FBAndUnlockHold/AndIn1"], ["FBOr17/OrOut","FBAndLvSetPermit/AndIn1"],
     ["FBAndLvCurrentPermit/AndOut","FBAndLvSetPermit/AndIn2"], ["FBAndLvSetPermit/AndOut","FBRs1/Set"]

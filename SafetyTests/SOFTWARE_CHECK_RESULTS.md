@@ -1,7 +1,7 @@
 # Результаты программных проверок
 
-Дата: 2026-10-19T06:56:18.809Z
-SAL SHA256: 6ed0c79094a2530be3ab9323abb832d88e56d60c9bb19773f03a32367b6d7ad5
+Дата: 2026-10-19T07:10:42.987Z
+SAL SHA256: 23cb1dd91d983b309294936fa8563cf9d669427401d38337c6b3c9647875adf2
 
 Clock: observed-fixed-scan-v1; first observed edge age0; fixed scan per scenario. Generic runFor durations describe scheduled scan advance, not an implicit event timestamp.
 
@@ -9,7 +9,7 @@ Clock: observed-fixed-scan-v1; first observed edge age0; fixed scan per scenario
 
 - harness: PASS; 174/174, ошибок 0, пропусков 0.
 - historical: PASS; 75/75, ошибок 0, пропусков 0.
-- current: PASS; 33/33, ошибок 0, пропусков 0.
+- current: PASS; 69/69, ошибок 0, пропусков 0.
 - Текущий код: {"PASS":166,"FAIL":35,"NOT VERIFIED":5,"ERROR":0}.
 
 PASS относится только к указанному компоненту/сценарию. Прототипы и исторические воспроизведения не являются приёмкой текущего SAL.
@@ -49,9 +49,9 @@ BUTTON/STATE проверяют границу отдельной ветви: в
 - LATE:AFTER:BLUE:600: {"signal":"any retrospective StepUp","expected":false,"actual":true,"checkpoint":"already qualified single cannot become another command"}.
 - REARM:BLUE:SHORT-NEUTRAL: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"no new chord during entire 1100 ms after incomplete neutral filter"}.
 - REPEAT:BLUE:NO-SECOND-UP: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"no second request in entire 1100 ms until both released and full filter"}.
-- BUTTON:open-cover-chord: {"label":"no up without valid cover/release attempt","actual":true,"expected":false}.
+- BUTTON:open-cover-chord: {"label":"no up without a new released/armed attempt; DoorMonitor is not an energy guard","actual":true,"expected":false}.
 - BUTTON:held-blue-at-start: {"label":"no unlock without valid release attempt","actual":true,"expected":false}.
-- BUTTON:held-chord-at-start: {"label":"no up without valid cover/release attempt","actual":true,"expected":false}.
+- BUTTON:held-chord-at-start: {"label":"no up without a new released/armed attempt; DoorMonitor is not an energy guard","actual":true,"expected":false}.
 - STATE:conflicting-set-requests: {"label":"conflicting requests cannot report simultaneous Safe and Run","actual":true,"expected":false}.
 - PRIORITY:Step12:Mentee:fallback=false: {"label":"no new LV command during fault","actual":true,"expected":false}.
 - PRIORITY:Step12:Mentee:fallback=true: {"label":"no new LV command during fault","actual":true,"expected":false}.
@@ -61,13 +61,13 @@ BUTTON/STATE проверяют границу отдельной ветви: в
 ## Пробелы и ошибки
 
 - ACC-B01: Complete recognizer/reset ownership is not yet bound across Safe/R&D/Run
-- ACC-C02-F: Preservation of existing DoorMonitor conditions and cover reactions not fully covered; no new separate locked-feedback guard is required
+- ACC-C02-F: Full-phase coverage of both InterLock NC energy guards and separate DoorMonitor solenoid reactions remains incomplete; no locked-feedback gate is required
 - ACC-C01-E: Software coverage of all transition phases and fault/button combinations remains incomplete
 - LATE:NO-FAULT: Network12 component has no bound complete group/fault observation; absence of a parsed Error is not proof of no fault
 - LATE:NO-ROLLBACK: Single request producer is observable, but accepted transition/event ownership and downstream rollback are not bound in this component; no fake latched marker used
 - Full group startup/restart and Network4 semantics not modeled
 - Full upstream transition permission/completion coverage incomplete
-- Distinct locked-feedback software binding requires agreed program contract
+- Full-phase coverage of two InterLock NC energy guards and separate DoorMonitor solenoid conditions remains incomplete; no separate locked-feedback gate required
 - Energy completion/timeout behavior requires explicit software expectations where not specified
 
 Подробные наблюдения, исходные условия и допущения: SOFTWARE_CHECK_RESULTS.json.
