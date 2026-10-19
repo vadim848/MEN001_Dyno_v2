@@ -1,5 +1,19 @@
 # Early STO: fixture расширенной actual-output проверки
 
+## Clarification: отдельная изоляция legacy completion Set producer
+
+Review нашёл несовместимость `pending(completion)` с будущим корректным early route. Принятый SU даёт ORTRUE ужеN+1 и STO TRUE N+2, раньше latecompletion. Нельзя ожидать RSFALSE после реальногоSU и ожиданияC2/TON; нельзя просто сменить wait predicate сaggregate наlateproducer и считатьисправленным.
+
+Для **только completion Setguard suites** разрешается явная узкая fixture edge boundary: два новых прямых consumers acceptedSU→Network1/FBOr8/OrIn3 и→FBOr10/OrIn3 читаютFALSE. ИстинныйSUwriter и его старый fanout в Network12/OR1→Decouple3→And4/HV→Ton3→And6→Decouple2 остаются исполняемыми без подмены. Источники legacy STO globals, их Set aggregate, RS, Reset и все guards не seedятся. Этот cut изолирует параллельный новый producer, а не симулирует принятие/завершение.
+
+Предпочтительная fixture реализация: consumer-specific read boundary после полной source/SGVL валидации и source closure, с проверкой exact edge identity против actual graph; не менять SAL/parser/runtime semantics глобально. Scope/evidence обязан перечислить `{source:'//RndPhysicalCompact/STATE_SU/RsOut', target:'//Network1/FBOr8/OrIn3'}` и analogousOR10, значениеFALSE, reason `legacy completion producer isolation: suppress parallel early producer only`. В baseline доimplementation этихedgesнет: зафиксировать `edgeAbsentInBaseline`, не создавать выдуманную связь или ссылку. Послеimplementation утверждённыйcut допустим только при реально найденном именно этом canonicaledge. Не подавлятьotherinputsORлибоwholeSUvariable.
+
+Closure остаётся полной по исходному source: настоящийSU, oldcompletionHV и всеguards присутствуют; cut не оправдывает исчезновение неизвестных источников. Evidence limit явно говорит «oldcompletion Setguard при отключённой параллельной early-edge», не fulluncutsource lifecycle. В dedicated suite оставлять этот cut фиксированным в healthy/fault/shortpulse/manualrestart/alreadylatched completion pairs. `pending` послеэтого ждёт одновременно genuine lateproducerTRUE, SetaggregateTRUE и RSFALSE, анеодин aggregate отдругогопроизводителя.
+
+PhysicalSU/N+2, downstreamretainedrequestиlaterRunconfirmation scenarios **никогда не используют этот cut**. Они показывают uncutearybranch и оригинальный completion fanout в одномinterval, включая реальныеoutputs. Так fullphysicalacceptanceпроверяетновыйroute, isolatedcompletionguardпроверяетвсеoldproducers, а scopeневыдаёт componentisolation за целикомисполненнуюмашину.
+
+Не выбирать искусственный Resettrace только радиRSFALSE: онзатрагиваетphase/requestlifetime и потребует больше предположений. НормальныеResetwaveformtestsиordinaryrouteостаютсяuncut. Existingmodeowner boundary остаётся явным. Перед новымsourceedit редактор готовитpairedredpositive по этойscopeбезослабленияfirstfaultoracle. Запись STOP.
+
 Статус **READY plan-only после LV/HV ACCEPT/checkpoint**, не передача red-tests редактору сейчас. Stable SAL SHA256 `dd9fd938fd5493795a7eea7b29cb027d7e994e2a55e2ad02d2ca66cb4beb6923`,253блока. Existing69 normal scenarios не меняются. Нет SAL/runtime/test правок в этом исследовании.
 
 ## Минимальное расширение fixture API

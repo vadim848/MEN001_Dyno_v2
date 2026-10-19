@@ -32,7 +32,14 @@ baselines intact. b5692c3 also includes reviewed PLC pulse LV/HV red tests:
 source dd9fd938fd5493795a7eea7b29cb027d7e994e2a55e2ad02d2ca66cb4beb6923;
 178/75/321 test stages PASS,201/1/5 cases. It adds only two existing AndIn4
 bindings. See PLC_PULSE_IMPLEMENTATION_REVIEW.md and PLC_PULSE_CURRENT_RESULTS.json.
-Next is earlySTO fixture-plan review and real red tests; no full41 acceptance.
+Next is earlySTO real red tests after fixture-plan review; no full41 acceptance.
+Latest checkpoint is a9f809b: accepted PLC pulse repair and reviewed earlySTO
+fixture plan. Editor is authorized ONLY for earlySTO red-test/observation stage;
+no new STO program implementation before independent test review/checkpoint.
+EarlySTO red package is prepared:88 tests32PASS/56FAIL; default69 traces remain
+byte-identical. Read EARLY_STO_TESTS_READY.md and pending EARLY_STO_TEST_REVIEW.md.
+Completion guard tests have explicit two-consumer isolation; full physical
+acceptance/completion tests are uncut. Program source/runtime remain unchanged.
 
 Emergency checkpoint created on 2026-10-18 before moving to another workstation.
 

@@ -10,8 +10,9 @@
 SAL SHA256: dd9fd938fd5493795a7eea7b29cb027d7e994e2a55e2ad02d2ca66cb4beb6923.
 GVL1.sgvl SHA256:06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5.
 253 блока из255; прежние timer values сохранены. Checkpointb5692c3 содержит
-принятые03B/R3 и reviewed PLC pulse red tests; последующее принятое исправление
-PLC pulse пока рабочий diff. Ревью:PLC_PULSE_IMPLEMENTATION_REVIEW.md,
+принятые03B/R3 и reviewed PLC pulse red tests; принятое исправление
+PLC pulse сохранено в a9f809b вместе с reviewed earlySTO fixture plan.
+Ревью:PLC_PULSE_IMPLEMENTATION_REVIEW.md,
 03B_R3_REVIEW.md и ITERATION_03B_REVIEW.md. PLC_PULSE_CURRENT_RESULTS.json
 связывает текущие source/model/artifact hashes и48 тестов; R3_CURRENT_RESULTS.json
 сохраняет предыдущие86+69 трасс. Прежний03B_INTEGRATED_ACCEPTANCE.json
@@ -96,6 +97,12 @@ fault и возврат входа без Restart проверены в Safe/R&D
    C2FALSE и оба Healthy значения, no STO before N+2, дальнейшие сохранённые
    feedback/confirmation действия, oldSet/Reset/PLC waveforms и fault/pulse.
    Тесты/review/checkpoint до дальнейшего изменения SAL; no seed SU/STO latch.
+   Fixture принят ревью, редактору передан только red-test этап послеa9f809b.
+   Red stage готов:88tests32PASS/56FAIL, no infrastructure errors;
+   16missing earlySTO,32firstfault,8pulse/recovery. Default69 сценариев и трасс
+   идентичны принятой базе. Completion-only tests явно изолируют только два
+   параллельных early consumer inputs; physical/fullcompletion — без изоляции.
+   SAL/SGVL/runtime не менялись. Нужны финальное review тестов и checkpoint.
 3. Затем реализация двух guards/двух SU inputs по плану, целевые/полные проверки,
    независимое ревью. Не менять mainEStop/таймеры/legacy actions ради зелени.
 4. Полные Safe↔R&D↔Run, emergency owner/recovery, startup/Network4,
@@ -133,6 +140,10 @@ fault и возврат входа без Restart проверены в Safe/R&D
 - Down во время уже начатого перехода, точный fault destination при конфликте,
   некоторые completion/recovery сценарии остаются не определены источниками.
   OPEN_SCENARIO_SOURCE_REVIEW.md фиксирует доказанное и границы.
+- Дополнительно пользователю задано: новый Green после полного release во
+  StartingRun — ignore либо abort-down; новый valid BOTH в Run — ignore либо
+  штатная остановка SS1/discharge→R&D. SPEC§15 оставляет выбор, reference его
+  не определяет. Это не late-second той же попытки. Ответов пока нет.
 - DISCHARGE_PROGRAM_CONTRACT.md: reference использует выдержки/свою команду
   разряда, отдельного подтверждения completion/timeout не найдено. Не invent
   новый feedback смысл/число timeout; нужный пользовательский сценарий записан.
@@ -145,8 +156,9 @@ f7b4f7e исходный пакет+01; c024651 пакет02;
 9ef945c B1/R2+03A;0e4ab09 HV04;b0184eb red03C;
 e6ee0db принятая03C+red06;930d6a1 принятая06+red05;
 d86925a принятая05+red07; c69bc32 принятая07+red03B;
-218dde5 непринятая03B+reviewedR3red; b5692c3 принятая03B/R3+reviewed PLC pulse red.
-Текущий рабочий diff — исправление PLC pulse Set guards, ещё не принятое.
+218dde5 непринятая03B+reviewedR3red; b5692c3 принятая03B/R3+reviewed PLC pulse red;
+a9f809b принятый PLC pulse fix+reviewed earlySTO fixture plan.
+Текущий рабочий diff — earlySTO red tests/наблюдения, не изменение SAL.
 
 Baseline workflow-2026-10-18 (manifest/архив/результаты/fixture) неизменяем.
 UpgradeLog3/4 посторонние, никогда не включать. Не реконструировать историю

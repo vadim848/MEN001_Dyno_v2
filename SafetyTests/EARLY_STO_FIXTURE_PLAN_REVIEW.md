@@ -49,3 +49,25 @@ The final tests must demonstrate the stated closure/binding properties; this
 plan review does not certify an unimplemented fixture or source behavior.
 
 Reviewer writes STOP. No source/runtime/test edits.
+
+## Completion route isolation clarification
+
+The first test implementation exposed a future-correct-source contradiction:
+real SU makes the new aggregate TRUE at N+1 and STO TRUE at N+2 before late
+completion. Waiting for aggregate alone exits on the wrong producer; waiting
+longer for late completion cannot retain RSFALSE. The architect's explicit
+two-consumer FALSE boundary is **ACCEPT technical approach** for completion
+Setguard component suites only.
+
+Prefer consumer-specific read interception after full original audit and
+uncut closure, validating exact STATE_SU.RsOut→OR8/OrIn3 and→OR10/OrIn3 edges.
+Baseline absent edges must be recorded absent. Do not seed SU, late globals,
+aggregates or latches, and do not modify generic runtime behavior. If graph
+mutation were used instead, both normalized edge representations would need
+consistent handling; the selected read boundary requires no graph mutation.
+
+Real SU→original HV/TON/completion chain remains active. Paired scenarios use
+the same cut and require actual lateTRUE+aggregateTRUE+RSFALSE. Uncut physical
+early output, retained request/later confirmation, ordinary routes and Reset
+waveforms must remain uncut. This closes the fixture-design issue; the actual
+revised tests and evidence still require review before red checkpoint.

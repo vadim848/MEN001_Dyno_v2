@@ -12,7 +12,9 @@ const external={in_ES_NC_1:true,in_ES_NC_2:true,in_LV_Connector_Interlock:true,i
   in_Relase_Door_PB:false,in_Door_Monitor:true,in_False_SI2_CH8:false,in_Estop_PLC:false,
   inPLC_RnD_Mode:false,inPLC_RnD_Mode_2:false,inPLC_BypassC1C2:false};
 
-export function physicalRndSource(model,stepMs=1,{entryButtons={}}={}) {
+export function physicalRndSource(model,stepMs=1,{entryButtons={},observedSignals={}}={}) {
+  for(const [key,value] of Object.entries(observedSignals))if(Object.hasOwn(PHYSICAL_SIGNALS,key)&&PHYSICAL_SIGNALS[key]!==value)throw Error('Cannot rebind physical observation '+key);
+  const signals={...PHYSICAL_SIGNALS,...observedSignals};
   if(model.bindingAudit?.status!=="PASS")throw Error("Full actual-source binding audit required before selection");
   const all=model.networks.flatMap(n=>n.blocks),ports=new Map(),owners=new Map(),writers=new Map(),aliasTargets=new Map(),cuts=[],unknown=[];
   const addWriter=(name,port)=>{if(!writers.has(name))writers.set(name,[]);writers.get(name).push(port);};
@@ -32,7 +34,7 @@ export function physicalRndSource(model,stepMs=1,{entryButtons={}}={}) {
       cuts.push({name,id:v.id,alias:v.alias,initialValue:external[name],consumer,reason:"Explicit given program input; initial PLC request levels fixed FALSE, no handshake policy inferred"});
     }
   }
-  for(const signal of Object.values(PHYSICAL_SIGNALS))variable(signal,"observed actual output");
+  for(const signal of Object.values(signals))variable(signal,"observed actual output");
   while(pending.length) {
     const output=pending.pop();if(demanded.has(output))continue;demanded.add(output);
     const block=owners.get(output);if(!block)throw Error(`Output writer missing ${output}`);
@@ -58,11 +60,11 @@ export function physicalRndSource(model,stepMs=1,{entryButtons={}}={}) {
   const r=new SalRuntime({...model,networks:model.networks.map(n=>({...n,blocks:n.blocks.filter(b=>selected.has(b))})).filter(n=>n.blocks.length)},
     {scanMs:stepMs,unconnectedInput:false});
   r.setInputs({...external,...Object.fromEntries(phaseNames.map(n=>[n,false]))});
-  const clock=new ObservedSamples(r,stepMs),transitions=[],frames=[],rises=Object.fromEntries(Object.keys(PHYSICAL_SIGNALS).map(k=>[k,0]));
+  const clock=new ObservedSamples(r,stepMs),transitions=[],frames=[],rises=Object.fromEntries(Object.keys(signals).map(k=>[k,0]));
   let observedMs=-stepMs;
-  let previous=Object.fromEntries(Object.keys(PHYSICAL_SIGNALS).map(k=>[k,false])),capture=true;
+  let previous=Object.fromEntries(Object.keys(signals).map(k=>[k,false])),capture=true;
   const nativeScan=r.scan.bind(r);r.scan=(dt=stepMs)=>{nativeScan(dt);observedMs+=dt;if(capture){
-    const current=Object.fromEntries(Object.entries(PHYSICAL_SIGNALS).map(([k,v])=>[k,r.get(v)]));
+    const current=Object.fromEntries(Object.entries(signals).map(([k,v])=>[k,r.get(v)]));
     for(const k of Object.keys(current))if(current[k]&&!previous[k])rises[k]++;
     const raw={...Object.fromEntries(Object.keys(external).map(name=>[name,r.get(name)])),b_Step_RnD:r.get("b_Step_RnD")};
     if(Object.keys(current).some(k=>current[k]!==previous[k]))transitions.push({timeMs:observedMs,signals:current,raw});
@@ -77,10 +79,10 @@ export function physicalRndSource(model,stepMs=1,{entryButtons={}}={}) {
   if(!r.get("out_LV_C1"))throw Error("Real LV setup positive control failed");
   // Keep observer continuous through each scenario; setup trace is separate.
   const setupTransitions=transitions.splice(0);frames.length=0;for(const k of Object.keys(rises))rises[k]=0;
-  previous=Object.fromEntries(Object.entries(PHYSICAL_SIGNALS).map(([k,v])=>[k,r.get(v)]));
+  previous=Object.fromEntries(Object.entries(signals).map(([k,v])=>[k,r.get(v)]));
   clock.sample({b_Step12:false,b_Step_RnD:true,...entryButtons});clock.advance(2100);
   return {r,clock,scope,frames,transitions,rises,setupTransitions,
-    get:k=>r.get(PHYSICAL_SIGNALS[k]),sample:inputs=>clock.sample(inputs),advance:ms=>clock.advance(ms),
+    get:k=>r.get(signals[k]),sample:inputs=>clock.sample(inputs),advance:ms=>clock.advance(ms),
     edgeAfter:(first,delta,inputs)=>clock.observeAfter(first,delta,inputs),
     clearFrames(){frames.length=0;},
     any:k=>frames.some(f=>f.signals[k]),
