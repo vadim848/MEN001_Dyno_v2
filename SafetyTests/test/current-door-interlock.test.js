@@ -19,7 +19,7 @@ test("DOOR06 exact alias targets separate solenoid consumers from energy InterLo
   assert.ok(targets("in_False_SI2_CH8").includes("//Network12/FBAnd16/AndIn2"));
   assert.deepEqual(and16.inputs.slice(0,3).map(p=>[p.channelInterface,p.deactivate1]),[
     ["Activated","Break Contact (NC)"],["Activated","Make Contact (NO)"],["Activated","Break Contact (NC)"]]);
-  assert.equal(all.length,209);
+  assert.equal(all.length,253);
 });
 
 for(const door of [false,true])for(const nc1 of [false,true])for(const nc2 of [false,true])for(const inhibit of [false,true])
@@ -29,7 +29,7 @@ for(const door of [false,true])for(const nc1 of [false,true])for(const nc2 of [f
   });
 
 function runEnergy(route,door,nc1,nc2,extra={}) {
-  const r=make([...model.networks.find(n=>n.name==="Network12").blocks,...[
+  const r=make([...model.networks.find(n=>n.name==="Network12").blocks,...model.networks.find(n=>n.name==="RndPhysicalCompact").blocks,...[
     "//Network1/FBAndLvCurrentPermit","//Network1/FBAndHvSetPermit","//Network1/FBRs2","//Network1/FBOr18"].map(get)]);
   const rs=get("//Network1/FBRs2");for(const source of rs.inputs.find(p=>p.name==="Reset").sources)r.values.set(source,false);
   r.setInputs({...healthy,b_Step_RnD:true,b_ResetPB_Lock:false,in_False_SI2_CH8:false,
@@ -58,7 +58,7 @@ test("DOOR06 preserve all three original unlock consumers and their component tr
   const baseline=spawnSync("git",["show","0e4ab09:MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal"],{encoding:"utf8",maxBuffer:4*1024*1024});assert.equal(baseline.status,0);
   const xml=fs.readFileSync(file,"utf8");
   const blockText=(source,network,name)=>source.match(new RegExp('<Network\\b[^>]*name="'+network+'"[\\s\\S]*?</Network>'))[0]
-    .match(new RegExp('<fBAnd\\b[^>]*name="'+name+'"[\\s\\S]*?</fBAnd>'))[0].replaceAll("\r\n","\n");
+    .match(new RegExp('<fBAnd\\b[^>]*name="'+name+'"[\\s\\S]*?</fBAnd>'))[0].replaceAll("\r\n","\n").replace(/orderOfExecution="\d+"/,'orderOfExecution="ORDER"');
   for(const [network,name]of [["Network2","FBAnd8"],["Network12","FBAnd11"],["Network12","FBAnd17"]]) {
     assert.equal(blockText(xml,network,name),blockText(baseline.stdout,network,name));
     const block=get(`//${network}/${name}`);

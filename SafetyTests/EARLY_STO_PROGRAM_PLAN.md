@@ -1,5 +1,34 @@
 # Early STO: программная граница и пакет исследования
 
+## Обновление после253 оптимизации: CONDITIONAL READY AFTER03B
+
+Рабочий исходный checkpoint для этого плана — `c69bc32`, source SAL bf110ab.../SGVL508610..., плюс принятый design `03B_COMPACT_OPTIMIZED_PLAN.json`253. Активный SAL редактора не читался и не менялся. Условие передачи следующему редактору: actual03B принят, его source/SGVL hashes зафиксированы, все нижеследующие пути/порты и source closure повторно проверены. Старый раздел о нехватке блока ниже исторический: CSE освободил второе место, **253+2=255**. PLC-only early acceptance в данный пакет не входит.
+
+### Точный интегрированный граф
+
+1. Сохранить существующий Run confirmation Network12/FBAnd6→FBDecouple2, включая Ton3/C2_FBK/invertedHVHealthy, discharge-request reset, Step3 и ResetPB lock. Не переносить весь Decouple на SU. Его старые STO Set globals можно оставить как поздний legacy producer; ранний физический route добавляется отдельно, оба проходят единый per-drive guard.
+2. Добавить настоящий физический accepted `RndPhysicalCompact/STATE_SU/RsOut` к свободному OrIn3 обоих существующих STO Set OR: FBOr8 port `270d8d89-2f99-4e2b-84ac-f4ecadcd4d3c`; FBOr10 `45bbd24a-adec-4b7e-bfb9-c31d26a9c676`. Только canonical direct edge; без нового OR и без raw PLC aggregate. STATE_SU должен сохранять approved acceptance permissions и emergency lifetime; обычный late second не отменяет уже принятое событие.
+3. Новые safeAnd `FBAndSto1SetPermit`, `FBAndSto2SetPermit`, по три действующих входа: соответствующий полный Set OR; текущий `FBAndLvCurrentPermit/AndOut`; инвертированный raw `in_Mentee_EStop` через настоящий alias target usage. Остальные5входов Deactivated. НовыеGUID назначает deterministic editor manifest, template exact native AND, безaliasnamespaceglobalподмены.
+4. Удалить существующий прямой canonical edge OR8→FBRs3/Set и OR10→FBRs4/Set. Подключить OR→свойguard→свойSet. Set port IDs: drive1 `a4eaf134-edc7-4df9-af82-bd9308d5a25b`, drive2 `8c62a62b-8092-4712-86b4-64f81f12292e`. Старые Reset wiring/ports, наружные STO aliases и диагностический fanout не переподключать.
+
+### Порядок: недостаточно поставить новые gates перед ранними RS
+
+Чтобы accepted SU текущего скана действительно дошёл до обоих выходов, из253 последовательности удалить четыре **existing** позиции RS3,RS4,OR8,OR10, сохранив относительный порядок всех остальных249 блоков. В хвосте назначить: order250 OR8,251 guard1,252 RS3,253 OR10,254 guard2,255 RS4. Это точный proposed порядок; E/SU и CurrentPermit находятся раньше. Каждый Set gate вычисляется непосредственно перед своим RS и читает текущий raw Mentee. Все прежние producers обоих OR сохранены. CurrentPermit raw NC/connectors/PLC предотвращает stale new Set даже если EStopOK дообновления предыдущего скана.
+
+Изменение порядка существующих RS — существенная часть пакета, не скрытая metadata правка. Reset OR7/9 остаются в своих существующих относительных позициях и сохраняют все исходные inputs. После перемещения RS читает уже вычисленный текущий aggregate Reset; возможное снятие одного прежнего scan latency должно быть явно проверено/зафиксировано. Нельзя заявить unchanged reset timing только потому, что wire тот же. Network10 PLC индикация, если находится раньше tailRS, может читать предыдущее значение до следующего скана; это наблюдение также проверяется отдельно от наружного STO output.
+
+Если actual traces выявят изменение сохранённых физических request durations/действий вне approved early launch/emergency response, этот ordering package возвращается архитектору; не ослаблять expected source sequence. Данный conditional READY означает точный reviewable пакет, а не доказанную эквивалентность до тестирования.
+
+### Red tests до следующего SAL изменения
+
+- Accepted physical SU при C2_FBK FALSE и обоих raw Healthy значениях: после одного полного accepted scan оба STO aliases TRUE, confirmation Step3 FALSE. Доказать actual acceptance marker, не seed raw BOTH или earlyPLCaggregate. После исходных feedback подтвердить прежние действия And6/Decouple2.
+- Для drive1/2 отдельно: каждый oldSet producer, поздний legacy completion и новый SU; предыдущий OR TRUE, fault появляется в первом скане. NC1/NC2, каждыйInterLock, каждыйconnector, PLCstop, Mentee: новый Set запрещён обоим. Pairedhealthy тотжеproducer даёт SetTRUE. Сбросить RS доисходногоFALSE, чтобы проверять именно запрещённый новый Set, а не требовать несогласованного forceReset ужеlatchedвыхода.
+- Отдельно ужеlatchedSTO и существующие Reset producers: текущие reset действия, восстановление безrestart, retainedSU/faultmemory, Reset/Set collision. Не вводить новый forceReset через Set gates и не заменять faultsequence очисткой acceptedrequest.
+- Сравнить waveform наружных aliases, Network10 status, Step3, discharge reset и ResetPB lock в обычном исходном запуске/остановке; объяснить scan shifts, не скрывать их. Параметры всехтаймеров побайтно прежние.
+- Полный bindingaudit source253→255 доsubgraph; union actualrecognizer+N12+N1producer/guard/RS+нужныеconsumers, nofallback. FullBOOT/group lifecycle остаётся открытым какв03B; аппаратная/native Buildвалидация не заявляется.
+
+Запись плана остановлена для review после actual03B. Далее сохранён исходный bounded report для trace; его budget NOTREADY заменён настоящим conditional пакетом выше.
+
 Статус: **NOT READY для редактора SAL**. Прямое подключение SU к свободным OR-входам технически возможно, но не решает порядок скана и аварийный приоритет. Данный документ не разрешает такую частичную реализацию.
 
 ## Источник и намерение

@@ -1,5 +1,6 @@
 import { SalRuntime } from "./sal-runtime.js";
 import { currentGestureBoundaryChecks } from "./current-gesture-boundaries.js";
+import { physicalRndSource } from "./physical-rnd-source.js";
 import { ObservedSamples } from "./observed-samples.js";
 
 const ready = { b_Step_RnD: true, b_ResetPB_Lock: false, in_False_SI2_CH8: false,
@@ -10,6 +11,8 @@ const ready = { b_Step_RnD: true, b_ResetPB_Lock: false, in_False_SI2_CH8: false
 
 export function candidateButtonCoverChecks(model) {
   const results = [];
+  const integrated = model.networks.some(n=>n.name==="RndPhysicalCompact");
+  const timerPath = name => integrated ? `//RndPhysicalCompact/${name==="FBTon4"?"GREEN":"BLUE"}/TonOut` : `//Network12/${name}/TonOut`;
   // Historical fixture still writes the output directly from RsOut. Current
   // candidate checks must include its final gate; missing gate is a binding gap.
   const legacyWriter = model.variables.find(v => v.name === "out_Door_Unlock_Solonoeid")
@@ -18,7 +21,7 @@ export function candidateButtonCoverChecks(model) {
   function check(id, requirements, title, selection, scenario) {
     const missing = Object.entries(selection).flatMap(([name, names]) => {
       const n = model.networks.find(n => n.name === name);
-      return !n ? [name] : names.filter(b => !n.blocks.some(x => x.name === b)).map(b => `${name}/${b}`);
+      return !n ? [name] : names.filter(b => !(integrated&&name==="Network12"&&["FBTon1","FBTon2","FBTon4"].includes(b))&&!n.blocks.some(x => x.name === b)).map(b => `${name}/${b}`);
     });
     if (missing.length) {
       results.push({ id, requirements, title, status: "NOT VERIFIED", reason: `Binding missing: ${missing.join(", ")}` });
@@ -26,13 +29,15 @@ export function candidateButtonCoverChecks(model) {
     }
     const selected = { ...model, networks: model.networks.filter(n => selection[n.name]).map(n =>
       ({ ...n, blocks: selection[n.name].length ? n.blocks.filter(b => selection[n.name].includes(b.name)) : n.blocks })) };
-    const r = new SalRuntime(selected).setInputs(ready);
+    const actualBranch = integrated&&selection.Network12&&!selection.Network3 ? physicalRndSource(model,10) : null;
+    if(integrated&&selection.Network3)selected.networks.push(model.networks.find(n=>n.name==="RndPhysicalCompact"));
+    const r = actualBranch?.r ?? new SalRuntime(selected).setInputs(ready);
     const observations = [];
     const expect = (signal, expected, checkpoint, actual = r.get(signal)) => observations.push({ signal, expected, actual, checkpoint });
     scenario(r, expect);
     const firstViolation = observations.find(o => o.actual !== o.expected);
     results.push({ id, requirements, title, status: firstViolation ? "FAIL" : "PASS",
-      scope: Object.keys(selection), observations, firstViolation: firstViolation ?? null,
+      scope: actualBranch?.scope ?? Object.keys(selection), observations, firstViolation: firstViolation ?? null,
       assumedUnconnectedPorts: [...r.assumedUnconnectedPorts], limitations: [...r.limitations] });
   }
   const rnd = { Network12: [] };
@@ -48,12 +53,14 @@ export function candidateButtonCoverChecks(model) {
     for (const [suffix, stagger] of [["IN", 240], ["EDGE", 250], ["LATE", 260], ["490", 490], ["500", 500], ["510", 510]]) {
     const id = `ACC-B03-${suffix}${first === "BLUE" ? "-BLUE" : ""}`;
     check(id, ["BTN-005", "BTN-006", "BTN-008"], `${first} first; second at ${stagger} ms; chord window inclusive 250 ms`, { ...cover, ...rnd }, (r, e) => {
-      // Full neutral interval precedes the attempt. Network12 has no complete
-      // Armed state: this is an input precondition, not proof of its recognizer.
+      // Full neutral interval precedes the attempt. the integrated current branch has real release/Armed ownership; historical
+      // fixtures retain their original recognizer and explicit input precondition.
       r.runFor(2100);
+      let qualified=false; const nativeScan=r.scan.bind(r);
+      r.scan=(...args)=>{const result=nativeScan(...args);qualified ||=r.get(timerPath(timer));return result;};
       const clock=new ObservedSamples(r,10),firstTime=clock.sample({[input]:true});
       clock.observeAfter(firstTime,stagger,{in_Reset_PB:true,in_Relase_Door_PB:true});
-      e(`//Network12/${timer}/TonOut`, stagger >= 500, "single TON qualification at second observed sample; not a visible unlock pulse");
+      e(timerPath(timer), stagger >= 500, "observed every scan before consumption; not a visible unlock pulse",qualified);
       let forbiddenUnlock = false;
       r.setInputs({ in_Reset_PB: true, in_Relase_Door_PB: true });
       for (let i = 0; i < 99; i++) {
@@ -78,13 +85,13 @@ export function candidateButtonCoverChecks(model) {
   check("ACC-B02-G", ["BTN-003"], "Green: TON at 500 ms; downstream down by 510 ms", rnd, (r, e) => {
     r.runFor(2100);
     r.setInputs({in_Reset_PB:true}).scan().runFor(490); e("b_Set_Transition_2", false, "490 ms");
-    r.runFor(10); e("//Network12/FBTon4/TonOut", true, "500 ms timer threshold; consumer precedes TON in global scan");
+    r.runFor(10); e(timerPath("FBTon4"), true, "500 ms timer threshold; consumer precedes TON in global scan");
     r.runFor(10); e("b_Set_Transition_2", true, "510 ms");
   });
   check("ACC-B02-B", ["BTN-004"], "Blue: TON at 500 ms; downstream unlock by 510 ms", rnd, (r, e) => {
     r.runFor(2100);
     r.setInputs({in_Relase_Door_PB:true}).scan().runFor(490); e("b_Set_Door_Unlock_1", false, "490 ms");
-    r.runFor(10); e("//Network12/FBTon2/TonOut", true, "500 ms timer threshold; consumer precedes TON in global scan");
+    r.runFor(10); e(timerPath("FBTon2"), true, "500 ms timer threshold; consumer precedes TON in global scan");
     r.runFor(10); e("b_Set_Door_Unlock_1", true, "510 ms");
   });
   check("ACC-B03-T", ["BTN-006"], "Both: no up at 990 ms; up at 1000 ms", rnd, (r, e) => {
@@ -110,7 +117,7 @@ export function candidateButtonCoverChecks(model) {
   check("ACC-C01-R", ["CVR-001"], "R&D unlock removed after blue release, locked monitor retained", {
     ...cover, Network12: ["FBAnd1", "FBAnd2", "FBAnd3", "FBTon2", "FBAnd11", "FBAnd17"]
   }, (r, e) => {
-    r.runFor(1200, { in_Relase_Door_PB: true }); e("out_Door_Unlock_Solonoeid", true, "qualified hold");
+    r.runFor(2100); r.runFor(1200, { in_Relase_Door_PB: true }); e("out_Door_Unlock_Solonoeid", true, "qualified hold");
     r.runFor(50, { in_Relase_Door_PB: false }); e("out_Door_Unlock_Solonoeid", false, "50 ms after release");
   });
   check("ACC-C02-X", ["CVR-005"], "Unlock cannot coexist with upward command after open/reclose", { ...cover, ...rnd }, (r, e) => {
@@ -138,6 +145,7 @@ export function candidateButtonCoverChecks(model) {
       const estop = r.model.networks.flatMap(n => n.blocks).find(b => b.functionName === "safeEstop");
       r.memory.set(estop.path, { enabled: true, restartArmed: false, delayed: true, offElapsedMs: 0 });
       r.write(estop.outputs.find(p => p.name === "EStopOut"), true);
+      if(integrated)r.runFor(2100); // Fresh release/Armed preparation precedes the held-blue control.
       r.runFor(1200, { in_Relase_Door_PB: true });
       e("out_Door_Unlock_Solonoeid", phase !== "Step3", "blue held before fault");
       r.runFor(100, { in_ES_NC_1: false });

@@ -1,16 +1,16 @@
 # Результаты программных проверок
 
-Дата: 2026-10-19T12:16:40.097Z
-SAL SHA256: bf110ab452a5d9d3fcafd1acc5ab657b993e3e2828f384a63c1491c57b2cdcc6
+Дата: 2026-10-19T14:43:28.068Z
+SAL SHA256: a45f129ebdc8e60602465381fd7a0579c8c9c18a84c9ae9a6abdb45cb462e51a
 
 Clock: observed-fixed-scan-v1; first observed edge age0; fixed scan per scenario. Generic runFor durations describe scheduled scan advance, not an implicit event timestamp.
 
 Аппаратная конфигурация принята как исходное условие. Файлы проекта не изменяются этим запуском.
 
-- harness: PASS; 174/174, ошибок 0, пропусков 0.
+- harness: PASS; 178/178, ошибок 0, пропусков 0.
 - historical: PASS; 75/75, ошибок 0, пропусков 0.
-- current: PASS; 112/112, ошибок 0, пропусков 0.
-- Текущий код: {"PASS":172,"FAIL":29,"NOT VERIFIED":5,"ERROR":0}.
+- current: PASS; 186/186, ошибок 0, пропусков 0.
+- Текущий код: {"PASS":201,"FAIL":1,"NOT VERIFIED":5,"ERROR":0}.
 
 PASS относится только к указанному компоненту/сценарию. Прототипы и исторические воспроизведения не являются приёмкой текущего SAL.
 
@@ -22,34 +22,6 @@ BUTTON/STATE проверяют границу отдельной ветви: в
 
 ## Найденные несоответствия
 
-- ACC-B01-R: {"signal":"b_Set_Door_Unlock_1","expected":false,"actual":true,"checkpoint":"second hold after only 100 ms neutral"}.
-- ACC-B03-LATE: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
-- ACC-B03-490: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
-- ACC-B03-500: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
-- ACC-B03-510: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
-- ACC-B03-LATE-BLUE: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
-- ACC-B03-490-BLUE: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
-- ACC-B03-500-BLUE: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
-- ACC-B03-510-BLUE: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
-- ACC-B03-B: {"signal":"b_Set_Door_Unlock_1","expected":false,"actual":true,"checkpoint":"remaining button held 1200 ms"}.
-- ACC-B03-G: {"signal":"b_Set_Transition_2","expected":false,"actual":true,"checkpoint":"remaining button held 1200 ms"}.
-- EXACT:CHORD:GREEN:251: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms since second press"}.
-- EXACT:CHORD:GREEN:500: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms since second press"}.
-- EXACT:CHORD:GREEN:510: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms since second press"}.
-- LATE:BEFORE:GREEN:300: {"signal":"any StepUp","expected":false,"actual":true,"checkpoint":"late second before qualification cancels attempt"}.
-- LATE:AFTER:GREEN:600: {"signal":"any retrospective StepUp","expected":false,"actual":true,"checkpoint":"already qualified single cannot become another command"}.
-- REARM:GREEN:SHORT-NEUTRAL: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"no new chord during entire 1100 ms after incomplete neutral filter"}.
-- REPEAT:GREEN:NO-SECOND-UP: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"no second request in entire 1100 ms until both released and full filter"}.
-- EXACT:CHORD:BLUE:251: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms since second press"}.
-- EXACT:CHORD:BLUE:500: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms since second press"}.
-- EXACT:CHORD:BLUE:510: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms since second press"}.
-- LATE:BEFORE:BLUE:300: {"signal":"any StepUp","expected":false,"actual":true,"checkpoint":"late second before qualification cancels attempt"}.
-- LATE:AFTER:BLUE:600: {"signal":"any retrospective StepUp","expected":false,"actual":true,"checkpoint":"already qualified single cannot become another command"}.
-- REARM:BLUE:SHORT-NEUTRAL: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"no new chord during entire 1100 ms after incomplete neutral filter"}.
-- REPEAT:BLUE:NO-SECOND-UP: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"no second request in entire 1100 ms until both released and full filter"}.
-- BUTTON:open-cover-chord: {"label":"no up without a new released/armed attempt; DoorMonitor is not an energy guard","actual":true,"expected":false}.
-- BUTTON:held-blue-at-start: {"label":"no unlock without valid release attempt","actual":true,"expected":false}.
-- BUTTON:held-chord-at-start: {"label":"no up without a new released/armed attempt; DoorMonitor is not an energy guard","actual":true,"expected":false}.
 - STATE:conflicting-set-requests: {"label":"conflicting requests cannot report simultaneous Safe and Run","actual":true,"expected":false}.
 
 ## Пробелы и ошибки

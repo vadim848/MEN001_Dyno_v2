@@ -1,3 +1,4 @@
+import { physicalRndSource } from "./physical-rnd-source.js";
 import { SalRuntime } from "./sal-runtime.js";
 import { phaseNames, emergencyEvents, runPhaseCase } from "./emergency-phase-matrix.js";
 
@@ -67,14 +68,16 @@ export function currentCodeChecks(model) {
   ]) check(`BUTTON:${name}`, "Working Network12 R&D branch; startup means first sample of this branch, not full group restart", e => {
     const n = model.networks.find(n => n.name === "Network12");
     if (!n) throw new Error("Missing Network12");
-    const r = new SalRuntime({ ...model, networks: [n] }).setInputs({ b_Step_RnD: true, b_ResetPB_Lock: false,
+    const integrated=model.networks.some(n=>n.name==="RndPhysicalCompact");
+    const actual=integrated?physicalRndSource(model,10,{entryButtons:inputs}):null;
+    const r = actual?.r ?? new SalRuntime({ ...model, networks: [n] }).setInputs({ b_Step_RnD: true, b_ResetPB_Lock: false,
       in_False_SI2_CH8: false, inPLC_RnD_Mode: false, inPLC_RnD_Mode_2: false,
       in_InterLock_NC_1:true,in_InterLock_NC_2:true,
       in_HV_C2_FBK: false, in_HV_Healthy_FBK: true, ...inputs });
     r.runFor(2500);
     e("no up without a new released/armed attempt; DoorMonitor is not an energy guard", r.get("b_Set_Transition_3"), expectedUp);
     e("no unlock without valid release attempt", r.get("b_Set_Door_Unlock_1"), expectedUnlock);
-    return { assumedUnconnectedPorts: [...r.assumedUnconnectedPorts], limitations: [...r.limitations] };
+    return { selectedScope:actual?.scope, assumedUnconnectedPorts: [...r.assumedUnconnectedPorts], limitations: [...r.limitations] };
   });
   for (const [name, commands] of paths) check(`STATE:${name}`, "Network3 state ownership only; internal set requests injected, not upstream permission acceptance", e => {
     const n = model.networks.find(n => n.name === "Network3");

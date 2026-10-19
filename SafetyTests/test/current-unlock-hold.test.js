@@ -1,3 +1,5 @@
+import { compact,movedPath,expectedOrder } from "./helpers/compact-expectations.js";
+import { physicalRndSource } from "../src/physical-rnd-source.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -31,12 +33,12 @@ test("CVR current SAL: sole final writer, normalized single wire, native port ID
   const ids = [...xml.matchAll(/\bId="([^"]+)"/g)].map(m => m[1]);
   assert.equal(new Set(ids).size, ids.length);
   assert.deepEqual(model.networks.flatMap(n => n.blocks).map(b => b.orderOfExecution).sort((a,b) => a-b),
-    Array.from({ length: 209 }, (_,i) => i+1));
-  assert.equal(gate.orderOfExecution, 209);
+    Array.from({ length: 253 }, (_,i) => i+1));
+  assert.equal(gate.orderOfExecution, 253);
   for (const previous of old.networks.flatMap(n => n.blocks)) {
-    const current = model.networks.flatMap(n => n.blocks).find(b => b.path === previous.path);
+    const current = model.networks.flatMap(n => n.blocks).find(b => b.path === movedPath(previous.path));
     const afterLV=previous.orderOfExecution >= 2 ? previous.orderOfExecution + 2 : 1;
-    assert.equal(current.orderOfExecution,afterLV>=5?afterLV+1:afterLV);
+    assert.equal(current.orderOfExecution,expectedOrder(previous.path));
   }
   for (const variable of old.variables) {
     const current = model.variables.find(v => v.name === variable.name);
@@ -44,7 +46,8 @@ test("CVR current SAL: sole final writer, normalized single wire, native port ID
     assert.equal(current.id, variable.id);
   }
   const params = m => m.networks.flatMap(n => n.blocks).map(b => [b.path, b.parameters]).filter(([,p]) => p.length);
-  assert.deepEqual(params(model), params(old));
+  const mappedOld=params(old).map(([path,p])=>[movedPath(path),p]).sort();
+  assert.deepEqual(params(model).filter(([path])=>!["//RndPhysicalCompact/RELEASE","//RndPhysicalCompact/WINDOW"].includes(path)).sort(),mappedOld);
   assert.equal(xml.match(/<safetyApplication\b[^>]*>/)[0], oldXml.match(/<safetyApplication\b[^>]*>/)[0]);
   // B1 intentionally adds logical consumers through SAL alias usage roles.
   // Preserve descriptors and old consumers; exact allowed fanout is audited in
@@ -53,6 +56,7 @@ test("CVR current SAL: sole final writer, normalized single wire, native port ID
     const current=model.variables.find(v=>v.name===previous.name);
     for(const target of previous.targetPorts) {
       if(previous.name==="in_Door_Monitor"&&target==="//Network12/FBAnd16/AndIn1")continue; // deliberate06 energy guard change
+      if(["//Network12/FBTon2/TonIn","//Network12/FBTon4/TonIn"].includes(target))continue; // moved TON enables now belong to actual recognizer
       assert.ok(current.targetPorts.includes(target));
     }
     assert.deepEqual(current.sourcePorts, previous.name===output ? [gate.outputs[0].path] : previous.sourcePorts);
@@ -86,14 +90,14 @@ test("CVR current SAL: existing Safe producer permits held blue and release clea
 });
 
 test("CVR current SAL: actual R&D TON must expire again after blue interruption", () => {
-  const r = runtime({ Network12:["FBAnd1","FBAnd2","FBAnd3","FBTon2","FBAnd11","FBAnd17"] }).setInputs({
-    b_Step_RnD:true, in_Door_Monitor:true, in_Relase_Door_PB:true, in_Reset_PB:false,
-    inPLC_RnD_Mode:false, inPLC_RnD_Mode_2:false });
-  r.runFor(1200); assert.equal(r.get(output), true);
-  r.setInputs({ in_Relase_Door_PB:false }).scan();
-  assert.equal(r.get(output), false); assert.equal(r.get(latch), false);
-  r.runFor(400, { in_Relase_Door_PB:true }); assert.equal(r.get(output), false);
-  r.runFor(800); assert.equal(r.get(output), true);
+  const r = physicalRndSource(model,10).r;
+  r.runFor(1200,{in_Relase_Door_PB:true}); assert.equal(r.get(output),true);
+  r.setInputs({in_Relase_Door_PB:false}).scan();
+  assert.equal(r.get(output),false);assert.equal(r.get(latch),false);
+  r.runFor(1200,{in_Relase_Door_PB:true});assert.equal(r.get(output),false,"interrupted attempt cannot rearm before complete neutral");
+  r.runFor(2100,{in_Relase_Door_PB:false});
+  r.setInputs({in_Relase_Door_PB:true}).scan().runFor(490);assert.equal(r.get(output),false);
+  r.runFor(30);assert.equal(r.get(output),true,"fresh complete release and new500ms qualification");
   r.setInputs({ in_Reset_PB:true }).scan();
   assert.equal(r.get(output), false); assert.equal(r.get(latch), false);
 });

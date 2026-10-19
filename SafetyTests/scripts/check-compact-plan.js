@@ -113,6 +113,20 @@ for (const order of ["green", "blue"]) {
   r => r.counts.up === 1 && !r.counts.green && !r.counts.blue &&
     r.observations[0]?.SU === false && r.observations[1]?.SU === true);
 }
+if(process.argv.includes('--release-controls'))for(const fresh of ['in_Reset_PB','in_Relase_Door_PB']) {
+  check(`rearm-after-blue:${fresh}`,1,[{at:0,input:{in_Relase_Door_PB:true}},
+    {at:600,input:{in_Relase_Door_PB:false}},{at:2601,input:{[fresh]:true}}],3200,
+    r=>r.counts.blue===(fresh==='in_Relase_Door_PB'?2:1)&&r.counts.green===(fresh==='in_Reset_PB'?1:0)&&r.counts.up===0);
+  check(`rearm-too-early:${fresh}`,1,[{at:0,input:{in_Relase_Door_PB:true}},
+    {at:600,input:{in_Relase_Door_PB:false}},{at:2599,input:{[fresh]:true}}],3200,
+    r=>r.counts.blue===1&&r.counts.green===0&&r.counts.up===0);
+  check(`held-entry:${fresh}`,1,[{at:-2200,input:{[fresh]:true}}],1600,
+    r=>!r.counts.blue&&!r.counts.green&&!r.counts.up);
+  for(const delta of [249,250,251])check(`rearm-chord:${fresh}:${delta}`,1,[
+    {at:0,input:{in_Relase_Door_PB:true}},{at:600,input:{in_Relase_Door_PB:false}},
+    {at:2601,input:{[fresh]:true}},{at:2601+delta,input:{[fresh==='in_Reset_PB'?'in_Relase_Door_PB':'in_Reset_PB']:true}}],4000,
+    r=>r.counts.blue===1&&r.counts.green===0&&r.counts.up===(delta<=250?1:0));
+}
 const summary = { kind: "DESIGN NETLIST ONLY; NOT working SAL/native validation", clock: "observed-edge fixed samples",
   cases: results.length, PASS: results.filter(r => r.status === "PASS").length,
   FAIL: results.filter(r => r.status === "FAIL").length,

@@ -1,3 +1,4 @@
+import { removeCompactGvl } from "./helpers/compact-expectations.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -11,12 +12,12 @@ const get=p=>blocks.find(b=>b.path===p);
 const permit=get("//Network1/FBAndLvCurrentPermit"),gate=get("//Network1/FBAndHvSetPermit"),rs=get("//Network1/FBRs2"),or=get("//Network1/FBOr18");
 const healthy={b_EStop_Ok:true,in_ES_NC_1:true,in_ES_NC_2:true,in_InterLock_NC_1:true,in_InterLock_NC_2:true,
   in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,in_Estop_PLC:false};
-const make=extra=>new SalRuntime({...model,networks:[{blocks:[permit,gate,rs,or,...extra]}]}, {unconnectedInput:false}).setInputs(healthy);
+const make=extra=>new SalRuntime({...model,networks:[{blocks:[permit,gate,rs,or,...extra,...(extra.some(b=>b.path.startsWith("//Network12/"))?model.networks.find(n=>n.name==="RndPhysicalCompact").blocks:[])]}]}, {unconnectedInput:false}).setInputs(healthy);
 const noReset=r=>{for(const source of rs.inputs.find(p=>p.name==="Reset").sources)r.values.set(source,false);r.values.set(rs.inputs.find(p=>p.name==="Reset").path,false);};
 
 test("HV current SAL: sole canonical Set path, preserved aggregate inputs and complete binding audit",()=>{
   assert.equal(model.bindingAudit.status,"PASS");
-  assert.deepEqual([permit.orderOfExecution,gate.orderOfExecution,rs.orderOfExecution,or.orderOfExecution],[2,5,6,176]);
+  assert.deepEqual([permit.orderOfExecution,gate.orderOfExecution,rs.orderOfExecution,or.orderOfExecution],[2,5,6,220]);
   assert.deepEqual(rs.inputs.find(p=>p.name==="Set").sources,[gate.outputs[0].path]);
   assert.deepEqual(or.outputs[0].targets,[gate.inputs[0].path]);
   assert.deepEqual(gate.inputs[1].sources,[permit.outputs[0].path]);
@@ -67,5 +68,5 @@ test("HV current SAL: SGVL changes since B1 are limited to explicit07 EStop outp
   const removal=/<FbPortUsage\b[^>]*>\s*<ModelElementId>55c0b75c-a041-46ff-b5a3-715fa2f8d676<\/ModelElementId>\s*<\/FbPortUsage>/g;
   assert.equal([...current.toString("utf8").matchAll(removal)].length,1);
   const normalize=s=>s.replace(/>\s+</g,"><").replaceAll("\r\n","\n").trim();
-  assert.equal(normalize(current.toString("utf8").replace(removal,"")),normalize(before.stdout.toString("utf8")));
+  assert.equal(normalize(removeCompactGvl(current.toString("utf8")).replace(removal,"")),normalize(before.stdout.toString("utf8")));
 });

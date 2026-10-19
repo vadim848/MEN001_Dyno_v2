@@ -1,3 +1,4 @@
+import { removeCompactGvl } from "./helpers/compact-expectations.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -11,6 +12,7 @@ const salUrl=new URL("../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup
 const sal=fs.readFileSync(salUrl,"utf8"),gvl=fs.readFileSync(new URL("../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl",import.meta.url),"utf8");
 const fixture=new URL("../fixtures/v2-4bb8703/TwinSafeGroup1.sal",import.meta.url),original=fs.readFileSync(fixture,"utf8");
 const walk=n=>[n,...n.children.flatMap(walk)];
+const compact=JSON.parse(fs.readFileSync(new URL("../03B_COMPACT_OPTIMIZED_PLAN.json",import.meta.url)));
 const additions={in_Relase_Door_PB:["FBOr3/OrIn3","FBAndUnlockHold/AndIn2"],in_Reset_PB:["FBOr3/OrIn4","FBAndUnlockHold/AndIn3"],
   in_Mentee_EStop:["FBAndLvSetPermit/AndIn3","FBAndHvSetPermit/AndIn3"],
   in_ES_NC_1:["FBAndLvCurrentPermit/AndIn2"],in_ES_NC_2:["FBAndLvCurrentPermit/AndIn3"],in_InterLock_NC_1:["FBAndLvCurrentPermit/AndIn4","../Network12/FBAnd16/AndIn1"],
@@ -23,13 +25,13 @@ test("B1 current source and unchanged historical wire roles pass structural audi
   const now=parseSalFile(salUrl),before=parseSalFile(fixture);
   let count=0;
   for(const old of before.variables) {
-    const current=now.variables.find(v=>v.name===old.name),extra=(additions[old.name]??[]).map(p=>p.startsWith("../")?`//${p.slice(3)}`:`//Network1/${p}`);
-    const retained=old.targetPorts.filter(p=>!(old.name==="in_Door_Monitor"&&p==="//Network12/FBAnd16/AndIn1")); // explicit user-approved06 energy guard replacement
+    const current=now.variables.find(v=>v.name===old.name),extra=[...(additions[old.name]??[]).map(p=>p.startsWith("../")?`//${p.slice(3)}`:`//Network1/${p}`),...compact.aliasTargetUsageAdditions.filter(u=>u.variableId===old.id).map(u=>u.targetPort)];
+    const retained=old.targetPorts.filter(p=>!(old.name==="in_Door_Monitor"&&p==="//Network12/FBAnd16/AndIn1")&&!["//Network12/FBTon2/TonIn","//Network12/FBTon4/TonIn"].includes(p)); // explicit user-approved06 energy guard replacement
     assert.deepEqual([...current.targetPorts].sort(),[...retained,...extra].sort());count+=extra.length;
     assert.deepEqual(current.alias,old.alias);
     assert.deepEqual(current.sourcePorts,old.name==="out_Door_Unlock_Solonoeid"?["//Network1/FBAndUnlockHold/AndOut"]:old.sourcePorts);
   }
-  assert.equal(count,16); // B1 eleven +06 two NC +05 two Mentee +07 one PLC consumer; only06 Door energy usage removed.
+  assert.equal(count,34); // B1 eleven +06 two NC +05 two Mentee +07 one PLC consumer; only06 Door energy usage removed.
   const requiredEdges=[
     ["FBRs6/RsOut","FBAndUnlockHold/AndIn1"], ["FBOr17/OrOut","FBAndLvSetPermit/AndIn1"],
     ["FBAndLvCurrentPermit/AndOut","FBAndLvSetPermit/AndIn2"], ["FBAndLvSetPermit/AndOut","FBRs1/Set"]
@@ -117,5 +119,5 @@ test("B1 plus07 SGVL delta is exactly two program usages; declarations and other
   const removal=/<FbPortUsage\b[^>]*>\s*<ModelElementId>(?:e38bf21e-15b3-448f-89c8-2795d5bf62db|55c0b75c-a041-46ff-b5a3-715fa2f8d676)<\/ModelElementId>\s*<\/FbPortUsage>/g;
   assert.equal([...gvl.matchAll(removal)].length,2);
   const normalize=s=>s.replace(/>\s+</g,"><").trim();
-  assert.equal(normalize(gvl.replace(removal,"")),normalize(baseline.stdout));
+  assert.equal(normalize(removeCompactGvl(gvl).replace(removal,"")),normalize(baseline.stdout));
 });

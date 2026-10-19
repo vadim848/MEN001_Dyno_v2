@@ -10,6 +10,7 @@ function scenario(name,dt,body,options) {
     const x=physicalRndSource(model,dt,options),checks=[],times={};scopes.set(dt,x.scope);
     const e=(label,actual,expected)=>checks.push({label,actual,expected});
     body(x,e,times);
+    if(model.networks.some(n=>n.name==="RndPhysicalCompact"))e("adapter Error stub observation only; native/group fault semantics remain unverified",x.frames.some(f=>f.internal?.windowError),false);
     e("no unresolved input in demanded command dependency cone",x.observed().commandConeUnconnected.length,0);
     const row={name,scanMs:dt,times,checks,transitions:x.transitions,rises:{...x.rises},
       status:checks.some(c=>c.actual!==c.expected)?"FAIL":"PASS"};evidence.push(row);
@@ -76,6 +77,7 @@ for(const first of ["green","blue"]) {
     e("first actual up/HV positive",x.get("up")&&x.get("hv"),true);
     x.sample(off);x.advance(100);x.sample(both);x.advance(1100);
     e("no second up request edge before complete release filter",x.rises.up,1);
+    if(model.networks.some(n=>n.name==="RndPhysicalCompact"))e("no second native FinishUp acceptance in held request interval",x.frames.filter(f=>f.internal.finishUp).length,1);
   });
   scenario(`${first} full release permits a fresh single after blue cycle`,1,(x,e,t)=>{
     t.first=x.sample({in_Relase_Door_PB:true});x.advance(502);e("qualified blue plus real grant-latch control",x.get("blue")&&x.get("unlock"),true);
@@ -107,6 +109,7 @@ scenario("reentry with held chord requires new release",1,(x,e)=>{
   e("observed interval includes the RnD entry sample",x.frames[mark]?.timeMs,entry);
   e("entry frame observes the asserted RnD boundary",x.frames[mark]?.raw.b_Step_RnD,true);
   e("held reentry never creates a new up request including entry sample",x.frames.slice(mark).some(f=>f.signals.up),false);
+  if(model.networks.some(n=>n.name==="RndPhysicalCompact"))e("no native FinishUp acceptance including reentry sample",x.frames.slice(mark).some(f=>f.internal.finishUp),false);
 });
 for(const fault of ["in_ES_NC_1","in_Estop_PLC","in_Mentee_EStop"])scenario(`safety inhibit ${fault} blocks new physical request`,1,(x,e)=>{
   x.sample({[fault]:fault!=="in_ES_NC_1"});x.sample(both);x.advance(1200);
@@ -139,4 +142,23 @@ for(const command of ["green","up"])scenario(`accepted ${command} cleared by act
   const key=command==="green"?"down":"up";e("accepted request positive control",x.get(key),true);
   const mark=x.frames.length;x.sample({in_ES_NC_1:false});x.advance(10);
   e("inhibit ends accepted request throughout fault interval",x.frames.slice(mark).some(f=>f.signals[key]),false);
+});
+
+// R1 architecture counterexamples: prepare the native window during the real2s release,
+// then accept a fresh chord immediately after the filter without an extra timing allowance.
+for(const first of ["green","blue"])for(const delta of [249,250,251])scenario(`fresh ${first} chord${delta} after accepted blue and full2000 release`,1,(x,e,t)=>{
+  x.sample({in_Relase_Door_PB:true});x.advance(502);e("previous actual blue/Unlock positive",x.get("blue")&&x.get("unlock"),true);
+  t.off=x.sample(off);x.advance(1999);e("release TON not early1999",x.r.get("//RndPhysicalCompact/RELEASE/TonOut"),false);
+  x.sample();e("release TON complete2000",x.r.get("//RndPhysicalCompact/RELEASE/TonOut"),true);
+  const mark=x.frames.length;t.first=x.sample(hold(first));e("first edge immediately after2000",t.first-t.off,2001);
+  t.releaseTrace=x.frames.filter(f=>f.timeMs-t.off<=2||[1999,2000,2001].includes(f.timeMs-t.off)).map(f=>({delta:f.timeMs-t.off,internal:f.internal,signals:f.signals}));
+  t.second=x.edgeAfter(t.first,delta,both);x.advance(999);
+  e("no command throughout fresh chord prethreshold",noActions(x,mark),false);
+  x.sample();e("fresh Up at1000 from second iff admitted",x.get("up"),delta<=250);
+  x.advance(2);e("fresh actual HV control",x.get("hv"),delta<=250);
+});
+for(const first of ["green","blue"])scenario(`new ${first} before full1999 release remains invalid`,1,(x,e,t)=>{
+  x.sample({in_Relase_Door_PB:true});x.advance(502);e("previous actual blue/Unlock positive",x.get("unlock"),true);
+  t.off=x.sample(off);x.advance(1998);const mark=x.frames.length;t.first=x.sample(hold(first));
+  e("early observed edge1999",t.first-t.off,1999);x.advance(1200);e("no command from incomplete release",noActions(x,mark),false);
 });

@@ -9,7 +9,7 @@ const healthy={b_EStop_Ok:true,in_ES_NC_1:true,in_ES_NC_2:true,in_InterLock_NC_1
   in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,in_Estop_PLC:false};
 function make(domain,extra=[]) {
   const hv=domain==="HV",rs=get(`//Network1/FBRs${hv?2:1}`),gate=get(`//Network1/FBAnd${hv?'Hv':'Lv'}SetPermit`),aggregate=get(`//Network1/FBOr${hv?18:17}`);
-  const r=new SalRuntime({...model,networks:[{blocks:[permit,gate,rs,aggregate,...extra]}]},{scanMs:1,unconnectedInput:false}).setInputs({...healthy,in_Mentee_EStop:false});
+  const r=new SalRuntime({...model,networks:[{blocks:[permit,gate,rs,aggregate,...extra,...(extra.some(b=>b.path.startsWith("//Network12/"))?model.networks.find(n=>n.name==="RndPhysicalCompact").blocks:[])]}]},{scanMs:1,unconnectedInput:false}).setInputs({...healthy,in_Mentee_EStop:false});
   for(const source of rs.inputs.find(p=>p.name==="Reset").sources)r.values.set(source,false);
   return {r,rs,gate,aggregate,output:hv?"out_HV_C2":"out_LV_C1"};
 }
@@ -63,6 +63,6 @@ test("MENTEE05 original Safe/Run protections, diagnostic alias and inactive main
       r.scan();assert.equal(r.get(block.outputs[0].path),!mentee);
     }
   }
-  assert.equal(model.bindingAudit.status,"PASS");assert.equal(all.length,209);
+  assert.equal(model.bindingAudit.status,"PASS");assert.equal(all.length,253);
   assert.ok(fs.readFileSync(file,"utf8").includes('Crc="872783435"'));
 });

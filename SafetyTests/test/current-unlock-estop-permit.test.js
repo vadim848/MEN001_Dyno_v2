@@ -1,3 +1,4 @@
+import { physicalRndSource } from "../src/physical-rnd-source.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { parseSalFile } from "../src/sal-parser.js";
@@ -6,6 +7,7 @@ const model=parseSalFile(new URL("../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/T
 const all=model.networks.flatMap(n=>n.blocks),get=p=>all.find(b=>b.path===p),gate=get("//Network1/FBAndUnlockHold");
 const final="out_Door_Unlock_Solonoeid",latch="//Network1/FBRs6/RsOut";
 function prepared(mode) {
+  if(mode==="R&D"){const x=physicalRndSource(model,1);x.sample({in_Relase_Door_PB:true});x.advance(600);assert.equal(x.get("unlock"),true,"actual integrated R&D grant positive");return x.r;}
   const common=["FBAnd1","FBEstop1","FBOr3","FBOr4","FBRs6","FBAndUnlockHold"].map(n=>get(`//Network1/${n}`));
   const grant=mode==="Safe"?["FBDecouple3","FBAnd7","FBAnd8"].map(n=>get(`//Network2/${n}`)):
     ["FBAnd1","FBAnd2","FBAnd3","FBTon2","FBAnd11","FBAnd17"].map(n=>get(`//Network12/${n}`));
@@ -50,7 +52,7 @@ test("UNLOCK07 existing Door solenoid consumers and EStop configuration are pres
   assert.deepEqual([...model.variables.find(v=>v.name==="in_Door_Monitor").targetPorts].sort(),[
     "//Network2/FBAnd8/AndIn1","//Network12/FBAnd11/AndIn1","//Network12/FBAnd17/AndIn1"].sort());
   for(const name of ["EStopIn2","EStopIn4"])assert.equal(get("//Network1/FBEstop1").inputs.find(p=>p.name===name).channelInterface,"Both Deactivated");
-  assert.equal(all.length,209);assert.equal(model.bindingAudit.status,"PASS");
+  assert.equal(all.length,253);assert.equal(model.bindingAudit.status,"PASS");
 });
 test("UNLOCK07 global permission is a resolved SGVL reference with usage index",()=>{
   assert.deepEqual(gate.inputs.map(p=>p.channelInterface),[...Array(5).fill("Activated"),...Array(3).fill("Deactivated")]);
