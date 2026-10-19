@@ -56,7 +56,7 @@ export function timerContinuitySummary() {
   for (const [variant, options] of [["continuous", {}], ["missing first sample", { omitArmedStart: true }], ["timer before gates", { timersFirst: true }]]) {
     const r = timerExperiment(options);
     r.runFor(10, { Q_A: true, I_Green: true });
-    r.runFor(980, { Q_A: false, Q_G: true });
+    r.runFor(990, { Q_A: false, Q_G: true }); // 990ms after separately observed first sample
     const before = r.get("SingleDone"); r.runFor(10);
     const at1000 = r.get("SingleDone"); r.runFor(10);
     rows.push({ variant, at990ms: before, at1000ms: at1000, at1010ms: r.get("SingleDone"), fallbackPorts: [...r.assumedUnconnectedPorts] });

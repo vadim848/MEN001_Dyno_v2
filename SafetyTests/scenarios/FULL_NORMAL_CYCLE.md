@@ -11,7 +11,7 @@ Safe -> StartingRnD -> R&D -> StartingRun -> Run
 | Этап | Событие/feedback | Ожидаемое состояние | LV cmd | C2 cmd | SS1 | STO | Discharge |
 |---|---|---|---:|---:|---:|---:|---:|
 | 1 | Исходное состояние | Safe | 0 | 0 | 0 | 1 | 0 |
-| 2 | Новый StepUp, DoorMonitor и исходные программные разрешения выполнены | StartingRnD | 1 | 0 | 0 | 1 | 0 |
+| 2 | Новый StepUp, оба in_InterLock_NC_1/2 TRUE и прочие разрешения; DoorMonitor не gate | StartingRnD | 1 | 0 | 0 | 1 | 0 |
 | 3 | `LV_FBK=1` | R&D | 1 | 0 | 0 | 1 | 0 |
 | 4 | Принят новый StepUp при остальных действующих разрешениях; C2/Healthy feedback ещё не требуется для снятия STO | StartingRun | 1 | 1 | 0 | 0 | 0 |
 | 5 | `C2_FBK=1` и требуемый Healthy подтверждены | Run | 1 | 1 | 0 | 0 | 0 |
@@ -32,11 +32,12 @@ Safe -> StartingRnD -> R&D -> StartingRun -> Run
 Полная последовательность reference сохраняется кроме явно согласованных
 изменений для устойчивого R&D; условные имена фаз не задают её redesign.
 
-D-DOOR-CURRENT2026-10-19: обычный цифровой DoorMonitor через PLC и исходные
-программные условия сохраняются. Новое отдельное locked-feedback условие
-отложено до инженера/нового ответа пользователя, запуск сейчас им не блокировать.
-Не обходить EStop/interlocks или другие исходные защитные цепи; не называть
-DoorMonitor safe подтверждением. Таблица не доказывает их фактическую проверку.
+D-DOOR-INTERLOCK2026-10-19 после инженера Нива заменяет прежний Door energy
+guard: обычный DoorMonitor через PLC используется только для соленоида.
+Advance проверяет оба in_InterLock_NC_1/2, не in_ES_NC_1/2 вместо них.
+DoorFALSE+обаInterLockTRUE не блокирует advance; любойInterLockFALSE блокирует
+независимоDoor при сохранении прочих EStop/permissions. Unlock роли Door не
+менять. Hardware validation не заявляется, таблица не доказывает исполнение.
 
 Таблица — требуемый сценарий, не доказательство исполнения фактического SAL.
 Completion/timeout oracle использовать после сопоставления существующей

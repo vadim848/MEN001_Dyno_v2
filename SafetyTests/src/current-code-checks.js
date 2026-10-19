@@ -39,11 +39,13 @@ export function currentCodeChecks(model) {
       };
       const out = () => r.get(block.outputs[0].path);
       drive(true);
+      r.scan(); // Register observed edge age0, separately from elapsed interval.
       const before = Math.max(0, Math.ceil(delayMs / 10) * 10 - 10);
       if (before) r.runFor(before);
       e("before configured threshold", out(), false);
       drive(false); r.scan(); e("interruption resets", out(), false);
       drive(true);
+      r.scan(); // New observed edge after interruption.
       if (before) r.runFor(before);
       e("full interval required after interruption", out(), false);
       r.scan(); e("at first scan reaching threshold", out(), true);

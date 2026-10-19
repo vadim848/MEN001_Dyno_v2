@@ -7,6 +7,7 @@ import { parseSalFile } from "../src/sal-parser.js";
 import { candidateButtonCoverChecks } from "../src/candidate-button-cover.js";
 import { currentCodeChecks } from "../src/current-code-checks.js";
 import { referenceBehavior } from "../src/reference-behavior.js";
+import { SAL_CLOCK_CONTRACT } from "../src/sal-runtime.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const sal = path.resolve(root, "../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal");
@@ -41,6 +42,10 @@ const reference = referenceBehavior(path.resolve(root, "../../MEN001_Dyno/MEN001
 const cases = [...requirements, ...currentCodeChecks(model), ...reference.cases];
 const summary = Object.fromEntries(["PASS", "FAIL", "NOT VERIFIED", "ERROR"].map(s => [s, cases.filter(c => c.status === s).length]));
 const report = { generatedAt: new Date().toISOString(), source: path.relative(path.resolve(root, ".."), sal).replaceAll("\\", "/"),
+  clockContract:SAL_CLOCK_CONTRACT,
+  modelSourceSha256:Object.fromEntries(["src/sal-runtime.js","src/observed-samples.js","src/sal-parser.js"].map(file=>
+    [file,crypto.createHash("sha256").update(fs.readFileSync(path.join(root,file))).digest("hex")])),
+  sgvlSha256:crypto.createHash("sha256").update(fs.readFileSync(path.resolve(root,"../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl"))).digest("hex"),
   bindingAudit: { status:model.bindingAudit.status, errors:model.bindingAudit.errors,
     globalReferences:model.bindingAudit.globalRefs.length, canonicalWires:model.bindingAudit.edges.length,
     scope:"Full working SAL + GVL1 namespace/relationship validation before any component selection; software structural evidence only" },
@@ -53,6 +58,7 @@ const report = { generatedAt: new Date().toISOString(), source: path.relative(pa
     "Distinct locked-feedback software binding requires agreed program contract", "Energy completion/timeout behavior requires explicit software expectations where not specified"] };
 fs.writeFileSync(path.join(root, "SOFTWARE_CHECK_RESULTS.json"), JSON.stringify(report) + "\n");
 const lines = ["# Результаты программных проверок", "", `Дата: ${report.generatedAt}`, `SAL SHA256: ${report.sha256}`, "",
+  `Clock: ${report.clockContract.version}; first observed edge age0; fixed scan per scenario. Generic runFor durations describe scheduled scan advance, not an implicit event timestamp.`, "",
   "Аппаратная конфигурация принята как исходное условие. Файлы проекта не изменяются этим запуском.", "",
   ...stages.map(s => `- ${s.name}: ${s.status}; ${s.counts.pass}/${s.counts.tests}, ошибок ${s.counts.fail}, пропусков ${s.counts.skipped}.`),
   `- Текущий код: ${JSON.stringify(summary)}.`, "",

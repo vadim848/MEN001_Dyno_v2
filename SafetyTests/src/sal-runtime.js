@@ -6,6 +6,11 @@ function activePorts(ports) {
   return ports.filter(port => !["Deactivated", "Both Deactivated"].includes(port.channelInterface));
 }
 
+export const SAL_CLOCK_CONTRACT = Object.freeze({
+  version:"observed-fixed-scan-v1",edgeOrigin:"First observed enabled/loss sample has elapsed0",
+  scope:"Fixed scanMs per scenario; no physical/native timing claim; off-grid event timestamps are unsupported"
+});
+
 export class SalRuntime {
   constructor(model, { scanMs = 10, executionOrder = "global", unconnectedInput = true } = {}) {
     if (!["global", "legacy-network"].includes(executionOrder)) throw new Error("Unknown execution order");
@@ -103,9 +108,9 @@ export class SalRuntime {
       case "safeTon": {
         const enabled = inputs[0] ?? false;
         const delayMs = Number(block.parameters.find(p => p.timing)?.timing ?? 0) * 1000;
-        const previous = this.memory.get(block.path)?.elapsedMs ?? 0;
-        const elapsedMs = enabled ? previous + dtMs : 0;
-        this.memory.set(block.path, { elapsedMs });
+        const previous = this.memory.get(block.path) ?? { elapsedMs:0, previousEnabled:false };
+        const elapsedMs = enabled ? (previous.previousEnabled ? previous.elapsedMs + dtMs : 0) : 0;
+        this.memory.set(block.path, { elapsedMs, previousEnabled:enabled });
         this.write(block.outputs[0], enabled && elapsedMs >= delayMs);
         break;
       }
@@ -124,7 +129,7 @@ export class SalRuntime {
         const previous = this.memory.get(block.path) ?? { enabled: false, restartArmed: false, delayed: false, offElapsedMs: 0 };
         const enabled = safe && (previous.enabled || (previous.restartArmed && !restart));
         const configuredDelay = Number(block.parameters.find(p => p.timing)?.timing ?? 0);
-        const offElapsedMs = enabled ? 0 : previous.offElapsedMs + dtMs;
+        const offElapsedMs = enabled || previous.enabled ? 0 : previous.offElapsedMs + dtMs;
         const delayed = enabled || (previous.delayed && offElapsedMs < configuredDelay);
         this.memory.set(block.path, { enabled, restartArmed: safe && restart, delayed, offElapsedMs });
         this.write(block.outputs.find(port => port.name === "Error"), false);

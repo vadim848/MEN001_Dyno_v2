@@ -14,11 +14,11 @@ test("Current SAL TON adapter preserves configured millisecond boundaries at dt1
       const v=r.variableTargets.get(input.path);if(v)r.setInputs({ [v]:raw });};
     const delay=Number(block.parameters.find(p=>p.timing).timing)*1000;
     assert.equal(Number.isInteger(delay),true);
-    drive(true);r.runFor(delay-1);assert.equal(r.get(block.outputs[0].path),false,block.path);
+    drive(true);r.scan();r.runFor(delay-1);assert.equal(r.get(block.outputs[0].path),false,block.path);
     r.scan();assert.equal(r.get(block.outputs[0].path),true,block.path);
     r.scan();assert.equal(r.get(block.outputs[0].path),true,block.path);
     drive(false);r.scan();assert.equal(r.get(block.outputs[0].path),false,block.path);
-    drive(true);r.runFor(delay-1);assert.equal(r.get(block.outputs[0].path),false,block.path);
+    drive(true);r.scan();r.runFor(delay-1);assert.equal(r.get(block.outputs[0].path),false,block.path);
     r.scan();assert.equal(r.get(block.outputs[0].path),true,block.path);
   }
 });

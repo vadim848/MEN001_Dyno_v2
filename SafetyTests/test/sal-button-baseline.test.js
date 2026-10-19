@@ -36,6 +36,7 @@ test("V2-BTN01 Network12 actual button timers are 0.5 s / 0.5 s / 1 s", () => {
 test("V2-BTN02 blue alone sets door-unlock request after 0.5 s", () => {
   const runtime = new SalRuntime(buttonModel, { scanMs: 10 })
     .setInputs({ ...ready, in_Relase_Door_PB: true })
+    .scan() // first observed blue sample age0
     .runFor(490);
   assert.equal(runtime.get("b_Set_Door_Unlock_1"), false);
   runtime.runFor(20); // TON qualifies at 500 ms; downstream AND updates next scan.
@@ -48,6 +49,7 @@ test("V2-BTN03 both buttons produce the upward transition request after 1 s", ()
     // It is a neutral component prehistory, not a new release-filter rule.
     .setInputs(ready).runFor(20)
     .setInputs({ ...ready, in_Reset_PB: true, in_Relase_Door_PB: true })
+    .scan() // first observed chord sample age0
     .runFor(990);
   assert.equal(runtime.get("b_Set_Transition_3"), false);
   runtime.runFor(10);
@@ -66,6 +68,7 @@ test("V2-BTN04 Network12 has no 2 s neutral-release qualification timer", () => 
 test("V2-BTN05 failed two-button attempt degrades to blue unlock in current v2", () => {
   const runtime = new SalRuntime(buttonModel, { scanMs: 10 })
     .setInputs({ ...ready, in_Reset_PB: true, in_Relase_Door_PB: true })
+    .scan() // observed initial hold; following durations are edge-relative
     .runFor(300);
   runtime.setInputs({ in_Reset_PB: false }).runFor(210);
   assert.equal(runtime.get("b_Set_Door_Unlock_1"), true,
@@ -75,6 +78,7 @@ test("V2-BTN05 failed two-button attempt degrades to blue unlock in current v2",
 test("V2-BTN06 failed two-button attempt degrades to green/down transition in current v2", () => {
   const runtime = new SalRuntime(buttonModel, { scanMs: 10 })
     .setInputs({ ...ready, in_Reset_PB: true, in_Relase_Door_PB: true })
+    .scan()
     .runFor(300);
   runtime.setInputs({ in_Relase_Door_PB: false }).runFor(210);
   assert.equal(runtime.get("b_Set_Transition_2"), true,

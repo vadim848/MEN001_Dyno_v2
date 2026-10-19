@@ -40,7 +40,7 @@ test("V2-ESTOP02 emergency output drops immediately and delayed output drops at 
   r.runFor(10, { in_ES_NC_1: false });
   assert.equal(r.get("b_EStop_Ok"), false);
   assert.equal(r.get(delayed), true);
-  r.runFor(80);
+  r.runFor(90); // 90ms elapsed since separately observed first loss sample
   assert.equal(r.get(delayed), true);
   r.runFor(10);
   assert.equal(r.get(delayed), false);

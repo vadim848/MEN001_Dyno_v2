@@ -53,9 +53,9 @@ SHA: SOFTWARE_CHECK_RESULTS.md/.json. Исторические fixture и отд
 | CVR-001 | Iteration01 реальные SAL tests/ACC-C01 | Hold-only, green exclusion, квалификация отдельно, нет обхода final writer |
 | CVR-002 | Iteration01 Safe/R&D | Режим сам не включает соленоид, удержание/отпускание в обеих устойчивых фазах |
 | CVR-003 | Нет полной candidate проверки | Открыта неограниченно в Safe/R&D без fault/таймера закрытия; команды не запускают закрытие |
-| CVR-004 | BUTTON open-cover, частично | D-DOOR-CURRENT: существующий DoorMonitor через PLC и исходные разрешения, DoorMonitorFALSE блокирует без fault, после отказа новый жест. Новое отдельное locked условие отложено, не mandatory NV |
+| CVR-004 | Старый BUTTON open-cover oracle требует замены | D-DOOR-INTERLOCK: DoorFALSE и оба InterLockNC TRUE разрешают advance при прочих условиях; любой InterLockFALSE блокирует независимо Door. Проверять оба основных up маршрута |
 | CVR-005 | ACC-C02-X, iteration01 gate | Unlock и фактическое повышение не сосуществуют; внутренний request не считать энергией |
-| CVR-006 | Исходные DoorMonitor/защитные цепи требуют проверки, trace завершён | D-DOOR-CURRENT: сохранить и проверить исходные программные реакции при опасной энергии; отдельный locked-loss контракт отложен до инженера/нового решения, не текущий mandatory NV. Не объявлять обычный DoorMonitor safe proof |
+| CVR-006 | InterLock/защитные цепи требуют проверки | D-DOOR-INTERLOCK: оба InterLockNC участвуют в energy safety; Door только unlock. Сохранить EMG-002 и прочие защиты, не вводить новый locked-loss контракт |
 | MOD-001 | STATE Safe-RnD-Run ownership only | Сохранённая исходная LV последовательность, каждый feedback/прерывание, R&D лишь после подтверждений |
 | MOD-002 | STATE ownership; StartingRun oracle обновлён | Accepted launch снимает STO без C2/Healthy ожидания; Run только после подтверждений; авария/failure не обходятся |
 | MOD-003 | Частично held commands; Q-PLC-REQUEST | Новый жест/handshake для каждого шага, удерживаемый PLC уровень не повторяет; самостоятельный новый PLC запрос без физического жеста требует решения |

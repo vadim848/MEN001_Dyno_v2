@@ -9,6 +9,14 @@
 
 ## Current synchronization — 2026-10-18
 
+Latest2026-10-19 D-DOOR-INTERLOCK after engineer Niv supersedes retained
+Door energy guard: PLC DoorMonitor only serves existing solenoid grant/reset.
+Energy advance checks BOTH in_InterLock_NC_1/2 (not ES_NC1/2). DoorFALSE with
+bothInterLockTRUE must not block advance if other permissions hold; either
+InterLockFALSE blocks regardlessDoor. DOOR_INTERLOCK_REQUIREMENT.md inventories
+all actual consumers/IDs and acceptance matrix. Earlier D-DOOR-CURRENT notes
+below are historical in energy-guard scope. Other protections/03C remain.
+
 PLC request policy update2026-10-19: actual v2 MAIN act_LogicMap emits held
 codes10/11/00, while Network12 merges PLC paths with button paths. Reference
 MAIN has no corresponding R&D action. SPEC§14 requires a new event/handshake,

@@ -144,6 +144,23 @@ Q-LOCK-CONTRACT выше (уточнён после D-LOCK-CHECK). Технич�
 
 ## Согласованные решения
 
+D-DOOR-INTERLOCK, последнее решение пользователя после инженера Нива
+2026-10-19: «PLC Door Monitoring внутри Safety только для соленоида открытия
+крышки, НЕ energy advance guard; заменить проверкой двух Interlock Normally
+Closed1/2». Точные символы in_InterLock_NC_1/2, не in_ES_NC_1/2.
+DoorMonitor сохраняет только existing unlock grant/reset роль. При прочих
+выполненных условиях DoorFALSE+обаInterLockTRUE допускает advance; любой
+InterLockFALSE запрещает независимоDoor. Это заменяет D-DOOR-CURRENT как
+energy guard, но не создаёт новой unlock политики/отдельного locked feedback.
+Прочие EStop/permissions и дальнейшие feedback остаются. Все программные
+consumer/ID и матрица в DOOR_INTERLOCK_REQUIREMENT.md; hardware не исследуется.
+Ни старый Door-only guard, ни последующее отложенное lock обсуждение не
+отменяют это новое решение. Actual-code acceptance ещё предстоит, не считать
+новую спецификацию доказательством исправления.
+
+Ниже D-DOOR-CURRENT и прежние launch-контракты сохранены как история;
+их требование DoorTRUE для energy superseded D-DOOR-INTERLOCK.
+
 D-DOOR-CURRENT, последнее действующее решение пользователя 2026-10-19 через
 координатора: сохранить обычный цифровой DoorMonitor через PLC и программные
 условия исходного рабочего проекта; НЕ добавлять отдельное locked feedback

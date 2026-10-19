@@ -1,5 +1,6 @@
 import { SalRuntime } from "./sal-runtime.js";
 import { currentGestureBoundaryChecks } from "./current-gesture-boundaries.js";
+import { ObservedSamples } from "./observed-samples.js";
 
 const ready = { b_Step_RnD: true, b_ResetPB_Lock: false, in_False_SI2_CH8: false,
   in_Door_Monitor: true, inPLC_RnD_Mode: false, inPLC_RnD_Mode_2: false,
@@ -48,8 +49,9 @@ export function candidateButtonCoverChecks(model) {
       // Full neutral interval precedes the attempt. Network12 has no complete
       // Armed state: this is an input precondition, not proof of its recognizer.
       r.runFor(2100);
-      r.runFor(stagger, { [input]: true });
-      e(`//Network12/${timer}/TonOut`, stagger >= 500, "single TON qualification before second button; not a visible unlock pulse");
+      const clock=new ObservedSamples(r,10),firstTime=clock.sample({[input]:true});
+      clock.observeAfter(firstTime,stagger,{in_Reset_PB:true,in_Relase_Door_PB:true});
+      e(`//Network12/${timer}/TonOut`, stagger >= 500, "single TON qualification at second observed sample; not a visible unlock pulse");
       let forbiddenUnlock = false;
       r.setInputs({ in_Reset_PB: true, in_Relase_Door_PB: true });
       for (let i = 0; i < 99; i++) {
@@ -64,28 +66,28 @@ export function candidateButtonCoverChecks(model) {
   }
   check("ACC-B03-FLICKER", ["BTN-006", "BTN-007"], "Chord timer restarts fully after one button flickers", rnd, (r, e) => {
     r.runFor(2100);
-    r.runFor(300, { in_Reset_PB: true, in_Relase_Door_PB: true });
-    r.runFor(50, { in_Reset_PB: false });
-    r.runFor(990, { in_Reset_PB: true });
+    r.setInputs({in_Reset_PB:true,in_Relase_Door_PB:true}).scan().runFor(300);
+    r.setInputs({in_Reset_PB:false}).scan().runFor(50);
+    r.setInputs({in_Reset_PB:true}).scan().runFor(990);
     e("b_Set_Transition_3", false, "990 ms since restored chord");
     r.runFor(10); e("b_Set_Transition_3", true, "1000 ms since restored chord");
     r.runFor(10); e("b_Set_Transition_3", true, "1010 ms since restored chord");
   });
   check("ACC-B02-G", ["BTN-003"], "Green: TON at 500 ms; downstream down by 510 ms", rnd, (r, e) => {
     r.runFor(2100);
-    r.runFor(490, { in_Reset_PB: true }); e("b_Set_Transition_2", false, "490 ms");
+    r.setInputs({in_Reset_PB:true}).scan().runFor(490); e("b_Set_Transition_2", false, "490 ms");
     r.runFor(10); e("//Network12/FBTon4/TonOut", true, "500 ms timer threshold; consumer precedes TON in global scan");
     r.runFor(10); e("b_Set_Transition_2", true, "510 ms");
   });
   check("ACC-B02-B", ["BTN-004"], "Blue: TON at 500 ms; downstream unlock by 510 ms", rnd, (r, e) => {
     r.runFor(2100);
-    r.runFor(490, { in_Relase_Door_PB: true }); e("b_Set_Door_Unlock_1", false, "490 ms");
+    r.setInputs({in_Relase_Door_PB:true}).scan().runFor(490); e("b_Set_Door_Unlock_1", false, "490 ms");
     r.runFor(10); e("//Network12/FBTon2/TonOut", true, "500 ms timer threshold; consumer precedes TON in global scan");
     r.runFor(10); e("b_Set_Door_Unlock_1", true, "510 ms");
   });
   check("ACC-B03-T", ["BTN-006"], "Both: no up at 990 ms; up at 1000 ms", rnd, (r, e) => {
     r.runFor(2100);
-    r.runFor(990, { in_Reset_PB: true, in_Relase_Door_PB: true }); e("b_Set_Transition_3", false, "990 ms");
+    r.setInputs({in_Reset_PB:true,in_Relase_Door_PB:true}).scan().runFor(990); e("b_Set_Transition_3", false, "990 ms");
     r.runFor(10); e("b_Set_Transition_3", true, "1000 ms");
     r.runFor(10); e("b_Set_Transition_3", true, "1010 ms");
   });

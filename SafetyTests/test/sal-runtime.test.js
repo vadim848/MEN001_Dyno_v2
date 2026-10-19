@@ -69,7 +69,7 @@ test("SAL-RUN03 connector recovery requires the configured 100 ms TON", () => {
     in_InterLock_NC_2: true
   };
   const runtime = runtimeAtConnectorBoundary().setInputs({ ...healthy, in_HV_Connector_Interlock: false }).scan();
-  runtime.setInputs(healthy).runFor(90);
+  runtime.setInputs(healthy).scan().runFor(90); // observed recovery edge +90ms
   assert.equal(runtime.get("//Network2/FBTon1/TonOut"), false);
   runtime.runFor(10);
   assert.equal(runtime.get("//Network2/FBTon1/TonOut"), true);
