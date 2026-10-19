@@ -9,6 +9,24 @@
 
 ## Current synchronization — 2026-10-18
 
+Coverage refresh2026-10-19: reviewed04/03C/06/05 and accepted07r2 are reflected
+in SOFTWARE_ACCEPTANCE_SCOPE.md. Latest saved source SALbf110ab452a5d9d3fcafd1acc5ab657b993e3e2828f384a63c1491c57b2cdcc6,
+SGVL508610b92e60ae602a75952113b34f7a8bd9c3f283fbb93dfa45b6a532f0a3ba.
+Reported174/75/112 test suites PASS;172PASS/29FAIL/5NV scenarios. No new run
+by this documentation update. All41 mandatory IDs remain, not whole-system PASS.
+
+| Accepted packet | Current actual-code evidence | Still open |
+|---|---|---|
+| 04/05 LV/HV | Shared nine current permissions; actual producers/aggregate/Set gate/RS, paired firstfault controls | STO/other raises, complete emergency owner/recovery |
+| 03C clock | observed-fixed-scan-v1 boundaries/first observed age0 |03B recognizer not implemented; no BTN acceptance from prototypes/clock alone |
+| 06 Door | Real R&D energy producer uses BOTH InterLockNC instead of Door; three Door unlock consumers preserved | Full external launch and all phase/route acceptance |
+| 07r2 Unlock | Final writer uses latched EStopOK plus current PLCstop; Safe/R&D NC1/PLC firstscan and no-reopen after restore | NC2/Mentee, all transition phases/energy completion, full EMG-007 |
+
+Source reviews: ITERATION_04_REVIEW.md, ITERATION_03C_REVIEW.md,
+ITERATION_06_REVIEW.md, ITERATION_05_REVIEW.md, ITERATION_07_REVIEW.md.
+There is no CVR-007 ID; emergency cover scope is EMG-007 plus CVR-001/002.
+Historical evidence below and prototype PASS never close current requirements.
+
 Latest2026-10-19 D-DOOR-INTERLOCK after engineer Niv supersedes retained
 Door energy guard: PLC DoorMonitor only serves existing solenoid grant/reset.
 Energy advance checks BOTH in_InterLock_NC_1/2 (not ES_NC1/2). DoorFALSE with

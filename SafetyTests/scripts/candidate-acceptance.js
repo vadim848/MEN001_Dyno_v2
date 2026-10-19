@@ -8,6 +8,7 @@ const sal = fileURLToPath(new URL("../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/
 const model = parseSalFile(sal);
 const cases = candidateButtonCoverChecks(model);
 const report = { source: "working v2 SAL, not pinned fixture", crc: model.crc,
+  sgvlSha256:crypto.createHash("sha256").update(fs.readFileSync(new URL("../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl",import.meta.url))).digest("hex"),
   clockContract:SAL_CLOCK_CONTRACT,
   runtimeSha256:crypto.createHash("sha256").update(fs.readFileSync(new URL("../src/sal-runtime.js",import.meta.url))).digest("hex"),
   schedulerSha256:crypto.createHash("sha256").update(fs.readFileSync(new URL("../src/observed-samples.js",import.meta.url))).digest("hex"),

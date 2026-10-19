@@ -15,7 +15,7 @@ const additions={in_Relase_Door_PB:["FBOr3/OrIn3","FBAndUnlockHold/AndIn2"],in_R
   in_Mentee_EStop:["FBAndLvSetPermit/AndIn3","FBAndHvSetPermit/AndIn3"],
   in_ES_NC_1:["FBAndLvCurrentPermit/AndIn2"],in_ES_NC_2:["FBAndLvCurrentPermit/AndIn3"],in_InterLock_NC_1:["FBAndLvCurrentPermit/AndIn4","../Network12/FBAnd16/AndIn1"],
   in_InterLock_NC_2:["FBAndLvCurrentPermit/AndIn5","../Network12/FBAnd16/AndIn3"],in_LV_Connector_Interlock:["FBAndLvCurrentPermit/AndIn6"],
-  in_HV_Connector_Interlock:["FBAndLvCurrentPermit/AndIn7"],in_Estop_PLC:["FBAndLvCurrentPermit/AndIn8"]};
+  in_HV_Connector_Interlock:["FBAndLvCurrentPermit/AndIn7"],in_Estop_PLC:["FBAndLvCurrentPermit/AndIn8","FBAndUnlockHold/AndIn5"]};
 
 test("B1 current source and unchanged historical wire roles pass structural audit",()=>{
   assert.deepEqual(validateSalBindings(original,gvl).errors,[]);
@@ -29,7 +29,7 @@ test("B1 current source and unchanged historical wire roles pass structural audi
     assert.deepEqual(current.alias,old.alias);
     assert.deepEqual(current.sourcePorts,old.name==="out_Door_Unlock_Solonoeid"?["//Network1/FBAndUnlockHold/AndOut"]:old.sourcePorts);
   }
-  assert.equal(count,15); // B1 eleven +06 two NC +05 two Mentee logical consumers; only06 Door energy usage removed.
+  assert.equal(count,16); // B1 eleven +06 two NC +05 two Mentee +07 one PLC consumer; only06 Door energy usage removed.
   const requiredEdges=[
     ["FBRs6/RsOut","FBAndUnlockHold/AndIn1"], ["FBOr17/OrOut","FBAndLvSetPermit/AndIn1"],
     ["FBAndLvCurrentPermit/AndOut","FBAndLvSetPermit/AndIn2"], ["FBAndLvSetPermit/AndOut","FBRs1/Set"]
@@ -88,7 +88,7 @@ test("B1 serialized input-side and output-side single wires normalize identicall
   const block=current.networks[0].blocks.find(b=>b.name==="FBAndUnlockHold");
   assert.ok(block.inputs[0].sources.includes(edge.from));
   const r=new SalRuntime({...current,networks:[{blocks:[block]}]});
-  r.values.set(edge.from,true);r.setInputs({in_Relase_Door_PB:true,in_Reset_PB:false}).scan();
+  r.values.set(edge.from,true);r.setInputs({in_Relase_Door_PB:true,in_Reset_PB:false,b_EStop_Ok:true,in_Estop_PLC:false}).scan();
   assert.equal(r.get("out_Door_Unlock_Solonoeid"),true);
   assert.ok(walk(readBindingXml(sal)).some(n=>n.tag==="fbPortGlobalVariableReferences"));
   assert.ok(reference);
@@ -105,17 +105,17 @@ test("B1 serialized input-side and output-side single wires normalize identicall
     const inputBlock=inputModel.networks[0].blocks.find(b=>b.name===block.name);
     const inputRuntime=new SalRuntime({...inputModel,networks:[{blocks:[inputBlock]}]});
     inputRuntime.values.set(edge.from,true);
-    inputRuntime.setInputs({in_Relase_Door_PB:true,in_Reset_PB:false}).scan();
+    inputRuntime.setInputs({in_Relase_Door_PB:true,in_Reset_PB:false,b_EStop_Ok:true,in_Estop_PLC:false}).scan();
     assert.equal(inputRuntime.get("out_Door_Unlock_Solonoeid"),true);
     assert.deepEqual(inputBlock.inputs[0].sources,block.inputs[0].sources);
   }finally{if(fs.existsSync(temp))fs.unlinkSync(temp);}
 });
 
-test("B1 SGVL delta is exactly one program usage; declarations and other indices remain unchanged",()=>{
+test("B1 plus07 SGVL delta is exactly two program usages; declarations and other indices remain unchanged",()=>{
   const baseline=spawnSync("git",["show","c024651:MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl"],{encoding:"utf8",maxBuffer:4*1024*1024});
   assert.equal(baseline.status,0,baseline.stderr);
-  const removal=/<FbPortUsage\b[^>]*>\s*<ModelElementId>e38bf21e-15b3-448f-89c8-2795d5bf62db<\/ModelElementId>\s*<\/FbPortUsage>/g;
-  assert.equal([...gvl.matchAll(removal)].length,1);
+  const removal=/<FbPortUsage\b[^>]*>\s*<ModelElementId>(?:e38bf21e-15b3-448f-89c8-2795d5bf62db|55c0b75c-a041-46ff-b5a3-715fa2f8d676)<\/ModelElementId>\s*<\/FbPortUsage>/g;
+  assert.equal([...gvl.matchAll(removal)].length,2);
   const normalize=s=>s.replace(/>\s+</g,"><").trim();
   assert.equal(normalize(gvl.replace(removal,"")),normalize(baseline.stdout));
 });

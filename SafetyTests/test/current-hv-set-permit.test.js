@@ -60,9 +60,12 @@ test("HV current SAL: real legacy/R&D/third-route stale aggregate paired first-f
   }
 });
 
-test("HV current SAL: SGVL content remains identical to B1 checkpoint apart from Git EOL normalization",()=>{
+test("HV current SAL: SGVL changes since B1 are limited to explicit07 EStop output permission usage",()=>{
   const before=spawnSync("git",["show","9ef945c:MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl"],{maxBuffer:4*1024*1024});
   assert.equal(before.status,0);
   const current=fs.readFileSync(new URL("../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl",import.meta.url));
-  assert.equal(current.toString("utf8").replaceAll("\r\n","\n"),before.stdout.toString("utf8").replaceAll("\r\n","\n"));
+  const removal=/<FbPortUsage\b[^>]*>\s*<ModelElementId>55c0b75c-a041-46ff-b5a3-715fa2f8d676<\/ModelElementId>\s*<\/FbPortUsage>/g;
+  assert.equal([...current.toString("utf8").matchAll(removal)].length,1);
+  const normalize=s=>s.replace(/>\s+</g,"><").replaceAll("\r\n","\n").trim();
+  assert.equal(normalize(current.toString("utf8").replace(removal,"")),normalize(before.stdout.toString("utf8")));
 });

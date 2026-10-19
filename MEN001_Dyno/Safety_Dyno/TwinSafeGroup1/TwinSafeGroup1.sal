@@ -1995,10 +1995,16 @@
                   <inPort Id="10d1624b-3840-4133-bce1-11534436c303" name="AndIn3" portName="AndIn3" portNum="4" objectIndex="10" varId="4" filter="2" portDataType="1" maxDeviation="0" resetTime="0" channelInterface="Activated" deactivate1="Make Contact (NO)" />
                 </functioBlockHasInPorts>
                 <functioBlockHasInPorts Id="c095f5f9-eec0-45f7-9c5b-319163e33879">
-                  <inPort Id="55c0b75c-a041-46ff-b5a3-715fa2f8d676" name="AndIn4" portName="AndIn4" portNum="5" objectIndex="11" varId="5" filter="2" portDataType="1" maxDeviation="0" resetTime="0" channelInterface="Deactivated" />
+                  <inPort Id="55c0b75c-a041-46ff-b5a3-715fa2f8d676" name="AndIn4" portName="AndIn4" portNum="5" objectIndex="11" varId="5" filter="2" portDataType="1" maxDeviation="0" resetTime="0" channelInterface="Activated" deactivate1="Break Contact (NC)">
+                    <fbPortGlobalVariableReferences>
+                      <functionBlockPortHasFbPortGlobalVariableReferences Id="cbc15c53-3bd0-4454-b23e-410149fa299b">
+                        <fbPortGlobalVariableReference Id="284d9275-cd77-47fe-b42d-26ca104b7a96" variableId="98ab783a-9ee4-42cd-8375-54abc169e250" lastKnownPath="GVL1.b_EStop_Ok" />
+                      </functionBlockPortHasFbPortGlobalVariableReferences>
+                    </fbPortGlobalVariableReferences>
+                  </inPort>
                 </functioBlockHasInPorts>
                 <functioBlockHasInPorts Id="fea62df3-bd84-4d3d-9532-e5d32208973c">
-                  <inPort Id="3f513b29-6b63-4f75-926e-811ca7650568" name="AndIn5" portName="AndIn5" portNum="6" objectIndex="12" varId="6" filter="2" portDataType="1" maxDeviation="0" resetTime="0" channelInterface="Deactivated" />
+                  <inPort Id="3f513b29-6b63-4f75-926e-811ca7650568" name="AndIn5" portName="AndIn5" portNum="6" objectIndex="12" varId="6" filter="2" portDataType="1" maxDeviation="0" resetTime="0" channelInterface="Activated" deactivate1="Make Contact (NO)" />
                 </functioBlockHasInPorts>
                 <functioBlockHasInPorts Id="e4bb67e2-ff48-4892-9d17-5034e8936a10">
                   <inPort Id="8eb8a238-9830-484d-b0e0-70419a56da9a" name="AndIn6" portName="AndIn6" portNum="7" objectIndex="13" varId="7" filter="2" portDataType="1" maxDeviation="0" resetTime="0" channelInterface="Deactivated" />
@@ -11875,6 +11881,15 @@
                     <functionBlockPort>
                       <fbPortUsageReferencesFunctionBlockPort Id="14b7f8ed-ea2b-40f9-841b-7b8108445b12">
                         <inPortMoniker name="//Network1/FBAndLvCurrentPermit/AndIn8" />
+                      </fbPortUsageReferencesFunctionBlockPort>
+                    </functionBlockPort>
+                  </fbPortUsage>
+                </variableUsagesHasUsages>
+                <variableUsagesHasUsages Id="3016045d-9ec4-4a13-a763-142d367f0e18">
+                  <fbPortUsage Id="e9468510-b5b2-4295-b53f-56e45bfcf9fa">
+                    <functionBlockPort>
+                      <fbPortUsageReferencesFunctionBlockPort Id="3fbc8d19-9869-4b59-8243-6330fa8b3713">
+                        <inPortMoniker name="//Network1/FBAndUnlockHold/AndIn5" />
                       </fbPortUsageReferencesFunctionBlockPort>
                     </functionBlockPort>
                   </fbPortUsage>

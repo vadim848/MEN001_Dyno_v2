@@ -16,7 +16,8 @@ const cover = ["FBOr3", "FBOr4", "FBRs6", "FBAndUnlockHold"];
 function runtime(extra = {}) {
   const selection = { Network1: cover, ...extra };
   return new SalRuntime({ ...model, networks: model.networks.filter(n => selection[n.name]).map(n =>
-    ({ ...n, blocks: n.blocks.filter(b => selection[n.name].includes(b.name)) })) }, { unconnectedInput: false });
+    ({ ...n, blocks: n.blocks.filter(b => selection[n.name].includes(b.name)) })) }, { unconnectedInput: false })
+    .setInputs({b_EStop_Ok:true,in_Estop_PLC:false}); // Explicit healthy07 boundary; fault paths tested with actual EStop separately.
 }
 
 test("CVR current SAL: sole final writer, normalized single wire, native port IDs and contiguous execution", () => {
@@ -62,7 +63,7 @@ test("CVR current SAL: eight final gate combinations use the actual parsed block
   for (const permit of [false,true]) for (const blue of [false,true]) for (const green of [false,true]) {
     const r = new SalRuntime({ ...model, networks: [{ blocks: [gate] }] });
     r.values.set(latch, permit);
-    r.setInputs({ in_Relase_Door_PB: blue, in_Reset_PB: green }).scan();
+    r.setInputs({ in_Relase_Door_PB: blue, in_Reset_PB: green,b_EStop_Ok:true,in_Estop_PLC:false }).scan();
     assert.equal(r.get(output), permit && blue && !green);
   }
 });

@@ -3,6 +3,7 @@ import { currentGestureBoundaryChecks } from "./current-gesture-boundaries.js";
 import { ObservedSamples } from "./observed-samples.js";
 
 const ready = { b_Step_RnD: true, b_ResetPB_Lock: false, in_False_SI2_CH8: false,
+  b_EStop_Ok:true,in_Estop_PLC:false,
   in_InterLock_NC_1:true,in_InterLock_NC_2:true,
   in_Door_Monitor: true, inPLC_RnD_Mode: false, inPLC_RnD_Mode_2: false,
   in_HV_C2_FBK: false, in_HV_Healthy_FBK: true, in_Reset_PB: false, in_Relase_Door_PB: false };

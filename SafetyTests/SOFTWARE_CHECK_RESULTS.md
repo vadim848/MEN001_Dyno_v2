@@ -1,7 +1,7 @@
 # Результаты программных проверок
 
-Дата: 2026-10-19T07:34:25.760Z
-SAL SHA256: ea2443b0ea92f95584496360e103f4f9a8b5fd61bb2f492f88a9a9d60628564e
+Дата: 2026-10-19T12:16:40.097Z
+SAL SHA256: bf110ab452a5d9d3fcafd1acc5ab657b993e3e2828f384a63c1491c57b2cdcc6
 
 Clock: observed-fixed-scan-v1; first observed edge age0; fixed scan per scenario. Generic runFor durations describe scheduled scan advance, not an implicit event timestamp.
 
@@ -9,8 +9,8 @@ Clock: observed-fixed-scan-v1; first observed edge age0; fixed scan per scenario
 
 - harness: PASS; 174/174, ошибок 0, пропусков 0.
 - historical: PASS; 75/75, ошибок 0, пропусков 0.
-- current: PASS; 84/84, ошибок 0, пропусков 0.
-- Текущий код: {"PASS":170,"FAIL":31,"NOT VERIFIED":5,"ERROR":0}.
+- current: PASS; 112/112, ошибок 0, пропусков 0.
+- Текущий код: {"PASS":172,"FAIL":29,"NOT VERIFIED":5,"ERROR":0}.
 
 PASS относится только к указанному компоненту/сценарию. Прототипы и исторические воспроизведения не являются приёмкой текущего SAL.
 
@@ -33,8 +33,6 @@ BUTTON/STATE проверяют границу отдельной ветви: в
 - ACC-B03-510-BLUE: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms of both held"}.
 - ACC-B03-B: {"signal":"b_Set_Door_Unlock_1","expected":false,"actual":true,"checkpoint":"remaining button held 1200 ms"}.
 - ACC-B03-G: {"signal":"b_Set_Transition_2","expected":false,"actual":true,"checkpoint":"remaining button held 1200 ms"}.
-- ACC-C01-E-Step1: {"signal":"out_Door_Unlock_Solonoeid","expected":false,"actual":true,"checkpoint":"blue held during NC1 fault"}.
-- ACC-C01-E-Step_RnD: {"signal":"out_Door_Unlock_Solonoeid","expected":false,"actual":true,"checkpoint":"blue held during NC1 fault"}.
 - EXACT:CHORD:GREEN:251: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms since second press"}.
 - EXACT:CHORD:GREEN:500: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms since second press"}.
 - EXACT:CHORD:GREEN:510: {"signal":"b_Set_Transition_3","expected":false,"actual":true,"checkpoint":"1000 ms since second press"}.

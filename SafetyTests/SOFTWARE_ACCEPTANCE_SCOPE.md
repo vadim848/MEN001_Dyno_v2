@@ -22,6 +22,26 @@ SINGLE0.5/BOTH1 утверждены D-TIMING; последнее D-CHORD250 у�
 
 ## Матрица обязательных проверок
 
+Актуализация2026-10-19 по implementation/review04,03C,06,05,07 (07r2 уже
+принята независимым ревьюером): SAL
+`bf110ab452a5d9d3fcafd1acc5ab657b993e3e2828f384a63c1491c57b2cdcc6`, SGVL
+`508610b92e60ae602a75952113b34f7a8bd9c3f283fbb93dfa45b6a532f0a3ba`.
+Сохранённый отчёт:174 harness/75 historical/112 current tests PASS;
+сценарии172PASS/29FAIL/5NV/0ERROR. Эти числа прочитаны из отчёта, а не новый
+запуск аналитика. Все41ID по-прежнему обязательны, весь проект не принят.
+
+- [04 review](ITERATION_04_REVIEW.md), [05 review](ITERATION_05_REVIEW.md):
+  реальные LV/HV Set gates и девять текущих разрешений, actual producers и
+  first-fault/stale-positive controls; не полное покрытие всех повышений/STO.
+- [03C review](ITERATION_03C_REVIEW.md): исправлен observed clock стенда,
+  не логика кнопок установки. Clock PASS не закрывает BTN,03B не реализован.
+- [06 review](ITERATION_06_REVIEW.md): реальный R&D energy Door guard заменён
+  обоими InterLockNC, три соленоидных Door consumers сохранены. Прочие up
+  guards/полный внешний launch и жизненный цикл требуют дальнейшей проверки.
+- [07 review](ITERATION_07_REVIEW.md): конечный Unlock защищён EStopOK и
+  текущим PLCstop, первый fault scan и отсутствие reopen после raw restore
+  без reset проверены для Safe/R&D. NC2/Mentee/all transitions не закрыты.
+
 «Частично» означает ограниченный исполняемый сценарий реального SAL либо
 структурную проверку; это не закрытие всего ID. Точные результаты запуска и
 SHA: SOFTWARE_CHECK_RESULTS.md/.json. Исторические fixture и отдельные модели
@@ -36,11 +56,11 @@ SHA: SOFTWARE_CHECK_RESULTS.md/.json. Исторические fixture и отд
 | EMG-004 | Частично PRIORITY connectors | Потеря после Safe в каждой фазе, аварийное владение и запрет новых повышений |
 | EMG-005 | Частично ESTOP/ACC-C01-E | Возврат каждого защитного входа не отменяет начатую аварийную последовательность |
 | EMG-006 | Частично EStop component/reference | Полная ручная процедура после снятия энергии, только Safe, PLC не снимает аварийную память |
-| EMG-007 | Частично ACC-C01-E/PRIORITY | Unlock FALSE во всех аварийных/переходных фазах и до завершения снятия опасной энергии |
+| EMG-007 | 07r2 actual final gate: Safe/R&D NC1/PLC firstscan и latched no-reopen; ACC-C01-E два FAIL закрыты | Остальные NC2/Mentee/источники, все переходные фазы и завершение снятия опасной энергии; не считать 07 полным закрытием |
 | EMG-008 | Исторические трассы не закрывают candidate | Healthy loss во время SS1: непосредственный выбор STO без предварительного общего ожидания |
 | EMG-009 | Нет полной candidate проверки | Возврат Healthy после аварийного выбора не возвращает SS1 и не сокращает заданный coast wait |
 | EMG-010 | Исторические Run-down трассы | Разряд до C2 OFF, completion/отказная процедура и feedback до R&D; недостающий oracle через аналитика |
-| EMG-011 | Частично PRIORITY; план iteration02 | Актуальные разрешения на каждом producer повышения, запрет при аварии; positive controls |
+| EMG-011 | Приняты02/04/05: LV/HV new Set guards, девять текущих разрешений, реальные producers и firstscan positive/fault controls | STO и остальные raises/полная emergency ownership/recovery не закрыты; проверить все источники повышения, не только LV/HVSet |
 | EMG-012 | Частично STATE conflicting-set | Все недопустимые комбинации; запрет неоднозначного владения. Точный destination Q-FAULT-DESTINATION |
 | BTN-001 | ACC-B01-R, частичная ветвь | Release filter между попытками во всех режимах и после команд/срывов |
 | BTN-002 | Частично BUTTON held-at-start | Нажатие до окончания очистки отклоняется полностью, удержание не легализует |
@@ -50,12 +70,12 @@ SHA: SOFTWARE_CHECK_RESULTS.md/.json. Исторические fixture и отд
 | BTN-006 | ACC-B03-T/FLICKER | BOTH1 непрерывно от второй кнопки, сброс при потере кнопки, полный новый отсчёт |
 | BTN-007 | ACC-B03-B/G | Срыв/мигание/piano не создают одиночную команду до очистки |
 | BTN-008 | Частично late/held scenarios; D-LATE-SECOND полное покрытие pending | >250 до single: ниsingle ниup, безfault; после/ровно500singleaccepted: нетотмены/rollback/прерывания, нетновойкоманды до обеOFF+фильтр; обе очередности |
-| CVR-001 | Iteration01 реальные SAL tests/ACC-C01 | Hold-only, green exclusion, квалификация отдельно, нет обхода final writer |
-| CVR-002 | Iteration01 Safe/R&D | Режим сам не включает соленоид, удержание/отпускание в обеих устойчивых фазах |
+| CVR-001 | Приняты01 и07: actual sole final writer, hold/green, NC1/PLC permit и firstfault | Полная квалификация/recognizer03B и все emergency/transition контексты ещё не закрыты |
+| CVR-002 | 01 Safe/R&D hold/release;07 сохраняет legitimate positive grants и latched no-reopen | Все входы/entry/recovery режима и полная квалификация; mode сам не должен включать соленоид |
 | CVR-003 | Нет полной candidate проверки | Открыта неограниченно в Safe/R&D без fault/таймера закрытия; команды не запускают закрытие |
-| CVR-004 | Старый BUTTON open-cover oracle требует замены | D-DOOR-INTERLOCK: DoorFALSE и оба InterLockNC TRUE разрешают advance при прочих условиях; любой InterLockFALSE блокирует независимо Door. Проверять оба основных up маршрута |
+| CVR-004 | Принята06: actual R&D producer Door independence и обаNC, real path/structural checks; старый startup negative остаётся recognizer gap | Полный внешний gesture/PLC acceptance и оба up маршрута; DoorFALSE+обаNCtrue positive при прочих разрешениях, каждыйNCfalse negative независимоDoor |
 | CVR-005 | ACC-C02-X, iteration01 gate | Unlock и фактическое повышение не сосуществуют; внутренний request не считать энергией |
-| CVR-006 | InterLock/защитные цепи требуют проверки | D-DOOR-INTERLOCK: оба InterLockNC участвуют в energy safety; Door только unlock. Сохранить EMG-002 и прочие защиты, не вводить новый locked-loss контракт |
+| CVR-006 | 06 сохранила три Door solenoid consumers,04/05 сохраняют обаNC в energy Set guards | Полная реакция на InterLock loss EMG-002/все фазы ещё не закрыта; Door только unlock, отдельный locked-loss не вводить |
 | MOD-001 | STATE Safe-RnD-Run ownership only | Сохранённая исходная LV последовательность, каждый feedback/прерывание, R&D лишь после подтверждений |
 | MOD-002 | STATE ownership; StartingRun oracle обновлён | Accepted launch снимает STO без C2/Healthy ожидания; Run только после подтверждений; авария/failure не обходятся |
 | MOD-003 | Частично held commands; Q-PLC-REQUEST | Новый жест/handshake для каждого шага, удерживаемый PLC уровень не повторяет; самостоятельный новый PLC запрос без физического жеста требует решения |
