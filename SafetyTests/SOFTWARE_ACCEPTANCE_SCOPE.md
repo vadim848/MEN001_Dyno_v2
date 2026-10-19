@@ -22,25 +22,36 @@ SINGLE0.5/BOTH1 утверждены D-TIMING; последнее D-CHORD250 у�
 
 ## Матрица обязательных проверок
 
-Актуализация2026-10-19 по implementation/review04,03C,06,05,07 (07r2 уже
-принята независимым ревьюером): SAL
-`bf110ab452a5d9d3fcafd1acc5ab657b993e3e2828f384a63c1491c57b2cdcc6`, SGVL
-`508610b92e60ae602a75952113b34f7a8bd9c3f283fbb93dfa45b6a532f0a3ba`.
-Сохранённый отчёт:174 harness/75 historical/112 current tests PASS;
-сценарии172PASS/29FAIL/5NV/0ERROR. Эти числа прочитаны из отчёта, а не новый
+Актуализация2026-10-19 после принятой03B и scopedR3: SAL
+`a50e24af66c755f00001e3bd2eed70ba4d30526df8dfa427b5d37bc6dcebb413`, SGVL
+`06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5`.
+Сохранённый отчёт:178 harness/75 historical/272 current tests PASS;
+сценарии201PASS/1FAIL/5NV/0ERROR. Эти числа прочитаны из отчёта, а не новый
 запуск аналитика. Все41ID по-прежнему обязательны, весь проект не принят.
 
 - [04 review](ITERATION_04_REVIEW.md), [05 review](ITERATION_05_REVIEW.md):
   реальные LV/HV Set gates и девять текущих разрешений, actual producers и
   first-fault/stale-positive controls; не полное покрытие всех повышений/STO.
 - [03C review](ITERATION_03C_REVIEW.md): исправлен observed clock стенда,
-  не логика кнопок установки. Clock PASS не закрывает BTN,03B не реализован.
+  не логика кнопок установки. Clock PASS сам по себе не закрывает BTN.
+- [03B review](ITERATION_03B_REVIEW.md), [R3 review](03B_R3_REVIEW.md):
+  accepted actual physical R&D recognizer, native first-only WINDOW и effective
+  master-pair resolver всех четырёх EStop pairs.145-block branch,26 given inputs,
+  typed Network3 ownership cuts; actual timing/late/rearm/pulses проверены.
+  Safe/Run/fullgroup reachability/PLC handshake не закрыты; Error=hoststub
+  не доказательство native/group nofault. Все41 ID остаются обязательными.
 - [06 review](ITERATION_06_REVIEW.md): реальный R&D energy Door guard заменён
   обоими InterLockNC, три соленоидных Door consumers сохранены. Прочие up
   guards/полный внешний launch и жизненный цикл требуют дальнейшей проверки.
 - [07 review](ITERATION_07_REVIEW.md): конечный Unlock защищён EStopOK и
   текущим PLCstop, первый fault scan и отсутствие reopen после raw restore
   без reset проверены для Safe/R&D. NC2/Mentee/all transitions не закрыты.
+
+Открыт scoped LV/HV gap: one-sample PLCstop/raw restore без Restart может
+дать новый Set по предыдущим значениям producer/EStopOK.04/05 не закрывают
+эту recovery границу. Follow-up: PLC_PULSE_SET_REQUIREMENTS.md; red tests
+готовятся отдельно. EarlySTO и полная исходная последовательность не завершены;
+PLC-only policy/conflict destination/transition-down/discharge вопросы остаются.
 
 «Частично» означает ограниченный исполняемый сценарий реального SAL либо
 структурную проверку; это не закрытие всего ID. Точные результаты запуска и
@@ -62,15 +73,15 @@ SHA: SOFTWARE_CHECK_RESULTS.md/.json. Исторические fixture и отд
 | EMG-010 | Исторические Run-down трассы | Разряд до C2 OFF, completion/отказная процедура и feedback до R&D; недостающий oracle через аналитика |
 | EMG-011 | Приняты02/04/05: LV/HV new Set guards, девять текущих разрешений, реальные producers и firstscan positive/fault controls | STO и остальные raises/полная emergency ownership/recovery не закрыты; проверить все источники повышения, не только LV/HVSet |
 | EMG-012 | Частично STATE conflicting-set | Все недопустимые комбинации; запрет неоднозначного владения. Точный destination Q-FAULT-DESTINATION |
-| BTN-001 | ACC-B01-R, частичная ветвь | Release filter между попытками во всех режимах и после команд/срывов |
-| BTN-002 | Частично BUTTON held-at-start | Нажатие до окончания очистки отклоняется полностью, удержание не легализует |
-| BTN-003 | ACC-B02-G, узкая Network12 | Одна команда после SINGLE0.5, границы/прерывания/удержание; Armed precondition, D-Q500 single priority |
-| BTN-004 | ACC-B02-B и hold gate | До SINGLE0.5 unlock FALSE, затем разрешённый held unlock; Safe/R&D, D-Q500: qualified single отдельно от green-gated output |
-| BTN-005 | ACC-B03 IN/EDGE/LATE, требуют sync D-CHORD250 | Chord при delta<=250мс; >250мс неStepUp; до/ровно/после250, обе очередности, без double acceptance |
-| BTN-006 | ACC-B03-T/FLICKER | BOTH1 непрерывно от второй кнопки, сброс при потере кнопки, полный новый отсчёт |
-| BTN-007 | ACC-B03-B/G | Срыв/мигание/piano не создают одиночную команду до очистки |
-| BTN-008 | Частично late/held scenarios; D-LATE-SECOND полное покрытие pending | >250 до single: ниsingle ниup, безfault; после/ровно500singleaccepted: нетотмены/rollback/прерывания, нетновойкоманды до обеOFF+фильтр; обе очередности |
-| CVR-001 | Приняты01 и07: actual sole final writer, hold/green, NC1/PLC permit и firstfault | Полная квалификация/recognizer03B и все emergency/transition контексты ещё не закрыты |
+| BTN-001 | Принята03B actual R&D release/rearm | Другие режимы/full lifecycle/owner handoffs |
+| BTN-002 | Принята03B R&D held-at-start/prematurepress | Полный group startup и другие режимы, cut не reachability |
+| BTN-003 | Принята03B R&D SINGLE500/однократность | Safe/Run и полный owner lifecycle |
+| BTN-004 | Принята03B R&D blue500/held gate | Safe qualification и полный lifecycle/доступ |
+| BTN-005 | Приняты03B/R3 R&D WINDOW250 inclusive, обе очередности, effective pair inputs | Другие режимы/entry/реальные owner paths |
+| BTN-006 | Принята03B R&D BOTH1000 от второй, continuity/reset | Другие режимы и cross-mode traces |
+| BTN-007 | Принята03B R&D failedchord/piano/swap | Другие режимы и полный lifecycle |
+| BTN-008 | Принята03B R&D late300/500/600/repeat/rearm в branch | Полный accepted-transition rollback/другие режимы; branch не весь ID |
+| CVR-001 | 01/07 и03B R&D qualification, actual writer/hold/green | Safe qualification и все emergency/transition/lifecycle контексты |
 | CVR-002 | 01 Safe/R&D hold/release;07 сохраняет legitimate positive grants и latched no-reopen | Все входы/entry/recovery режима и полная квалификация; mode сам не должен включать соленоид |
 | CVR-003 | Нет полной candidate проверки | Открыта неограниченно в Safe/R&D без fault/таймера закрытия; команды не запускают закрытие |
 | CVR-004 | Принята06: actual R&D producer Door independence и обаNC, real path/structural checks; старый startup negative остаётся recognizer gap | Полный внешний gesture/PLC acceptance и оба up маршрута; DoorFALSE+обаNCtrue positive при прочих разрешениях, каждыйNCfalse negative независимоDoor |

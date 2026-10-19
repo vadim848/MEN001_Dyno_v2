@@ -1,3 +1,4 @@
+import { SAL_NATIVE_PAIR_CONTRACT } from "../src/estop-native-pairs.js";
 import fs from "node:fs";
 import crypto from "node:crypto";
 import path from "node:path";
@@ -43,7 +44,8 @@ const cases = [...requirements, ...currentCodeChecks(model), ...reference.cases]
 const summary = Object.fromEntries(["PASS", "FAIL", "NOT VERIFIED", "ERROR"].map(s => [s, cases.filter(c => c.status === s).length]));
 const report = { generatedAt: new Date().toISOString(), source: path.relative(path.resolve(root, ".."), sal).replaceAll("\\", "/"),
   clockContract:SAL_CLOCK_CONTRACT,
-  modelSourceSha256:Object.fromEntries(["src/sal-runtime.js","src/observed-samples.js","src/sal-parser.js"].map(file=>
+  nativePairContract:SAL_NATIVE_PAIR_CONTRACT,
+  modelSourceSha256:Object.fromEntries(["src/sal-runtime.js","src/observed-samples.js","src/sal-parser.js","src/estop-native-pairs.js","src/physical-rnd-source.js"].map(file=>
     [file,crypto.createHash("sha256").update(fs.readFileSync(path.join(root,file))).digest("hex")])),
   sgvlSha256:crypto.createHash("sha256").update(fs.readFileSync(path.resolve(root,"../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl"))).digest("hex"),
   bindingAudit: { status:model.bindingAudit.status, errors:model.bindingAudit.errors,

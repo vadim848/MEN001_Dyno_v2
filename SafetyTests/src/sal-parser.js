@@ -1,3 +1,4 @@
+import { effectiveEstopInputs } from "./estop-native-pairs.js";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -97,11 +98,12 @@ export function buildDependencyGraph(model) {
 
   for (const network of model.networks) {
     for (const block of network.blocks) {
+      const estopActive=block.functionName==="safeEstop"?new Set([block.inputs.find(p=>p.name==="Restart")?.path,...effectiveEstopInputs(block).map(({port})=>port.path)]):null;
       for (const input of block.inputs) {
         for (const global of input.globals) {
           add(`var:${global.lastKnownPath?.split(".").at(-1)}`, input.path);
         }
-        if (!["Deactivated", "Both Deactivated"].includes(input.channelInterface)) {
+        if (estopActive?estopActive.has(input.path):!["Deactivated", "Both Deactivated"].includes(input.channelInterface)) {
           for (const output of block.outputs) add(input.path, output.path);
         }
       }

@@ -25,7 +25,7 @@ for(const e of P.integration){const target=ports.get(e.target);for(const c of ta
 for(const row of P.sequence.filter(r=>r.oldPath)){const b=blocks.get(row.oldPath);if(!b||Number(b.attrs.orderOfExecution)!==row.oldOrder)throw Error('old order '+row.oldPath);b.attrs.orderOfExecution=String(row.newOrder);b.changed=true;}
 const portIds=new Map([...ports].map(([path,p])=>[path,p.attrs.Id]));for(const b of P.blocks)for(const p of [...b.nativePorts.inputs,...b.nativePorts.outputs])portIds.set(`//${P.network}/${b.name}/${p.name}`,p.Id);
 function portXml(p,tag,b){let a=Object.fromEntries(Object.entries(p).filter(([k])=>!['active','bindingSource'].includes(k)));if(tag==='inPort'){
- if(b.type==='safeEstop'){if(p.name.startsWith('EStopIn'))a.channelInterface=p.name==='EStopIn1'?'Single-Channel Both Activated':'Both Deactivated';else if(p.name.startsWith('EDM')){delete a.channelInterface;delete a.deactivate1;delete a.deactivate2;}}
+ if(b.type==='safeEstop'){if(p.name.startsWith('EStopIn'))a.channelInterface=p.name==='EStopIn1'?'Single-Channel 1 Activated':'Both Deactivated';else if(p.name.startsWith('EDM')){delete a.channelInterface;delete a.deactivate1;delete a.deactivate2;}}
  else if(b.type!=='safeDecouple')a.channelInterface=p.active?'Activated':'Deactivated';
  if(p.active&&p.bindingSource)a.deactivate1=p.bindingSource.inverted?'Make Contact (NO)':'Break Contact (NC)';
  }

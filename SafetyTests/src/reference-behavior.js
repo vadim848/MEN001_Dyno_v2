@@ -1,3 +1,4 @@
+import { effectiveEstopInputs } from "./estop-native-pairs.js";
 import fs from "node:fs";
 import crypto from "node:crypto";
 import { parseSalFile } from "./sal-parser.js";
@@ -14,14 +15,16 @@ function profile(model) {
   const r = new SalRuntime({ ...model, networks: [{ blocks: [block] }] });
   function drive(name, logical) {
     const port = block.inputs.find(p => p.name === name);
-    const raw = port.deactivate1 === "Make Contact (NO)" ? !logical : logical;
+    const effective=effectiveEstopInputs(block).find(p=>p.port.path===port.path);
+    const invert=effective?.inverted ?? port.deactivate1 === "Make Contact (NO)";
+    const raw = invert ? !logical : logical;
     r.values.set(port.path, raw);
     for (const source of port.sources) r.values.set(source, raw);
     for (const global of port.globals) r.setInputs({ [global.lastKnownPath.split(".").at(-1)]: raw });
     const variable = r.variableTargets.get(port.path);
     if (variable) r.setInputs({ [variable]: raw });
   }
-  for (const p of block.inputs.filter(p => p.name.startsWith("EStopIn"))) drive(p.name, true);
+  for (const {port} of effectiveEstopInputs(block)) drive(port.name,true);
   drive("Restart", false);
   const values = [];
   const snap = label => values.push({ label, enabled: r.get(`${block.path}/EStopOut`) });

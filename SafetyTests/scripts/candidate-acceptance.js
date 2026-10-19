@@ -1,3 +1,4 @@
+import { SAL_NATIVE_PAIR_CONTRACT } from "../src/estop-native-pairs.js";
 import fs from "node:fs";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
@@ -10,6 +11,9 @@ const cases = candidateButtonCoverChecks(model);
 const report = { source: "working v2 SAL, not pinned fixture", crc: model.crc,
   sgvlSha256:crypto.createHash("sha256").update(fs.readFileSync(new URL("../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl",import.meta.url))).digest("hex"),
   clockContract:SAL_CLOCK_CONTRACT,
+  nativePairContract:SAL_NATIVE_PAIR_CONTRACT,
+  pairResolverSha256:crypto.createHash("sha256").update(fs.readFileSync(new URL("../src/estop-native-pairs.js",import.meta.url))).digest("hex"),
+  closureSha256:crypto.createHash("sha256").update(fs.readFileSync(new URL("../src/physical-rnd-source.js",import.meta.url))).digest("hex"),
   runtimeSha256:crypto.createHash("sha256").update(fs.readFileSync(new URL("../src/sal-runtime.js",import.meta.url))).digest("hex"),
   schedulerSha256:crypto.createHash("sha256").update(fs.readFileSync(new URL("../src/observed-samples.js",import.meta.url))).digest("hex"),
   sha256: crypto.createHash("sha256").update(fs.readFileSync(sal)).digest("hex"),

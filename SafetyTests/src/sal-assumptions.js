@@ -1,3 +1,4 @@
+import { effectiveEstopInputs } from "./estop-native-pairs.js";
 // Structural inventory only: no assumed value or electrical polarity is proof.
 export function auditAssumptions(model) {
   const blocks = model.networks.flatMap(n => n.blocks);
@@ -17,8 +18,10 @@ export function auditAssumptions(model) {
   const variables = new Map(model.variables.map(v => [v.name, v]));
   const unresolved = [];
   let activeInputs = 0;
+  const nativeEstopInputs=blocks.filter(b=>b.functionName==="safeEstop").flatMap(b=>effectiveEstopInputs(b).map(({port,master,contact})=>({block:b.path,port:port.path,master:master.path,contact})));
+  const activeEstop=new Set(nativeEstopInputs.map(p=>p.port));
   for (const b of blocks) for (const p of b.inputs) {
-    if (["Deactivated", "Both Deactivated"].includes(p.channelInterface)) continue;
+    if (b.functionName==="safeEstop"?p.name!=="Restart"&&!activeEstop.has(p.path):["Deactivated", "Both Deactivated"].includes(p.channelInterface)) continue;
     activeInputs++;
     const refs = [...new Set([
       ...p.sources, ...(incoming.get(p.path) ?? []),
@@ -50,7 +53,7 @@ export function auditAssumptions(model) {
   const order = blocks.map(b => b.orderOfExecution);
   const duplicateOrders = [...new Set(order.filter((x, i) => order.indexOf(x) !== i))];
   return {
-    crc: model.crc, blocks: blocks.length, activeInputs,
+    crc: model.crc, blocks: blocks.length, activeInputs, nativeEstopInputs,
     executionOrder: { min: Math.min(...order), max: Math.max(...order), duplicateOrders },
     externalInputs, unresolved,
     summary: {

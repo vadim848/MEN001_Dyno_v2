@@ -13,6 +13,8 @@ test("SAL-INPUT01 inventory finds unresolved transition input and physical const
   assert.deepEqual(p.usedOutputs, ["//Network6/FBDecouple2/DecOut5"]);
   assert.equal(report.externalInputs.find(x => x.name === "in_False_SI2_CH8").channelId, "15");
   assert.equal(report.summary.missingProducers, 0);
+  assert.ok(report.nativeEstopInputs.some(p=>p.port==="//Network1/FBEstop1/EStopIn2"&&p.master==="//Network1/FBEstop1/EStopIn1"&&p.contact==="Break Contact (NC)"));
+  assert.ok(report.nativeEstopInputs.some(p=>p.port==="//Network1/FBEstop1/EStopIn4"&&p.master==="//Network1/FBEstop1/EStopIn3"&&p.contact==="Make Contact (NO)"));
 });
 
 test("SAL-INPUT02 deleting a wired producer is reported rather than becoming an assumed constant", () => {

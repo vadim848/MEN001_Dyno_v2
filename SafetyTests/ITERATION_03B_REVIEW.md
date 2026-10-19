@@ -1,5 +1,35 @@
 # Independent review — iteration 03B
 
+## Current final verdict after R3 repair
+
+2026-10-19: **ACCEPT scoped03B software implementation including R1/R2/R3.**
+Initial HOLD and its exact defective-source assessment are preserved below.
+R3 was confirmed against SDK, repaired, and independently accepted in
+`03B_R3_REVIEW.md`; the new helper is explicitly first-only and the shared
+effective-pair resolver now covers execution, closure, static graph and
+inventory. No main EStop/legacy SAL or SGVL rewrite was used to hide the issue.
+
+Accepted current SAL SHA256
+`a50e24af66c755f00001e3bd2eed70ba4d30526df8dfa427b5d37bc6dcebb413`;
+SGVL `06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5`.
+Current evidence: `R3_CURRENT_RESULTS.json`, SHA256
+`bd83253f9f624739bf0f10e4dabd9133fc98a85f8327885c4dd46e4de58c4d7e`.
+All embedded/source/artifact hashes were checked with zero mismatches.
+On the final faithful adapter reviewer independently reproduced actual69+
+native5=74 PASS, native-pair86 PASS, clock105 PASS, historical21 PASS, and
+an additional four-pair/contact12-case probe. Reported complete stages are
+178/75/272 all PASS; functional201/1/5/0, standalone47/0/5. Existing functional
+case statuses are unchanged by R3; corrected NC2/Mentee trace semantics and
+fallback metadata are identified separately.
+
+Acceptance is the recognizer and tested program branch, not all41 requirements.
+All lifecycle/phase-cut, no-EDM/Error-stub and remaining FAIL/NV limits below
+continue to apply. LV/HV PLC pulse/recovery Set guards and early STO are future
+packages. No native/hardware validation, deployment or push is claimed.
+Reviewer final writes STOP; no open substantive03B review finding remains.
+
+## Historical initial review, before R3
+
 2026-10-19. Reviewer only; implementation and tests were not edited.
 
 ## Verdict

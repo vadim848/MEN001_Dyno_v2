@@ -1,3 +1,4 @@
+import { effectiveEstopInputs } from "./estop-native-pairs.js";
 function variableName(reference) {
   return reference?.resolvedName ?? reference?.lastKnownPath?.split(".").at(-1);
 }
@@ -52,7 +53,7 @@ export class SalRuntime {
     return Boolean(this.values.get(name.startsWith("//") || name.startsWith("var:") ? name : `var:${name}`));
   }
 
-  read(port) {
+  readRaw(port) {
     let raw;
     if (port.sources.length) raw = this.get(port.sources[0]);
     else if (port.globals.length) raw = this.get(`var:${variableName(port.globals[0])}`);
@@ -68,6 +69,11 @@ export class SalRuntime {
     // In this SAL encoding "Make Contact (NO)" is the negated contact. This is
     // observable in Network12: it prevents the single-button branch while the
     // other physical button is active.
+    return raw;
+  }
+
+  read(port) {
+    const raw=this.readRaw(port);
     return port.deactivate1 === "Make Contact (NO)" ? !raw : raw;
   }
 
@@ -85,7 +91,7 @@ export class SalRuntime {
   }
 
   evaluate(block, dtMs) {
-    const inputs = activePorts(block.inputs).map(port => this.read(port));
+    const inputs = block.functionName === "safeEstop" ? [] : activePorts(block.inputs).map(port => this.read(port));
     switch (block.functionName) {
       case "safeAnd":
         this.write(block.outputs[0], inputs.every(Boolean));
@@ -121,10 +127,9 @@ export class SalRuntime {
           throw new Error(`${block.path}: active/connected EDM is not implemented by this partial adapter`);
         }
         this.limitations.add(`${block.path}: EDM activation absent from parsed configuration; no-EDM assumption, group lifecycle/discrepancy unmodeled`);
-        const safetyInputs = block.inputs.filter(port =>
-          port.name.startsWith("EStopIn") && !["Deactivated", "Both Deactivated"].includes(port.channelInterface)
-        );
-        const safe = safetyInputs.every(port => this.read(port));
+        const safetyInputs=effectiveEstopInputs(block,{isBound:port=>port.sources.length>0||port.globals.length>0||
+          this.variableTargets.has(port.path)||(this.model.bindingMode==="explicit-test-injection"&&this.values.has(port.path))});
+        const safe=safetyInputs.every(({port,inverted})=>{const raw=this.readRaw(port);return inverted?!raw:raw;});
         const restart = this.read(block.inputs.find(port => port.name === "Restart"));
         const previous = this.memory.get(block.path) ?? { enabled: false, restartArmed: false, delayed: false, offElapsedMs: 0 };
         const enabled = safe && (previous.enabled || (previous.restartArmed && !restart));

@@ -13,7 +13,11 @@ function timer(delay) { return {path:"//Clock/TON",name:"TON",functionName:"safe
 function estop(delay) {
   const b=structuredClone(originalStop);b.path="//Clock/Window";b.orderOfExecution=3;
   for(const p of [...b.inputs,...b.outputs]) {p.path=`${b.path}/${p.name}`;p.sources=[];p.targets=[];p.globals=[];}
-  for(const p of b.inputs) {p.channelInterface=["Restart","EStopIn1"].includes(p.name)?"Activated":"Deactivated";p.deactivate1="Break Contact (NC)";}
+  for(const p of b.inputs) {
+    if(p.name.startsWith("EStopIn"))p.channelInterface=p.name==="EStopIn1"?"Single-Channel 1 Activated":"Both Deactivated";
+    else delete p.channelInterface;
+    p.deactivate1="Break Contact (NC)";p.deactivate2="Break Contact (NC)";
+  }
   b.parameters.find(p=>p.timing).timing=String(delay);return b;
 }
 function setPort(r,b,name,value){r.values.set(b.inputs.find(p=>p.name===name).path,value);}

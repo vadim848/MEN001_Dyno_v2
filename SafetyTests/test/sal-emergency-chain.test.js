@@ -96,11 +96,12 @@ for (const [id, input, failed, restored] of [
   ["09", "in_InterLock_NC_1", false, true],
   ["10", "in_InterLock_NC_2", false, true]
 ]) {
-  test(`V2-CHAIN${id} ${input} starts Step4 independently of EStop OK`, () => {
+  test(`V2-CHAIN${id} ${input} starts Step4; NC2/Mentee also drop effective main EStop`, () => {
     for (const assumed of [false, true]) {
       const r = armed(assumed);
       r.runFor(100, { [input]: failed });
-      assert.equal(r.get("b_EStop_Ok"), true, "this event is outside active FBEstop inputs");
+      const effectiveMainInput=["in_ES_NC_2","in_Mentee_EStop"].includes(input);
+      assert.equal(r.get("b_EStop_Ok"),!effectiveMainInput,"SDK masterBoth activates NC2/Mentee; connector/external inputs retain their other chain");
       assert.equal(r.get("b_Step3"), false);
       assert.equal(r.get("b_Step4"), true);
       assert.equal(r.get("out_Safety_Armed"), false);

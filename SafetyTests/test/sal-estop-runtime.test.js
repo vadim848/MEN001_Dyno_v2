@@ -12,7 +12,7 @@ const selected = { ...model, networks: model.networks.filter(n => n.name === "Ne
 const delayed = "//Network1/FBEstop1/EStopDelOut";
 function ready() {
   return new SalRuntime(selected).setInputs({ in_Reset_PB: false, in_ES_NC_1: true,
-    in_ES_NC_2: true, in_Estop_PLC: false, in_False_SI2_CH8: false }).runFor(100);
+    in_ES_NC_2: true, in_Mentee_EStop:false, in_Estop_PLC: false, in_False_SI2_CH8: false }).runFor(100);
 }
 function enable(r) {
   r.runFor(30, { in_Reset_PB: true });

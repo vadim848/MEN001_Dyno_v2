@@ -1,3 +1,4 @@
+import { effectiveEstopInputs } from "./estop-native-pairs.js";
 import { SalRuntime,SAL_CLOCK_CONTRACT } from "./sal-runtime.js";
 import { ObservedSamples } from "./observed-samples.js";
 
@@ -37,7 +38,9 @@ export function physicalRndSource(model,stepMs=1,{entryButtons={}}={}) {
     const block=owners.get(output);if(!block)throw Error(`Output writer missing ${output}`);
     if(block.path.startsWith("//Network3/"))throw Error("Uncut state owner entered branch dependency closure");
     selected.add(block);
-    const inputs=block.functionName==="safeDecouple"?[block.inputs[block.outputs.findIndex(p=>p.path===output)]]:
+    const inputs=block.functionName==="safeEstop"?
+      [block.inputs.find(p=>p.name==="Restart"),...effectiveEstopInputs(block,{isBound:p=>p.sources.length>0||p.globals.length>0||aliasTargets.has(p.path)}).map(({port})=>port)]:
+      block.functionName==="safeDecouple"?[block.inputs[block.outputs.findIndex(p=>p.path===output)]]:
       block.inputs.filter(p=>!["Deactivated","Both Deactivated"].includes(p.channelInterface)&&!p.name.startsWith("EDM"));
     for(const p of inputs) {
       demandedInputs.add(p.path);

@@ -2,21 +2,23 @@
 
 ## Последний принятый результат
 
-Iteration07 принята независимым ревью. Полный пакет:
-**174/174 harness, 75/75 historical, 112/112 current;
-172 PASS /29 FAIL /5 NOT VERIFIED /0 ERROR**.
+03B и R3 приняты независимым ревью в ограниченном программном объёме.
+**178/178 harness,75/75 historical,272/272 current;
+201PASS/1FAIL/5NOT VERIFIED/0ERROR.** Проект в целом НЕ принят.
 
-SAL SHA256: bf110ab452a5d9d3fcafd1acc5ab657b993e3e2828f384a63c1491c57b2cdcc6.
-GVL1.sgvl SHA256: 508610b92e60ae602a75952113b34f7a8bd9c3f283fbb93dfa45b6a532f0a3ba.
-Функциональных блоков209. Параметры прежних таймеров сохранены.
-Проект в целом НЕ принят; успешные unit tests не закрывают обязательные пробелы.
+SAL SHA256: a50e24af66c755f00001e3bd2eed70ba4d30526df8dfa427b5d37bc6dcebb413.
+GVL1.sgvl SHA256:06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5.
+253 блока из255; прежние timer values сохранены. Текущая принятая реализация
+пока рабочий diff после checkpoint218dde5. Ревью:03B_R3_REVIEW.md и
+ITERATION_03B_REVIEW.md. R3_CURRENT_RESULTS.json связывает актуальные
+source/model/plan hashes и86+69 трасс; прежний03B_INTEGRATED_ACCEPTANCE.json
+исторический, с ограничением старой pair-модели.
 
-Повторно открыт узкий пробел LV/HV Set recovery: при PLC EStop длительностью
-один наблюдённый скан и возврате без Restart сохранённый запрос может установить
-выход до обновления памяти EStop в следующем скане. Архитектор воспроизвёл
-на реальных producers/guards/RS с явно заданными phase boundaries; полная
-достижимость не заявляется. Это отдельный follow-up после03B, не её регрессия
-и не отмена остальных положительных результатов02/04/05.
+Остался прежний STATE:conflicting-set-requests и5NV; все41 требования обязательны.
+Повторно открыт узкий LV/HV Set recovery gap: один наблюдённый PLCstop и
+rawrestore без Restart могут разрешить сохранённый Set до обновления памяти
+EStop. Реальные producer/guard/RS со state cuts воспроизведены; полная
+достижимость не заявляется. Это отдельный следующий пакет, не регрессия03B.
 
 ## Объём и источники
 
@@ -67,6 +69,7 @@ AGENTS.md и WORKFLOW.md обязательны: отдельные аналит
 | 06 | Door заменён обоими InterLock в N12/And16;36 tests PASS;0 новых FB |
 | 05 | Mentee TRUE блокирует новый LV/HV Set;15 tests PASS,4 старых FAIL закрыты; latched outputs/Reset сохранены |
 | 07r2 | Final Unlock: EStopOK AND NOT current PLC stop дополнительно;28 tests PASS,2 старых FAIL закрыты;0 новых FB |
+| 03B/R3 | Actual R&D recognizer253 blocks,69 physical +86 pair tests PASS; shared native pair model, full41 scope остаётся открытым |
 
 07 учитывает реальный порядок: EStop21 читает предыдущий PLC producer95,
 finalUnlock209 поэтому имеет отдельный текущий PLC guard. NC1/PLC первичный
@@ -79,67 +82,50 @@ fault и возврат входа без Restart проверены в Safe/R&D
 
 ## Следующие шаги
 
-1. Обновить source/netlist03B после принятой07, сохранить её typed bindings.
-   Полный первый граф290 не помещается в native предел255. Компактный граф254
-   прошёл техническое ревью/36 воспроизводимых design checks, но это НЕ actualSAL.
-   Оптимизация до253 принята техническим ревью: удалён только новый
-   дублирующий InterLock guard; исходная последовательность не удаляется.
-2. Пакет03B actual-source61 tests принят:28PASS/33FAIL на старом SAL.
-   Checkpoint до редактора сохранён: c69bc32. Нормативная проверка sharedE
-   закрыта: R&D потеря InterLock/connector=Emergency, старый permissive code
-   не oracle; это не Safe connector absence. Затем интеграция physical R&D с native
-   ESTOP off-delay250, существующими TON500/1000 и release2000, все native
-   wrappers/usage IDs/order map. Не выдавать отдельную модель за реализацию.
-3. Обновить candidate/current selections: весьSAL/SGVL audit до срезов,
-   новый network+N12+реальные dependencies, явные boundary injections.
-   Старый N12-only срез не должен скрыть отсутствующий producer fallbackTRUE.
-   Observer непрерывен с первого sample, включая запрещённые краткие импульсы.
-4. Реальные03B traces:249/250/251 при1мс, ближайшие точки сеток2/5/10,
-   single499/500, BOTH999/1000, late300/500/600, piano/swap/flicker,
-   held-at-start/release/repeat, сохранение SG/SU до реального выхода изR&D.
-5. Независимое ревью и циклы исправлений. Затем earlySTO/исходная полная
-   последовательность и оставшиеся обязательные требования; не завершать по
-   одной зелёной ветви кнопок.
+1. PLC pulse LV/HV: редактору переданы ТОЛЬКО новые red tests на принятомR3.
+   Основа PLC_PULSE_SET_REQUIREMENTS.md, PLC_PULSE_SET_GUARD_REVIEW.md и
+   PLC_PULSE_AND_STO_PLAN_REVIEW.md. Реальные producers, paired healthy/fault,
+   first recovery scan, noRestart/manualRestart, latched outputs; scoped cuts
+   и scan-by-scan observation явны. SAL/runtime до review/checkpoint не менять.
+   Тесты готовы и приняты независимым ревью:48tests36PASS/12FAIL/0skip.
+   Все12FAIL — first rawrestore безRestart; healthy/manualRestart/latched
+   controls PASS. Source/R3 model не менялись. PLC_PULSE_RED_BASELINE.json
+   сохраняется; checkpoint до исправления — следующий шаг.
+2. После независимой приёмки тестов сохранить checkpoint: принятые03B/R3 и
+   честный новый red baseline. Затем добавить previous PLC permission producer
+   к свободному AndIn4 обоих существующих Set guards;0 новых блоков,
+   Reset/timers/order неизменны. Повторить целевые/полные тесты и независимое ревью.
+3. EarlySTO: действующий EARLY_STO_ORDER_REVIEW_PLAN.md — reviewed conditional
+   план, ещё не реализация. Два четырёхвходовых per-drive Set guard дают255,
+   сохраняют относительный старый порядок и передают SU за два скана без C2/
+   Healthy ожидания. Нужны реальные red tests, доказательство lifetime SU при
+   handoff, old Reset/PLC waveforms и fault/pulse/recovery. Старый tail-перенос
+   альтернативный, не выбранная инструкция; same-scan не требование пользователя.
+4. Полные Safe↔R&D↔Run sequences, emergency owner/recovery, startup/Network4,
+   Safe/Run recognizer и остальные обязательные ID по NEXT_REQUIREMENTS_WORKLIST.
+   Не закрывать ID одним branch test; не выдумывать ожидаемую реакцию.
 
-Рабочая реализация03B уже содержит253 блока и проходит full-source binding audit.
-Первый функциональный прогон дал59/61: обнаружена задержка повторного взвода
-после полного release2000. Исправление подготовки P/A передано редактору;
-таймеры и порядок блоков сохраняются. Исправление применено: исходные61 плюс8
-проверок повторного chord/преждевременного нажатия дают69/69 PASS;
-структурные5/5 и прежние111/111 регрессий PASS. Техническое ревью R1 принято,
-Полный пакет завершён:178/178 harness,75/75 historical,186/186 current;
-201PASS/1FAIL/5NV/0ERROR. По одинаковым ID28 FAIL→PASS, ни одного PASS→FAIL.
-Остался прежний STATE:conflicting-set-requests. Независимый targeted run74/74 PASS.
-03B НЕ ПРИНЯТА: R3 подтвердил ошибку native channel-pair настройки
-WINDOW.EStopIn1. SDK ActivatedBoth активирует оба входа пары, а схема
-предусматривает только первый; прежняя рекомендация архитектора была неверна.
-Host adapter эту разницу скрывал. Готовится отдельное исправление/регрессия
-single-channel activation без dummy input и изменения таймеров/порядка.
-То же SDK-свидетельство исправляет прежний вывод о main EStop: slave NC2 и
-инвертированный Mentee активируются настройкой master, несмотря на собственное
-Both Deactivated. Их native SAL не меняется; общий resolver runtime и closure
-должен учитывать пару. MENTEE_PROGRAM_CONTRACT.md исправлен, прежние host
-результаты сохранены как история, не native proof.
-Редактор остановил запись, source
-SAL a45f129ebdc8e60602465381fd7a0579c8c9c18a84c9ae9a6abdb45cb462e51a,
-SGVL06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5.
-До снятия HOLD не переходить к следующему изменению SAL.
+## Принятый03B/R3 и границы доказательства
 
-R3 red-stage готов:86 tests,56PASS/30FAIL/0skip, без инфраструктурных ошибок.
-Тесты воспроизводят native helper mode, NC2/Mentee и master-pair polarity,
-отсутствующие effective-active dependencies. SAL/runtime/derived plan пока
-не менялись. Артефакты:03B_R3_TESTS_READY.md и R3_RED_BASELINE.json;
-нужны независимое ревью тестов и checkpoint перед исправлением.
-
-Следующий малый пакет после03B — PLC_PULSE_SET_GUARD_REVIEW.md:
-red tests короткого PLC-stop/возврата и исправление LV/HV без новых блоков.
-Root независимо повторил read-only probe; phase cuts явно перечислены.
-
-Для earlySTO действует новый EARLY_STO_ORDER_REVIEW_PLAN.md, пока только план:
-два независимых четырёхвходовых STO Set guard дают255 блоков, сохраняют
-относительный порядок прежних блоков и передают SU за два скана без ожидания
-C2/Healthy. Старый tail-перенос — альтернативный вариант, не инструкция.
-Нужны отдельные ревью/red tests Reset/PLC/fault и реальная интеграция.
+- Compact253: net44 новых блока, три исходных TON перемещены с прежними IDs/
+  значениями. Full-source SAL/SGVL audit перед срезами; исходные guards сохранены.
+- Original61 red28PASS/33FAIL →61PASS;8 дополнительных rearm controls →69PASS.
+  R1 устранил подготовку после2000 без добавления задержки; R2 разделил
+  retained Up и новое событие, fresh positive после явного phase exit/reentry.
+- R3 red86:56PASS/30FAIL →86PASS. SDK доказал master/slave activation/contact;
+  ошибочный helper Both заменён на `Single-Channel 1 Activated`. Старые main
+  EStop ports/SGVL не менялись. NC2 и invertedMentee активны через master;
+  прежний own-slave BothDeactivated не доказывал неактивность.
+- Один resolver используется runtime, demanded closure, static graph и inventory.
+  Master contact применяется один раз; unsupported/active-unbound не получают
+  выдуманный BOOL. Исторические ложные host expectations исправлены поSDK,
+  source fixtures неизменны. NativeError остаётся FALSE stub, не no-fault proof.
+- Final case statuses против218dde5 не изменились;32 NC2/Mentee trace corrections
+  и92 fallback metadata deltas объяснены в companion. Независимые86+105+21+74
+  checks и дополнительный12-case4-pair probe PASS, hashes0mismatch.
+- Typed Network3 phase boundaries остаются инъекциями:145 actual blocks,
+ 113 typed boundary records не доказывают full reachability/group lifecycle.
+  Whole41 acceptance, late full-owner rollback, all emergency contexts не закрыты.
 
 ## Решения пользователя, которых ещё не хватает
 
@@ -161,8 +147,9 @@ C2/Healthy. Старый tail-перенос — альтернативный в
 f7b4f7e исходный пакет+01; c024651 пакет02;
 9ef945c B1/R2+03A;0e4ab09 HV04;b0184eb red03C;
 e6ee0db принятая03C+red06;930d6a1 принятая06+red05;
-d86925a принятая05+red07; c69bc32 принятая07+red03B.
-Текущий рабочий diff содержит непринятую реализацию03B и её проверки.
+d86925a принятая05+red07; c69bc32 принятая07+red03B;
+218dde5 непринятая03B+reviewedR3red.
+Текущий рабочий diff содержит принятые03B/R3 и новые red tests PLC pulse в работе.
 
 Baseline workflow-2026-10-18 (manifest/архив/результаты/fixture) неизменяем.
 UpgradeLog3/4 посторонние, никогда не включать. Не реконструировать историю

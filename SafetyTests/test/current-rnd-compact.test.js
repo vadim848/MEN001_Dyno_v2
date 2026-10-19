@@ -21,7 +21,7 @@ test('RNDCOMPACT every native port/parameter identity and typed producer matches
    for(const p of expected){const actual=b[role].find(a=>a.name===p.name);assert.ok(actual);for(const key of ['Id','portNum','objectIndex','varId','filter','portDataType'])assert.equal(actual[key],p[key],`${path}/${p.name}:${key}`);
     if(role!=='inputs')continue;
     if(planned.type==='safeEstop'){
-     if(p.name.startsWith('EStopIn'))assert.equal(actual.channelInterface,p.name==='EStopIn1'?'Single-Channel Both Activated':'Both Deactivated');
+     if(p.name.startsWith('EStopIn'))assert.equal(actual.channelInterface,p.name==='EStopIn1'?'Single-Channel 1 Activated':'Both Deactivated');
      if(p.name.startsWith('EDM')){assert.equal(actual.channelInterface,undefined);assert.equal(actual.deactivate1,undefined);assert.deepEqual(actual.sources,[]);assert.deepEqual(actual.globals,[]);}
     }
     if(!p.active)continue;

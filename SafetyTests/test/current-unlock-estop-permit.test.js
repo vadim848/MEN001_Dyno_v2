@@ -12,7 +12,7 @@ function prepared(mode) {
   const grant=mode==="Safe"?["FBDecouple3","FBAnd7","FBAnd8"].map(n=>get(`//Network2/${n}`)):
     ["FBAnd1","FBAnd2","FBAnd3","FBTon2","FBAnd11","FBAnd17"].map(n=>get(`//Network12/${n}`));
   const r=new SalRuntime({...model,networks:[{blocks:[...common,...grant]}]},{scanMs:1,unconnectedInput:false});
-  r.setInputs({b_Step1:mode==="Safe",b_Step_RnD:mode==="R&D",in_ES_NC_1:true,in_ES_NC_2:true,in_Estop_PLC:false,
+  r.setInputs({b_Step1:mode==="Safe",b_Step_RnD:mode==="R&D",in_ES_NC_1:true,in_ES_NC_2:true,in_Mentee_EStop:false,in_Estop_PLC:false,
     in_False_SI2_CH8:false,in_Door_Monitor:true,in_Reset_PB:false,in_Relase_Door_PB:false});
   r.runFor(10);r.setInputs({in_Reset_PB:true}).scan();r.setInputs({in_Reset_PB:false}).scan();
   assert.equal(r.get("b_EStop_Ok"),true,"actual main EStop manually prepared");

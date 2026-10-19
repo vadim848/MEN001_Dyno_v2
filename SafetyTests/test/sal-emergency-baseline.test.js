@@ -33,16 +33,16 @@ test("V2-EMG02 main E-Stop channel 1 is active and reaches b_EStop_Ok", () => {
   assert.ok(findPath(graph, "var:in_ES_NC_1", "var:b_EStop_Ok"));
 });
 
-test("V2-EMG03 ES_NC_2 is assigned to a deactivated E-Stop function input", () => {
+test("V2-EMG03 ES_NC_2 own field is inactive but SDK master activates its causal EStop path", () => {
   const port = estop(model).inputs.find(input => variableAt(model, input.path) === "in_ES_NC_2");
   assert.equal(port.channelInterface, "Both Deactivated");
-  assert.equal(findPath(graph, "var:in_ES_NC_2", "var:b_EStop_Ok"), null);
+  assert.ok(findPath(graph, "var:in_ES_NC_2", "var:b_EStop_Ok"));
 });
 
-test("V2-EMG04 Mentee E-Stop is assigned to a deactivated E-Stop function input", () => {
+test("V2-EMG04 Mentee own field is inactive but SDK master activates its causal EStop path", () => {
   const port = estop(model).inputs.find(input => variableAt(model, input.path) === "in_Mentee_EStop");
   assert.equal(port.channelInterface, "Both Deactivated");
-  assert.equal(findPath(graph, "var:in_Mentee_EStop", "var:b_EStop_Ok"), null);
+  assert.ok(findPath(graph, "var:in_Mentee_EStop", "var:b_EStop_Ok"));
 });
 
 test("V2-EMG05 PLC E-Stop reaches the active EStopIn3 path", () => {
