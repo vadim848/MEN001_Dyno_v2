@@ -9,6 +9,7 @@ import { candidateButtonCoverChecks } from "../src/candidate-button-cover.js";
 import { currentCodeChecks } from "../src/current-code-checks.js";
 import { referenceBehavior } from "../src/reference-behavior.js";
 import { SAL_CLOCK_CONTRACT } from "../src/sal-runtime.js";
+import { preflightWorkingProgram } from "../src/boot-preflight.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const sal = path.resolve(root, "../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal");
@@ -40,7 +41,8 @@ const requirements = candidateButtonCoverChecks(model).map(row => ({ ...row,
   ...(row.id === "ACC-C02-F" ? { reason: "Full-phase coverage of both InterLock NC energy guards and separate DoorMonitor solenoid reactions remains incomplete; no locked-feedback gate is required" } : {}),
   ...(row.id === "ACC-C01-E" ? { reason: "Software coverage of all transition phases and fault/button combinations remains incomplete" } : {}) }));
 const reference = referenceBehavior(path.resolve(root, "../../MEN001_Dyno/MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal"), model);
-const cases = [...requirements, ...currentCodeChecks(model), ...reference.cases];
+const bootPreflight = preflightWorkingProgram();
+const cases = [...requirements, ...currentCodeChecks(model), ...reference.cases, ...bootPreflight.cases];
 const summary = Object.fromEntries(["PASS", "FAIL", "NOT VERIFIED", "ERROR"].map(s => [s, cases.filter(c => c.status === s).length]));
 const report = { generatedAt: new Date().toISOString(), source: path.relative(path.resolve(root, ".."), sal).replaceAll("\\", "/"),
   clockContract:SAL_CLOCK_CONTRACT,
@@ -53,12 +55,15 @@ const report = { generatedAt: new Date().toISOString(), source: path.relative(pa
     scope:"Full working SAL + GVL1 namespace/relationship validation before any component selection; software structural evidence only" },
   sha256: crypto.createHash("sha256").update(fs.readFileSync(sal)).digest("hex"),
   crcRecordedInSource: model.crc, hardwareConfiguration: "accepted existing system; not tested or modified",
-  scope: "Software only; partial SAL adapter, selected chains/components and seeded phases. No hardware safety claim.",
+  scope: "Software only; selected component/phase-cut executions plus separate full-source capability preflight with zero functional BOOT PASS. No hardware safety claim.",
   timingPolicy: "User approved single 0.5s / both 1s; chord delta <=250ms symmetrically, both time starts at second press. Only this window change is authorized. At 500ms the single already wins; no retrospective StepUp or invented visible unlock pulse.",
-  stages, excluded: groups.excluded, reference, summary, cases,
-  gaps: ["Full group startup/restart and Network4 semantics not modeled", "Full upstream transition permission/completion coverage incomplete",
+  stages, excluded: groups.excluded, reference, summary, cases, bootPreflight,
+  capabilitySourceSha256:Object.fromEntries(["src/boot-preflight.js","src/boot-source-inventory.js","BOOT_PREFLIGHT_SOURCE_MANIFEST.json"].map(file=>
+    [file,crypto.createHash("sha256").update(fs.readFileSync(path.join(root,file))).digest("hex")])),
+  gaps: [...bootPreflight.gaps.map(g=>`${g.code}: ${g.reason}`), "Full upstream transition permission/completion coverage incomplete",
     "Full-phase coverage of two InterLock NC energy guards and separate DoorMonitor solenoid conditions remains incomplete; no separate locked-feedback gate required", "Energy completion/timeout behavior requires explicit software expectations where not specified"] };
 fs.writeFileSync(path.join(root, "SOFTWARE_CHECK_RESULTS.json"), JSON.stringify(report) + "\n");
+fs.writeFileSync(path.join(root, "BOOT_PREFLIGHT_RESULTS.json"), JSON.stringify(bootPreflight) + "\n");
 const lines = ["# Результаты программных проверок", "", `Дата: ${report.generatedAt}`, `SAL SHA256: ${report.sha256}`, "",
   `Clock: ${report.clockContract.version}; first observed edge age0; fixed scan per scenario. Generic runFor durations describe scheduled scan advance, not an implicit event timestamp.`, "",
   "Аппаратная конфигурация принята как исходное условие. Файлы проекта не изменяются этим запуском.", "",

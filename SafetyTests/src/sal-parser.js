@@ -27,11 +27,11 @@ function ports(body, tag) {
   });
 }
 
-export function parseSalFile(file, { bindingMode = "auto" } = {}) {
+export function parseSalFile(file, { bindingMode = "auto", sgvlPath } = {}) {
   const absolute = path.resolve(file instanceof URL ? fileURLToPath(file) : file);
   const working = fileURLToPath(new URL("../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal",import.meta.url));
   const current = bindingMode === "current" || (bindingMode === "auto" && absolute.toLowerCase() === working.toLowerCase());
-  const bindingAudit = current ? assertSalBindings(file,new URL("../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl",import.meta.url)) : null;
+  const bindingAudit = current ? assertSalBindings(file,sgvlPath === undefined ? new URL("../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl",import.meta.url) : sgvlPath) : null;
   const xml = fs.readFileSync(file, "utf8");
   const networks = [];
   for (const network of elements(xml, "Network")) {

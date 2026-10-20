@@ -17,9 +17,12 @@ Historical entries below preserve earlier checkpoints and superseded findings.
 Current accepted program2026-10-19:03B/R3 recognizer, PLC pulse LV/HV guards,
 and earlySTO; source0fc39751781cf9525765b223e08c909f31353b976ad4c796881268b39f0fa909,
 SGVL06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5.
-255 blocks. Full178/75/413 test stages PASS;201PASS/1FAIL/5NV cases.
-No full41 acceptance. Latest local checkpoint2ddafef contains accepted PLC fix
-and reviewed earlySTO red tests; subsequent accepted earlySTO is still a diff.
+255 blocks. Accepted program stages178/75/413 PASS;201PASS/1FAIL/5NV.
+Report-only BOOT preflight now193/75/413 PASS;201PASS/1FAIL/7NV/0ERROR,
+old case statuses unchanged, exactly2 new capability NV,0 functional BOOT PASS.
+Independent report-tool review ACCEPT; program/runtime unchanged.
+No full41 acceptance. Latest local checkpointa0b0d38 contains accepted earlySTO.
+Earlier2ddafef preserved its reviewed red tests before program changes.
 
 Current reviews/evidence: EARLY_STO_IMPLEMENTATION_REVIEW.md and
 EARLY_STO_CURRENT_RESULTS.json; PLC_PULSE_IMPLEMENTATION_REVIEW.md and

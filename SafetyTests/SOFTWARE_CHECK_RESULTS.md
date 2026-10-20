@@ -1,16 +1,16 @@
 # Результаты программных проверок
 
-Дата: 2026-10-19T19:52:52.194Z
+Дата: 2026-10-19T20:39:22.306Z
 SAL SHA256: 0fc39751781cf9525765b223e08c909f31353b976ad4c796881268b39f0fa909
 
 Clock: observed-fixed-scan-v1; first observed edge age0; fixed scan per scenario. Generic runFor durations describe scheduled scan advance, not an implicit event timestamp.
 
 Аппаратная конфигурация принята как исходное условие. Файлы проекта не изменяются этим запуском.
 
-- harness: PASS; 178/178, ошибок 0, пропусков 0.
+- harness: PASS; 193/193, ошибок 0, пропусков 0.
 - historical: PASS; 75/75, ошибок 0, пропусков 0.
 - current: PASS; 413/413, ошибок 0, пропусков 0.
-- Текущий код: {"PASS":201,"FAIL":1,"NOT VERIFIED":5,"ERROR":0}.
+- Текущий код: {"PASS":201,"FAIL":1,"NOT VERIFIED":7,"ERROR":0}.
 
 PASS относится только к указанному компоненту/сценарию. Прототипы и исторические воспроизведения не являются приёмкой текущего SAL.
 
@@ -31,7 +31,10 @@ BUTTON/STATE проверяют границу отдельной ветви: в
 - ACC-C01-E: Software coverage of all transition phases and fault/button combinations remains incomplete
 - LATE:NO-FAULT: Network12 component has no bound complete group/fault observation; absence of a parsed Error is not proof of no fault
 - LATE:NO-ROLLBACK: Single request producer is observable, but accepted transition/event ownership and downstream rollback are not bound in this component; no fake latched marker used
-- Full group startup/restart and Network4 semantics not modeled
+- BOOT:UNSUPPORTED_UNBOUND_PROGRAM_INPUT: Network4 has eight unbound DECOUPLE inputs and seven used phase writers; native unbound values are not established
+- BOOT:UNSUPPORTED_GROUP_LIFECYCLE: RunStop/ErrAck are declared and bound, but the adapter has no group lifecycle/memory/error engine; requested Run and main EStop Restart do not establish group RUN/ErrAck
+- UNSUPPORTED_UNBOUND_PROGRAM_INPUT: Network4 has eight unbound DECOUPLE inputs and seven used phase writers; native unbound values are not established
+- UNSUPPORTED_GROUP_LIFECYCLE: RunStop/ErrAck are declared and bound, but the adapter has no group lifecycle/memory/error engine; requested Run and main EStop Restart do not establish group RUN/ErrAck
 - Full upstream transition permission/completion coverage incomplete
 - Full-phase coverage of two InterLock NC energy guards and separate DoorMonitor solenoid conditions remains incomplete; no separate locked-feedback gate required
 - Energy completion/timeout behavior requires explicit software expectations where not specified
