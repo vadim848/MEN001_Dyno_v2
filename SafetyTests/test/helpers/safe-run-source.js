@@ -17,7 +17,7 @@ const rootSignals={safeBlue:'b_Set_Door_Unlock',rndBlue:'b_Set_Door_Unlock_1',sa
  laterStep12:'b_Step12_Set_2',laterLockRequest:'b_SetLock_ResetPB_3',lock:'b_ResetPB_Lock',estop:'b_EStop_Ok',
  lv:'out_LV_C1',hv:'out_HV_C2',sto1:'STO_DR1',sto2:'STO_DR2',unlock:'out_Door_Unlock_Solonoeid',
  lvDischarge:'out_LV_Discharge_Request',hvDischarge:'out_HV_Discharge_Request',plcSto1:'outPLC_STO_1',plcSto2:'outPLC_STO_2',
- safeBoth:'//Network2/FBAnd10/AndOut',safeTonQ:'//Network2/FBTon3/TonOut',safeReady:'//Network2/FBAnd3/AndOut',safeGate:'//Network2/FBAnd4/AndOut',
+ safeBoth:'//RndPhysicalCompact/BOTH/TonOut',safeTonQ:'//RndPhysicalCompact/BOTH/TonOut',safeReady:'//Network2/FBAnd3/AndOut',safeGate:'//Network2/FBAnd4/AndOut',
  safePlc:'//Network2/FBAnd91/AndOut',runPlc:'//Network6/FBAnd17/AndOut',runTonQ:'//Network6/FBTon2/TonOut',runQualifier:'//Network6/FBAnd24/AndOut',
  grant:'//Network1/FBRs6/RsOut',grantSet:'//Network1/FBOr4/OrOut',grantReset:'//Network1/FBOr3/OrOut',runAggregate:'//Network6/FBOr5/OrOut'};
 const hash=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
@@ -63,7 +63,7 @@ export function createSafeRunFixture(mode,{scanMs=1,rawOverrides={}}={}){
  r.setInputs({...raw,...Object.fromEntries(phases.map(p=>[p,false]))});
  const clock=new ObservedSamples(r,scanMs),frames=[],setup=[],transitions=[],rises=Object.fromEntries(Object.keys(signals).map(k=>[k,0]));
  let previous=Object.fromEntries(Object.keys(signals).map(k=>[k,false])),preparing=true,consumed={};
- const evaluate=r.evaluate.bind(r);r.evaluate=(b,dt)=>{for(const [key,path]of Object.entries({safeTonInput:'//Network2/FBTon3/TonIn',runTonInput:'//Network6/FBTon2/TonIn',runConsumedQualifier:'//Network6/FBAnd23/AndIn1'})){const p=ports.get(path);if(p&&b.inputs.some(i=>i.path===path))consumed[key]=r.readRaw(p);}return evaluate(b,dt);};
+ const evaluate=r.evaluate.bind(r);r.evaluate=(b,dt)=>{for(const [key,path]of Object.entries({safeTonInput:'//RndPhysicalCompact/BOTH/TonIn',runTonInput:'//Network6/FBTon2/TonIn',runConsumedQualifier:'//Network6/FBAnd23/AndIn1'})){const p=ports.get(path);if(p&&b.inputs.some(i=>i.path===path))consumed[key]=r.readRaw(p);}return evaluate(b,dt);};
  const scan=r.scan.bind(r);r.scan=dt=>{consumed={};scan(dt);const current=Object.fromEntries(Object.entries(signals).map(([k,v])=>[k,r.get(v)]));
   const frame={timeMs:clock.timeMs+dt,signals:current,consumed:{...consumed},raw:Object.fromEntries(Object.keys(raw).map(k=>[k,r.get(k)])),phases:Object.fromEntries(phases.map(k=>[k,r.get(k)]))};
   if(preparing)setup.push(frame);else{frames.push(frame);for(const k of Object.keys(signals))if(current[k]&&!previous[k])rises[k]++;if(Object.keys(signals).some(k=>current[k]!==previous[k]))transitions.push(frame);}previous=current;return r;};

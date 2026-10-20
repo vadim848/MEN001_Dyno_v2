@@ -1,3 +1,4 @@
+import {createSafeRunFixture} from './helpers/safe-run-source.js';
 import { physicalRndSource } from "../src/physical-rnd-source.js";
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -7,6 +8,8 @@ const model=parseSalFile(new URL("../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/T
 const all=model.networks.flatMap(n=>n.blocks),get=p=>all.find(b=>b.path===p),gate=get("//Network1/FBAndUnlockHold");
 const final="out_Door_Unlock_Solonoeid",latch="//Network1/FBRs6/RsOut";
 function prepared(mode) {
+if(mode==='Safe'){const x=createSafeRunFixture('Safe');x.sample({in_Relase_Door_PB:true});x.advance(600);assert.equal(x.get('unlock'),true,'audited actual closure healthy positive');return x.r;}
+
   if(mode==="R&D"){const x=physicalRndSource(model,1);x.sample({in_Relase_Door_PB:true});x.advance(600);assert.equal(x.get("unlock"),true,"actual integrated R&D grant positive");return x.r;}
   const common=["FBAnd1","FBEstop1","FBOr3","FBOr4","FBRs6","FBAndUnlockHold"].map(n=>get(`//Network1/${n}`));
   const grant=mode==="Safe"?["FBDecouple3","FBAnd7","FBAnd8"].map(n=>get(`//Network2/${n}`)):

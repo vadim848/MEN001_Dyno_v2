@@ -68,7 +68,7 @@ export function physicalRndSource(model,stepMs=1,{entryButtons={},observedSignal
     for(const k of Object.keys(current))if(current[k]&&!previous[k])rises[k]++;
     const raw={...Object.fromEntries(Object.keys(external).map(name=>[name,r.get(name)])),b_Step_RnD:r.get("b_Step_RnD")};
     if(Object.keys(current).some(k=>current[k]!==previous[k]))transitions.push({timeMs:observedMs,signals:current,raw});
-    const internal=model.networks.some(n=>n.name==="RndPhysicalCompact")?Object.fromEntries(Object.entries({finishUp:"GATE_020/AndOut",finishGreen:"GATE_017/AndOut",finishBlue:"GATE_018/AndOut",windowError:"WINDOW/Error",restart:"GATE_007/AndOut",ready:"WINDOW/EStopOut",delayed:"WINDOW/EStopDelOut",release:"RELEASE/TonOut",P:"STATE_P/RsOut",A:"STATE_A/RsOut",C:"STATE_C/RsOut",L:"STATE_L/RsOut",T:"STATE_T/RsOut"}).map(([key,path])=>[key,r.get("//RndPhysicalCompact/"+path)])):undefined;
+    const internal=model.networks.some(n=>n.name==="RndPhysicalCompact")?Object.fromEntries(Object.entries({finishUp:"GATE_020/AndOut",finishGreen:"GREEN/TonOut",finishBlue:"BLUE/TonOut",windowError:"WINDOW/Error",restart:"GATE_007/AndOut",ready:"WINDOW/EStopOut",delayed:"WINDOW/EStopDelOut",release:"RELEASE/TonOut",P:"STATE_P/RsOut",A:"STATE_A/RsOut",C:"STATE_C/RsOut",L:"STATE_L/RsOut",T:"STATE_T/RsOut"}).map(([key,path])=>[key,r.get("//RndPhysicalCompact/"+path)])):undefined;
     frames.push({timeMs:observedMs,signals:current,raw,internal});previous=current;
   }return r;};
   // Real manual restart; state boundary deliberately not R&D until setup ends.

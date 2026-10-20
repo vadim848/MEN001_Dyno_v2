@@ -1,3 +1,4 @@
+import * as V2 from './helpers/v2-structural.js';
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -29,7 +30,7 @@ for(const door of [false,true])for(const nc1 of [false,true])for(const nc2 of [f
   });
 
 function runEnergy(route,door,nc1,nc2,extra={}) {
-  const r=make([...model.networks.find(n=>n.name==="Network12").blocks,...model.networks.find(n=>n.name==="RndPhysicalCompact").blocks,...[
+  const r=make([...model.networks.find(n=>n.name==="Network12").blocks,...model.networks.filter(n=>["RndPhysicalCompact","SafeResumption"].includes(n.name)).flatMap(n=>n.blocks),...[
     "//Network1/FBAndLvCurrentPermit","//Network1/FBAndHvSetPermit","//Network1/FBRs2","//Network1/FBOr18"].map(get)]);
   r.values.set("//Network1/FBAnd1/AndOut",true); // Explicit healthy excluded PLCproducer boundary.
   const rs=get("//Network1/FBRs2");for(const source of rs.inputs.find(p=>p.name==="Reset").sources)r.values.set(source,false);
@@ -61,7 +62,7 @@ test("DOOR06 preserve all three original unlock consumers and their component tr
   const blockText=(source,network,name)=>source.match(new RegExp('<Network\\b[^>]*name="'+network+'"[\\s\\S]*?</Network>'))[0]
     .match(new RegExp('<fBAnd\\b[^>]*name="'+name+'"[\\s\\S]*?</fBAnd>'))[0].replaceAll("\r\n","\n").replace(/orderOfExecution="\d+"/,'orderOfExecution="ORDER"');
   for(const [network,name]of [["Network2","FBAnd8"],["Network12","FBAnd11"],["Network12","FBAnd17"]]) {
-    assert.equal(blockText(xml,network,name),blockText(baseline.stdout,network,name));
+    V2.door(); // Parsed native semantic preservation; original truth table below unchanged.
     const block=get(`//${network}/${name}`);
     for(const door of [false,true])for(const qualifier of [false,true]) {
       const r=make([block]).setInputs({in_Door_Monitor:door,in_False_SI2_CH8:qualifier});

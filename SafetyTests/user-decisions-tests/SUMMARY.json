@@ -1,0 +1,2951 @@
+{
+  "kind": "Current source baseline, independent diagnostic cases, not full acceptance",
+  "totals": {
+    "PASS": 8,
+    "FAIL": 12,
+    "NOT VERIFIED": 2,
+    "ERROR": 0
+  },
+  "archives": [
+    {
+      "file": "baseline-results.json.gz",
+      "rawSha256": "8013c41bc07fc62255e8042d540586b746a037d208974b24015d8fcf06cdabe6",
+      "compressedSha256": "fe5055a8e7f109deef7027ce834525ba9eca1cb29f67f92c651fd39baf8bc2ea",
+      "roundtrip": "PASS"
+    },
+    {
+      "file": "startingrun-results.json.gz",
+      "rawSha256": "8df139c0beefffc5035f6319bc9829595288ccd8e62fdcf039633f99fcd23cbd",
+      "compressedSha256": "cfc995d188ba83c8f71469de1bcf6f72bc4aced3563a37b124c6664b5f74cb83",
+      "roundtrip": "PASS"
+    }
+  ],
+  "results": [
+    {
+      "id": "L-feedback-later-off",
+      "status": "NOT VERIFIED",
+      "checks": [
+        {
+          "label": "Actual RnD entry",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No accepted SG before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "FeedbackON prevents premature Safe",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No LV/HV reenergization after commandOFF",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [
+        {
+          "status": "NOT VERIFIED",
+          "requirement": "Eventual healthy Safe/fresh reentry",
+          "reason": "2500ms diagnostic observation exhausted; not a normative deadline",
+          "last": {
+            "timeMs": 8421,
+            "signals": {
+              "b_Step1": false,
+              "b_Step2": true,
+              "b_Step3": false,
+              "b_Step4": false,
+              "b_Step5": false,
+              "b_Step6": false,
+              "b_Step12": false,
+              "b_Step_RnD": false,
+              "lv": false,
+              "hv": false,
+              "sto1": false,
+              "sto2": false,
+              "estop": true,
+              "safeUp": false,
+              "down": false,
+              "up": false,
+              "SU": false,
+              "SG": false,
+              "C": false,
+              "T": false,
+              "mode": false,
+              "owner": true,
+              "lvDischarge": true,
+              "setLv": false,
+              "setHv": false,
+              "lvProposal": false,
+              "hvProposal": false,
+              "lvPermittedSet": false,
+              "hvPermittedSet": false
+            },
+            "raw": {
+              "in_ES_NC_1": true,
+              "in_ES_NC_2": true,
+              "in_InterLock_NC_1": true,
+              "in_InterLock_NC_2": true,
+              "in_LV_Connector_Interlock": true,
+              "in_HV_Connector_Interlock": true,
+              "in_Mentee_EStop": false,
+              "in_Estop_PLC": false,
+              "in_False_SI2_CH8": false,
+              "in_Reset_PB": true,
+              "in_Relase_Door_PB": false,
+              "in_Door_Monitor": true,
+              "in_Safety_Run": false,
+              "inPLC_RnD_Mode": false,
+              "inPLC_RnD_Mode_2": false,
+              "inPLC_BypassC1C2": false,
+              "in_LV_C1_FBK": false,
+              "in_HV_C2_FBK": false,
+              "in_STO_DR1_FBK": true,
+              "in_STO_DR2_FBK": true,
+              "in_LV_Healthy_FBK": true,
+              "in_HV_Healthy_FBK": true,
+              "in_C3_Manual_Set": false,
+              "in_C3_Manual_Reset": false,
+              "in_RBM_Manual_Set": false,
+              "in_RBM_Manual_Reset": false
+            }
+          }
+        }
+      ],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 17,
+      "scopeLimits": [
+        "Conditional initialSafe and seven inactive Network4 globals",
+        "No BOOT/group lifecycle proof",
+        "No phase/owner injection after protocolstart",
+        "No healthy Step2-to-Safe endpoint oracle"
+      ]
+    },
+    {
+      "id": "L-already-off",
+      "status": "NOT VERIFIED",
+      "checks": [
+        {
+          "label": "Actual RnD entry",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No accepted SG before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No LV/HV reenergization after commandOFF",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [
+        {
+          "status": "NOT VERIFIED",
+          "requirement": "Eventual healthy Safe/fresh reentry",
+          "reason": "2500ms diagnostic observation exhausted; not a normative deadline",
+          "last": {
+            "timeMs": 8321,
+            "signals": {
+              "b_Step1": false,
+              "b_Step2": true,
+              "b_Step3": false,
+              "b_Step4": false,
+              "b_Step5": false,
+              "b_Step6": false,
+              "b_Step12": false,
+              "b_Step_RnD": false,
+              "lv": false,
+              "hv": false,
+              "sto1": false,
+              "sto2": false,
+              "estop": true,
+              "safeUp": false,
+              "down": false,
+              "up": false,
+              "SU": false,
+              "SG": false,
+              "C": false,
+              "T": false,
+              "mode": false,
+              "owner": true,
+              "lvDischarge": true,
+              "setLv": false,
+              "setHv": false,
+              "lvProposal": false,
+              "hvProposal": false,
+              "lvPermittedSet": false,
+              "hvPermittedSet": false
+            },
+            "raw": {
+              "in_ES_NC_1": true,
+              "in_ES_NC_2": true,
+              "in_InterLock_NC_1": true,
+              "in_InterLock_NC_2": true,
+              "in_LV_Connector_Interlock": true,
+              "in_HV_Connector_Interlock": true,
+              "in_Mentee_EStop": false,
+              "in_Estop_PLC": false,
+              "in_False_SI2_CH8": false,
+              "in_Reset_PB": true,
+              "in_Relase_Door_PB": false,
+              "in_Door_Monitor": true,
+              "in_Safety_Run": false,
+              "inPLC_RnD_Mode": false,
+              "inPLC_RnD_Mode_2": false,
+              "inPLC_BypassC1C2": false,
+              "in_LV_C1_FBK": false,
+              "in_HV_C2_FBK": false,
+              "in_STO_DR1_FBK": true,
+              "in_STO_DR2_FBK": true,
+              "in_LV_Healthy_FBK": true,
+              "in_HV_Healthy_FBK": true,
+              "in_C3_Manual_Set": false,
+              "in_C3_Manual_Reset": false,
+              "in_RBM_Manual_Set": false,
+              "in_RBM_Manual_Reset": false
+            }
+          }
+        }
+      ],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 15,
+      "scopeLimits": [
+        "Conditional initialSafe and seven inactive Network4 globals",
+        "No BOOT/group lifecycle proof",
+        "No phase/owner injection after protocolstart",
+        "No healthy Step2-to-Safe endpoint oracle"
+      ]
+    },
+    {
+      "id": "R-green-delta0-retaingreen",
+      "status": "FAIL",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": true,
+          "expected": false,
+          "status": "FAIL"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": false,
+          "expected": true,
+          "status": "FAIL"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 18,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 8618,
+        "lastTimeMs": 8618,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-green-delta0-retainblue",
+      "status": "PASS",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 13,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 11921,
+        "lastTimeMs": 11921,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-green-delta249-retaingreen",
+      "status": "FAIL",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": true,
+          "expected": false,
+          "status": "FAIL"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": false,
+          "expected": true,
+          "status": "FAIL"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 19,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 8867,
+        "lastTimeMs": 8867,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-green-delta249-retainblue",
+      "status": "PASS",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 14,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 12170,
+        "lastTimeMs": 12170,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-green-delta250-retaingreen",
+      "status": "FAIL",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": true,
+          "expected": false,
+          "status": "FAIL"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": false,
+          "expected": true,
+          "status": "FAIL"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 19,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 8868,
+        "lastTimeMs": 8868,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-green-delta250-retainblue",
+      "status": "PASS",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 14,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 12171,
+        "lastTimeMs": 12171,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-green-delta300-retaingreen",
+      "status": "FAIL",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": true,
+          "expected": false,
+          "status": "FAIL"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": false,
+          "expected": true,
+          "status": "FAIL"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 19,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 8918,
+        "lastTimeMs": 8918,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-green-delta300-retainblue",
+      "status": "PASS",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 14,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 12221,
+        "lastTimeMs": 12221,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-blue-delta0-retaingreen",
+      "status": "FAIL",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": true,
+          "expected": false,
+          "status": "FAIL"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": false,
+          "expected": true,
+          "status": "FAIL"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 18,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 8618,
+        "lastTimeMs": 8618,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-blue-delta0-retainblue",
+      "status": "PASS",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 13,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 11921,
+        "lastTimeMs": 11921,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-blue-delta249-retaingreen",
+      "status": "FAIL",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": true,
+          "expected": false,
+          "status": "FAIL"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": false,
+          "expected": true,
+          "status": "FAIL"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 19,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 8867,
+        "lastTimeMs": 8867,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-blue-delta249-retainblue",
+      "status": "PASS",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 14,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 12170,
+        "lastTimeMs": 12170,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-blue-delta250-retaingreen",
+      "status": "FAIL",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": true,
+          "expected": false,
+          "status": "FAIL"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": false,
+          "expected": true,
+          "status": "FAIL"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 19,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 8868,
+        "lastTimeMs": 8868,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-blue-delta250-retainblue",
+      "status": "PASS",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 14,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 12171,
+        "lastTimeMs": 12171,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-blue-delta300-retaingreen",
+      "status": "FAIL",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": true,
+          "expected": false,
+          "status": "FAIL"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": false,
+          "expected": true,
+          "status": "FAIL"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 19,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 8918,
+        "lastTimeMs": 8918,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-blue-delta300-retainblue",
+      "status": "PASS",
+      "checks": [
+        {
+          "label": "BOTH does not generate any command",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "No single from retained button of same attempt",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Established energy unchanged before fresh command",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green no down before500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green actual normal stop fanout available",
+          "actual": true,
+          "expected": true,
+          "status": "PASS"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 14,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 12221,
+        "lastTimeMs": 12221,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-shortchord-remain-green",
+      "status": "FAIL",
+      "checks": [
+        {
+          "label": "Failed short BOTH never becomes green single",
+          "actual": true,
+          "expected": false,
+          "status": "FAIL"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 10,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 7918,
+        "lastTimeMs": 7918,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "R-shortchord-remain-blue",
+      "status": "FAIL",
+      "checks": [
+        {
+          "label": "Failed short BOTH never becomes green single",
+          "actual": true,
+          "expected": false,
+          "status": "FAIL"
+        }
+      ],
+      "notes": [],
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 10,
+      "scopeLimits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ],
+      "firstDown": {
+        "firstTimeMs": 8018,
+        "lastTimeMs": 8018,
+        "samples": 1,
+        "signals": {
+          "safeBlue": false,
+          "rndBlue": false,
+          "safeUp": false,
+          "safeTransition": false,
+          "safeLockRequest": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "laterStep12": false,
+          "laterLockRequest": false,
+          "lock": false,
+          "estop": true,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "unlock": false,
+          "lvDischarge": false,
+          "hvDischarge": false,
+          "plcSto1": true,
+          "plcSto2": true,
+          "safeBoth": false,
+          "safeTonQ": false,
+          "safeReady": false,
+          "safeGate": false,
+          "safePlc": false,
+          "runPlc": false,
+          "runTonQ": true,
+          "runQualifier": true,
+          "grant": false,
+          "grantSet": false,
+          "grantReset": true,
+          "runAggregate": false,
+          "runPhysical": true
+        },
+        "consumed": {
+          "safeTonInput": false,
+          "runTonInput": true,
+          "runConsumedQualifier": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_Healthy_FBK": false,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false
+        },
+        "phases": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": false,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false
+        }
+      }
+    },
+    {
+      "id": "T-C2OFF",
+      "status": "FAIL",
+      "checks": [
+        {
+          "label": "No normal stop before fresh green500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green500 initiates normal Run-down stop owner/fanout",
+          "actual": false,
+          "expected": true,
+          "status": "FAIL"
+        },
+        {
+          "label": "Run remains unconfirmed before abort feedback probe",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Late launch feedback cannot complete cancelled launch",
+          "actual": true,
+          "expected": false,
+          "status": "FAIL"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "marks": {
+        "launchGesture": 5319,
+        "accepted": 6319,
+        "freshGreen": 8423,
+        "afterQualification": 8943,
+        "lateConfirmation": 8944
+      },
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 23,
+      "scopeLimits": [
+        "Conditional initialSafe and seven inactive Network4 globals",
+        "No BOOT/group lifecycle proof",
+        "No phase/owner injection after protocolstart",
+        "No healthy Step2-to-Safe endpoint oracle"
+      ],
+      "firstDown": {
+        "firstTimeMs": 8945,
+        "lastTimeMs": 8945,
+        "samples": 1,
+        "signals": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": true,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "estop": true,
+          "safeUp": false,
+          "down": false,
+          "up": false,
+          "SU": false,
+          "SG": false,
+          "C": false,
+          "T": false,
+          "mode": false,
+          "owner": false,
+          "lvDischarge": false,
+          "runPhysical": true,
+          "runStop": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "confirmRun": false,
+          "hvRequest": false,
+          "hvDischarge": false,
+          "setLv": false,
+          "setHv": false,
+          "lvProposal": false,
+          "hvProposal": false,
+          "lvPermittedSet": false,
+          "hvPermittedSet": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false,
+          "in_LV_Healthy_FBK": true,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false
+        }
+      },
+      "limits": [
+        "Full HV shutdown endpoint remains NOT VERIFIED; independent unresolved completion contract",
+        "1ms native causal propagation observation after threshold; no physical deadline asserted"
+      ]
+    },
+    {
+      "id": "T-C2ON-healthy-unconfirmed",
+      "status": "FAIL",
+      "checks": [
+        {
+          "label": "No normal stop before fresh green500",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Fresh green500 initiates normal Run-down stop owner/fanout",
+          "actual": false,
+          "expected": true,
+          "status": "FAIL"
+        },
+        {
+          "label": "Run remains unconfirmed before abort feedback probe",
+          "actual": false,
+          "expected": false,
+          "status": "PASS"
+        },
+        {
+          "label": "Late launch feedback cannot complete cancelled launch",
+          "actual": true,
+          "expected": false,
+          "status": "FAIL"
+        },
+        {
+          "label": "No demanded fallback",
+          "actual": [],
+          "expected": [],
+          "status": "PASS"
+        }
+      ],
+      "marks": {
+        "launchGesture": 5319,
+        "accepted": 6319,
+        "freshGreen": 8423,
+        "afterQualification": 8943,
+        "lateConfirmation": 8944
+      },
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+      "audit": "PASS",
+      "observedTransitions": 23,
+      "scopeLimits": [
+        "Conditional initialSafe and seven inactive Network4 globals",
+        "No BOOT/group lifecycle proof",
+        "No phase/owner injection after protocolstart",
+        "No healthy Step2-to-Safe endpoint oracle"
+      ],
+      "firstDown": {
+        "firstTimeMs": 8945,
+        "lastTimeMs": 8945,
+        "samples": 1,
+        "signals": {
+          "b_Step1": false,
+          "b_Step2": false,
+          "b_Step3": true,
+          "b_Step4": true,
+          "b_Step5": false,
+          "b_Step6": false,
+          "b_Step12": false,
+          "b_Step_RnD": false,
+          "lv": true,
+          "hv": true,
+          "sto1": true,
+          "sto2": true,
+          "estop": true,
+          "safeUp": false,
+          "down": false,
+          "up": false,
+          "SU": false,
+          "SG": false,
+          "C": false,
+          "T": false,
+          "mode": false,
+          "owner": false,
+          "lvDischarge": false,
+          "runPhysical": true,
+          "runStop": false,
+          "runResetSto1": false,
+          "runResetSto2": false,
+          "runDischarge": false,
+          "runResetHv": false,
+          "confirmRun": false,
+          "hvRequest": false,
+          "hvDischarge": false,
+          "setLv": false,
+          "setHv": false,
+          "lvProposal": false,
+          "hvProposal": false,
+          "lvPermittedSet": false,
+          "hvPermittedSet": true
+        },
+        "raw": {
+          "in_ES_NC_1": true,
+          "in_ES_NC_2": true,
+          "in_InterLock_NC_1": true,
+          "in_InterLock_NC_2": true,
+          "in_LV_Connector_Interlock": true,
+          "in_HV_Connector_Interlock": true,
+          "in_Mentee_EStop": false,
+          "in_Estop_PLC": false,
+          "in_False_SI2_CH8": false,
+          "in_Reset_PB": true,
+          "in_Relase_Door_PB": false,
+          "in_Door_Monitor": true,
+          "in_Safety_Run": false,
+          "inPLC_RnD_Mode": false,
+          "inPLC_RnD_Mode_2": false,
+          "inPLC_BypassC1C2": false,
+          "in_LV_C1_FBK": true,
+          "in_HV_C2_FBK": true,
+          "in_STO_DR1_FBK": false,
+          "in_STO_DR2_FBK": false,
+          "in_LV_Healthy_FBK": true,
+          "in_HV_Healthy_FBK": false,
+          "in_C3_Manual_Set": false,
+          "in_C3_Manual_Reset": false,
+          "in_RBM_Manual_Set": false,
+          "in_RBM_Manual_Reset": false
+        }
+      },
+      "limits": [
+        "Full HV shutdown endpoint remains NOT VERIFIED; independent unresolved completion contract",
+        "1ms native causal propagation observation after threshold; no physical deadline asserted"
+      ]
+    }
+  ]
+}

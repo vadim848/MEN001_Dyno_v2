@@ -1,0 +1,21 @@
+// Static inspection only: no SalRuntime or behavioral execution.
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import {parseSalFile} from '../src/sal-parser.js';
+import {readBindingXml} from '../src/sal-binding-validator.js';
+import {effectiveEstopInputs} from '../src/estop-native-pairs.js';
+const base=new URL('./',import.meta.url),sal=new URL('../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',base),sgvl=new URL('../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl',base);
+const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const m=parseSalFile(sal,{bindingMode:'current',sgvlPath:sgvl});if(m.bindingAudit.status!=='PASS')throw Error('Whole source audit failed');
+const all=m.networks.flatMap(n=>n.blocks),ports=new Map(all.flatMap(b=>[...b.inputs,...b.outputs]).map(p=>[p.path,p]));
+const aliases=new Map(m.variables.flatMap(v=>v.targetPorts.map(p=>[p,{name:v.name,id:v.id}])));
+const native=readBindingXml(fs.readFileSync(sal,'utf8')),ids=new Map();
+function visit(n){if(n.attr?.functionName){let p=n.parent;while(p&&p.tag!=='Network')p=p.parent;ids.set('//'+p.attr.name+'/'+n.attr.name,n.attr.Id);}for(const c of n.children)visit(c);}visit(native);
+const inputNames=['in_ES_NC_1','in_ES_NC_2','in_Mentee_EStop','in_Estop_PLC','in_InterLock_NC_1','in_InterLock_NC_2','in_LV_Connector_Interlock','in_HV_Connector_Interlock'];
+const consumers=m.variables.filter(v=>inputNames.includes(v.name)).map(v=>({name:v.name,id:v.id,consumers:v.targetPorts.map(p=>({port:p,id:ports.get(p)?.Id,blockOrder:all.find(b=>b.inputs.some(x=>x.path===p))?.orderOfExecution}))}));
+const criticalPaths=['//Network1/FBEstop1','//Network1/FBAnd1','//Network1/FBAndUnlockHold','//Network1/FBRs6','//Network1/FBOr3','//Network1/FBOr4','//Network1/FBAndLvCurrentPermit','//Network1/FBAndLvSetPermit','//Network1/FBAndHvSetPermit','//Network1/FBAndSto1SetPermit','//Network1/FBAndSto2SetPermit','//Network1/FBRs1','//Network1/FBRs2','//Network2/FBAnd3','//Network2/FBAnd4','//Network2/FBAnd7','//Network5/FBAnd1','//Network12/FBAnd4'];
+const selected=new Set(criticalPaths);for(const b of all)if(/^\/\/Network(3|5|6|12)\//.test(b.path)||/RND_DOWN_STEP2_OWNER|STATE_SU|STATE_SG/.test(b.path))selected.add(b.path);for(const c of consumers)for(const p of c.consumers)selected.add(p.port.slice(0,p.port.lastIndexOf('/')));
+const blocks=all.filter(b=>selected.has(b.path)).map(b=>({path:b.path,id:ids.get(b.path),order:b.orderOfExecution,functionName:b.functionName,inputs:b.inputs.filter(p=>p.channelInterface!=='Deactivated'||p.sources.length||p.globals.length||aliases.has(p.path)).map(p=>({path:p.path,id:p.Id,channelInterface:p.channelInterface,contact:p.deactivate1,sources:p.sources,globals:p.globals.map(g=>({id:g.variableId,name:g.resolvedName})),alias:aliases.get(p.path)})),outputs:b.outputs.map(p=>({path:p.path,id:p.Id,globals:p.globals.map(g=>({id:g.variableId,name:g.resolvedName})),targets:p.targets}))})).sort((a,b)=>a.order-b.order);
+const main=all.find(b=>b.path==='//Network1/FBEstop1');
+const report={status:'Static source inventory PASS; behavioral checks NOT RUN',sourceSha256:hash(sal),sgvlSha256:hash(sgvl),bindingAudit:{status:m.bindingAudit.status,ports:m.bindingAudit.portCount,canonicalWires:m.bindingAudit.edges.length},consumers,mainEffectivePairs:effectiveEstopInputs(main,{isBound:p=>p.sources.length||p.globals.length||aliases.has(p.path)}).map(x=>({port:x.port.path,id:x.port.Id,inverted:x.inverted})),blocks,limits:['No behavioral result or phase destination oracle','No hardware mappings/configuration investigation','IDs/polarities are current program bindings only']};
+fs.writeFileSync(new URL('source-inventory.json',base),JSON.stringify(report,null,2));console.log({status:report.status,sourceSha256:report.sourceSha256,blocks:blocks.length});

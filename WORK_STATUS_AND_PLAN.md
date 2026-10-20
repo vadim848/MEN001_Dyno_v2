@@ -1,6 +1,98 @@
 # Статус и план — 2026-10-20
 
-## Возобновление координации и независимая проверка
+## Текущий принятый ограниченный результат
+
+Safe qualification и запрет повторного LV/HV после принятого RnD-down перенесены
+в рабочий SAL и приняты независимым post-working review. Source:
+`72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e`, SGVL:
+`de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56`.
+255 блоков; значения всех сохранённых таймеров неизменны. Точный перенос24
+файлов и protected core проверен по SHA; все280 входов рабочего прогона
+неизменны до/после. Runtime/parser/native pair/clock не менялись.
+
+Рабочий `npm run check:software`: **189/189 harness,75/75 historical,
+436/438 current;200PASS/1FAIL/7NOT VERIFIED/0ERROR**, exit1.
+Два current FAIL — прежние Run failed-chord→green; сценарный FAIL —
+STATE:conflicting-set-requests. 201→200 PASS объясняется единственным удалённым
+TIMER://Network2/FBTon3: старый Safe TON заменён реально проверяемым BOTH1с,
+обязательные требования не удалялись. BOOT остаётся NV, functionalBootPass0.
+
+Доказательства: working-transfer/FINAL_WORKING_EVIDENCE.json,
+CANONICAL_RUN_INTEGRITY.json, DOWN_EPISODE_OWNER_REVIEW.md и актуальные
+SOFTWARE_CHECK_RESULTS. Исходный RED checkpoint103a2bd сохранён, без push.
+Не объявлять весь проект принятым: реализация нормального LV completion→Safe,
+решений Run/StartingRun, вопросы PLC/conflict и полнота41 требований ещё открыты.
+Реальный fault-component reset/reentry не заменяет нормальное завершение остановки.
+
+Следующий этап уже поручен аналитику: NEXT_ACCEPTANCE_SCENARIO_AUDIT.md —
+разделить независимое testable-now покрытие NC2/Mentee/emergency/recovery,
+сценарии с pending user decision и технические ограничения N4/group adapter.
+Продолжать независимые проверки, неизвестные реакции не выдумывать.
+
+### Новые решения пользователя и текущая передача
+
+Пользователь явно подтвердил: для завершения RnD→Safe достаточно
+`LV_C1_FBK=FALSE` после отключения LV; новую полноценную BOTH в Run
+игнорировать; новую зелёную 500 мс в StartingRun после полной очистки
+обработать прерыванием запуска по сценарию Run→R&D. Аналитик фиксирует
+контекст и критерии до архитектуры/реализации; это пока требования, не
+утверждение об уже реализованном поведении.
+
+Пакет A1+A2 NC2/Mentee завершён и независимо принят: **40PASS/0FAIL/0ERROR**,
+`NEXT_EMERGENCY_EXECUTION_REVIEW.md`. Это component coverage с реальными
+producers/Set/Reset, held-blue Unlock и restore без Restart; не вся EMG/BOOT/A3.
+
+Отдельный baseline новых решений: **8PASS/12FAIL/2NOT VERIFIED/0ERROR**;
+`USER_DECISIONS_BASELINE_REVIEW.md` принимает его как RED evidence. Run после
+BOTH/invalid chord ошибочно принимает оставшуюся зелёную; StartingRun не
+принимает требуемое прерывание, поздний feedback подтверждает Run и лишь
+затем прежний Run-down реагирует на удержанную зелёную. LV normal completion
+остаётся NV с source-ledger отсутствующего healthy пути при declared N4 cuts,
+не с выдуманным сроком завершения. Архитектор готовит узкий LV counted plan,
+затем отдельную Run/StartingRun итерацию. Frozen baseline не перезаписывать
+candidate прогонами; кандидат требует отдельного output и независимой проверки.
+
+Права записи разделены. Отчёт в исходный голосовой чат отправлен по
+прямому разрешению пользователя. Ведущий продолжает приём результатов
+и передачу следующим исполнителям.
+
+## Журнал возобновления и подготовки (предыдущие снимки)
+
+Записи ниже сохраняют порядок исследования; их прежние working SHA/HOLD
+и ожидаемые действия не переопределяют текущий принятый результат выше.
+
+Локальный RED checkpoint `103a2bd` сохраняет новые правила, независимый пакет,
+неизменяемый baseline и изолированный Safe255 с честным no-reenergization FAIL.
+Активные архитектурные правки в этот checkpoint не включались. Точные байты
+SHA256-пакета защищены .gitattributes; sandbox/большие raw JSON/UpgradeLog исключены.
+Рабочий SAL/SGVL всё ещё исходные0fc397…/06010caf… .
+
+Последняя техническая итерация — отдельный down-owner v2:
+SAL `72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e`,
+SGVL `de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56`.
+Новый RS отмечает происхождение текущего Step2 от принятого RnD-down,
+вычисляется до N5 energy guard и сбрасывается при фактическом выходе Step2.
+Общий LVDischarge veto отвергнут как затрагивающий исходные запуски.
+V1 устранял no-autoenergy, но менял SG при Safe+RnD; сохранён с HOLD.
+V2 сохраняет точный SG, освобождая блок эквивалентным De Morgan в G23.
+Независимый static review v2 PASS/255/0binding errors; SG замечание закрыто.
+Исполнения регрессии и независимые проверки v2 продолжаются, working SAL HOLD.
+Нормальный LV-discharge completion→Safe остаётся отдельным вопросом пользователю;
+его отсутствие не заменяется аварийным компонентным reset/reentry proof.
+
+Обновление v2: редактор и независимый тестировщик завершили RnD69/69,
+earlySTO88/88, Safe15/15, B1, дополнительные Safe controls, no-autoenergy
+(2500мс), legacy Step2 с обычным LVDischarge, реальный fault-component exit/
+Restart/fresh attempt/reentry, SG conflict equivalence и De Morgan — PASS.
+Ревьюер принял bounded core evidence; полного нормального RnD→Safe это не доказывает.
+Независимый test_migration выполняет только own copied-suite migration:
+PLCPULSE48/48 на baseline и v2, actual70-block producer cone без ownerFALSE;
+CVR непрерывно до500 запрещён, BLUE/BA квалифицируются500, реальный consumer/
+grant/Unlock501 по native order. Новые source-observer closures/full-neutral
+приняты для холодного прогона. Один ранний full с изменённым observer во время
+исполнения явно diagnostic-only; финальный обязан сверять SHA всех входов до/после.
+STRUCTURAL_V2_MIGRATION_LEDGER.md задаёт exact delta всех17 старых structural
+assertions; сейчас независимые migration и review этого пакета продолжаются.
 
 Причины двух организационных остановок: после отчёта статуса ведущий завершил
 ход без запуска исправлений; после запуска специалистов снова завершил ход,
@@ -66,7 +158,7 @@ candidate255 при initialSafe и семи явно неактивных N4 г�
 Network4/group lifecycle и полная достижимость остаются NOT VERIFIED;
 условный replay с явно заданной границей не подменяет их приёмку.
 
-## Последний принятый результат
+## Принятый baseline до Safe/down-owner исправлений
 
 03B/R3, PLC pulse LV/HV fix и earlySTO приняты независимым ревью
 в ограниченном программном объёме.
@@ -167,16 +259,17 @@ fault и возврат входа без Restart проверены в Safe/R&D
    по workingreference и первичным описаниям; hardware scope не расширять.
 3. Гипотеза no-EDM Restart ограниченно исследована и НЕ ДОКАЗАНА.
    Код по ней не менять; прерванные запросы доступа не обходить.
-4. Safe/Run: known test requirements приняты для RED-пакета.
-   Counted255 кандидат HOLD по SAFE_RUN_GESTURE_PLAN_REVIEW.md:
-   B1 (отложенный Safe-запуск) исправлен в предложении и ограниченно
-   принят review; B2 неявный QR-ignore и B3 causal owner/order открыты. Native SAL не менять до READY.
-   Тестплан отдельно принят reviewer; bounded RED tests первый прогон
-   15 total/8PASS/7FAIL/0 fixtureERROR; финальное independent review
-   ACCEPT tests-as-RED, not logic (SAFE_RUN_GESTURE_TEST_REVIEW.md).
-   Accepted full report201/1/7 относится к версии до нового RED-пакета;
-   не подменять им новые известные отказы. RED пакет готов к checkpoint.
-   Full reachability/emergency/recovery остаются обязательными.
+4. Safe/Run: исходный RED checkpoint7e81d0a и дополнительный независимый
+   no-autoenergy RED checkpoint103a2bd сохранены. Текущий partial Safe|RnD
+   и down-owner v2 прошёл целевые независимые проверки и core review;
+   точный SHA/результаты — в разделе возобновления выше. Полная Run ветвь
+   сохранена, два её invalid-chord FAIL остаются обязательными.
+   Следующая передача: независимая exact full-suite structural/fixture migration
+   → immutable full run → независимое ревью → редактор working SAL при READY.
+   Не переносить source до закрытия migration gate. После переноса повторить
+   относящиеся source-bound проверки/полный пакет и review на working pair.
+   Full reachability/emergency/recovery и нормальный LV completion→Safe
+   остаются открытыми; старый201/1/7 не выдавать за приёмку новой версии.
 5. Ожидаются ответы по новым PLC requests, conflict destination, discharge
    completion, новомуGreenвStartingRun и BOTHвRun. Только зависимые сценарии
    ждут ответа; отсутствие ответа не согласие.

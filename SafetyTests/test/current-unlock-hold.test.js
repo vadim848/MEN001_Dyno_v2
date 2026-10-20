@@ -1,3 +1,5 @@
+import * as V2 from './helpers/v2-structural.js';
+import {createSafeRunFixture} from './helpers/safe-run-source.js';
 import { compact,movedPath,expectedOrder } from "./helpers/compact-expectations.js";
 import { physicalRndSource } from "../src/physical-rnd-source.js";
 import test from "node:test";
@@ -22,45 +24,11 @@ function runtime(extra = {}) {
     .setInputs({b_EStop_Ok:true,in_Estop_PLC:false}); // Explicit healthy07 boundary; fault paths tested with actual EStop separately.
 }
 
-test("CVR current SAL: sole final writer, normalized single wire, native port IDs and contiguous execution", () => {
-  assert.deepEqual(model.variables.find(v => v.name === output).sourcePorts, [gate.outputs[0].path]);
-  assert.equal(model.networks.flatMap(n => n.blocks).flatMap(b => b.outputs).filter(p =>
-    p.globals.some(g => g.lastKnownPath === `GVL1.${output}`)).length, 0);
-  assert.deepEqual(gate.inputs[0].sources, [latch]);
-  assert.ok(model.networks[0].blocks.find(b => b.name === "FBRs6").outputs[0].targets.includes(gate.inputs[0].path));
-  assert.deepEqual(gate.inputs.map(p => p.varId), ["2", "3", "4", "5", "6", "7", "8", "9"]);
-  assert.equal(gate.outputs[0].varId, "20");
-  const ids = [...xml.matchAll(/\bId="([^"]+)"/g)].map(m => m[1]);
-  assert.equal(new Set(ids).size, ids.length);
-  assert.deepEqual(model.networks.flatMap(n => n.blocks).map(b => b.orderOfExecution).sort((a,b) => a-b),
-    Array.from({ length: 255 }, (_,i) => i+1));
-  assert.equal(gate.orderOfExecution, 255);
-  for (const previous of old.networks.flatMap(n => n.blocks)) {
-    const current = model.networks.flatMap(n => n.blocks).find(b => b.path === movedPath(previous.path));
-    const afterLV=previous.orderOfExecution >= 2 ? previous.orderOfExecution + 2 : 1;
-    assert.equal(current.orderOfExecution,expectedOrder(previous.path));
-  }
-  for (const variable of old.variables) {
-    const current = model.variables.find(v => v.name === variable.name);
-    assert.deepEqual(current.alias, variable.alias);
-    assert.equal(current.id, variable.id);
-  }
-  const params = m => m.networks.flatMap(n => n.blocks).map(b => [b.path, b.parameters]).filter(([,p]) => p.length);
-  const mappedOld=params(old).map(([path,p])=>[movedPath(path),p]).sort();
-  assert.deepEqual(params(model).filter(([path])=>!["//RndPhysicalCompact/RELEASE","//RndPhysicalCompact/WINDOW"].includes(path)).sort(),mappedOld);
-  assert.equal(xml.match(/<safetyApplication\b[^>]*>/)[0], oldXml.match(/<safetyApplication\b[^>]*>/)[0]);
-  // B1 intentionally adds logical consumers through SAL alias usage roles.
-  // Preserve descriptors and old consumers; exact allowed fanout is audited in
-  // current-native-bindings.test.js rather than forbidding logical connections.
-  for(const previous of old.variables) {
-    const current=model.variables.find(v=>v.name===previous.name);
-    for(const target of previous.targetPorts) {
-      if(previous.name==="in_Door_Monitor"&&target==="//Network12/FBAnd16/AndIn1")continue; // deliberate06 energy guard change
-      if(["//Network12/FBTon2/TonIn","//Network12/FBTon4/TonIn"].includes(target))continue; // moved TON enables now belong to actual recognizer
-      assert.ok(current.targetPorts.includes(target));
-    }
-    assert.deepEqual(current.sourcePorts, previous.name===output ? [gate.outputs[0].path] : previous.sourcePorts);
-  }
+test("CVR V2 sole final writer255, exact retained order manifest, timers and physical aliases", () => {
+ // Approved baseline+explicit v2 delta; no source masking.
+ V2.final(); V2.orders(); V2.timers(); V2.aliases();
+
+
 });
 
 test("CVR current SAL: eight final gate combinations use the actual parsed block", () => {
@@ -81,12 +49,9 @@ test("CVR current SAL: reset dominates a concurrent Set and clears stale permiss
   }
 });
 
-test("CVR current SAL: existing Safe producer permits held blue and release clears first scan", () => {
-  const r = runtime({ Network2:["FBDecouple3", "FBAnd7", "FBAnd8"] }).setInputs({ b_Step1:true, in_Door_Monitor:true, in_Relase_Door_PB:true });
-  r.scan(); assert.equal(r.get(output), true);
-  r.setInputs({ in_Relase_Door_PB:false }).scan();
-  assert.equal(r.get(output), false); assert.equal(r.get(latch), false);
-  // Safe has no blue TON. Full recognizer/rearm remains a separate known gap.
+test("CVR approved Safe blue500 qualification, original grant conditions, release clears",()=>{
+const x=createSafeRunFixture('Safe');x.sample({in_Relase_Door_PB:true});x.advance(499);for(const f of x.frames)for(const k of ['safeBlue','grant','unlock'])assert.equal(f.signals[k],false,'before500 '+k+' at '+f.timeMs);assert.equal(x.get('unlock'),false,'499ms negative');x.advance(1);assert.equal(x.r.get('//RndPhysicalCompact/BLUE/TonOut'),true,'native500 qualification');assert.equal(x.r.get('//RndPhysicalCompact/STATE_BA/RsOut'),true,'native accepted500 blue');assert.equal(x.get('unlock'),false,'And7 already consumed previous BA on500');x.advance(1);assert.equal(x.get('safeBlue'),true,'next actual And7 consumption501');assert.equal(x.get('grant'),true);assert.equal(x.get('unlock'),true,'same501 actual Or4/RS/final chain');x.sample({in_Relase_Door_PB:false});assert.equal(x.get('unlock'),false);assert.equal(x.get('grant'),false);
+for(const rawOverrides of [{in_Door_Monitor:false},{in_ES_NC_1:false},{in_ES_NC_2:false},{in_Estop_PLC:true}]){const y=createSafeRunFixture('Safe');y.sample({...rawOverrides,in_Relase_Door_PB:true});y.advance(600);for(const f of y.frames)for(const k of ['grant','unlock'])assert.equal(f.signals[k],false,JSON.stringify(rawOverrides)+' '+k+' at '+f.timeMs);assert.equal(y.get('unlock'),false,JSON.stringify(rawOverrides));}
 });
 
 test("CVR current SAL: actual R&D TON must expire again after blue interruption", () => {

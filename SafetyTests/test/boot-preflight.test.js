@@ -16,7 +16,7 @@ test('BOOT preflight owns fresh full-source parsing, all native inventory and ex
  const r=preflightWorkingProgram();assert.equal(r.status,'NOT VERIFIED');assert.equal(r.bindingAudit.status,'PASS');assert.equal(r.sourceCoverage.status,'MATCH');
  assert.equal(r.source.sal.rawSha256,sha(sal));assert.equal(r.source.sgvl.rawSha256,sha(sgvl));assert.equal(r.inventory.blocks.length,255);
  assert.ok(r.inventory.networks.some(n=>n.name==='Network3'));assert.ok(r.inventory.networks.some(n=>n.name==='Network4'));
- assert.equal(r.inventory.globalWriters.length,85);assert.equal(r.inventory.outwardOutputs.length,37);assert.equal(r.inventory.blocks.filter(b=>b.stateful).length,52);
+ assert.equal(r.inventory.globalWriters.length,85);assert.equal(r.inventory.outwardOutputs.length,37);assert.equal(r.inventory.blocks.filter(b=>b.stateful).length,53);
  assert.ok(r.inventory.blocks.every(b=>b.attributes.Id&&b.inputs.every(p=>p.attributes.Id)&&b.outputs.every(p=>p.attributes.Id)));
  assert.equal(r.functionalBootPass,0);assert.equal(r.execution.performed,false);assert.deepEqual(r.execution.phaseCuts,[]);assert.deepEqual(r.execution.seededOutputs,[]);
  assert.equal(r.cases.some(c=>c.status==='PASS'),false);assert.deepEqual(r.cases.map(c=>c.code),['UNSUPPORTED_UNBOUND_PROGRAM_INPUT','UNSUPPORTED_GROUP_LIFECYCLE']);

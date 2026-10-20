@@ -30,7 +30,7 @@ export function candidateButtonCoverChecks(model) {
     const selected = { ...model, networks: model.networks.filter(n => selection[n.name]).map(n =>
       ({ ...n, blocks: selection[n.name].length ? n.blocks.filter(b => selection[n.name].includes(b.name)) : n.blocks })) };
     const actualBranch = integrated&&selection.Network12&&!selection.Network3 ? physicalRndSource(model,10) : null;
-    if(integrated&&selection.Network3)selected.networks.push(model.networks.find(n=>n.name==="RndPhysicalCompact"));
+    if(integrated&&(selection.Network2||selection.Network3))for(const name of ["RndPhysicalCompact","SafeResumption"])if(!selected.networks.some(n=>n.name===name))selected.networks.push(model.networks.find(n=>n.name===name));
     const r = actualBranch?.r ?? new SalRuntime(selected).setInputs(ready);
     const observations = [];
     const expect = (signal, expected, checkpoint, actual = r.get(signal)) => observations.push({ signal, expected, actual, checkpoint });
@@ -110,6 +110,7 @@ export function candidateButtonCoverChecks(model) {
   check("ACC-C01-S", ["CVR-001", "CVR-002"], "Safe unlock removed after blue release", {
     ...cover, Network2: ["FBDecouple3", "FBAnd7", "FBAnd8"]
   }, (r, e) => {
+    r.runFor(2100,{b_Step_RnD:false,b_Step1:true,in_Reset_PB:false,in_Relase_Door_PB:false});
     r.runFor(1200, { b_Step_RnD: false, b_Step1: true, in_Relase_Door_PB: true });
     e("out_Door_Unlock_Solonoeid", true, "qualified hold");
     r.runFor(50, { in_Relase_Door_PB: false }); e("out_Door_Unlock_Solonoeid", false, "50 ms after release");

@@ -6,7 +6,9 @@ MEN001_Dyno / Prodoction / 4495a1f6049f6a58ebfd436761faa84d17c8d643, origin
 https://github.com/vadim848/MEN001_Dyno.git. Сначала искать ответы в reference;
 новое поведение R&D брать из требований v2. Самостоятельно продолжать анализ,
 планирование, тесты и реальные локальные изменения программной логики по
-WORKFLOW.md с архитектором, редактором и независимым ревьюером. Прежнее
+WORKFLOW.md с аналитиком, архитектором, редактором, независимым тестировщиком
+и независимым ревьюером. Ведущий отвечает за передачи до результата/реального
+блокера, промежуточный отчёт не завершает координацию. Прежнее
 ограничение «только тесты» снято пользователем; аппаратные границы сохраняются.
 Запуск: `cd SafetyTests; npm run check:software`. Прежние аппаратные gates
 ниже сохраняются как история и не блокируют это задание.
@@ -14,7 +16,45 @@ WORKFLOW.md с архитектором, редактором и независ�
 **Latest status and next-step order:** read `WORK_STATUS_AND_PLAN.md` first.
 Historical entries below preserve earlier checkpoints and superseded findings.
 
-Current accepted program2026-10-19:03B/R3 recognizer, PLC pulse LV/HV guards,
+**Active resumption 2026-10-20:** local RED checkpoint `103a2bd` includes workflow
+roles and independent immutable baseline/candidate traces. Working SAL/SGVL are now
+the reviewed down-owner V2 (exact24-file transfer, no native/hardware operation or push):
+`72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e` /
+`de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56`
+passed independent 15 Safe /69 RnD /88 earlySTO, no-autoenergy, owner
+capture/hold/fault-component clear/fresh reentry, legacy generic-discharge
+startup, exact SG preservation and De Morgan. See independent-down-episode-owner/v2
+and DOWN_EPISODE_OWNER_REVIEW. Baseline and earlier Safe255 reproduced inherited
+SPEC11 reenergization; V2 prevents it within the declared component boundaries.
+Normal LV discharge completion→Safe is now specified by the user:
+after actual LV command OFF, LV_C1_FBK=FALSE is sufficient. Implementation
+and independent normal-cycle checks are pending, not the user answer.
+Actual canonical full run:189/189 harness,75/75 historical,436/438 current;
+200PASS/1STATEFAIL/7NV/0ERROR, exit1. Same two Run failures remain. All280 inputs
+unchanged before/after,24post-SHA and protected runtime/parser/core exact.
+Post-working independent review ACCEPT bounded implementation, not whole41.
+The single removed case from201PASS is the retired SafeTON3 parameter; BOTH1s
+and actual Safe behavior remain covered. See working-transfer/FINAL_WORKING_EVIDENCE.json.
+
+Current handoffs: NEXT_ACCEPTANCE_SCENARIO_AUDIT.md and the A1+A2 emergency
+architecture/plan review are READY; independent NC2/Mentee tests are executing.
+USER_DECISIONS_2026_10_20_HANDOFF.md records the three direct answers: LV feedback
+completion, BOTH ignored in Run, fresh green in StartingRun aborts using the
+normal Run→RnD sequence. Architect and a separate independent test author prepare
+that implementation cycle. No answer is inferred for remaining HV/PLC/conflict
+questions. Full copied-suite migration, official
+live-working-source no-autoenergy regression and current-source run/review are
+complete. STRUCTURAL_V2_MIGRATION_LEDGER.md describes pre-transfer0fc baseline
+versus72f V2, not the current production still being0fc. BOOT remains NV/0functionalPASS.
+Preserve historical RED packages, old frozen pairs and runtime/parser semantics.
+
+All four specialists previously showed running while awaiting reference approval;
+cancelled requests were not retried. Require explicit compute/tool-wait/approval
+status. Existing confirmed reference/earlier reads suffice for current migration.
+Do not finalize root on a progress report or leave a completed specialist without
+handoff. No automation/continuation is implied by ending a root turn.
+
+Historical accepted baseline2026-10-19:03B/R3 recognizer, PLC pulse LV/HV guards,
 and earlySTO; source0fc39751781cf9525765b223e08c909f31353b976ad4c796881268b39f0fa909,
 SGVL06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5.
 255 blocks. Accepted program stages178/75/413 PASS;201PASS/1FAIL/5NV.

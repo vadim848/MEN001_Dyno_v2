@@ -22,6 +22,62 @@ SINGLE0.5/BOTH1 утверждены D-TIMING; последнее D-CHORD250 у�
 
 ## Матрица обязательных проверок
 
+### Принят bounded A1/A2 пакет — 2026-10-20
+
+NEXT_EMERGENCY_EXECUTION_REVIEW.md: **ACCEPT,40PASS/0FAIL/0fixtureERROR**;
+working SAL72f42d…/SGVLde0fa… без изменения кода этим пакетом.
+Independent next-emergency-tests REPORT/RESULTS/VERIFIED_REPORT.json и
+PACKAGE_IDENTITY фиксируют actual native producers, Set/Reset consumers и
+непрерывные1мс traces. A1: Safe/RnD fresh-blue grant positive, heldblue при
+NC2/Mentee one/ten-scan fault и восстановлении без Restart; Unlock/EStopFALSE
+с первого fault до200мс после восстановления. A2: real pendingSet на Safe-Step12
+LV, RnD HV/STO1/STO2, original-start Step2 LV/HV; paired здоровые controls,
+fault/restore запрещают все новые nativeSet/выходные rises. Это расширяет
+EMG001/005/007/011,CVR001/002, но не закрывает целиком этиID или все41.
+InitialSafe/originalStep2 component boundary, семь inactiveN4cuts, noBOOT/group,
+A3/полная аварийная completion/destination остаются открытыми.
+
+Новый user-decision baseline: 8PASS/12FAIL/2NV/0ERROR, sourceunchanged;
+USER_DECISIONS_BASELINE_REVIEW принят как ограниченный RED пакет тестов,
+не как приёмка реализации. Frozen архивы сохраняются для сравнения кандидата.
+LV normalcompletion вопрос отвечен D-LV-OFF-COMPLETE, implementation pending;
+RunBOTH/StartingRun новые решения также не закрываются A1/A2PASS.
+
+### Новые нормативные решения 2026-10-20 — реализация ещё не принята
+
+SCENARIO_DECISIONS.md: D-LV-OFF-COMPLETE закрывает LV completion вопрос:
+после отключения LV при RnD→Safe достаточно LV_C1_FBK FALSE, новых таймеров
+не требуется. MOD005/STP005: проверить настоящий down→LV-off→feedbackOFF→Safe,
+feedbackON запрещает преждевременный Safe, отсутствует повторное включение.
+D-RUN-BOTH-IGNORE закрывает QR: полноценная новая BOTH в Run игнорируется;
+BTN005–008/MOD004: нет single/down/up, новая попытка лишь после полной очистки.
+D-STARTINGRUN-GREEN-DOWN закрывает QT в указанном контексте: после принятого
+запуска и STO released новая green500 после очистки прерывает запуск и
+выполняет Run→RnD. MOD002/004, STP001–004 и CVR005 проверяют реальный abort
+owner/нормальную остановку; не immediateRnD и не новый discharge oracle.
+Подробные позитивы/негативы и сохранившиеся границы:
+USER_DECISIONS_2026_10_20_HANDOFF.md. Исторические pending QR/QT/LV строки
+ниже заменены этими решениями в их точном контексте. QP/conflict/HV completion
+и остальные неопределённые transition contexts остаются отдельными.
+
+Актуально2026-10-20 после переноса и независимого post-working review:
+рабочий SAL72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e,
+SGVLde0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56.
+Safe qualification/no-autoenergy приняты только в заявленном компонентном
+объёме. Рабочий full:189/189 harness,75/75 historical,436/438 current;
+200PASS/1STATEFAIL/7NV/0ERROR. Два Run invalid-chord FAIL сохранены.
+Новый current-rnd-down-no-reenergy.test.js запускается штатным check:software:
+4 проверки actual phase writers/первый Step2/2500мс удержание без нового Set,
+исходный Step2 при обычном discharge FALSE/TRUE и fault-component clear/fresh
+reentry. Seven explicit inactive N4 boundaries/initial state ограничивают proof;
+это не нормальный RnD→Safe, полный BOOT или всё emergency/recovery покрытие.
+Независимые Safe15/RnD69/earlySTO88 и prior baseline RED сохранены.
+Снята только устаревшая проверка параметра выведенного Safe TON3;
+замещающий BOTH1с/полный интервал/сбросы проверяются. Все41ID остаются обязательны.
+Review: DOWN_EPISODE_OWNER_REVIEW.md; transfer/integrity — working-transfer/.
+
+Ниже сохранены предыдущие снимки до этого переноса, не актуальные counts/source.
+
 Новый отдельный RED этап2026-10-20, SAFE_RUN_GESTURE_TESTS_READY.md:
 15 targeted tests=8PASS/7FAIL/0ERROR;14 actualSAL component cases7PASS/7FAIL
 и1observer metaPASS. Source0fc39751… неизменён, demandedcone170blocks,

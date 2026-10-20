@@ -7,7 +7,40 @@
 > this task, never a gate for software checks. Sections below the current
 > synchronization note retain historical observations, not the current plan.
 
-## Current synchronization — 2026-10-18
+## Current synchronization — 2026-10-20
+
+A1/A2 extension: NEXT_EMERGENCY_EXECUTION_REVIEW.md independently ACCEPTS
+40PASS/0FAIL/0fixtureERROR on unchanged72f42d…/de0fa… . Evidence package:
+next-emergency-tests REPORT/RESULTS/VERIFIED_REPORT.json/PACKAGE_IDENTITY.
+A1: actual fresh-blue access controls then Safe/RnD NC2/Mentee one/ten-scan
+fault, blueheld/greenOFF; firstfault through200ms restorationwithoutRestart
+Unlock/EStopFALSE. A2: actual pendingSet/nativeRS and pairedhealthy controls,
+Safe-Step12LV,RnD HV/STO1/STO2,originalStep2LV/HV; no new permittedSet/output
+rise through cleanrestore. Expands bounded EMG001/005/007/011,CVR001/002,
+not fullfamilies/all41/BOOT/A3/emergencycompletion. Initialcomponent phases
+and seven inactiveN4cuts remain explicit, nativeproducer/SetReset provenance
+and actualcontinuous samples independently verified.
+
+Separate newdecisionbaseline reports8PASS/12FAIL/2NV/0ERROR unchangedsource;
+USER_DECISIONS_BASELINE_REVIEW accepts it separately as bounded RED evidence,
+not implementation acceptance or a result of the A1/A2 review.
+LVcompletion usercriterion is answered; implementation remains pending.
+
+Working source72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e /
+SGVLde0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56.
+Independent bounded Safe/no-reenergization fix and copied-suite migration
+accepted after actual working run:189/189 harness,75/75 historical,436/438
+current,200PASS/1STATEFAIL/7NV/0ERROR. Two Run failed-chord cases remain RED.
+Official current-rnd-down-no-reenergy covers actual first-Step2 owner capture,
+2500ms no renewed permitted Set/output, generic-discharge legacy startup and
+fault-component clear/fresh reentry. All280 inputs and exact24-file transfer
+verified. Native/group BOOT remains unsupported/NV, zero functional BOOT PASS;
+normal LV completion to Safe and full41 scope are not accepted.
+DOWN_EPISODE_OWNER_REVIEW.md and working-transfer/ hold current review/identities;
+independent-down-episode-owner preserves raw/gzip proofs. Historical RED and
+earlier source reports below remain unchanged as historical evidence.
+
+## Previous synchronization snapshots
 
 Safe/Run RED update2026-10-20: SAFE_RUN_GESTURE_TESTS_READY.md records15
 targeted tests8PASS/7FAIL/0ERROR (14actualSAL cases7/7 plus1observer metaPASS).

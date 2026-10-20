@@ -1,5 +1,80 @@
 # Safe/Run gestures: bounded architecture options
 
+## Resumption 2026-10-20: independent Safe-only candidate
+
+**Exact next editor handoff:** read only JSON key
+`downEpisodeOwnerCandidateV2`, version `down-episode-owner-v2-demorgan`, and
+its `ordering.manifest` (255 unique nodes, retire8/add8). Independent reviewer
+cleared this for isolated native construction only. Preserve frozen v1 files.
+Earlier `downEpisodeOwnerCandidate`, broad discharge veto and SG-reset changes
+are not builder choices. V2 retains SG_OWNER_SET/old SG reset, folds GATE019
+by De Morgan, and adds the current-Step2 owner. Functional replay and complete
+acceptance are pending; normative Safe completion is not selected here.
+
+Latest no-reenergy design is JSON `downEpisodeOwnerCandidate`, not the broad
+LV-discharge veto. Dedicated RS marks the current Step2 episode entered from
+RnD down: Set=actual N12 LV-discharge request, Reset=!actual Step2, placed
+between Step2 RS and N5 And1. And1 adds !owner. This preserves reference Step2
+episodes and clears on actual episode exit; no new completion/start policy.
+Cost stays255 by omitting SG_OWNER_SET: SG.Set=GreenTON, Reset=!RND_SCOPE.
+Technical review/replay required, including that SG optimization and phase
+conflict boundary. Broad RS5 veto is rejected for unproved legacy compatibility.
+
+**Revision:** preserve SG_OWNER_SET and SG.Reset=!E exactly, including arbitrary
+phase flags. Free its replacement slot by retiring pure OR GATE019 instead:
+fold `!(GreenDone OR BlueDone)` into existing GATE023 with inverted GreenDone
+on input4 and inverted BlueDone on free input5. Both current TONs precede this
+consumer. JSON now has retire8/add8=255 and updated complete order. The earlier
+SG scope-reset optimization is superseded; no onehot assumption funds the fix.
+
+Latest lifecycle correction: actual normal RnD-up does not require an overlap
+with Run. Current b_Step3_Set_2 directly resets RnD in the confirmation scan,
+before Run OR6/RS3 can consume it next scan. Actual tester trace confirms this;
+require owner retention until actual exit and first-evaluation cleanup, not a
+fabricated overlapping phase seed. Healthy Step2-to-Safe also remains an open
+implementation gap; the bounded SG owner trace legitimately ends at Step2.
+
+New separate proposed mitigation after baseline+candidate negative confirmed
+actual LV/HV re-energization: JSON `downNoReenergyCandidate` uses two existing
+free Network5/And1 ports, !LVDischargeRS5 and !current RnD LVDischarge request.
+No new FB or timing. Both are needed because And1 executes before RS5 on the
+first Step2 scan. This is **technical review only**, not implementation READY:
+RS lifetime, future fresh Step12 startup and legacy direct Step2 after discharge
+must be reviewed. It does not invent a completion predicate or close Safe255
+acceptance. Full source rationale and limits are in the resumption document.
+
+**Revision after isolated candidate replay:** the 254-node version below is
+superseded by **255 nodes: retire7/add7**, retaining GATE_020 FinishUp. Its
+original four inputs remain; activate input5=RND_SCOPE direct. Restore
+STATE_SU.Set and CSet.OrIn3 to current FinishUp, rather than prior SU. Safe
+And4 still uses current raw BOTH.TonOut, with And3 and SAFE_UP_SCOPE intact;
+CSet.OrIn4 still reads current Safe owner. The prior one-scan C lag caused two
+TRUE FinishUp-equivalent samples in short-neutral tests, even though actual
+up/HV had one rise. Those failures are material; tests are unchanged. JSON
+safeOnlyCandidate and the resumption document describe the revised255 plan.
+Candidate reconstruction and replay remain required before acceptance.
+
+Read `SAFE_RUN_RESUMPTION_ARCHITECTURE.md` and JSON `safeOnlyCandidate` before
+the historical full shared proposal below. Analyst confirms that the full
+Safe|RnD|Run classifier changes unresolved valid Run BOTH histories and cannot
+be installed merely by omitting assertions about its endpoint.
+
+Concrete independent split: MODE=Safe|RnD, RunTON2/And24/And23 unchanged, direct
+Network12 SG unchanged. Omit proposed RND_SG and OWNER_EXIT; retain RunTON2.
+This gives 255-8+7=**254**, with an ordered 254-node patch manifest in JSON.
+MODE itself falls after actual RnD exit and remains TRUE during RnD+Run overlap,
+so the old RnD request lifetime does not need the full generic owner-exit gate.
+Safe owner remains behind original And3 readiness and current Safe scope.
+The five known Safe red observations are its target; two Run short-chord red
+observations stay open and must be reported. QR/QT/QP are not selected.
+
+Status **READY for independent technical review of this partial design only**;
+**NOT READY for native SAL acceptance/handoff** until candidate construction,
+whole-source binding audit and actual causal replay specified in the new
+document. The manifest is a precise ordered patch specification, not generated
+SAL and not an executed proof. Main EStop current order is23, not historical21.
+No SAL/runtime/test edits were made. Full shared candidate B2/B3 remains HOLD.
+
 ## Review correction B1: исходная readiness перед владельцем Safe
 
 **Текущий статус HOLD B2/B3, не SAL READY.** Исправлен только предлагаемыйB1граф; count255сохранён. ReviewerсправедливоотклонилqueueквалификациибезAnd3. РанееописанныйSetSafeRS=BothDoneнижеисторический, заменёнточнойпоследовательностьюздесьиJSON.

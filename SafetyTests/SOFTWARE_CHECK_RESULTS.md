@@ -1,16 +1,16 @@
 # Результаты программных проверок
 
-Дата: 2026-10-19T20:39:22.306Z
-SAL SHA256: 0fc39751781cf9525765b223e08c909f31353b976ad4c796881268b39f0fa909
+Дата: 2026-10-20T07:28:49.233Z
+SAL SHA256: 72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e
 
 Clock: observed-fixed-scan-v1; first observed edge age0; fixed scan per scenario. Generic runFor durations describe scheduled scan advance, not an implicit event timestamp.
 
 Аппаратная конфигурация принята как исходное условие. Файлы проекта не изменяются этим запуском.
 
-- harness: PASS; 193/193, ошибок 0, пропусков 0.
+- harness: PASS; 189/189, ошибок 0, пропусков 0.
 - historical: PASS; 75/75, ошибок 0, пропусков 0.
-- current: PASS; 413/413, ошибок 0, пропусков 0.
-- Текущий код: {"PASS":201,"FAIL":1,"NOT VERIFIED":7,"ERROR":0}.
+- current: FAIL; 436/438, ошибок 2, пропусков 0.
+- Текущий код: {"PASS":200,"FAIL":1,"NOT VERIFIED":7,"ERROR":0}.
 
 PASS относится только к указанному компоненту/сценарию. Прототипы и исторические воспроизведения не являются приёмкой текущего SAL.
 

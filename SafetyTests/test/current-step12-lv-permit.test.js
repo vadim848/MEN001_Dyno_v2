@@ -1,3 +1,4 @@
+import * as V2 from './helpers/v2-structural.js';
 import test from "node:test";
 import assert from "node:assert/strict";
 import { parseSalFile } from "../src/sal-parser.js";
@@ -14,22 +15,11 @@ function make(blocks) { const r = new SalRuntime({ ...model, networks:[{ blocks 
 function noReset(r) { r.values.set(rs.inputs.find(p => p.name === "Reset").path,false); }
 function seed(r,value) { r.memory.set(rs.path,{ value }); r.write(rs.outputs[0],value); }
 
-test("LV current SAL: sole Set binding, preserved producers/fanout and relative execution boundary", () => {
-  assert.deepEqual(rs.inputs.find(p => p.name === "Set").sources,[set.outputs[0].path]);
-  assert.deepEqual(or.outputs[0].targets,[set.inputs[0].path]);
-  assert.deepEqual(set.outputs[0].targets,[rs.inputs.find(p => p.name === "Set").path]);
-  assert.deepEqual(set.inputs.map(p => p.channelInterface),["Activated","Activated","Activated","Activated",...Array(4).fill("Deactivated")]);
-  assert.equal(set.inputs[2].deactivate1,"Make Contact (NO)");
-  assert.equal(permit.inputs.every(p => p.channelInterface === "Activated"),true);
-  assert.deepEqual(permit.inputs.map(p => p.globals[0]?.resolvedName ??
-    model.variables.find(v=>v.targetPorts.includes(p.path))?.name),Object.keys(healthy));
-  assert.deepEqual([permit.orderOfExecution,set.orderOfExecution,rs.orderOfExecution],[2,3,4]);
-  const producer = get("//Network11/FBAnd1");
-  assert.ok(producer.outputs[0].targets.includes("//Network11/FBTon1/TonIn"));
-  assert.equal(producer.outputs[0].globals[0].lastKnownPath,"GVL1.b_Set_LV_C1_1");
-  assert.equal(or.orderOfExecution,221);
-  const incoming = all.flatMap(b => b.outputs.flatMap(o => o.targets.filter(t => t === rs.inputs.find(p => p.name === "Set").path)));
-  assert.equal(incoming.length,1);
+test("LV V2 sole Set path and original aggregate sources, reviewed223 order", () => {
+ // Approved baseline+explicit v2 delta; no source masking.
+ V2.energy('LV');
+
+
 });
 
 test("LV current SAL: permission truth table and preserved already-latched LV", () => {

@@ -1,3 +1,4 @@
+import * as V2 from './helpers/v2-structural.js';
 import { removeCompactGvl } from "./helpers/compact-expectations.js";
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -12,25 +13,15 @@ const get=p=>blocks.find(b=>b.path===p);
 const permit=get("//Network1/FBAndLvCurrentPermit"),gate=get("//Network1/FBAndHvSetPermit"),rs=get("//Network1/FBRs2"),or=get("//Network1/FBOr18");
 const healthy={b_EStop_Ok:true,in_ES_NC_1:true,in_ES_NC_2:true,in_InterLock_NC_1:true,in_InterLock_NC_2:true,
   in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,in_Estop_PLC:false};
-const make=extra=>{const r=new SalRuntime({...model,networks:[{blocks:[permit,gate,rs,or,...extra,...(extra.some(b=>b.path.startsWith("//Network12/"))?model.networks.find(n=>n.name==="RndPhysicalCompact").blocks:[])]}]}, {unconnectedInput:false}).setInputs(healthy);r.values.set("//Network1/FBAnd1/AndOut",true); // Explicit healthy excluded PLCproducer boundary, exercised dynamically by PLC pulse suite.
+const make=extra=>{const r=new SalRuntime({...model,networks:[{blocks:[permit,gate,rs,or,...extra,...(extra.some(b=>b.path.startsWith("//Network12/"))?model.networks.filter(n=>["RndPhysicalCompact","SafeResumption"].includes(n.name)).flatMap(n=>n.blocks):[])]}]}, {unconnectedInput:false}).setInputs(healthy);r.values.set("//Network1/FBAnd1/AndOut",true); // Explicit healthy excluded PLCproducer boundary, exercised dynamically by PLC pulse suite.
 return r;};
 const noReset=r=>{for(const source of rs.inputs.find(p=>p.name==="Reset").sources)r.values.set(source,false);r.values.set(rs.inputs.find(p=>p.name==="Reset").path,false);};
 
-test("HV current SAL: sole canonical Set path, preserved aggregate inputs and complete binding audit",()=>{
-  assert.equal(model.bindingAudit.status,"PASS");
-  assert.deepEqual([permit.orderOfExecution,gate.orderOfExecution,rs.orderOfExecution,or.orderOfExecution],[2,5,6,222]);
-  assert.deepEqual(rs.inputs.find(p=>p.name==="Set").sources,[gate.outputs[0].path]);
-  assert.deepEqual(or.outputs[0].targets,[gate.inputs[0].path]);
-  assert.deepEqual(gate.inputs[1].sources,[permit.outputs[0].path]);
-  assert.equal(model.bindingAudit.edges.filter(e=>e.to===rs.inputs.find(p=>p.name==="Set").path).length,1);
-  assert.deepEqual(or.inputs.slice(0,3).map(p=>p.globals[0]?.resolvedName??p.sources[0]),
-    ["b_Set_HV_C2","//Network1/FBAnd6/AndOut","b_Set_HV_C2_1"]);
-  assert.deepEqual(gate.inputs.map(p=>p.channelInterface),["Activated","Activated","Activated","Activated",...Array(4).fill("Deactivated")]);
-  assert.equal(gate.inputs[2].deactivate1,"Make Contact (NO)");
-  assert.equal(permit.outputs[0].targets.includes("//Network1/FBAndLvSetPermit/AndIn2"),true);
-  const xml=fs.readFileSync(file,"utf8"),sgvl=fs.readFileSync(new URL("../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl",import.meta.url),"utf8");
-  const missing=xml.replace(/<wiredLink\b[^>]*>\s*<inPortMoniker name="\/\/Network1\/FBAndHvSetPermit\/AndIn2"\s*\/>\s*<\/wiredLink>/,"");
-  assert.equal(validateSalBindings(missing,sgvl).status,"ERROR");
+test("HV V2 sole Set path and unchanged aggregate sources, exact reviewed224 order",()=>{
+ // Approved baseline+explicit v2 delta; no source masking.
+ V2.energy('HV');
+
+
 });
 
 test("HV current SAL: permission truth table and already-latched HV without Reset",()=>{
@@ -62,12 +53,9 @@ test("HV current SAL: real legacy/R&D/third-route stale aggregate paired first-f
   }
 });
 
-test("HV current SAL: SGVL changes since B1 are limited to explicit07 EStop output permission usage",()=>{
-  const before=spawnSync("git",["show","9ef945c:MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl"],{maxBuffer:4*1024*1024});
-  assert.equal(before.status,0);
-  const current=fs.readFileSync(new URL("../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl",import.meta.url));
-  const removal=/<FbPortUsage\b[^>]*>\s*<ModelElementId>55c0b75c-a041-46ff-b5a3-715fa2f8d676<\/ModelElementId>\s*<\/FbPortUsage>/g;
-  assert.equal([...current.toString("utf8").matchAll(removal)].length,1);
-  const normalize=s=>s.replace(/>\s+</g,"><").replaceAll("\r\n","\n").trim();
-  assert.equal(normalize(removeCompactGvl(current.toString("utf8")).replace(removal,"")),normalize(before.stdout.toString("utf8")));
+test("HV V2 SGVL declarations and writers unchanged, exact eleven target usage changes",()=>{
+ // Approved baseline+explicit v2 delta; no source masking.
+ V2.sgvl();
+
+
 });

@@ -23,6 +23,40 @@ reference-behavior.js. R&D — устойчивая промежуточная �
 
 ## Подтверждённые требования и границы итераций
 
+### Последние прямые ответы пользователя — 2026-10-20
+
+Переданы ведущим без дополнительной интерпретации; заменяют pending LV
+completion, Q-RUN-CHORD и указанный StartingRun случай Q-TRANSITION-DOWN.
+Нижние pending формулировки сохраняются как история и этим superseded.
+
+- **D-LV-OFF-COMPLETE:** устойчивый RnD→Safe, после принятой зелёной и
+  отключения LV достаточно `in_LV_C1_FBK=FALSE` для завершения разряда и
+  перехода в Safe. Новых таймеров не требуется. Это относится к LV этого
+  перехода; не определяет HV-discharge completion/timeout и не отменяет
+  исходный порядок отключения LV/battery/BMS и аварийные разрешения.
+- **D-RUN-BOTH-IGNORE:** новую полноценную BOTH в Run игнорировать.
+  После neutral2000, second<=250ms и continuous both1000ms нет normaldown,
+  up, Unlock или изменения Run только из этого жеста. TwoButtonsAttempt
+  не деградирует в single при отпускании одной; новая команда после обеOFF
+  и полного фильтра. EStop/иные действующие причины остановки сохраняются.
+- **D-STARTINGRUN-GREEN-DOWN:** после принятого RnD→StartingRun запуска
+  и снятия STO новая попытка green500 после полной очистки прерывает запуск
+  и выполняет сценарий Run→RnD. Это новая попытка, а не late-second той же
+  принятой команды: D-LATE-SECOND остаётся в силе. Прерывание не означает
+  немедленный RnD или немедленное отключение C2; применимы согласованные
+  SS1/STO/discharge/feedback условия нормальной Run→RnD последовательности.
+  Решение не распространяется на иные ещё не определённые transition-down
+  контексты и не отменяет emergency priority или D-STO-LAUNCH.
+
+Source mapping before criteria: reference original Step2 powers LV/HV and
+later confirms Run; current RnD down instead creates Step2_Set_2 and has
+dedicated RND_DOWN_STEP2_OWNER preventing inherited automatic reenergization.
+Reference has no independent newly named RnD stop; новые ответы намеренно
+определяют added RnD completion и StartingRun interruption. Кодовые пути и
+пределы описаны в REFERENCE_PHASE_MAPPING.md, DISCHARGE_PROGRAM_CONTRACT.md,
+SAFE_RUN_RESUMPTION_ARCHITECTURE.md. Эти решения не доказывают реализацию.
+Согласованные критерии/передача: USER_DECISIONS_2026_10_20_HANDOFF.md.
+
 | Сценарий | Ожидаемое программное поведение | Источник / граница |
 |---|---|---|
 | Safe/R&D, разрешение unlock уже получено, синяя отпущена | Unlock FALSE; переход вверх от одиночной синей отсутствует | §5 пп1–4, CVR-001/002; iteration01 |

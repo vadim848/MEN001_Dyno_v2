@@ -1,0 +1,13 @@
+import fs from 'node:fs';import crypto from 'node:crypto';import {spawnSync} from 'node:child_process';
+const base=new URL('./',import.meta.url),repo=new URL('../../',base),safety=new URL('SafetyTests/',repo);
+const inputPaths=JSON.parse(fs.readFileSync(new URL('SafetyTests/test-migration-down-owner/run-001-inputs.json',repo))).files.map(r=>r.path);
+const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const inventory=()=>inputPaths.map(path=>({path,sha256:sha(new URL(path,repo))}));
+const before=inventory();fs.writeFileSync(new URL('CANONICAL_INPUTS_BEFORE.json',base),JSON.stringify({canonical:true,files:before},null,2));
+const childEnv={...process.env},stripped=['MEN001_RND_DOWN_SAL','MEN001_RND_DOWN_SGVL','MEN001_RND_DOWN_EVIDENCE_DIR'];for(const key of stripped)delete childEnv[key];
+const r=spawnSync('npm.cmd',['run','check:software'],{shell:true,cwd:safety,env:childEnv,encoding:'utf8',maxBuffer:48*1024*1024});
+const after=inventory(),unchanged=JSON.stringify(before)===JSON.stringify(after);
+fs.writeFileSync(new URL('CANONICAL_CHECK.log',base),r.stdout+r.stderr);
+fs.writeFileSync(new URL('CANONICAL_RUN_INTEGRITY.json',base),JSON.stringify({exit:r.status,command:'npm run check:software',cwd:'SafetyTests',canonical:true,sourceOverridesStripped:stripped,inputFiles:before.length,unchanged,beforeSha256:crypto.createHash('sha256').update(JSON.stringify(before)).digest('hex'),afterSha256:crypto.createHash('sha256').update(JSON.stringify(after)).digest('hex'),error:r.error?.message},null,2));
+for(const report of ['SOFTWARE_CHECK_RESULTS.json','SOFTWARE_CHECK_RESULTS.md','BOOT_PREFLIGHT_RESULTS.json'])if(fs.existsSync(new URL(report,safety)))fs.copyFileSync(new URL(report,safety),new URL('CANONICAL_'+report,base));
+console.log({exit:r.status,unchanged,stdout:r.stdout,error:r.error?.message});if(!unchanged)throw Error('Canonical inputs changed during run');
