@@ -1,11 +1,14 @@
-# Статус и план — 2026-10-19
+# Статус и план — 2026-10-20
 
 ## Последний принятый результат
 
 03B/R3, PLC pulse LV/HV fix и earlySTO приняты независимым ревью
 в ограниченном программном объёме.
-**178/178 harness,75/75 historical,413/413 current;
-201PASS/1FAIL/5NOT VERIFIED/0ERROR.** Проект в целом НЕ принят.
+Принятая программная версия:178/75/413 PASS,201PASS/1FAIL/5NV.
+Последний report-only BOOT пакет принят независимым ревью и сохранён
+в96a9be9: **193/193 harness,75/75 historical,413/413 current;
+201PASS/1FAIL/7NOT VERIFIED/0ERROR.** Старые case statuses неизменны,
+добавлены2 capability NV,0 functional BOOT PASS. Проект в целом НЕ принят.
 
 SAL SHA256:0fc39751781cf9525765b223e08c909f31353b976ad4c796881268b39f0fa909.
 GVL1.sgvl SHA256:06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5.
@@ -96,16 +99,18 @@ fault и возврат входа без Restart проверены в Safe/R&D
    Network4 unbound data sources и неучтённый group lifecycle должны быть явно
    unsupported, а не давать ложный PASS. Уточнить программные источники/контракт
    по workingreference и первичным описаниям; hardware scope не расширять.
-3. Проверить точный no-EDM EStop Restart contract по vendor sample4: возможное
-   отличие host restartArmed=safe&&restart при одновременном safetyrestore/fall.
-   Это пока проверяемая гипотеза, не новый принятый дефект. До фактов код не менять.
-4. Safe/Run: source review подготовлен; архитектор проверяет native resource
-   budget и ownership при смене режима. Native audit подтвердил3dead AND;
-   первый общий вариант требует260 при лимите255, handoff owner не доказан.
-   Analyst готовит known-scenario test criteria; до counted READY — без SAL правок.
-   Далее полные Safe↔R&D↔Run, emergency owner/recovery, startup.
-   Все41 ID обязательны; branch PASS не закрывает full reachability. Известные
-   сценарии разрабатывать независимо, неизвестные реакции не закреплять.
+3. Гипотеза no-EDM Restart ограниченно исследована и НЕ ДОКАЗАНА.
+   Код по ней не менять; прерванные запросы доступа не обходить.
+4. Safe/Run: known test requirements приняты для RED-пакета.
+   Counted255 кандидат HOLD по SAFE_RUN_GESTURE_PLAN_REVIEW.md:
+   B1 (отложенный Safe-запуск) исправлен в предложении и ограниченно
+   принят review; B2 неявный QR-ignore и B3 causal owner/order открыты. Native SAL не менять до READY.
+   Тестплан отдельно принят reviewer; bounded RED tests первый прогон
+   15 total/8PASS/7FAIL/0 fixtureERROR; финальное independent review
+   ACCEPT tests-as-RED, not logic (SAFE_RUN_GESTURE_TEST_REVIEW.md).
+   Accepted full report201/1/7 относится к версии до нового RED-пакета;
+   не подменять им новые известные отказы. RED пакет готов к checkpoint.
+   Full reachability/emergency/recovery остаются обязательными.
 5. Ожидаются ответы по новым PLC requests, conflict destination, discharge
    completion, новомуGreenвStartingRun и BOTHвRun. Только зависимые сценарии
    ждут ответа; отсутствие ответа не согласие.
@@ -160,7 +165,8 @@ d86925a принятая05+red07; c69bc32 принятая07+red03B;
 218dde5 непринятая03B+reviewedR3red; b5692c3 принятая03B/R3+reviewed PLC pulse red;
 a9f809b принятый PLC pulse fix+reviewed earlySTO fixture plan;
 2ddafef reviewed earlySTO red tests до изменения SAL; a0b0d38 принятый earlySTO.
-Текущий рабочий diff — BOOT/Restart программные исследования и актуализация статуса.
+96a9be9 — независимо принятый report-only whole-source BOOT preflight, без SAL изменений.
+Текущий рабочий diff — Safe/Run планы и актуализация evidence/status.
 
 Baseline workflow-2026-10-18 (manifest/архив/результаты/fixture) неизменяем.
 UpgradeLog3/4 посторонние, никогда не включать. Не реконструировать историю

@@ -22,12 +22,31 @@ SINGLE0.5/BOTH1 утверждены D-TIMING; последнее D-CHORD250 у�
 
 ## Матрица обязательных проверок
 
+Новый отдельный RED этап2026-10-20, SAFE_RUN_GESTURE_TESTS_READY.md:
+15 targeted tests=8PASS/7FAIL/0ERROR;14 actualSAL component cases7PASS/7FAIL
+и1observer metaPASS. Source0fc39751… неизменён, demandedcone170blocks,
+typed Network3 cuts/Network4+group outside. Это7 условных componentFAIL,
+не7доказанных системных дефектов или fullreachability. Noqueue/And3-notready
+preservation controls PASS. Native255 proposal B1 скорректирован, B2/B3 HOLD;
+финальное независимое ревью ACCEPT как RED пакет (SAFE_RUN_GESTURE_TEST_REVIEW.md), исправление SAL не принято.
+Полный пакет не перезапускался, сохранённый201/1/7 отчёт ниже относится
+к accepted source ДО новых RED и не включает эти7FAIL. Все41ID обязательны.
+
 Актуализация2026-10-19 после принятого scoped earlySTO: SAL
 `0fc39751781cf9525765b223e08c909f31353b976ad4c796881268b39f0fa909`, SGVL
 `06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5`.
-Сохранённый отчёт:178 harness/75 historical/413 current tests PASS;
-сценарии201PASS/1FAIL/5NV/0ERROR. Эти числа прочитаны из отчёта, а не новый
+Сохранённый отчёт после STOP редактора BOOT preflight A:
+193 harness/75 historical/413 current tests PASS;
+сценарии201PASS/1FAIL/7NV/0ERROR. Эти числа прочитаны из отчёта, а не новый
 запуск аналитика. Все41ID по-прежнему обязательны, весь проект не принят.
+
+BOOT preflight A — report-only capability diagnostic; final independent
+review ACCEPT, checkpoint96a9be9. Это не functional BOOT acceptance.
+Два новых NV: UNSUPPORTED_UNBOUND_PROGRAM_INPUT (Network4
+8unboundinputs/7usedphasewriters) и UNSUPPORTED_GROUP_LIFECYCLE (нет group
+lifecycle/error/memory engine). Functional BOOT PASS=0, прежние cases не
+изменены/не удалены. Это делает ограничения видимыми, не закрывает BOOT-001/002
+и не заменяет программную модель/проверку; SAL/SGVL/runtime не менялись.
 
 - [04 review](ITERATION_04_REVIEW.md), [05 review](ITERATION_05_REVIEW.md):
   реальные LV/HV Set gates и девять текущих разрешений, actual producers и

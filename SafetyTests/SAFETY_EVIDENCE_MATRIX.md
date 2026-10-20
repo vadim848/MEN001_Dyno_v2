@@ -9,11 +9,30 @@
 
 ## Current synchronization — 2026-10-18
 
+Safe/Run RED update2026-10-20: SAFE_RUN_GESTURE_TESTS_READY.md records15
+targeted tests8PASS/7FAIL/0ERROR (14actualSAL cases7/7 plus1observer metaPASS).
+Source0fc39751… unchanged;170-block demandedcone with typedphasecuts, not
+fullgroup/reachability. Actual conditional failures cover earlySafeBlue,
+Safe valid/late chord exclusivity and Run failedchord→green degradation.
+Noqueue/And3-notready preservation controls PASS. Final test review ACCEPT
+as RED tests only (SAFE_RUN_GESTURE_TEST_REVIEW.md);
+native255 proposal corrected B1 but B2/B3 HOLD, no implementation acceptance.
+No full rerun: accepted201/1/7 report below is historical preRED and does not
+include these7FAIL. Neither observerPASS nor scoped controls close all41IDs.
+
 Latest accepted refresh2026-10-19:03B/R3, PLC pulse and scoped physical earlySTO,
 see EARLY_STO_IMPLEMENTATION_REVIEW.md. SAL
 `0fc39751781cf9525765b223e08c909f31353b976ad4c796881268b39f0fa909`, SGVL
 `06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5`.
-Saved178/75/413 test suites PASS;201PASS/1FAIL/5NV cases, standalone47/0/5;
+Saved after BOOT preflight A editor STOP:193/75/413 test suites PASS;
+201PASS/1FAIL/7NV cases; source unchanged from earlySTO.
+BOOT package final independent review ACCEPT, checkpoint96a9be9;
+report-only capability acceptance, not accepted functional BOOT.
+Two additional capability NV explicitly record Network4 unbound inputs and
+unsupported group lifecycle/memory/error engine. Functional BOOT PASS=0;
+old cases unchanged/none removed. This report-only work does not close BOOT
+requirements or supply native unbound values/group RUN semantics.
+Prior earlySTO standalone47/0/5 is a historical packet result;
 no new run here.
 Actual physical R&D timing/late/rearm recognizer now covered in145-block
 branch with26 given inputs and typed Network3 ownership cuts. R3 uses native

@@ -20,8 +20,8 @@ SGVL06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5.
 255 blocks. Accepted program stages178/75/413 PASS;201PASS/1FAIL/5NV.
 Report-only BOOT preflight now193/75/413 PASS;201PASS/1FAIL/7NV/0ERROR,
 old case statuses unchanged, exactly2 new capability NV,0 functional BOOT PASS.
-Independent report-tool review ACCEPT; program/runtime unchanged.
-No full41 acceptance. Latest local checkpointa0b0d38 contains accepted earlySTO.
+Independent report-tool review ACCEPT; checkpoint96a9be9; program/runtime unchanged.
+No full41 acceptance. Program checkpointa0b0d38 contains accepted earlySTO; report package96a9be9 is newer.
 Earlier2ddafef preserved its reviewed red tests before program changes.
 
 Current reviews/evidence: EARLY_STO_IMPLEMENTATION_REVIEW.md and
@@ -36,8 +36,14 @@ both channels. Only new WINDOW became first-only; legacy mainESTOP/SGVL stayed
 unchanged. Runtime/closure/staticgraph/inventory use one native pair resolver.
 ErrorFALSE remains a stub; group/EDM/lifecycle proof is not claimed.
 
-Next: reviewed software BOOT/lifecycle preflight and no-EDM Restart-contract
-investigation, then remaining full sequences/ownership. Several behavior-policy
+Safe/Run known-scenario RED now independently accepted as tests:15total,
+8PASS/7FAIL/0ERROR (14actualSAL7/7 plus observer1). Source unchanged.
+See SAFE_RUN_GESTURE_TESTS_READY.md / TEST_REVIEW.md and immutable red baseline.
+Earlier full report201/1/7 predates these new tests, full package not rerun.
+Next: resolve native B2/B3, reviewed source implementation, unchanged tests green.
+Counted255 candidate HOLD: B1 delayed-launch proposal corrected, but implicit
+Run BOTH ignore (B2) and owner/order proof (B3) remain unresolved. No-EDM Restart hypothesis NOT PROVEN, no code fix.
+Several behavior-policy
 questions await user answers; do not guess. No new program edit without the
 requirements/plan/redtests/independentreview/checkpoint workflow. No push.
 Read WORK_STATUS_AND_PLAN.md and SOFTWARE_ACCEPTANCE_SCOPE.md for current scope.
