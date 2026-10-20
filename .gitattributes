@@ -3,6 +3,15 @@
 ###############################################################################
 * text=auto
 
+# Immutable software evidence: preserve the bytes bound by SHA256 manifests.
+SafetyTests/independent-safe-resumption/** -text
+SafetyTests/independent-safe-resumption/**/*.sal -diff
+SafetyTests/independent-safe-resumption/**/*.sgvl -diff
+SafetyTests/candidates/safe-resumption/*.sal -text -diff
+SafetyTests/candidates/safe-resumption/*.sgvl -text -diff
+SafetyTests/candidates/safe-resumption/binding-audit.json -text
+SafetyTests/candidates/safe-resumption/invariants.json -text
+
 ###############################################################################
 # Set default behavior for command prompt diff.
 #

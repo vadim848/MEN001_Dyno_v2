@@ -37,6 +37,68 @@ reference-behavior.js. R&D — устойчивая промежуточная �
 
 ## Открытые вопросы поведения
 
+### Уточнение источников 2026-10-20: RnD down и Step2
+
+SPEC§11 уже задаёт штатный RnD→Safe после отключения LV и подтверждений;
+выбор конечного Safe либо Run не является новым вопросом пользователю.
+В Safe|RnD resumption lifecycle ранее ошибочно предполагалась здоровая ветвь
+Step2→Safe. Current trace аналитика/архитектора этого не доказывает: RnD SG
+ведёт через Network12/And15 (!LV_C1_FBK) к Step2_Set_2; healthy Step2 связан
+с исходной power-on последовательностью Network5. Найденные Safe producers
+Network5/And7 и Network9/And1 заблокированы объявленным FalseInputFALSE.
+Не менять этот вход или EStop ради прохождения выдуманного healthy endpoint.
+Это обнаруженный пробел соответствия кода требованию, а не новый oracle.
+
+Ограниченный owner proof может заканчивать actual Step2 acceptance, сбросом
+RnD и SG на фактическом выходе из MODE Safe|RnD. Он не закрывает обязательный
+RnD→Safe, LV-discharge completion или full lifecycle. Трассировка и границы:
+SAFE_RUN_RESUMPTION_SCENARIO_REVIEW.md, раздел correction. Сначала архитектор
+сопоставляет согласованный shutdown с исходной последовательностью. Если после
+этого не определён именно LV completion, адресный вопрос: из устойчивого RnD,
+HV уже безопасен/C2OFF, принята новая green500, LV команды выключены и
+LV_C1_FBK OFF — какая существующая последовательность программных входов
+подтверждает окончание LV discharge перед Safe? Ответ не получен; новые
+feedback/timeout/аппаратные источники не предполагаются. Это отдельный
+возможный уточняющий вопрос, не разрешение менять routing или прежние времена.
+
+Дополнение no-up oracle: после реального SG→LV-off→LV_C1_FBK OFF→Step2 и
+выхода RnD, при NC healthy, FalseInputFALSE, PLC00, обеих кнопках OFF и
+LV/HV feedbackOFF новая команда повышения отсутствует. По §11 нельзя заново
+принять LV/HV Set или поднять отключённые command outputs. Это определено
+независимо от неизвестного LV-discharge completion. Известный power-on fanout
+Network5/And1 делает это кандидатом inherited routing defect; baseline и
+candidate проверяются одной conditional negative трассой. Без её результата
+не объявлять выполненный FAIL; даже при reenergization не утверждать достижение
+Run, поскольку feedback остаются OFF. Потенциальный вопрос о completion→Safe
+остаётся отдельным и не блокирует no-up проверку.
+
+Independent no-reenergization baseline/candidate traces теперь прочитаны:
+оба conditional протокола завершены, оба RED по permitted LV/HVSet/выходам,
+при семи точных Network4 inactive cuts и начальном Safe. Это воспроизведённый
+inherited программный дефект в объявленном bounded protocol, не proof полного
+BOOT/Run endpoint/оборудования. Точные IDs, hashes и first-sample границы
+сохранены в SAFE_RUN_RESUMPTION_SCENARIO_REVIEW.md. Исправление обязано
+сохранить положительные fresh Safe BOTH и RnD BOTH/early-STO проверки.
+
+Адресный ещё не отвеченный вопрос о completion (если source mapping его не
+разрешит): «Исходно устойчивый R&D, HV разряжен и C2OFF. После новой green500
+команды LV выключены и LV_C1_FBK FALSE. Какой существующий программный вход
+либо существующий таймер с его условиями запуска/завершения подтверждает
+окончание LV discharge перед завершением перехода в Safe?» Safe endpoint
+уже задан, не спрашивается; новый сигнал/timeout не предполагается.
+
+Ограничение предложенного fix: общий !LVDischarge guard в Network5/And1 не
+согласован как policy всех запусков. Требование no-auto-UP после RnD-down без
+новой команды не отменяет явно принятый исходный запуск, если discharge memory
+TRUE была его штатным исходным условием. Architect trace указывает возможное
+затрагивание Network4 directStep2 старта до позднего discharge-reset. N4FALSE
+в тесте этого не разрешает; QPpending также не означает отмену PLC пути.
+До source-based различения ongoingdown и legitimateacceptedstart broadguard
+HOLD. Это обязанность архитектурного сохранения source, не основание ослабить
+no-up RED. Новый вопрос пользователю пока не нужен: сначала установить реальный
+программный start event/контракт. Гипотетический точный сценарий и границы
+записаны в SAFE_RUN_RESUMPTION_SCENARIO_REVIEW.md.
+
 Зависимые изменения не выполнять без ответа. Остальные итерации продолжаются.
 Отсутствие ответа не означает согласия. Часть вопросов понадобится только
 при переходе к соответствующему пакету; они не блокируют hold gate/LV permission.
