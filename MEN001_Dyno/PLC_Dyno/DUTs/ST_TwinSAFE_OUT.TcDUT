@@ -13,8 +13,8 @@ STRUCT
 	BatRelay_CMD: BOOL;
 	BatRelay_Manual_Off: BOOL;
 	BatRelay_Manual_On: BOOL;
-	Set_RnD_Mode	:	BOOL	;
-	Set_RnD_Mode2	:	BOOL	;
+	CMD_SAFE_TO_RND	:	BOOL	;
+	CMD_RND_TO_RUN	:	BOOL	;
 
 	EstopPLC: BOOL;
 
@@ -22,6 +22,10 @@ STRUCT
 	RB_BatBMS_Manual_Off: BOOL;
 	RB_BatBMS_Manual_On: BOOL;
 	Bypass_C1C2	:	BOOL	;
+
+	CMD_RUN_TO_RND	:	BOOL	;
+	CMD_RND_TO_SAFE	:	BOOL	;
+	Heartbeat	:	BOOL	;//0.5 s toggle, TwinSAFE watchdog 3 s
 
 END_STRUCT
 END_TYPE
