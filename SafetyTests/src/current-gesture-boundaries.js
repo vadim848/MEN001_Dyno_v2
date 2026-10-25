@@ -2,6 +2,7 @@ import { physicalRndSource } from "./physical-rnd-source.js";
 import { SalRuntime } from "./sal-runtime.js";
 import { anySignalDuring } from "./scan-observer.js";
 import { ObservedSamples } from "./observed-samples.js";
+import { withActualNames } from "./signal-names.js";
 
 function includingObservedSample(r,duration,signal,inputs) {
   const atObservedEdge=r.get(signal);
@@ -18,12 +19,12 @@ export function currentGestureBoundaryChecks(model) {
   const ready = { b_Step_RnD:true,b_ResetPB_Lock:false,in_False_SI2_CH8:false,
     in_InterLock_NC_1:true,in_InterLock_NC_2:true,
     in_Door_Monitor:true,inPLC_RnD_Mode:false,inPLC_RnD_Mode_2:false,
-    in_HV_C2_FBK:false,in_HV_Healthy_FBK:true,in_Reset_PB:false,in_Relase_Door_PB:false };
+    in_HV_C2_FBK:false,in_HV_Faulty_FBK:false /* R0 nominal (lead 2026-10-22, D-ARCH-POL): raw Faulty FALSE = PS healthy; on F1/R1 mapped to in_HV_Healthy_FBK with the same raw FALSE */,in_Reset_PB:false,in_Relase_Door_PB:false };
   const branch = model.networks.find(n => n.name === "Network12");
   function check(id, requirements, scenario) {
     if (!branch) { results.push({ id,requirements,status:"NOT VERIFIED",reason:"Actual Network12 binding missing" }); return; }
     const actual=integrated?physicalRndSource(model,1):null;
-    const r = actual?.r ?? new SalRuntime({ ...model,networks:[branch] },{ scanMs:1,unconnectedInput:false }).setInputs(ready);
+    const r = actual?.r ?? new SalRuntime({ ...model,networks:[branch] },{ scanMs:1,unconnectedInput:false }).setInputs(withActualNames(model,ready));
     const observations = [];
     const expect = (signal,expected,checkpoint,actual=r.get(signal)) => observations.push({ signal,expected,actual,checkpoint });
     try {

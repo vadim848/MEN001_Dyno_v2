@@ -1,0 +1,241 @@
+{
+ "note": "stand runtime model (sal-runtime, unconnectedInput:false, 1 ms scan, plant: FBK follow outputs); editor self-check only, not a requirement PASS; architect reference outputs: repro/t16.out.txt, t18.out.txt, t20.out.txt (prototype on F1)",
+ "core": "program/editor/E2a-RC/source",
+ "candidate": "candidates/E2a-RC/native",
+ "rows": [
+  {
+   "group": "t16",
+   "name": "RUN base fbk30",
+   "mut": [],
+   "E2a-core": "Run@cmd+100",
+   "E2a-RC": "Run@cmd+600"
+  },
+  {
+   "group": "t16",
+   "name": "RUN base fbk700",
+   "mut": [],
+   "E2a-core": "Run@cmd+702",
+   "E2a-RC": "Run@cmd+802"
+  },
+  {
+   "group": "t16",
+   "name": "RUN base HV glitch @560",
+   "mut": [],
+   "E2a-core": "Run@cmd+100",
+   "E2a-RC": "Run@cmd+663"
+  },
+  {
+   "group": "t16",
+   "name": "RUN base FBK dip @560",
+   "mut": [],
+   "E2a-core": "Run@cmd+100",
+   "E2a-RC": "Run@cmd+663"
+  },
+  {
+   "group": "t16",
+   "name": "RUN base HV faulty",
+   "mut": [],
+   "E2a-core": "Run@cmd+-1",
+   "E2a-RC": "Run@cmd+-1"
+  },
+  {
+   "group": "t16",
+   "name": "RUN base fbk9999 (no FBK)",
+   "mut": [],
+   "E2a-core": "Run@cmd+-1",
+   "E2a-RC": "Run@cmd+-1"
+  },
+  {
+   "group": "t16",
+   "name": "RUN M window bypass FBAnd6.AndIn1",
+   "mut": [
+    "deactivate-input //Network12/FBAnd6.AndIn1"
+   ],
+   "E2a-RC": "Run@cmd+132"
+  },
+  {
+   "group": "t16",
+   "name": "RUN M FBAnd6.AndIn2 (FBK) fbk9999",
+   "mut": [
+    "deactivate-input //Network12/FBAnd6.AndIn2"
+   ],
+   "E2a-RC": "Run@cmd+600"
+  },
+  {
+   "group": "t16",
+   "name": "RUN M FBAnd6.AndIn3 (HV) hvBad",
+   "mut": [
+    "deactivate-input //Network12/FBAnd6.AndIn3"
+   ],
+   "E2a-RC": "Run@cmd+600"
+  },
+  {
+   "group": "t16",
+   "name": "RND base fbk30",
+   "mut": [],
+   "E2a-core": "R&D@cmd+100",
+   "E2a-RC": "R&D@cmd+600"
+  },
+  {
+   "group": "t16",
+   "name": "RND base fbk700",
+   "mut": [],
+   "E2a-core": "R&D@cmd+702",
+   "E2a-RC": "R&D@cmd+802"
+  },
+  {
+   "group": "t16",
+   "name": "RND base LV faulty",
+   "mut": [],
+   "E2a-core": "R&D@cmd+-1",
+   "E2a-RC": "R&D@cmd+-1"
+  },
+  {
+   "group": "t16",
+   "name": "RND base fbk9999 (no FBK)",
+   "mut": [],
+   "E2a-core": "R&D@cmd+-1",
+   "E2a-RC": "R&D@cmd+-1"
+  },
+  {
+   "group": "t16",
+   "name": "RND M window bypass N11/FBAnd4.AndIn1",
+   "mut": [
+    "deactivate-input //Network11/FBAnd4.AndIn1"
+   ],
+   "E2a-RC": "R&D@cmd+132"
+  },
+  {
+   "group": "t16",
+   "name": "RND M N11/FBAnd4.AndIn2 (FBK) fbk9999",
+   "mut": [
+    "deactivate-input //Network11/FBAnd4.AndIn2"
+   ],
+   "E2a-RC": "R&D@cmd+600"
+  },
+  {
+   "group": "t18",
+   "name": "HV base",
+   "mut": [],
+   "E2a-core": "pre=1 SU@17019 reqOFF@-1 (-) end req=0 S3",
+   "E2a-RC": "pre=1 SU@17019 reqOFF@17021 (reqOFF-a=2) end req=0 SR"
+  },
+  {
+   "group": "t18",
+   "name": "HV base rejected (cover open)",
+   "mut": [],
+   "E2a-core": "pre=1 SU@-1 reqOFF@-1 (-) end req=1 SR",
+   "E2a-RC": "pre=1 SU@-1 reqOFF@-1 (-) end req=1 SR"
+  },
+  {
+   "group": "t18",
+   "name": "HV M FBOr5.OrIn2",
+   "mut": [
+    "deactivate-input //Network1/FBOr5.OrIn2"
+   ],
+   "E2a-RC": "pre=1 SU@17019 reqOFF@-1 (-) end req=1 SR"
+  },
+  {
+   "group": "t18",
+   "name": "LV base",
+   "mut": [],
+   "E2a-core": "pre=1 g2@13517 reqOFF@-1 (-)",
+   "E2a-RC": "pre=1 g2@13517 reqOFF@13518 (reqOFF-a=1)"
+  },
+  {
+   "group": "t18",
+   "name": "LV M FBOr1.OrIn2",
+   "mut": [
+    "deactivate-input //Network1/FBOr1.OrIn2"
+   ],
+   "E2a-RC": "pre=1 g2@13517 reqOFF@-1 (-)"
+  },
+  {
+   "group": "t20",
+   "name": "base B_rejectedPLC_coverOpen",
+   "mut": [],
+   "E2a-core": "pre=1 min=1",
+   "E2a-RC": "pre=1 min=1"
+  },
+  {
+   "group": "t20",
+   "name": "base C_RnD_EStop_PLC11",
+   "mut": [],
+   "E2a-core": "min=1 SR",
+   "E2a-RC": "min=0 firstFALSE@+4 SR"
+  },
+  {
+   "group": "t20",
+   "name": "base D_Safe_EStop_PLC10_LV",
+   "mut": [],
+   "E2a-core": "pre=1 min=1 S12",
+   "E2a-RC": "pre=1 min=1 S1"
+  },
+  {
+   "group": "t20",
+   "name": "base E_button_RnD_to_Run",
+   "mut": [],
+   "E2a-core": "a=0 u=+2 reqOFF=never",
+   "E2a-RC": "a=0 u=+2 reqOFF=+2"
+  },
+  {
+   "group": "t20",
+   "name": "base R64_Safe_to_RnD_BOTH_HVreq",
+   "mut": [],
+   "E2a-core": "S1 pre=1 during BOTH min=1 -> SR req=1",
+   "E2a-RC": "S1 pre=1 during BOTH min=1 -> SR req=1"
+  },
+  {
+   "group": "t20",
+   "name": "C delta -1 (PLC at ES-1)",
+   "mut": [],
+   "E2a-core": "min=1 SR C1=1 C2=0 STO=0",
+   "E2a-RC": "min=0 firstFALSE@+3 SR C1=1 C2=0 STO=0"
+  },
+  {
+   "group": "t20",
+   "name": "C delta 0 (PLC at ES+0)",
+   "mut": [],
+   "E2a-core": "min=1 SR C1=1 C2=0 STO=0",
+   "E2a-RC": "min=0 firstFALSE@+4 SR C1=1 C2=0 STO=0"
+  },
+  {
+   "group": "t20",
+   "name": "C delta 1 (PLC at ES+1)",
+   "mut": [],
+   "E2a-core": "min=1 SR C1=1 C2=0 STO=0",
+   "E2a-RC": "min=0 firstFALSE@+4 SR C1=1 C2=0 STO=0"
+  },
+  {
+   "group": "t20",
+   "name": "C delta 2 (PLC at ES+2)",
+   "mut": [],
+   "E2a-core": "min=1 SR C1=1 C2=0 STO=0",
+   "E2a-RC": "min=0 firstFALSE@+4 SR C1=1 C2=0 STO=0"
+  },
+  {
+   "group": "t20",
+   "name": "M FBAnd4.AndIn2 (cover) B",
+   "mut": [
+    "deactivate-input //Network12/FBAnd4.AndIn2"
+   ],
+   "E2a-RC": "pre=1 min=0 firstFALSE@+4"
+  },
+  {
+   "group": "t20",
+   "name": "M FBAnd91.AndIn4 (EOk) D",
+   "mut": [
+    "deactivate-input //Network2/FBAnd91.AndIn4"
+   ],
+   "E2a-RC": "pre=1 min=0 firstFALSE@+3 S12"
+  },
+  {
+   "group": "t20",
+   "name": "M FBOr5.OrIn2 E",
+   "mut": [
+    "deactivate-input //Network1/FBOr5.OrIn2"
+   ],
+   "E2a-RC": "a=0 u=+2 reqOFF=never"
+  }
+ ]
+}

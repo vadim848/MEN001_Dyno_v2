@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="E_MotorState" Id="{0f843d1a-6f68-4eb5-b640-df284d0e0ccf}">
+    <Declaration><![CDATA[TYPE E_MotorState :
+(
+    DISABLED    := 0,
+    ENABLING    := 1,
+    READY       := 2,
+    MOVING      := 3,
+    STOPPING    := 4,
+    HOMING      := 5,
+    ERROR       := 6,
+    RESETTING   := 7    // sequenced fault recovery: SoE drive reset -> settle -> NC reset
+) UDINT := DISABLED;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

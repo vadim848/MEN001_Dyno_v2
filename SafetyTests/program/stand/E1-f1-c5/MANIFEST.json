@@ -1,0 +1,55 @@
+{
+ "slice": "E1-f1-c5",
+ "role": "v2-stand-engineer",
+ "date": "2026-10-21",
+ "reviewCondition": "F1_G4_REVIEW C5",
+ "sha256": {
+  "scripts/f1-delta-check.mjs": "8fbb8d9888bc80681e7f0e632d1354e8811cacf61d1c8449cf27e828402b0e92",
+  "program/tester/E1-f1/delta-check.mjs": "654a041a39eccfe345c98ac49efd7fa906044ce8da6349d595173184a8de81c7",
+  "program/stand/E1-f1-c5/f1-delta-check.diff": "76f25cfe075438d85ac97e382c8730dec80e072746d36df23e25b4b715251767",
+  "program/stand/E1-f1-c5/gitattributes.txt": "854e072b3f8ba059c4961b69aabac146ebe9949d8a30f08296a55454660f9553",
+  "program/stand/E1-f1-c5/MIG8_PROCEDURE.md": "61618bfdb7fd4087e442e9991893f421690351027935821b148b5278fca56067",
+  "fixtures/resumed-p0-canonical/MANIFEST.json": "5d6fc0e7ce10bb3d7ca6b932f9256c8f88c49b351e3157a8b6aa55c0d8f2996e",
+  "fixtures/resumed-p0-canonical/TwinSafeGroup1.sal": "34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b",
+  "fixtures/resumed-p0-canonical/GVL1.sgvl": "517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635",
+  "fixtures/resumed-p0-canonical/TwinSafeGroup1.sal.diagram": "7b5eb79439011cdf9a3206aa815dec4349a35cf8155bfac7492b7ffd75e578ce",
+  "resumed-development-2026-10-21/architect/F1_RUN_RECOGNIZER_PLAN.json": "b52f6b0e440a09ce138ad91e633b2fcd78f431d246a4dbdabc083809a0a08b60",
+  "candidates/resumed-f1/native/TwinSafeGroup1.sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "candidates/resumed-f1/native/GVL1.sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+  "candidates/resumed-f1/native/TwinSafeGroup1.sal.diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603"
+ },
+ "checkerPort": {
+  "from": "program/tester/E1-f1/delta-check.mjs",
+  "to": "scripts/f1-delta-check.mjs",
+  "changedOnly": [
+   "header comments",
+   "import os, fileURLToPath",
+   "outPath optional -> os.tmpdir() mkdtemp; refuse program/tester/",
+   "report.tool path + toolOrigin"
+  ],
+  "checkLogicIdentical": "43 check expressions byte-identical (see f1-delta-check.diff); stand vs original JSON reports identical except generatedAt/tool/toolSha256/toolOrigin (F1) and stack-trace file path (P0vsP0)"
+ },
+ "runs": [
+  {
+   "cmd": "node scripts/f1-delta-check.mjs fixtures/resumed-p0-canonical candidates/resumed-f1/native resumed-development-2026-10-21/architect/F1_RUN_RECOGNIZER_PLAN.json",
+   "result": "DELTA PASS 43/43",
+   "exit": 0
+  },
+  {
+   "cmd": "node scripts/f1-delta-check.mjs fixtures/resumed-p0-canonical fixtures/resumed-p0-canonical <plan>",
+   "result": "8 FAIL then DELTA ERROR (treated as FAIL): Cannot read properties of undefined (reading tag)",
+   "exit": 2,
+   "note": "identical to original tester checker on same inputs"
+  },
+  {
+   "cmd": "same F1 run in isolated temp copy without .git",
+   "result": "DELTA PASS 43/43",
+   "exit": 0
+  },
+  {
+   "cmd": "node scripts/f1-delta-check.mjs a b <plan> program/tester/E1-f1/x.json",
+   "result": "refused, nothing written",
+   "exit": 64
+  }
+ ]
+}

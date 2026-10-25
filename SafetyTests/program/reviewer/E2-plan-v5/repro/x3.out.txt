@@ -1,0 +1,12 @@
+v4/ Safe->R&D cmd@1002 out_LV_Discharge_Request&cmd rel [-1,-1] STO released rel -1 state b_Step_RnD rel 100
+   R&D->Run cmd@1002 out_HV_Discharge_Request&cmd rel [-1,-1] STO released rel 0 state b_Step3 rel 102
+   after Run->R&D: S_RnD HVdis 1 LVdis 0
+   2nd R&D->Run cmd@1002 out_HV_Discharge_Request&cmd rel [0,101] STO released rel 0 state b_Step3 rel 102
+   after R&D->Safe: S1 LVdis 1
+   2nd Safe->R&D cmd@1002 out_LV_Discharge_Request&cmd rel [0,99] STO released rel -1 state b_Step_RnD rel 100
+v5/ Safe->R&D cmd@1002 out_LV_Discharge_Request&cmd rel [-1,-1] STO released rel -1 state b_Step_RnD rel 600
+   R&D->Run cmd@1002 out_HV_Discharge_Request&cmd rel [-1,-1] STO released rel 0 state b_Step3 rel 600
+   after Run->R&D: S_RnD HVdis 1 LVdis 0
+   2nd R&D->Run cmd@1002 out_HV_Discharge_Request&cmd rel [0,599] STO released rel 0 state b_Step3 rel 600
+   after R&D->Safe: S1 LVdis 1
+   2nd Safe->R&D cmd@1002 out_LV_Discharge_Request&cmd rel [0,599] STO released rel -1 state b_Step_RnD rel 600

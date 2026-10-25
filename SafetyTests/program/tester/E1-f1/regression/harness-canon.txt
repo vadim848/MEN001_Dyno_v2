@@ -1,0 +1,189 @@
+|A05 E-Stop dominates from Run and enters emergency coast
+|A05 E-Stop in Safe and R&D goes directly to de-energized Emergency
+|A06 E-Stop during C2 disconnect continues waiting for C2 OFF
+|A06 E-Stop during discharge continues discharge with C2 ON
+|A06 E-Stop in an HV-capable phase uses STO coast and keeps C2 connected
+|A06 complete E-Stop HV sequence cannot skip coast, discharge or C2 feedback
+|B01 green requires release filter and stable single hold
+|B03 staggered buttons inside chord window become one StepUp
+|B09 flicker in two-button attempt never degrades to blue
+|B11 two-button timer restarts after flicker
+|B14 incomplete release filter cannot arm held input
+|BOOT Network4 lists eight unbound native inputs, seven precise phase writers/readers, unused channel8
+|BOOT accepts matching relocated file pairs, portable LF/CRLF without dropping any source attributes
+|BOOT custom SGVL must be explicit and parser audits that exact requested file
+|BOOT declared RunStop/ErrAck are typed connections, not inferred group RUN or main Restart
+|BOOT file mutation rejected: alter full-source metadata revision
+|BOOT file mutation rejected: change native attribute while preserving count
+|BOOT file mutation rejected: foreign namespace relationship
+|BOOT file mutation rejected: mask Network4 name
+|BOOT file mutation rejected: remove complete Network4
+|BOOT file mutation rejected: remove one actual state writer
+|BOOT preflight owns fresh full-source parsing, all native inventory and exact two unsupported categories
+|BOOT rejects a dropped trusted inventory entry instead of accepting copied source digests
+|BOOT rejects an unsupported adapter revision rather than inventing group capability
+|BOOT rejects present-but-null/undefined/invalid custom paths without canonical fallback
+|BOOT rejects supplied filtered models, copied auditPASS, fallback/seeds and caller trust overrides
+|C01/C05/C06/C08 cover unlock, open wait, rejected rise, relock and fresh rise
+|C05 open cover is permitted indefinitely in Safe and R&D
+|C06 upward request with open cover is silently ignored
+|C09 cover interlock loss during discharge continues emergency discharge
+|C09 cover interlock loss during disconnect never re-closes C2
+|C09 cover interlock loss in HV-capable phases latches emergency energy removal
+|C09 loss of cover interlock in StartingRnD faults before R&D
+|COMBINED01 down pulse retains native owner across release and blocks blue access
+|COMBINED02 completion and mode change cannot re-enable held-blue access
+|COMBINED03 emergency drops qualified unlock in the same frame and latches through recovery
+|COMBINED04 interrupted route/energy context is frozen for diagnostics without normal requests
+|COMBINED05 emergency wins over simultaneous completion and missing guards reject pulses
+|D01/E01 full upward path requires feedback and locked cover
+|D04 LV ON feedback timeout prevents R&D
+|E04 C2 ON feedback timeout prevents Run
+|END-TO-END normal Safe -> R&D -> Run -> R&D -> Safe cycle
+|F01 normal Run to R&D keeps C2 during SS1 and discharge
+|F02 Healthy loss during SS1 immediately selects STO coast path
+|G06 before timeout missing discharge completion prevents C2 opening and R&D
+|G06 discharge timeout faults while keeping C2 and discharge commanded
+|G07 C2 OFF feedback timeout prevents R&D
+|H02 LV OFF feedback timeout prevents Safe
+|Missing SAL bindings produce ERROR rather than acceptance success
+|NATIVE01 Boolean contact lowering preserves next-state equations across varied contexts
+|NATIVE02 schedule has contiguous relative order and keeps all latch writes after next-state gates
+|NOWNER01 four routes retain pulses and complete equivalently to the host owner
+|NOWNER02 deterministic mixed commands/faults/recovery match the reference across 1000 scans
+|NOWNER03 timeout takeover is suppressed by valid completion at the same boundary
+|NOWNER04 conflicts latch emergency and unspecified producer inputs are rejected
+|NOWNER05 graph matches fault-over-completion and fresh manual recovery gating
+|OBS-CAUSAL helper250 fixed1 secondDelta249: before-helper capture
+|OBS-CAUSAL helper250 fixed1 secondDelta250: before-helper capture
+|OBS-CAUSAL helper250 fixed1 secondDelta251: before-helper capture
+|OBS-CAUSAL helper250 fixed10 secondDelta240: before-helper capture
+|OBS-CAUSAL helper250 fixed10 secondDelta250: before-helper capture
+|OBS-CAUSAL helper250 fixed10 secondDelta260: before-helper capture
+|OBS-CAUSAL helper250 fixed2 secondDelta248: before-helper capture
+|OBS-CAUSAL helper250 fixed2 secondDelta250: before-helper capture
+|OBS-CAUSAL helper250 fixed2 secondDelta252: before-helper capture
+|OBS-CAUSAL helper250 fixed5 secondDelta245: before-helper capture
+|OBS-CAUSAL helper250 fixed5 secondDelta250: before-helper capture
+|OBS-CAUSAL helper250 fixed5 secondDelta255: before-helper capture
+|OBS-ESTOP delay100 fixed10: startup, loss, threshold, recovery and new window
+|OBS-ESTOP delay100 fixed1: startup, loss, threshold, recovery and new window
+|OBS-ESTOP delay100 fixed2: startup, loss, threshold, recovery and new window
+|OBS-ESTOP delay100 fixed5: startup, loss, threshold, recovery and new window
+|OBS-ESTOP delay250 fixed10: startup, loss, threshold, recovery and new window
+|OBS-ESTOP delay250 fixed1: startup, loss, threshold, recovery and new window
+|OBS-ESTOP delay250 fixed2: startup, loss, threshold, recovery and new window
+|OBS-ESTOP delay250 fixed5: startup, loss, threshold, recovery and new window
+|OBS-TON //Network1/FBTon1 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network1/FBTon1 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network1/FBTon1 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network1/FBTon1 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network11/FBTon1 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network11/FBTon1 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network11/FBTon1 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network11/FBTon1 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network12/FBTon3 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network12/FBTon3 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network12/FBTon3 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network12/FBTon3 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network2/FBTon1 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network2/FBTon1 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network2/FBTon1 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network2/FBTon1 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network2/FBTon2 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network2/FBTon2 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network2/FBTon2 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network2/FBTon2 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon1 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon1 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon1 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon1 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon2 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon2 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon2 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon2 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon3 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon3 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon3 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon3 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon4 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon4 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon4 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network5/FBTon4 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network6/FBTon1 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network6/FBTon1 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network6/FBTon1 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network6/FBTon1 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network6/FBTon2 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network6/FBTon2 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network6/FBTon2 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network6/FBTon2 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network7/FBTon1 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network7/FBTon1 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network7/FBTon1 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network7/FBTon1 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network7/FBTon2 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network7/FBTon2 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network7/FBTon2 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network7/FBTon2 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network7/FBTon3 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network7/FBTon3 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network7/FBTon3 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network7/FBTon3 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network8/FBTon1 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network8/FBTon1 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network8/FBTon1 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network8/FBTon1 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //Network8/FBTon2 fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //Network8/FBTon2 fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //Network8/FBTon2 fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //Network8/FBTon2 fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/BLUE fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/BLUE fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/BLUE fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/BLUE fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/BOTH fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/BOTH fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/BOTH fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/BOTH fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/GREEN fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/GREEN fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/GREEN fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/GREEN fixed5: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/RELEASE fixed10: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/RELEASE fixed1: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/RELEASE fixed2: observed-edge boundary, interruption and rehold
+|OBS-TON //RndPhysicalCompact/RELEASE fixed5: observed-edge boundary, interruption and rehold
+|OWNER01 one-scan down request survives release and repeated/up commands until completion
+|OWNER02 held command cannot retrigger after completion and stale completion rejects a fresh attempt
+|OWNER03 emergency beats completion and remains latched after fault disappears
+|OWNER04 guard rejection and simultaneous commands never select upward over downward
+|OWNER05 illustrative timeout escalates, while completion at the boundary wins
+|OWNER06 integrated recognizer pulse retains request across release and inhibits new gestures
+|Observed dispatcher records exact fixed-grid deltas and rejects off-grid events
+|P01 missing LV or HV connector interlock in Safe only blocks StepUp
+|P02 connector loss after leaving Safe starts emergency response
+|P03 either external emergency interlock channel causes Emergency
+|P04 restored external interlock does not cancel emergency sequence
+|PROTO01 startup-held and incomplete neutral cannot create a command
+|PROTO02 green pulse occurs once; short release cannot re-arm
+|PROTO03 inclusive chord boundary accepts 490/500 and rejects 510 ms
+|PROTO04 failed chord never degrades and requires a fresh simultaneous interval
+|PROTO05 blue permission falls on release/fault and cannot resume while held
+|PROTO06 mode/transition and missing energy proof inhibit access
+|PROTO07 conflicting state memories inhibit outputs and return to release qualification
+|SAL-INPUT01 inventory finds unresolved transition input and physical constant alias
+|SAL-INPUT02 deleting a wired producer is reported rather than becoming an assumed constant
+|SAL-INPUT03 a selected network cannot silently claim omitted global producers
+|SAL-RUN01 runtime supports every function block present in v2
+|SAL-RUN02 Network2 connector qualification drops immediately
+|SAL-RUN03 connector recovery requires the configured 100 ms TON
+|SAL-SEM01 default execution follows all group block numbers across network boundaries
+|SAL-SEM02 real RS holds, sets and resets with Reset dominant
+|SAL-SEM03 unconnected Decouple inputs are reported and sensitive to the chosen assumption
+|Scan observer advances every scan without short-circuiting after detection
+|Scan observer retains an interior one-millisecond pulse after output returns FALSE
+|Software package executes working SAL components and preserves explicit assumptions
+|TIMER01 Armed->Candidate maintains the first sample; faulty fixtures lose one scan
+|TIMER02 Candidate->TwoAttempt preserves both-button timing and resets on channel loss
+|TIMER03 inhibit clears timers and requires a new complete neutral interval

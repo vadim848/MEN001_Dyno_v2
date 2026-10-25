@@ -1,0 +1,17 @@
+base                     runIL        S6 EOk=false C2=false
+base                     downIL       S_RnD EOk=true
+base                     suIL         S6 EOk=false STO1=false C2=false
+base                     rndBothOpen  S_RnD SU=false STO1=false
+base                     runDecoder   viol=0 
+base                     conn         EOk=false
+FBOrIlRunOk.OrIn3        downIL       S4 EOk=false
+FBAndNotRunSu.AndIn2     suIL         S_RnD EOk=true STO1=true C2=true
+FBAndSuEmg.AndIn1        runDecoder   viol=3 9818:b_Step4+b_Step6://Network3/DEC_EMG/AndOut
+FBOrStep4.OrIn2          suIL         S_RnD EOk=false STO1=true C2=true
+FBOr13.OrIn2             suIL         S_RnD+S6 EOk=false STO1=false C2=false
+HEALTHY_OK.AndIn3        runIL        S3 EOk=false C2=true
+HEALTHY_OK.AndIn2 inv    hvRun        S4
+GATE_030.OrIn5           rndBothOpen  S3 SU=false STO1=true
+GATE_020.AndIn6          rndBothOpen  S4 SU=false STO1=false
+DEC_RUN.AndIn2           runDecoder   viol=0 
+FBAnd1.AndIn4 (conn)     conn         EOk=true

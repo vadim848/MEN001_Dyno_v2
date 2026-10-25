@@ -4,8 +4,11 @@
   "type": "module",
   "scripts": {
     "check:software": "node scripts/software-check.js",
-    "test": "node --test",
+    "test": "node --test \"test/*.test.js\"",
     "test:mutations": "node scripts/mutation-check.js",
+    "test:sal-mutations": "node scripts/sal-mutation-check.js",
+    "test:stand-fb": "node scripts/stand-fb-mutation-check.js",
+    "test:isolated": "node scripts/stand-isolated-check.js",
     "audit:xml": "node scripts/xml-audit.js",
     "audit:sal": "node scripts/sal-report.js",
     "audit:boot": "node scripts/boot-preflight.js --write",
@@ -16,6 +19,10 @@
     "design:owner": "node scripts/native-owner-report.js",
     "design:integrated": "node scripts/integrated-control-report.js",
     "audit:bindings": "node scripts/signal-bindings-report.js",
-    "design:timers": "node scripts/timer-producer-report.js"
+    "design:timers": "node scripts/timer-producer-report.js",
+    "probe:grants": "node scripts/grant-probes.js",
+    "check:e2-delta": "node scripts/e2-delta-check.mjs --chain F1=candidates/resumed-f1/native R1=candidates/E2-R1/native E2a-core=candidates/E2a/native E2a-RC=candidates/E2a-RC/native",
+    "check:catalog": "node scripts/catalog-check.js",
+    "check:structure": "node scripts/structure-check.js"
   }
 }

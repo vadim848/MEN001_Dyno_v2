@@ -1,0 +1,732 @@
+TAP version 13
+# Subtest: DIAG [split] E2a RUN-CONF RC-5 (i) natural: C2_FBK ON one scan after the command, HV healthy: no Run <= u+599, Run at u+601 (Q-V4-01 "Б", question 68 "Б"), no Emergency
+not ok 1 - DIAG [split] E2a RUN-CONF RC-5 (i) natural: C2_FBK ON one scan after the command, HV healthy: no Run <= u+599, Run at u+601 (Q-V4-01 "Б", question 68 "Б"), no Emergency
+  ---
+  duration_ms: 9490.6863
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:77:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    5 violated checks
+    + actual - expected
+    
+    + [
+    +   'RC-1: no Run in any scan < K=u+500 ((i) natural: C2_FBK ON one scan after the command, HV healthy); Run first at u+100',
+    +   'RC-1: no Run in a scan with C2_FBK OFF or HV Faulty TRUE ((i) natural: C2_FBK ON one scan after the command, HV healthy)',
+    +   'RC-2 (v7): no Run in any scan <= u+599 (window 500 ms + 100 ms, question 68 "Б") ((i) natural: C2_FBK ON one scan after the command, HV healthy)',
+    +   'RC-5 (v7 §4.1): no Run in any scan <= u+599 ((i) natural: C2_FBK ON one scan after the command, HV healthy); Run first at u+100',
+    +   '((i) natural: C2_FBK ON one scan after the command, HV healthy) no Emergency/fault before Run; first t=6519'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'RC-1: no Run in any scan < K=u+500 ((i) natural: C2_FBK ON one scan after the command, HV healthy); Run first at u+100'
+    1: 'RC-1: no Run in a scan with C2_FBK OFF or HV Faulty TRUE ((i) natural: C2_FBK ON one scan after the command, HV healthy)'
+    2: 'RC-2 (v7): no Run in any scan <= u+599 (window 500 ms + 100 ms, question 68 "Б") ((i) natural: C2_FBK ON one scan after the command, HV healthy)'
+    3: 'RC-5 (v7 §4.1): no Run in any scan <= u+599 ((i) natural: C2_FBK ON one scan after the command, HV healthy); Run first at u+100'
+    4: '((i) natural: C2_FBK ON one scan after the command, HV healthy) no Emergency/fault before Run; first t=6519'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    check (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:70:59)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:77:156)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# observation: u=6420 K=u+500 Run first at u+100; K+100 Run=true
+# Subtest: DIAG [split] E2a RUN-CONF RC-5 (ii) C2_FBK delayed 30 ms (ON from u+30): no Run <= u+599, Run at u+601 (Q-V4-01 "Б", question 68 "Б"), no Emergency
+not ok 2 - DIAG [split] E2a RUN-CONF RC-5 (ii) C2_FBK delayed 30 ms (ON from u+30): no Run <= u+599, Run at u+601 (Q-V4-01 "Б", question 68 "Б"), no Emergency
+  ---
+  duration_ms: 2340.4039
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:77:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    5 violated checks
+    + actual - expected
+    
+    + [
+    +   'RC-1: no Run in any scan < K=u+500 ((ii) C2_FBK delayed 30 ms (ON from u+30)); Run first at u+100',
+    +   'RC-1: no Run in a scan with C2_FBK OFF or HV Faulty TRUE ((ii) C2_FBK delayed 30 ms (ON from u+30))',
+    +   'RC-2 (v7): no Run in any scan <= u+599 (window 500 ms + 100 ms, question 68 "Б") ((ii) C2_FBK delayed 30 ms (ON from u+30))',
+    +   'RC-5 (v7 §4.1): no Run in any scan <= u+599 ((ii) C2_FBK delayed 30 ms (ON from u+30)); Run first at u+100',
+    +   '((ii) C2_FBK delayed 30 ms (ON from u+30)) no Emergency/fault before Run; first t=6519'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'RC-1: no Run in any scan < K=u+500 ((ii) C2_FBK delayed 30 ms (ON from u+30)); Run first at u+100'
+    1: 'RC-1: no Run in a scan with C2_FBK OFF or HV Faulty TRUE ((ii) C2_FBK delayed 30 ms (ON from u+30))'
+    2: 'RC-2 (v7): no Run in any scan <= u+599 (window 500 ms + 100 ms, question 68 "Б") ((ii) C2_FBK delayed 30 ms (ON from u+30))'
+    3: 'RC-5 (v7 §4.1): no Run in any scan <= u+599 ((ii) C2_FBK delayed 30 ms (ON from u+30)); Run first at u+100'
+    4: '((ii) C2_FBK delayed 30 ms (ON from u+30)) no Emergency/fault before Run; first t=6519'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    check (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:70:59)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:77:156)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# observation: u=6420 K=u+500 Run first at u+100; K+100 Run=true
+# Subtest: DIAG [split] E2a RUN-CONF RC-5 (iii) C2_FBK delayed 400 ms (ON from u+400): no Run <= u+599, Run at u+601 (Q-V4-01 "Б", question 68 "Б"), no Emergency
+not ok 3 - DIAG [split] E2a RUN-CONF RC-5 (iii) C2_FBK delayed 400 ms (ON from u+400): no Run <= u+599, Run at u+601 (Q-V4-01 "Б", question 68 "Б"), no Emergency
+  ---
+  duration_ms: 2207.1707
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:77:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    5 violated checks
+    + actual - expected
+    
+    + [
+    +   'RC-1: no Run in any scan < K=u+500 ((iii) C2_FBK delayed 400 ms (ON from u+400)); Run first at u+401',
+    +   'RC-1: no Run in a scan with C2_FBK OFF or HV Faulty TRUE ((iii) C2_FBK delayed 400 ms (ON from u+400))',
+    +   'RC-2 (v7): no Run in any scan <= u+599 (window 500 ms + 100 ms, question 68 "Б") ((iii) C2_FBK delayed 400 ms (ON from u+400))',
+    +   'RC-5 (v7 §4.1): no Run in any scan <= u+599 ((iii) C2_FBK delayed 400 ms (ON from u+400)); Run first at u+401',
+    +   '((iii) C2_FBK delayed 400 ms (ON from u+400)) no Emergency/fault before Run; first t=6820'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'RC-1: no Run in any scan < K=u+500 ((iii) C2_FBK delayed 400 ms (ON from u+400)); Run first at u+401'
+    1: 'RC-1: no Run in a scan with C2_FBK OFF or HV Faulty TRUE ((iii) C2_FBK delayed 400 ms (ON from u+400))'
+    2: 'RC-2 (v7): no Run in any scan <= u+599 (window 500 ms + 100 ms, question 68 "Б") ((iii) C2_FBK delayed 400 ms (ON from u+400))'
+    3: 'RC-5 (v7 §4.1): no Run in any scan <= u+599 ((iii) C2_FBK delayed 400 ms (ON from u+400)); Run first at u+401'
+    4: '((iii) C2_FBK delayed 400 ms (ON from u+400)) no Emergency/fault before Run; first t=6820'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    check (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:70:59)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:77:156)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# observation: u=6420 K=u+500 Run first at u+401; K+100 Run=true
+# Subtest: DIAG [split] E2a RUN-CONF RC-5 (v) C2_FBK ON from u+499 (just before the end of the window): no Run <= u+599, Run at u+601 (Q-V4-01 "Б", question 68 "Б"), no Emergency
+not ok 4 - DIAG [split] E2a RUN-CONF RC-5 (v) C2_FBK ON from u+499 (just before the end of the window): no Run <= u+599, Run at u+601 (Q-V4-01 "Б", question 68 "Б"), no Emergency
+  ---
+  duration_ms: 2139.9602
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:77:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks
+    + actual - expected
+    
+    + [
+    +   'RC-1: no Run in a scan with C2_FBK OFF or HV Faulty TRUE ((v) C2_FBK ON from u+499 (just before the end of the window))',
+    +   'RC-2 (v7): no Run in any scan <= u+599 (window 500 ms + 100 ms, question 68 "Б") ((v) C2_FBK ON from u+499 (just before the end of the window))',
+    +   'RC-5 (v7 §4.1): no Run in any scan <= u+599 ((v) C2_FBK ON from u+499 (just before the end of the window)); Run first at u+500',
+    +   '((v) C2_FBK ON from u+499 (just before the end of the window)) no Emergency/fault before Run; first t=6919'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'RC-1: no Run in a scan with C2_FBK OFF or HV Faulty TRUE ((v) C2_FBK ON from u+499 (just before the end of the window))'
+    1: 'RC-2 (v7): no Run in any scan <= u+599 (window 500 ms + 100 ms, question 68 "Б") ((v) C2_FBK ON from u+499 (just before the end of the window))'
+    2: 'RC-5 (v7 §4.1): no Run in any scan <= u+599 ((v) C2_FBK ON from u+499 (just before the end of the window)); Run first at u+500'
+    3: '((v) C2_FBK ON from u+499 (just before the end of the window)) no Emergency/fault before Run; first t=6919'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    check (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:70:59)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:77:156)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# observation: u=6420 K=u+500 Run first at u+500; K+100 Run=true
+# Subtest: DIAG [split] E2a RUN-CONF RC-5 (vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency: no Run <= u+599, Run at u+601 (Q-V4-01 "Б", question 68 "Б"), no Emergency
+not ok 5 - DIAG [split] E2a RUN-CONF RC-5 (vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency: no Run <= u+599, Run at u+601 (Q-V4-01 "Б", question 68 "Б"), no Emergency
+  ---
+  duration_ms: 2178.0727
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:77:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    5 violated checks
+    + actual - expected
+    
+    + [
+    +   'RC-1: no Run in any scan < K=u+500 ((vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency); Run first at u+100',
+    +   'RC-1: no Run in a scan with C2_FBK OFF or HV Faulty TRUE ((vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency)',
+    +   'RC-2 (v7): no Run in any scan <= u+599 (window 500 ms + 100 ms, question 68 "Б") ((vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency)',
+    +   'RC-5 (v7 §4.1): no Run in any scan <= u+599 ((vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency); Run first at u+100',
+    +   '((vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency) no Emergency/fault before Run; first t=6519'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'RC-1: no Run in any scan < K=u+500 ((vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency); Run first at u+100'
+    1: 'RC-1: no Run in a scan with C2_FBK OFF or HV Faulty TRUE ((vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency)'
+    2: 'RC-2 (v7): no Run in any scan <= u+599 (window 500 ms + 100 ms, question 68 "Б") ((vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency)'
+    3: 'RC-5 (v7 §4.1): no Run in any scan <= u+599 ((vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency); Run first at u+100'
+    4: '((vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency) no Emergency/fault before Run; first t=6519'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    check (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:70:59)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:77:156)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# observation: u=6420 K=u+500 Run first at u+100; K+100 Run=true
+# Subtest: DIAG [split] E2a RUN-CONF HV Faulty TRUE for 3000 ms after C2_FBK ON: no Run meanwhile; HV healthy -> Run at k+101, not at k+99
+not ok 6 - DIAG [split] E2a RUN-CONF HV Faulty TRUE for 3000 ms after C2_FBK ON: no Run meanwhile; HV healthy -> Run at k+101, not at k+99
+  ---
+  duration_ms: 4159.8463
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:79:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    3 violated checks
+    + actual - expected
+    
+    + [
+    +   'RC-1: no Run in a scan with C2_FBK OFF or HV Faulty TRUE ((iv) HV Faulty TRUE until u+2999)',
+    +   'RC-5 (v7 §4.1): no Run in any scan <= u+3099 ((iv) HV Faulty TRUE until u+2999); Run first at u+3001',
+    +   '((iv) HV Faulty TRUE until u+2999) no Emergency/fault before Run; first t=9421'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'RC-1: no Run in a scan with C2_FBK OFF or HV Faulty TRUE ((iv) HV Faulty TRUE until u+2999)'
+    1: 'RC-5 (v7 §4.1): no Run in any scan <= u+3099 ((iv) HV Faulty TRUE until u+2999); Run first at u+3001'
+    2: '((iv) HV Faulty TRUE until u+2999) no Emergency/fault before Run; first t=9421'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    check (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:70:59)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:81:2)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# observation: u=6421 K=u+3000 Run first at u+3001; K+100 Run=true
+# Subtest: DIAG [split] E2a RUN-CONF RC-4 drives STO FBK pinned to "STO active" (in_STO_DRx_FBK TRUE): Run at K+101 = u+601 (STO FBK not required, no 5 s hold)
+not ok 7 - DIAG [split] E2a RUN-CONF RC-4 drives STO FBK pinned to "STO active" (in_STO_DRx_FBK TRUE): Run at K+101 = u+601 (STO FBK not required, no 5 s hold)
+  ---
+  duration_ms: 1735.1395
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:82:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    5 violated checks
+    + actual - expected
+    
+    + [
+    +   'RC-1: no Run in any scan < K=u+500 (RC-4 STO FBK pinned); Run first at u+100',
+    +   'RC-1: no Run in a scan with C2_FBK OFF or HV Faulty TRUE (RC-4 STO FBK pinned)',
+    +   'RC-2 (v7): no Run in any scan <= u+599 (window 500 ms + 100 ms, question 68 "Б") (RC-4 STO FBK pinned)',
+    +   'RC-5 (v7 §4.1): no Run in any scan <= u+599 (RC-4 STO FBK pinned); Run first at u+100',
+    +   '(RC-4 STO FBK pinned) no Emergency/fault before Run; first t=6519'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'RC-1: no Run in any scan < K=u+500 (RC-4 STO FBK pinned); Run first at u+100'
+    1: 'RC-1: no Run in a scan with C2_FBK OFF or HV Faulty TRUE (RC-4 STO FBK pinned)'
+    2: 'RC-2 (v7): no Run in any scan <= u+599 (window 500 ms + 100 ms, question 68 "Б") (RC-4 STO FBK pinned)'
+    3: 'RC-5 (v7 §4.1): no Run in any scan <= u+599 (RC-4 STO FBK pinned); Run first at u+100'
+    4: '(RC-4 STO FBK pinned) no Emergency/fault before Run; first t=6519'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    check (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:70:59)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:83:69)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# observation: u=6420 K=u+500 Run first at u+100; K+100 Run=true
+# Subtest: DIAG [split] E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+550 (K+50, after the window): no Run <= u+650, Run at u+652, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 "В", question 68 "Б")
+not ok 8 - DIAG [split] E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+550 (K+50, after the window): no Run <= u+650, Run at u+652, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 "В", question 68 "Б")
+  ---
+  duration_ms: 7228.4469
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:96:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    3 violated checks
+    + actual - expected
+    
+    + [
+    +   'RC-6: no Run in any scan <= u+650; Run first at u+100',
+    +   'RC-6: Run at u+652 and later; Run first at u+100',
+    +   'RC-6 no Emergency/fault before Run; first t=6819'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'RC-6: no Run in any scan <= u+650; Run first at u+100'
+    1: 'RC-6: Run at u+652 and later; Run first at u+100'
+    2: 'RC-6 no Emergency/fault before Run; first t=6819'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:102:54)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG [split] E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 20 ms u+550..u+569 (after the window): no Run <= u+669, Run at u+671, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 "В", question 68 "Б")
+not ok 9 - DIAG [split] E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 20 ms u+550..u+569 (after the window): no Run <= u+669, Run at u+671, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 "В", question 68 "Б")
+  ---
+  duration_ms: 1450.3453
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:96:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    3 violated checks
+    + actual - expected
+    
+    + [
+    +   'RC-6: no Run in any scan <= u+669; Run first at u+100',
+    +   'RC-6: Run at u+671 and later; Run first at u+100',
+    +   'RC-6 no Emergency/fault before Run; first t=6819'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'RC-6: no Run in any scan <= u+669; Run first at u+100'
+    1: 'RC-6: Run at u+671 and later; Run first at u+100'
+    2: 'RC-6 no Emergency/fault before Run; first t=6819'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:102:54)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG [split] E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+599 (K+99, boundary before Run): no Run <= u+699, Run at u+701, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 "В", question 68 "Б")
+not ok 10 - DIAG [split] E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+599 (K+99, boundary before Run): no Run <= u+699, Run at u+701, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 "В", question 68 "Б")
+  ---
+  duration_ms: 1759.0464
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:96:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    3 violated checks
+    + actual - expected
+    
+    + [
+    +   'RC-6: no Run in any scan <= u+699; Run first at u+100',
+    +   'RC-6: Run at u+701 and later; Run first at u+100',
+    +   'RC-6 no Emergency/fault before Run; first t=6819'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'RC-6: no Run in any scan <= u+699; Run first at u+100'
+    1: 'RC-6: Run at u+701 and later; Run first at u+100'
+    2: 'RC-6 no Emergency/fault before Run; first t=6819'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:102:54)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG [split] E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+51 (inside the window): no Run <= u+599, Run at u+601, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 "В", question 68 "Б")
+not ok 11 - DIAG [split] E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+51 (inside the window): no Run <= u+599, Run at u+601, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 "В", question 68 "Б")
+  ---
+  duration_ms: 1430.415
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:96:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks
+    + actual - expected
+    
+    + [
+    +   'RC-6: no Run in any scan <= u+599; Run first at u+100',
+    +   'RC-6 no Emergency/fault before Run; first t=6819'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'RC-6: no Run in any scan <= u+599; Run first at u+100'
+    1: 'RC-6 no Emergency/fault before Run; first t=6819'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:102:54)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG [split] E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 20 ms u+51..u+70 (inside the window): no Run <= u+599, Run at u+601, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 "В", question 68 "Б")
+not ok 12 - DIAG [split] E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 20 ms u+51..u+70 (inside the window): no Run <= u+599, Run at u+601, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 "В", question 68 "Б")
+  ---
+  duration_ms: 1345.9137
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:96:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks
+    + actual - expected
+    
+    + [
+    +   'RC-6: no Run in any scan <= u+599; Run first at u+100',
+    +   'RC-6 no Emergency/fault before Run; first t=6819'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'RC-6: no Run in any scan <= u+599; Run first at u+100'
+    1: 'RC-6 no Emergency/fault before Run; first t=6819'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:102:54)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG [split] E2a RUN-CONF RC-7 (v7) C2_FBK FALSE 1 scan at t_f+1 inside the 500 ms window, command kept: not an emergency, no rollback, Run at u+601 (Q-V4-01 "Б")
+not ok 13 - DIAG [split] E2a RUN-CONF RC-7 (v7) C2_FBK FALSE 1 scan at t_f+1 inside the 500 ms window, command kept: not an emergency, no rollback, Run at u+601 (Q-V4-01 "Б")
+  ---
+  duration_ms: 1223.9918
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:104:23'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (u=6720, t_f=6721, bounce 6722)
+    + actual - expected
+    
+    + [
+    +   'RC-7/RC-2: no Run <= u+599; Run first at u+100',
+    +   'RC-7 no Emergency/fault before Run; first t=6819'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'RC-7/RC-2: no Run <= u+599; Run first at u+100'
+    1: 'RC-7 no Emergency/fault before Run; first t=6819'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:111:53)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG [split] E2a RUN-CONF RC-7 (v7) C2_FBK FALSE 1 scan at t_f+50 inside the 500 ms window, command kept: not an emergency, no rollback, Run at u+601 (Q-V4-01 "Б")
+not ok 14 - DIAG [split] E2a RUN-CONF RC-7 (v7) C2_FBK FALSE 1 scan at t_f+50 inside the 500 ms window, command kept: not an emergency, no rollback, Run at u+601 (Q-V4-01 "Б")
+  ---
+  duration_ms: 1198.1618
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:104:23'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (u=6720, t_f=6721, bounce 6771)
+    + actual - expected
+    
+    + [
+    +   'RC-7/RC-2: no Run <= u+599; Run first at u+100',
+    +   'RC-7 no Emergency/fault before Run; first t=6819'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'RC-7/RC-2: no Run <= u+599; Run first at u+100'
+    1: 'RC-7 no Emergency/fault before Run; first t=6819'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:111:53)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG [split] E2a RUN-CONF RC-7 (v7, FBK-03) C2_FBK FALSE 1 scan at u+502 after the window (FBK confirmed), before Run: Emergency (rule L1 vs in_Estop_PLC), no Run, Restart -> only Safe (Q-V4-01 "Б", Q-RC-19)
+not ok 15 - DIAG [split] E2a RUN-CONF RC-7 (v7, FBK-03) C2_FBK FALSE 1 scan at u+502 after the window (FBK confirmed), before Run: Emergency (rule L1 vs in_Estop_PLC), no Run, Restart -> only Safe (Q-V4-01 "Б", Q-RC-19)
+  ---
+  duration_ms: 1015.6857
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:123:31'
+  failureType: 'testCodeFailure'
+  error: 'precondition: C2 command ON, C2_FBK ON, Run not yet confirmed at ev-1 (u=6720, t_f=6721)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    rc7After (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:113:9)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:123:243)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG [split] E2a RUN-CONF RC-7 (v7, FBK-03) C2_FBK FALSE 1 scan at u+550 after the window (FBK confirmed), before Run: Emergency (rule L1 vs in_Estop_PLC), no Run, Restart -> only Safe (Q-V4-01 "Б", Q-RC-19)
+not ok 16 - DIAG [split] E2a RUN-CONF RC-7 (v7, FBK-03) C2_FBK FALSE 1 scan at u+550 after the window (FBK confirmed), before Run: Emergency (rule L1 vs in_Estop_PLC), no Run, Restart -> only Safe (Q-V4-01 "Б", Q-RC-19)
+  ---
+  duration_ms: 989.1507
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:123:31'
+  failureType: 'testCodeFailure'
+  error: 'precondition: C2 command ON, C2_FBK ON, Run not yet confirmed at ev-1 (u=6720, t_f=6721)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    rc7After (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:113:9)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:123:243)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG [split] E2a RUN-CONF RC-7 (v7, FBK-03) C2_FBK FALSE 1 scan at u+599 after the window (FBK confirmed), before Run: Emergency (rule L1 vs in_Estop_PLC), no Run, Restart -> only Safe (Q-V4-01 "Б", Q-RC-19)
+not ok 17 - DIAG [split] E2a RUN-CONF RC-7 (v7, FBK-03) C2_FBK FALSE 1 scan at u+599 after the window (FBK confirmed), before Run: Emergency (rule L1 vs in_Estop_PLC), no Run, Restart -> only Safe (Q-V4-01 "Б", Q-RC-19)
+  ---
+  duration_ms: 1118.9948
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:123:31'
+  failureType: 'testCodeFailure'
+  error: 'precondition: C2 command ON, C2_FBK ON, Run not yet confirmed at ev-1 (u=6720, t_f=6721)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    rc7After (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:113:9)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:123:243)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG [split] DIAG observation E2a RUN-CONF RC-7: C2_FBK FALSE 1 scan at u+500 (end of the window, v7 §4.1 observation)
+ok 18 - DIAG [split] DIAG observation E2a RUN-CONF RC-7: C2_FBK FALSE 1 scan at u+500 (end of the window, v7 §4.1 observation)
+  ---
+  duration_ms: 878.1348
+  type: 'test'
+  ...
+# unavailable (observation only): precondition: C2 command ON, C2_FBK ON, Run not yet confirmed at ev-1 (u=6720, t_f=6721)
+# Subtest: DIAG [split] DIAG observation E2a RUN-CONF RC-7: C2_FBK FALSE 1 scan at u+501 (end of the window, v7 §4.1 observation)
+ok 19 - DIAG [split] DIAG observation E2a RUN-CONF RC-7: C2_FBK FALSE 1 scan at u+501 (end of the window, v7 §4.1 observation)
+  ---
+  duration_ms: 1233.08
+  type: 'test'
+  ...
+# unavailable (observation only): precondition: C2 command ON, C2_FBK ON, Run not yet confirmed at ev-1 (u=6720, t_f=6721)
+# Subtest: DIAG [split] E2a MOD1-01 (v7 §4.2) Safe->R&D natural: no R&D <= u1+599, R&D at u1+601 and later (question 68 "Б": C1 window 500 ms + 100 ms continuous C1_FBK and LV healthy), no Emergency
+not ok 20 - DIAG [split] E2a MOD1-01 (v7 §4.2) Safe->R&D natural: no R&D <= u1+599, R&D at u1+601 and later (question 68 "Б": C1 window 500 ms + 100 ms continuous C1_FBK and LV healthy), no Emergency
+  ---
+  duration_ms: 3293.7506
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:132:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks
+    + actual - expected
+    
+    + [
+    +   'no R&D (status or stage) in any scan <= u1+599; R&D first at u1+99'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'no R&D (status or stage) in any scan <= u1+599; R&D first at u1+99'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:136:157)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG [split] E2a MOD1-01 / FBK-01 (v7 §4.2) Safe->R&D, C1_FBK FALSE 1 scan at u1+51 inside the window: not an emergency, R&D at u1+601
+not ok 21 - DIAG [split] E2a MOD1-01 / FBK-01 (v7 §4.2) Safe->R&D, C1_FBK FALSE 1 scan at u1+51 inside the window: not an emergency, R&D at u1+601
+  ---
+  duration_ms: 1210.9595
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:137:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks
+    + actual - expected
+    
+    + [
+    +   'no R&D <= u1+599; R&D first at u1+99'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'no R&D <= u1+599; R&D first at u1+99'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:181:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:182:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:142:121)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG [split] E2a FBK-01 (v7 §4.2/§4.3) Safe->R&D, C1_FBK FALSE 1 scan at u1+550 after the window, before R&D: Emergency (EMGREF-LV, rule L1 vs in_Estop_PLC), R&D never, Restart -> only Safe
+not ok 22 - DIAG [split] E2a FBK-01 (v7 §4.2/§4.3) Safe->R&D, C1_FBK FALSE 1 scan at u1+550 after the window, before R&D: Emergency (EMGREF-LV, rule L1 vs in_Estop_PLC), R&D never, Restart -> only Safe
+  ---
+  duration_ms: 794.4272
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2a-run-conf.test.js:143:1'
+  failureType: 'testCodeFailure'
+  error: 'precondition: C1 ON, C1_FBK ON, R&D not yet confirmed at ev-1 (u1=3117)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2a-run-conf.test.js:145:9)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG [split] DIAG observation E2a MOD1-01: Safe->R&D, LV Faulty TRUE 1 scan at u1+550 after the window (v7 §4.2: observation)
+ok 23 - DIAG [split] DIAG observation E2a MOD1-01: Safe->R&D, LV Faulty TRUE 1 scan at u1+550 after the window (v7 §4.2: observation)
+  ---
+  duration_ms: 1034.1273
+  type: 'test'
+  ...
+# R&D first at u1+99; Emergency false; C1 OFF at undefined
+1..23
+# tests 23
+# suites 0
+# pass 3
+# fail 20
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 52644.868

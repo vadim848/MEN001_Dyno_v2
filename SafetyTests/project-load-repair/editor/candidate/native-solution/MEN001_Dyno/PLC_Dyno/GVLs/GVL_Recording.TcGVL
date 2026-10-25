@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <GVL Name="GVL_Recording" Id="{c5e1a9f4-7b22-4d18-8a3e-2f6c4b1d8e90}">
+    <Declaration><![CDATA[{attribute 'TcGvlVarFlags' := 'OPC'}
+// High-rate recording: PLC fills a ring of chunks at the task rate; the app
+// bulk-reads completed chunks over ADS and writes them to a file.
+//
+// HANDSHAKE (all ADS symbols under GVL_Recording.*):
+//   app  -> bEnable    : start/stop recording (rising edge resets the ring)
+//   app  -> nAckSeq    : last chunk sequence the app has fully read (overflow calc)
+//   PLC  -> nChunkSeq  : completed-chunk counter (bumped each time a chunk fills)
+//   PLC  -> nReadyIdx   : ring slot of the most recently completed chunk (0..REC_RING-1)
+//   PLC  -> nDropped    : frames lost because the app fell behind (should stay 0)
+//   PLC  -> aChunks     : the chunk ring (read aChunks[nReadyIdx].* per channel)
+//
+// The app reads a COMPLETED chunk (one the FB has already advanced past), so with
+// REC_RING slots it has (REC_RING-1)*REC_CHUNK/rate seconds to read before the FB
+// laps back to that slot — REC_RING-1 chunks of read slack (REC_CHUNK frames each).
+VAR_GLOBAL CONSTANT
+    REC_CHUNK      : UDINT := 2000;   // EtherCAT frames per chunk (chunk period = REC_CHUNK / task-rate)
+    REC_RING       : UDINT := 4;      // number of chunks in the ring (read slack)
+    REC_OVERSAMPLE : UDINT := 10;     // Mentee oversamples per frame — MUST match firmware OVERSAMPLE_SAMPLES_PER_CYCLE
+    REC_FUTEK_OS   : UDINT := 5;      // Futek analog oversamples per frame (EL3702 x5) — MUST match ST_AnalogInData nChx_Sample len
+END_VAR
+
+VAR_GLOBAL
+    // ── control (app writes) ──
+    bEnable   : BOOL;     // TRUE = recording; rising edge clears the ring + counters
+    nAckSeq   : UDINT;    // last chunk seq the app finished reading
+
+    // ── status (PLC writes, app reads) ──
+    nChunkSeq : UDINT;    // completed-chunk counter (monotonic; 0 = none yet this session)
+    nReadyIdx : BYTE;     // ring slot of the most recently completed chunk
+    nDropped  : UDINT;    // frames dropped (app too slow / overflow) — should remain 0
+    bRunning  : BOOL;     // echoes bEnable once latched (diagnostic)
+
+    // ── the chunk ring (ADS-read per channel array) ──
+    aChunks   : ARRAY[0..REC_RING - 1] OF ST_RecChunk;
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

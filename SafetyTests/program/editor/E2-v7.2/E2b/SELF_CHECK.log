@@ -1,0 +1,35 @@
+PASS source-sha-is-staging-source {"TwinSafeGroup1.sal":"5733552a150bfd33df4211da8f97a8fc993ff990ad52c90a8d7758d950660f3f","GVL1.sgvl":"253de7f39f2c4af83fa8642445a885d18ecfcdccec46fcbf96612d88a810b669","TwinSafeGroup1.sal.diagram":"5fa942384352033814f2d51bf8c4a847098d6a3322d4b733995de64b7b759bb2"}
+PASS staged-sha-is-staging-result 
+PASS native-equals-staged-semantics blocks/ports/attrs/order/wires/global refs/SAL usages/SGVL usages identical; only CRC/formatting differ
+PASS native-structure-preflight {"status":"PASS","errors":[],"counts":{"networks":14,"blocks":225,"ports":1908,"variables":77,"wires":287,"crossNetworkWires":0}}
+PASS binding-audit {"status":"PASS","errors":[]}
+PASS counts-225-1908-63-77-14 {"source":{"networks":14,"fb":217,"ports":1836,"symbols":63,"salVariables":75,"wires":277,"globalRefs":167,"sgvlUsages":167,"salFbUsages":223,"aliasUsages":76,"safeTon":17},"native":{"networks":14,"fb":225,"ports":1908,"symbols":63,"salVariables":77,"wires":287,"globalRefs":177,"sgvlUsages":177,"salFbUsages":235,"aliasUsages":76,"safeTon":17}}
+PASS wire-count-delta-equals-staging {"source":277,"native":287,"removed":1,"added":11}
+PASS global-refs-equal-sgvl-usages {"native":177,"sgvl":177,"source":167}
+PASS alias-usage-count-unchanged {"source":76,"native":76}
+PASS no-dangling-references []
+PASS global-ref-sgvl-usage-pairing-1to1 []
+PASS every-symbol-single-source-and-consumer []
+PASS symbol-set-and-ids-unchanged 
+PASS every-internal-SAL-variable-single-source-and-consumer []
+PASS single-source-per-input-and-unique-wire-pairs {"dupPairs":0,"multi":[]}
+PASS activated-inputs-have-source []
+PASS deactivated-inputs-have-no-source []
+PASS no-deleted-blocks []
+PASS new-blocks-equal-plan ["Network1/FBAndNotRunSu","Network1/FBOrIlRunOk","Network3/FBAndBootFbkOff","Network3/FBOrS12Reset","Network3/G10_EXIT","Network6/FBAndLvEmg","Network6/FBOrStep4","Network6/STAGE_LVON"]
+PASS plan-input-sources-and-contacts []
+PASS new-blocks-native-template-signature []
+PASS instance-names-unique 225
+PASS surviving-port-deltas-only-planned []
+PASS wire-delta-exact {"wRemoved":["Network6/FBAnd2/AndOut>Network6/FBDecouple1/DecIn1"],"wAdded":["Network1/FBAndNotRunSu/AndOut>Network1/FBOrIlRunOk/OrIn1","Network1/FBOrIlRunOk/OrOut>Network1/FBAnd1/AndIn3","Network3/FBAndBootFbkOff/AndOut>Network3/FBAnd1/AndIn3","Network3/FBOrS12Reset/OrOut>Network3/FBRs8/Reset","Network3/FBRs6/RsOut>Network3/G10_EXIT/AndIn1","Network3/G10_EXIT/AndOut>Network3/FBOr2/OrIn3","Network
+PASS sal-variables-only-planned-usage-delta []
+PASS symbol-usages-only-planned-delta []
+PASS order-of-execution-per-plan {"contiguous":true,"head15":true,"L1_FBAnd16_CONNECTORS_SCOPE_NotRunSu_IlRunOk_before_N1FBAnd1":true,"FBEstop1_G10_EXIT_BootFbkOff_N3FBAnd2_N3FBAnd1":true,"G10_EXIT_before_PrevG_writer_N6FBDecouple2":true,"N6_STAGE_LVON_FBAndLvEmg_FBOrStep4_FBDecouple1":true,"relativeOrderOfOtherBlocksPreserved":true}
+PASS timer-and-parameter-ports-unchanged {"safeTon":[17,17]}
+PASS networks-unchanged-attrs ["Network1:51","Network2:21","Network3:21","Network4:0","Network5:0","Network6:41","Network7:11","Network8:7","Network9:0","Network10:2","Network11:6","Network12:19","RndPhysicalCompact:39","SafeResumption:7"]
+PASS staged-kept-source-crc-native-new-crc {"source":{"sal":"1618144730","sgvl":"1140635775"},"staged":{"sal":"1618144730","sgvl":"1140635775"},"native":{"sal":"338929284","sgvl":"2354910773"}}
+PASS diagram-shapes-match-model {"source":{"fBAndShape":102,"fBOrShape":47,"fBRsShape":27,"fBTonShape":17,"fBDecoupleShape":22,"fBEstopShape":2,"inPortShape":1461,"outPortShape":375,"paramPortShape":19,"wiredLinkConnector":277,"networkSwimLane":14},"native":{"fBAndShape":106,"fBOrShape":51,"fBRsShape":27,"fBTonShape":17,"fBDecoupleShape":22,"fBEstopShape":2,"inPortShape":1525,"outPortShape":383,"paramPortShape":19,"wiredLinkConn
+PASS diagram-connectors-resolve-one-per-wire {"badConn":[],"connectors":287,"wires":287}
+PASS diagram-lane-membership [{"b":"Network1/FBAndNotRunSu","lane":"Network1"},{"b":"Network1/FBOrIlRunOk","lane":"Network1"},{"b":"Network3/FBOrS12Reset","lane":"Network3"},{"b":"Network3/G10_EXIT","lane":"Network3"},{"b":"Network3/FBAndBootFbkOff","lane":"Network3"},{"b":"Network6/STAGE_LVON","lane":"Network6"},{"b":"Network6/FBAndLvEmg","lane":"Network6"},{"b":"Network6/FBOrStep4","lane":"Network6"}]
+
+33/33 self-checks PASS

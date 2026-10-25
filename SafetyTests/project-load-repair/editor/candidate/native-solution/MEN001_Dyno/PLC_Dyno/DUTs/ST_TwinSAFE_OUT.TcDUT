@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_TwinSAFE_OUT" Id="{5f6797b0-0b7a-4b83-b52e-77b635e9a746}">
+    <Declaration><![CDATA[TYPE ST_TwinSAFE_OUT :
+STRUCT
+	
+	RUN			: BOOL := TRUE;
+	ErrACK		: BOOL:=TRUE;
+	Restart		: BOOL;
+	DoorMonitor: BOOL;
+	SolenoedMonitor: BOOL;
+
+	BatRelay_CMD: BOOL;
+	BatRelay_Manual_Off: BOOL;
+	BatRelay_Manual_On: BOOL;
+	Set_RnD_Mode	:	BOOL	;
+	Set_RnD_Mode2	:	BOOL	;
+
+	EstopPLC: BOOL;
+
+	BatBMS_Cmd: BOOL;
+	RB_BatBMS_Manual_Off: BOOL;
+	RB_BatBMS_Manual_On: BOOL;
+	Bypass_C1C2	:	BOOL	;
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

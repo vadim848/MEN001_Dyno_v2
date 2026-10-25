@@ -1,0 +1,65 @@
+{
+  "schema": "men001-v2-analyst-criteria/1",
+  "slice": "E1-f1-MU06",
+  "date": "2026-10-21",
+  "source": {
+    "f1Sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "f1Sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "f1Diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+    "canonicalP0Sal": "34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b",
+    "mu06Sal": "a10cdfdefdd6248551e3c3924e63ecfbc7e28ba37390bae638155bd994423ef5",
+    "mutationResults": "aeb9cb243145f56763371a23c4284336e0b2c0860e67ac02139e3689fabfee5b",
+    "reference": "4495a1f6049f6a58ebfd436761faa84d17c8d643"
+  },
+  "signal": {
+    "name": "in_False_SI2_CH8",
+    "alias": {"sdsId": "62", "channelId": "15", "functionId": "1618018561"},
+    "valueGiven": false,
+    "valueSources": ["SAL_INPUT_INVENTORY.json runtimeValue NOT SUPPLIED", "V2_SAFE_EXIT_REPORT.md: name does not prove constant", "fault-code-inventory/ANALYST.md: name not proof of constant FALSE"],
+    "referenceRole": "9 consumers, all inverted; Network1/FBAnd1 (!in_Estop_PLC AND !in_False) -> FBEstop1.EStopIn3; Network5..9/FBAnd1 step guards; TRUE = emergency operand + step inhibit",
+    "p0F1Consumers": {"total": 41, "inverted": 38, "direct": ["//Network5/FBAnd7/AndIn2", "//Network9/FBAnd1/AndIn2", "//Network12/FBAnd14/AndIn4"]},
+    "directVsReference": "Network5/FBAnd7 and Network9/FBAnd1 inverted in reference, direct in v2 since commits 7482285 / 77546cb (pre-agent)"
+  },
+  "verdict": "Requirement on TRUE exists only as preserved reference role + SPEC 13/EMG-001/EMG-005 (criteria C01-C03). Constant FALSE not established (option b rejected). MU06 is EQUIVALENT by structure: And24.AndIn2 implied by AndIn3 in the same scan.",
+  "commonConditions": "R0: stable Run via tester/E1-f1/runners/run-source.js createSafeRunFixture('Run'); b_EStop_Ok TRUE; b_ResetPB_Lock FALSE; both buttons released >=2100 ms; in_False FALSE; scan 1 ms; p = green (in_Reset_PB) rise; q = p+500 first GREEN-qualified scan; acceptance = RUN_DOWN_OWNER.Set consumed at q+1",
+  "criteria": [
+    {
+      "id": "C01", "status": "READY", "ids": ["BTN-003", "EMG-001"],
+      "initial": "R0",
+      "sequence": ["p green ON held", "in_False TRUE pulse 1 and 2 scans starting k in {p-10 held to p+601, p+495..p+500}", "then FALSE"],
+      "expected": "no RUN_DOWN_OWNER.Set, no runPhysical, no runResetSto1/2, runDischarge, runResetHv from this attempt; b_EStop_Ok FALSE after pulse",
+      "forbidden": ["normal Run->R&D sequence (SS1/STO/discharge) from green while emergency operand active"],
+      "boundaries": {"q-1 (p+499)": "normative: no command", "q (p+500)": "normative: no command", "q+1 (p+501)": "observation only (F1 blocks); not normative", ">=q+2": "C04 BLOCKED"},
+      "sources": ["reference Network1/FBAnd1->FBEstop1.EStopIn3", "reference Network6/FBAnd1 !in_False", "SPEC 13 (1 over 3)", "EMG-001", "D-Q500"]
+    },
+    {
+      "id": "C02", "status": "READY", "ids": ["BTN-001", "BTN-007", "EMG-005"],
+      "initial": "R0",
+      "sequence": ["p-10 in_False TRUE", "p green ON held to p+1500", "p+601 in_False FALSE", "observe until p+1500, green NOT released"],
+      "expected": "no RUN_DOWN_OWNER.Set / down request in window; b_EStop_Ok stays FALSE; new attempt only after full release + filter",
+      "forbidden": ["owner Set from the same attempt after in_False clears (queued old green)"],
+      "excluded": "green release = FBEstop1 Restart (V14-Q6); Restart reaction in Run belongs to E2/EMG-006",
+      "sources": ["SPEC 3.1 / BTN-001, BTN-007", "EMG-005", "reference EStop latch"]
+    },
+    {
+      "id": "C03", "status": "READY", "ids": ["BTN-003"],
+      "initial": "R0", "sequence": ["p green ON held 600 ms"],
+      "expected": "owner Set consumed at p+501; down requests present",
+      "sources": ["D-Q500", "F1 plan"]
+    },
+    {
+      "id": "C04", "status": "BLOCKED", "dependsOn": "E2 (single stage ownership; accepted normal down + subsequent emergency)",
+      "initial": "R0", "sequence": ["p green ON", "in_False TRUE at >= p+502"],
+      "observed": "F1: owner Set p+501 and b_EStop_Ok FALSE coexist",
+      "expected": null
+    }
+  ],
+  "mutantClassification": {
+    "MU06": "EQUIVALENT",
+    "proof": "in_False(k) -> GATE_001.AndIn2 (!in_False, order119) -> GATE_004(124) -> GATE_005(125) -> GATE_009(130) -> GREEN.TonIn(135); safeTon output FALSE when TonIn FALSE; And24 order 237 reads linkRndGreenQualified of same scan => AndIn3 TRUE implies in_False FALSE. Also And23.AndIn2 = Network6/FBAnd1 (b_Step3 AND !in_False, order 51).",
+    "evidence": "PROBE_RESULTS.json: 20 scenarios F1 vs MU06 identical",
+    "limits": "model runtime (sal-runtime), b_Step3 cut at Network3; structural argument, not native runtime",
+    "suggestedKillableMutants": ["GATE_001.AndIn2 Deactivated", "Network6/FBAnd1.AndIn2 Deactivated", "combination with And24.AndIn2"]
+  },
+  "questions": ["Q-MU06-01 (non-blocking)"]
+}

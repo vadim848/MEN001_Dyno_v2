@@ -1,0 +1,16 @@
+v6 linkRunUpAccepted
+ buttons R&D->Run: a 16519 u-a 2 reqOFF-a 1
+ ES in StartingRun a+50: 1:S_RnD|EMG|HV_C2=1,HVREQ=0  2:S4|EMG|HV_C2=1,HVREQ=0  7008:S5|EMG|HV_C2=1,HVREQ=0  7009:S5|EMG|HV_C2=1,HVREQ=1  8010:S5|EMG|HV_C2=0,HVREQ=1  8012:S6|EMG|HV_C2=0,HVREQ=1
+ legacy PLC Run(1,1) held, ES: 1:S3|EMG|HV_C2=1,HVREQ=0  4:S4|EMG|HV_C2=1,HVREQ=0  7010:S5|EMG|HV_C2=1,HVREQ=0  9011:S5|EMG|HV_C2=0,HVREQ=0  9013:S6|EMG|HV_C2=0,HVREQ=0
+ legacy PLC (1,1) cover open in R&D: 1:S_RnD|RND|HV_C2=0,HVREQ=1  2:S_RnD|RND|HV_C2=0,HVREQ=0
+ legacy PLC R&D->Run accepted: u 3 reqOFF 2 S3 RUN
+ R&D, ES then PLC(1,1) next scan: min HVreq over 3 s 0 S4 EMG
+ R&D, ES and PLC(1,1) same scan: min HVreq over 3 s 0 S4 EMG
+ALT b_Set_HV_C2_1
+ buttons R&D->Run: a 16519 u-a 2 reqOFF-a 2
+ ES in StartingRun a+50: 1:S_RnD|EMG|HV_C2=1,HVREQ=0  2:S4|EMG|HV_C2=1,HVREQ=0  7008:S5|EMG|HV_C2=1,HVREQ=0  7009:S5|EMG|HV_C2=1,HVREQ=1  8010:S5|EMG|HV_C2=0,HVREQ=1  8012:S6|EMG|HV_C2=0,HVREQ=1
+ legacy PLC Run(1,1) held, ES: 1:S3|EMG|HV_C2=1,HVREQ=0  4:S4|EMG|HV_C2=1,HVREQ=0  7010:S5|EMG|HV_C2=1,HVREQ=0  7011:S5|EMG|HV_C2=1,HVREQ=1  8012:S5|EMG|HV_C2=0,HVREQ=1  8014:S6|EMG|HV_C2=0,HVREQ=1
+ legacy PLC (1,1) cover open in R&D: 1:S_RnD|RND|HV_C2=0,HVREQ=1
+ legacy PLC R&D->Run accepted: u 3 reqOFF 3 S3 RUN
+ R&D, ES then PLC(1,1) next scan: min HVreq over 3 s 1 S4 EMG
+ R&D, ES and PLC(1,1) same scan: min HVreq over 3 s 1 S4 EMG

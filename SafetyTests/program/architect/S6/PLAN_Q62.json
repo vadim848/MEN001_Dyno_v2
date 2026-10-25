@@ -1,0 +1,44 @@
+{
+ "stage": "Q-S6-2 A (Restart only from green press begun in Emergency)",
+ "base": {
+  "sal": "candidates/E6v/native/TwinSafeGroup1.sal (= canonical @0c1800e)",
+  "sha256": "9209319039fc555e77e5dfc626deafd507a14058cfd96847f0eb29dccb3469ef",
+  "sgvlSha256": "27864ca301abf9c651527c66ff15194ef802a9016e344f02ec3e6b1681995db1",
+  "fb": 344
+ },
+ "fbAfter": 346,
+ "deleted": [],
+ "newVariables": [],
+ "removedVariables": [],
+ "orderNote": "fractional orders = insertion points; editor renumbers contiguously 1..N keeping relative order",
+ "added": {
+  "//Network1/Q62_RST": {
+   "fn": "safeAnd",
+   "order": 41.5,
+   "in": {
+    "AndIn1": "V:in_Reset_PB",
+    "AndIn2": "!W://Network1/Q62_BLK/RsOut"
+   },
+   "out": {}
+  },
+  "//Network1/Q62_BLK": {
+   "fn": "safeRs",
+   "order": 42.1,
+   "in": {
+    "Reset": "!V:in_Reset_PB",
+    "Set": "G:b_EStop_Ok"
+   },
+   "out": {}
+  }
+ },
+ "changed": {
+  "//Network1/FBEstop1": {
+   "inputs": {
+    "Restart": {
+     "from": "V:in_Reset_PB",
+     "to": "W://Network1/Q62_RST/AndOut"
+    }
+   }
+  }
+ }
+}

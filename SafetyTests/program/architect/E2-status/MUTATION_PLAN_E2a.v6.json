@@ -1,0 +1,290 @@
+{
+  "version": "sal-mutation-plan-v1",
+  "structuralSoftwareCheckCases": [
+    "^BOOT:"
+  ],
+  "planVersion": 6,
+  "testFiles": [
+    "current-e2a-status.test.js",
+    "current-e2a-emg-safe.test.js",
+    "current-e2a-emg-rnd.test.js",
+    "current-e2a-emg-run.test.js",
+    "current-e2a-emg-rundown.test.js",
+    "current-e2a-sweep-estop.test.js",
+    "current-e2b-sweep-connector.test.js",
+    "current-e2a-race.test.js",
+    "current-e2a-rnd-cover-healthy.test.js",
+    "current-e2a-run-conf.test.js",
+    "current-e2b-interlock-run.test.js",
+    "current-e2b-cover-transitions.test.js",
+    "current-e2b-connector-safe.test.js",
+    "current-e2c-stp-i.test.js",
+    "current-e2c-hlt03.test.js",
+    "current-e2d-release-permit.test.js",
+    "current-e2d-unlock-cover.test.js",
+    "current-e2a-emg-anchor.test.js",
+    "current-e2a-emg-rd-sweep.test.js",
+    "current-e2d-unlock-door.test.js",
+    "current-e2d-fbk-unsolicited.test.js"
+  ],
+  "behaviouralTests": [
+    "^E2[a-d] "
+  ],
+  "sourceSha256": "5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b",
+  "status": "Architect guard-mutation plan v6 for E2a-core (PLAN.md v6). sourceSha256 = editor candidate. operatorAvailable:false only for operators the stand does not implement (rebind-global, composite). modelKill = architect prototype (not native, not a test).",
+  "mutations": [
+    {
+      "id": "M-E2a-01",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr1",
+      "port": "OrIn3",
+      "rationale": "S1 not reset by g2",
+      "killingScenario": "Safe->R&D by BOTH: b_Step1 and b_Step12 both TRUE; N2/FBAnd12 keeps resetting C1, R&D not reached",
+      "oracle": "MOD1-01, E2-01 (stage memories)"
+    },
+    {
+      "id": "M-E2a-02",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr13",
+      "port": "OrIn3",
+      "rationale": "SR not reset by g5",
+      "killingScenario": "R&D->Safe: S1 and SR both TRUE after C1_FBK OFF",
+      "oracle": "E2-01, MOD5-01"
+    },
+    {
+      "id": "M-E2a-03",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr13",
+      "port": "OrIn4",
+      "rationale": "SR not reset by g4",
+      "killingScenario": "R&D->Run: SR and S3 both TRUE",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-E2a-04",
+      "guard": "Arbitration",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr13",
+      "port": "OrIn2",
+      "rationale": "g7 does not cancel SR (g6/g7 arbitration)",
+      "killingScenario": "Run->R&D, C2_FBK held ON; in_ES_NC_1 FALSE 2 scans before C2_FBK OFF: SR and S4 both TRUE",
+      "oracle": "E2-01, EMG-001 priority",
+      "modelKill": "repro/t9.out.txt"
+    },
+    {
+      "id": "M-E2a-05",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr5",
+      "port": "OrIn2",
+      "rationale": "S3 not reset by g7",
+      "killingScenario": "Steady Run + in_ES_NC_1 FALSE: S3 and S4 both TRUE",
+      "oracle": "E2-01, EMGREF-RUN"
+    },
+    {
+      "id": "M-E2a-06",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr5",
+      "port": "OrIn3",
+      "rationale": "S3 not reset by g6",
+      "killingScenario": "Run->R&D: S3 and SR both TRUE after C2_FBK OFF",
+      "oracle": "E2-01, STP-A"
+    },
+    {
+      "id": "M-E2a-07",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr16",
+      "port": "OrIn2",
+      "rationale": "g6 does not set SR",
+      "killingScenario": "Run->R&D: no stage after C2_FBK OFF (status EMG)",
+      "oracle": "STP-A, E2-02, E2-04"
+    },
+    {
+      "id": "M-E2a-08",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr16",
+      "port": "OrIn1",
+      "rationale": "g3 does not set SR",
+      "killingScenario": "Safe->R&D: no stage after LV confirmation",
+      "oracle": "MOD1-01, E2-04"
+    },
+    {
+      "id": "M-E2a-09",
+      "guard": "ChildOwner",
+      "op": "deactivate-input",
+      "block": "//Network6/RUN_DOWN_RESET",
+      "port": "OrIn1",
+      "rationale": "owner survives return to R&D",
+      "killingScenario": "Run->R&D, then BOTH R&D->Run: Run not reached, C2 OFF",
+      "oracle": "MOD-002, E2-01",
+      "modelKill": "repro/v2/t5.out.txt"
+    },
+    {
+      "id": "M-E2a-10",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr7",
+      "port": "OrIn2",
+      "rationale": "S4 not reset by g8",
+      "killingScenario": "EStop in Run to Step5: b_Step4 and b_Step5 both TRUE (and out_Step4/5)",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-E2a-11",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr9",
+      "port": "OrIn2",
+      "rationale": "S5 not reset by g9",
+      "killingScenario": "EStop in Run to Step6: b_Step5 and b_Step6 both TRUE",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-E2a-12",
+      "guard": "Ring",
+      "op": "invert-contact",
+      "block": "//Network3/FBRs8",
+      "port": "Reset",
+      "rationale": "S12 Reset polarity inverted",
+      "killingScenario": "Safe->R&D: S12 never holds, R&D not reached",
+      "oracle": "MOD1-01"
+    },
+    {
+      "id": "M-E2a-13",
+      "guard": "RaceMask",
+      "op": "deactivate-input",
+      "block": "//Network6/HEALTH_GUARD",
+      "port": "OrIn1",
+      "rationale": "Healthy loss in accepted Run-down starts Step4",
+      "killingScenario": "E2-02 L/H d=1..5: S4 instead of R&D",
+      "oracle": "E2-02",
+      "modelKill": "repro/v2/t4.out.txt"
+    },
+    {
+      "id": "M-E2a-14",
+      "guard": "Healthy",
+      "op": "invert-contact",
+      "block": "//Network6/HEALTHY_OK",
+      "port": "AndIn1",
+      "rationale": "LV Faulty polarity inverted in Run hold",
+      "killingScenario": "Steady Run with in_LV_Faulty_FBK FALSE: Step4 starts",
+      "oracle": "POL-01, MOD-002"
+    },
+    {
+      "id": "M-E2a-15",
+      "guard": "Healthy",
+      "op": "invert-contact",
+      "block": "//Network6/HEALTHY_OK",
+      "port": "AndIn2",
+      "rationale": "HV Faulty polarity inverted in Run hold",
+      "killingScenario": "Steady Run with in_HV_Faulty_FBK FALSE: Step4 starts",
+      "oracle": "POL-01",
+      "modelKill": "repro/v2/t8.out.txt"
+    },
+    {
+      "id": "M-E2a-16",
+      "guard": "HealthyPolarity",
+      "op": "invert-contact",
+      "block": "//Network11/FBAnd4",
+      "port": "AndIn3",
+      "rationale": "R&D entry polarity reverted to F1",
+      "killingScenario": "Safe->R&D with in_LV_Faulty_FBK FALSE: stays S12",
+      "oracle": "POL-01, MOD1-01"
+    },
+    {
+      "id": "M-E2a-17",
+      "guard": "Order",
+      "op": "swap-order",
+      "block": "//Network3/FBRs7",
+      "port": "",
+      "value": {
+        "moveAfter": "//RndPhysicalCompact/GATE_001"
+      },
+      "rationale": "stage RS outside the contiguous head",
+      "killingScenario": "transitions into/out of SR: mixed snapshot (v1 prototype: S1+S3 at Run entry)",
+      "oracle": "E2-01, INV-4"
+    },
+    {
+      "id": "M-E2a-28",
+      "guard": "Order",
+      "op": "swap-order",
+      "block": "//Network12/FBAnd16",
+      "port": "",
+      "value": {
+        "moveAfter": "//Network1/FBAnd1"
+      },
+      "rationale": "cover AND after N1/FBAnd1",
+      "killingScenario": "StartingRun/Run + NC1 FALSE: b_EStop_Ok one scan later than in_Estop_PLC (L1)",
+      "oracle": "IL-03, IL-05a (L1)",
+      "formerly": "M-E2b-31",
+      "expectedOnThisCandidate": "EQUIVALENT (order has no consumer until E2b: FBAnd16 feeds only N12/FBAnd4 in core); kill on E2b stack (M-E2b-31)"
+    },
+    {
+      "id": "M-E2a-29",
+      "guard": "Order",
+      "op": "swap-order",
+      "block": "//SafeResumption/CONNECTOR_SCOPE",
+      "port": "",
+      "value": {
+        "moveAfter": "//Network1/FBAnd1"
+      },
+      "rationale": "connector scope after N1/FBAnd1",
+      "killingScenario": "R&D + LV connector FALSE: b_EStop_Ok at e+2 instead of e+1 (L1 vs in_Estop_PLC)",
+      "oracle": "EMG4-03 (L1)",
+      "modelKill": "repro/t15.out.txt (base equal e+1)",
+      "formerly": "M-E2b-32",
+      "expectedOnThisCandidate": "EQUIVALENT (N1/FBAnd1.AndIn4 connector cause added in E2b); kill on E2b stack (M-E2b-32)"
+    }
+  ],
+  "equivalentBySearch": [
+    {
+      "block": "//Network3/FBOr1",
+      "port": "OrIn4",
+      "ref": "M-E2b-30: no g5/g7 coincidence in v3 (25), w1 (630), w12 (72) runs; structural argument: 1-scan PLC/connector pulse that drops EOk(k) resets GATE_001 at k-1 so g5(k)=FALSE (DERIVED); input kept, re-evaluate in E3/E4",
+      "formerly": "M-E2b-30"
+    },
+    {
+      "block": "//Network12/FBAnd2",
+      "port": "AndIn3",
+      "id": "UL-05",
+      "ref": "review v4 w15: Safe and R&D, blue at 0, green at g in {0,1,100,499,500,501,700}: no output/stage difference; recRndC_BA excludes green, FBAndUnlockHold masks output (DERIVED)"
+    }
+  ],
+  "equivalentByRequirement": [
+    {
+      "block": "//Network3/FBAnd1",
+      "port": "AndIn2",
+      "id": "M-E2a-27 (ES-06)",
+      "ref": "analyst E2-plan-v4-questions CRITERIA section 2 + PROBE_ES06: stage memory before Restart not normative; outputs/status identical; with Bypass gate (A) Safe gives no energy"
+    }
+  ],
+  "equivalentByProof": [
+    {
+      "block": "//Network6/RUN_DOWN_RESET",
+      "port": "OrIn2",
+      "ref": "MU11 - PLAN v2 section 9, accepted by reviewer for E2a..E2d; C3 of E1 review fulfilled by equivalence proof; re-evaluate in E3."
+    },
+    {
+      "block": "//Network7/FBAnd8",
+      "port": "AndIn5",
+      "ref": "S4 gate against stale TON; accepted by review."
+    },
+    {
+      "block": "//Network6/FBAnd18",
+      "port": "AndIn4",
+      "ref": "S3 gate; stale Ton1 re-sets SR idempotently; accepted by review."
+    }
+  ],
+  "removedGuards": [
+    {
+      "guard": "ES-07 Network5/FBAnd1.AndIn3",
+      "by": "R1"
+    }
+  ]
+}

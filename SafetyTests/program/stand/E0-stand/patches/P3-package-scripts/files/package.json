@@ -1,0 +1,24 @@
+{
+  "name": "men001-dyno-safety-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check:software": "node scripts/software-check.js",
+    "test": "node --test",
+    "test:mutations": "node scripts/mutation-check.js",
+    "test:sal-mutations": "node scripts/sal-mutation-check.js",
+    "test:stand-fb": "node scripts/stand-fb-mutation-check.js",
+    "test:isolated": "node scripts/stand-isolated-check.js",
+    "audit:xml": "node scripts/xml-audit.js",
+    "audit:sal": "node scripts/sal-report.js",
+    "audit:boot": "node scripts/boot-preflight.js --write",
+    "audit:inputs": "node scripts/sal-assumptions-report.js",
+    "audit:phases": "node scripts/emergency-phase-report.js",
+    "acceptance:candidate": "node scripts/candidate-acceptance.js",
+    "design:native": "node scripts/native-recognizer-report.js",
+    "design:owner": "node scripts/native-owner-report.js",
+    "design:integrated": "node scripts/integrated-control-report.js",
+    "audit:bindings": "node scripts/signal-bindings-report.js",
+    "design:timers": "node scripts/timer-producer-report.js"
+  }
+}

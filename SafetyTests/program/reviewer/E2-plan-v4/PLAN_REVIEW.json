@@ -1,0 +1,153 @@
+{
+  "schema": "men001-v2-reviewer-plan-review/1",
+  "role": "v2-reviewer",
+  "date": "2026-10-22",
+  "subject": "program/architect/E2-status v4",
+  "sources": {
+    "planMd": "c57da8964b64df2d1a4a01250a740ff5e5074595d62e52eba92aa9866746e90e",
+    "planJson": "05582010785b65a1c656e96f73b0fa45198afc5f2a982e684d1419c86edd2c31",
+    "mutationPlans": {
+      "E2a": "13f22e1e7f18e5f5cabcf078ffb060b7b875a12067112bc3168419c6ec41bfe8",
+      "E2b": "87265b75f46a1bcadecbdf9747e79e62e8c5ca9f72aa7750c44a97a127ff295b",
+      "E2c": "4ca980347c4cc8ce5e589de66510a10b7cd384dda41741075ab9080682882b6e",
+      "E2d": "7c2725d2b880fdfaf19f2e3a0a51e38c01f1e802f5c1ffe51b1e9aba498f67a6"
+    },
+    "canonicalSal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "r1CandidateSal": "ca841a01fe44f776a5868968fde70cce728657aaf411d6b8bfa6689cfadc7bb3",
+    "scenarioDecisionsPlan": "ff59e2f8372c873926dce18a2e6551176e3a8de9a497f97c6a651cf9329ca645",
+    "scenarioDecisionsAtVerdict": "2633920b1d8981e3b63b53cb580b2c5cbfed287df00bacb086a5336d821cd86e (earlier during review 7eccf0d1...)",
+    "criteriaDeltaV4": "2b405938d002343a65afc73db8d2b83f172106462368121792c2539d70a60c04",
+    "criteriaDeltaV5": "29f4288f926ab2459f239ffe3414bbf94f5990d947efc1037c8c12e02ae29b47",
+    "head": "a8f6de7",
+    "reference": "4495a1f git show only"
+  },
+  "evidenceKind": "model (architect proto.mjs on sal-runtime, R1 simulated on F1, old input names); not native, not CRC, not IDE, not target, not hardware; no mutation actually executed",
+  "verdicts": {
+    "E2a_SAL": "ring/HEALTH_GUARD/polarity/rename READY FOR EDITOR (A4-1..A4-5, A4-7); E2a-RC NEEDS CHANGES (A4-8)",
+    "E2a_PLC": "NEEDS CHANGES (A4-6, Q-ARCH-11 B mapping)",
+    "E2b": "READY FOR EDITOR (logic); MUTATION_PLAN_E2b and known FAIL NEEDS CHANGES before G2 (B4-1..B4-4)",
+    "E2c": "READY FOR EDITOR (X4-1)",
+    "E2d": "READY FOR EDITOR (SAL, Door guards untouched); MUTATION_PLAN_E2d NEEDS CHANGES (D4-1, D4-2)",
+    "rebaseToF1": "complete and honest; reference-only after Q-64 A; no verdict"
+  },
+  "closure": {
+    "B3-1": "closed (model w4: connector and cover = in_Estop_PLC in S12, R&D, SU, Run; Run connector 1 scan earlier, allowed)",
+    "B3-2": "closed",
+    "B3-4": "closed by construction; normal transitions unaffected",
+    "B3-5": "closed (t15 reproduced)",
+    "B3-6": "partial: M-E2b-24/25 killers invalid (B4-1)",
+    "B3-7": "partial: REL-01(e) on E2a and Bypass-in-S6 missing (B4-2, B4-3)",
+    "A3-1": "closed vs v3/V, reopened by question 68 (A4-8)",
+    "A3-2": "closed",
+    "A3-3": "closed",
+    "A3-4": "stale again: SCENARIO_DECISIONS now 7eccf0d1",
+    "C3-1": "closed",
+    "C3-2": "closed",
+    "D3-1_D3-2_QARCH10": "closed"
+  },
+  "findings": [
+    {
+      "id": "B4-1",
+      "to": "architect",
+      "severity": "required before G2",
+      "text": "M-E2b-24/25 (G10_EXIT.AndIn7/8) not killed by stated scenario: Bypass raises C1 and C2 in the same scan, single mutant blocked by the other input; G10 reads previous-scan commands. Give pair mutation or equivalentBySearch with argument.",
+      "evidence": "repro/w6.out.txt, w8.out.txt"
+    },
+    {
+      "id": "B4-2",
+      "to": "architect",
+      "severity": "required",
+      "text": "REL-01(e) canonical defect is closed from E2b by GATE_030.OrIn5 (not E2d); add REL-01(e) to E2b criteria, Safe connector killer to M-E2b-21, known FAIL REL-01(e) after E2a.",
+      "evidence": "repro/w2.out.txt, w2.attr.out.txt, w3.out.txt, w5.out.txt, w5.n5.out.txt, w6.out.txt"
+    },
+    {
+      "id": "B4-3",
+      "to": "architect + analyst",
+      "severity": "required (record) / question",
+      "text": "Legacy Bypass in S6 after early Restart raises C1/C2 with status EMG; at G10 exit coinciding with Bypass rising edge 1 scan SAFE with C1/C2 commands TRUE. Record as known FAIL E2b..E2d until E4 (CFG-02 class); analyst: allowed until E4 or gate in E2b?",
+      "evidence": "repro/w7.out.txt, w9.out.txt, w10.out.txt"
+    },
+    {
+      "id": "B4-4",
+      "to": "architect",
+      "severity": "required",
+      "text": "M-E2b-30 (FBOr1.OrIn4) equivalent in reachable model behaviour: record as equivalentBySearch (DERIVED): v3 25 runs + w1 630 + w12 72, structural argument (GATE_001 raw read clears SG/DecOut4 on the same 1-scan pulse); re-evaluate in E3/E4.",
+      "evidence": "repro/w1.out.txt, w12.out.txt"
+    },
+    {
+      "id": "A4-1",
+      "to": "architect",
+      "text": "SCENARIO_DECISIONS SHA -> 7eccf0d1; add decisions 63, 64, 66, Q-T3-1, Q-CA1-01; Q-64 makes R1 question and section 8 reference-only."
+    },
+    {
+      "id": "A4-2",
+      "to": "architect + analyst",
+      "text": "M-E2a-21 killer wrong: swap keeps restart, Run only +1 scan (102->103, 143->144, 153->154). Killable only by normative exact upper bound (RC-6); otherwise equivalent within tolerance.",
+      "evidence": "repro/w14.out.txt"
+    },
+    {
+      "id": "A4-3",
+      "to": "architect (stand)",
+      "text": "Stand STATE cases Safe-RnD-Run, Emergency-removal, conflicting-set-requests ERROR INJECTION_POINT_MISSING on R1: give grant injection points of E2a ring or record as replaced by E2-01/E2-02."
+    },
+    {
+      "id": "A4-4",
+      "to": "architect",
+      "text": "Known FAIL after E2a: add REL-01(e) and Bypass in S6."
+    },
+    {
+      "id": "A4-5",
+      "to": "architect",
+      "text": "PLAN.json baselineResources still F1/limit 255; mu24 refers to non-existent M-E2d-05 (now M-E2d-03)."
+    },
+    {
+      "id": "A4-6",
+      "to": "architect",
+      "text": "E2a-PLC per Q-ARCH-11 B: explicit mapping LV_Healthy->LV_Faulty (DUT, tsproj Name, Link VarA 13171/13173), LV_Healthy_Invert->LV_Healthy (DUT, tsproj Name), MAIN LV_Healthy := NOT LV_Faulty, VIS 2 variable refs (not 4; 2 text labels unchanged); atomic rename and G2 check that links point to _Faulty and every consumer keeps polarity; reconcile 7 files vs 4 opened by lead."
+    },
+    {
+      "id": "A4-7",
+      "to": "architect",
+      "text": "Seven F1 survivors: IL-04/IL-05 (a) E2d; IL-06/IL-07 (a) E2b; ES-07 (a) R1; ES-06 N3/FBAnd1.AndIn2 (b) killer boot without Restart -> no stage until Restart (analyst to confirm normative); UL-05 N12/FBAnd2.AndIn3 (c) candidate equivalentBySearch.",
+      "evidence": "repro/w15.out.txt"
+    },
+    {
+      "id": "X4-1",
+      "to": "architect",
+      "text": "All MUTATION_PLAN_E2a..d testFiles = 20 exact names: add current-e2a-emg-anchor, current-e2a-emg-rd-sweep, current-e2d-unlock-door; filter ^E2[a-d] unchanged."
+    },
+    {
+      "id": "D4-1",
+      "to": "architect",
+      "text": "UNL-05 Door mutations missing. Door guards untouched by plan. Use invert-contact N2/FBAnd8.AndIn1 or deactivate N1/FBOr3.OrIn1 (Safe, killed by UNL-05 S a-c) and deactivate N12/FBAnd2.AndIn4 or FBAnd11.AndIn1 (R&D, killed by UNL-05 R); deactivate N2/FBAnd8.AndIn1 is restrictive (killed by UNL-04 only); N12/FBAnd3/FBAnd17 Door reset in R&D not killable until Q-T3-2b.",
+      "evidence": "repro/w13.out.txt"
+    },
+    {
+      "id": "D4-2",
+      "to": "architect",
+      "text": "E2d: state that REL-01(e) is closed in E2b; M-E2d-03 covers Q-REL only."
+    },
+    {
+      "id": "N-1",
+      "to": "architect",
+      "severity": "observation",
+      "text": "in_False_SI2_CH8 input in FBAndLvEmg/HLT_LV: blocks have no direct PLC signals; justify necessity under Q-MU06-01 or drop at native check. equivalentByProof accepted."
+    },
+    {
+      "id": "A4-8",
+      "to": "architect + analyst/tester",
+      "severity": "substantive",
+      "text": "Q-V4-01 B / question 68 B: Run not before C2 cmd + 500 ms + 100 ms continuous C2_FBK and HV ok after window; FBK dip after window -> Emergency (Q-RC-19), HV dip -> restart; same for R&D (C1_FBK, LV). E2a-RC v4 has no 500 ms lower bound (model Run at cmd+132) and restarts on FBK dip. Add 500 ms window (e.g. TON 0.5 s from command into AND before TON 0.1 s), split reactions (or known FAIL until E6), R&D confirmation analogue, recount resources, rewrite M-E2a-18..21 and add window mutations; RC criteria/tests update.",
+      "evidence": "architect repro/t15.out.txt, t14.out.txt; reviewer repro/w14.out.txt"
+    }
+  ],
+  "checks": {
+    "L1": "w4: all phases, all causes; cover/connector never lag in_Estop_PLC",
+    "E2aRC": "netlist verified; t15 reproduced; M-E2a-18/19/20 killable; M-E2a-21 timing-only",
+    "FBOr1_OrIn4": "normal transitions unaffected; M-E2b-30 no reachable killer in 702 runs",
+    "QT31": "w11: R&D->Safe normal C1 OFF not delayed by emergency after acceptance; no Q-T3-1 violation in E2b model",
+    "Q66": "no effect on E2a..E2d; E3 sketch drop HL_FAULT +4; E6 add LV 30 s watchdog",
+    "REL01e": "closed from E2b in model for all G1 v3 windows incl. N5 (hold >= restoration+1000); retry after 2.1 s accepted"
+  },
+  "repro": "program/reviewer/E2-plan-v4/repro/w1..w15.mjs + *.out.txt; node SafetyTests/program/reviewer/E2-plan-v4/repro/wN.mjs (w2/w5 accept argument 'attr'/'n5')"
+}

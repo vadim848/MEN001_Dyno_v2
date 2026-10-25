@@ -1,0 +1,455 @@
+{
+  "schema": "men001-v2-analyst-criteria/1",
+  "slice": "E4-v14",
+  "date": "2026-10-21",
+  "source": {
+    "sal": "34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b",
+    "sgvl": "517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635",
+    "diagram": "7b5eb79439011cdf9a3206aa815dec4349a35cf8155bfac7492b7ffd75e578ce",
+    "plcMain": "873d34ff21d9594cd2a25547cba735808802906080b2c8280aabd9a9cd7dcd7e",
+    "v14pdf": "fe6ce64b8b8a942ee6445feff8781369f1c8ed00c9d6aaa37918350575dfdcb4",
+    "jpegTransitions": "ce358cd426420d2e61a81f71407fe216ca9034972809a2d99de1bbe40d101d99",
+    "jpegLogicMap": "2d964dfa0c6ad8d2b50c1ae0150def891f907025059cdb0683ac894f705fa049",
+    "reference": "4495a1f6049f6a58ebfd436761faa84d17c8d643"
+  },
+  "commonConditions": "R0 = test/helpers/rnd-down-source.js raw; scan 1 ms; stable modes reached by real producers via physical gesture at code 00; code XY = (inPLC_RnD_Mode, inPLC_RnD_Mode_2)",
+  "criteria": [
+    {
+      "id": "C01",
+      "status": "READY",
+      "ids": [
+        "MOD-003",
+        "BOOT-002"
+      ],
+      "initial": "stable R&D (physical, code 00), C2 OFF, R0",
+      "sequence": [
+        "t0 code 00->10 held",
+        "t0+500 green ON",
+        "t0+1100 green OFF -> R&D->Safe until in_LV_C1_FBK FALSE"
+      ],
+      "expected": "2500 ms after Safe: no b_Step12_Set, out_LV_C1 FALSE, no Step12/R&D, Unlock FALSE",
+      "forbidden": "any up from unchanged code 10",
+      "boundaries": "no numeric PLC parameter; observation window 2500 ms",
+      "emergency": "in_Estop_PLC pulse 100 ms + green Restart -> still no up",
+      "sources": [
+        "SPEC §20 MOD-003",
+        "SCENARIO_DECISIONS no-up oracle",
+        "QP held-level (under revision)"
+      ],
+      "canonicalExpectation": "structural FAIL (N2/FBAnd91 level)",
+      "deps": []
+    },
+    {
+      "id": "C02",
+      "status": "READY",
+      "ids": [
+        "MOD-003",
+        "MOD-002"
+      ],
+      "initial": "stable Run (physical, code 00)",
+      "sequence": [
+        "t0 code 00->11 held",
+        "physical green 0.5 s -> full return to R&D (C2 FBK OFF)"
+      ],
+      "expected": "2500 ms after R&D: no b_Set_HV_C2_1, out_HV_C2 FALSE, STO kept, no Step3",
+      "forbidden": "repeat R&D->Run from held 11",
+      "boundaries": "window 2500 ms",
+      "emergency": null,
+      "sources": [
+        "MOD-003",
+        "SPEC §15",
+        "Vadim #4"
+      ],
+      "canonicalExpectation": "structural FAIL (N12/FBAnd10 level)",
+      "deps": []
+    },
+    {
+      "id": "C03",
+      "status": "READY",
+      "ids": [
+        "MOD-003",
+        "BOOT-001"
+      ],
+      "initial": "first group scan with code 10 / 11 / 01 already set, R0",
+      "sequence": [
+        "observe from start"
+      ],
+      "expected": "2500 ms after Safe: no up; Run not restored",
+      "forbidden": "auto up/Run from boot code",
+      "boundaries": "scan-based",
+      "emergency": null,
+      "sources": [
+        "MOD-003",
+        "BOOT-001",
+        "SPEC §17"
+      ],
+      "canonicalExpectation": "check; BOOT adapter limits may give NV",
+      "deps": []
+    },
+    {
+      "id": "C04",
+      "status": "READY",
+      "ids": [
+        "CVR-004",
+        "MOD-007",
+        "EMG-003",
+        "MOD-003"
+      ],
+      "initial": "stable Safe, code 00; variants NC1 F / NC2 F / both F x Door T/F; LV conn F; HV conn F",
+      "sequence": [
+        "t0-100 violation",
+        "t0 code 00->10 held",
+        "t0+2500 violation removed, code held",
+        "observe +2500"
+      ],
+      "expected": "no Step12/R&D, b_Step12_Set FALSE, out_LV_C1 FALSE, Unlock FALSE; connectors: no fault; after restore still no up",
+      "forbidden": "state change, LV set, deferred execution after restore",
+      "boundaries": "violation removed in scan N, code appears N-1/N/N+1",
+      "emergency": "NC fault classification in Safe out of scope (Q-E4V14-09)",
+      "sources": [
+        "CVR-004 closure",
+        "DOOR_INTERLOCK_REQUIREMENT table",
+        "SPEC §5 p7,11",
+        "SCENARIO_DECISIONS cover-open row",
+        "EMG-003",
+        "MOD-003"
+      ],
+      "canonicalExpectation": "structural: Step12 may set without energy; phase 2 FAIL (level)",
+      "deps": []
+    },
+    {
+      "id": "C05",
+      "status": "READY",
+      "ids": [
+        "CVR-004",
+        "MOD-002",
+        "EMG-011"
+      ],
+      "initial": "stable R&D, code 00; NC variants x Door",
+      "sequence": [
+        "violation at scan N; code 00->11 at N-1/N/N+1"
+      ],
+      "expected": "no b_Set_HV_C2_1, out_HV_C2 FALSE, STO kept, no Step3",
+      "forbidden": "any HV/STO release",
+      "boundaries": "scan N-1/N/N+1",
+      "emergency": "Emergency per EMG-002 not asserted here",
+      "sources": [
+        "CVR-004",
+        "SPEC §7",
+        "EMG-011"
+      ],
+      "canonicalExpectation": "check",
+      "deps": [
+        "Q-E4V14-09 for emergency classification"
+      ]
+    },
+    {
+      "id": "C06",
+      "status": "READY",
+      "ids": [
+        "EMG-001",
+        "EMG-011",
+        "EMG-006",
+        "MOD-003"
+      ],
+      "initial": "stable Safe (A, code 10) / stable R&D (B, code 11); sources: Estop_PLC T, ES_NC_1 F, ES_NC_2 F, Mentee T",
+      "sequence": [
+        "emergency at scan N; UP code at N-1/N/N+1",
+        "t+200 cause removed, code held, 2500 ms no Restart",
+        "green ON 300 ms/OFF (Restart; duration not normative)",
+        "observe 2500 ms"
+      ],
+      "expected": "b_EStop_Ok FALSE from first scan; no up/STO release; Unlock FALSE; after Restart only Safe, no up",
+      "forbidden": "auto R&D/Run after recovery; up during emergency",
+      "boundaries": "scan N-1/N/N+1",
+      "emergency": "all four sources",
+      "sources": [
+        "SPEC §13",
+        "SPEC §12 p6",
+        "EMG-001/006/011",
+        "MOD-003",
+        "Vadim #12 (existing Restart role)"
+      ],
+      "canonicalExpectation": "check",
+      "deps": [
+        "Q-E4V14-01 for gesture"
+      ]
+    },
+    {
+      "id": "C07",
+      "status": "READY",
+      "ids": [
+        "EMG-006",
+        "MOD-007"
+      ],
+      "initial": "stable Safe and stable R&D, code 00",
+      "sequence": [
+        "t0 Estop_PLC (or Mentee) TRUE 100 ms then FALSE",
+        "codes 00,10,11,01,00 every 500 ms; Bypass TRUE 500 ms; DoorMonitor toggles; buttons OFF"
+      ],
+      "expected": "b_EStop_Ok/out_Estop_OK FALSE throughout; Unlock FALSE; no C1/C2 set or STO release",
+      "forbidden": "PLC-only clearing of Emergency",
+      "boundaries": "n/a",
+      "emergency": null,
+      "sources": [
+        "SPEC §12",
+        "EMG-006",
+        "SPEC §17",
+        "v1.4 §8 #5 (match)"
+      ],
+      "canonicalExpectation": "structural PASS expected; verify",
+      "deps": []
+    },
+    {
+      "id": "C08",
+      "status": "READY",
+      "ids": [
+        "CVR-001",
+        "EMG-007"
+      ],
+      "initial": "stable Safe / R&D / Run / Emergency",
+      "sequence": [
+        "16 combos (bit1,bit2,Bypass,DoorMonitor) 600 ms each, buttons OFF"
+      ],
+      "expected": "out_Door_Unlock_Solonoeid FALSE always",
+      "forbidden": "PLC-opened cover",
+      "boundaries": "n/a",
+      "emergency": "Emergency branch included",
+      "sources": [
+        "SPEC §5 p1",
+        "CVR-001",
+        "SPEC §17"
+      ],
+      "canonicalExpectation": "structural PASS (FBAndUnlockHold.AndIn2 = blue)",
+      "deps": []
+    },
+    {
+      "id": "C09",
+      "status": "READY",
+      "ids": [
+        "MOD-007"
+      ],
+      "initial": "stable Safe (and stable R&D), code 00, R0",
+      "sequence": [
+        "t0 Bypass TRUE held 12000 ms then FALSE"
+      ],
+      "expected": "out_LV_C1 and out_HV_C2 FALSE throughout; no step change (R&D: out_HV_C2 FALSE)",
+      "forbidden": "single PLC bit energising C1/C2",
+      "boundaries": "Ton1 9999/10000/10001 ms recorded as OBSERVE only",
+      "emergency": null,
+      "sources": [
+        "SPEC §17",
+        "MOD-007",
+        "v1.4 §5"
+      ],
+      "canonicalExpectation": "structural FAIL (N1/FBAnd4 -> FBOr17/18 -> SetPermit)",
+      "deps": [
+        "Q-E4V14-07 may revise"
+      ]
+    },
+    {
+      "id": "C10",
+      "status": "READY",
+      "ids": [
+        "MOD-004",
+        "MOD-003"
+      ],
+      "initial": "(a) Safe->R&D in progress (Step12, LV FBK not confirmed); (b) accepted R&D->Run, STO released; (c) Run->R&D in progress",
+      "sequence": [
+        "(a) code 00->11 held",
+        "(b) code 10/11 change or hold",
+        "(c) code 11 held"
+      ],
+      "expected": "no second step, no HV set, no STO release during and 2500 ms after target state",
+      "forbidden": "queued/deferred up after transition",
+      "boundaries": "scan-based",
+      "emergency": null,
+      "sources": [
+        "MOD-004",
+        "SPEC §15",
+        "Vadim #4",
+        "MOD-003"
+      ],
+      "canonicalExpectation": "(a),(c) structural FAIL; (b) check",
+      "deps": []
+    },
+    {
+      "id": "C11",
+      "status": "READY",
+      "ids": [
+        "CVR-005"
+      ],
+      "initial": "stable R&D, blue qualified (Unlock TRUE) and held",
+      "sequence": [
+        "code 00->11"
+      ],
+      "expected": "never Unlock TRUE together with HV set/C2 rise/STO release",
+      "forbidden": "coexistence",
+      "boundaries": "scan-based",
+      "emergency": null,
+      "sources": [
+        "CVR-005",
+        "SPEC §7"
+      ],
+      "canonicalExpectation": "check",
+      "deps": [
+        "Q-E4V14-04 decides which reaction wins"
+      ]
+    },
+    {
+      "id": "C12",
+      "status": "OBSERVE",
+      "ids": [
+        "MOD-006",
+        "MOD-007",
+        "MOD-003"
+      ],
+      "initial": "stable Safe / R&D / Run",
+      "sequence": [
+        "code 00->XY hold 3000 ms ->00 for XY in 00,01,10,11"
+      ],
+      "expected": "record steps, requests, contactors, STO, SS1, discharge, Unlock, out_TransitionStep",
+      "forbidden": "n/a",
+      "boundaries": "n/a",
+      "emergency": null,
+      "sources": [
+        "E4 freeze: current PLC tests are observations"
+      ],
+      "canonicalExpectation": "structural predictions in TRACE §3",
+      "deps": []
+    },
+    {
+      "id": "C13",
+      "status": "PENDING-V14",
+      "ids": [
+        "MOD-008"
+      ],
+      "initial": "stable R&D",
+      "sequence": [
+        "in_HV_Healthy_FBK FALSE 2000 ms then TRUE"
+      ],
+      "expected": "R&D kept, no fault/Emergency, LV kept",
+      "forbidden": "state change from PS2 health in R&D",
+      "boundaries": "n/a",
+      "emergency": null,
+      "sources": [
+        "v1.4 §4 only"
+      ],
+      "canonicalExpectation": "structural: not consumed in steady R&D",
+      "deps": [
+        "lead Q1"
+      ]
+    },
+    {
+      "id": "C14",
+      "status": "BLOCKED",
+      "what": "positive PLC acceptance & new-request definition",
+      "questions": [
+        "lead Q1",
+        "lead Q2",
+        "Q-E4V14-02",
+        "Q-E4V14-03"
+      ],
+      "ids": [
+        "MOD-003",
+        "MOD-007",
+        "MOD-002",
+        "CVR-004"
+      ]
+    },
+    {
+      "id": "C15",
+      "status": "BLOCKED",
+      "what": "PLC request with button pressed",
+      "questions": [
+        "Q-E4V14-04"
+      ],
+      "ids": [
+        "MOD-003"
+      ]
+    },
+    {
+      "id": "C16",
+      "status": "BLOCKED",
+      "what": "mismatched command; PLC DOWN in transitions",
+      "questions": [
+        "Q-E4V14-05"
+      ],
+      "ids": [
+        "MOD-004"
+      ]
+    },
+    {
+      "id": "C17",
+      "status": "BLOCKED",
+      "what": "Run->R&D zero speed/current",
+      "questions": [
+        "lead Q3"
+      ],
+      "ids": [
+        "STP-001",
+        "STP-002",
+        "STP-003",
+        "STP-004"
+      ]
+    },
+    {
+      "id": "C18",
+      "status": "BLOCKED",
+      "what": "STS_COVER_LOCKED",
+      "questions": [
+        "lead Q2",
+        "lead Q5",
+        "Q-E4V14-09"
+      ],
+      "ids": [
+        "CVR-004"
+      ]
+    },
+    {
+      "id": "C19",
+      "status": "BLOCKED",
+      "what": "Emergency->Safe gesture",
+      "questions": [
+        "Q-E4V14-01"
+      ],
+      "ids": [
+        "EMG-006"
+      ]
+    },
+    {
+      "id": "C20",
+      "status": "BLOCKED",
+      "what": "heartbeat",
+      "questions": [
+        "Q-E4V14-08"
+      ],
+      "ids": [
+        "EMG-001"
+      ]
+    },
+    {
+      "id": "C21",
+      "status": "BLOCKED",
+      "what": "battery/BMS in R&D",
+      "questions": [
+        "Q-E4V14-06"
+      ],
+      "ids": [
+        "MOD-001",
+        "MOD-005"
+      ]
+    },
+    {
+      "id": "C22",
+      "status": "BLOCKED",
+      "what": "inPLC_BypassC1C2 fate",
+      "questions": [
+        "Q-E4V14-07"
+      ],
+      "ids": [
+        "MOD-007"
+      ]
+    }
+  ]
+}

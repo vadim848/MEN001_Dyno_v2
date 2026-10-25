@@ -1,0 +1,264 @@
+[
+  {
+    "name": "baseline-run",
+    "salSha256": "ffd6c64e567131cb4fd5c4dd58816e0e5e8bb4f60777142d7959d9cc591ef0d1",
+    "sgvlSha256": "4eb263924e8ca5d77a4017c7f82b0a13396d981d881158be8c8f2a169d393ee5",
+    "reportSha256": "f08ff3a4969e3ee0d8af9377824777de9814dd2310eaf7c1624a3c0582a4bd3b",
+    "exit": "1",
+    "stages": [
+      {
+        "name": "harness",
+        "status": "PASS",
+        "counts": {
+          "tests": 189,
+          "pass": 189,
+          "fail": 0,
+          "skipped": 0
+        },
+        "failedNames": []
+      },
+      {
+        "name": "historical",
+        "status": "PASS",
+        "counts": {
+          "tests": 75,
+          "pass": 75,
+          "fail": 0,
+          "skipped": 0
+        },
+        "failedNames": []
+      },
+      {
+        "name": "current",
+        "status": "FAIL",
+        "counts": {
+          "tests": 438,
+          "pass": 436,
+          "fail": 2,
+          "skipped": 0
+        },
+        "failedNames": [
+          "SR-RG-INVALID-green-remain-green failed chord cannot degrade",
+          "SR-RG-INVALID-blue-remain-green failed chord cannot degrade"
+        ]
+      }
+    ],
+    "summary": {
+      "PASS": 200,
+      "FAIL": 1,
+      "NOT VERIFIED": 7,
+      "ERROR": 0
+    },
+    "errors": []
+  },
+  {
+    "name": "candidate-unmigrated",
+    "salSha256": "3e27fa82b90d3dbbdc3ba191fd65364a3e08cac1ed0c17455006fdce1413371d",
+    "sgvlSha256": "9a8471fe049c063e0e2fe639b097b14fb3bd35ab1bcfb34b851273e9f3011a54",
+    "reportSha256": "0ea191c3ba53b0c945b1e4d9124b7b57b8e88c939f93f846b57f6e0bdbc60a23",
+    "exit": "3",
+    "stages": [
+      {
+        "name": "harness",
+        "status": "ERROR",
+        "counts": {
+          "tests": 189,
+          "pass": 184,
+          "fail": 5,
+          "skipped": 0
+        },
+        "failedNames": [
+          "BOOT preflight owns fresh full-source parsing, all native inventory and exact two unsupported categories",
+          "BOOT Network4 lists eight unbound native inputs, seven precise phase writers/readers, unused channel8",
+          "BOOT declared RunStop/ErrAck are typed connections, not inferred group RUN or main Restart",
+          "BOOT accepts matching relocated file pairs, portable LF/CRLF without dropping any source attributes",
+          "BOOT rejects an unsupported adapter revision rather than inventing group capability"
+        ]
+      },
+      {
+        "name": "historical",
+        "status": "PASS",
+        "counts": {
+          "tests": 75,
+          "pass": 75,
+          "fail": 0,
+          "skipped": 0
+        },
+        "failedNames": []
+      },
+      {
+        "name": "current",
+        "status": "FAIL",
+        "counts": {
+          "tests": 362,
+          "pass": 326,
+          "fail": 36,
+          "skipped": 0
+        },
+        "failedNames": [
+          "test\\\\current-door-interlock.test.js",
+          "test\\\\current-early-sto-bindings.test.js",
+          "EARLYSTO drive1/completion healthy pending Set positive fixed10",
+          "EARLYSTO drive1/completion first fault in_ES_NC_1 fixed10",
+          "EARLYSTO drive1/completion first fault in_ES_NC_2 fixed10",
+          "EARLYSTO drive1/completion first fault in_InterLock_NC_1 fixed10",
+          "EARLYSTO drive1/completion first fault in_InterLock_NC_2 fixed10",
+          "EARLYSTO drive1/completion first fault in_LV_Connector_Interlock fixed10",
+          "EARLYSTO drive1/completion first fault in_HV_Connector_Interlock fixed10",
+          "EARLYSTO drive1/completion first fault in_Estop_PLC fixed10",
+          "EARLYSTO drive1/completion first fault in_Mentee_EStop fixed10",
+          "EARLYSTO drive1/completion single-sample PLC pulse and raw restore fixed1",
+          "EARLYSTO drive1/completion single-sample PLC pulse and raw restore fixed10",
+          "EARLYSTO drive1/completion latched output not forcibly reset by new Set guard fixed10",
+          "EARLYSTO drive2/completion healthy pending Set positive fixed10",
+          "EARLYSTO drive2/completion first fault in_ES_NC_1 fixed10",
+          "EARLYSTO drive2/completion first fault in_ES_NC_2 fixed10",
+          "EARLYSTO drive2/completion first fault in_InterLock_NC_1 fixed10",
+          "EARLYSTO drive2/completion first fault in_InterLock_NC_2 fixed10",
+          "EARLYSTO drive2/completion first fault in_LV_Connector_Interlock fixed10",
+          "EARLYSTO drive2/completion first fault in_HV_Connector_Interlock fixed10",
+          "EARLYSTO drive2/completion first fault in_Estop_PLC fixed10",
+          "EARLYSTO drive2/completion first fault in_Mentee_EStop fixed10",
+          "EARLYSTO drive2/completion single-sample PLC pulse and raw restore fixed1",
+          "EARLYSTO drive2/completion single-sample PLC pulse and raw restore fixed10",
+          "EARLYSTO drive2/completion latched output not forcibly reset by new Set guard fixed10",
+          "EARLYSTO drive1/completion accepted manual Restart healthy positive fixed10",
+          "EARLYSTO drive2/completion accepted manual Restart healthy positive fixed10",
+          "test\\\\current-hv-set-permit.test.js",
+          "test\\\\current-native-bindings.test.js",
+          "test\\\\current-rnd-compact.test.js",
+          "SR-RG-INVALID-green-remain-green failed chord cannot degrade",
+          "SR-RG-INVALID-blue-remain-green failed chord cannot degrade",
+          "test\\\\current-step12-lv-permit.test.js",
+          "test\\\\current-unlock-hold.test.js",
+          "test\\\\current-v2-migration-negatives.test.js"
+        ]
+      }
+    ],
+    "summary": {
+      "PASS": 200,
+      "FAIL": 1,
+      "NOT VERIFIED": 5,
+      "ERROR": 1
+    },
+    "errors": [
+      {
+        "id": "BOOT:SOURCE_REJECTED",
+        "code": "SOURCE_COVERAGE_MISMATCH",
+        "error": "Full native inventory differs from the reviewed source: no filtering/masking/writer removal is accepted"
+      }
+    ]
+  },
+  {
+    "name": "candidate-migrated",
+    "salSha256": "3e27fa82b90d3dbbdc3ba191fd65364a3e08cac1ed0c17455006fdce1413371d",
+    "sgvlSha256": "9a8471fe049c063e0e2fe639b097b14fb3bd35ab1bcfb34b851273e9f3011a54",
+    "reportSha256": "06e8eef7dc5a94a4d213956151e44b6f2ef716edaeacb6f72742c50e2b20a64a",
+    "exit": "1",
+    "stages": [
+      {
+        "name": "harness",
+        "status": "PASS",
+        "counts": {
+          "tests": 189,
+          "pass": 189,
+          "fail": 0,
+          "skipped": 0
+        },
+        "failedNames": []
+      },
+      {
+        "name": "historical",
+        "status": "PASS",
+        "counts": {
+          "tests": 75,
+          "pass": 75,
+          "fail": 0,
+          "skipped": 0
+        },
+        "failedNames": []
+      },
+      {
+        "name": "current",
+        "status": "FAIL",
+        "counts": {
+          "tests": 438,
+          "pass": 428,
+          "fail": 10,
+          "skipped": 0
+        },
+        "failedNames": [
+          "EARLYSTO composed LV254 exact manifest,247 historical native survivors, reviewed relative moves and SGVL delta",
+          "EARLYSTO composed LV254 critical STO contacts and explicit canonical graph layers",
+          "HV LV254 SGVL declarations and writers unchanged, composed target-usage changes",
+          "B1 V2 physical aliases and required wires preserved through exact logical consumer delta",
+          "B1 LV254 SGVL declarations and all source indices unchanged through exact composed target delta",
+          "PLC V2 native producer96, preserved contacts and exact whole graph fanout",
+          "RNDCOMPACT V2 exact canonical graph delta and retained early STO integration",
+          "RNDCOMPACT V2 all SGVL declarations and source indices exact; only eleven target changes",
+          "SR-RG-INVALID-green-remain-green failed chord cannot degrade",
+          "SR-RG-INVALID-blue-remain-green failed chord cannot degrade"
+        ]
+      }
+    ],
+    "summary": {
+      "PASS": 200,
+      "FAIL": 1,
+      "NOT VERIFIED": 7,
+      "ERROR": 0
+    },
+    "errors": []
+  },
+  {
+    "name": "candidate-migrated-fixed",
+    "salSha256": "3e27fa82b90d3dbbdc3ba191fd65364a3e08cac1ed0c17455006fdce1413371d",
+    "sgvlSha256": "9a8471fe049c063e0e2fe639b097b14fb3bd35ab1bcfb34b851273e9f3011a54",
+    "reportSha256": "b007e1acf1f0ab50d270fb31dd7ef000342aff44502ca0c33f1e34388618a1ea",
+    "exit": "1",
+    "stages": [
+      {
+        "name": "harness",
+        "status": "PASS",
+        "counts": {
+          "tests": 189,
+          "pass": 189,
+          "fail": 0,
+          "skipped": 0
+        },
+        "failedNames": []
+      },
+      {
+        "name": "historical",
+        "status": "PASS",
+        "counts": {
+          "tests": 75,
+          "pass": 75,
+          "fail": 0,
+          "skipped": 0
+        },
+        "failedNames": []
+      },
+      {
+        "name": "current",
+        "status": "FAIL",
+        "counts": {
+          "tests": 438,
+          "pass": 436,
+          "fail": 2,
+          "skipped": 0
+        },
+        "failedNames": [
+          "SR-RG-INVALID-green-remain-green failed chord cannot degrade",
+          "SR-RG-INVALID-blue-remain-green failed chord cannot degrade"
+        ]
+      }
+    ],
+    "summary": {
+      "PASS": 200,
+      "FAIL": 1,
+      "NOT VERIFIED": 7,
+      "ERROR": 0
+    },
+    "errors": []
+  }
+]

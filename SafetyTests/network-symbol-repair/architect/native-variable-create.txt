@@ -1,0 +1,52 @@
+Variable::Create RVA 70308
+0000 ldnull 
+0001 stloc.0 
+0002 ldarg.1 
+0003 callvirt get_Store
+0008 callvirt get_TransactionManager
+000D ldstr Create variable {0}
+0012 ldarg.0 
+0013 call Format
+0018 callvirt BeginTransaction
+001D stloc.1 
+001E ldarg.1 
+001F callvirt get_Partition
+0024 ldc.i4.1 
+0025 newarr PropertyAssignment
+002A dup 
+002B ldc.i4.0 
+002C ldsfld Variable::NameDomainPropertyId
+0031 ldarg.0 
+0032 newobj .ctor
+0037 stelem.ref 
+0038 newobj .ctor
+003D stloc.0 
+003E ldloc.0 
+003F ldarg.1 
+0040 callvirt get_Partition
+0045 ldc.i4.0 
+0046 newarr PropertyAssignment
+004B newobj .ctor
+0050 callvirt set_SourceUsages
+0055 ldloc.0 
+0056 ldarg.1 
+0057 callvirt get_Partition
+005C ldc.i4.0 
+005D newarr PropertyAssignment
+0062 newobj .ctor
+0067 callvirt set_TargetUsages
+006C ldarg.1 
+006D callvirt get_Variables
+0072 ldloc.0 
+0073 callvirt Add
+0078 ldloc.1 
+0079 callvirt Commit
+007E leave.s 10
+0080 ldloc.1 
+0081 brfalse.s 6
+0083 ldloc.1 
+0084 callvirt Dispose
+0089 endfinally 
+008A ldloc.0 
+008B ret 
+

@@ -1,0 +1,53 @@
+no-event Safe->R&D (base): A(b_Step12)=p+1001, C1 ON p+1002, C1_FBK p+1003, R&D p+1602
+== K-2 (WDG-02): LV Faulty TRUE from t, cleared at t_f+5000 (R&D expected) / held (30 s rollback = E6, not implemented)
+base Faulty from p-200, cleared t_f+5000                       S12 - C1 - R&D - end s1
+base Faulty from p-200, held                                   S12 - C1 - R&D - end s1
+base Faulty from p+900, cleared t_f+5000                       S12 - C1 - R&D - end s1
+base Faulty from p+900, held                                   S12 - C1 - R&D - end s1
+base Faulty from A, cleared t_f+5000                           S12 1001 C1 1002 R&D 6104 end rnd
+base Faulty from A, held                                       S12 1001 C1 1002 R&D - end s12
+base Faulty from A+1, cleared t_f+5000                         S12 1001 C1 1002 R&D 6104 end rnd
+base Faulty from A+1, held                                     S12 1001 C1 1002 R&D - end s12
+k1 Faulty from p-200, cleared t_f+5000                         S12 - C1 - R&D - end s1
+k1 Faulty from p-200, held                                     S12 - C1 - R&D - end s1
+k1 Faulty from p+900, cleared t_f+5000                         S12 - C1 - R&D - end s1
+k1 Faulty from p+900, held                                     S12 - C1 - R&D - end s1
+k1 Faulty from A, cleared t_f+5000                             S12 1001 C1 1002 R&D 6104 end rnd
+k1 Faulty from A, held                                         S12 1001 C1 1002 R&D - end s12
+k1 Faulty from A+1, cleared t_f+5000                           S12 1001 C1 1002 R&D 6104 end rnd
+k1 Faulty from A+1, held                                       S12 1001 C1 1002 R&D - end s12
+v76 Faulty from p-200, cleared t_f+5000                        S12 1001 C1 1002 R&D 6104 end rnd
+v76 Faulty from p-200, held                                    S12 1001 C1 1002 R&D - end s12
+v76 Faulty from p+900, cleared t_f+5000                        S12 1001 C1 1002 R&D 6104 end rnd
+v76 Faulty from p+900, held                                    S12 1001 C1 1002 R&D - end s12
+v76 Faulty from A, cleared t_f+5000                            S12 1001 C1 1002 R&D 6104 end rnd
+v76 Faulty from A, held                                        S12 1001 C1 1002 R&D - end s12
+v76 Faulty from A+1, cleared t_f+5000                          S12 1001 C1 1002 R&D 6104 end rnd
+v76 Faulty from A+1, held                                      S12 1001 C1 1002 R&D - end s12
+HLT-01 steady R&D, LV Faulty -> (base)                         S1 C1=0
+HLT-01 steady R&D, LV Faulty -> (k1)                           S1 C1=0
+HLT-01 steady R&D, LV Faulty -> (v76)                          S1 C1=0
+HLT-01 steady R&D, LV Faulty -> (mutInv)                       S_RnD C1=1
+== TD-15 Safe->R&D: LV connector FALSE from c (held)
+base c=A-1           C1 ON scans >= c: 0 S12 - no EMG
+base c=A+0           C1 ON scans >= c: 0 S12 1001 EMG at p+1002
+base c=A+1           C1 ON scans >= c: 0 S12 1001 EMG at p+1003
+v76 c=A-1            C1 ON scans >= c: 0 S12 - no EMG
+v76 c=A+0            C1 ON scans >= c: 0 S12 1001 EMG at p+1002
+v76 c=A+1            C1 ON scans >= c: 0 S12 1001 EMG at p+1003
+== TD-15 R&D->Run: A(recRndC_SU)=p+1000, C2 ON p+1002, STO released p+1002
+base c=A-1           C2 ON scans >= c: 0, STO released scans >= c: 0 no EMG
+base c=A+0           C2 ON scans >= c: 0, STO released scans >= c: 0 no EMG
+base c=A+1           C2 ON scans >= c: 0, STO released scans >= c: 0 EMG at p+1002
+base c=A+2           C2 ON scans >= c: 0, STO released scans >= c: 0 EMG at p+1003
+v76 c=A-1            C2 ON scans >= c: 0, STO released scans >= c: 0 no EMG
+v76 c=A+0            C2 ON scans >= c: 0, STO released scans >= c: 0 no EMG
+v76 c=A+1            C2 ON scans >= c: 0, STO released scans >= c: 0 EMG at p+1002
+v76 c=A+2            C2 ON scans >= c: 0, STO released scans >= c: 0 EMG at p+1003
+== TD-15 legacy PLC (1,0) Safe->R&D: A(b_Step12)=t0+2, C1 ON t0+4
+base c=A-1           C1 ON scans >= c: 0 EMG at t0+3
+base c=A+0           C1 ON scans >= c: 0 EMG at t0+3
+base c=A+1           C1 ON scans >= c: 0 EMG at t0+4
+v76 c=A-1            C1 ON scans >= c: 0 EMG at t0+3
+v76 c=A+0            C1 ON scans >= c: 0 EMG at t0+3
+v76 c=A+1            C1 ON scans >= c: 0 EMG at t0+4

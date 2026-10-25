@@ -1,0 +1,31 @@
+{
+  "slice": "E2-G1-v7",
+  "role": "v2-reviewer",
+  "date": "2026-10-22",
+  "verdict": "G1 PASS WITH CONDITIONS",
+  "expectedDeltasV7_3names": "OK",
+  "source": {"head": "dbca5dd", "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3", "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104", "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+    "oracleNewDuringReview": "analyst/E2-G1-v7-q/CRITERIA.md 4f6d291610896916"},
+  "reproduced": {
+    "nonE2": {"tests": 483, "pass": 465, "fail": 18, "skip": 0, "todo": 0, "sameAsTesterBaseline": true},
+    "e2": {"tests": 888, "normative": {"PASS": 93, "FAIL": 706, "NV": 33}, "DIAG_PASS": 34, "KF_FAIL": 22, "diffVsTesterBaselineByName": 0},
+    "candidateE2aRC_native": {"sal": "5733552a", "tests": 33, "pass": 22, "fail": 10, "todo": 1, "missingLedgerUsages": 22,
+      "counts": {"networks": 14, "blocks": 217, "ports": 1836, "variables": 75, "wires": 277, "crossNetworkWires": 0}},
+    "checkSoftware": "not run (writes outside reviewer zone); tester artifact exit 4, 3 UNEXPLAINED = the 3 moved names"
+  },
+  "closed": ["N10", "N12", "N13", "N14", "N15", "m-11", "m-12", "m-13", "LV-A1"],
+  "notClosed": {"N11": "superseded by N16: analyst E2-G1-v7-q §1 READY - green within rb+1999 is an invalid attempt; FBK-05/06 v7 assert a forbidden abort"},
+  "conditions": [
+    {"id": "N16", "to": "tester", "due": "before G3", "text": "window-abort -> FBK-05/06-W (v7-q §3.2): same stimulus, differential vs X0 without green, WDG rollback <= w+1, SafetyFault <= w+1 (NV), no Emergency; add -NEG (green <= rb+1999, BOTH remnant) and -POS (rb+2001, >=501 ms); rb+2000 DIAG; -CMD BLOCKED-E4. Remove FBK-06 x4 from content REDs (146 -> recount)."},
+    {"id": "N17", "to": "tester", "due": "before G3", "text": "STP-006 issue (dis-hold) and IL-05d(1) (cover-transitions): release pause >= 2001 ms from rb before the green; fix test name in stp-i per v7-q."},
+    {"id": "D2", "to": "stand / G4", "due": "before G4", "text": "exact F1->E2 native delta proof (aliases/wires, SGVL, PLC fanout, counts, ledger usages per PLAN.json); V2ID FAIL / ledger NV on a candidate not acceptable without it; check variables=75 vs 2 deleted SGVL Symbols."},
+    {"id": "D-v7", "to": "lead", "due": "now", "text": "approve HANDOFF_v7 expected-deltas fragment (3 names) as is."},
+    {"id": "m-14", "to": "analyst", "text": "REL01-e2 s=Q+2: F1 lifts at Q+102 after permit restoration; TD-06 counts it as accepted - define whether lift deferred across the outage is allowed."},
+    {"id": "m-15", "to": "tester", "text": "current-native-structure: use V2.salUrl/V2.gvlUrl (E2_SOURCE_ROOT consistency)."},
+    {"id": "m-16", "to": "tester", "text": "KF-5: per-scan check of 'R&D with C2 ON and HV request FALSE outside a transition'."},
+    {"id": "m-17", "to": "analyst", "text": "confirm 'Safe after boot' base for FBK10-PLC-A (derivation from Q-V4-02 judged correct)."},
+    {"id": "m-18", "to": "tester", "text": "HANDOFF_v7 non-E2 base '481' should be 479."},
+    {"id": "C5", "to": "architect / G3", "text": "as v6; FBK-05/06 excluded from kill basis until N16."}
+  ],
+  "limits": ["software SAL model only (1 ms scan); no native CRC/Verify/IDE/Target/hardware claims", "R&D/Run paths unreachable on canonical (D-ARCH-POL)", "no mutations run", "candidate DIS-HOLD-LV not rerun by reviewer"]
+}

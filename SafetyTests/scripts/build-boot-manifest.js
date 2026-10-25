@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {parseSalFile} from '../src/sal-parser.js';
 import {inventoryBootSource} from '../src/boot-source-inventory.js';
-const checkpoint='a0b0d38',root=new URL('../../',import.meta.url);
+const checkpoint='0391fae',root=new URL('../../',import.meta.url);
 const paths={sal:'MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',sgvl:'MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl',runtime:'SafetyTests/src/sal-runtime.js'};
 const sha=b=>crypto.createHash('sha256').update(b).digest('hex'),lf=b=>b.toString('utf8').replaceAll('\r\n','\n');
 const bytes=Object.fromEntries(Object.entries(paths).map(([kind,p])=>[kind,fs.readFileSync(new URL(p,root))]));

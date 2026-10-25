@@ -1,0 +1,42 @@
+{
+  "schema": "men001-v2-review/1",
+  "gate": "plan review E2-status",
+  "role": "v2-reviewer",
+  "date": "2026-10-21",
+  "source": {
+    "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+    "planMd": "1b7ce7d39adb336f1cbb64e9d410745aaef9444d3e361cc3dd78e0fc97576893",
+    "planJson": "32c970475aa0074063fe0ddad8d0bd0109542e8b2a3c8b210256f2086ed5436d",
+    "mutationPlans": {"E2a": "7bca4622db4bb729b2252b67197114d463585dcdd7bba843c528f41c564ef81e", "E2b": "3356c074ec1393cc32a11212079d4680c8e314ad488b1b468f9a7e1ffac6d97f", "E2c": "3638e8a710b20564b66fe6686baa1dae8d0f157fdf9cfee1a588533e2f09ea1b", "E2d": "4771f5ec45142b91bd0f0f670796fa56daf37ef9b0df56e97d12f8311476d0ae", "E3draft": "f91e373ba4a3cc4906cf38aac07ec2cf1d4f78063b822c734f68434ac99946ce"},
+    "scenarioDecisionsUsedByPlan": "ab1be3652a304fb29c2e41ac0c927cbdf1ba5fccb0b6860426e38dd35f4edd66",
+    "scenarioDecisionsReviewed": "455de843091d57fdefc296ae4757cba31fd98d8c40e5a3352ce9651308d42ace (uncommitted, changed during review; adds Q-RC-03..09, D-ARCH-POL, Q-RC-10)",
+    "criteria": "8d712ccc3ca35d78a1b0aea0a63065f2dd0dc1d0935e52391c43034d6fbf0b85",
+    "reference": "4495a1f git show only"
+  },
+  "verdict": "NEEDS CHANGES",
+  "slices": {
+    "mechanism": "sound under DERIVED GRP-2, input snapshot, RS-4/GRP-4; no counterexample to <=1 stage / exactly 1 status",
+    "R1": "NOT READY - removes reference original power-on sequence Network5 and its timers; needs Vadim decision (Q-ARCH-06) and reference-action trace",
+    "E2a": "READY FOR G1 on behavioural criteria E2-01/E2-02/E2-03(structural)/E2-04; mutation plan after fixes",
+    "E2b": "NEEDS CHANGES - contradicts answered Q-RC-03 (a) StartingRun Emergency, (b1) Run-down continues",
+    "E2c": "polarity confirmed by D-ARCH-POL; NEEDS CHANGES with E2d (HLT/green R&D->Safe blocked by cover in GATE_001)",
+    "E2d": "NEEDS CHANGES - V14-Q21(a)/Q-RC-03(b1) R&D->Safe with open cover",
+    "E3plus": "sketch; refresh for Q-RC-04..09; ABT_SET cannot fire (green not qualifiable during SU)"
+  },
+  "findings": [
+    {"id": "N1", "sev": "major", "to": "architect, lead/Vadim", "text": "R1 deletes reference Network5 (Safe->Step2->Run power-on: C1+C2, 5 s TON, Healthy, discharge resets, STO release, STO FBK before Run). Plan calls it dead logic without tracing preserved/dropped reference actions. Q-MU06-02 covers only N5/FBAnd7, N9/FBAnd1, N12/FBAnd14(+12/13). N4=FALSE is DERIVED (DEC-3 NV recorded). Alternative: detach ring by port deactivation only, 251 FB."},
+    {"id": "N2", "sev": "minor", "to": "architect", "text": "Move N11/FBAnd4.AndIn3 polarity flip into/before E2a; otherwise E2a tests need raw LV toggling between R&D entry and Run."},
+    {"id": "N3", "sev": "major", "to": "architect", "text": "E2b contradicts Q-RC-03: Run-down must continue on cover loss; StartingRun must be Emergency. Dependent points also N6/FBAnd9.AndIn2/3 and RUN_DOWN_RESET.OrIn3 (GATE_001 IL); SU is reset by cover in the same scan; STO/C2 stay on after SU abort (repro/su_cover.out.txt)."},
+    {"id": "N4", "sev": "major", "to": "architect", "text": "E2d keeps cover in GATE_001 for R&D: with open cover green never qualifies (no R&D->Safe), in-progress R&D->Safe is aborted (SG reset, C1 OFF, stage R&D), HLT-01 latch cannot hold (repro/rnd_cover.out.txt). Violates V14-Q21(a), Q-RC-03(b1)."},
+    {"id": "N5", "sev": "major", "to": "architect, tester", "text": "M-E2a-15/16 likely equivalent: recognizer C-latch prevents green/BOTH qualification during SU/SG (repro/su_green.out.txt); PLAN 2.5 claim not reproduced. E3 ABT_SET (linkRndGreenQualified AND SU) unreachable for same reason."},
+    {"id": "N6", "sev": "minor", "to": "architect, lead, analyst", "text": "MU11 equivalence holds in E2a-d but the stated reason is wrong (correct: every g7 cause with owner active also drops linkRndGatePermit). E1 review condition C3 and E2-02 text require explicit lead/analyst decision. g6 is stale 2 scans, not 1. Add mutations DEC_RUN.AndIn2, DEC_EMG.AndIn1/3, DEC_SAFE_OR.OrIn1, HEALTHY_OK.AndIn2."},
+    {"id": "N7", "sev": "minor", "to": "architect, analyst", "text": "Q-ARCH-01 wording understates StartingRun (STO released and C2 ON remain, not only LV). EMG-004 connector loss after Safe is not an Emergency status source in the decoder."},
+    {"id": "N8", "sev": "minor", "to": "architect, G2", "text": "STS_* would be the first Symbols without consumer (all 85 canonical Symbols have source and consumer) - native acceptability NV. E2d text 'preserve existing N1/FBAnd4.AndIn3/4, GATE_010.AndIn3/4' - these inputs do not exist in canonical; they are new. Head count '1..13' lists 14 blocks."}
+  ],
+  "budgetCheck": {"R1": "242-27=215, ports 2076-244=1832, symbols 66: correct", "E2a": "+5 FB +45 ports: correct", "E2aToE2dWithoutR1": 251, "E3": "+17 correct; 251+17=268 needs R1 or R2", "E6": "~259 / ~256 does not fit, honestly stated"},
+  "oneScanShift": "not a weakening; requirements give no scan for S4/S5/S6 or Safe->R&D; STP-A R&D in scan after C2_FBK OFF holds; tester must keep requirement-derived scan oracles",
+  "reproduction": ["cd SafetyTests; node program/reviewer/E2-plan/repro/su_green.mjs", "node program/reviewer/E2-plan/repro/su_cover.mjs", "node program/reviewer/E2-plan/repro/rnd_cover.mjs", "node program/reviewer/E2-plan/repro/sym.mjs"],
+  "limits": "Model runs of canonical with stand plant (STO_DR TRUE = torque enabled); not native, not hardware. No tests run, nothing fixed."
+}

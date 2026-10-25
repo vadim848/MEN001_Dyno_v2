@@ -1,0 +1,61 @@
+{
+  "slice": "E1-f1-mutants",
+  "role": "v2-architect",
+  "date": "2026-10-21",
+  "changesToF1": "none",
+  "source": {
+    "f1": {"sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3", "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104", "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603"},
+    "f1PlanFrozen": "b52f6b0e440a09ce138ad91e633b2fcd78f431d246a4dbdabc083809a0a08b60",
+    "p0Canonical": {"sal": "34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b", "sgvl": "517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635"},
+    "reference": "4495a1f6049f6a58ebfd436761faa84d17c8d643 (git show only)"
+  },
+  "verdicts": [
+    {
+      "id": "MU06", "mutation": "//Network6/FBAnd24/AndIn2 (!in_False_SI2_CH8) Deactivated",
+      "verdict": "EQUIVALENT", "strength": "proved (combinational, same scan)",
+      "proof": "linkRndGreenQualified = GREEN TON(GATE_009 = GATE_005 & in_Reset_PB); GATE_005 = GATE_004 & !T; GATE_004 = GATE_001 & ...; GATE_001.AndIn2 = !in_False; orders 119<124<125<130<135<237; TON output requires current input => GREEN(k) implies !in_False(k)",
+      "evidence": ["results/mu06-directed.json (40 cases, 0 divergent)", "results/diff_MU06.json (90x6000 random, 0 divergent)"],
+      "recommendation": "Analyst/lead decision: keep as uniform !False pattern or drop as redundant; behavior identical either way",
+      "originForAnalyst": "reference uses !in_False only as AND enable (9 consumers, all inverted); P0 FBAnd24.AndIn3 was raw N6/FBTon2(in_Reset_PB) so !False was not redundant there; F1 switched AndIn3 to shared GREEN which already contains GATE_001"
+    },
+    {
+      "id": "MU10", "mutation": "//Network6/RUN_DOWN_RESET/OrIn1 (b_Step_RnD_Set) Deactivated",
+      "verdict": "EQUIVALENT", "strength": "proved in sal-runtime execution model under stated conditions",
+      "proof": "b_Step_RnD_Set(m) => Step12(m-1) held for N11 TON => Step1(m)=0 (FBRs1 reset by b_Step12), RnD(m-1)=0 (RnD set only by same pulse that resets Step12; Step12 re-set needs Step1 or Step3), Step3(m)=0 (Step3 sources need Step2 chain or RnD; Run->Step12 resets Step3 same scan) => MODE(m)=0 => !linkRndGatePermit(m)=1. Also owner already 0 since first Step12 scan (MODE=0 there).",
+      "conditions": ["sal-runtime global orderOfExecution semantics, reset-dominant safeRs, TON resets when input FALSE", "Network4/FBDecouple1 unconnected inputs modeled FALSE (proof does not depend on them)", "invariant no Step12 together with Step1/RnD/Step3 is proved from F1 Set/Reset sources only, not a general E2 proof"],
+      "evidence": ["results/mu10-lifecycle.txt (no divergence; owner=0,permit=0 at Step12 entry t=804 and at b_Step_RnD_Set t=1123)", "results/diff_MU10.json (90x6000 random, 0 divergent, b_Step_RnD_Set seen 7 scans, never with owner=1)"],
+      "recommendation": "Future slice (E2 or later, not F1): remove OrIn1 from RUN_DOWN_RESET, or record explicitly as equivalent-by-proof defense-in-depth. Preferred: remove."
+    },
+    {
+      "id": "MU11", "mutation": "//Network6/RUN_DOWN_RESET/OrIn2 (b_Step4_Set) Deactivated",
+      "verdict": "KILLABLE", "strength": "demonstrated in full-program sal-runtime, scan 1 ms",
+      "uncoveredCause": "LV/HV Healthy loss: in FBAnd9 (=> b_Step4_Set) but not in GATE_001; all other FBAnd9 causes reach GATE_001 same scan or earlier",
+      "scenario": {
+        "initial": "F1 Run (Step3), EStop restarted, permits OK, Healthy raw FALSE, LV_C1_FBK=HV_C2_FBK=TRUE, STO FBK FALSE, buttons released >=2 s",
+        "events": ["in_Reset_PB TRUE; owner=1 at +502 ms; N6/FBTon1 TonOut at +704 ms", "in_Reset_PB FALSE, 50 scans, HV_C2_FBK stays TRUE", "scan h: in_HV_Healthy_FBK TRUE (or LV)", "in_HV_C2_FBK FALSE first seen at scan h+4"],
+        "observableDifference": "F1: Step4 only, out_LV_C1 drops. MU11: b_Step12_Set_2 at h+4, from h+5 persistent b_Step4 AND b_Step12, b_Set_LV_C1_1=1, out_LV_C1 stays TRUE in Step4"
+      },
+      "evidence": ["results/mu11-trace-d5.txt", "results/mu11-sweep.txt"],
+      "caveat": "Killing oracle is an E2 requirement (no double phase ownership). F1 itself shows Step4 AND Step12 at offsets h+1..h+3 (d=2..4); P0 with green held d=2..5. Expected reaction must come from analyst.",
+      "recommendation": "Keep input (necessary, narrows race window by one scan). Treat kill test as E2 scenario."
+    }
+  ],
+  "newFindingForE2": {
+    "summary": "Run-down: Healthy loss while waiting for C2_FBK OFF after N6/FBTon1 elapsed, C2_FBK OFF 1-3 scans later => persistent b_Step4 AND b_Step12, LV C1 request in Step4. Also Step3 AND Step4 for one scan.",
+    "cause": "N6/FBAnd18 (b_Step12_Set_2) not gated by phase/emergency; N3/FBRs8 reset only by b_Step_RnD_Set",
+    "presentIn": ["F1", "P0 canonical"], "absentIn": ["reference 4495a1f (no Run->Step12 chain)"],
+    "evidence": ["results/f1-race.txt", "results/p0-race.txt"],
+    "limits": "model scan 1 ms; physical timing/correlation not validated"
+  },
+  "g3MutationsForTester": [
+    {"id": "MU06", "action": "exclude from G3 denominator as proved equivalent"},
+    {"id": "MU10", "action": "exclude from G3 denominator as proved equivalent (conditions listed)"},
+    {"id": "MU11", "action": "kill with section-2 scenario once analyst fixes E2 oracle"},
+    {"id": "M-E2a", "action": "future E2: remove b_Step4_Set path from N3/FBOr5 (Step3 reset)"},
+    {"id": "M-E2b", "action": "future E2: invert N6/FBAnd18.AndIn2 (HV_C2_FBK)"},
+    {"id": "M-E2c", "action": "future E2: swap orderOfExecution N3/FBRs3 and N3/FBRs8"}
+  ],
+  "resources": {"fb": "242/255 unchanged", "dataPorts": 2076, "globals": 209, "variables": 75, "wires": 307},
+  "writtenFiles": ["PLAN.md", "PLAN.json", "repro/sim.mjs", "repro/mu06.mjs", "repro/mu10.mjs", "repro/mu11.mjs", "repro/p0race.mjs", "repro/diff.mjs", "results/*"],
+  "sideObservation": "v2 N5/FBAnd7.AndIn2 (3d96ba39) and N9/FBAnd1.AndIn2 (de6108cd) are Break Contact (direct in_False) vs Make Contact (inverted) in reference; changed in commit 77546cb 2026-10-11"
+}

@@ -1,0 +1,78 @@
+SafetyApplicationSerializerBase::ReadSafetyApplicationHasVariablesInstances RVA 296292
+0000 br 187
+0005 ldarg.0 
+0006 callvirt get_Directory
+000B ldsfld SafetyApplicationHasVariables::DomainClassId
+0010 callvirt GetSerializer
+0015 ldarg.0 
+0016 ldarg.2 
+0017 ldarg.1 
+0018 callvirt get_Partition
+001D callvirt TryCreateInstance
+0022 isinst TypeDefinition
+0027 stloc.0 
+0028 ldloc.0 
+0029 brfalse.s 44
+002B ldloc.0 
+002C ldsfld SafetyApplicationHasVariables::SafetyApplicationDomainRoleId
+0031 ldarg.1 
+0032 call SetRolePlayer
+0037 ldarg.0 
+0038 callvirt get_Directory
+003D ldloc.0 
+003E callvirt GetDomainClass
+0043 callvirt get_Id
+0048 callvirt GetSerializer
+004D ldarg.0 
+004E ldloc.0 
+004F ldarg.2 
+0050 callvirt Read
+0055 br.s 105
+0057 ldarg.0 
+0058 callvirt get_Directory
+005D ldsfld Variable::DomainClassId
+0062 callvirt GetSerializer
+0067 ldarg.0 
+0068 ldarg.2 
+0069 ldarg.1 
+006A callvirt get_Partition
+006F callvirt TryCreateInstance
+0074 isinst TypeDefinition
+0079 stloc.1 
+007A ldloc.1 
+007B brfalse.s 61
+007D ldarg.0 
+007E ldarg.2 
+007F ldtoken 33554817
+0084 call GetTypeFromHandle
+0089 call ExpectingFullFormRelationship
+008E ldarg.1 
+008F callvirt get_Variables
+0094 ldloc.1 
+0095 callvirt Add
+009A ldarg.0 
+009B callvirt get_Directory
+00A0 ldloc.1 
+00A1 callvirt GetDomainClass
+00A6 callvirt get_Id
+00AB callvirt GetSerializer
+00B0 ldarg.0 
+00B1 ldloc.1 
+00B2 ldarg.2 
+00B3 callvirt Read
+00B8 br.s 6
+00BA ldarg.2 
+00BB call Skip
+00C0 ldarg.0 
+00C1 callvirt get_Result
+00C6 callvirt get_Failed
+00CB brtrue.s 20
+00CD ldarg.2 
+00CE callvirt get_EOF
+00D3 brtrue.s 12
+00D5 ldarg.2 
+00D6 callvirt get_NodeType
+00DB ldc.i4.1 
+00DC beq -220
+00E1 ret 
+

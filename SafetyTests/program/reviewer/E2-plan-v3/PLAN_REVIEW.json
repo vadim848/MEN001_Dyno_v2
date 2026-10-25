@@ -1,0 +1,49 @@
+{
+  "schema": "men001-v2-review/1",
+  "slice": "E2-plan-v3",
+  "role": "v2-reviewer",
+  "date": "2026-10-21",
+  "source": {
+    "canonicalSal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "canonicalSgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "canonicalDiagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+    "scenarioDecisionsPlan": "bdf55216dab6e4aa3e3a1c01ae51f9441d2a3664c5ec8fd93955379bbbdb86fe",
+    "scenarioDecisionsVerdict": "ff59e2f8372c873926dce18a2e6551176e3a8de9a497f97c6a651cf9329ca645",
+    "planMd": "eb3236b683ba779cc2ef4434636c48a2af5526c01bc823eaf4d86551d9687b10",
+    "planJson": "ba6d463ff5fd2d7eefb91abc646f6765e4a30a88acaf1770b99283c7f8322ecf",
+    "criteriaV2": "f2f11d77eba0d3b4441b42ff55666fbfc741bdd2867ebb763829328ad909eaa3",
+    "criteriaDelta": "a017cbde326bde62c1d1bda8381e5687d98fa35eb6c95e0e26d593985e6ea15f",
+    "criteriaDeltaV4": "2b405938d002343a65afc73db8d2b83f172106462368121792c2539d70a60c04",
+    "r1Candidate": {"sal": "ca841a01fe44f776a5868968fde70cce728657aaf411d6b8bfa6689cfadc7bb3", "sgvl": "4f205138337ea3de3660d5ef2d8978db438e3e8d19f2e9dd393ec7a5816cdb36", "diagram": "b82aa41a6ee065267852d78ccaff961714eca1e8e8c006f087de715fb2a137b6"}
+  },
+  "evidenceKind": "model (architect proto.mjs on sal-runtime, stand plant); not native, not hardware",
+  "verdicts": {
+    "R1addendum": "ACCEPTABLE (D-1 keep empty networks, Verify NV; D-2 with scripted check of (a)(b); D-3 seven refs confirmed)",
+    "E2a": "READY FOR EDITOR (SAL part) with A3-1..A3-4; E2a-PLC BLOCKED (Q-ARCH-11 contradiction + user path-guard extension)",
+    "E2b": "NEEDS CHANGES (B3-1, B3-2, B3-4, B3-5, B3-6, B3-7)",
+    "E2c": "READY FOR EDITOR after E2b v4 (C3-1, C3-2)",
+    "E2d": "NEEDS CHANGES (remove IL_SCOPE/linkIlScope/GATE_010.AndIn3 per Q-ARCH-10 A, -1 FB; drop M-E2d-03/04; D3-2)"
+  },
+  "findings": {
+    "B3-1": {"severity": "major", "to": "architect", "text": "LV/HV connector lags in_Estop_PLC by 1 scan in R&D/S12/SU on all outputs (EOk 3 vs 2, C1 OFF 2006 vs 2005, STO 7008 vs 7007, C2 OFF 8012 vs 8011): violates L1 (EMG4-03). Cause: SafeResumption/CONNECTORS+CONNECTOR_SCOPE ord 117/118 after N1/FBAnd1 ord 90.", "repro": "repro/v1.out.txt"},
+    "B3-2": {"severity": "major", "to": "architect", "text": "Move of N12/FBAnd16 before N1/FBAnd1 exists only in proto.mjs, not in PLAN.md 2.2/PLAN.json order; literal plan gives +1 scan lag for cover in SU (IL-05a L1).", "repro": "repro/v2.out.txt"},
+    "B3-3": {"severity": "resolved", "text": "R&D open-cover Unlock in E2b/E2c intermediate stacks - now required by Q-ARCH-10 A", "repro": "repro/v5.out.txt"},
+    "B3-4": {"severity": "major-doc", "to": "architect", "text": "Arbitration claim 2.1 false for g5: S1 Reset = g2 only; g5 and g7 same scan would give S1+S4. No counterexample in 25 model runs (v3.out.txt), exclusion relies on implicit invariant. Add g7 to N3/FBOr1 (0 FB) or prove/test INV g5 => b_EStop_Ok(k)."},
+    "B3-5": {"severity": "major", "to": "architect", "text": "equivalentByProof refuted: G10_EXIT.AndIn1 mutant gives S1+S4 (Restart in S4 after C1 OFF); G10_EXIT.AndIn6 mutant exits to Safe with C2_FBK ON in S6.", "repro": "repro/v4.out.txt"},
+    "B3-6": {"severity": "minor", "to": "architect", "text": "Mutation gaps E2b: FBAndLvEmg.AndIn1, FBOrStep4.OrIn1, FBOrS12Reset.OrIn1, FBOr2.OrIn3, G10.AndIn7/8 (mutation or proof), FBAndLvEmg.AndIn3 equivalence, order mutants (FBAnd16, CONNECTOR_SCOPE before N1/FBAnd1; G10 before N6/FBDecouple2); M-E2b-13 killer = any Safe->R&D."},
+    "B3-7": {"severity": "minor", "to": "architect", "text": "'each slice safe on its own' overstated: R1+E2a+E2b has no HLT (R&D->Run with LV Faulty reaches Run then S4); list as known FAIL of E2b checkpoint."},
+    "C3-1": {"severity": "minor", "to": "architect", "text": "order mutant HLT_LV vs STATE_SU"},
+    "C3-2": {"severity": "minor", "to": "architect", "text": "HLT_LV.AndIn3 in_False -> equivalentByProof"},
+    "D3-2": {"severity": "minor", "to": "architect/stand", "text": "test/current-e2d-unlock-cover.test.js exists but not in testFiles (17 exact names)"},
+    "A3-1": {"severity": "required", "to": "architect", "text": "E2a-RC correct under Q-RC-RUNCONF-01 V (TON from AND(cmd,C2_FBK,!HV_Faulty), dip resets); move into E2a changes with mutations FBAnd6.AndIn2/AndIn3, FBTon3 input, swap-order; remove 'RUN-CONF k+99' from known FAIL (not established)."},
+    "A3-2": {"severity": "minor", "to": "architect", "text": "PLAN.json renameImpact stale (2 vs 4 names; outPLC listed as untouched E4)"},
+    "A3-3": {"severity": "minor", "text": "PLAN.json slice string says v2"},
+    "A3-4": {"severity": "minor", "text": "update SCENARIO_DECISIONS SHA"},
+    "Q-ARCH-11-contradiction": {"severity": "blocking for E2a-PLC", "to": "analyst/Vadim", "text": "LV_Healthy_Invert := NOT LV_Healthy (MAIN.TcPOU:113-114) is TRUE=healthy; renaming it to LV_Faulty with 'TRUE = fault' is impossible; plan also renames LV_Healthy (tsproj) -> two LV_Faulty fields."},
+    "budget": {"severity": "requirements", "to": "lead/Vadim", "text": "Limit 512 (EL1918, stand FB-limit): savings not needed; reject behaviour/interface-changing options (b),(e),(g1); (a) not needed; (c) is a requirements question (two fault memories with different reset rules: D-HEALTHY-FAULT-RESET-EDGE vs E6-Q2), Q-ARCH-06 forbids merge until answered; baseline with HL_FAULT. Page budget 12x2048 B NV."}
+  },
+  "closedPrevious": ["B-1", "B-2", "B-4", "B-5", "C-1", "D-1", "D-2", "D-3", "A-1", "A-2", "A-3"],
+  "partialPrevious": {"B-3": "functional closed, L1 lag B3-1", "C-2": "attempt consumed; SafetyFault E5 known FAIL", "C-3": "E3 known FAIL"},
+  "reproCommands": ["node SafetyTests/program/reviewer/E2-plan-v3/repro/v1.mjs", "v2.mjs", "v3.mjs", "v4.mjs", "v5.mjs", "v6.mjs"],
+  "limits": "Model only; FBEstop1 channel semantics for ES_NC_2/Mentee per sal-runtime (NV native); E2a-RC not modelled (netlist check only); no hardware safety claims."
+}

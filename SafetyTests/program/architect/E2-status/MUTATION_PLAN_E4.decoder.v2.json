@@ -1,0 +1,128 @@
+{
+  "version": "sal-mutation-plan-v1",
+  "planVersion": 2,
+  "status": "Decoder mutations. Apply in E4 (decoder built with publication, D2-A) or in E2a if decoder variant D2-B is chosen.",
+  "sourceSha256": "TBD: G2 candidate SAL of slice E4.decoder",
+  "testFiles": [
+    "current-door-interlock.test.js",
+    "current-early-sto.test.js",
+    "current-estop-native-pairs.test.js",
+    "current-hv-set-permit.test.js",
+    "current-mentee-set-permit.test.js",
+    "current-plc-pulse-set-permit.test.js",
+    "current-rnd-down-no-reenergy.test.js",
+    "current-rnd-physical-integration.test.js",
+    "current-safe-run-gestures.test.js",
+    "current-step12-lv-permit.test.js",
+    "current-timer-one-ms.test.js",
+    "current-unlock-estop-permit.test.js",
+    "current-unlock-hold.test.js",
+    "current-code-checks.test.js",
+    "sal-runtime.test.js",
+    "sal-semantics.test.js",
+    "timer-observed-clock.test.js",
+    "current-e4-*.test.js (v2-tester, G1)"
+  ],
+  "behaviouralTests": [
+    "^DOOR06 (component|actual|existing emergency)",
+    "^EARLYSTO (drive[12]|physical)",
+    "^R3PAIR ",
+    "^MENTEE05 (paired|HV: (all|already)|LV: (all|already))",
+    "^PLCPULSE ",
+    "^RNDPHYS ",
+    "^SR-",
+    "^current SAL",
+    "^UNLOCK07 (component|final component|[^ ]+: healthy|[^ ]+/[^ ]+: fault)",
+    "^CVR (current SAL|approved)",
+    "^(HV|LV) current SAL",
+    "^SAL-RUN0[23]",
+    "^SAL-SEM02",
+    "^Current SAL TON adapter",
+    "^E4 "
+  ],
+  "structuralSoftwareCheckCases": [
+    "^BOOT:"
+  ],
+  "mutations": [
+    {
+      "id": "M-DEC-01",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_RND",
+      "port": "AndIn2",
+      "rationale": "R&D status not masked by Emergency",
+      "killingScenario": "Steady R&D + in_ES_NC_1 FALSE: STS_RND and STS_EMG both TRUE",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-DEC-02",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_RUN",
+      "port": "AndIn2",
+      "rationale": "Run status not masked",
+      "killingScenario": "Steady Run + in_ES_NC_1 FALSE: in scans before S3 reset STS_RUN TRUE and STS_EMG FALSE (exactly-one holds; status wrong)",
+      "oracle": "Emergency priority from the scan b_EStop_Ok falls (E2-01, SPEC 13)"
+    },
+    {
+      "id": "M-DEC-03",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_SAFE",
+      "port": "AndIn2",
+      "rationale": "Safe status not masked",
+      "killingScenario": "Safe + in_ES_NC_1 FALSE: STS_SAFE and STS_EMG",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-DEC-04",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_EMG",
+      "port": "AndIn1",
+      "rationale": "complement ignores Safe",
+      "killingScenario": "Safe: STS_SAFE and STS_EMG",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-DEC-05",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_EMG",
+      "port": "AndIn2",
+      "rationale": "complement ignores R&D",
+      "killingScenario": "R&D: STS_RND and STS_EMG",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-DEC-06",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_EMG",
+      "port": "AndIn3",
+      "rationale": "complement ignores Run",
+      "killingScenario": "Run: STS_RUN and STS_EMG",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-DEC-07",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_SAFE_OR",
+      "port": "OrIn1",
+      "rationale": "S1 not Safe",
+      "killingScenario": "steady Safe: STS_EMG instead of STS_SAFE",
+      "oracle": "E2-01, Q-RC-10"
+    },
+    {
+      "id": "M-DEC-08",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_SAFE_OR",
+      "port": "OrIn2",
+      "rationale": "S12 not Safe",
+      "killingScenario": "Safe->R&D in progress: STS_EMG instead of STS_SAFE",
+      "oracle": "READY-D SPEC 6 + E2-01"
+    }
+  ]
+}

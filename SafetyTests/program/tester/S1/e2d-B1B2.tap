@@ -1,0 +1,80 @@
+TAP version 13
+# Subtest: [E2] D-08 Run->R&D waiting C2 OFF: LV lost, C2_FBK OFF 2 scans later -> exactly R&D, then chained R&D->Safe
+not ok 1 - [E2] D-08 Run->R&D waiting C2 OFF: LV lost, C2_FBK OFF 2 scans later -> exactly R&D, then chained R&D->Safe
+  ---
+  duration_ms: 19884.4899
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:218:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    D-08: 2 violated check(s) [source E2-Q1, E2-Q2, Q-RC-16]
+    + actual - expected
+    
+    + [
+    +   'B1: chained R&D->Safe although LV returned (loss remembered) [Q-RC-16]',
+    +   'B1: ends Safe, C1 OFF; status=RND'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'B1: chained R&D->Safe although LV returned (loss remembered) [Q-RC-16]'
+    1: 'B1: ends Safe, C1 OFF; status=RND'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:219:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: [E2] E-05 Emergency, cause still active, green -> stays Emergency
+not ok 2 - [E2] E-05 Emergency, cause still active, green -> stays Emergency
+  ---
+  duration_ms: 70062.1994
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:218:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    E-05: 6 violated check(s) [source SPEC §12, EMG6-01, REC-ACCEPTED (тестировщик, S1-Q7)]
+    + actual - expected
+    
+    + [
+    +   'Emergency from Safe, in_LV_C1_FBK ON at Restart: stays Emergency (status never Safe) [SPEC §12, EMG6-01]',
+    +   'in_LV_C1_FBK ON while green held, released with FBK ON: stays Emergency [SPEC §12, EMG6-01]',
+    +   'in_LV_C1_FBK OFF afterwards without a new green press: no deferred exit, stays Emergency [REC-ACCEPTED (тестировщик, S1-Q7)]',
+    +   'Emergency from Safe, in_HV_C2_FBK ON at Restart: stays Emergency (status never Safe) [SPEC §12, EMG6-01]',
+    +   'in_HV_C2_FBK ON while green held, released with FBK ON: stays Emergency [SPEC §12, EMG6-01]',
+    +   'in_HV_C2_FBK OFF afterwards without a new green press: no deferred exit, stays Emergency [REC-ACCEPTED (тестировщик, S1-Q7)]'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'Emergency from Safe, in_LV_C1_FBK ON at Restart: stays Emergency (status never Safe) [SPEC §12, EMG6-01]'
+    1: 'in_LV_C1_FBK ON while green held, released with FBK ON: stays Emergency [SPEC §12, EMG6-01]'
+    2: 'in_LV_C1_FBK OFF afterwards without a new green press: no deferred exit, stays Emergency [REC-ACCEPTED (тестировщик, S1-Q7)]'
+    3: 'Emergency from Safe, in_HV_C2_FBK ON at Restart: stays Emergency (status never Safe) [SPEC §12, EMG6-01]'
+    4: 'in_HV_C2_FBK ON while green held, released with FBK ON: stays Emergency [SPEC §12, EMG6-01]'
+    5: 'in_HV_C2_FBK OFF afterwards without a new green press: no deferred exit, stays Emergency [REC-ACCEPTED (тестировщик, S1-Q7)]'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:219:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 70207.5283

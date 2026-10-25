@@ -1534,7 +1534,7 @@ External Setpoint Generation:
 		</DataType>
 		<DataType>
 			<Name GUID="{00A13C32-F824-B787-8933-636B72C9FA0F}" AutoDeleteType="true">ST_TwinSAFE_IN</Name>
-			<BitSize>200</BitSize>
+			<BitSize>256</BitSize>
 			<SubItem>
 				<Name>Safety_Armed</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
@@ -1616,25 +1616,25 @@ External Setpoint Generation:
 				<BitOffs>144</BitOffs>
 			</SubItem>
 			<SubItem>
-				<Name>LV_Healthy</Name>
+				<Name>LV_Faulty</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
 				<BitSize>8</BitSize>
 				<BitOffs>152</BitOffs>
 			</SubItem>
 			<SubItem>
-				<Name>HV_Healthy</Name>
+				<Name>HV_Faulty</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
 				<BitSize>8</BitSize>
 				<BitOffs>160</BitOffs>
 			</SubItem>
 			<SubItem>
-				<Name>LV_Healthy_Invert</Name>
+				<Name>LV_Healthy</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
 				<BitSize>8</BitSize>
 				<BitOffs>168</BitOffs>
 			</SubItem>
 			<SubItem>
-				<Name>HV_Healthy_Invert</Name>
+				<Name>HV_Healthy</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
 				<BitSize>8</BitSize>
 				<BitOffs>176</BitOffs>
@@ -1651,6 +1651,48 @@ External Setpoint Generation:
 				<BitSize>8</BitSize>
 				<BitOffs>192</BitOffs>
 			</SubItem>
+			<SubItem>
+				<Name>STS_SAFE</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>200</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>STS_RND</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>208</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>STS_RUN</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>216</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>STS_EMG</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>224</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>STS_CFG</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>232</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>STS_COVER_LOCKED</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>240</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>STS_FAULT</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>248</BitOffs>
+			</SubItem>
 		</DataType>
 		<DataType>
 			<Name GUID="{3BE1C7C4-E5EB-9326-437C-7B0152A3C5D7}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..9] OF UDINT</Name>
@@ -1663,7 +1705,7 @@ External Setpoint Generation:
 		</DataType>
 		<DataType>
 			<Name GUID="{8BEA81A6-2C9B-0720-B825-3B0924FEF9D2}" AutoDeleteType="true">ST_TwinSAFE_OUT</Name>
-			<BitSize>120</BitSize>
+			<BitSize>144</BitSize>
 			<SubItem>
 				<Name>RUN</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
@@ -1719,13 +1761,13 @@ External Setpoint Generation:
 				<BitOffs>56</BitOffs>
 			</SubItem>
 			<SubItem>
-				<Name>Set_RnD_Mode</Name>
+				<Name>CMD_SAFE_TO_RND</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
 				<BitSize>8</BitSize>
 				<BitOffs>64</BitOffs>
 			</SubItem>
 			<SubItem>
-				<Name>Set_RnD_Mode2</Name>
+				<Name>CMD_RND_TO_RUN</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
 				<BitSize>8</BitSize>
 				<BitOffs>72</BitOffs>
@@ -1759,6 +1801,24 @@ External Setpoint Generation:
 				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
 				<BitSize>8</BitSize>
 				<BitOffs>112</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CMD_RUN_TO_RND</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>120</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CMD_RND_TO_SAFE</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>128</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Heartbeat</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>136</BitOffs>
 			</SubItem>
 		</DataType>
 		<DataType>
@@ -2081,9 +2141,9 @@ External Setpoint Generation:
 				</Variant>
 				<Variant>
 					<Name>PLC</Name>
-					<BuildConfig>Release|TwinCAT OS (ARMV8-A)</BuildConfig>
 					<Simulation Enable="false"/>
 					<TargetNetId>192.168.1.50.1.1</TargetNetId>
+					<BuildConfig>Debug|TwinCAT OS (ARMV8-A)</BuildConfig>
 				</Variant>
 			</ProjectVariant>
 		</System>
@@ -2399,7 +2459,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{08826ED1-2731-4199-9F57-50138DAEE7D7}" Name="PLC_Dyno" PrjFilePath="PLC_Dyno\PLC_Dyno.plcproj" TmcFilePath="PLC_Dyno\PLC_Dyno.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{C439BCA6-8355-EAF8-884C-6364AC15669E}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{AC03BD7B-C31B-7278-5681-8CA891D15F3F}" TmcPath="PLC_Dyno\PLC_Dyno.tmc">
 					<Name>PLC_Dyno Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -12014,8 +12074,26 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 								<Entry Name="Standard Out Var 98" Index="#x7000" Sub="#x1a">
 									<Type>BIT</Type>
 								</Entry>
+								<Entry Name="Standard Out Var 100" Index="#x7000" Sub="#x1b">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="Standard Out Var 101" Index="#x7000" Sub="#x1c">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="Standard Out Var 102" Index="#x7000" Sub="#x1d">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="Standard Out Var 103" Index="#x7000" Sub="#x1e">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="Standard Out Var 104" Index="#x7000" Sub="#x1f">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="Standard Out Var 105" Index="#x7000" Sub="#x20">
+									<Type>BIT</Type>
+								</Entry>
 								<Entry>
-									<Type GUID="{18071995-0000-0000-0000-002000000007}">ARRAY [0..6] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="StandardOutputs" Index="#x17f0" InOut="1" Flags="#x2011" SyncMan="2">
@@ -12924,8 +13002,10 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 	</Project>
 	<Mappings>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500840000403}" Id="#x02030010"/>
-		<MappingInfo Identifier="{00000000-2001-0850-0020-500851000403}" Id="#x02030030"/>
-		<MappingInfo Identifier="{08502001-0010-0500-0020-500830000403}" Id="#x02030040" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500851000403}" Id="#x02030040"/>
+		<MappingInfo Identifier="{08502001-0010-0500-0020-500830000403}" Id="#x02030060" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{05000010-0040-0304-3000-040340000403}" Id="#x02030030" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{05000010-0050-0304-3000-040350000403}" Id="#x02030050" Watchdog="00000000000000000000000000000000"/>
 		<MappingInfo Identifier="{03040040-0040-0304-4000-040340000403}" Id="#x02030020" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIID^Device 2 (EtherCAT)">
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Rack 19 (EK1100 - A0)_1^A1 - SI1 (EL1918)_1">
@@ -13169,13 +13249,20 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^EStop_NC2" VarB="StandardInputs^Standard Out Var 83"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^EStop_Ok" VarB="StandardInputs^Standard Out Var 77"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^EStop_Status" VarB="StandardInputs^Standard Out Var 78"/>
-				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^HV_Healthy" VarB="StandardInputs^Standard Out Var 90"/>
+				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^HV_Faulty" VarB="StandardInputs^Standard Out Var 90"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^HV_Interlock" VarB="StandardInputs^Standard Out Var 92"/>
-				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^LV_Healthy" VarB="StandardInputs^Standard Out Var 89"/>
+				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^LV_Faulty" VarB="StandardInputs^Standard Out Var 89"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^LV_Interlock" VarB="StandardInputs^Standard Out Var 91"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^ReadyForStep2" VarB="StandardInputs^Standard Out Var 52"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^STO_1" VarB="StandardInputs^Standard Out Var 85"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^STO_2" VarB="StandardInputs^Standard Out Var 86"/>
+				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^STS_CFG" VarB="StandardInputs^Standard Out Var 103"/>
+				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^STS_COVER_LOCKED" VarB="StandardInputs^Standard Out Var 104"/>
+				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^STS_EMG" VarB="StandardInputs^Standard Out Var 102"/>
+				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^STS_FAULT" VarB="StandardInputs^Standard Out Var 105"/>
+				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^STS_RND" VarB="StandardInputs^Standard Out Var 100"/>
+				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^STS_RUN" VarB="StandardInputs^Standard Out Var 101"/>
+				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^STS_SAFE" VarB="StandardInputs^Standard Out Var 14"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^Safety_Armed" VarB="StandardInputs^Standard Out Var 53"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^Speps^step1" VarB="StandardInputs^Standard Out Var 65"/>
 				<Link VarA="PlcTask Inputs^GVL_Safety.stTwinSAFE_IN^Speps^step2" VarB="StandardInputs^Standard Out Var 66"/>
@@ -13188,14 +13275,17 @@ Bit1: Value bigger/equal Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^BatRelay_Manual_Off" VarB="StandardOutputs^Standard In Var 56"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^BatRelay_Manual_On" VarB="StandardOutputs^Standard In Var 55"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^Bypass_C1C2" VarB="StandardOutputs^Standard In Var 99"/>
+				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^CMD_RND_TO_RUN" VarB="StandardOutputs^Standard In Var 97"/>
+				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^CMD_RND_TO_SAFE" VarB="StandardOutputs^Standard In Var 64"/>
+				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^CMD_RUN_TO_RND" VarB="StandardOutputs^Standard In Var 63"/>
+				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^CMD_SAFE_TO_RND" VarB="StandardOutputs^Standard In Var 94"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^DoorMonitor" VarB="StandardOutputs^Standard In Var 16"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^ErrACK" VarB="StandardOutputs^Standard In Var 1"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^EstopPLC" VarB="StandardOutputs^Standard In Var 54"/>
+				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^Heartbeat" VarB="StandardOutputs^Standard In Var 48"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^RB_BatBMS_Manual_Off" VarB="StandardOutputs^Standard In Var 58"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^RB_BatBMS_Manual_On" VarB="StandardOutputs^Standard In Var 57"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^RUN" VarB="StandardOutputs^Standard In Var 50"/>
-				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^Set_RnD_Mode" VarB="StandardOutputs^Standard In Var 94"/>
-				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^Set_RnD_Mode2" VarB="StandardOutputs^Standard In Var 97"/>
 				<Link VarA="PlcTask Outputs^GVL_Safety.stTwinSAFE_OUT^SolenoedMonitor" VarB="StandardOutputs^Standard In Var 15"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">

@@ -1,0 +1,33 @@
+{
+  "version": "resumed-p0-canonical-v1",
+  "purpose": "Frozen exact bytes of resumed P0 canonical (pre-F1) TwinSAFE sources. Base side of the P0->F1 exact delta proof (MIG-1, review condition C5). Do not refresh to match a changed source.",
+  "createdBy": "v2-stand-engineer E1-f1-c5 2026-10-21",
+  "repository": "MEN001_Dyno_v2",
+  "commit": "ab3d5580287c018e7d5b53b547b2104b08a9cf43",
+  "obtainedWith": "git cat-file blob <commit>:<repoPath> > <file> (raw blob, no EOL conversion; repoPaths are -text in root .gitattributes)",
+  "entries": [
+    {
+      "file": "TwinSafeGroup1.sal",
+      "repoPath": "MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal",
+      "gitBlob": "dc6a4c03b5a69cae51f0ff6355ac900d93665ed9",
+      "sha256": "34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b",
+      "bytes": 1273581
+    },
+    {
+      "file": "GVL1.sgvl",
+      "repoPath": "MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl",
+      "gitBlob": "cf28323ecb24933fa1fdee21a8286b774dc81e08",
+      "sha256": "517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635",
+      "bytes": 49806
+    },
+    {
+      "file": "TwinSafeGroup1.sal.diagram",
+      "repoPath": "MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal.diagram",
+      "gitBlob": "402ad15ab48e0a4ac74918a57ad33ff14f5627bf",
+      "sha256": "7b5eb79439011cdf9a3206aa815dec4349a35cf8155bfac7492b7ffd75e578ce",
+      "bytes": 802323
+    }
+  ],
+  "crossCheck": "Byte-identical (same SHA256) to SafetyTests/candidates/resumed-p0/native/* at creation time.",
+  "consumers": ["test/helpers/v2-structural.js after MIG-1 (base of check-source-pair.mjs and scripts/f1-delta-check.mjs)"]
+}

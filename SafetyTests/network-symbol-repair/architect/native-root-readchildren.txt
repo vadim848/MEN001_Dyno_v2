@@ -1,0 +1,94 @@
+SafetyApplicationSerializerBase::ReadChildElements RVA 295276
+0000 br 213
+0005 ldarg.2 
+0006 callvirt get_LocalName
+000B stloc.0 
+000C ldloc.0 
+000D ldstr comments
+0012 call op_Equality
+0017 brtrue.s 40
+0019 ldloc.0 
+001A ldstr networks
+001F call op_Equality
+0024 brtrue.s 68
+0026 ldloc.0 
+0027 ldstr twinSAFEGroupAliasPorts
+002C call op_Equality
+0031 brtrue.s 93
+0033 ldloc.0 
+0034 ldstr variables
+0039 call op_Equality
+003E brtrue.s 118
+0040 ret 
+0041 ldarg.2 
+0042 callvirt get_IsEmptyElement
+0047 brfalse.s 11
+0049 ldarg.2 
+004A call Skip
+004F br 134
+0054 ldarg.2 
+0055 call SkipToFirstChild
+005A ldarg.0 
+005B ldarg.1 
+005C ldarg.2 
+005D call ReadSafetyApplicationHasCommentsInstances
+0062 ldarg.2 
+0063 call Skip
+0068 br.s 112
+006A ldarg.2 
+006B callvirt get_IsEmptyElement
+0070 brfalse.s 8
+0072 ldarg.2 
+0073 call Skip
+0078 br.s 96
+007A ldarg.2 
+007B call SkipToFirstChild
+0080 ldarg.0 
+0081 ldarg.1 
+0082 ldarg.2 
+0083 call ReadSafetyApplicationHasNetworksInstances
+0088 ldarg.2 
+0089 call Skip
+008E br.s 74
+0090 ldarg.2 
+0091 callvirt get_IsEmptyElement
+0096 brfalse.s 8
+0098 ldarg.2 
+0099 call Skip
+009E br.s 58
+00A0 ldarg.2 
+00A1 call SkipToFirstChild
+00A6 ldarg.0 
+00A7 ldarg.1 
+00A8 ldarg.2 
+00A9 call ReadSafetyApplicationHasTwinSAFEGroupAliasPortInstances
+00AE ldarg.2 
+00AF call Skip
+00B4 br.s 36
+00B6 ldarg.2 
+00B7 callvirt get_IsEmptyElement
+00BC brfalse.s 8
+00BE ldarg.2 
+00BF call Skip
+00C4 br.s 20
+00C6 ldarg.2 
+00C7 call SkipToFirstChild
+00CC ldarg.0 
+00CD ldarg.1 
+00CE ldarg.2 
+00CF call ReadSafetyApplicationHasVariablesInstances
+00D4 ldarg.2 
+00D5 call Skip
+00DA ldarg.0 
+00DB callvirt get_Result
+00E0 callvirt get_Failed
+00E5 brtrue.s 20
+00E7 ldarg.2 
+00E8 callvirt get_EOF
+00ED brtrue.s 12
+00EF ldarg.2 
+00F0 callvirt get_NodeType
+00F5 ldc.i4.1 
+00F6 beq -246
+00FB ret 
+

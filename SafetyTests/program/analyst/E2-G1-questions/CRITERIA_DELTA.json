@@ -1,0 +1,34 @@
+{
+ "schema": "men001-v2-analyst-criteria-delta/1",
+ "slice": "E2-G1-questions",
+ "date": "2026-10-21",
+ "base": {"criteria": "REQ-CONSOLIDATION/CRITERIA.md v2 f2f11d77eba0d3b4441b42ff55666fbfc741bdd2867ebb763829328ad909eaa3", "criteriaJson": "49d534c8a311fecdf6eb6a197968e3ce51cd34f4ee9118e9eae80357978baeb4"},
+ "source": {
+  "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+  "scenarioDecisions": "f363aae89acc653797d102dda45f90bbd1b1ee4c0a0afbfd98a86eac8931c64b (working copy)",
+  "scope": "0e41f7dc52d2922e02737ce3845f5549f9f44a9aaa2682bd42d9458fb02b1db9",
+  "spec": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472",
+  "reference": "MEN001_Dyno 4495a1f6049f6a58ebfd436761faa84d17c8d643 (git show only)"
+ },
+ "r0Addition": {"in_Safety_Run": true, "status": "READY-D", "sources": ["SAL in_Safety_Run -> //RunStop + Network3/FBAnd1/AndIn1", "V14-Q20 historical note", "Q-RC-10", "EMG6-01"], "falseScope": "E7 BOOT/group lifecycle only"},
+ "injectionPolicy": "injected initial Safe (in_Safety_Run FALSE + b_Step1 write) = diagnostic only, excluded from ID coverage and mutation behaviouralTests",
+ "changes": [
+  {"id": "EMGREF-LV", "type": "new", "status": "READY", "sources": ["Q-ARCH-01", "Q-RC-14"], "blockedPart": {"what": "C1 OFF moment in Safe->R&D variant", "question": "Q-E2Q-01"}},
+  {"id": "E2-01", "type": "clarified", "status": "READY", "note": "normative in_Safety_Run TRUE; zero-stage scan in transition followed by FBAnd1 Safe set is forbidden double ownership"},
+  {"id": "E2-04", "type": "clarified", "status": "READY-D", "sources": ["Q-RC-10", "EMG6-01"], "note": "Safe from no-stage only as EMG6-01 exit; group-start [false] variant diagnostic"},
+  {"id": "STP-D", "type": "extended", "status": "READY", "sources": ["Q-ARCH-05/Q-RC-11"], "note": "+SafetyFault HealthyLost, ack E6-Q2"},
+  {"id": "STP-F", "type": "changed", "status": "READY (sequence, HV)", "blockedPart": {"what": "SafetyFault on LV chain R&D->Safe", "question": "Q-E2Q-02"}},
+  {"id": "STP-G5", "type": "unblocked", "status": "READY", "sources": ["Q-ARCH-05"]},
+  {"id": "STP-I", "type": "new", "status": "READY", "sources": ["Q-ARCH-03", "Q-ARCH-05", "D-STARTINGRUN-GREEN-DOWN", "E2-Q2a"], "blockedPart": {"what": "LV recovered before R&D", "question": "Q-RC-16 (extension)"}},
+  {"id": "RUN-CONF", "type": "new", "status": "READY", "ids": ["MOD-002"], "sources": ["Q-ARCH-09"], "rule": "Run when C2_FBK ON and in_HV_Faulty_FBK FALSE for 100 ms; no 5 s hold, no STO FBK"},
+  {"id": "HLT-01", "type": "extended", "status": "READY", "sources": ["Q-RC-11"], "note": "+SafetyFault HealthyLost until E6-Q2 ack"},
+  {"id": "HLT-02", "type": "extended", "status": "READY", "note": "no SafetyFault"},
+  {"id": "HLT-03", "type": "unblocked", "status": "READY", "sources": ["Q-RC-11", "E6-Q2"], "blockedPart": {"what": "chained case after Run->R&D", "question": "Q-E2Q-02"}},
+  {"id": "EMG6-01", "type": "unblocked-part", "status": "READY", "sources": ["Q-ARCH-01", "V14-Q6"], "note": "R&D/R&D->Safe/Safe->R&D: Restart -> Safe only; Config non-connector causes depend on E4"},
+  {"id": "EMG4-03", "type": "unblocked", "status": "READY", "sources": ["Q-RC-14", "Q-ARCH-01"]},
+  {"id": "POL-01", "type": "changed", "status": "READY", "sources": ["D-ARCH-POL-RENAME (outPLC addition)"], "note": "outPLC_LV/HV_Healthy -> outPLC_LV/HV_Faulty; Network10 relay raw Faulty"}
+ ],
+ "scopeDelta": ["EMG-004", "EMG-006", "HLT-001", "MOD-002", "STP-001/EMG-008", "MOD-008", "BOOT-001/002"],
+ "questions": ["Q-E2Q-01", "Q-E2Q-02", "Q-RC-16 extension"]
+}

@@ -1,0 +1,228 @@
+SafetyApplicationLanguageSerializationHelper::LoadModel RVA 226292
+0000 ldarg.0 
+0001 ldarg.1 
+0002 ldarg.2 
+0003 ldarg.3 
+0004 ldarg.s 4
+0006 ldarg.s 5
+0008 ldarg.s 6
+000A ldloca.s 0
+000C ldloca.s 1
+000E call LoadModel
+0013 ret 
+SafetyApplicationLanguageSerializationHelper::LoadModel RVA 226324
+0000 ldarg.1 
+0001 brtrue.s 11
+0003 ldstr serializationResult
+0008 newobj .ctor
+000D throw 
+000E ldarg.2 
+000F brtrue.s 11
+0011 ldstr partition
+0016 newobj .ctor
+001B throw 
+001C ldarg.3 
+001D call IsNullOrEmpty
+0022 brfalse.s 11
+0024 ldstr fileName
+0029 newobj .ctor
+002E throw 
+002F ldarg.s 7
+0031 ldc.i4.0 
+0032 stind.i1 
+0033 ldarg.s 8
+0035 ldc.i4.0 
+0036 stind.i4 
+0037 ldarg.2 
+0038 callvirt get_Store
+003D callvirt get_TransactionActive
+0042 brtrue.s 21
+0044 call get_SingletonResourceManager
+0049 ldstr MissingTransaction
+004E callvirt GetString
+0053 newobj .ctor
+0058 throw 
+0059 ldnull 
+005A stloc.0 
+005B ldarg.0 
+005C ldarg.2 
+005D callvirt get_Store
+0062 callvirt GetDirectory
+0067 stloc.1 
+0068 ldloc.1 
+0069 ldsfld SafetyApplicationBase::DomainClassId
+006E callvirt GetSerializer
+0073 stloc.2 
+0074 ldloc.2 
+0075 brfalse 429
+007A ldarg.0 
+007B ldarg.3 
+007C ldloca.s 3
+007E call IsCrcCheckNeeded
+0083 brtrue.s 2
+0085 ldc.i4.0 
+0086 stloc.3 
+0087 ldarg.3 
+0088 call OpenRead
+008D stloc.s 4
+008F ldloc.1 
+0090 ldloc.s 4
+0092 callvirt get_Name
+0097 ldarg.1 
+0098 newobj .ctor
+009D stloc.s 5
+009F ldarg.0 
+00A0 ldarg.2 
+00A1 ldloc.s 5
+00A3 ldc.i4.1 
+00A4 callvirt InitializeSerializationContext
+00A9 newobj .ctor
+00AE stloc.s 6
+00B0 ldloc.s 6
+00B2 ldsfld TransactionContextKey
+00B7 box Guid
+00BC ldloc.s 5
+00BE callvirt Add
+00C3 ldarg.2 
+00C4 callvirt get_Store
+00C9 callvirt get_TransactionManager
+00CE ldstr Load Model from 
+00D3 ldarg.3 
+00D4 call Concat
+00D9 ldc.i4.1 
+00DA ldloc.s 6
+00DC callvirt BeginTransaction
+00E1 stloc.s 7
+00E3 ldloc.s 4
+00E5 callvirt get_Length
+00EA ldc.i4.5 
+00EB conv.i8 
+00EC ble 200
+00F1 call get_Instance
+00F6 ldloc.s 5
+00F8 ldc.i4.0 
+00F9 callvirt CreateXmlReaderSettings
+00FE stloc.s 8
+0100 ldarg.0 
+0101 ldloc.s 4
+0103 ldloc.s 8
+0105 ldloc.3 
+0106 call CreateXmlReader
+010B stloc.s 9
+010D ldloc.s 9
+010F callvirt Read
+0114 pop 
+0115 ldarg.0 
+0116 ldloc.s 9
+0118 ldloca.s 10
+011A callvirt TryGetEncoding
+011F brfalse.s 8
+0121 ldarg.1 
+0122 ldloc.s 10
+0124 callvirt set_Encoding
+0129 ldloc.s 9
+012B ldarg.s 6
+012D ldarg.2 
+012E callvirt get_Store
+0133 call ResolveDomainModels
+0138 ldloc.s 9
+013A callvirt MoveToContent
+013F pop 
+0140 ldloc.2 
+0141 ldloc.s 5
+0143 ldloc.s 9
+0145 ldarg.2 
+0146 callvirt TryCreateInstance
+014B isinst TypeDefinition
+0150 stloc.0 
+0151 ldloc.0 
+0152 brfalse.s 21
+0154 ldarg.1 
+0155 callvirt get_Failed
+015A brtrue.s 13
+015C ldarg.0 
+015D ldloc.s 5
+015F ldloc.0 
+0160 ldloc.s 9
+0162 ldarg.s 4
+0164 callvirt ReadRootElement
+0169 ldloc.s 9
+016B isinst TypeDefinition
+0170 brfalse.s 32
+0172 ldarg.s 7
+0174 ldloc.s 9
+0176 castclass TypeDefinition
+017B callvirt get_IsCrcVerified
+0180 stind.i1 
+0181 ldarg.s 8
+0183 ldloc.s 9
+0185 castclass TypeDefinition
+018A callvirt get_AccCrc
+018F stind.i4 
+0190 br.s 4
+0192 ldarg.s 7
+0194 ldc.i4.1 
+0195 stind.i1 
+0196 leave.s 12
+0198 ldloc.s 9
+019A brfalse.s 7
+019C ldloc.s 9
+019E callvirt Dispose
+01A3 endfinally 
+01A4 leave.s 19
+01A6 stloc.s 11
+01A8 ldloc.s 5
+01AA ldc.i4.3 
+01AB ldloc.s 11
+01AD call MethodSpecification
+01B2 call AddMessage
+01B7 leave.s 0
+01B9 ldloc.0 
+01BA brtrue.s 16
+01BC ldarg.1 
+01BD callvirt get_Failed
+01C2 brtrue.s 8
+01C4 ldarg.0 
+01C5 ldarg.2 
+01C6 callvirt CreateModelHelper
+01CB stloc.0 
+01CC ldloc.s 7
+01CE callvirt get_IsActive
+01D3 brfalse.s 7
+01D5 ldloc.s 7
+01D7 callvirt Commit
+01DC leave.s 12
+01DE ldloc.s 7
+01E0 brfalse.s 7
+01E2 ldloc.s 7
+01E4 callvirt Dispose
+01E9 endfinally 
+01EA ldarg.1 
+01EB callvirt get_Failed
+01F0 brtrue.s 39
+01F2 ldarg.s 5
+01F4 brfalse.s 35
+01F6 ldarg.1 
+01F7 ldarg.s 5
+01F9 newobj .ctor
+01FE stloc.s 12
+0200 ldarg.s 5
+0202 ldarg.2 
+0203 ldc.i4.s 16
+0205 callvirt Validate
+020A pop 
+020B leave.s 26
+020D ldloc.s 12
+020F brfalse.s 7
+0211 ldloc.s 12
+0213 callvirt Dispose
+0218 endfinally 
+0219 leave.s 12
+021B ldloc.s 4
+021D brfalse.s 7
+021F ldloc.s 4
+0221 callvirt Dispose
+0226 endfinally 
+0227 ldloc.0 
+0228 ret 
+

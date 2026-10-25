@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <GVL Name="GVL_CsvProfile" Id="{2f8b6d14-9c30-4a72-8e5b-1d0f7a3c6e25}">
+    <Declaration><![CDATA[{attribute 'TcGvlVarFlags' := 'OPC'}
+// Generic CSV-trajectory profile. The app uploads the resampled, unit-converted
+// sample arrays + config into stCsv, then pulses stCsv.bStart; FB_CsvPlayer
+// (called in PRG_Motion) replays it at the task rate, synchronized across both
+// motors. Read/written GUARDED by the app (a PLC image without GVL_CsvProfile must
+// not break the rest of telemetry).
+VAR_GLOBAL
+    // ADS: GVL_CsvProfile.stCsv (buffers written in chunks: stCsv.aMentee / .aLoad)
+    stCsv : ST_CsvProfile;
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

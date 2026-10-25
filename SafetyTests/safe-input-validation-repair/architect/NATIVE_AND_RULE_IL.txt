@@ -1,0 +1,148 @@
+VerifierHSafetyPLC::VerifyFbAnd RVA 2156300
+0000 ldc.i4.3 
+0001 stloc.0 
+0002 ldarg.2 
+0003 callvirt get_FunctionBlock
+0008 stloc.1 
+0009 ldc.i4.0 
+000A stloc.2 
+000B ldc.i4.0 
+000C stloc.3 
+000D ldsfld String::Empty
+0012 stloc.s 4
+0014 ldarg.0 
+0015 ldarg.2 
+0016 ldarg.3 
+0017 call GetInPorts
+001C stloc.s 5
+001E ldloc.s 5
+0020 callvirt TypeSpecification::GetEnumerator
+0025 stloc.s 6
+0027 br.s 90
+0029 ldloca.s 6
+002B call TypeSpecification::get_Current
+0030 stloc.s 7
+0032 ldloca.s 7
+0034 call TypeSpecification::get_Key
+0039 callvirt TypeSpecification::get_Item1
+003E stloc.s 8
+0040 ldloca.s 7
+0042 call TypeSpecification::get_Value
+0047 stloc.s 9
+0049 ldloc.0 
+004A ldarg.0 
+004B ldloca.s 7
+004D call TypeSpecification::get_Key
+0052 ldarg.2 
+0053 ldloc.s 9
+0055 ldloca.s 2
+0057 ldloca.s 3
+0059 call VerifyFbAndFbOrFbCntInPorts
+005E and 
+005F stloc.0 
+0060 ldloca.s 7
+0062 call TypeSpecification::get_Key
+0067 callvirt TypeSpecification::get_Item2
+006C callvirt FunctionBlockPort::get_ObjectIndex
+0071 ldc.i4.8 
+0072 beq.s 15
+0074 ldloc.0 
+0075 ldarg.0 
+0076 ldarg.1 
+0077 ldloc.s 8
+0079 ldarg.2 
+007A ldloc.s 9
+007C call VerifyPortHasOnlySafeIoMappings
+0081 and 
+0082 stloc.0 
+0083 ldloca.s 6
+0085 call TypeSpecification::MoveNext
+008A brtrue.s 157
+008C leave.s 14
+008E ldloca.s 6
+0090 constrained. TypeSpecification
+0096 callvirt IDisposable::Dispose
+009B endfinally 
+009C ldloc.2 
+009D ldc.i4.2 
+009E bge.s 40
+00A0 call ErrorLists::get_TargetSystemConfigHSafetyPLC_VerifyFbAnd_NumberOfActivePorts
+00A5 ldloc.1 
+00A6 callvirt FunctionBlockBase::get_InstanceName
+00AB call String::Format
+00B0 stloc.s 4
+00B2 ldarg.0 
+00B3 ldloc.s 4
+00B5 ldarg.3 
+00B6 ldarg.2 
+00B7 ldc.i4.1 
+00B8 newarr ModelElement
+00BD dup 
+00BE ldc.i4.0 
+00BF ldloc.1 
+00C0 stelem.ref 
+00C1 call AddFunctionBlockError
+00C6 ldc.i4.0 
+00C7 stloc.0 
+00C8 ldarg.2 
+00C9 callvirt get_UserFunctionBlock
+00CE brfalse 159
+00D3 ldloc.3 
+00D4 ldc.i4.2 
+00D5 bge 152
+00DA ldloc.s 5
+00DC ldsfld <>c::<>9__70_0
+00E1 dup 
+00E2 brtrue.s 23
+00E4 pop 
+00E5 ldsfld <>c::<>9
+00EA ldftn <VerifyFbAnd>b__70_0
+00F0 newobj TypeSpecification::.ctor
+00F5 dup 
+00F6 stsfld <>c::<>9__70_0
+00FB call MethodSpecification
+0100 brfalse.s 112
+0102 ldloc.3 
+0103 ldloc.s 5
+0105 ldarg.0 
+0106 ldftn <VerifyFbAnd>b__70_1
+010C newobj TypeSpecification::.ctor
+0111 call MethodSpecification
+0116 add 
+0117 stloc.3 
+0118 ldloc.3 
+0119 ldc.i4.2 
+011A bge.s 86
+011C ldarg.0 
+011D ldfld VerifierHSafetyPLC::mTscHSafetyPLC
+0122 callvirt get_ApplicationLanguage
+0127 ldarg.2 
+0128 callvirt get_Network
+012D callvirt Network::get_SafetyApplication
+0132 callvirt GetSafetyFileNodeByModel
+0137 stloc.s 10
+0139 call ErrorLists::get_TargetSystemConfigHSafetyPLC_VerifyFbAnd_NumberOfActiveMetaPorts
+013E ldarg.2 
+013F callvirt get_UserFunctionBlock
+0144 callvirt FunctionBlockBase::get_InstanceName
+0149 ldloc.1 
+014A callvirt FunctionBlockBase::get_InstanceName
+014F call String::Format
+0154 stloc.s 4
+0156 ldarg.0 
+0157 ldloc.s 4
+0159 ldloc.s 10
+015B ldarg.2 
+015C ldc.i4.1 
+015D newarr ModelElement
+0162 dup 
+0163 ldc.i4.0 
+0164 ldarg.2 
+0165 callvirt get_UserFunctionBlock
+016A stelem.ref 
+016B call AddFunctionBlockError
+0170 ldc.i4.0 
+0171 stloc.0 
+0172 ldloc.0 
+0173 ret 
+

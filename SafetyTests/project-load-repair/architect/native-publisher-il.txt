@@ -1,0 +1,3211 @@
+PublisherEL6900::BuildFunctionBlockDataSets RVA 2000924
+0000 ldarg.0 
+0001 ldfld PublisherEL6900::mTscEL6900
+0006 ldfld TargetSystemConfigEL6900::mFBDataSets
+000B callvirt Clear
+0010 ldarg.0 
+0011 ldfld PublisherEL6900::mTscEL6900
+0016 ldfld TargetSystemConfigEL6900::mCRCsFBDataSets
+001B callvirt Clear
+0020 ldarg.0 
+0021 ldfld PublisherEL6900::mTscEL6900
+0026 callvirt get_ApplicationLanguage
+002B callvirt get_AllFunctionBlocks
+0030 callvirt GetEnumerator
+0035 stloc.0 
+0036 br 8867
+003B ldloca.s 0
+003D call get_Current
+0042 stloc.1 
+0043 ldc.i4.s 64
+0045 newarr Byte
+004A stloc.2 
+004B ldloc.1 
+004C callvirt get_FunctionBlock
+0051 stloc.3 
+0052 ldloc.3 
+0053 callvirt get_Network
+0058 callvirt get_SafetyApplication
+005D callvirt get_Store
+0062 callvirt get_TransactionManager
+0067 ldstr Get the InPorts in the right order
+006C callvirt BeginTransaction
+0071 stloc.s 7
+0073 ldloc.3 
+0074 callvirt get_InPorts
+0079 ldsfld <>c::<>9__16_0
+007E dup 
+007F brtrue.s 23
+0081 pop 
+0082 ldsfld <>c::<>9
+0087 ldftn <BuildFunctionBlockDataSets>b__16_0
+008D newobj .ctor
+0092 dup 
+0093 stsfld <>c::<>9__16_0
+0098 callvirt Sort
+009D ldloc.s 7
+009F callvirt Commit
+00A4 leave.s 12
+00A6 ldloc.s 7
+00A8 brfalse.s 7
+00AA ldloc.s 7
+00AC callvirt Dispose
+00B1 endfinally 
+00B2 ldloc.3 
+00B3 callvirt GetDomainClass
+00B8 callvirt get_Id
+00BD stloc.s 4
+00BF ldloc.s 4
+00C1 ldsfld DomainClassId
+00C6 call op_Equality
+00CB brfalse 1350
+00D0 ldloc.2 
+00D1 ldc.i4.0 
+00D2 ldc.i4.s 11
+00D4 call GetBytes
+00D9 call MethodSpecification
+00DE stelem.i1 
+00DF ldc.i4.0 
+00E0 stloc.s 8
+00E2 ldloc.3 
+00E3 callvirt get_InPorts
+00E8 ldsfld <>c::<>9__16_1
+00ED dup 
+00EE brtrue.s 23
+00F0 pop 
+00F1 ldsfld <>c::<>9
+00F6 ldftn <BuildFunctionBlockDataSets>b__16_1
+00FC newobj .ctor
+0101 dup 
+0102 stsfld <>c::<>9__16_1
+0107 call MethodSpecification
+010C stloc.s 9
+010E ldarg.0 
+010F ldfld PublisherEL6900::mTscEL6900
+0114 callvirt get_Verifier
+0119 castclass TypeDefinition
+011E ldloc.s 9
+0120 ldloc.1 
+0121 callvirt IsPortConnected
+0126 brfalse.s 6
+0128 ldloc.s 8
+012A ldc.i4.2 
+012B add 
+012C stloc.s 8
+012E ldloc.3 
+012F callvirt get_InPorts
+0134 ldsfld <>c::<>9__16_2
+0139 dup 
+013A brtrue.s 23
+013C pop 
+013D ldsfld <>c::<>9
+0142 ldftn <BuildFunctionBlockDataSets>b__16_2
+0148 newobj .ctor
+014D dup 
+014E stsfld <>c::<>9__16_2
+0153 call MethodSpecification
+0158 stloc.s 10
+015A ldarg.0 
+015B ldfld PublisherEL6900::mTscEL6900
+0160 callvirt get_Verifier
+0165 castclass TypeDefinition
+016A ldloc.s 10
+016C ldloc.1 
+016D callvirt IsPortConnected
+0172 brfalse.s 6
+0174 ldloc.s 8
+0176 ldc.i4.4 
+0177 add 
+0178 stloc.s 8
+017A ldloc.3 
+017B isinst FBEstop
+0180 callvirt get_SafeInputsAfterDiscError
+0185 brfalse.s 10
+0187 ldloc.s 8
+0189 ldc.i4 128
+018E add 
+018F stloc.s 8
+0191 ldloc.2 
+0192 ldc.i4.1 
+0193 ldloc.s 8
+0195 call GetBytes
+019A call MethodSpecification
+019F stelem.i1 
+01A0 ldc.i4.0 
+01A1 stloc.s 11
+01A3 ldc.i4.0 
+01A4 stloc.s 12
+01A6 ldloc.3 
+01A7 callvirt get_InPorts
+01AC callvirt GetEnumerator
+01B1 stloc.s 14
+01B3 br 926
+01B8 ldloca.s 14
+01BA call get_Current
+01BF stloc.s 15
+01C1 ldloc.s 15
+01C3 stloc.s 16
+01C5 ldc.i4.0 
+01C6 stloc.s 17
+01C8 ldc.i4.0 
+01C9 stloc.s 18
+01CB ldc.i4.0 
+01CC stloc.s 19
+01CE ldloc.s 16
+01D0 callvirt get_PortName
+01D5 stloc.s 20
+01D7 ldloc.s 20
+01D9 brfalse 423
+01DE ldloc.s 20
+01E0 call get_Length
+01E5 stloc.s 21
+01E7 ldloc.s 21
+01E9 ldc.i4.4 
+01EA sub 
+01EB switch 
+0204 br 380
+0209 ldloc.s 20
+020B ldc.i4.3 
+020C call get_Chars
+0211 stloc.s 22
+0213 ldloc.s 22
+0215 ldc.i4.s 49
+0217 beq.s 90
+0219 ldloc.s 22
+021B ldc.i4.s 50
+021D beq.s 106
+021F br 353
+0224 ldloc.s 20
+0226 ldc.i4.7 
+0227 call get_Chars
+022C stloc.s 22
+022E ldloc.s 22
+0230 ldc.i4.s 49
+0232 sub 
+0233 switch 
+0258 br 296
+025D ldloc.s 20
+025F ldstr Restart
+0264 call op_Equality
+0269 brtrue 213
+026E br 274
+0273 ldloc.s 20
+0275 ldstr EDM1
+027A call op_Equality
+027F brtrue 196
+0284 br 252
+0289 ldloc.s 20
+028B ldstr EDM2
+0290 call op_Equality
+0295 brtrue 179
+029A br 230
+029F ldloc.s 20
+02A1 ldstr EStopIn1
+02A6 call op_Equality
+02AB brtrue 163
+02B0 br 208
+02B5 ldloc.s 20
+02B7 ldstr EStopIn3
+02BC call op_Equality
+02C1 brtrue 154
+02C6 br 186
+02CB ldloc.s 20
+02CD ldstr EStopIn5
+02D2 call op_Equality
+02D7 brtrue 145
+02DC br 164
+02E1 ldloc.s 20
+02E3 ldstr EStopIn7
+02E8 call op_Equality
+02ED brtrue 136
+02F2 br 142
+02F7 ldloc.s 20
+02F9 ldstr EStopIn2
+02FE call op_Equality
+0303 brtrue 590
+0308 br.s 123
+030A ldloc.s 20
+030C ldstr EStopIn4
+0311 call op_Equality
+0316 brtrue 571
+031B br.s 104
+031D ldloc.s 20
+031F ldstr EStopIn6
+0324 call op_Equality
+0329 brtrue 552
+032E br.s 85
+0330 ldloc.s 20
+0332 ldstr EStopIn8
+0337 call op_Equality
+033C brtrue 533
+0341 br.s 66
+0343 ldc.i4.4 
+0344 stloc.s 18
+0346 br.s 61
+0348 ldc.i4.8 
+0349 stloc.s 18
+034B br.s 56
+034D ldc.i4.s 12
+034F stloc.s 18
+0351 br.s 50
+0353 ldc.i4.1 
+0354 stloc.s 17
+0356 ldc.i4.s 16
+0358 stloc.s 18
+035A ldc.i4.s 48
+035C stloc.s 19
+035E br.s 37
+0360 ldc.i4.3 
+0361 stloc.s 17
+0363 ldc.i4.s 24
+0365 stloc.s 18
+0367 ldc.i4.s 49
+0369 stloc.s 19
+036B br.s 24
+036D ldc.i4.5 
+036E stloc.s 17
+0370 ldc.i4.s 32
+0372 stloc.s 18
+0374 ldc.i4.s 50
+0376 stloc.s 19
+0378 br.s 11
+037A ldc.i4.7 
+037B stloc.s 17
+037D ldc.i4.s 40
+037F stloc.s 18
+0381 ldc.i4.s 51
+0383 stloc.s 19
+0385 ldc.i4.4 
+0386 ldloc.s 18
+0388 bne.un.s 34
+038A ldloc.1 
+038B ldloc.s 15
+038D callvirt InPort
+0392 stloc.s 16
+0394 ldarg.0 
+0395 ldloc.s 16
+0397 ldloc.1 
+0398 call GetPortSourceAddress
+039D ldc.i4.0 
+039E ldloc.2 
+039F ldloc.s 18
+03A1 ldc.i4.4 
+03A2 call Copy
+03A7 br 426
+03AC ldc.i4.8 
+03AD ldloc.s 18
+03AF beq.s 6
+03B1 ldc.i4.s 12
+03B3 ldloc.s 18
+03B5 bne.un.s 62
+03B7 ldloc.1 
+03B8 ldloc.s 15
+03BA callvirt InPort
+03BF stloc.s 16
+03C1 ldarg.0 
+03C2 ldfld PublisherEL6900::mTscEL6900
+03C7 callvirt get_Verifier
+03CC castclass TypeDefinition
+03D1 ldloc.s 16
+03D3 callvirt IsPortConnected
+03D8 brfalse 377
+03DD ldarg.0 
+03DE ldloc.s 16
+03E0 ldloc.1 
+03E1 call GetPortSourceAddress
+03E6 ldc.i4.0 
+03E7 ldloc.2 
+03E8 ldloc.s 18
+03EA ldc.i4.4 
+03EB call Copy
+03F0 br 353
+03F5 ldloc.s 17
+03F7 ldc.i4.0 
+03F8 ble 345
+03FD ldloc.1 
+03FE ldloc.s 15
+0400 callvirt InPort
+0405 stloc.s 16
+0407 ldloc.1 
+0408 ldloc.s 15
+040A callvirt GetSlave
+040F callvirt InPort
+0414 stloc.s 23
+0416 ldloc.s 23
+0418 brfalse.s 50
+041A ldarg.0 
+041B ldfld PublisherEL6900::mTscEL6900
+0420 callvirt get_Verifier
+0425 castclass TypeDefinition
+042A ldloc.s 15
+042C callvirt IsInPortSecondChannelOfGroupActive
+0431 brfalse.s 25
+0433 ldarg.0 
+0434 ldfld PublisherEL6900::mTscEL6900
+0439 callvirt get_Verifier
+043E castclass TypeDefinition
+0443 ldloc.s 23
+0445 callvirt IsPortConnected
+044A br.s 1
+044C ldc.i4.0 
+044D stloc.s 24
+044F ldarg.0 
+0450 ldfld PublisherEL6900::mTscEL6900
+0455 callvirt get_Verifier
+045A castclass TypeDefinition
+045F ldloc.s 15
+0461 callvirt IsInPortFirstChannelOfGroupActive
+0466 brfalse 163
+046B ldarg.0 
+046C ldfld PublisherEL6900::mTscEL6900
+0471 callvirt get_Verifier
+0476 castclass TypeDefinition
+047B ldloc.s 16
+047D callvirt IsPortConnected
+0482 brfalse 135
+0487 ldloc.s 11
+0489 ldc.i4.1 
+048A ldloc.s 17
+048C ldc.i4.1 
+048D sub 
+048E ldc.i4.s 31
+0490 and 
+0491 shl 
+0492 add 
+0493 stloc.s 11
+0495 ldloc.s 15
+0497 callvirt get_Deactivate1
+049C call get_SA_FB_Port_Status_MakeContactIdentifier
+04A1 call op_Equality
+04A6 brfalse.s 14
+04A8 ldloc.s 12
+04AA ldc.i4.1 
+04AB ldloc.s 17
+04AD ldc.i4.1 
+04AE sub 
+04AF ldc.i4.s 31
+04B1 and 
+04B2 shl 
+04B3 add 
+04B4 stloc.s 12
+04B6 ldarg.0 
+04B7 ldloc.s 16
+04B9 ldloc.1 
+04BA call GetPortSourceAddress
+04BF ldc.i4.0 
+04C0 ldloc.2 
+04C1 ldloc.s 18
+04C3 ldc.i4.4 
+04C4 call Copy
+04C9 ldloc.s 15
+04CB callvirt get_ChannelInterface
+04D0 call get_SA_FB_Port_Status_Two_Channel
+04D5 call op_Equality
+04DA ldloc.s 24
+04DC and 
+04DD brfalse.s 47
+04DF ldloc.s 15
+04E1 callvirt get_DiscrepancyTime
+04E6 call get_InvariantCulture
+04EB call ToDouble
+04F0 ldc.r8 
+04F9 div 
+04FA call ToInt32
+04FF stloc.s 25
+0501 ldloc.2 
+0502 ldloc.s 19
+0504 ldloc.s 25
+0506 call GetBytes
+050B ldc.i4.0 
+050C ldelem.u1 
+050D stelem.i1 
+050E ldloc.s 18
+0510 ldc.i4.4 
+0511 add 
+0512 stloc.s 18
+0514 ldloc.s 24
+0516 brfalse.s 62
+0518 ldloc.s 11
+051A ldc.i4.1 
+051B ldloc.s 17
+051D ldc.i4.s 31
+051F and 
+0520 shl 
+0521 add 
+0522 stloc.s 11
+0524 ldloc.s 15
+0526 callvirt get_Deactivate2
+052B call get_SA_FB_Port_Status_MakeContactIdentifier
+0530 call op_Equality
+0535 brfalse.s 12
+0537 ldloc.s 12
+0539 ldc.i4.1 
+053A ldloc.s 17
+053C ldc.i4.s 31
+053E and 
+053F shl 
+0540 add 
+0541 stloc.s 12
+0543 ldarg.0 
+0544 ldloc.s 23
+0546 ldloc.1 
+0547 call GetPortSourceAddress
+054C ldc.i4.0 
+054D ldloc.2 
+054E ldloc.s 18
+0550 ldc.i4.4 
+0551 call Copy
+0556 ldloca.s 14
+0558 call MoveNext
+055D brtrue -938
+0562 leave.s 14
+0564 ldloca.s 14
+0566 constrained. TypeSpecification
+056C callvirt Dispose
+0571 endfinally 
+0572 ldloc.2 
+0573 ldc.i4.2 
+0574 ldloc.s 11
+0576 call GetBytes
+057B ldc.i4.0 
+057C ldelem.u1 
+057D stelem.i1 
+057E ldloc.2 
+057F ldc.i4.3 
+0580 ldloc.s 12
+0582 call GetBytes
+0587 ldc.i4.0 
+0588 ldelem.u1 
+0589 stelem.i1 
+058A ldloc.3 
+058B callvirt get_OutPorts
+0590 ldsfld <>c::<>9__16_3
+0595 dup 
+0596 brtrue.s 23
+0598 pop 
+0599 ldsfld <>c::<>9
+059E ldftn <BuildFunctionBlockDataSets>b__16_3
+05A4 newobj .ctor
+05A9 dup 
+05AA stsfld <>c::<>9__16_3
+05AF call MethodSpecification
+05B4 stloc.s 13
+05B6 ldarg.0 
+05B7 ldfld PublisherEL6900::mTscEL6900
+05BC callvirt get_Verifier
+05C1 castclass TypeDefinition
+05C6 ldloc.s 13
+05C8 ldloc.1 
+05C9 callvirt IsPortConnected
+05CE brfalse 7320
+05D3 ldloc.1 
+05D4 ldloc.3 
+05D5 callvirt get_ParameterPorts
+05DA ldc.i4.0 
+05DB callvirt get_Item
+05E0 callvirt ParameterPort
+05E5 callvirt get_Timing
+05EA ldc.i4 167
+05EF call get_InvariantCulture
+05F4 ldloca.s 26
+05F6 call TryParse
+05FB pop 
+05FC ldloc.s 26
+05FE conv.i4 
+05FF ldc.i4.s 10
+0601 div 
+0602 call GetBytes
+0607 ldc.i4.0 
+0608 ldloc.2 
+0609 ldc.i4.s 52
+060B ldc.i4.2 
+060C call Copy
+0611 br 7253
+0616 ldloc.s 4
+0618 ldsfld DomainClassId
+061D call op_Equality
+0622 brfalse 1338
+0627 ldloc.2 
+0628 ldc.i4.0 
+0629 ldc.i4.s 12
+062B call GetBytes
+0630 call MethodSpecification
+0635 stelem.i1 
+0636 ldc.i4.0 
+0637 stloc.s 27
+0639 ldloc.3 
+063A callvirt get_InPorts
+063F ldsfld <>c::<>9__16_4
+0644 dup 
+0645 brtrue.s 23
+0647 pop 
+0648 ldsfld <>c::<>9
+064D ldftn <BuildFunctionBlockDataSets>b__16_4
+0653 newobj .ctor
+0658 dup 
+0659 stsfld <>c::<>9__16_4
+065E call MethodSpecification
+0663 stloc.s 28
+0665 ldarg.0 
+0666 ldfld PublisherEL6900::mTscEL6900
+066B callvirt get_Verifier
+0670 castclass TypeDefinition
+0675 ldloc.s 28
+0677 ldloc.1 
+0678 callvirt IsPortConnected
+067D brfalse.s 6
+067F ldloc.s 27
+0681 ldc.i4.1 
+0682 add 
+0683 stloc.s 27
+0685 ldloc.3 
+0686 callvirt get_InPorts
+068B ldsfld <>c::<>9__16_5
+0690 dup 
+0691 brtrue.s 23
+0693 pop 
+0694 ldsfld <>c::<>9
+0699 ldftn <BuildFunctionBlockDataSets>b__16_5
+069F newobj .ctor
+06A4 dup 
+06A5 stsfld <>c::<>9__16_5
+06AA call MethodSpecification
+06AF stloc.s 29
+06B1 ldarg.0 
+06B2 ldfld PublisherEL6900::mTscEL6900
+06B7 callvirt get_Verifier
+06BC castclass TypeDefinition
+06C1 ldloc.s 29
+06C3 ldloc.1 
+06C4 callvirt IsPortConnected
+06C9 brfalse.s 6
+06CB ldloc.s 27
+06CD ldc.i4.2 
+06CE add 
+06CF stloc.s 27
+06D1 ldloc.3 
+06D2 callvirt get_InPorts
+06D7 ldsfld <>c::<>9__16_6
+06DC dup 
+06DD brtrue.s 23
+06DF pop 
+06E0 ldsfld <>c::<>9
+06E5 ldftn <BuildFunctionBlockDataSets>b__16_6
+06EB newobj .ctor
+06F0 dup 
+06F1 stsfld <>c::<>9__16_6
+06F6 call MethodSpecification
+06FB stloc.s 30
+06FD ldarg.0 
+06FE ldfld PublisherEL6900::mTscEL6900
+0703 callvirt get_Verifier
+0708 castclass TypeDefinition
+070D ldloc.s 30
+070F ldloc.1 
+0710 callvirt IsPortConnected
+0715 brfalse.s 6
+0717 ldloc.s 27
+0719 ldc.i4.4 
+071A add 
+071B stloc.s 27
+071D ldloc.3 
+071E isinst FBMon
+0723 dup 
+0724 callvirt get_ManualFunctionTest
+0729 brfalse.s 6
+072B ldloc.s 27
+072D ldc.i4.8 
+072E add 
+072F stloc.s 27
+0731 callvirt get_SafeInputsAfterDiscError
+0736 brfalse.s 10
+0738 ldloc.s 27
+073A ldc.i4 128
+073F add 
+0740 stloc.s 27
+0742 ldloc.2 
+0743 ldc.i4.1 
+0744 ldloc.s 27
+0746 call GetBytes
+074B ldc.i4.0 
+074C ldelem.u1 
+074D stelem.i1 
+074E ldc.i4.0 
+074F stloc.s 31
+0751 ldc.i4.0 
+0752 stloc.s 32
+0754 ldloc.3 
+0755 callvirt get_InPorts
+075A callvirt GetEnumerator
+075F stloc.s 14
+0761 br 816
+0766 ldloca.s 14
+0768 call get_Current
+076D stloc.s 34
+076F ldloc.s 34
+0771 stloc.s 35
+0773 ldc.i4.0 
+0774 stloc.s 36
+0776 ldc.i4.0 
+0777 stloc.s 37
+0779 ldc.i4.0 
+077A stloc.s 38
+077C ldloc.s 35
+077E callvirt get_PortName
+0783 stloc.s 20
+0785 ldloc.s 20
+0787 brfalse 367
+078C ldloc.s 20
+078E call get_Length
+0793 stloc.s 21
+0795 ldloc.s 21
+0797 ldc.i4.4 
+0798 sub 
+0799 switch 
+07AE br 328
+07B3 ldloc.s 20
+07B5 ldc.i4.6 
+07B6 call get_Chars
+07BB stloc.s 22
+07BD ldloc.s 22
+07BF ldc.i4.s 49
+07C1 beq.s 110
+07C3 ldloc.s 22
+07C5 ldc.i4.s 50
+07C7 beq.s 126
+07C9 ldloc.s 22
+07CB ldc.i4.s 116
+07CD beq.s 76
+07CF br 295
+07D4 ldloc.s 20
+07D6 ldc.i4.3 
+07D7 call get_Chars
+07DC stloc.s 22
+07DE ldloc.s 22
+07E0 ldc.i4.s 49
+07E2 beq.s 121
+07E4 ldloc.s 22
+07E6 ldc.i4.s 50
+07E8 beq 131
+07ED br 265
+07F2 ldloc.s 20
+07F4 ldc.i4.5 
+07F5 call get_Chars
+07FA stloc.s 22
+07FC ldloc.s 22
+07FE ldc.i4.s 49
+0800 sub 
+0801 switch 
+0816 br 224
+081B ldloc.s 20
+081D ldstr Restart
+0822 call op_Equality
+0827 brtrue 154
+082C br 202
+0831 ldloc.s 20
+0833 ldstr Secure1
+0838 call op_Equality
+083D brtrue 174
+0842 br 180
+0847 ldloc.s 20
+0849 ldstr Secure2
+084E call op_Equality
+0853 brtrue 574
+0858 br 158
+085D ldloc.s 20
+085F ldstr EDM1
+0864 call op_Equality
+0869 brtrue.s 96
+086B br 139
+0870 ldloc.s 20
+0872 ldstr EDM2
+0877 call op_Equality
+087C brtrue.s 82
+087E br.s 123
+0880 ldloc.s 20
+0882 ldstr MonIn1
+0887 call op_Equality
+088C brtrue.s 72
+088E br.s 107
+0890 ldloc.s 20
+0892 ldstr MonIn3
+0897 call op_Equality
+089C brtrue.s 69
+089E br.s 91
+08A0 ldloc.s 20
+08A2 ldstr MonIn2
+08A7 call op_Equality
+08AC brtrue 485
+08B1 br.s 72
+08B3 ldloc.s 20
+08B5 ldstr MonIn4
+08BA call op_Equality
+08BF brtrue 466
+08C4 br.s 53
+08C6 ldc.i4.4 
+08C7 stloc.s 37
+08C9 br.s 48
+08CB ldc.i4.8 
+08CC stloc.s 37
+08CE br.s 43
+08D0 ldc.i4.s 12
+08D2 stloc.s 37
+08D4 br.s 37
+08D6 ldc.i4.1 
+08D7 stloc.s 36
+08D9 ldc.i4.s 16
+08DB stloc.s 37
+08DD ldc.i4.s 40
+08DF stloc.s 38
+08E1 br.s 24
+08E3 ldc.i4.3 
+08E4 stloc.s 36
+08E6 ldc.i4.s 24
+08E8 stloc.s 37
+08EA ldc.i4.s 41
+08EC stloc.s 38
+08EE br.s 11
+08F0 ldc.i4.5 
+08F1 stloc.s 36
+08F3 ldc.i4.s 32
+08F5 stloc.s 37
+08F7 ldc.i4.s 42
+08F9 stloc.s 38
+08FB ldloc.s 36
+08FD brtrue.s 62
+08FF ldloc.1 
+0900 ldloc.s 34
+0902 callvirt InPort
+0907 stloc.s 35
+0909 ldarg.0 
+090A ldfld PublisherEL6900::mTscEL6900
+090F callvirt get_Verifier
+0914 castclass TypeDefinition
+0919 ldloc.s 35
+091B callvirt IsPortConnected
+0920 brfalse 369
+0925 ldarg.0 
+0926 ldloc.s 35
+0928 ldloc.1 
+0929 call GetPortSourceAddress
+092E ldc.i4.0 
+092F ldloc.2 
+0930 ldloc.s 37
+0932 ldc.i4.4 
+0933 call Copy
+0938 br 345
+093D ldloc.1 
+093E ldloc.s 34
+0940 callvirt InPort
+0945 stloc.s 35
+0947 ldloc.1 
+0948 ldloc.s 34
+094A callvirt GetSlave
+094F callvirt InPort
+0954 stloc.s 39
+0956 ldloc.s 39
+0958 brfalse.s 50
+095A ldarg.0 
+095B ldfld PublisherEL6900::mTscEL6900
+0960 callvirt get_Verifier
+0965 castclass TypeDefinition
+096A ldloc.s 34
+096C callvirt IsInPortSecondChannelOfGroupActive
+0971 brfalse.s 25
+0973 ldarg.0 
+0974 ldfld PublisherEL6900::mTscEL6900
+0979 callvirt get_Verifier
+097E castclass TypeDefinition
+0983 ldloc.s 39
+0985 callvirt IsPortConnected
+098A br.s 1
+098C ldc.i4.0 
+098D stloc.s 40
+098F ldarg.0 
+0990 ldfld PublisherEL6900::mTscEL6900
+0995 callvirt get_Verifier
+099A castclass TypeDefinition
+099F ldloc.s 34
+09A1 callvirt IsInPortFirstChannelOfGroupActive
+09A6 brfalse 163
+09AB ldarg.0 
+09AC ldfld PublisherEL6900::mTscEL6900
+09B1 callvirt get_Verifier
+09B6 castclass TypeDefinition
+09BB ldloc.s 35
+09BD callvirt IsPortConnected
+09C2 brfalse 135
+09C7 ldloc.s 31
+09C9 ldc.i4.1 
+09CA ldloc.s 36
+09CC ldc.i4.1 
+09CD sub 
+09CE ldc.i4.s 31
+09D0 and 
+09D1 shl 
+09D2 add 
+09D3 stloc.s 31
+09D5 ldloc.s 34
+09D7 callvirt get_Deactivate1
+09DC call get_SA_FB_Port_Status_MakeContactIdentifier
+09E1 call op_Equality
+09E6 brfalse.s 14
+09E8 ldloc.s 32
+09EA ldc.i4.1 
+09EB ldloc.s 36
+09ED ldc.i4.1 
+09EE sub 
+09EF ldc.i4.s 31
+09F1 and 
+09F2 shl 
+09F3 add 
+09F4 stloc.s 32
+09F6 ldarg.0 
+09F7 ldloc.s 35
+09F9 ldloc.1 
+09FA call GetPortSourceAddress
+09FF ldc.i4.0 
+0A00 ldloc.2 
+0A01 ldloc.s 37
+0A03 ldc.i4.4 
+0A04 call Copy
+0A09 ldloc.s 34
+0A0B callvirt get_ChannelInterface
+0A10 call get_SA_FB_Port_Status_Two_Channel
+0A15 call op_Equality
+0A1A ldloc.s 40
+0A1C and 
+0A1D brfalse.s 47
+0A1F ldloc.s 34
+0A21 callvirt get_DiscrepancyTime
+0A26 call get_InvariantCulture
+0A2B call ToDouble
+0A30 ldc.r8 
+0A39 div 
+0A3A call ToInt32
+0A3F stloc.s 41
+0A41 ldloc.2 
+0A42 ldloc.s 38
+0A44 ldloc.s 41
+0A46 call GetBytes
+0A4B ldc.i4.0 
+0A4C ldelem.u1 
+0A4D stelem.i1 
+0A4E ldloc.s 37
+0A50 ldc.i4.4 
+0A51 add 
+0A52 stloc.s 37
+0A54 ldloc.s 40
+0A56 brfalse.s 62
+0A58 ldloc.s 31
+0A5A ldc.i4.1 
+0A5B ldloc.s 36
+0A5D ldc.i4.s 31
+0A5F and 
+0A60 shl 
+0A61 add 
+0A62 stloc.s 31
+0A64 ldloc.s 34
+0A66 callvirt get_Deactivate2
+0A6B call get_SA_FB_Port_Status_MakeContactIdentifier
+0A70 call op_Equality
+0A75 brfalse.s 12
+0A77 ldloc.s 32
+0A79 ldc.i4.1 
+0A7A ldloc.s 36
+0A7C ldc.i4.s 31
+0A7E and 
+0A7F shl 
+0A80 add 
+0A81 stloc.s 32
+0A83 ldarg.0 
+0A84 ldloc.s 39
+0A86 ldloc.1 
+0A87 call GetPortSourceAddress
+0A8C ldc.i4.0 
+0A8D ldloc.2 
+0A8E ldloc.s 37
+0A90 ldc.i4.4 
+0A91 call Copy
+0A96 ldloca.s 14
+0A98 call MoveNext
+0A9D brtrue -828
+0AA2 leave.s 14
+0AA4 ldloca.s 14
+0AA6 constrained. TypeSpecification
+0AAC callvirt Dispose
+0AB1 endfinally 
+0AB2 ldloc.2 
+0AB3 ldc.i4.2 
+0AB4 ldloc.s 31
+0AB6 call GetBytes
+0ABB ldc.i4.0 
+0ABC ldelem.u1 
+0ABD stelem.i1 
+0ABE ldloc.2 
+0ABF ldc.i4.3 
+0AC0 ldloc.s 32
+0AC2 call GetBytes
+0AC7 ldc.i4.0 
+0AC8 ldelem.u1 
+0AC9 stelem.i1 
+0ACA ldloc.3 
+0ACB callvirt get_OutPorts
+0AD0 ldsfld <>c::<>9__16_7
+0AD5 dup 
+0AD6 brtrue.s 23
+0AD8 pop 
+0AD9 ldsfld <>c::<>9
+0ADE ldftn <BuildFunctionBlockDataSets>b__16_7
+0AE4 newobj .ctor
+0AE9 dup 
+0AEA stsfld <>c::<>9__16_7
+0AEF call MethodSpecification
+0AF4 stloc.s 33
+0AF6 ldarg.0 
+0AF7 ldfld PublisherEL6900::mTscEL6900
+0AFC callvirt get_Verifier
+0B01 castclass TypeDefinition
+0B06 ldloc.s 33
+0B08 ldloc.1 
+0B09 callvirt IsPortConnected
+0B0E brfalse 5976
+0B13 ldc.r8 
+0B1C stloc.s 42
+0B1E ldloc.1 
+0B1F ldloc.3 
+0B20 callvirt get_ParameterPorts
+0B25 ldc.i4.0 
+0B26 callvirt get_Item
+0B2B callvirt ParameterPort
+0B30 callvirt get_Timing
+0B35 ldc.i4 167
+0B3A call get_InvariantCulture
+0B3F ldloca.s 42
+0B41 call TryParse
+0B46 pop 
+0B47 ldloc.s 42
+0B49 conv.i4 
+0B4A ldc.i4.s 10
+0B4C div 
+0B4D call GetBytes
+0B52 ldc.i4.0 
+0B53 ldloc.2 
+0B54 ldc.i4.s 43
+0B56 ldc.i4.2 
+0B57 call Copy
+0B5C br 5898
+0B61 ldloc.s 4
+0B63 ldsfld DomainClassId
+0B68 call op_Equality
+0B6D brfalse 228
+0B72 ldloc.2 
+0B73 ldc.i4.0 
+0B74 ldc.i4.s 13
+0B76 call GetBytes
+0B7B call MethodSpecification
+0B80 stelem.i1 
+0B81 ldc.i4.0 
+0B82 stloc.s 43
+0B84 ldc.i4.0 
+0B85 stloc.s 44
+0B87 ldc.i4.4 
+0B88 stloc.s 45
+0B8A ldc.i4.0 
+0B8B stloc.s 46
+0B8D br 149
+0B92 ldloc.3 
+0B93 callvirt get_InPorts
+0B98 ldloc.s 46
+0B9A callvirt get_Item
+0B9F stloc.s 47
+0BA1 ldloc.1 
+0BA2 ldloc.s 47
+0BA4 callvirt InPort
+0BA9 stloc.s 48
+0BAB ldarg.0 
+0BAC ldfld PublisherEL6900::mTscEL6900
+0BB1 callvirt get_Verifier
+0BB6 castclass TypeDefinition
+0BBB ldloc.s 47
+0BBD callvirt IsInPortStandaloneActive
+0BC2 brfalse.s 87
+0BC4 ldarg.0 
+0BC5 ldfld PublisherEL6900::mTscEL6900
+0BCA callvirt get_Verifier
+0BCF castclass TypeDefinition
+0BD4 ldloc.s 48
+0BD6 callvirt IsPortConnected
+0BDB brfalse.s 62
+0BDD ldloc.s 43
+0BDF ldc.i4.1 
+0BE0 ldloc.s 46
+0BE2 ldc.i4.s 31
+0BE4 and 
+0BE5 shl 
+0BE6 add 
+0BE7 stloc.s 43
+0BE9 ldloc.s 47
+0BEB callvirt get_Deactivate1
+0BF0 call get_SA_FB_Port_Status_MakeContactIdentifier
+0BF5 call op_Equality
+0BFA brfalse.s 12
+0BFC ldloc.s 44
+0BFE ldc.i4.1 
+0BFF ldloc.s 46
+0C01 ldc.i4.s 31
+0C03 and 
+0C04 shl 
+0C05 add 
+0C06 stloc.s 44
+0C08 ldarg.0 
+0C09 ldloc.s 48
+0C0B ldloc.1 
+0C0C call GetPortSourceAddress
+0C11 ldc.i4.0 
+0C12 ldloc.2 
+0C13 ldloc.s 45
+0C15 ldc.i4.4 
+0C16 call Copy
+0C1B ldloc.s 45
+0C1D ldc.i4.4 
+0C1E add 
+0C1F stloc.s 45
+0C21 ldloc.s 46
+0C23 ldc.i4.1 
+0C24 add 
+0C25 stloc.s 46
+0C27 ldloc.s 46
+0C29 ldloc.3 
+0C2A callvirt get_InPorts
+0C2F callvirt get_Count
+0C34 blt -167
+0C39 ldloc.2 
+0C3A ldc.i4.2 
+0C3B ldloc.s 43
+0C3D call GetBytes
+0C42 ldc.i4.0 
+0C43 ldelem.u1 
+0C44 stelem.i1 
+0C45 ldloc.2 
+0C46 ldc.i4.3 
+0C47 ldloc.s 44
+0C49 call GetBytes
+0C4E ldc.i4.0 
+0C4F ldelem.u1 
+0C50 stelem.i1 
+0C51 br 5653
+0C56 ldloc.s 4
+0C58 ldsfld DomainClassId
+0C5D call op_Equality
+0C62 brfalse 239
+0C67 ldloc.2 
+0C68 ldc.i4.0 
+0C69 ldc.i4.s 14
+0C6B call GetBytes
+0C70 call MethodSpecification
+0C75 stelem.i1 
+0C76 ldc.i4.0 
+0C77 stloc.s 49
+0C79 ldc.i4.0 
+0C7A stloc.s 50
+0C7C ldc.i4.4 
+0C7D stloc.s 51
+0C7F ldc.i4.0 
+0C80 stloc.s 52
+0C82 br 160
+0C87 ldloc.3 
+0C88 callvirt get_InPorts
+0C8D ldloc.s 52
+0C8F callvirt get_Item
+0C94 stloc.s 53
+0C96 ldloc.1 
+0C97 ldloc.3 
+0C98 callvirt get_InPorts
+0C9D ldloc.s 52
+0C9F callvirt get_Item
+0CA4 callvirt InPort
+0CA9 stloc.s 54
+0CAB ldarg.0 
+0CAC ldfld PublisherEL6900::mTscEL6900
+0CB1 callvirt get_Verifier
+0CB6 castclass TypeDefinition
+0CBB ldloc.s 53
+0CBD callvirt IsInPortStandaloneActive
+0CC2 brfalse.s 87
+0CC4 ldarg.0 
+0CC5 ldfld PublisherEL6900::mTscEL6900
+0CCA callvirt get_Verifier
+0CCF castclass TypeDefinition
+0CD4 ldloc.s 54
+0CD6 callvirt IsPortConnected
+0CDB brfalse.s 62
+0CDD ldloc.s 49
+0CDF ldc.i4.1 
+0CE0 ldloc.s 52
+0CE2 ldc.i4.s 31
+0CE4 and 
+0CE5 shl 
+0CE6 add 
+0CE7 stloc.s 49
+0CE9 ldloc.s 53
+0CEB callvirt get_Deactivate1
+0CF0 call get_SA_FB_Port_Status_MakeContactIdentifier
+0CF5 call op_Equality
+0CFA brfalse.s 12
+0CFC ldloc.s 50
+0CFE ldc.i4.1 
+0CFF ldloc.s 52
+0D01 ldc.i4.s 31
+0D03 and 
+0D04 shl 
+0D05 add 
+0D06 stloc.s 50
+0D08 ldarg.0 
+0D09 ldloc.s 54
+0D0B ldloc.1 
+0D0C call GetPortSourceAddress
+0D11 ldc.i4.0 
+0D12 ldloc.2 
+0D13 ldloc.s 51
+0D15 ldc.i4.4 
+0D16 call Copy
+0D1B ldloc.s 51
+0D1D ldc.i4.4 
+0D1E add 
+0D1F stloc.s 51
+0D21 ldloc.s 52
+0D23 ldc.i4.1 
+0D24 add 
+0D25 stloc.s 52
+0D27 ldloc.s 52
+0D29 ldloc.3 
+0D2A callvirt get_InPorts
+0D2F callvirt get_Count
+0D34 blt -178
+0D39 ldloc.2 
+0D3A ldc.i4.2 
+0D3B ldloc.s 49
+0D3D call GetBytes
+0D42 ldc.i4.0 
+0D43 ldelem.u1 
+0D44 stelem.i1 
+0D45 ldloc.2 
+0D46 ldc.i4.3 
+0D47 ldloc.s 50
+0D49 call GetBytes
+0D4E ldc.i4.0 
+0D4F ldelem.u1 
+0D50 stelem.i1 
+0D51 br 5397
+0D56 ldloc.s 4
+0D58 ldsfld DomainClassId
+0D5D call op_Equality
+0D62 brfalse 399
+0D67 ldloc.2 
+0D68 ldc.i4.0 
+0D69 ldc.i4.s 15
+0D6B call GetBytes
+0D70 call MethodSpecification
+0D75 stelem.i1 
+0D76 ldloc.3 
+0D77 callvirt get_InPorts
+0D7C callvirt GetEnumerator
+0D81 stloc.s 14
+0D83 br 335
+0D88 ldloca.s 14
+0D8A call get_Current
+0D8F stloc.s 55
+0D91 ldc.i4.0 
+0D92 stloc.s 56
+0D94 ldloc.s 55
+0D96 callvirt get_PortName
+0D9B stloc.s 20
+0D9D ldloc.s 20
+0D9F brfalse 252
+0DA4 ldloc.s 20
+0DA6 call get_Length
+0DAB stloc.s 21
+0DAD ldloc.s 21
+0DAF ldc.i4.6 
+0DB0 bne.un 235
+0DB5 ldloc.s 20
+0DB7 ldc.i4.5 
+0DB8 call get_Chars
+0DBD stloc.s 22
+0DBF ldloc.s 22
+0DC1 ldc.i4.s 49
+0DC3 sub 
+0DC4 switch 
+0DE9 br 178
+0DEE ldloc.s 20
+0DF0 ldstr DecIn1
+0DF5 call op_Equality
+0DFA brtrue.s 120
+0DFC br 159
+0E01 ldloc.s 20
+0E03 ldstr DecIn2
+0E08 call op_Equality
+0E0D brtrue.s 106
+0E0F br 140
+0E14 ldloc.s 20
+0E16 ldstr DecIn3
+0E1B call op_Equality
+0E20 brtrue.s 92
+0E22 br.s 124
+0E24 ldloc.s 20
+0E26 ldstr DecIn4
+0E2B call op_Equality
+0E30 brtrue.s 82
+0E32 br.s 108
+0E34 ldloc.s 20
+0E36 ldstr DecIn5
+0E3B call op_Equality
+0E40 brtrue.s 72
+0E42 br.s 92
+0E44 ldloc.s 20
+0E46 ldstr DecIn6
+0E4B call op_Equality
+0E50 brtrue.s 62
+0E52 br.s 76
+0E54 ldloc.s 20
+0E56 ldstr DecIn7
+0E5B call op_Equality
+0E60 brtrue.s 52
+0E62 br.s 60
+0E64 ldloc.s 20
+0E66 ldstr DecIn8
+0E6B call op_Equality
+0E70 brtrue.s 42
+0E72 br.s 44
+0E74 ldc.i4.2 
+0E75 stloc.s 56
+0E77 br.s 39
+0E79 ldc.i4.6 
+0E7A stloc.s 56
+0E7C br.s 34
+0E7E ldc.i4.s 10
+0E80 stloc.s 56
+0E82 br.s 28
+0E84 ldc.i4.s 14
+0E86 stloc.s 56
+0E88 br.s 22
+0E8A ldc.i4.s 18
+0E8C stloc.s 56
+0E8E br.s 16
+0E90 ldc.i4.s 22
+0E92 stloc.s 56
+0E94 br.s 10
+0E96 ldc.i4.s 26
+0E98 stloc.s 56
+0E9A br.s 4
+0E9C ldc.i4.s 30
+0E9E stloc.s 56
+0EA0 ldloc.s 56
+0EA2 brfalse.s 51
+0EA4 ldarg.0 
+0EA5 ldfld PublisherEL6900::mTscEL6900
+0EAA callvirt get_Verifier
+0EAF castclass TypeDefinition
+0EB4 ldloc.s 55
+0EB6 ldloc.1 
+0EB7 callvirt IsPortConnected
+0EBC brfalse.s 25
+0EBE ldarg.0 
+0EBF ldloc.1 
+0EC0 ldloc.s 55
+0EC2 callvirt InPort
+0EC7 ldloc.1 
+0EC8 call GetPortSourceAddress
+0ECD ldc.i4.0 
+0ECE ldloc.2 
+0ECF ldloc.s 56
+0ED1 ldc.i4.4 
+0ED2 call Copy
+0ED7 ldloca.s 14
+0ED9 call MoveNext
+0EDE brtrue -347
+0EE3 leave 4995
+0EE8 ldloca.s 14
+0EEA constrained. TypeSpecification
+0EF0 callvirt Dispose
+0EF5 endfinally 
+0EF6 ldloc.s 4
+0EF8 ldsfld DomainClassId
+0EFD call op_Equality
+0F02 brfalse 1040
+0F07 ldloc.2 
+0F08 ldc.i4.0 
+0F09 ldc.i4.s 16
+0F0B call GetBytes
+0F10 call MethodSpecification
+0F15 stelem.i1 
+0F16 ldloc.1 
+0F17 ldloc.3 
+0F18 callvirt get_InPorts
+0F1D ldsfld <>c::<>9__16_8
+0F22 dup 
+0F23 brtrue.s 23
+0F25 pop 
+0F26 ldsfld <>c::<>9
+0F2B ldftn <BuildFunctionBlockDataSets>b__16_8
+0F31 newobj .ctor
+0F36 dup 
+0F37 stsfld <>c::<>9__16_8
+0F3C call MethodSpecification
+0F41 callvirt InPort
+0F46 stloc.s 57
+0F48 ldarg.0 
+0F49 ldfld PublisherEL6900::mTscEL6900
+0F4E callvirt get_Verifier
+0F53 castclass TypeDefinition
+0F58 ldloc.s 57
+0F5A callvirt IsPortConnected
+0F5F brfalse.s 4
+0F61 ldloc.2 
+0F62 ldc.i4.1 
+0F63 ldc.i4.1 
+0F64 stelem.i1 
+0F65 ldc.i4.0 
+0F66 stloc.s 58
+0F68 ldloc.3 
+0F69 callvirt get_InPorts
+0F6E ldsfld <>c::<>9__16_10
+0F73 dup 
+0F74 brtrue.s 23
+0F76 pop 
+0F77 ldsfld <>c::<>9
+0F7C ldftn <BuildFunctionBlockDataSets>b__16_10
+0F82 newobj .ctor
+0F87 dup 
+0F88 stsfld <>c::<>9__16_10
+0F8D call MethodSpecification
+0F92 callvirt GetEnumerator
+0F97 stloc.s 61
+0F99 br 314
+0F9E ldloc.s 61
+0FA0 callvirt get_Current
+0FA5 stloc.s 62
+0FA7 ldc.i4.0 
+0FA8 stloc.s 63
+0FAA ldloc.s 62
+0FAC callvirt get_PortName
+0FB1 stloc.s 20
+0FB3 ldloc.s 20
+0FB5 brfalse 246
+0FBA ldloc.s 20
+0FBC call get_Length
+0FC1 stloc.s 21
+0FC3 ldloc.s 21
+0FC5 ldc.i4.5 
+0FC6 bne.un 229
+0FCB ldloc.s 20
+0FCD ldc.i4.4 
+0FCE call get_Chars
+0FD3 stloc.s 22
+0FD5 ldloc.s 22
+0FD7 ldc.i4.s 49
+0FD9 sub 
+0FDA switch 
+0FFF br 172
+1004 ldloc.s 20
+1006 ldstr OpIn1
+100B call op_Equality
+1010 brtrue.s 120
+1012 br 153
+1017 ldloc.s 20
+1019 ldstr OpIn2
+101E call op_Equality
+1023 brtrue.s 106
+1025 br 134
+102A ldloc.s 20
+102C ldstr OpIn3
+1031 call op_Equality
+1036 brtrue.s 92
+1038 br.s 118
+103A ldloc.s 20
+103C ldstr OpIn4
+1041 call op_Equality
+1046 brtrue.s 81
+1048 br.s 102
+104A ldloc.s 20
+104C ldstr OpIn5
+1051 call op_Equality
+1056 brtrue.s 70
+1058 br.s 86
+105A ldloc.s 20
+105C ldstr OpIn6
+1061 call op_Equality
+1066 brtrue.s 59
+1068 br.s 70
+106A ldloc.s 20
+106C ldstr OpIn7
+1071 call op_Equality
+1076 brtrue.s 48
+1078 br.s 54
+107A ldloc.s 20
+107C ldstr OpIn8
+1081 call op_Equality
+1086 brtrue.s 37
+1088 br.s 38
+108A ldc.i4.1 
+108B stloc.s 63
+108D br.s 33
+108F ldc.i4.2 
+1090 stloc.s 63
+1092 br.s 28
+1094 ldc.i4.3 
+1095 stloc.s 63
+1097 br.s 23
+1099 ldc.i4.4 
+109A stloc.s 63
+109C br.s 18
+109E ldc.i4.5 
+109F stloc.s 63
+10A1 br.s 13
+10A3 ldc.i4.6 
+10A4 stloc.s 63
+10A6 br.s 8
+10A8 ldc.i4.7 
+10A9 stloc.s 63
+10AB br.s 3
+10AD ldc.i4.8 
+10AE stloc.s 63
+10B0 ldarg.0 
+10B1 ldfld PublisherEL6900::mTscEL6900
+10B6 callvirt get_Verifier
+10BB castclass TypeDefinition
+10C0 ldloc.s 62
+10C2 ldloc.1 
+10C3 callvirt IsPortConnected
+10C8 brfalse.s 14
+10CA ldloc.s 58
+10CC ldc.i4.1 
+10CD ldloc.s 63
+10CF ldc.i4.1 
+10D0 sub 
+10D1 ldc.i4.s 31
+10D3 and 
+10D4 shl 
+10D5 add 
+10D6 stloc.s 58
+10D8 ldloc.s 61
+10DA callvirt MoveNext
+10DF brtrue -326
+10E4 leave.s 12
+10E6 ldloc.s 61
+10E8 brfalse.s 7
+10EA ldloc.s 61
+10EC callvirt Dispose
+10F1 endfinally 
+10F2 ldloc.2 
+10F3 ldc.i4.2 
+10F4 ldloc.s 58
+10F6 call GetBytes
+10FB ldc.i4.0 
+10FC ldelem.u1 
+10FD stelem.i1 
+10FE ldloc.2 
+10FF ldc.i4.1 
+1100 ldelem.u1 
+1101 ldc.i4.1 
+1102 bne.un.s 18
+1104 ldarg.0 
+1105 ldloc.s 57
+1107 ldloc.1 
+1108 call GetPortSourceAddress
+110D ldc.i4.0 
+110E ldloc.2 
+110F ldc.i4.4 
+1110 ldc.i4.4 
+1111 call Copy
+1116 ldloc.3 
+1117 callvirt get_InPorts
+111C ldsfld <>c::<>9__16_11
+1121 dup 
+1122 brtrue.s 23
+1124 pop 
+1125 ldsfld <>c::<>9
+112A ldftn <BuildFunctionBlockDataSets>b__16_11
+1130 newobj .ctor
+1135 dup 
+1136 stsfld <>c::<>9__16_11
+113B call MethodSpecification
+1140 callvirt GetEnumerator
+1145 stloc.s 61
+1147 br 339
+114C ldloc.s 61
+114E callvirt get_Current
+1153 stloc.s 64
+1155 ldloc.s 64
+1157 stloc.s 65
+1159 ldc.i4.0 
+115A stloc.s 66
+115C ldloc.s 65
+115E callvirt get_PortName
+1163 stloc.s 20
+1165 ldloc.s 20
+1167 brfalse 253
+116C ldloc.s 20
+116E call get_Length
+1173 stloc.s 21
+1175 ldloc.s 21
+1177 ldc.i4.5 
+1178 bne.un 236
+117D ldloc.s 20
+117F ldc.i4.4 
+1180 call get_Chars
+1185 stloc.s 22
+1187 ldloc.s 22
+1189 ldc.i4.s 49
+118B sub 
+118C switch 
+11B1 br 179
+11B6 ldloc.s 20
+11B8 ldstr OpIn1
+11BD call op_Equality
+11C2 brtrue.s 120
+11C4 br 160
+11C9 ldloc.s 20
+11CB ldstr OpIn2
+11D0 call op_Equality
+11D5 brtrue.s 106
+11D7 br 141
+11DC ldloc.s 20
+11DE ldstr OpIn3
+11E3 call op_Equality
+11E8 brtrue.s 93
+11EA br.s 125
+11EC ldloc.s 20
+11EE ldstr OpIn4
+11F3 call op_Equality
+11F8 brtrue.s 83
+11FA br.s 109
+11FC ldloc.s 20
+11FE ldstr OpIn5
+1203 call op_Equality
+1208 brtrue.s 73
+120A br.s 93
+120C ldloc.s 20
+120E ldstr OpIn6
+1213 call op_Equality
+1218 brtrue.s 63
+121A br.s 77
+121C ldloc.s 20
+121E ldstr OpIn7
+1223 call op_Equality
+1228 brtrue.s 53
+122A br.s 61
+122C ldloc.s 20
+122E ldstr OpIn8
+1233 call op_Equality
+1238 brtrue.s 43
+123A br.s 45
+123C ldc.i4.8 
+123D stloc.s 66
+123F br.s 40
+1241 ldc.i4.s 12
+1243 stloc.s 66
+1245 br.s 34
+1247 ldc.i4.s 16
+1249 stloc.s 66
+124B br.s 28
+124D ldc.i4.s 20
+124F stloc.s 66
+1251 br.s 22
+1253 ldc.i4.s 24
+1255 stloc.s 66
+1257 br.s 16
+1259 ldc.i4.s 28
+125B stloc.s 66
+125D br.s 10
+125F ldc.i4.s 32
+1261 stloc.s 66
+1263 br.s 4
+1265 ldc.i4.s 36
+1267 stloc.s 66
+1269 ldloc.1 
+126A ldloc.s 64
+126C callvirt InPort
+1271 stloc.s 65
+1273 ldarg.0 
+1274 ldfld PublisherEL6900::mTscEL6900
+1279 callvirt get_Verifier
+127E castclass TypeDefinition
+1283 ldloc.s 65
+1285 callvirt IsPortConnected
+128A brfalse.s 19
+128C ldarg.0 
+128D ldloc.s 65
+128F ldloc.1 
+1290 call GetPortSourceAddress
+1295 ldc.i4.0 
+1296 ldloc.2 
+1297 ldloc.s 66
+1299 ldc.i4.4 
+129A call Copy
+129F ldloc.s 61
+12A1 callvirt MoveNext
+12A6 brtrue -351
+12AB leave.s 12
+12AD ldloc.s 61
+12AF brfalse.s 7
+12B1 ldloc.s 61
+12B3 callvirt Dispose
+12B8 endfinally 
+12B9 ldc.i4.0 
+12BA stloc.s 59
+12BC ldloc.3 
+12BD isinst FBOpmode
+12C2 callvirt get_ParameterPorts
+12C7 ldsfld <>c::<>9__16_9
+12CC dup 
+12CD brtrue.s 23
+12CF pop 
+12D0 ldsfld <>c::<>9
+12D5 ldftn <BuildFunctionBlockDataSets>b__16_9
+12DB newobj .ctor
+12E0 dup 
+12E1 stsfld <>c::<>9__16_9
+12E6 call MethodSpecification
+12EB stloc.s 60
+12ED ldloc.1 
+12EE ldloc.s 60
+12F0 callvirt ParameterPort
+12F5 callvirt get_Timing
+12FA ldloca.s 59
+12FC call TryParse
+1301 pop 
+1302 ldloc.2 
+1303 ldc.i4.s 40
+1305 ldloc.s 59
+1307 ldc.i4.s 10
+1309 div 
+130A call GetBytes
+130F ldc.i4.0 
+1310 ldelem.u1 
+1311 stelem.i1 
+1312 br 3924
+1317 ldloc.s 4
+1319 ldsfld DomainClassId
+131E call op_Equality
+1323 brfalse 656
+1328 ldloc.2 
+1329 ldc.i4.0 
+132A ldc.i4.s 20
+132C call GetBytes
+1331 call MethodSpecification
+1336 stelem.i1 
+1337 ldc.i4.0 
+1338 stloc.s 67
+133A ldc.i4.0 
+133B stloc.s 68
+133D ldloc.3 
+133E callvirt get_InPorts
+1343 callvirt GetEnumerator
+1348 stloc.s 14
+134A br 471
+134F ldloca.s 14
+1351 call get_Current
+1356 stloc.s 71
+1358 ldloc.s 71
+135A stloc.s 72
+135C ldc.i4.0 
+135D stloc.s 73
+135F ldc.i4.0 
+1360 stloc.s 74
+1362 ldc.i4.0 
+1363 stloc.s 75
+1365 ldloc.s 72
+1367 callvirt get_PortName
+136C stloc.s 20
+136E ldloc.s 20
+1370 ldstr TwoHand1
+1375 call op_Equality
+137A brtrue.s 50
+137C ldloc.s 20
+137E ldstr TwoHand3
+1383 call op_Equality
+1388 brtrue.s 48
+138A ldloc.s 20
+138C ldstr TwoHand2
+1391 call op_Equality
+1396 brtrue 395
+139B ldloc.s 20
+139D ldstr TwoHand4
+13A2 call op_Equality
+13A7 brtrue 378
+13AC br.s 23
+13AE ldc.i4.1 
+13AF stloc.s 73
+13B1 ldc.i4.4 
+13B2 stloc.s 74
+13B4 ldc.i4.s 52
+13B6 stloc.s 75
+13B8 br.s 11
+13BA ldc.i4.3 
+13BB stloc.s 73
+13BD ldc.i4.s 12
+13BF stloc.s 74
+13C1 ldc.i4.s 53
+13C3 stloc.s 75
+13C5 ldloc.s 73
+13C7 ldc.i4.0 
+13C8 ble 345
+13CD ldloc.1 
+13CE ldloc.s 71
+13D0 callvirt InPort
+13D5 stloc.s 72
+13D7 ldloc.1 
+13D8 ldloc.s 71
+13DA callvirt GetSlave
+13DF callvirt InPort
+13E4 stloc.s 76
+13E6 ldloc.s 76
+13E8 brfalse.s 50
+13EA ldarg.0 
+13EB ldfld PublisherEL6900::mTscEL6900
+13F0 callvirt get_Verifier
+13F5 castclass TypeDefinition
+13FA ldloc.s 71
+13FC callvirt IsInPortSecondChannelOfGroupActive
+1401 brfalse.s 25
+1403 ldarg.0 
+1404 ldfld PublisherEL6900::mTscEL6900
+1409 callvirt get_Verifier
+140E castclass TypeDefinition
+1413 ldloc.s 76
+1415 callvirt IsPortConnected
+141A br.s 1
+141C ldc.i4.0 
+141D stloc.s 77
+141F ldarg.0 
+1420 ldfld PublisherEL6900::mTscEL6900
+1425 callvirt get_Verifier
+142A castclass TypeDefinition
+142F ldloc.s 71
+1431 callvirt IsInPortFirstChannelOfGroupActive
+1436 brfalse 163
+143B ldarg.0 
+143C ldfld PublisherEL6900::mTscEL6900
+1441 callvirt get_Verifier
+1446 castclass TypeDefinition
+144B ldloc.s 72
+144D callvirt IsPortConnected
+1452 brfalse 135
+1457 ldloc.s 67
+1459 ldc.i4.1 
+145A ldloc.s 73
+145C ldc.i4.1 
+145D sub 
+145E ldc.i4.s 31
+1460 and 
+1461 shl 
+1462 add 
+1463 stloc.s 67
+1465 ldloc.s 71
+1467 callvirt get_Deactivate1
+146C call get_SA_FB_Port_Status_MakeContactIdentifier
+1471 call op_Equality
+1476 brfalse.s 14
+1478 ldloc.s 68
+147A ldc.i4.1 
+147B ldloc.s 73
+147D ldc.i4.1 
+147E sub 
+147F ldc.i4.s 31
+1481 and 
+1482 shl 
+1483 add 
+1484 stloc.s 68
+1486 ldarg.0 
+1487 ldloc.s 72
+1489 ldloc.1 
+148A call GetPortSourceAddress
+148F ldc.i4.0 
+1490 ldloc.2 
+1491 ldloc.s 74
+1493 ldc.i4.4 
+1494 call Copy
+1499 ldloc.s 71
+149B callvirt get_ChannelInterface
+14A0 call get_SA_FB_Port_Status_Two_Channel
+14A5 call op_Equality
+14AA ldloc.s 77
+14AC and 
+14AD brfalse.s 47
+14AF ldloc.s 71
+14B1 callvirt get_DiscrepancyTime
+14B6 call get_InvariantCulture
+14BB call ToDouble
+14C0 ldc.r8 
+14C9 div 
+14CA call ToInt32
+14CF stloc.s 78
+14D1 ldloc.2 
+14D2 ldloc.s 75
+14D4 ldloc.s 78
+14D6 call GetBytes
+14DB ldc.i4.0 
+14DC ldelem.u1 
+14DD stelem.i1 
+14DE ldloc.s 74
+14E0 ldc.i4.4 
+14E1 add 
+14E2 stloc.s 74
+14E4 ldloc.s 77
+14E6 brfalse.s 62
+14E8 ldloc.s 67
+14EA ldc.i4.1 
+14EB ldloc.s 73
+14ED ldc.i4.s 31
+14EF and 
+14F0 shl 
+14F1 add 
+14F2 stloc.s 67
+14F4 ldloc.s 71
+14F6 callvirt get_Deactivate2
+14FB call get_SA_FB_Port_Status_MakeContactIdentifier
+1500 call op_Equality
+1505 brfalse.s 12
+1507 ldloc.s 68
+1509 ldc.i4.1 
+150A ldloc.s 73
+150C ldc.i4.s 31
+150E and 
+150F shl 
+1510 add 
+1511 stloc.s 68
+1513 ldarg.0 
+1514 ldloc.s 76
+1516 ldloc.1 
+1517 call GetPortSourceAddress
+151C ldc.i4.0 
+151D ldloc.2 
+151E ldloc.s 74
+1520 ldc.i4.4 
+1521 call Copy
+1526 ldloca.s 14
+1528 call MoveNext
+152D brtrue -483
+1532 leave.s 14
+1534 ldloca.s 14
+1536 constrained. TypeSpecification
+153C callvirt Dispose
+1541 endfinally 
+1542 ldloc.2 
+1543 ldc.i4.2 
+1544 ldloc.s 67
+1546 call GetBytes
+154B ldc.i4.0 
+154C ldelem.u1 
+154D stelem.i1 
+154E ldloc.2 
+154F ldc.i4.3 
+1550 ldloc.s 68
+1552 call GetBytes
+1557 ldc.i4.0 
+1558 ldelem.u1 
+1559 stelem.i1 
+155A ldc.i4.0 
+155B stloc.s 69
+155D ldloc.3 
+155E isinst FBTwohand
+1563 callvirt get_ParameterPorts
+1568 ldsfld <>c::<>9__16_12
+156D dup 
+156E brtrue.s 23
+1570 pop 
+1571 ldsfld <>c::<>9
+1576 ldftn <BuildFunctionBlockDataSets>b__16_12
+157C newobj .ctor
+1581 dup 
+1582 stsfld <>c::<>9__16_12
+1587 call MethodSpecification
+158C stloc.s 70
+158E ldloc.1 
+158F ldloc.s 70
+1591 callvirt ParameterPort
+1596 callvirt get_Timing
+159B ldloca.s 69
+159D call TryParse
+15A2 pop 
+15A3 ldloc.2 
+15A4 ldc.i4.s 54
+15A6 ldloc.s 69
+15A8 ldc.i4.s 10
+15AA div 
+15AB call GetBytes
+15B0 ldc.i4.0 
+15B1 ldelem.u1 
+15B2 stelem.i1 
+15B3 br 3251
+15B8 ldloc.s 4
+15BA ldsfld DomainClassId
+15BF call op_Equality
+15C4 brfalse 344
+15C9 ldloc.2 
+15CA ldc.i4.0 
+15CB ldc.i4.s 21
+15CD call GetBytes
+15D2 call MethodSpecification
+15D7 stelem.i1 
+15D8 ldc.i4.0 
+15D9 stloc.s 79
+15DB ldc.i4.0 
+15DC stloc.s 80
+15DE ldloc.3 
+15DF callvirt get_InPorts
+15E4 ldc.i4.0 
+15E5 callvirt get_Item
+15EA stloc.s 81
+15EC ldloc.3 
+15ED callvirt get_InPorts
+15F2 ldc.i4.1 
+15F3 callvirt get_Item
+15F8 stloc.s 82
+15FA ldloc.1 
+15FB ldloc.s 81
+15FD callvirt InPort
+1602 stloc.s 83
+1604 ldloc.1 
+1605 ldloc.s 82
+1607 callvirt InPort
+160C stloc.s 84
+160E ldloc.s 79
+1610 ldc.i4.1 
+1611 add 
+1612 stloc.s 79
+1614 ldloc.s 81
+1616 callvirt get_Deactivate1
+161B call get_SA_FB_Port_Status_MakeContactIdentifier
+1620 call op_Equality
+1625 brfalse.s 6
+1627 ldloc.s 80
+1629 ldc.i4.1 
+162A add 
+162B stloc.s 80
+162D ldarg.0 
+162E ldloc.s 83
+1630 ldloc.1 
+1631 call GetPortSourceAddress
+1636 ldc.i4.0 
+1637 ldloc.2 
+1638 ldc.i4.4 
+1639 ldc.i4.4 
+163A call Copy
+163F ldloc.s 79
+1641 ldc.i4.2 
+1642 add 
+1643 stloc.s 79
+1645 ldloc.s 81
+1647 callvirt get_Deactivate2
+164C call get_SA_FB_Port_Status_MakeContactIdentifier
+1651 call op_Equality
+1656 brfalse.s 6
+1658 ldloc.s 80
+165A ldc.i4.2 
+165B add 
+165C stloc.s 80
+165E ldarg.0 
+165F ldloc.s 84
+1661 ldloc.1 
+1662 call GetPortSourceAddress
+1667 ldc.i4.0 
+1668 ldloc.2 
+1669 ldc.i4.8 
+166A ldc.i4.4 
+166B call Copy
+1670 ldloc.2 
+1671 ldc.i4.2 
+1672 ldloc.s 79
+1674 call GetBytes
+1679 ldc.i4.0 
+167A ldelem.u1 
+167B stelem.i1 
+167C ldloc.2 
+167D ldc.i4.3 
+167E ldloc.s 80
+1680 call GetBytes
+1685 ldc.i4.0 
+1686 ldelem.u1 
+1687 stelem.i1 
+1688 ldloc.3 
+1689 isinst FBEdm
+168E ldc.i4.0 
+168F stloc.s 85
+1691 callvirt get_ParameterPorts
+1696 callvirt GetEnumerator
+169B stloc.s 86
+169D br.s 102
+169F ldloca.s 86
+16A1 call get_Current
+16A6 stloc.s 87
+16A8 ldc.i4.0 
+16A9 stloc.s 88
+16AB ldloc.s 87
+16AD callvirt get_Name
+16B2 ldstr Switch Off Monitoring (ms)
+16B7 call op_Equality
+16BC brfalse.s 6
+16BE ldc.i4.s 52
+16C0 stloc.s 88
+16C2 br.s 23
+16C4 ldloc.s 87
+16C6 callvirt get_Name
+16CB ldstr Switch On Monitoring (ms)
+16D0 call op_Equality
+16D5 brfalse.s 4
+16D7 ldc.i4.s 54
+16D9 stloc.s 88
+16DB ldloc.1 
+16DC ldloc.s 87
+16DE callvirt ParameterPort
+16E3 callvirt get_Timing
+16E8 ldloca.s 85
+16EA call TryParse
+16EF brfalse.s 20
+16F1 ldloc.s 85
+16F3 ldc.i4.s 10
+16F5 div 
+16F6 call GetBytes
+16FB ldc.i4.0 
+16FC ldloc.2 
+16FD ldloc.s 88
+16FF ldc.i4.2 
+1700 call Copy
+1705 ldloca.s 86
+1707 call MoveNext
+170C brtrue.s 145
+170E leave 2904
+1713 ldloca.s 86
+1715 constrained. TypeSpecification
+171B callvirt Dispose
+1720 endfinally 
+1721 ldloc.s 4
+1723 ldsfld DomainClassId
+1728 call op_Equality
+172D brfalse 1444
+1732 ldloc.2 
+1733 ldc.i4.0 
+1734 ldc.i4.s 22
+1736 call GetBytes
+173B call MethodSpecification
+1740 stelem.i1 
+1741 ldloc.3 
+1742 isinst FBMuting
+1747 stloc.s 89
+1749 ldc.i4.0 
+174A stloc.s 90
+174C ldloc.s 89
+174E callvirt get_SequentialInputs
+1753 brfalse.s 6
+1755 ldloc.s 90
+1757 ldc.i4.1 
+1758 add 
+1759 stloc.s 90
+175B ldloc.3 
+175C callvirt get_InPorts
+1761 ldsfld <>c::<>9__16_13
+1766 dup 
+1767 brtrue.s 23
+1769 pop 
+176A ldsfld <>c::<>9
+176F ldftn <BuildFunctionBlockDataSets>b__16_13
+1775 newobj .ctor
+177A dup 
+177B stsfld <>c::<>9__16_13
+1780 call MethodSpecification
+1785 stloc.s 91
+1787 ldarg.0 
+1788 ldfld PublisherEL6900::mTscEL6900
+178D callvirt get_Verifier
+1792 castclass TypeDefinition
+1797 ldloc.s 91
+1799 ldloc.1 
+179A callvirt IsPortConnected
+179F brfalse.s 6
+17A1 ldloc.s 90
+17A3 ldc.i4.2 
+17A4 add 
+17A5 stloc.s 90
+17A7 ldloc.3 
+17A8 callvirt get_InPorts
+17AD ldsfld <>c::<>9__16_14
+17B2 dup 
+17B3 brtrue.s 23
+17B5 pop 
+17B6 ldsfld <>c::<>9
+17BB ldftn <BuildFunctionBlockDataSets>b__16_14
+17C1 newobj .ctor
+17C6 dup 
+17C7 stsfld <>c::<>9__16_14
+17CC call MethodSpecification
+17D1 stloc.s 92
+17D3 ldarg.0 
+17D4 ldfld PublisherEL6900::mTscEL6900
+17D9 callvirt get_Verifier
+17DE castclass TypeDefinition
+17E3 ldloc.s 92
+17E5 ldloc.1 
+17E6 callvirt IsPortConnected
+17EB brfalse.s 6
+17ED ldloc.s 90
+17EF ldc.i4.4 
+17F0 add 
+17F1 stloc.s 90
+17F3 ldloc.2 
+17F4 ldc.i4.1 
+17F5 ldloc.s 90
+17F7 call GetBytes
+17FC ldc.i4.0 
+17FD ldelem.u1 
+17FE stelem.i1 
+17FF ldc.i4.0 
+1800 stloc.s 93
+1802 ldc.i4.0 
+1803 stloc.s 94
+1805 ldloc.3 
+1806 callvirt get_InPorts
+180B callvirt GetEnumerator
+1810 stloc.s 14
+1812 br 896
+1817 ldloca.s 14
+1819 call get_Current
+181E stloc.s 96
+1820 ldloc.s 96
+1822 stloc.s 97
+1824 ldc.i4.0 
+1825 stloc.s 98
+1827 ldc.i4.0 
+1828 stloc.s 99
+182A ldc.i4.0 
+182B stloc.s 100
+182D ldloc.s 97
+182F callvirt get_PortName
+1834 stloc.s 20
+1836 ldloc.s 20
+1838 brfalse 324
+183D ldloc.s 20
+183F call get_Length
+1844 stloc.s 21
+1846 ldloc.s 21
+1848 ldc.i4.4 
+1849 sub 
+184A switch 
+185F br 285
+1864 ldloc.s 20
+1866 ldc.i4.3 
+1867 call get_Chars
+186C stloc.s 22
+186E ldloc.s 22
+1870 ldc.i4.s 49
+1872 beq.s 74
+1874 ldloc.s 22
+1876 ldc.i4.s 50
+1878 beq.s 90
+187A br 258
+187F ldloc.s 20
+1881 ldc.i4.6 
+1882 call get_Chars
+1887 stloc.s 22
+1889 ldloc.s 22
+188B ldc.i4.s 49
+188D sub 
+188E switch 
+18A3 br 217
+18A8 ldloc.s 20
+18AA ldstr Enable
+18AF call op_Equality
+18B4 brtrue 147
+18B9 br 195
+18BE ldloc.s 20
+18C0 ldstr EDM1
+18C5 call op_Equality
+18CA brtrue 130
+18CF br 173
+18D4 ldloc.s 20
+18D6 ldstr EDM2
+18DB call op_Equality
+18E0 brtrue.s 116
+18E2 br 154
+18E7 ldloc.s 20
+18E9 ldstr Muting1
+18EE call op_Equality
+18F3 brtrue.s 103
+18F5 ldloc.s 20
+18F7 ldstr OSSDIn1
+18FC call op_Equality
+1901 brtrue.s 102
+1903 br.s 124
+1905 ldloc.s 20
+1907 ldstr Muting3
+190C call op_Equality
+1911 brtrue.s 99
+1913 br.s 108
+1915 ldloc.s 20
+1917 ldstr Muting2
+191C call op_Equality
+1921 brtrue 625
+1926 ldloc.s 20
+1928 ldstr OSSDIn2
+192D call op_Equality
+1932 brtrue 608
+1937 br.s 72
+1939 ldloc.s 20
+193B ldstr Muting4
+1940 call op_Equality
+1945 brtrue 589
+194A br.s 53
+194C ldc.i4.4 
+194D stloc.s 99
+194F br.s 48
+1951 ldc.i4.8 
+1952 stloc.s 99
+1954 br.s 43
+1956 ldc.i4.s 12
+1958 stloc.s 99
+195A br.s 37
+195C ldc.i4.1 
+195D stloc.s 98
+195F ldc.i4.s 16
+1961 stloc.s 99
+1963 ldc.i4.s 52
+1965 stloc.s 100
+1967 br.s 24
+1969 ldc.i4.3 
+196A stloc.s 98
+196C ldc.i4.s 24
+196E stloc.s 99
+1970 ldc.i4.s 53
+1972 stloc.s 100
+1974 br.s 11
+1976 ldc.i4.5 
+1977 stloc.s 98
+1979 ldc.i4.s 32
+197B stloc.s 99
+197D ldc.i4.s 54
+197F stloc.s 100
+1981 ldloc.s 97
+1983 callvirt get_PortName
+1988 ldstr Enable
+198D call op_Equality
+1992 brfalse.s 62
+1994 ldloc.1 
+1995 ldloc.s 96
+1997 callvirt InPort
+199C stloc.s 97
+199E ldarg.0 
+199F ldfld PublisherEL6900::mTscEL6900
+19A4 callvirt get_Verifier
+19A9 castclass TypeDefinition
+19AE ldloc.s 97
+19B0 callvirt IsPortConnected
+19B5 brfalse 477
+19BA ldarg.0 
+19BB ldloc.s 97
+19BD ldloc.1 
+19BE call GetPortSourceAddress
+19C3 ldc.i4.0 
+19C4 ldloc.2 
+19C5 ldloc.s 99
+19C7 ldc.i4.4 
+19C8 call Copy
+19CD br 453
+19D2 ldloc.s 97
+19D4 callvirt get_PortName
+19D9 ldstr EDM1
+19DE call op_Equality
+19E3 brtrue.s 19
+19E5 ldloc.s 97
+19E7 callvirt get_PortName
+19EC ldstr EDM2
+19F1 call op_Equality
+19F6 brfalse.s 62
+19F8 ldloc.1 
+19F9 ldloc.s 96
+19FB callvirt InPort
+1A00 stloc.s 97
+1A02 ldarg.0 
+1A03 ldfld PublisherEL6900::mTscEL6900
+1A08 callvirt get_Verifier
+1A0D castclass TypeDefinition
+1A12 ldloc.s 97
+1A14 callvirt IsPortConnected
+1A19 brfalse 377
+1A1E ldarg.0 
+1A1F ldloc.s 97
+1A21 ldloc.1 
+1A22 call GetPortSourceAddress
+1A27 ldc.i4.0 
+1A28 ldloc.2 
+1A29 ldloc.s 99
+1A2B ldc.i4.4 
+1A2C call Copy
+1A31 br 353
+1A36 ldloc.s 98
+1A38 ldc.i4.0 
+1A39 ble 345
+1A3E ldloc.1 
+1A3F ldloc.s 96
+1A41 callvirt InPort
+1A46 stloc.s 97
+1A48 ldloc.1 
+1A49 ldloc.s 96
+1A4B callvirt GetSlave
+1A50 callvirt InPort
+1A55 stloc.s 101
+1A57 ldloc.s 101
+1A59 brfalse.s 50
+1A5B ldarg.0 
+1A5C ldfld PublisherEL6900::mTscEL6900
+1A61 callvirt get_Verifier
+1A66 castclass TypeDefinition
+1A6B ldloc.s 96
+1A6D callvirt IsInPortSecondChannelOfGroupActive
+1A72 brfalse.s 25
+1A74 ldarg.0 
+1A75 ldfld PublisherEL6900::mTscEL6900
+1A7A callvirt get_Verifier
+1A7F castclass TypeDefinition
+1A84 ldloc.s 101
+1A86 callvirt IsPortConnected
+1A8B br.s 1
+1A8D ldc.i4.0 
+1A8E stloc.s 102
+1A90 ldarg.0 
+1A91 ldfld PublisherEL6900::mTscEL6900
+1A96 callvirt get_Verifier
+1A9B castclass TypeDefinition
+1AA0 ldloc.s 96
+1AA2 callvirt IsInPortFirstChannelOfGroupActive
+1AA7 brfalse 163
+1AAC ldarg.0 
+1AAD ldfld PublisherEL6900::mTscEL6900
+1AB2 callvirt get_Verifier
+1AB7 castclass TypeDefinition
+1ABC ldloc.s 97
+1ABE callvirt IsPortConnected
+1AC3 brfalse 135
+1AC8 ldloc.s 93
+1ACA ldc.i4.1 
+1ACB ldloc.s 98
+1ACD ldc.i4.1 
+1ACE sub 
+1ACF ldc.i4.s 31
+1AD1 and 
+1AD2 shl 
+1AD3 add 
+1AD4 stloc.s 93
+1AD6 ldloc.s 96
+1AD8 callvirt get_Deactivate1
+1ADD call get_SA_FB_Port_Status_MakeContactIdentifier
+1AE2 call op_Equality
+1AE7 brfalse.s 14
+1AE9 ldloc.s 94
+1AEB ldc.i4.1 
+1AEC ldloc.s 98
+1AEE ldc.i4.1 
+1AEF sub 
+1AF0 ldc.i4.s 31
+1AF2 and 
+1AF3 shl 
+1AF4 add 
+1AF5 stloc.s 94
+1AF7 ldarg.0 
+1AF8 ldloc.s 97
+1AFA ldloc.1 
+1AFB call GetPortSourceAddress
+1B00 ldc.i4.0 
+1B01 ldloc.2 
+1B02 ldloc.s 99
+1B04 ldc.i4.4 
+1B05 call Copy
+1B0A ldloc.s 96
+1B0C callvirt get_ChannelInterface
+1B11 call get_SA_FB_Port_Status_Two_Channel
+1B16 call op_Equality
+1B1B ldloc.s 102
+1B1D and 
+1B1E brfalse.s 47
+1B20 ldloc.s 96
+1B22 callvirt get_DiscrepancyTime
+1B27 call get_InvariantCulture
+1B2C call ToDouble
+1B31 ldc.r8 
+1B3A div 
+1B3B call ToInt32
+1B40 stloc.s 103
+1B42 ldloc.2 
+1B43 ldloc.s 100
+1B45 ldloc.s 103
+1B47 call GetBytes
+1B4C ldc.i4.0 
+1B4D ldelem.u1 
+1B4E stelem.i1 
+1B4F ldloc.s 99
+1B51 ldc.i4.4 
+1B52 add 
+1B53 stloc.s 99
+1B55 ldloc.s 102
+1B57 brfalse.s 62
+1B59 ldloc.s 93
+1B5B ldc.i4.1 
+1B5C ldloc.s 98
+1B5E ldc.i4.s 31
+1B60 and 
+1B61 shl 
+1B62 add 
+1B63 stloc.s 93
+1B65 ldloc.s 96
+1B67 callvirt get_Deactivate2
+1B6C call get_SA_FB_Port_Status_MakeContactIdentifier
+1B71 call op_Equality
+1B76 brfalse.s 12
+1B78 ldloc.s 94
+1B7A ldc.i4.1 
+1B7B ldloc.s 98
+1B7D ldc.i4.s 31
+1B7F and 
+1B80 shl 
+1B81 add 
+1B82 stloc.s 94
+1B84 ldarg.0 
+1B85 ldloc.s 101
+1B87 ldloc.1 
+1B88 call GetPortSourceAddress
+1B8D ldc.i4.0 
+1B8E ldloc.2 
+1B8F ldloc.s 99
+1B91 ldc.i4.4 
+1B92 call Copy
+1B97 ldloca.s 14
+1B99 call MoveNext
+1B9E brtrue -908
+1BA3 leave.s 14
+1BA5 ldloca.s 14
+1BA7 constrained. TypeSpecification
+1BAD callvirt Dispose
+1BB2 endfinally 
+1BB3 ldloc.2 
+1BB4 ldc.i4.2 
+1BB5 ldloc.s 93
+1BB7 call GetBytes
+1BBC ldc.i4.0 
+1BBD ldelem.u1 
+1BBE stelem.i1 
+1BBF ldloc.2 
+1BC0 ldc.i4.3 
+1BC1 ldloc.s 94
+1BC3 call GetBytes
+1BC8 ldc.i4.0 
+1BC9 ldelem.u1 
+1BCA stelem.i1 
+1BCB ldc.i4.0 
+1BCC stloc.s 95
+1BCE ldloc.s 89
+1BD0 callvirt get_ParameterPorts
+1BD5 callvirt GetEnumerator
+1BDA stloc.s 86
+1BDC br 214
+1BE1 ldloca.s 86
+1BE3 call get_Current
+1BE8 stloc.s 104
+1BEA ldloc.s 104
+1BEC callvirt get_Name
+1BF1 ldstr Filter Time Muting (ms)
+1BF6 call op_Equality
+1BFB brfalse.s 46
+1BFD ldloc.1 
+1BFE ldloc.s 104
+1C00 callvirt ParameterPort
+1C05 callvirt get_Timing
+1C0A ldloca.s 95
+1C0C call TryParse
+1C11 brfalse 161
+1C16 ldloc.2 
+1C17 ldc.i4.s 55
+1C19 ldloc.s 95
+1C1B ldc.i4.s 10
+1C1D div 
+1C1E call GetBytes
+1C23 ldc.i4.0 
+1C24 ldelem.u1 
+1C25 stelem.i1 
+1C26 br 140
+1C2B ldloc.s 104
+1C2D callvirt get_Name
+1C32 ldstr Max. Muting Time (minutes)
+1C37 call op_Equality
+1C3C brfalse.s 52
+1C3E ldloc.1 
+1C3F ldloc.s 104
+1C41 callvirt ParameterPort
+1C46 callvirt get_Timing
+1C4B ldloca.s 95
+1C4D call TryParse
+1C52 brfalse.s 99
+1C54 ldloc.s 95
+1C56 ldc.i4.s 60
+1C58 mul 
+1C59 call GetBytes
+1C5E stloc.s 105
+1C60 ldloc.2 
+1C61 ldc.i4.s 56
+1C63 ldloc.s 105
+1C65 ldc.i4.0 
+1C66 ldelem.u1 
+1C67 stelem.i1 
+1C68 ldloc.2 
+1C69 ldc.i4.s 57
+1C6B ldloc.s 105
+1C6D ldc.i4.1 
+1C6E ldelem.u1 
+1C6F stelem.i1 
+1C70 br.s 69
+1C72 ldloc.s 104
+1C74 callvirt get_Name
+1C79 ldstr Delay Time (ms)
+1C7E call op_Equality
+1C83 brfalse.s 50
+1C85 ldloc.1 
+1C86 ldloc.s 104
+1C88 callvirt ParameterPort
+1C8D callvirt get_Timing
+1C92 ldloca.s 95
+1C94 call TryParse
+1C99 brfalse.s 28
+1C9B ldloc.s 95
+1C9D ldc.i4.s 10
+1C9F div 
+1CA0 call GetBytes
+1CA5 stloc.s 106
+1CA7 ldloc.2 
+1CA8 ldc.i4.s 58
+1CAA ldloc.s 106
+1CAC ldc.i4.0 
+1CAD ldelem.u1 
+1CAE stelem.i1 
+1CAF ldloc.2 
+1CB0 ldc.i4.s 59
+1CB2 ldloc.s 106
+1CB4 ldc.i4.1 
+1CB5 ldelem.u1 
+1CB6 stelem.i1 
+1CB7 ldloca.s 86
+1CB9 call MoveNext
+1CBE brtrue -226
+1CC3 leave 1443
+1CC8 ldloca.s 86
+1CCA constrained. TypeSpecification
+1CD0 callvirt Dispose
+1CD5 endfinally 
+1CD6 ldloc.s 4
+1CD8 ldsfld DomainClassId
+1CDD call op_Equality
+1CE2 brfalse 172
+1CE7 ldloc.2 
+1CE8 ldc.i4.0 
+1CE9 ldc.i4.s 23
+1CEB call GetBytes
+1CF0 call MethodSpecification
+1CF5 stelem.i1 
+1CF6 ldc.i4.0 
+1CF7 stloc.s 107
+1CF9 ldc.i4.0 
+1CFA stloc.s 108
+1CFC ldc.i4.4 
+1CFD stloc.s 109
+1CFF ldc.i4.0 
+1D00 stloc.s 110
+1D02 br.s 99
+1D04 ldloc.3 
+1D05 callvirt get_InPorts
+1D0A ldloc.s 110
+1D0C callvirt get_Item
+1D11 stloc.s 111
+1D13 ldloc.1 
+1D14 ldloc.s 111
+1D16 callvirt InPort
+1D1B stloc.s 112
+1D1D ldloc.s 107
+1D1F ldc.i4.1 
+1D20 ldloc.s 110
+1D22 ldc.i4.s 31
+1D24 and 
+1D25 shl 
+1D26 add 
+1D27 stloc.s 107
+1D29 ldloc.s 111
+1D2B callvirt get_Deactivate1
+1D30 call get_SA_FB_Port_Status_MakeContactIdentifier
+1D35 call op_Equality
+1D3A brfalse.s 12
+1D3C ldloc.s 108
+1D3E ldc.i4.1 
+1D3F ldloc.s 110
+1D41 ldc.i4.s 31
+1D43 and 
+1D44 shl 
+1D45 add 
+1D46 stloc.s 108
+1D48 ldarg.0 
+1D49 ldloc.s 112
+1D4B ldloc.1 
+1D4C call GetPortSourceAddress
+1D51 ldc.i4.0 
+1D52 ldloc.2 
+1D53 ldloc.s 109
+1D55 ldc.i4.4 
+1D56 call Copy
+1D5B ldloc.s 109
+1D5D ldc.i4.4 
+1D5E add 
+1D5F stloc.s 109
+1D61 ldloc.s 110
+1D63 ldc.i4.1 
+1D64 add 
+1D65 stloc.s 110
+1D67 ldloc.s 110
+1D69 ldloc.3 
+1D6A callvirt get_InPorts
+1D6F callvirt get_Count
+1D74 blt.s 142
+1D76 ldloc.2 
+1D77 ldc.i4.2 
+1D78 ldloc.s 107
+1D7A call GetBytes
+1D7F ldc.i4.0 
+1D80 ldelem.u1 
+1D81 stelem.i1 
+1D82 ldloc.2 
+1D83 ldc.i4.3 
+1D84 ldloc.s 108
+1D86 call GetBytes
+1D8B ldc.i4.0 
+1D8C ldelem.u1 
+1D8D stelem.i1 
+1D8E br 1240
+1D93 ldloc.s 4
+1D95 ldsfld DomainClassId
+1D9A call op_Equality
+1D9F brfalse 172
+1DA4 ldloc.2 
+1DA5 ldc.i4.0 
+1DA6 ldc.i4.s 24
+1DA8 call GetBytes
+1DAD call MethodSpecification
+1DB2 stelem.i1 
+1DB3 ldc.i4.0 
+1DB4 stloc.s 113
+1DB6 ldc.i4.0 
+1DB7 stloc.s 114
+1DB9 ldc.i4.4 
+1DBA stloc.s 115
+1DBC ldc.i4.0 
+1DBD stloc.s 116
+1DBF br.s 99
+1DC1 ldloc.3 
+1DC2 callvirt get_InPorts
+1DC7 ldloc.s 116
+1DC9 callvirt get_Item
+1DCE stloc.s 117
+1DD0 ldloc.1 
+1DD1 ldloc.s 117
+1DD3 callvirt InPort
+1DD8 stloc.s 118
+1DDA ldloc.s 113
+1DDC ldc.i4.1 
+1DDD ldloc.s 116
+1DDF ldc.i4.s 31
+1DE1 and 
+1DE2 shl 
+1DE3 add 
+1DE4 stloc.s 113
+1DE6 ldloc.s 117
+1DE8 callvirt get_Deactivate1
+1DED call get_SA_FB_Port_Status_MakeContactIdentifier
+1DF2 call op_Equality
+1DF7 brfalse.s 12
+1DF9 ldloc.s 114
+1DFB ldc.i4.1 
+1DFC ldloc.s 116
+1DFE ldc.i4.s 31
+1E00 and 
+1E01 shl 
+1E02 add 
+1E03 stloc.s 114
+1E05 ldarg.0 
+1E06 ldloc.s 118
+1E08 ldloc.1 
+1E09 call GetPortSourceAddress
+1E0E ldc.i4.0 
+1E0F ldloc.2 
+1E10 ldloc.s 115
+1E12 ldc.i4.4 
+1E13 call Copy
+1E18 ldloc.s 115
+1E1A ldc.i4.4 
+1E1B add 
+1E1C stloc.s 115
+1E1E ldloc.s 116
+1E20 ldc.i4.1 
+1E21 add 
+1E22 stloc.s 116
+1E24 ldloc.s 116
+1E26 ldloc.3 
+1E27 callvirt get_InPorts
+1E2C callvirt get_Count
+1E31 blt.s 142
+1E33 ldloc.2 
+1E34 ldc.i4.2 
+1E35 ldloc.s 113
+1E37 call GetBytes
+1E3C ldc.i4.0 
+1E3D ldelem.u1 
+1E3E stelem.i1 
+1E3F ldloc.2 
+1E40 ldc.i4.3 
+1E41 ldloc.s 114
+1E43 call GetBytes
+1E48 ldc.i4.0 
+1E49 ldelem.u1 
+1E4A stelem.i1 
+1E4B br 1051
+1E50 ldloc.s 4
+1E52 ldsfld DomainClassId
+1E57 call op_Equality
+1E5C brfalse 184
+1E61 ldloc.2 
+1E62 ldc.i4.0 
+1E63 ldc.i4.s 25
+1E65 call GetBytes
+1E6A call MethodSpecification
+1E6F stelem.i1 
+1E70 ldloc.2 
+1E71 ldc.i4.2 
+1E72 ldc.i4.1 
+1E73 stelem.i1 
+1E74 ldloc.3 
+1E75 callvirt get_InPorts
+1E7A call MethodSpecification
+1E7F stloc.s 119
+1E81 ldloc.1 
+1E82 ldloc.s 119
+1E84 callvirt InPort
+1E89 stloc.s 120
+1E8B ldloc.s 119
+1E8D callvirt get_Deactivate1
+1E92 call get_SA_FB_Port_Status_MakeContactIdentifier
+1E97 call op_Equality
+1E9C brfalse.s 4
+1E9E ldloc.2 
+1E9F ldc.i4.3 
+1EA0 ldc.i4.1 
+1EA1 stelem.i1 
+1EA2 ldarg.0 
+1EA3 ldloc.s 120
+1EA5 ldloc.1 
+1EA6 call GetPortSourceAddress
+1EAB ldc.i4.0 
+1EAC ldloc.2 
+1EAD ldc.i4.4 
+1EAE ldc.i4.4 
+1EAF call Copy
+1EB4 ldc.r8 
+1EBD stloc.s 121
+1EBF ldloc.3 
+1EC0 isinst FBTof
+1EC5 callvirt get_ParameterPorts
+1ECA call MethodSpecification
+1ECF stloc.s 122
+1ED1 ldloc.1 
+1ED2 ldloc.s 122
+1ED4 callvirt ParameterPort
+1ED9 callvirt get_Timing
+1EDE ldc.i4 167
+1EE3 call get_InvariantCulture
+1EE8 ldloca.s 121
+1EEA call TryParse
+1EEF brfalse 887
+1EF4 ldloc.s 121
+1EF6 ldc.r8 
+1EFF mul 
+1F00 call ToInt16
+1F05 call GetBytes
+1F0A ldc.i4.0 
+1F0B ldloc.2 
+1F0C ldc.i4.s 52
+1F0E ldc.i4.2 
+1F0F call Copy
+1F14 br 850
+1F19 ldloc.s 4
+1F1B ldsfld DomainClassId
+1F20 call op_Equality
+1F25 brfalse 184
+1F2A ldloc.2 
+1F2B ldc.i4.0 
+1F2C ldc.i4.s 26
+1F2E call GetBytes
+1F33 call MethodSpecification
+1F38 stelem.i1 
+1F39 ldloc.2 
+1F3A ldc.i4.2 
+1F3B ldc.i4.1 
+1F3C stelem.i1 
+1F3D ldloc.3 
+1F3E callvirt get_InPorts
+1F43 call MethodSpecification
+1F48 stloc.s 123
+1F4A ldloc.1 
+1F4B ldloc.s 123
+1F4D callvirt InPort
+1F52 stloc.s 124
+1F54 ldloc.s 123
+1F56 callvirt get_Deactivate1
+1F5B call get_SA_FB_Port_Status_MakeContactIdentifier
+1F60 call op_Equality
+1F65 brfalse.s 4
+1F67 ldloc.2 
+1F68 ldc.i4.3 
+1F69 ldc.i4.1 
+1F6A stelem.i1 
+1F6B ldarg.0 
+1F6C ldloc.s 124
+1F6E ldloc.1 
+1F6F call GetPortSourceAddress
+1F74 ldc.i4.0 
+1F75 ldloc.2 
+1F76 ldc.i4.4 
+1F77 ldc.i4.4 
+1F78 call Copy
+1F7D ldc.r8 
+1F86 stloc.s 125
+1F88 ldloc.3 
+1F89 isinst FBTon
+1F8E callvirt get_ParameterPorts
+1F93 call MethodSpecification
+1F98 stloc.s 126
+1F9A ldloc.1 
+1F9B ldloc.s 126
+1F9D callvirt ParameterPort
+1FA2 callvirt get_Timing
+1FA7 ldc.i4 167
+1FAC call get_InvariantCulture
+1FB1 ldloca.s 125
+1FB3 call TryParse
+1FB8 brfalse 686
+1FBD ldloc.s 125
+1FBF ldc.r8 
+1FC8 mul 
+1FC9 call ToInt16
+1FCE call GetBytes
+1FD3 ldc.i4.0 
+1FD4 ldloc.2 
+1FD5 ldc.i4.s 52
+1FD7 ldc.i4.2 
+1FD8 call Copy
+1FDD br 649
+1FE2 ldloc.s 4
+1FE4 ldsfld DomainClassId
+1FE9 call op_Equality
+1FEE brfalse 632
+1FF3 newobj .ctor
+1FF8 stloc.s 127
+1FFA ldloc.2 
+1FFB ldc.i4.0 
+1FFC ldc.i4.s 27
+1FFE call GetBytes
+2003 call MethodSpecification
+2008 stelem.i1 
+2009 ldc.i4.0 
+200A stloc.s 128
+200C ldc.i4.0 
+200D stloc.s 129
+200F ldloc.3 
+2010 callvirt get_InPorts
+2015 ldsfld <>c::<>9__16_15
+201A dup 
+201B brtrue.s 23
+201D pop 
+201E ldsfld <>c::<>9
+2023 ldftn <BuildFunctionBlockDataSets>b__16_15
+2029 newobj .ctor
+202E dup 
+202F stsfld <>c::<>9__16_15
+2034 call MethodSpecification
+2039 stloc.s 130
+203B ldloc.1 
+203C ldloc.s 130
+203E callvirt InPort
+2043 stloc.s 131
+2045 ldarg.0 
+2046 ldfld PublisherEL6900::mTscEL6900
+204B callvirt get_Verifier
+2050 castclass TypeDefinition
+2055 ldloc.s 130
+2057 callvirt IsInPortFirstChannelOfGroupActive
+205C brfalse.s 25
+205E ldarg.0 
+205F ldfld PublisherEL6900::mTscEL6900
+2064 callvirt get_Verifier
+2069 castclass TypeDefinition
+206E ldloc.s 131
+2070 callvirt IsPortConnected
+2075 br.s 1
+2077 ldc.i4.0 
+2078 stloc.s 132
+207A ldloc.s 132
+207C brfalse.s 49
+207E ldloc.s 128
+2080 ldc.i4.1 
+2081 add 
+2082 stloc.s 128
+2084 ldloc.s 130
+2086 callvirt get_Deactivate1
+208B call get_SA_FB_Port_Status_MakeContactIdentifier
+2090 call op_Equality
+2095 brfalse.s 6
+2097 ldloc.s 129
+2099 ldc.i4.1 
+209A add 
+209B stloc.s 129
+209D ldarg.0 
+209E ldloc.s 131
+20A0 ldloc.1 
+20A1 call GetPortSourceAddress
+20A6 ldc.i4.0 
+20A7 ldloc.2 
+20A8 ldc.i4.4 
+20A9 ldc.i4.4 
+20AA call Copy
+20AF ldloc.1 
+20B0 ldloc.3 
+20B1 callvirt get_InPorts
+20B6 ldsfld <>c::<>9__16_16
+20BB dup 
+20BC brtrue.s 23
+20BE pop 
+20BF ldsfld <>c::<>9
+20C4 ldftn <BuildFunctionBlockDataSets>b__16_16
+20CA newobj .ctor
+20CF dup 
+20D0 stsfld <>c::<>9__16_16
+20D5 call MethodSpecification
+20DA callvirt GetSlave
+20DF callvirt InPort
+20E4 stloc.s 133
+20E6 ldloc.s 133
+20E8 brfalse.s 50
+20EA ldarg.0 
+20EB ldfld PublisherEL6900::mTscEL6900
+20F0 callvirt get_Verifier
+20F5 castclass TypeDefinition
+20FA ldloc.s 130
+20FC callvirt IsInPortSecondChannelOfGroupActive
+2101 brfalse.s 25
+2103 ldarg.0 
+2104 ldfld PublisherEL6900::mTscEL6900
+2109 callvirt get_Verifier
+210E castclass TypeDefinition
+2113 ldloc.s 133
+2115 callvirt IsPortConnected
+211A br.s 1
+211C ldc.i4.0 
+211D stloc.s 134
+211F ldloc.s 134
+2121 brfalse.s 49
+2123 ldloc.s 128
+2125 ldc.i4.2 
+2126 add 
+2127 stloc.s 128
+2129 ldloc.s 130
+212B callvirt get_Deactivate2
+2130 call get_SA_FB_Port_Status_MakeContactIdentifier
+2135 call op_Equality
+213A brfalse.s 6
+213C ldloc.s 129
+213E ldc.i4.2 
+213F add 
+2140 stloc.s 129
+2142 ldarg.0 
+2143 ldloc.s 133
+2145 ldloc.1 
+2146 call GetPortSourceAddress
+214B ldc.i4.0 
+214C ldloc.2 
+214D ldc.i4.8 
+214E ldc.i4.4 
+214F call Copy
+2154 ldloc.2 
+2155 ldc.i4.2 
+2156 ldloc.s 128
+2158 call GetBytes
+215D ldc.i4.0 
+215E ldelem.u1 
+215F stelem.i1 
+2160 ldloc.2 
+2161 ldc.i4.3 
+2162 ldloc.s 129
+2164 call GetBytes
+2169 ldc.i4.0 
+216A ldelem.u1 
+216B stelem.i1 
+216C ldloc.s 130
+216E callvirt get_ChannelInterface
+2173 call get_SA_FB_Port_Status_Two_Channel
+2178 call op_Equality
+217D ldloc.s 132
+217F and 
+2180 ldloc.s 134
+2182 and 
+2183 brfalse.s 30
+2185 ldloc.s 130
+2187 callvirt get_DiscrepancyTime
+218C call ToInt32
+2191 stloc.s 137
+2193 ldloc.2 
+2194 ldc.i4.s 52
+2196 ldloc.s 137
+2198 ldc.i4.s 10
+219A div 
+219B call GetBytes
+21A0 ldc.i4.0 
+21A1 ldelem.u1 
+21A2 stelem.i1 
+21A3 ldloc.s 127
+21A5 ldc.i4.0 
+21A6 stfld <>c__DisplayClass16_0::conId
+21AB ldloc.3 
+21AC isinst FBConnShutdown
+21B1 stloc.s 135
+21B3 ldloc.s 135
+21B5 callvirt get_ParameterPorts
+21BA ldsfld <>c::<>9__16_17
+21BF dup 
+21C0 brtrue.s 23
+21C2 pop 
+21C3 ldsfld <>c::<>9
+21C8 ldftn <BuildFunctionBlockDataSets>b__16_17
+21CE newobj .ctor
+21D3 dup 
+21D4 stsfld <>c::<>9__16_17
+21D9 call MethodSpecification
+21DE stloc.s 136
+21E0 ldloc.1 
+21E1 ldloc.s 136
+21E3 callvirt ParameterPort
+21E8 callvirt get_Timing
+21ED ldloc.s 127
+21EF ldflda <>c__DisplayClass16_0::conId
+21F4 call TryParse
+21F9 brfalse.s 112
+21FB ldarg.0 
+21FC ldfld PublisherEL6900::mTscEL6900
+2201 callvirt get_SafetyAliasDevices
+2206 ldloc.s 127
+2208 ldftn <BuildFunctionBlockDataSets>b__18
+220E newobj .ctor
+2213 call MethodSpecification
+2218 stloc.s 138
+221A ldloc.s 127
+221C ldfld <>c__DisplayClass16_0::conId
+2221 call GetBytes
+2226 stloc.s 139
+2228 ldloc.2 
+2229 ldc.i4.s 58
+222B ldloc.s 139
+222D ldc.i4.0 
+222E ldelem.u1 
+222F stelem.i1 
+2230 ldloc.2 
+2231 ldc.i4.s 59
+2233 ldloc.s 139
+2235 ldc.i4.1 
+2236 ldelem.u1 
+2237 stelem.i1 
+2238 ldloc.s 135
+223A callvirt get_Network
+223F callvirt get_SafetyApplication
+2244 call NeedsFixConnectionShutdownConnIds
+2249 brfalse.s 10
+224B ldloc.2 
+224C ldc.i4.s 56
+224E ldloc.s 139
+2250 ldc.i4.0 
+2251 ldelem.u1 
+2252 stelem.i1 
+2253 br.s 22
+2255 ldloc.s 138
+2257 callvirt get_ConnectionNo
+225C call GetBytes
+2261 stloc.s 139
+2263 ldloc.2 
+2264 ldc.i4.s 56
+2266 ldloc.s 139
+2268 ldc.i4.0 
+2269 ldelem.u1 
+226A stelem.i1 
+226B ldc.i4.0 
+226C stloc.s 5
+226E ldloc.3 
+226F callvirt get_MapState
+2274 brfalse.s 6
+2276 ldloc.s 5
+2278 ldc.i4.1 
+2279 add 
+227A stloc.s 5
+227C ldloc.3 
+227D callvirt get_MapDiag
+2282 brfalse.s 6
+2284 ldloc.s 5
+2286 ldc.i4.2 
+2287 add 
+2288 stloc.s 5
+228A ldloc.2 
+228B ldc.i4.s 61
+228D ldloc.s 5
+228F call GetBytes
+2294 call MethodSpecification
+2299 stelem.i1 
+229A ldarg.0 
+229B ldfld PublisherEL6900::mTscEL6900
+22A0 callvirt get_CalcProjectCrc
+22A5 ldloc.2 
+22A6 ldc.i4.s 62
+22A8 callvirt GetCrcCheckSum
+22AD stloc.s 6
+22AF ldloc.s 6
+22B1 ldc.i4.0 
+22B2 ldloc.2 
+22B3 ldc.i4.s 62
+22B5 ldc.i4.2 
+22B6 call Copy
+22BB ldarg.0 
+22BC ldfld PublisherEL6900::mTscEL6900
+22C1 ldfld TargetSystemConfigEL6900::mCRCsFBDataSets
+22C6 ldloc.s 6
+22C8 callvirt Add
+22CD ldarg.0 
+22CE ldfld PublisherEL6900::mTscEL6900
+22D3 ldfld TargetSystemConfigEL6900::mFBDataSets
+22D8 ldloc.2 
+22D9 callvirt Add
+22DE ldloca.s 0
+22E0 call MoveNext
+22E5 brtrue -8879
+22EA leave.s 14
+22EC ldloca.s 0
+22EE constrained. TypeSpecification
+22F4 callvirt Dispose
+22F9 endfinally 
+22FA leave.s 6
+22FC pop 
+22FD ldc.i4.m1 
+22FE stloc.s 21
+2300 leave.s 2
+2302 ldc.i4.0 
+2303 ret 
+2304 ldloc.s 21
+2306 ret 
+

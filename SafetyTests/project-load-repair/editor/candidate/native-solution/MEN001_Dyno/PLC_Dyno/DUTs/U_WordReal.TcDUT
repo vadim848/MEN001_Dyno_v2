@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="U_WordReal" Id="{b7e2c1a4-3d56-4f8a-9b21-5c7e8d3f2a61}">
+    <Declaration><![CDATA[// Bit-reinterpret a raw 32-bit oversample word (UDINT on the wire) as IEEE-754
+// REAL — the flex-PDO slot words are float-bits for the motion/iq fields.
+TYPE U_WordReal :
+UNION
+    u : UDINT;
+    f : REAL;
+END_UNION
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,220 @@
+{
+  "schema": "plan-review-v1",
+  "slice": "E2-plan-v5",
+  "role": "v2-reviewer",
+  "date": "2026-10-22",
+  "subject": {
+    "PLAN.md": "b90eff7c4045a638a6822bbff022459565f552b2e2b39ea295c6693bc640b4fd",
+    "PLAN.json": "2dfce7e0444aa0074063fe0ddad8d0bd0109542e8b2a3c8b210256f2086ed5436d",
+    "MUTATION_PLAN_E2a.json": "05ce79246bfab13598917a955dea52a2fb92180b5c9111c907e4583ada6b818b",
+    "MUTATION_PLAN_E2b.json": "28f63c45f862abaefb10723a41c2a44e515bea315bb2d90a27fbe7bf5e24febf",
+    "MUTATION_PLAN_E2c.json": "d359b3c4aae3ae7eebe54ccf3ae6bde8ccb96c47761bd2b507d3b91f12ecaee5",
+    "MUTATION_PLAN_E2d.json": "08acfb2eed8d5fb4239102bf98b10181ee542a356b7be92471635c139b3e7f6a",
+    "MUTATION_PLAN_E3.draft.json": "fc017bdbb55c86a7ca387cddfe155a9361e552d3e617de812728483c63aa7793",
+    "MUTATION_PLAN_E4.decoder.json": "052a45e09066d7c0275e147f12efe757558fe815a9970d9a595da0f9ac118f97",
+    "repro/t16.mjs": "00c74d0988fe77c85cc63ea7a9fae6db8c2273a57a3bd3dcc797cf726e8ad91f",
+    "repro/t17.mjs": "b64d8579b8dd723404c715e580fe374adf2aa69d092d2a05bd193a1da59e31c5",
+    "repro/t10.mjs": "d0e3621a649cc3d44760d86fe3ccfc52e77920871d3ecf94e83a0400ebd3e1b0",
+    "repro/proto.mjs": "e1d423c740fbe7077fbc32aa11299a78efdf3957057521560927dff2eec3c749"
+  },
+  "sources": {
+    "canonicalSalF1": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "r1Sal": "ca841a01fe44f776a5868968fde70cce728657aaf411d6b8bfa6689cfadc7bb3",
+    "r1Sgvl": "4f205138337ea3de3660d5ef2d8978db438e3e8d19f2e9dd393ec7a5816cdb36",
+    "r1Diagram": "b82aa41a6ee065267852d78ccaff961714eca1e8e8c006f087de715fb2a137b6",
+    "scenarioDecisionsCurrent": "ddee45529a13dbb224bfc82637dcaa5a14e92eb243e55030601775a774829c07",
+    "scenarioDecisionsCitedByPlan": "2633920b1d8981e3b63b53cb580b2c5cbfed287df00bacb086a5336d821cd86e",
+    "criteriaDeltaV7Md": "378a9f935e63c5e05d6bbd404a0d810386c5f125687f04e9f88943f1b41f8459",
+    "criteriaDeltaV7Json": "4aa5e45741e1bf90215df6dc6bf25e9be97fa9595e7e0d7f2ac67ca05c69491e",
+    "analystPlanV4QuestionsCriteria": "5d6bcc1a13e3bc7e8ee78e4d7d2855c6374a0f1af5f7e4f23df98b34c3d7120b",
+    "referenceSal": "c5f0c0cea479f65e3a11fbe9cf2520a2b54d2cbf85602fd7a2cbab8e27132153",
+    "head": "a8f6de7",
+    "scenarioDecisionsAtVerdict": "0fcb4f33d252bf0e91f4f0c7f3bea091bbb3fdb47c6cc4d14ed46ba9f5fbf2e0"
+  },
+  "verdicts": {
+    "E2a-RC": "NEEDS CHANGES",
+    "E2a-PLC": "READY FOR EDITOR (minor P5-1)",
+    "E2b": "NEEDS CHANGES",
+    "E2c": "READY FOR EDITOR",
+    "E2d": "NEEDS CHANGES (minor, D5-1)"
+  },
+  "findings": [
+    {
+      "id": "R5-1",
+      "severity": "major",
+      "slice": "E2a-RC",
+      "to": [
+        "architect",
+        "analyst",
+        "tester"
+      ],
+      "text": "HV (Q-V7-01 G): out_HV_Discharge_Request is an RS level (not a pulse), reset only by b_Reset_HV_Discharg_Req2 (Network5 reset removed by R1). Removal happens at Run confirmation (R1 ~a+102, v5 ~a+601), not at the accepted HV lift, and never if confirmation does not come. Required: reset source = accepted R&D->Run grant (GATE_020 / STATE_SU set via Symbol), Config entry in E4; do NOT move the Symbol to FBTon3.TonOut; mutations: deactivate new reset input, reset from BOTH qualification instead of acceptance. Analyst: criterion DIS-HOLD ([a,a+1]; TRUE through rejected attempt, Safe->R&D, Emergency). LV part remains open: release moment of out_LV_Discharge_Request at Safe->R&D not decided (Q-V7-01 is HV only) - question to analyst.",
+      "evidence": "repro/x3.out.txt"
+    },
+    {
+      "id": "R5-2",
+      "severity": "minor",
+      "slice": "E2a-RC",
+      "to": [
+        "architect",
+        "analyst"
+      ],
+      "text": "WIN_C2/WIN_C1 input rises at u-1 (one scan before out_HV_C2); the 0.1 s count starts at u+499; Run at u+600. RC-2/RC-3 hold; the v7 clause 'Run counted from k<w' is literally violated at one point. Fix plan text; analyst to reconcile v7 wording.",
+      "evidence": "repro/x4.out.txt"
+    },
+    {
+      "id": "R5-3",
+      "severity": "minor",
+      "slice": "E2a-RC",
+      "to": [
+        "architect"
+      ],
+      "text": "M-E2a-21 is a normal mutation, killer RC-5(iv) (u+3101 vs u+3102), per analyst RC-UB; drop equivalentWithinTolerance.",
+      "evidence": "repro/x4.out.txt"
+    },
+    {
+      "id": "R5-4",
+      "severity": "medium",
+      "slice": "E2a-RC",
+      "to": [
+        "architect",
+        "stand"
+      ],
+      "text": "M-E2a-26 as a single rewire is a 'no FBK check' mutant, not C5(x). Faithful mutant needs 3 edits (FBTon3.TonIn := WIN_C2, FBAnd6.AndIn1 := FBTon3.TonOut, DecIn1..4 and Symbol from FBAnd6, order WIN->TON->AND); killed by RC-6 (u+600 vs u+652) and RC-5(iv). Manual G3 recipe required.",
+      "evidence": "repro/x4.out.txt (M26)"
+    },
+    {
+      "id": "R5-5",
+      "severity": "minor",
+      "slice": "E2a-core plan",
+      "to": [
+        "architect"
+      ],
+      "text": "M-E2a-27 (ES-06) -> equivalentByRequirement per analyst CRITERIA section 2; killer 'b_Step1 FALSE before Restart' not accepted."
+    },
+    {
+      "id": "R5-6",
+      "severity": "medium",
+      "slice": "E2a-RC",
+      "to": [
+        "analyst",
+        "lead"
+      ],
+      "text": "Q-V7-02 closure (R&D confirmed like Run) is not recorded in SCENARIO_DECISIONS/criteria; v7 still BLOCKED, so M-E2a-25 (R&D at u1+500) has no normative killer. Implementation is compatible with both readings."
+    },
+    {
+      "id": "P5-1",
+      "severity": "minor",
+      "slice": "E2a-PLC",
+      "to": [
+        "architect"
+      ],
+      "text": ".sds paths lack TwinSafeGroup1/; exclude .bak and CODE_REVIEW_2026-07.md from the '_Invert' G2 grep; external ADS consumers NV."
+    },
+    {
+      "id": "B5-1",
+      "severity": "major",
+      "slice": "E2b",
+      "to": [
+        "architect",
+        "tester"
+      ],
+      "text": "Adopt variant (A) Network1/FBAnd4.AndIn5 := b_Step1 in E2b: sufficient for B43-01/B43-02 in the model; makes legacy Bypass inert (steady R&D: 2998 scans C2 ON -> 0) - record as intentional change (V14-Q16, Q-RC-05, EMG-011). Add M-E2b-36 deactivate AndIn5 (killers B43-02 delta -1/0, B43-01a). Remove B4-3 isolation/known FAIL.",
+      "evidence": "repro/x1.out.txt, repro/x2.out.txt"
+    },
+    {
+      "id": "B5-2",
+      "severity": "major",
+      "slice": "E2b",
+      "to": [
+        "analyst",
+        "architect",
+        "tester"
+      ],
+      "text": "Boot with C1_FBK or C2_FBK ON + Restart -> Safe via g1 (Network3/FBAnd1) bypassing G10_EXIT FBK checks. In E2 scope (boot = Emergency, EMG6-01, SPEC section 12, v7 4.5). Analyst: criterion EMG6-01-BOOT; architect: gate g1 with FBK OFF (about +1 FB) + mutation.",
+      "evidence": "repro/x1.out.txt (base boot lines only), analyst PROBE_BOOT_FBK.txt"
+    },
+    {
+      "id": "B5-3",
+      "severity": "medium",
+      "slice": "E2b",
+      "to": [
+        "architect"
+      ],
+      "text": "M-E2b-35 mis-specified: Network1/FBAnd1 already executes after FBEstop1 (R1 ord 73 vs 21); the mutant keeps in_Estop_PLC at e+1 and delays NC/connector to e+2 = duplicate of M-E2b-31/32. C5(vi) not expressed; use a decoder-order mutant or map (vi) to M-DEC-02.",
+      "evidence": "repro/x2.out.txt"
+    },
+    {
+      "id": "B5-4",
+      "severity": "minor",
+      "slice": "E2b",
+      "to": [
+        "architect"
+      ],
+      "text": "Under (A) M-E2b-24/25/34 are equivalentBySearch (no command source in S6); the M-E2b-34 killer is invalid.",
+      "evidence": "repro/x1.out.txt"
+    },
+    {
+      "id": "D5-1",
+      "severity": "minor",
+      "slice": "E2d",
+      "to": [
+        "architect"
+      ],
+      "text": "Under (A) M-E2d-01/02 are unkillable (0/0 in Safe and R&D); drop the FBAnd4.AndIn3/4 change or classify equivalent; drop the CFG-02 R&D known FAIL.",
+      "evidence": "repro/x2.out.txt"
+    },
+    {
+      "id": "X5-1",
+      "severity": "minor",
+      "slice": "all",
+      "to": [
+        "architect"
+      ],
+      "text": "operatorAvailable:false flags are stale for swap-order, deactivate-input-pair, rewire (implemented in working-copy src/sal-mutations.js; runner runs them with a warning). True manual G3 mutants: faithful C5(x) and (vi). Add a manual G3 procedure."
+    },
+    {
+      "id": "X5-2",
+      "severity": "minor",
+      "slice": "all",
+      "to": [
+        "architect"
+      ],
+      "text": "SCENARIO_DECISIONS SHA stale (2633920b vs ddee4552); PLAN.json leadDecisions stale (HL_FAULT two memories; E2a-PLC BLOCKED)."
+    },
+    {
+      "id": "D5-2",
+      "severity": "minor",
+      "slice": "E2d",
+      "to": [
+        "architect",
+        "tester"
+      ],
+      "text": "Q-V7-04 B makes FBK-10 k3/k4 READY: lift after FBK OFF without new acknowledgement forbidden; on E2d it executes (no SafetyFault memory until E5/E6) - add explicit known FAIL FBK-10 k3/k4 until E5/E6."
+    },
+    {
+      "id": "E6-1",
+      "severity": "note",
+      "slice": "E6 sketch",
+      "to": [
+        "architect",
+        "analyst"
+      ],
+      "text": "Q-V7-03 A: window watchdog must not be gated by an ongoing abort; SafetyFault on window expiry without FBK during abort; FBK-05/06 no longer BLOCKED in v7 - analyst to update."
+    }
+  ],
+  "accepted": [
+    "E2a-RC structure and Symbol transfer (intra-network wires only, Symbol/variable counts unchanged, singleton source usage)",
+    "E2a-RC RC-1/2/3/5/6 in model",
+    "known FAIL 'FBK loss after window restarts count instead of Emergency' until E6",
+    "E2a-PLC mapping table, polarity and atomic order",
+    "M-E2b-21 + REL-01(e)",
+    "M-E2b-30 equivalentBySearch (DERIVED)",
+    "FBK-10 GATE_020.AndIn8 and Network2/FBAnd2 chain; M-E2d-09..11",
+    "Door mutations M-E2d-04..08",
+    "section 10a classification except ES-06 (R5-5)",
+    "resources 215/217/224/226; E3-E6 about 285 of 512"
+  ],
+  "reviewerRepro": "program/reviewer/E2-plan-v5/repro/{v1,v2,x1,x2,x3,x4}.mjs",
+  "limits": "Model of the architect prototype (R1 simulated on F1, old input names). Not native/CRC/IDE/Target/hardware. Mutations not run by the runner. Equivalences DERIVED by search."
+}

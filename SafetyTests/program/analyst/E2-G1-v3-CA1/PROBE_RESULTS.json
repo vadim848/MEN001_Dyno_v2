@@ -1,0 +1,317 @@
+{
+ "ref": {
+  "preStages": "b_Step1",
+  "preStatus": "STS_SAFE",
+  "safe": {
+   "pre": {
+    "out_LV_C1": false,
+    "out_HV_C2": false,
+    "STO_DR1": false,
+    "STO_DR2": false,
+    "out_SS1_DR1": false,
+    "out_SS1_DR2": false,
+    "out_LV_Discharge_Request": false,
+    "out_HV_Discharge_Request": false,
+    "out_Door_Unlock_Solonoeid": false,
+    "out_C3_BatRelay": false,
+    "out_RBM_Bat": false,
+    "outPLC_STO_1": false,
+    "outPLC_STO_2": false,
+    "out_EStop_Status": true,
+    "b_EStop_Ok": true
+   },
+   "profile": {
+    "status": 1,
+    "out_C3_BatRelay": "n/a",
+    "out_RBM_Bat": "n/a",
+    "out_LV_Discharge_Request": null,
+    "out_Door_Unlock_Solonoeid": "n/a",
+    "out_LV_C1": "n/a",
+    "STO_DR1": "n/a",
+    "STO_DR2": "n/a",
+    "out_HV_Discharge_Request": null,
+    "out_HV_C2": "n/a"
+   },
+   "around": [
+    {
+     "d": -1,
+     "stages": "b_Step1",
+     "st": "STS_SAFE",
+     "ok": true,
+     "ss1": "false/false",
+     "sto": "false/false"
+    },
+    {
+     "d": 0,
+     "stages": "b_Step1",
+     "st": "STS_SAFE",
+     "ok": true,
+     "ss1": "false/false",
+     "sto": "false/false"
+    },
+    {
+     "d": 1,
+     "stages": "b_Step1",
+     "st": "STS_EMG",
+     "ok": false,
+     "ss1": "false/false",
+     "sto": "false/false"
+    },
+    {
+     "d": 2,
+     "stages": "b_Step1",
+     "st": "STS_EMG",
+     "ok": false,
+     "ss1": "false/false",
+     "sto": "false/false"
+    },
+    {
+     "d": 3,
+     "stages": "b_Step1",
+     "st": "STS_EMG",
+     "ok": false,
+     "ss1": "false/false",
+     "sto": "false/false"
+    }
+   ],
+   "out_SS1_DR1": {
+    "from": false,
+    "d": "never"
+   },
+   "out_SS1_DR2": {
+    "from": false,
+    "d": "never"
+   },
+   "outPLC_STO_1": {
+    "from": false,
+    "d": "never"
+   },
+   "outPLC_STO_2": {
+    "from": false,
+    "d": "never"
+   },
+   "b_EStop_Ok": {
+    "from": true,
+    "to": false,
+    "d": 1
+   },
+   "out_EStop_Status": {
+    "from": true,
+    "to": false,
+    "d": 0
+   }
+  },
+  "run": {
+   "pre": {
+    "out_LV_C1": true,
+    "out_HV_C2": true,
+    "STO_DR1": true,
+    "STO_DR2": true,
+    "out_SS1_DR1": true,
+    "out_SS1_DR2": true,
+    "out_LV_Discharge_Request": false,
+    "out_HV_Discharge_Request": false,
+    "out_Door_Unlock_Solonoeid": false,
+    "out_C3_BatRelay": true,
+    "out_RBM_Bat": true,
+    "outPLC_STO_1": true,
+    "outPLC_STO_2": true,
+    "out_EStop_Status": true,
+    "b_EStop_Ok": true
+   },
+   "profile": {
+    "status": 1,
+    "out_C3_BatRelay": 4,
+    "out_RBM_Bat": 4,
+    "out_LV_Discharge_Request": 3,
+    "out_Door_Unlock_Solonoeid": "n/a",
+    "out_LV_C1": 2004,
+    "STO_DR1": 7006,
+    "STO_DR2": 7006,
+    "out_HV_Discharge_Request": 7008,
+    "out_HV_C2": 8009
+   },
+   "around": [
+    {
+     "d": -1,
+     "stages": "b_Step3",
+     "st": "STS_RUN",
+     "ok": true,
+     "ss1": "true/true",
+     "sto": "true/true"
+    },
+    {
+     "d": 0,
+     "stages": "b_Step3",
+     "st": "STS_RUN",
+     "ok": true,
+     "ss1": "true/true",
+     "sto": "true/true"
+    },
+    {
+     "d": 1,
+     "stages": "b_Step3",
+     "st": "STS_EMG",
+     "ok": false,
+     "ss1": "true/true",
+     "sto": "true/true"
+    },
+    {
+     "d": 2,
+     "stages": "b_Step3+b_Step4",
+     "st": "STS_EMG",
+     "ok": false,
+     "ss1": "true/true",
+     "sto": "true/true"
+    },
+    {
+     "d": 3,
+     "stages": "b_Step4",
+     "st": "STS_EMG",
+     "ok": false,
+     "ss1": "false/false",
+     "sto": "true/true"
+    }
+   ],
+   "out_SS1_DR1": {
+    "from": true,
+    "to": false,
+    "d": 3
+   },
+   "out_SS1_DR2": {
+    "from": true,
+    "to": false,
+    "d": 3
+   },
+   "outPLC_STO_1": {
+    "from": true,
+    "to": false,
+    "d": 7006
+   },
+   "outPLC_STO_2": {
+    "from": true,
+    "to": false,
+    "d": 7006
+   },
+   "b_EStop_Ok": {
+    "from": true,
+    "to": false,
+    "d": 1
+   },
+   "ss1": [
+    {
+     "d": -1,
+     "v": "true/true"
+    },
+    {
+     "d": 3,
+     "v": "false/false"
+    }
+   ]
+  }
+ },
+ "work": {
+  "preStages": "b_Step1",
+  "preStatus": "STS_SAFE",
+  "safe": {
+   "pre": {
+    "out_LV_C1": false,
+    "out_HV_C2": false,
+    "STO_DR1": false,
+    "STO_DR2": false,
+    "out_SS1_DR1": false,
+    "out_SS1_DR2": false,
+    "out_LV_Discharge_Request": false,
+    "out_HV_Discharge_Request": false,
+    "out_Door_Unlock_Solonoeid": false,
+    "out_C3_BatRelay": false,
+    "out_RBM_Bat": false,
+    "outPLC_STO_1": false,
+    "outPLC_STO_2": false,
+    "out_EStop_Status": true,
+    "b_EStop_Ok": true
+   },
+   "profile": {
+    "status": 1,
+    "out_C3_BatRelay": "n/a",
+    "out_RBM_Bat": "n/a",
+    "out_LV_Discharge_Request": null,
+    "out_Door_Unlock_Solonoeid": "n/a",
+    "out_LV_C1": "n/a",
+    "STO_DR1": "n/a",
+    "STO_DR2": "n/a",
+    "out_HV_Discharge_Request": null,
+    "out_HV_C2": "n/a"
+   },
+   "around": [
+    {
+     "d": -1,
+     "stages": "b_Step1",
+     "st": "STS_SAFE",
+     "ok": true,
+     "ss1": "false/false",
+     "sto": "false/false"
+    },
+    {
+     "d": 0,
+     "stages": "b_Step1",
+     "st": "STS_SAFE",
+     "ok": true,
+     "ss1": "false/false",
+     "sto": "false/false"
+    },
+    {
+     "d": 1,
+     "stages": "b_Step1",
+     "st": "STS_EMG",
+     "ok": false,
+     "ss1": "false/false",
+     "sto": "false/false"
+    },
+    {
+     "d": 2,
+     "stages": "b_Step1",
+     "st": "STS_EMG",
+     "ok": false,
+     "ss1": "false/false",
+     "sto": "false/false"
+    },
+    {
+     "d": 3,
+     "stages": "b_Step1",
+     "st": "STS_EMG",
+     "ok": false,
+     "ss1": "false/false",
+     "sto": "false/false"
+    }
+   ],
+   "out_SS1_DR1": {
+    "from": false,
+    "d": "never"
+   },
+   "out_SS1_DR2": {
+    "from": false,
+    "d": "never"
+   },
+   "outPLC_STO_1": {
+    "from": false,
+    "d": "never"
+   },
+   "outPLC_STO_2": {
+    "from": false,
+    "d": "never"
+   },
+   "b_EStop_Ok": {
+    "from": true,
+    "to": false,
+    "d": 1
+   },
+   "out_EStop_Status": {
+    "from": true,
+    "to": false,
+    "d": 0
+   }
+  },
+  "runErr": "precondition not reached within 3000 ms: R&D after BOTH from Safe (t=6214, stages=b_Step12, statuses=STS_SAFE)"
+ }
+}

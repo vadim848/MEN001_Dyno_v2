@@ -1,0 +1,620 @@
+{
+  "schema": "men001-v2-analyst-trace/1",
+  "slice": "E4-v14",
+  "role": "v2-analyst",
+  "date": "2026-10-21",
+  "source": {
+    "sal": "34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b",
+    "sgvl": "517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635",
+    "diagram": "7b5eb79439011cdf9a3206aa815dec4349a35cf8155bfac7492b7ffd75e578ce",
+    "plcMain": "873d34ff21d9594cd2a25547cba735808802906080b2c8280aabd9a9cd7dcd7e",
+    "v14pdf": "fe6ce64b8b8a942ee6445feff8781369f1c8ed00c9d6aaa37918350575dfdcb4",
+    "jpegTransitions": "ce358cd426420d2e61a81f71407fe216ca9034972809a2d99de1bbe40d101d99",
+    "jpegLogicMap": "2d964dfa0c6ad8d2b50c1ae0150def891f907025059cdb0683ac894f705fa049",
+    "reference": "4495a1f6049f6a58ebfd436761faa84d17c8d643"
+  },
+  "method": "structural reading via src/sal-parser.js + src/signal-bindings.js; NO contact = inversion (stand convention)",
+  "rows": [
+    {
+      "id": "T01",
+      "ref": "§2 terminology",
+      "status": "MATCH",
+      "ids": [
+        "MOD-006"
+      ],
+      "next": null
+    },
+    {
+      "id": "T02",
+      "ref": "§3 three buttons",
+      "status": "MATCH",
+      "ids": [],
+      "next": null
+    },
+    {
+      "id": "T03",
+      "ref": "§3 dual press = UP one level",
+      "status": "MATCH",
+      "ids": [
+        "BTN-005",
+        "BTN-006"
+      ],
+      "next": null
+    },
+    {
+      "id": "T04",
+      "ref": "§3 short press green = DOWN",
+      "status": "DIVERGES_WORDING_VADIM_DECISION_PREVAILS",
+      "ids": [
+        "BTN-003"
+      ],
+      "next": "info"
+    },
+    {
+      "id": "T05",
+      "ref": "§3 blue alone opens cover",
+      "status": "MATCH",
+      "ids": [
+        "CVR-001",
+        "CVR-002"
+      ],
+      "next": null
+    },
+    {
+      "id": "T06",
+      "ref": "§3 E-STOP = emergency",
+      "status": "MATCH",
+      "ids": [
+        "EMG-001"
+      ],
+      "next": null
+    },
+    {
+      "id": "T07",
+      "ref": "§3 note UP phys or PLC, closed+locked; open physical only",
+      "status": "PARTIAL",
+      "ids": [
+        "MOD-003",
+        "CVR-004",
+        "CVR-001"
+      ],
+      "next": "C08; lead Q1,Q5"
+    },
+    {
+      "id": "T08",
+      "ref": "§4 Emergency sources incl watchdog",
+      "status": "PARTIAL_WATCHDOG_NEW",
+      "ids": [
+        "EMG-001",
+        "EMG-006"
+      ],
+      "next": "Q-E4V14-08"
+    },
+    {
+      "id": "T09",
+      "ref": "§4 Safe reached by dis-engaging E-Stop",
+      "status": "DIVERGES",
+      "ids": [
+        "EMG-006"
+      ],
+      "next": "Q-E4V14-01"
+    },
+    {
+      "id": "T10",
+      "ref": "§4 R&D = PS1+battery+BMS, PS2 health ignored",
+      "status": "PARTIAL",
+      "ids": [
+        "MOD-001",
+        "MOD-005",
+        "MOD-008"
+      ],
+      "next": "Q-E4V14-06; C13"
+    },
+    {
+      "id": "T11",
+      "ref": "§4 Run cover locked, blue rejected",
+      "status": "MATCH",
+      "ids": [
+        "EMG-007",
+        "CVR-001"
+      ],
+      "next": null
+    },
+    {
+      "id": "T12",
+      "ref": "§4 R&D/Run reachable by PLC request",
+      "status": "NEW_EXTENDS_QP",
+      "ids": [
+        "MOD-003",
+        "MOD-007",
+        "MOD-002"
+      ],
+      "next": "lead Q1,Q2; C14"
+    },
+    {
+      "id": "T13",
+      "ref": "§4 free movement without Emergency",
+      "status": "MATCH",
+      "ids": [],
+      "next": null
+    },
+    {
+      "id": "T14",
+      "ref": "§5 PLC requests, TwinSAFE decides, no bypass",
+      "status": "MATCH_SPEC_DIVERGES_CODE_BYPASS",
+      "ids": [
+        "MOD-007"
+      ],
+      "next": "C09; Q-E4V14-07"
+    },
+    {
+      "id": "T15",
+      "ref": "§5 UP ignored if cover open",
+      "status": "MATCH_BUTTON_PLC_NEEDS_CHECK",
+      "ids": [
+        "CVR-004",
+        "EMG-003"
+      ],
+      "next": "C04,C05"
+    },
+    {
+      "id": "T16",
+      "ref": "§5 leaving Run requires zero speed/current",
+      "status": "NEW",
+      "ids": [
+        "STP-001",
+        "STP-002",
+        "STP-003",
+        "STP-004"
+      ],
+      "next": "lead Q3; C17"
+    },
+    {
+      "id": "T17",
+      "ref": "§5 open cover / clear emergency physical only",
+      "status": "MATCH",
+      "ids": [
+        "EMG-006",
+        "CVR-001"
+      ],
+      "next": "C07,C08"
+    },
+    {
+      "id": "T18",
+      "ref": "§5 cover/latch status to PLC",
+      "status": "NEW",
+      "ids": [
+        "CVR-004"
+      ],
+      "next": "lead Q2,Q5; C18"
+    },
+    {
+      "id": "T19",
+      "ref": "§5 Emergency->Safe by E-Stop engage/disengage",
+      "status": "DIVERGES_GESTURE",
+      "ids": [
+        "EMG-006"
+      ],
+      "next": "Q-E4V14-01"
+    },
+    {
+      "id": "T20",
+      "ref": "§5 Safe->R&D",
+      "status": "SEE_T10_T12_T15",
+      "ids": [
+        "MOD-001",
+        "CVR-004"
+      ],
+      "next": null
+    },
+    {
+      "id": "T21",
+      "ref": "§5 R&D->Run cover-gated",
+      "status": "PARTIAL",
+      "ids": [
+        "MOD-002",
+        "CVR-004"
+      ],
+      "next": "C05,C12"
+    },
+    {
+      "id": "T22",
+      "ref": "§5 Run->R&D short green / PLC / zero speed",
+      "status": "PARTIAL",
+      "ids": [
+        "STP-001",
+        "MOD-007"
+      ],
+      "next": "lead Q3; C17"
+    },
+    {
+      "id": "T23",
+      "ref": "§5 R&D->Safe via PLC",
+      "status": "DIVERGES_CODE_DEAD_BRANCH",
+      "ids": [
+        "MOD-005",
+        "MOD-007"
+      ],
+      "next": "Q-E4V14-02"
+    },
+    {
+      "id": "T24",
+      "ref": "§5 open cover Safe/R&D only",
+      "status": "MATCH",
+      "ids": [
+        "CVR-001",
+        "CVR-002",
+        "EMG-007"
+      ],
+      "next": null
+    },
+    {
+      "id": "T25",
+      "ref": "§5 Any->Emergency latching physical recovery",
+      "status": "PARTIAL",
+      "ids": [
+        "EMG-001",
+        "EMG-006"
+      ],
+      "next": "C06,C07; Q-E4V14-01,08"
+    },
+    {
+      "id": "T26",
+      "ref": "§6 four emergency sources identical latch",
+      "status": "PARTIAL",
+      "ids": [
+        "EMG-001"
+      ],
+      "next": null
+    },
+    {
+      "id": "T27",
+      "ref": "§6 non-physical trigger still physical recovery",
+      "status": "DIVERGES_GESTURE",
+      "ids": [
+        "EMG-006"
+      ],
+      "next": "Q-E4V14-01"
+    },
+    {
+      "id": "T28",
+      "ref": "§6 recovery step1 -> Safe directly",
+      "status": "DIVERGES_GESTURE_MATCH_SAFE_ONLY",
+      "ids": [
+        "EMG-006"
+      ],
+      "next": "Q-E4V14-01"
+    },
+    {
+      "id": "T29",
+      "ref": "§6 recovery step2 open cover",
+      "status": "MATCH",
+      "ids": [
+        "CVR-002"
+      ],
+      "next": null
+    },
+    {
+      "id": "T30",
+      "ref": "§6 recovery step3 UP physical only",
+      "status": "INTERNAL_CONTRADICTION",
+      "ids": [
+        "MOD-003"
+      ],
+      "next": "lead Q4"
+    },
+    {
+      "id": "T31",
+      "ref": "§6 cover locked through Emergency",
+      "status": "MATCH",
+      "ids": [
+        "EMG-007"
+      ],
+      "next": null
+    },
+    {
+      "id": "T32",
+      "ref": "§7 heartbeat loss -> emergency",
+      "status": "NEW",
+      "ids": [
+        "EMG-001"
+      ],
+      "next": "Q-E4V14-08"
+    },
+    {
+      "id": "T33",
+      "ref": "§7 watchdog recovery physical",
+      "status": "FOLLOWS_T19",
+      "ids": [
+        "EMG-006"
+      ],
+      "next": "Q-E4V14-01"
+    },
+    {
+      "id": "T34",
+      "ref": "§7 timeout placeholder",
+      "status": "NEW_UNSPECIFIED",
+      "ids": [],
+      "next": "Q-E4V14-08"
+    },
+    {
+      "id": "T35",
+      "ref": "§8 only buttons exposed",
+      "status": "INACCURATE",
+      "ids": [],
+      "next": "info"
+    },
+    {
+      "id": "T36",
+      "ref": "§8 #1 CMD_RUN_TO_R&D",
+      "status": "PARTIAL_CODE_CONFLICT_01_vs_10",
+      "ids": [
+        "MOD-007"
+      ],
+      "next": "Q-E4V14-02"
+    },
+    {
+      "id": "T37",
+      "ref": "§8 #2 CMD_R&D_TO_SAFE",
+      "status": "DIVERGES_CODE_DEAD_BRANCH",
+      "ids": [
+        "MOD-005"
+      ],
+      "next": "Q-E4V14-02"
+    },
+    {
+      "id": "T38",
+      "ref": "§8 #3 CMD_SAFE_TO_R&D",
+      "status": "PARTIAL_LEVEL",
+      "ids": [
+        "MOD-003",
+        "CVR-004"
+      ],
+      "next": "C01,C04"
+    },
+    {
+      "id": "T39",
+      "ref": "§8 #4 CMD_R&D_TO_RUN",
+      "status": "PARTIAL_LEVEL",
+      "ids": [
+        "MOD-003",
+        "MOD-002"
+      ],
+      "next": "C02,C05"
+    },
+    {
+      "id": "T40",
+      "ref": "§8 #5 CMD_TRIGGER_EMERGENCY",
+      "status": "MATCH",
+      "ids": [
+        "EMG-001",
+        "EMG-006"
+      ],
+      "next": "C06,C07"
+    },
+    {
+      "id": "T41",
+      "ref": "§8 #6 STS_COVER_LOCKED",
+      "status": "NEW",
+      "ids": [
+        "CVR-004"
+      ],
+      "next": "lead Q2,Q5"
+    },
+    {
+      "id": "T42",
+      "ref": "§8 individually addressable",
+      "status": "DIVERGES_CODE_AND_SCOPE",
+      "ids": [
+        "MOD-003"
+      ],
+      "next": "lead Q2"
+    },
+    {
+      "id": "T43",
+      "ref": "§8 note silently rejected like button",
+      "status": "MATCH",
+      "ids": [
+        "CVR-004",
+        "EMG-003"
+      ],
+      "next": "C04"
+    },
+    {
+      "id": "T44",
+      "ref": "§9 PLC cannot bypass",
+      "status": "SEE_T14",
+      "ids": [
+        "MOD-007"
+      ],
+      "next": null
+    },
+    {
+      "id": "T45",
+      "ref": "§9 hardwired E-Stop unchanged",
+      "status": "MATCH",
+      "ids": [
+        "EMG-001"
+      ],
+      "next": null
+    },
+    {
+      "id": "T46",
+      "ref": "§9 HV drop zero speed/current",
+      "status": "SEE_T16",
+      "ids": [
+        "STP-001"
+      ],
+      "next": "lead Q3"
+    },
+    {
+      "id": "T47",
+      "ref": "§9 software and configuration changes",
+      "status": "DIVERGES_SCOPE",
+      "ids": [],
+      "next": "lead Q2"
+    },
+    {
+      "id": "T48",
+      "ref": "§9 drawings",
+      "status": "OUT_OF_SCOPE",
+      "ids": [],
+      "next": null
+    },
+    {
+      "id": "T49",
+      "ref": "§9 confirm items",
+      "status": "PARTIAL",
+      "ids": [],
+      "next": "Q-E4V14-06,08"
+    },
+    {
+      "id": "T50",
+      "ref": "§10 history",
+      "status": "NOT_NORMATIVE",
+      "ids": [],
+      "next": null
+    },
+    {
+      "id": "S1",
+      "ref": "jpeg transitions table",
+      "status": "MATCH_PDF",
+      "ids": [],
+      "next": null
+    },
+    {
+      "id": "S2",
+      "ref": "jpeg act_LogicMap",
+      "status": "IDENTICAL_TO_V2_MAIN_118_157",
+      "ids": [
+        "MOD-003",
+        "MOD-007"
+      ],
+      "next": "Q-E4V14-02,03"
+    }
+  ],
+  "plcDecode": {
+    "encodingTable": {
+      "Safe_2_RnD": "10",
+      "RnD_2_Armed": "11",
+      "RnD_2_Safe": "00",
+      "Armed_2_RnD": "01"
+    },
+    "caseWrites": {
+      "Safe_2_RnD": "10",
+      "RnD_2_Armed": "11",
+      "RnD_2_Safe": "00",
+      "Armed_2_RnD": "10"
+    },
+    "plcDefault": "n_SafeSate=0 (never assigned in PLC code) -> 00 every cycle",
+    "salStructural": [
+      {
+        "code": "10",
+        "state": "b_Step1",
+        "path": "N2/FBAnd61,81,91 -> N2/FBOr1 -> b_Step12_Set",
+        "effect": "Safe->R&D request (level, no InterLock at request level)"
+      },
+      {
+        "code": "11",
+        "state": "any (HV set needs b_Step_RnD)",
+        "path": "N12/FBAnd8,9,10 -> FBOr1 -> FBDecouple3 -> FBAnd4 (b_Step_RnD, NC1&NC2) -> b_Set_HV_C2_1; DecOut2 -> b_Set_Transition_3 (ungated)",
+        "effect": "R&D->Run request (level)"
+      },
+      {
+        "code": "00",
+        "state": "b_Step_RnD",
+        "path": "N12/FBAnd12,13,14 (AndIn4 in_False_SI2_CH8 direct) -> FBOr2",
+        "effect": "dead branch when in_False_SI2_CH8=FALSE"
+      },
+      {
+        "code": "01",
+        "state": "b_Step3",
+        "path": "N6/FBAnd15,16,17 -> FBOr5 -> FBDecouple2",
+        "effect": "Run->R&D sequence (STO reset, discharge, C2 reset)"
+      },
+      {
+        "code": "00",
+        "state": "out_Step3",
+        "path": "N1/FBAnd9..12 -> FBAnd2/3 -> FBOr13/12 -> out_SS1_DR1/2",
+        "effect": "SS1 Run-permit term; any non-00 in Run withdraws SS1 permit (reference: out_SS1 = Step2 OR Step3)"
+      }
+    ],
+    "findings": [
+      "Armed->RnD: table/SAL 01 vs CASE 10; CASE 10 in Run withdraws SS1 without starting N6 down (partial)",
+      "Level decoding: held 10/11/01 re-triggers after return (MOD-003 conflict)",
+      "Idle 00 equals RnD_2_Safe; cannot be both idle and R&D->Safe under level decoding",
+      "Intermediate codes depend on atomic delivery (configuration, not investigated)",
+      "PLC Safe->R&D request not InterLock-gated at request level"
+    ]
+  },
+  "priorDecisions": [
+    {
+      "decision": "QP core (new PLC request sufficient in stable R&D)",
+      "v14": "confirms and extends to Safe->R&D and R&D->Safe",
+      "status": "UNDER_REVISION_PENDING_LEAD_Q1"
+    },
+    {
+      "decision": "QP buttons-pressed ignore",
+      "v14": "silent",
+      "status": "OPEN Q-E4V14-04"
+    },
+    {
+      "decision": "fresh-event/no-repeat",
+      "v14": "implicit only",
+      "status": "MOD-003 normative; mechanism to architect; Q-E4V14-03"
+    },
+    {
+      "decision": "no-queue",
+      "v14": "confirmed for cover-open rejection",
+      "status": "cover case derivable (C04); others open"
+    },
+    {
+      "decision": "handshake/strobe",
+      "v14": "replaced by individual signals + STS_COVER_LOCKED",
+      "status": "OPEN lead Q2"
+    },
+    {
+      "decision": "Q-PLC-REQUEST",
+      "v14": "yes for all four steps; contradicts own §6 step 3",
+      "status": "lead Q4"
+    },
+    {
+      "decision": "EMG-006 PLC cannot clear",
+      "v14": "confirms",
+      "status": "MATCH"
+    },
+    {
+      "decision": "D-DOOR-INTERLOCK",
+      "v14": "closed+locked",
+      "status": "lead Q5 + Q-E4V14-09"
+    }
+  ],
+  "affectedIds": {
+    "central": [
+      "MOD-003",
+      "MOD-007",
+      "CVR-004",
+      "EMG-006"
+    ],
+    "related": [
+      "MOD-001",
+      "MOD-002",
+      "MOD-004",
+      "MOD-005",
+      "MOD-006",
+      "MOD-008",
+      "EMG-001",
+      "EMG-002",
+      "EMG-003",
+      "EMG-007",
+      "EMG-011",
+      "CVR-001",
+      "CVR-005",
+      "STP-001",
+      "STP-002",
+      "STP-003",
+      "STP-004",
+      "BOOT-001"
+    ]
+  }
+}

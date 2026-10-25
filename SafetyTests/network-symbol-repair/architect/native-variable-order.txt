@@ -1,0 +1,149 @@
+Variable::ValidateOrderOfExecutionOrder RVA 71936
+0000 ldarg.0 
+0001 call GetDisplayName
+0006 stloc.0 
+0007 ldarg.0 
+0008 callvirt get_TargetUsages
+000D brfalse.s 31
+000F ldarg.0 
+0010 callvirt get_TargetUsages
+0015 callvirt get_Usages
+001A brfalse.s 18
+001C ldarg.0 
+001D callvirt get_TargetUsages
+0022 callvirt get_Usages
+0027 callvirt get_Count
+002C brtrue.s 1
+002E ret 
+002F ldarg.0 
+0030 callvirt get_SourceUsages
+0035 brfalse.s 32
+0037 ldarg.0 
+0038 callvirt get_SourceUsages
+003D callvirt get_Usages
+0042 brfalse.s 19
+0044 ldarg.0 
+0045 callvirt get_SourceUsages
+004A callvirt get_Usages
+004F callvirt get_Count
+0054 ldc.i4.1 
+0055 beq.s 1
+0057 ret 
+0058 ldarg.0 
+0059 callvirt get_SourceUsages
+005E callvirt get_Usages
+0063 call MethodSpecification
+0068 isinst TypeDefinition
+006D stloc.1 
+006E ldloc.1 
+006F brtrue.s 1
+0071 ret 
+0072 ldloc.1 
+0073 callvirt get_FunctionBlockPort
+0078 stloc.2 
+0079 ldloc.2 
+007A brtrue.s 1
+007C ret 
+007D ldloc.2 
+007E callvirt get_FbBase
+0083 isinst TypeDefinition
+0088 stloc.3 
+0089 ldloc.3 
+008A brtrue.s 1
+008C ret 
+008D ldloc.3 
+008E callvirt get_OrderOfExecution
+0093 stloc.s 4
+0095 ldarg.0 
+0096 callvirt get_TargetUsages
+009B callvirt get_Usages
+00A0 call MethodSpecification
+00A5 callvirt GetEnumerator
+00AA stloc.s 5
+00AC br 180
+00B1 ldloc.s 5
+00B3 callvirt get_Current
+00B8 stloc.s 6
+00BA ldloc.s 6
+00BC callvirt get_FunctionBlockPort
+00C1 stloc.s 7
+00C3 ldloc.s 7
+00C5 brfalse 155
+00CA ldloc.s 7
+00CC callvirt get_FbBase
+00D1 isinst TypeDefinition
+00D6 stloc.s 8
+00D8 ldloc.s 8
+00DA brfalse 134
+00DF ldloc.s 8
+00E1 callvirt get_OrderOfExecution
+00E6 stloc.s 9
+00E8 ldloc.s 4
+00EA ldloc.s 9
+00EC blt.s 119
+00EE call get_Variable_ValidateOrderOfExecutionOrderPortStrFormat
+00F3 dup 
+00F4 ldloc.2 
+00F5 callvirt get_PortName
+00FA ldloc.3 
+00FB callvirt get_InstanceName
+0100 call Format
+0105 stloc.s 10
+0107 ldloc.s 7
+0109 callvirt get_PortName
+010E ldloc.s 8
+0110 callvirt get_InstanceName
+0115 call Format
+011A stloc.s 11
+011C ldarg.1 
+011D call get_Variable_ValidateOrderOfExecutionOrderUseValueLastUpdateCycle
+0122 ldloc.0 
+0123 ldloc.s 11
+0125 ldloc.s 10
+0127 call Format
+012C ldstr VariablesUsageCounts
+0131 ldc.i4.7 
+0132 newarr ModelElement
+0137 dup 
+0138 ldc.i4.0 
+0139 ldarg.0 
+013A stelem.ref 
+013B dup 
+013C ldc.i4.1 
+013D ldarg.0 
+013E callvirt get_TargetUsages
+0143 stelem.ref 
+0144 dup 
+0145 ldc.i4.2 
+0146 ldarg.0 
+0147 callvirt get_SourceUsages
+014C stelem.ref 
+014D dup 
+014E ldc.i4.3 
+014F ldloc.s 6
+0151 stelem.ref 
+0152 dup 
+0153 ldc.i4.4 
+0154 ldloc.s 7
+0156 stelem.ref 
+0157 dup 
+0158 ldc.i4.5 
+0159 ldloc.1 
+015A stelem.ref 
+015B dup 
+015C ldc.i4.6 
+015D ldloc.2 
+015E stelem.ref 
+015F callvirt LogWarning
+0164 pop 
+0165 ldloc.s 5
+0167 callvirt MoveNext
+016C brtrue -192
+0171 leave.s 12
+0173 ldloc.s 5
+0175 brfalse.s 7
+0177 ldloc.s 5
+0179 callvirt Dispose
+017E endfinally 
+017F ret 
+

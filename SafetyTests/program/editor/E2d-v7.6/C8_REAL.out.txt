@@ -1,0 +1,40 @@
+K-1 Safe LV conn [f-300,f+10)                        E2d 2276d773   S1 -> S_RnD (change at f+1102)
+K-1 Safe LV conn [f-300,f+10)                        E2d+v7.6       S1 -> S1
+K-1 Safe both conn [f-300,f+10)                      E2d 2276d773   S1 -> S_RnD (change at f+1102)
+K-1 Safe both conn [f-300,f+10)                      E2d+v7.6       S1 -> S1
+K-1 R&D NC1 [f-300,f+10)                             E2d 2276d773   S_RnD -> S3 (change at f+1703)
+K-1 R&D NC1 [f-300,f+10)                             E2d+v7.6       S_RnD -> S_RnD
+K-1 R&D NC1+NC2 [f-300,f+10)                         E2d 2276d773   S_RnD -> S3 (change at f+1703)
+K-1 R&D NC1+NC2 [f-300,f+10)                         E2d+v7.6       S_RnD -> S_RnD
+R&D NC1 [f,p+300)                                    E2d 2276d773   S_RnD -> S_RnD
+R&D NC1 [f,p+300)                                    E2d+v7.6       S_RnD -> S_RnD
+R&D NC1 [p+500,p+999)                                E2d 2276d773   S_RnD -> S_RnD
+R&D NC1 [p+500,p+999)                                E2d+v7.6       S_RnD -> S_RnD
+Safe LV [p+1,p+2)                                    E2d 2276d773   S1 -> S1
+Safe LV [p+1,p+2)                                    E2d+v7.6       S1 -> S1
+accept: R&D NC1 r<=f-1 [f-300,f-1)                   E2d 2276d773   S_RnD -> S3 (change at f+1703)
+accept: R&D NC1 r<=f-1 [f-300,f-1)                   E2d+v7.6       S_RnD -> S3 (change at f+1703)
+accept: Safe LV r<=f-1 [f-300,f-1)                   E2d 2276d773   S1 -> S_RnD (change at f+1102)
+accept: Safe LV r<=f-1 [f-300,f-1)                   E2d+v7.6       S1 -> S_RnD (change at f+1102)
+obs: R&D NC1 r=f                                     E2d 2276d773   S_RnD -> S3 (change at f+1703)
+obs: R&D NC1 r=f                                     E2d+v7.6       S_RnD -> S3 (change at f+1703)
+control: Safe NC1 [p+500,p+999) accepted (V14-Q7)    E2d 2276d773   S1 -> S_RnD (change at f+1102)
+control: Safe NC1 [p+500,p+999) accepted (V14-Q7)    E2d+v7.6       S1 -> S_RnD (change at f+1102)
+no episode Safe                                      E2d 2276d773   S1 -> S_RnD (change at f+1102)
+no episode Safe                                      E2d+v7.6       S1 -> S_RnD (change at f+1102)
+no episode R&D                                       E2d 2276d773   S_RnD -> S3 (change at f+1703)
+no episode R&D                                       E2d+v7.6       S_RnD -> S3 (change at f+1703)
+R&D cover open, green single                         E2d 2276d773   S1
+R&D cover open, blue single                          E2d 2276d773   UL=1
+R&D blue 100ms cover open, release, BOTH after 1000ms E2d 2276d773   S_RnD
+R&D blue 100ms cover open, release, BOTH after 2100ms E2d 2276d773   S3
+Safe LV lost, green single, restore, BOTH            E2d 2276d773   S1; after restore+2.2 s BOTH: S_RnD
+R&D cover open, green single                         E2d+v7.6       S1
+R&D cover open, blue single                          E2d+v7.6       UL=1
+R&D blue 100ms cover open, release, BOTH after 1000ms E2d+v7.6       S_RnD
+R&D blue 100ms cover open, release, BOTH after 2100ms E2d+v7.6       S3
+Safe LV lost, green single, restore, BOTH            E2d+v7.6       S1; after restore+2.2 s BOTH: S_RnD
+mut s.GATE_SPOIL_R             K-1 R&D: S_RnD -> S3 (change at f+1703) | K-1 Safe: S1 -> S1 
+mut s.GATE_SPOIL_S             K-1 R&D: S_RnD -> S_RnD | K-1 Safe: S1 -> S_RnD (change at f+1102) 
+mut noOrIn6                    K-1 R&D: S_RnD -> S3 (change at f+1703) | K-1 Safe: S1 -> S_RnD (change at f+1102) 
+mut noReset                    K-1 R&D: S_RnD -> S_RnD | K-1 Safe: S1 -> S1 | blue+BOTH 2100: S_RnD

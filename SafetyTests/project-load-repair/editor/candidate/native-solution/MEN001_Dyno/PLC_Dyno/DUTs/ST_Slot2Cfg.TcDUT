@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_Slot2Cfg" Id="{7b3e9a41-5c28-4f16-8d07-9e2a4c6b1f53}">
+    <Declaration><![CDATA[// Binding configuration for the generic slot-2 debug PDO pipe (SLOT2_DEBUG_PDO_PROTOCOL).
+// The app fills the ABSOLUTE slave RAM addresses (from the flashed FW build's .map/.elf —
+// they move every build!) and pulses GVL_Slot2.bConfigure; FB_Slot2PipeHandler then walks
+// the table over the op/strobe protocol (CLEAR_ALL, then one bind per entry with addr<>0).
+//
+// Fixed conventions (mirror the app config + the old fixed pipe):
+//   monitor lanes: 0=theta  1=d_theta  2=iq  |  3..9 = ELF-picked debug variables
+//   inject slots: 0=impedance_p_des 1=impedance_v_des 2=impedance_kp 3=impedance_kd
+//                 4=impedance_torque_ff 5=setpoint_position 6=setpoint_velocity 7=setpoint_current
+TYPE ST_Slot2Cfg :
+STRUCT
+    aMonAddr    : ARRAY[0..9] OF UDINT;   // monitor lane -> absolute RAM addr (0 = unbound)
+    aMonSize    : ARRAY[0..9] OF UDINT;   // width code: 0=1B, 1=2B, else 4B (default 4B)
+    aInjAddr    : ARRAY[0..9] OF UDINT;   // inject slot -> absolute RAM addr (0 = unbound)
+    aInjSize    : ARRAY[0..9] OF UDINT;
+    nPrescaler  : UDINT := 5;             // capture decimation (40 kHz / prescaler; 5 -> 8 kHz,
+                                          // 8 samples per 1 ms cycle = 20% headroom, no drops)
+    nProfileId  : BYTE;                   // DEPRECATED, unused. Was the oversample-group
+                                          // selector; that mechanism is gone. KEPT because
+                                          // the app still writes 0 here (pinning the group
+                                          // off on older PLC builds) — deleting it before
+                                          // that write would fail every bind. Drop both
+                                          // together.
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

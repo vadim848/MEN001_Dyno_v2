@@ -1,0 +1,101 @@
+//Network1/FBK_OFF safeAnd order=32 pos=51 prev=FBOrIlRunOk next=EXIT_FBK_OK params=[]
+   AndIn1 ci=Activated d1=Make Contact (NO) src= g= v=in_LV_C1_FBK
+   AndIn2 ci=Activated d1=Make Contact (NO) src= g= v=in_HV_C2_FBK
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+//Network1/EXIT_FBK_OK safeOr order=33 pos=52 prev=FBK_OFF next=undefined params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src= g=b_EStop_Ok v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//Network1/FBK_OFF/AndOut g= v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+//Network8/FBOrS5 safeOr order=72 pos=7 prev=FBAnd3 next=undefined params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src= g=b_Step5 v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g=b_Step5_Set v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+//Network11/WIN_C1_IN safeAnd order=110 pos=6 prev=WIN_C1 next=undefined params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//Network11/FBAnd1/AndOut g= v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g= v=out_LV_C1
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+//RndPhysicalCompact/SG_S12_SCOPE safeAnd order=169 pos=46 prev=GATE_SPOIL_PF next=SG_SCOPE params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=linkRndGatePermit
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g=b_Step12 v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+//RndPhysicalCompact/SG_SCOPE safeOr order=170 pos=47 prev=SG_S12_SCOPE next=undefined params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src= g= v=linkSafeRndScope
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/SG_S12_SCOPE/AndOut g= v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+//SafeResumption/HLT_DESC_SET safeAnd order=164 pos=8 prev=HLT_LV next=HLT_MEM params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=in_LV_Faulty_FBK
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g= v=linkRunDownOwner
+   AndIn3 ci=Activated d1=Make Contact (NO) src= g= v=in_False_SI2_CH8
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+//SafeResumption/HLT_MEM safeRs order=165 pos=9 prev=HLT_DESC_SET next=HLT_LV_SRC params=[]
+   Reset ci=Activated d1=Break Contact (NC) src= g=b_Step1 v=
+   Set ci=Activated d1=Break Contact (NC) src=//SafeResumption/HLT_DESC_SET/AndOut g= v=
+//SafeResumption/HLT_LV_SRC safeOr order=166 pos=10 prev=HLT_MEM next=undefined params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src= g= v=in_LV_Faulty_FBK
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//SafeResumption/HLT_MEM/RsOut g= v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+order gap in Network1
+order gap in Network2
+order gap in Network3
+order gap in Network6
+order gap in Network7
+order gap in Network8
+order gap in Network11
+order gap in Network12
+order gap in RndPhysicalCompact
+order gap in SafeResumption
+global exec order of old blocks preserved: true
+exec 71 //Network8/FBOrS5
+exec 72 //Network8/FBAnd1
+exec 70 //Network7/FBAnd8
+exec 13 //Network3/FBRs5
+exec 32 //Network1/EXIT_FBK_OK
+exec 33 //Network1/FBEstop1
+exec 169 //RndPhysicalCompact/SG_SCOPE
+exec 170 //RndPhysicalCompact/STATE_SG
+exec 192 //Network12/FBAnd15
+exec 9 //Network3/FBRs8
+exec 2 //Network3/FBOrS12Reset
+exec 166 //SafeResumption/HLT_LV
+exec 109 //Network11/WIN_C1_IN
+exec 110 //Network11/WIN_C1
+exec 18 //Network1/FBRs1

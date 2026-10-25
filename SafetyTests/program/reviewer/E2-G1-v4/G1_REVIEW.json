@@ -1,0 +1,30 @@
+{
+ "slice": "E2-G1-v4", "role": "v2-reviewer", "date": "2026-10-22",
+ "verdict": "G1 PASS WITH CONDITIONS",
+ "source": {"sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3", "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104", "head": "a8f6de7",
+  "scenarioDecisions": "db129fd35810a610841b7f4aeada32636f9b41438623f405661f8ea58c521614", "criteriaV5": "29f4288f926ab2459f239ffe3414bbf94f5990d947efc1037c8c12e02ae29b47",
+  "criteriaV6md": "3d2d8fba7c162b601da39c6094fb35fff115264243a05c35526140f8b3030f02", "criteriaV6json": "7201ae656dbb38d23adfbd7fbd1075ba0588518f1a4020d3a01738df35dcdc4e",
+  "e2RuleL": "265384670e589bad22ccd602da65af1277a508f2db4ddeadf26e1d32d5994073", "e2Emergency": "bbdec4f1f7f140b8647b524cd178706d7a2036f6b7a9a1ef05ea2cc5782c4e8d"},
+ "rerun": {"e2": {"tests": 442, "PASS": 35, "FAIL": 384, "NV": 10, "DIAG_STAND_PASS": 13, "diffVsBaselineV4": 0, "statusChangesVsV3": ["E2a EMG6-01 EMGREF: in_Estop_PLC TRUE in Safe FAIL->PASS"], "removedVsV3": 0},
+  "nonE2": {"files": 23, "tests": 479, "notOk": 0, "note": "tester reported 477; +2 from foreign untracked files added later"}},
+ "closed": {"N3": "closed", "N4": "closed for STO/C2; SS1 residue -> C3", "N5": "closed", "N6": "closed in substance; C1 C2 C4", "N7": "closed", "m-1": "closed", "m-2": "closed", "m-3": "closed", "m-4": "closed", "m-5": "closed", "m-6": "closed"},
+ "conditions": [
+  {"id": "C1", "to": "tester (analyst confirms)", "before": "G3", "text": "rd-sweep PLC_HV (STP-D same scan): q_N(STO)=t_a+2000 inverts the oracle (STO at h -> FAIL shortened, STO delayed to t_a+2000 -> PASS); use q_N(STO)=min(t_a+2000,h) or NV", "evidence": "repro/stpd-combo-note.out"},
+  {"id": "C2", "to": "analyst -> tester", "before": "G3", "text": "normal step done in W_N before e and left target -> base L1/L2 re-assertion at [e+q_R,+1] is tester's own refinement; make diagnostic/NV until analyst answers", "evidence": "repro/done-before-e-note.out"},
+  {"id": "C3", "to": "tester", "before": "G3", "text": "N=u (ii): SS1 released in [a,a+1] not timed (profile from u-1 'n/a', rises only >= a+2); measure its return like STO/C2"},
+  {"id": "C4", "to": "tester/stand", "before": "G3", "text": "anti-vacuity: 'absent' IMM/DEL output -> ERROR; EMGRDL branch ledger with asserted expected paragraph per sweep point; precondition t_a<e in descentArea"},
+  {"id": "C5", "to": "architect / lead", "before": "G3", "text": "mutants: chain-only STO (branch B), SS1/discharge timer restart, shortened SS1, SS1 release after e, STS_RUN +2 after Emergency, status +3 in Run, N=u STO late, Door removed from unlock reset/grant, RC-5 count from command, RC-6 no restart; testFiles 20"}
+ ],
+ "minor": [
+  {"id": "m-7", "to": "analyst", "text": "RC-6 'STO released from u' vs v6 §4 allowing a/a+1"},
+  {"id": "m-8", "to": "tester", "text": "'statusChanged 1 (explained)' is explained only in HANDOFF, not in expected-deltas"}
+ ],
+ "answers": {
+  "selfTestsSufficient": "core EMGRDL decision logic yes; not covered: done-before-e branch, emergencyChecks wiring (descentArea/downTa/qNrunDown/skip/excl), N=u (ii), STP-D combination",
+  "EMG-RD-L_A": "window [min(q_N,e+q_R),+1] correct; p.4 for Discharge grounded (v5 p.4, reference holds discharge TRUE through latch); done-before-e refinement not grounded (C2); STP-D combo inverted (C1)",
+  "UNL05_RED_NC1": "correctly derived from Q-ARCH-04/10 'A' (F1 cover guard removed)",
+  "RC5_RC6": "per 'В' and v6 §1; watchdog part E6 not claimed",
+  "EMG6-01_Safe_FAIL_to_PASS": "justified by v6 §2 L3-Safe (ref +1, bound +2, canonical +1)"
+ },
+ "limits": "software SAL model only; Run/R&D paths never executed on a real trace; no mutations (no candidate); no native/Target/hardware claims"
+}

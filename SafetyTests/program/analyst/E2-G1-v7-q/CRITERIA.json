@@ -1,0 +1,112 @@
+{
+  "slice": "E2-G1-v7-q",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "sources": {
+    "scenarioDecisions": "c26025c3946f43a9769555f509f11ff47114a3a0848beb5c0e617e604917260a",
+    "spec": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472",
+    "scope": "03facdcebc8b54763d5bbfa0fc634dba85a5ed6bb5070e1b82ca33e76f9e9537",
+    "traceMatrix": "512b76359a2cb74eb00def76eccafa3502f4fe885fc7a6d4e5ac7706a74a9ed2",
+    "testerHandoffV7": "edf9a5c96c2219c835823f2c42b97f0f205d13abeb44e5878d224301abd142e5",
+    "reviewG1v6": "f07352f08cccea1297113265895fa22ca1d0e5ca24803a95947f9f889eb1f4c5",
+    "reqConsolidationCriteria": "f2f11d77eba0d3b4441b42ff55666fbfc741bdd2867ebb763829328ad909eaa3",
+    "v5QuestionsCriteriaBefore": "0a2f7de92239c7cf261ab1f959c613037c1defc2526a0fd8c5cccd24c9476b4c",
+    "head": "dbca5dd",
+    "referenceNote": "reference 4495a1f has no steady R&D, no StartingRun abort and no Safe->R&D abort; gives no oracle here"
+  },
+  "notation": {
+    "Q": "p+1000, T_BOTH qualification (delta 0)",
+    "rb": "first scan with both buttons FALSE after the BOTH gesture (release of the last button)",
+    "u": "first scan of C2 ON command / STO release (u1: C1 ON)",
+    "w": "u+500",
+    "g0": "green front (blue FALSE)",
+    "a": "T_SINGLE qualification scan of the green; g0+500 is q (observation), a <= g0+501"
+  },
+  "teamDefaults": [],
+  "questionsToVadim": [],
+  "criteria": [
+    {
+      "id": "ABORT-GREEN-CLR",
+      "status": "READY",
+      "matrixIds": ["BTN-001", "BTN-002", "BTN-007", "STP-006", "MOD-002", "MOD-001"],
+      "rule": "a green that aborts StartingRun (V14-Q12) or Safe->R&D (V14-Q13) is a NEW attempt: both buttons continuously released T_RELEASE 2000 ms counted from rb, then green alone T_SINGLE 500 ms",
+      "boundaries": {"g0<=rb+1999": "invalid: no abort in any scan for any hold; a new full 2 s release needed after it", "g0=rb+2000": "observation", "g0>=rb+2001": "valid new attempt"},
+      "forbidden": ["abort/descent/SafetyFault from a green pressed in [rb, rb+1999]", "abort from the BOTH remainder (blue released, green kept from the gesture) of any duration", "deferred execution of an invalid green", "counting the 2 s from p, Q or u instead of rb"],
+      "sources": ["D-STARTINGRUN-GREEN-DOWN (new attempt after full clearing)", "V14-Q12 A (acts as the green of D-STARTINGRUN-GREEN-DOWN)", "V14-Q13 A (new qualified green)", "SPEC 3.1 p.1,2,9,10,11", "BTN-001", "BTN-002", "BTN-007", "Vadim 2026-10-21 confirmations p.9, p.11", "REQ-CONSOLIDATION STP-E(1), PLC-09(b)"]
+    },
+    {
+      "id": "FBK-05/06-REACH",
+      "status": "READY (analysis)",
+      "matrixIds": ["WDG-001", "WDG-003"],
+      "rule": "abort already in progress at w is unreachable by a button: rb>=Q+1, w<=Q+900 (TD-06), earliest valid abort >= rb+2501 >= Q+2502 > w; even without clearing a green front at u+a_b qualifies at >= u+501 > w. Button points u+10/300/499 and u1+10/300 removed from the norm",
+      "sources": ["BTN-006", "BTN-003", "TD-06", "ABORT-GREEN-CLR"]
+    },
+    {
+      "id": "FBK-05/06-CMD",
+      "status": "BLOCKED-E4 (E4 frozen until Vadim's new PLC documentation; behaviour already answered)",
+      "matrixIds": ["WDG-001", "WDG-003", "MOD-008"],
+      "initial": "(05) R&D->Run accepted, C2 ON at u; (06) Safe->R&D accepted, C1 ON at u1; both buttons FALSE from rb <= a_b-1 (V14-Q14)",
+      "events": "front CMD_RUN_TO_R&D (05, PLC-09(a)) / CMD_R&D_TO_SAFE (06, PLC-09(b)) at a_b in {u+10, u+300, u+499} / {u1+10, u1+300, u1+499}; FBK never ON, variant ON u+1..u+199 then FALSE",
+      "expected": ["SafetyFault TRUE not later than w+1 (NV until symbol, A8)", "abort sequence scan-identical to the same abort with FBK ON", "no Emergency"],
+      "observation": ["mixed FBK in [w-1, w+1]", "command OFF before w"],
+      "sources": ["Q-V7-03 A", "Q-V4-01 B", "V14-Q12 A", "V14-Q13 A", "V14-Q14 A"]
+    },
+    {
+      "id": "FBK-05/06-W",
+      "status": "READY (E6)",
+      "matrixIds": ["WDG-001", "WDG-003"],
+      "initial": "as tester v7: (05) R&D, BOTH from p, rb=Q+2, C2 ON at u; (06) Safe, BOTH, C1 ON at u1",
+      "events": "FBK never / pulse ON u+1..u+199; green 600 ms with front u+a_b, a_b in {10, 300, 499} (invalid by ABORT-GREEN-CLR)",
+      "expected": ["differential vs X0 = same inputs without the green: outputs STO/Discharge/C1/C2 and statuses scan-identical in [u, w+3000+T_DIS]", "(05) WDG-03/Q-RC-12 rollback = abort StartingRun sequence + SafetyFault; (06) WDG-01 rollback to Safe + SafetyFault", "rollback start not later than w+1", "SafetyFault TRUE not later than w+1 (NV until symbol)", "no Emergency (pulse drop inside the window included)"],
+      "forbidden": ["any difference X vs X0 caused by the green", "no SafetyFault"],
+      "limit": "does not discriminate ABORT-GREEN-CLR (a wrongly accepted green would qualify after the rollback started); FBK-05/06-NEG does",
+      "sources": ["E6-Q1 B", "Q-RC-12 A", "WDG-01", "WDG-03", "Q-V4-01 B", "E2-G1-v4/CRITERIA_DELTA_v7 4.0", "ABORT-GREEN-CLR"]
+    },
+    {
+      "id": "FBK-05/06-NEG",
+      "status": "READY",
+      "matrixIds": ["BTN-001", "BTN-002", "MOD-001", "MOD-002", "MOD-004"],
+      "initial": "(05) R&D, in_HV_Faulty_FBK TRUE from before the gesture (StartingRun held, Q-RC-RUNCONF-01, <30 s); (06) Safe, in_LV_Faulty_FBK TRUE from before C1 ON (WDG-02); BOTH p..Q+1, rb=Q+2; FBK ON by plant",
+      "events": [
+        "(a) green 600 ms, g0 in {rb+10, rb+300, rb+1999}",
+        "(b) green from rb+1999 held to rb+3000",
+        "(c) green rb+300 for 600 ms, then a new green at g0+600+1999 for 600 ms (also invalid)",
+        "then Faulty FALSE at h = max(end of last green, rb+3500)+1000"
+      ],
+      "expected": ["every scan [g0, h-1]: (05) STO released, C2 ON, no SS1, no Discharge, status StartingRun; (06) C1 ON, out_LV_Discharge_Request FALSE, status Safe->R&D", "SafetyFault FALSE, no Emergency", "after h: (05) Run per RUN-CONF-T, none <= h+99, present at h+101; (06) R&D per RND-CONF-T likewise"],
+      "forbidden": ["abort/descent/SafetyFault from the green", "deferred R&D->Safe or Run->R&D after h", "Emergency"],
+      "sources": ["ABORT-GREEN-CLR", "WDG-02", "Q-RC-RUNCONF-01 B", "RUN-CONF-T/RND-CONF-T (TD-02)", "TD-01", "question 73 A"]
+    },
+    {
+      "id": "FBK-05/06-POS",
+      "status": "READY-D (STP-E, PLC-09(b))",
+      "matrixIds": ["STP-006", "MOD-002", "MOD-001", "STP-005", "BTN-003"],
+      "initial": "as FBK-05/06-NEG (transition held by Faulty TRUE, FBK ON, rb=Q+2)",
+      "events": "green alone, g0 in {rb+2001 (norm), rb+2000 (observation), rb+5000}, held 600 ms; variant held 499 ms -> no abort",
+      "expected05": ["no abort sign in [g0, g0+499]", "STO active not later than g0+502 (STP-E: <= a+1)", "Discharge not later than g0+503 (a+2), held as level (Q-V7-01 G)", "no SS1, no 5 s coast", "C2 OFF not earlier than t_d+T_DIS", "R&D after C2_FBK OFF", "LV C1 kept, no R&D->Safe (E2-01)", "after R&D HV Faulty FALSE: no Run, no C2 re-ON, STO kept for >= 3000 ms"],
+      "expected06": ["no abort sign in [g0, g0+499]", "C1 OFF after a (exact scan observation)", "C1_FBK OFF -> Safe", "LV Discharge per TD-01", "after Safe LV Faulty FALSE: no R&D, no C1 re-ON for >= 3000 ms"],
+      "both": ["no Emergency", "SafetyFault from the abort itself: observation (PLC-09(b) not specified)"],
+      "emergencyCombos": ["(05) C2_FBK FALSE after a and before the C2 OFF command -> Emergency (Q-RC-19, EMGREF-RUN)", "(06) C1_FBK FALSE after a and before the C1 OFF command -> Emergency; 0-1 scan gap -> observation", "NC1/NC2 FALSE during abort StartingRun -> Emergency (IL-05d(1))", "EStop / in_Estop_PLC -> Emergency (V14-Q9)"],
+      "sources": ["V14-Q12 A", "V14-Q13 A", "D-STARTINGRUN-GREEN-DOWN", "D-STARTINGRUN-NO-COAST", "REQ-CONSOLIDATION STP-E, PLC-09(b)", "D-LV-OFF-COMPLETE", "Q-V7-01 G", "TD-01", "FBK-05/06 v4"]
+    },
+    {
+      "id": "STIMULUS-STP006-IL05D1",
+      "status": "READY (stimulus correction, oracle unchanged)",
+      "matrixIds": ["STP-006", "EMG-002", "CVR-006"],
+      "rule": "current-e2a-dis-hold ISSUE 'STP-006 abort StartingRun' and current-e2b-cover-transitions 'IL-05d(1) ... aborted by green 600 ms': OFF 200 after BOTH makes the green invalid (g0 = rb+200) -> false RED on a correct candidate. Replace with OFF >= 2001 ms (recommended 2100, as E2-01 / KF-4), then GREEN 600. Other inputs and oracles unchanged",
+      "remark": "current-e2c-stp-i 'green 600 ms pressed during the abort (c=u+50, press c+10)': the press is the BOTH remainder (before p+1100), not a fresh green; oracle 'not executed' valid under any reading; name misleading. A fresh valid green during STP-I abort is unreachable by button (abort ends ~Q+1100..1500, g0 >= Q+2101); CMD variant is E4",
+      "sources": ["ABORT-GREEN-CLR", "SPEC 3.1 p.9"]
+    }
+  ],
+  "supersedes": {"E2-plan-v5-questions/CRITERIA.md §5 FBK-05/06": "replaced by FBK-05/06-CMD (BLOCKED-E4), FBK-05/06-W, FBK-05/06-NEG, FBK-05/06-POS"},
+  "trace": [
+    {"ids": ["BTN-001", "BTN-002", "BTN-007"], "criteria": ["ABORT-GREEN-CLR", "FBK-05/06-NEG"], "status": "READY"},
+    {"ids": ["BTN-003"], "criteria": ["FBK-05/06-POS"], "status": "READY"},
+    {"ids": ["WDG-001", "WDG-003", "MOD-008"], "criteria": ["FBK-05/06-CMD"], "status": "BLOCKED-E4"},
+    {"ids": ["WDG-001", "WDG-003"], "criteria": ["FBK-05/06-W"], "status": "READY (E6)"},
+    {"ids": ["MOD-001", "MOD-002", "MOD-004"], "criteria": ["FBK-05/06-NEG"], "status": "READY"},
+    {"ids": ["STP-006", "MOD-002"], "criteria": ["FBK-05/06-POS", "STIMULUS-STP006-IL05D1"], "status": "READY-D"},
+    {"ids": ["MOD-001", "STP-005"], "criteria": ["FBK-05/06-POS"], "status": "READY-D"},
+    {"ids": ["EMG-002", "CVR-006"], "criteria": ["STIMULUS-STP006-IL05D1"], "status": "stimulus only"}
+  ]
+}

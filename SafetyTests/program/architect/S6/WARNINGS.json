@@ -1,0 +1,2431 @@
+{
+ "source": "program/lead/S6/VERIFY_RESULT_3.md (Vadim xlsx 2026-10-25)",
+ "canonical": {
+  "sal": "9209319039fc555e77e5dfc626deafd507a14058cfd96847f0eb29dccb3469ef",
+  "sgvl": "27864ca301abf9c651527c66ff15194ef802a9016e344f02ec3e6b1681995db1",
+  "commit": "0c1800e"
+ },
+ "reference": {
+  "commit": "4495a1f6049f6a58ebfd436761faa84d17c8d643",
+  "sal": "c5f0c0cea479f65e3a11fbe9cf2520a2b54d2cbf85602fd7a2cbab8e27132153"
+ },
+ "f1": "fixtures/stand-f1-04b45456 (SAL 04b45456...)",
+ "semantics": "stand: native orderOfExecution, consumer before producer reads previous-scan value; scanMs=1 (1 scan = 1 ms on stand; native EL6910 cycle time not known -> delays given in scans)",
+ "counts": {
+  "total": 95,
+  "byKind": {
+   "WiredLink": 72,
+   "Variable": 22,
+   "GVL": 1
+  },
+  "byStatus": {
+   "PRE-EXISTING": 53,
+   "NEW": 42
+  },
+  "newByStage": {
+   "-": 53,
+   "E4": 19,
+   "E3": 5,
+   "E2a": 3,
+   "E5": 10,
+   "E2b": 3,
+   "E2c": 1,
+   "E6v": 1
+  },
+  "byVerdict": {
+   "ACCEPT": 87,
+   "ACCEPT (intentional)": 8
+  },
+  "fix": 0
+ },
+ "tools": [
+  "architect/S6/warn/map.mjs",
+  "architect/S6/warn/dump.mjs",
+  "architect/S6/warn/probe.mjs",
+  "architect/S6/warn/targeted.mjs",
+  "architect/S6/warn/classify.mjs"
+ ],
+ "warnings": [
+  {
+   "n": 1,
+   "kind": "WiredLink",
+   "key": "W:FBAnd72.AndOut->FBOr46.OrIn2",
+   "producer": {
+    "net": "Network1",
+    "order": 317,
+    "fb": "FBAnd72.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 315,
+    "port": "FBOr46.OrIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 2,
+   "kind": "WiredLink",
+   "key": "W:FBAnd73.AndOut->FBOr22.OrIn4",
+   "producer": {
+    "net": "Network1",
+    "order": 318,
+    "fb": "FBAnd73.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 74,
+    "port": "FBOr22.OrIn4"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 3,
+   "kind": "WiredLink",
+   "key": "W:CFG_EX.RsOut->FBOr10.OrIn2",
+   "producer": {
+    "net": "Network1",
+    "order": 147,
+    "fb": "CFG_EX.RsOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 51,
+    "port": "FBOr10.OrIn2"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "B-CFG",
+   "planBlock": "E4 Config exit -> HV/LV discharge request set (FBRs9/FBRs7)",
+   "safetyPath": "discharge request (Config exit)",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Discharge request latch set 1 scan after CFG_EX/CFG_OFF; level signals (RS-latched), no pulse loss; discharge is a separate command after C1/C2 OFF, 1 scan << CFG_T_HOLD.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 4,
+   "kind": "WiredLink",
+   "key": "W:FBAnd91.AndOut->RUN_DOWN_REQ.OrIn1",
+   "producer": {
+    "net": "Network6",
+    "order": 334,
+    "fb": "FBAnd91.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 327,
+    "port": "RUN_DOWN_REQ.OrIn1"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "C-RUNDOWN",
+   "planBlock": "E4 green Run->R&D request FBAnd91 -> RUN_DOWN_REQ",
+   "safetyPath": "Run->R&D (STO via SS1 sequence)",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Level request (GREEN TON held); owner set 1 scan later. No pulse.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 5,
+   "kind": "WiredLink",
+   "key": "W:WINDOW.EStopDelOut->SNAP_1.DecIn3",
+   "producer": {
+    "net": "RndPhysicalCompact",
+    "order": 173,
+    "fb": "WINDOW.EStopDelOut"
+   },
+   "consumer": {
+    "net": "RndPhysicalCompact",
+    "order": 162,
+    "port": "SNAP_1.DecIn3"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 6,
+   "kind": "WiredLink",
+   "key": "W:RD_STO.RsOut->RD_PROT_SET.AndIn3",
+   "producer": {
+    "net": "Network6",
+    "order": 254,
+    "fb": "RD_STO.RsOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 248,
+    "port": "RD_PROT_SET.AndIn3"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E3",
+   "group": "C-RUNDOWN",
+   "planBlock": "E3 RD_PROT_SET = run & Healthy lost & NOT RD_STO",
+   "safetyPath": "protective run-down + SafetyFault (linkHltRunLost)",
+   "extraDelayScans": 0,
+   "extraDelayMsAtStand": 0,
+   "analysis": "Self-terminating 1-scan set pulse by design (RD_PROT latches, RD_STO set same scan via RD_STO_TRIG). Targeted probe: 1-scan HV/LV faulty pulse in Run -> RD_PROT_SET 1 scan -> SF latched next scan, not lost. Coincidence with normal RD_STO set == Healthy loss 1 scan earlier.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 7,
+   "kind": "WiredLink",
+   "key": "W:FBTon12.TonOut->FBOr28.OrIn1",
+   "producer": {
+    "net": "Network7",
+    "order": 109,
+    "fb": "FBTon12.TonOut"
+   },
+   "consumer": {
+    "net": "Network7",
+    "order": 78,
+    "port": "FBOr28.OrIn1"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 8,
+   "kind": "WiredLink",
+   "key": "W:FBAnd4.AndOut->FBOr2.OrIn2",
+   "producer": {
+    "net": "Network3",
+    "order": 46,
+    "fb": "FBAnd4.AndOut"
+   },
+   "consumer": {
+    "net": "Network3",
+    "order": 1,
+    "port": "FBOr2.OrIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 9,
+   "kind": "WiredLink",
+   "key": "W:FBAnd37.AndOut->FBAndSto1SetPermit.AndIn4",
+   "producer": {
+    "net": "Network1",
+    "order": 99,
+    "fb": "FBAnd37.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 27,
+    "port": "FBAndSto1SetPermit.AndIn4"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 10,
+   "kind": "WiredLink",
+   "key": "W:FBAnd35.AndOut->FBAnd12.AndIn2",
+   "producer": {
+    "net": "Network6",
+    "order": 93,
+    "fb": "FBAnd35.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 59,
+    "port": "FBAnd12.AndIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 11,
+   "kind": "WiredLink",
+   "key": "W:FBAnd39.AndOut->FBAnd1.AndIn2",
+   "producer": {
+    "net": "Network2",
+    "order": 101,
+    "fb": "FBAnd39.AndOut"
+   },
+   "consumer": {
+    "net": "Network2",
+    "order": 18,
+    "port": "FBAnd1.AndIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 12,
+   "kind": "WiredLink",
+   "key": "W:RUN_DOWN_OWNER.RsOut->HEALTH_GUARD.OrIn1",
+   "producer": {
+    "net": "Network6",
+    "order": 336,
+    "fb": "RUN_DOWN_OWNER.RsOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 92,
+    "port": "HEALTH_GUARD.OrIn1"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E2a",
+   "group": "C-RUNDOWN",
+   "planBlock": "E2a HEALTH_GUARD masks Healthy loss while RUN_DOWN_OWNER",
+   "safetyPath": "Healthy-loss -> Step4 (FBAnd35/FBAnd12)",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Owner seen 1 scan late: Healthy loss in the owner-set scan is handled as before the command (Step4) == legal order. Probe Run->R&D(green/PLC) x LVF/HVF level+pulse at every event scan: no 0/2-state scan.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 13,
+   "kind": "WiredLink",
+   "key": "W:FBAnd33.AndOut->FBAnd14.AndIn2",
+   "producer": {
+    "net": "Network6",
+    "order": 90,
+    "fb": "FBAnd33.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 61,
+    "port": "FBAnd14.AndIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 14,
+   "kind": "WiredLink",
+   "key": "W:FBAnd74.AndOut->FBOr32.OrIn3",
+   "producer": {
+    "net": "Network1",
+    "order": 319,
+    "fb": "FBAnd74.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 87,
+    "port": "FBOr32.OrIn3"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 15,
+   "kind": "WiredLink",
+   "key": "W:FBAnd78.AndOut->FBAnd31.AndIn3",
+   "producer": {
+    "net": "Network6",
+    "order": 321,
+    "fb": "FBAnd78.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 294,
+    "port": "FBAnd31.AndIn3"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 16,
+   "kind": "WiredLink",
+   "key": "W:SF.RsOut->SF_ACK.AndIn4",
+   "producer": {
+    "net": "RndPhysicalCompact",
+    "order": 213,
+    "fb": "SF.RsOut"
+   },
+   "consumer": {
+    "net": "RndPhysicalCompact",
+    "order": 212,
+    "port": "SF_ACK.AndIn4"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E5",
+   "group": "E-SF",
+   "planBlock": "E5 SafetyFault ack SF_ACK = press AND RELEASE(k-1) AND NOT SF_SET AND SF(k-1)",
+   "safetyPath": "SafetyFault reset",
+   "extraDelayScans": 0,
+   "extraDelayMsAtStand": 0,
+   "analysis": "Intentional: RELEASE(k-1) with NOT GATE_002(k) = \"first pressed scan after the full release filter\" (edge); SF(k-1) restricts ack to an already latched fault; NOT SF_SET is same-scan (ack impossible while the cause is present). Reordering would break the edge.",
+   "verdict": "ACCEPT (intentional)"
+  },
+  {
+   "n": 17,
+   "kind": "WiredLink",
+   "key": "W:FBOr22.OrOut->FBRs1.Reset",
+   "producer": {
+    "net": "Network1",
+    "order": 74,
+    "fb": "FBOr22.OrOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 21,
+    "port": "FBRs1.Reset"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 18,
+   "kind": "WiredLink",
+   "key": "W:FBAnd37.AndOut->FBEstop1.EStopIn3",
+   "producer": {
+    "net": "Network1",
+    "order": 99,
+    "fb": "FBAnd37.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 42,
+    "port": "FBEstop1.EStopIn3"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 19,
+   "kind": "WiredLink",
+   "key": "W:FBAnd88.AndOut->FBRs19.Reset",
+   "producer": {
+    "net": "Network1",
+    "order": 331,
+    "fb": "FBAnd88.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 330,
+    "port": "FBRs19.Reset"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 20,
+   "kind": "WiredLink",
+   "key": "W:FBAnd75.AndOut->FBAnd47.AndIn4",
+   "producer": {
+    "net": "Network12",
+    "order": 320,
+    "fb": "FBAnd75.AndOut"
+   },
+   "consumer": {
+    "net": "Network12",
+    "order": 285,
+    "port": "FBAnd47.AndIn4"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 21,
+   "kind": "WiredLink",
+   "key": "W:FBOr13.OrOut->FBRs4.Reset",
+   "producer": {
+    "net": "Network1",
+    "order": 55,
+    "fb": "FBOr13.OrOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 30,
+    "port": "FBRs4.Reset"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 22,
+   "kind": "WiredLink",
+   "key": "W:CFG_OFF.AndOut->FBOr6.OrIn3",
+   "producer": {
+    "net": "Network1",
+    "order": 149,
+    "fb": "CFG_OFF.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 48,
+    "port": "FBOr6.OrIn3"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "B-CFG",
+   "planBlock": "E4 Config exit -> HV/LV discharge request set (FBRs9/FBRs7)",
+   "safetyPath": "discharge request (Config exit)",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Discharge request latch set 1 scan after CFG_EX/CFG_OFF; level signals (RS-latched), no pulse loss; discharge is a separate command after C1/C2 OFF, 1 scan << CFG_T_HOLD.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 23,
+   "kind": "WiredLink",
+   "key": "W:FBAnd66.AndOut->RD_RESET.OrIn1",
+   "producer": {
+    "net": "Network6",
+    "order": 303,
+    "fb": "FBAnd66.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 249,
+    "port": "RD_RESET.OrIn1"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E3",
+   "group": "C-RUNDOWN",
+   "planBlock": "E3 run-down completion FBAnd66 -> RD_RESET (RD_PROT/RD_SEQ/RD_STO reset)",
+   "safetyPath": "STO latch of run-down, completion",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Run-down latches cleared 1 scan after Step12 handover (b_Step12_Set_2 same scan to owner reset): STO request held 1 scan longer (conservative), RD_SEQ Set (owner, lagged) already FALSE when reset releases. No 2-state scan in probes.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 24,
+   "kind": "WiredLink",
+   "key": "W:FBOr12.OrOut->FBAndSto1SetPermit.AndIn1",
+   "producer": {
+    "net": "Network1",
+    "order": 54,
+    "fb": "FBOr12.OrOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 27,
+    "port": "FBAndSto1SetPermit.AndIn1"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 25,
+   "kind": "WiredLink",
+   "key": "W:FBAnd83.AndOut->FBAnd46.AndIn2",
+   "producer": {
+    "net": "Network6",
+    "order": 323,
+    "fb": "FBAnd83.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 297,
+    "port": "FBAnd46.AndIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 26,
+   "kind": "WiredLink",
+   "key": "W:WDC1_OK.RsOut->WDC1_FAIL_SET.AndIn3",
+   "producer": {
+    "net": "RndPhysicalCompact",
+    "order": 183,
+    "fb": "WDC1_OK.RsOut"
+   },
+   "consumer": {
+    "net": "RndPhysicalCompact",
+    "order": 180,
+    "port": "WDC1_FAIL_SET.AndIn3"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E5",
+   "group": "E-WD",
+   "planBlock": "E5 watchdog FAIL_SET = window AND NOT FBK AND NOT OK(k-1)",
+   "safetyPath": "watchdog C1/C2 FAIL latch",
+   "extraDelayScans": 0,
+   "extraDelayMsAtStand": 0,
+   "analysis": "OK_SET and FAIL_SET are decided in the same window-expiry scan by the FBK value (mutually exclusive); afterwards OK(k-1)=TRUE blocks FAIL (LOSS path handles later drops); both reset same-scan by NOT out_LV_C1/out_HV_C2. No 2-latch state.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 27,
+   "kind": "WiredLink",
+   "key": "W:FBAnd31.AndOut->FBOr19.OrIn3",
+   "producer": {
+    "net": "Network6",
+    "order": 294,
+    "fb": "FBAnd31.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 67,
+    "port": "FBOr19.OrIn3"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 28,
+   "kind": "WiredLink",
+   "key": "W:FBAnd84.AndOut->FBAnd45.AndIn2",
+   "producer": {
+    "net": "Network6",
+    "order": 324,
+    "fb": "FBAnd84.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 295,
+    "port": "FBAnd45.AndIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 29,
+   "kind": "WiredLink",
+   "key": "W:FBTon11.TonOut->FBOr27.OrIn1",
+   "producer": {
+    "net": "Network7",
+    "order": 108,
+    "fb": "FBTon11.TonOut"
+   },
+   "consumer": {
+    "net": "Network7",
+    "order": 77,
+    "port": "FBOr27.OrIn1"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 30,
+   "kind": "WiredLink",
+   "key": "W:FBAnd55.AndOut->FBDecouple1.DecIn2",
+   "producer": {
+    "net": "Network2",
+    "order": 329,
+    "fb": "FBAnd55.AndOut"
+   },
+   "consumer": {
+    "net": "Network2",
+    "order": 26,
+    "port": "FBDecouple1.DecIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 31,
+   "kind": "WiredLink",
+   "key": "W:RUN_DOWN_OWNER.RsOut->FBOr42.OrIn1",
+   "producer": {
+    "net": "Network6",
+    "order": 336,
+    "fb": "RUN_DOWN_OWNER.RsOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 306,
+    "port": "FBOr42.OrIn1"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 32,
+   "kind": "WiredLink",
+   "key": "W:FBAnd46.AndOut->FBOr37.OrIn2",
+   "producer": {
+    "net": "Network6",
+    "order": 297,
+    "fb": "FBAnd46.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 296,
+    "port": "FBOr37.OrIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 33,
+   "kind": "WiredLink",
+   "key": "W:RELEASE.TonOut->SF_ACK.AndIn2",
+   "producer": {
+    "net": "RndPhysicalCompact",
+    "order": 214,
+    "fb": "RELEASE.TonOut"
+   },
+   "consumer": {
+    "net": "RndPhysicalCompact",
+    "order": 212,
+    "port": "SF_ACK.AndIn2"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E5",
+   "group": "E-SF",
+   "planBlock": "E5 SafetyFault ack SF_ACK = press AND RELEASE(k-1) AND NOT SF_SET AND SF(k-1)",
+   "safetyPath": "SafetyFault reset",
+   "extraDelayScans": 0,
+   "extraDelayMsAtStand": 0,
+   "analysis": "Intentional: RELEASE(k-1) with NOT GATE_002(k) = \"first pressed scan after the full release filter\" (edge); SF(k-1) restricts ack to an already latched fault; NOT SF_SET is same-scan (ack impossible while the cause is present). Reordering would break the edge.",
+   "verdict": "ACCEPT (intentional)"
+  },
+  {
+   "n": 34,
+   "kind": "WiredLink",
+   "key": "W:FBAnd67.AndOut->FBOr23.OrIn2",
+   "producer": {
+    "net": "Network1",
+    "order": 305,
+    "fb": "FBAnd67.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 111,
+    "port": "FBOr23.OrIn2"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E2a",
+   "group": "C-RUNDOWN",
+   "planBlock": "E2a out_SS1_DR2 = Step2 OR (Step3 AND NOT descent)",
+   "safetyPath": "SS1 drive command (DR2)",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "SS1 drop 1 scan after descent start (DR1 path FBAnd67->FBOr24 identical, pre-existing in F1); SS1->STO interval shortened by <=1 scan of a seconds-range timer. Both drives stay aligned (same lag).",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 35,
+   "kind": "WiredLink",
+   "key": "W:FBOr45.OrOut->FBAndLvSetPermit.AndIn1",
+   "producer": {
+    "net": "Network1",
+    "order": 314,
+    "fb": "FBOr45.OrOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 20,
+    "port": "FBAndLvSetPermit.AndIn1"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 36,
+   "kind": "WiredLink",
+   "key": "W:FBOr46.OrOut->FBAndHvSetPermit.AndIn1",
+   "producer": {
+    "net": "Network1",
+    "order": 315,
+    "fb": "FBOr46.OrOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 22,
+    "port": "FBAndHvSetPermit.AndIn1"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 37,
+   "kind": "WiredLink",
+   "key": "W:PK_PREV.DecOut4->PA_R2S_AB.AndIn2",
+   "producer": {
+    "net": "Network1",
+    "order": 151,
+    "fb": "PK_PREV.DecOut4"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 141,
+    "port": "PA_R2S_AB.AndIn2"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "A-PLC-EDGE",
+   "planBlock": "E4 PLC command edge memory PK_PREV (S6 gates S6_G_*)",
+   "safetyPath": "PLC command accept -> main transitions",
+   "extraDelayScans": 0,
+   "extraDelayMsAtStand": 0,
+   "analysis": "Intentional previous-scan memory: PA_x = CMD_gated(k) AND NOT CMD_gated(k-1) = rising-edge detector, 1-scan accept pulse. Same-scan read would make PA_x constantly FALSE. Reordering forbidden.",
+   "verdict": "ACCEPT (intentional)"
+  },
+  {
+   "n": 38,
+   "kind": "WiredLink",
+   "key": "W:FBAnd38.AndOut->FBAnd1.AndIn7",
+   "producer": {
+    "net": "Network2",
+    "order": 100,
+    "fb": "FBAnd38.AndOut"
+   },
+   "consumer": {
+    "net": "Network2",
+    "order": 18,
+    "port": "FBAnd1.AndIn7"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 39,
+   "kind": "WiredLink",
+   "key": "W:WDC2_OK.RsOut->WDC2_FAIL_SET.AndIn3",
+   "producer": {
+    "net": "RndPhysicalCompact",
+    "order": 193,
+    "fb": "WDC2_OK.RsOut"
+   },
+   "consumer": {
+    "net": "RndPhysicalCompact",
+    "order": 190,
+    "port": "WDC2_FAIL_SET.AndIn3"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E5",
+   "group": "E-WD",
+   "planBlock": "E5 watchdog FAIL_SET = window AND NOT FBK AND NOT OK(k-1)",
+   "safetyPath": "watchdog C1/C2 FAIL latch",
+   "extraDelayScans": 0,
+   "extraDelayMsAtStand": 0,
+   "analysis": "OK_SET and FAIL_SET are decided in the same window-expiry scan by the FBK value (mutually exclusive); afterwards OK(k-1)=TRUE blocks FAIL (LOSS path handles later drops); both reset same-scan by NOT out_LV_C1/out_HV_C2. No 2-latch state.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 40,
+   "kind": "WiredLink",
+   "key": "W:FBOr32.OrOut->FBRs2.Reset",
+   "producer": {
+    "net": "Network1",
+    "order": 87,
+    "fb": "FBOr32.OrOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 23,
+    "port": "FBRs2.Reset"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 41,
+   "kind": "WiredLink",
+   "key": "W:DN_T_HOLD.TonOut->SU_ABORT_END.AndIn1",
+   "producer": {
+    "net": "Network6",
+    "order": 264,
+    "fb": "DN_T_HOLD.TonOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 259,
+    "port": "SU_ABORT_END.AndIn1"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E3",
+   "group": "C-RUNDOWN",
+   "planBlock": "E3 StartingRun abort end DN_T_HOLD",
+   "safetyPath": "abort latch SU_ABORT release",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Abort latch released 1 scan later (conservative: abort blocks PS_RND/HLT_LV/SG_OWNER).",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 42,
+   "kind": "WiredLink",
+   "key": "W:FBAnd37.AndOut->FBAndLvSetPermit.AndIn4",
+   "producer": {
+    "net": "Network1",
+    "order": 99,
+    "fb": "FBAnd37.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 20,
+    "port": "FBAndLvSetPermit.AndIn4"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 43,
+   "kind": "WiredLink",
+   "key": "W:FBTon10.TonOut->FBAnd19.AndIn3",
+   "producer": {
+    "net": "Network7",
+    "order": 104,
+    "fb": "FBTon10.TonOut"
+   },
+   "consumer": {
+    "net": "Network7",
+    "order": 76,
+    "port": "FBAnd19.AndIn3"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 44,
+   "kind": "WiredLink",
+   "key": "W:PK_PREV.DecOut2->PA_R2RUN.AndIn2",
+   "producer": {
+    "net": "Network1",
+    "order": 151,
+    "fb": "PK_PREV.DecOut2"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 137,
+    "port": "PA_R2RUN.AndIn2"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "A-PLC-EDGE",
+   "planBlock": "E4 PLC command edge memory PK_PREV (S6 gates S6_G_*)",
+   "safetyPath": "PLC command accept -> main transitions",
+   "extraDelayScans": 0,
+   "extraDelayMsAtStand": 0,
+   "analysis": "Intentional previous-scan memory: PA_x = CMD_gated(k) AND NOT CMD_gated(k-1) = rising-edge detector, 1-scan accept pulse. Same-scan read would make PA_x constantly FALSE. Reordering forbidden.",
+   "verdict": "ACCEPT (intentional)"
+  },
+  {
+   "n": 45,
+   "kind": "WiredLink",
+   "key": "W:FBDecouple15.DecOut3->FBOr28.OrIn2",
+   "producer": {
+    "net": "Network7",
+    "order": 110,
+    "fb": "FBDecouple15.DecOut3"
+   },
+   "consumer": {
+    "net": "Network7",
+    "order": 78,
+    "port": "FBOr28.OrIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 46,
+   "kind": "WiredLink",
+   "key": "W:G10_EXIT.AndOut->FBOr2.OrIn3",
+   "producer": {
+    "net": "Network3",
+    "order": 43,
+    "fb": "G10_EXIT.AndOut"
+   },
+   "consumer": {
+    "net": "Network3",
+    "order": 1,
+    "port": "FBOr2.OrIn3"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E2b",
+   "group": "D-ESTOP",
+   "planBlock": "E2b G10 exit -> FBOr2 (Step1 set, FBRs17 reset)",
+   "safetyPath": "return to Safe after Emergency drain",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "FBOr2 sets Step1 and resets FBRs17 in the same scan k+1 (consistent hand-over).",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 47,
+   "kind": "WiredLink",
+   "key": "W:FBAnd37.AndOut->FBAndHvSetPermit.AndIn4",
+   "producer": {
+    "net": "Network1",
+    "order": 99,
+    "fb": "FBAnd37.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 22,
+    "port": "FBAndHvSetPermit.AndIn4"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 48,
+   "kind": "WiredLink",
+   "key": "W:FBDecouple25.DecOut1->FBAnd49.AndIn3",
+   "producer": {
+    "net": "Network12",
+    "order": 311,
+    "fb": "FBDecouple25.DecOut1"
+   },
+   "consumer": {
+    "net": "Network12",
+    "order": 287,
+    "port": "FBAnd49.AndIn3"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 49,
+   "kind": "WiredLink",
+   "key": "W:FBAnd55.AndOut->FBDecouple1.DecIn1",
+   "producer": {
+    "net": "Network2",
+    "order": 329,
+    "fb": "FBAnd55.AndOut"
+   },
+   "consumer": {
+    "net": "Network2",
+    "order": 26,
+    "port": "FBDecouple1.DecIn1"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 50,
+   "kind": "WiredLink",
+   "key": "W:FBOr37.OrOut->FBRs12.Set",
+   "producer": {
+    "net": "Network6",
+    "order": 296,
+    "fb": "FBOr37.OrOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 65,
+    "port": "FBRs12.Set"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 51,
+   "kind": "WiredLink",
+   "key": "W:FBAnd67.AndOut->FBOr24.OrIn2",
+   "producer": {
+    "net": "Network1",
+    "order": 305,
+    "fb": "FBAnd67.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 112,
+    "port": "FBOr24.OrIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 52,
+   "kind": "WiredLink",
+   "key": "W:FBAnd32.AndOut->FBAnd13.AndIn2",
+   "producer": {
+    "net": "Network6",
+    "order": 89,
+    "fb": "FBAnd32.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 60,
+    "port": "FBAnd13.AndIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 53,
+   "kind": "WiredLink",
+   "key": "W:FBOr42.OrOut->RD_SEQ.Set",
+   "producer": {
+    "net": "Network6",
+    "order": 306,
+    "fb": "FBOr42.OrOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 251,
+    "port": "RD_SEQ.Set"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E3",
+   "group": "C-RUNDOWN",
+   "planBlock": "E3 RD_SEQ start (FBOr42 = owner OR RD_PROT)",
+   "safetyPath": "Run-down SS1/STO sequence start",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "RD_SEQ set 1 scan later (+1 pre-existing owner->FBOr42) = 2 scans before RD_T_SS1 starts; level, no pulse; STO timing unchanged relative to RD_SEQ.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 54,
+   "kind": "WiredLink",
+   "key": "W:FBTon10.TonOut->FBAnd18.AndIn3",
+   "producer": {
+    "net": "Network7",
+    "order": 104,
+    "fb": "FBTon10.TonOut"
+   },
+   "consumer": {
+    "net": "Network7",
+    "order": 75,
+    "port": "FBAnd18.AndIn3"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 55,
+   "kind": "WiredLink",
+   "key": "W:PK_PREV.DecOut4->PA_R2S_ST.AndIn2",
+   "producer": {
+    "net": "Network1",
+    "order": 151,
+    "fb": "PK_PREV.DecOut4"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 140,
+    "port": "PA_R2S_ST.AndIn2"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "A-PLC-EDGE",
+   "planBlock": "E4 PLC command edge memory PK_PREV (S6 gates S6_G_*)",
+   "safetyPath": "PLC command accept -> main transitions",
+   "extraDelayScans": 0,
+   "extraDelayMsAtStand": 0,
+   "analysis": "Intentional previous-scan memory: PA_x = CMD_gated(k) AND NOT CMD_gated(k-1) = rising-edge detector, 1-scan accept pulse. Same-scan read would make PA_x constantly FALSE. Reordering forbidden.",
+   "verdict": "ACCEPT (intentional)"
+  },
+  {
+   "n": 56,
+   "kind": "WiredLink",
+   "key": "W:FBAnd37.AndOut->FBAndSto2SetPermit.AndIn4",
+   "producer": {
+    "net": "Network1",
+    "order": 99,
+    "fb": "FBAnd37.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 29,
+    "port": "FBAndSto2SetPermit.AndIn4"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 57,
+   "kind": "WiredLink",
+   "key": "W:FBOr19.OrOut->FBRs11.Reset",
+   "producer": {
+    "net": "Network6",
+    "order": 67,
+    "fb": "FBOr19.OrOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 62,
+    "port": "FBRs11.Reset"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 58,
+   "kind": "WiredLink",
+   "key": "W:FBOr36.OrOut->FBAnd14.AndIn1",
+   "producer": {
+    "net": "Network6",
+    "order": 292,
+    "fb": "FBOr36.OrOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 61,
+    "port": "FBAnd14.AndIn1"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 59,
+   "kind": "WiredLink",
+   "key": "W:FBAnd71.AndOut->FBOr45.OrIn2",
+   "producer": {
+    "net": "Network1",
+    "order": 316,
+    "fb": "FBAnd71.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 314,
+    "port": "FBOr45.OrIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 60,
+   "kind": "WiredLink",
+   "key": "W:FBAnd89.AndOut->FBRs19.Set",
+   "producer": {
+    "net": "Network1",
+    "order": 333,
+    "fb": "FBAnd89.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 330,
+    "port": "FBRs19.Set"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 61,
+   "kind": "WiredLink",
+   "key": "W:FBAnd82.AndOut->FBAnd48.AndIn2",
+   "producer": {
+    "net": "Network12",
+    "order": 322,
+    "fb": "FBAnd82.AndOut"
+   },
+   "consumer": {
+    "net": "Network12",
+    "order": 286,
+    "port": "FBAnd48.AndIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 62,
+   "kind": "WiredLink",
+   "key": "W:FBOr14.OrOut->FBAndSto2SetPermit.AndIn1",
+   "producer": {
+    "net": "Network1",
+    "order": 56,
+    "fb": "FBOr14.OrOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 29,
+    "port": "FBAndSto2SetPermit.AndIn1"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 63,
+   "kind": "WiredLink",
+   "key": "W:PK_PREV.DecOut1->PA_S2R.AndIn2",
+   "producer": {
+    "net": "Network1",
+    "order": 151,
+    "fb": "PK_PREV.DecOut1"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 136,
+    "port": "PA_S2R.AndIn2"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "A-PLC-EDGE",
+   "planBlock": "E4 PLC command edge memory PK_PREV (S6 gates S6_G_*)",
+   "safetyPath": "PLC command accept -> main transitions",
+   "extraDelayScans": 0,
+   "extraDelayMsAtStand": 0,
+   "analysis": "Intentional previous-scan memory: PA_x = CMD_gated(k) AND NOT CMD_gated(k-1) = rising-edge detector, 1-scan accept pulse. Same-scan read would make PA_x constantly FALSE. Reordering forbidden.",
+   "verdict": "ACCEPT (intentional)"
+  },
+  {
+   "n": 64,
+   "kind": "WiredLink",
+   "key": "W:FBTon20.TonOut->FBAnd66.AndIn1",
+   "producer": {
+    "net": "Network6",
+    "order": 304,
+    "fb": "FBTon20.TonOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 303,
+    "port": "FBAnd66.AndIn1"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 65,
+   "kind": "WiredLink",
+   "key": "W:PK_PREV.DecOut3->PA_RUN2R_T.AndIn2",
+   "producer": {
+    "net": "Network1",
+    "order": 151,
+    "fb": "PK_PREV.DecOut3"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 138,
+    "port": "PA_RUN2R_T.AndIn2"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "A-PLC-EDGE",
+   "planBlock": "E4 PLC command edge memory PK_PREV (S6 gates S6_G_*)",
+   "safetyPath": "PLC command accept -> main transitions",
+   "extraDelayScans": 0,
+   "extraDelayMsAtStand": 0,
+   "analysis": "Intentional previous-scan memory: PA_x = CMD_gated(k) AND NOT CMD_gated(k-1) = rising-edge detector, 1-scan accept pulse. Same-scan read would make PA_x constantly FALSE. Reordering forbidden.",
+   "verdict": "ACCEPT (intentional)"
+  },
+  {
+   "n": 66,
+   "kind": "WiredLink",
+   "key": "W:FBOr11.OrOut->FBRs3.Reset",
+   "producer": {
+    "net": "Network1",
+    "order": 53,
+    "fb": "FBOr11.OrOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 28,
+    "port": "FBRs3.Reset"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 67,
+   "kind": "WiredLink",
+   "key": "W:FBAnd30.AndOut->FBOr36.OrIn2",
+   "producer": {
+    "net": "Network6",
+    "order": 293,
+    "fb": "FBAnd30.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 292,
+    "port": "FBOr36.OrIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 68,
+   "kind": "WiredLink",
+   "key": "W:PK_PREV.DecOut5->PA_CFG.AndIn2",
+   "producer": {
+    "net": "Network1",
+    "order": 151,
+    "fb": "PK_PREV.DecOut5"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 143,
+    "port": "PA_CFG.AndIn2"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "A-PLC-EDGE",
+   "planBlock": "E4 PLC command edge memory PK_PREV (S6 gates S6_G_*)",
+   "safetyPath": "PLC command accept -> main transitions",
+   "extraDelayScans": 0,
+   "extraDelayMsAtStand": 0,
+   "analysis": "Intentional previous-scan memory: PA_x = CMD_gated(k) AND NOT CMD_gated(k-1) = rising-edge detector, 1-scan accept pulse. Same-scan read would make PA_x constantly FALSE. Reordering forbidden.",
+   "verdict": "ACCEPT (intentional)"
+  },
+  {
+   "n": 69,
+   "kind": "WiredLink",
+   "key": "W:FBDecouple15.DecOut4->FBOr27.OrIn2",
+   "producer": {
+    "net": "Network7",
+    "order": 110,
+    "fb": "FBDecouple15.DecOut4"
+   },
+   "consumer": {
+    "net": "Network7",
+    "order": 77,
+    "port": "FBOr27.OrIn2"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 70,
+   "kind": "WiredLink",
+   "key": "W:FBDecouple4.DecOut1->FBAnd1.AndIn1",
+   "producer": {
+    "net": "Network2",
+    "order": 102,
+    "fb": "FBDecouple4.DecOut1"
+   },
+   "consumer": {
+    "net": "Network2",
+    "order": 18,
+    "port": "FBAnd1.AndIn1"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 71,
+   "kind": "WiredLink",
+   "key": "W:FBAnd45.AndOut->FBOr18.OrIn3",
+   "producer": {
+    "net": "Network6",
+    "order": 295,
+    "fb": "FBAnd45.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 66,
+    "port": "FBOr18.OrIn3"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 72,
+   "kind": "WiredLink",
+   "key": "W:FBOr18.OrOut->FBRs12.Reset",
+   "producer": {
+    "net": "Network6",
+    "order": 66,
+    "fb": "FBOr18.OrOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 65,
+    "port": "FBRs12.Reset"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": true,
+   "inF1_04b45456": true,
+   "firstStage": "REF",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in reference 4495a1f and F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  },
+  {
+   "n": 73,
+   "kind": "Variable",
+   "key": "V:linkHltLvLost:HLT_LV.AndOut->GATE_030.OrIn6",
+   "producer": {
+    "net": "SafeResumption",
+    "order": 275,
+    "fb": "HLT_LV.AndOut"
+   },
+   "consumer": {
+    "net": "RndPhysicalCompact",
+    "order": 241,
+    "port": "GATE_030.OrIn6"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E2c",
+   "group": "F-RND",
+   "planBlock": "E2c GATE_030 -> STATE_C (gesture consume latch) on LV Healthy loss",
+   "safetyPath": "R&D->Safe on LV Healthy loss (E2-Q2a)",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "STATE_SG set same scan (GATE_SG_SET ord 276), STATE_C 1 scan later; SG and C coexist by design for ~23 scans (C is the gesture-consumption latch, not a main state). Probe: no 0/2-main-state scan.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 74,
+   "kind": "Variable",
+   "key": "V:linkWdCfgFail:WD_FAIL_ANY.OrOut->CFG_EX_OR.OrIn2",
+   "producer": {
+    "net": "RndPhysicalCompact",
+    "order": 208,
+    "fb": "WD_FAIL_ANY.OrOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 146,
+    "port": "CFG_EX_OR.OrIn2"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E5",
+   "group": "E-WD",
+   "planBlock": "E5 watchdog FAIL in Config -> CFG_EX_OR -> CFG_EX",
+   "safetyPath": "watchdog -> Config exit",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "WDCx_FAIL is RS-latched (level); exit 1 scan later after a 500 ms / 30 s window; no wrong state.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 75,
+   "kind": "Variable",
+   "key": "V:linkCfgDone:CFG_DONE.AndOut->FBOr2.OrIn1",
+   "producer": {
+    "net": "Network1",
+    "order": 150,
+    "fb": "CFG_DONE.AndOut"
+   },
+   "consumer": {
+    "net": "Network3",
+    "order": 1,
+    "port": "FBOr2.OrIn1"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "B-CFG",
+   "planBlock": "E4 Config exit CFG_DONE -> FBOr2(Step1 set)/CFG_RST(STATE_CFG reset)",
+   "safetyPath": "Config exit to Safe",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Both consumers read the pulse in the same scan k+1 -> STATE_CFG reset and Step1 set together (consistent hand-over).",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 76,
+   "kind": "Variable",
+   "key": "V:linkAbortActive:SU_ABORT.RsOut->FBAndNotRunSu.AndIn3",
+   "producer": {
+    "net": "Network6",
+    "order": 261,
+    "fb": "SU_ABORT.RsOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 97,
+    "port": "FBAndNotRunSu.AndIn3"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E3",
+   "group": "C-RUNDOWN",
+   "planBlock": "E3/E4 SU_ABORT -> FBAndNotRunSu (interlock tolerance) / PS_RND (PLC R&D permit)",
+   "safetyPath": "Emergency interlock tolerance / PLC accept",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "At abort set the same consumers are already blocked by NOT recRndC_SU (prev-scan SU=TRUE), so no permissive window; at abort end permit returns 1 scan late (conservative).",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 77,
+   "kind": "Variable",
+   "key": "V:linkUpBlock:SF_UPBLK.OrOut->PA_CFG.AndIn8",
+   "producer": {
+    "net": "RndPhysicalCompact",
+    "order": 216,
+    "fb": "SF_UPBLK.OrOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 143,
+    "port": "PA_CFG.AndIn8"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E5",
+   "group": "E-SF",
+   "planBlock": "E5 SafetyFault up-block SF_UPBLK -> PA_CFG.AndIn8",
+   "safetyPath": "SafetyFault blocks Config entry",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "If SafetyFault latches in the same scan as a CFG command edge, CFG is accepted (block seen next scan) == legal order \"CFG accepted, then fault 1 scan later\"; SU/BA up-blocks are same-scan. No 2-state scan; residual: up-block not effective in the coincidence scan.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 78,
+   "kind": "Variable",
+   "key": "V:linkWdEmg:WD_EMG.OrOut->FBAnd37.AndIn5",
+   "producer": {
+    "net": "RndPhysicalCompact",
+    "order": 209,
+    "fb": "WD_EMG.OrOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 99,
+    "port": "FBAnd37.AndIn5"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E5",
+   "group": "E-WD",
+   "planBlock": "E5 WD_EMG -> FBAnd37.AndIn5 -> FBEstop1.EStopIn3 (FBAnd37->FBEstop1 pre-existing lag)",
+   "safetyPath": "Emergency (watchdog loss)",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Targeted probe: C1/C2 FBK loss -> WD_EMG at scan 1, EMG at scan 3 (2 scans: 1 NEW + 1 pre-existing); 1-scan FBK glitch still latches EMG. Level/latched inputs to safeEstop, no missed pulse.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 79,
+   "kind": "Variable",
+   "key": "V:linkCfgDone:CFG_DONE.AndOut->CFG_RST.OrIn1",
+   "producer": {
+    "net": "Network1",
+    "order": 150,
+    "fb": "CFG_DONE.AndOut"
+   },
+   "consumer": {
+    "net": "Network3",
+    "order": 16,
+    "port": "CFG_RST.OrIn1"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "B-CFG",
+   "planBlock": "E4 Config exit CFG_DONE -> FBOr2(Step1 set)/CFG_RST(STATE_CFG reset)",
+   "safetyPath": "Config exit to Safe",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Both consumers read the pulse in the same scan k+1 -> STATE_CFG reset and Step1 set together (consistent hand-over).",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 80,
+   "kind": "Variable",
+   "key": "V:linkCoverClosed:FBAnd81.AndOut->HEALTHY_OK.AndIn4",
+   "producer": {
+    "net": "Network12",
+    "order": 94,
+    "fb": "FBAnd81.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 91,
+    "port": "HEALTHY_OK.AndIn4"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E6v",
+   "group": "D-ESTOP",
+   "planBlock": "E6v / S6-fix: HEALTHY_OK.AndIn4 duplicate of AndIn3 (min-2 input rule)",
+   "safetyPath": "Healthy permit -> Step4",
+   "extraDelayScans": 0,
+   "extraDelayMsAtStand": 0,
+   "analysis": "AND(x,x)=x with the same symbol, same timing as AndIn3 (pre-existing E2b read): zero behavioural delta.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 81,
+   "kind": "Variable",
+   "key": "V:linkCfgAccept:PA_CFG.AndOut->FBOr9.OrIn1",
+   "producer": {
+    "net": "Network1",
+    "order": 143,
+    "fb": "PA_CFG.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 50,
+    "port": "FBOr9.OrIn1"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "B-CFG",
+   "planBlock": "E4 Config entry PA_CFG -> STATE_CFG/FBRs5(Step1)/FBRs7/FBRs9 resets",
+   "safetyPath": "Config entry; LV/HV discharge latches reset",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "All 4 consumers of the 1-scan pulse read it in the same scan k+1 -> Step1 reset and STATE_CFG set in the same scan (no 0/2-state scan; stand rule 5 holds in all runs). Partial reordering of only some consumers WOULD create a 0/2-state scan - keep together.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 82,
+   "kind": "Variable",
+   "key": "V:linkSafeUpScope:SAFE_UP_SCOPE.AndOut->PA_CFG.AndIn5",
+   "producer": {
+    "net": "SafeResumption",
+    "order": 166,
+    "fb": "SAFE_UP_SCOPE.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 143,
+    "port": "PA_CFG.AndIn5"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "B-CFG",
+   "planBlock": "E4 PA_CFG guard linkSafeUpScope",
+   "safetyPath": "Config entry guard",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Guard lags 1 scan only in its GATE_001 part; Step1 and EStop guards of PA_CFG are same-scan (PS_SAFE). Coincidence scan == legal sequence \"command 1 scan earlier\".",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 83,
+   "kind": "Variable",
+   "key": "V:out_EStop_Status:FBAnd29.AndOut->FBAnd35.AndIn1",
+   "producer": {
+    "net": "Network2",
+    "order": 152,
+    "fb": "FBAnd29.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 93,
+    "port": "FBAnd35.AndIn1"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E2a",
+   "group": "D-ESTOP",
+   "planBlock": "E2a FBAnd35 (Run healthy permit) reads out_EStop_Status (Network2) - order moved by E2a",
+   "safetyPath": "Run healthy permit -> FBAnd12 -> Step4 (not the Emergency chain)",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Emergency itself is same-scan: FBEstop1 (ord 42) reads in_ES_NC_1/2 directly (probe: EMG at scan 1). Only the Step4 descent request via FBAnd12 follows 1 scan later (EMG already latched).",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 84,
+   "kind": "Variable",
+   "key": "V:linkRunDownOwner:RUN_DOWN_OWNER.RsOut->FBOrIlRunOk.OrIn3",
+   "producer": {
+    "net": "Network6",
+    "order": 336,
+    "fb": "RUN_DOWN_OWNER.RsOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 98,
+    "port": "FBOrIlRunOk.OrIn3"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E2b",
+   "group": "C-RUNDOWN",
+   "planBlock": "E2b FBOrIlRunOk (interlock tolerance while owner) -> FBAnd37 -> EStopIn3",
+   "safetyPath": "Emergency (interlock in Run)",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Tolerance starts/ends 1 scan late; start: cover opening in the owner-set scan -> Emergency (conservative); end: owner reset only at R&D entry where NotRunSu already tolerates. No wrong state.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 85,
+   "kind": "Variable",
+   "key": "V:linkDescActive:DN_ACTIVE.OrOut->PS_RUN.AndIn3",
+   "producer": {
+    "net": "Network6",
+    "order": 266,
+    "fb": "DN_ACTIVE.OrOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 116,
+    "port": "PS_RUN.AndIn3"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "C-RUNDOWN",
+   "planBlock": "E4 PS_RUN blocked while descent active",
+   "safetyPath": "PLC Run->R&D accept",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "During the first descent scan PS_RUN may still accept CMD_RUN_TO_R&D -> second run-down request OR-ed into an already set owner: no effect.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 86,
+   "kind": "Variable",
+   "key": "V:linkHltLvLost:HLT_LV.AndOut->SF_SET.OrIn7",
+   "producer": {
+    "net": "SafeResumption",
+    "order": 275,
+    "fb": "HLT_LV.AndOut"
+   },
+   "consumer": {
+    "net": "RndPhysicalCompact",
+    "order": 211,
+    "port": "SF_SET.OrIn7"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E5",
+   "group": "E-SF",
+   "planBlock": "E5 SF_SET sources linkHltRunLost / linkHltLvLost",
+   "safetyPath": "SafetyFault set",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "1-scan pulses are not lost (value persists until the producer re-writes): targeted probes Run HV/LV faulty 1-scan pulse and R&D LV faulty pulse -> SF latched at scan 2.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 87,
+   "kind": "Variable",
+   "key": "V:linkAbortActive:SU_ABORT.RsOut->PS_RND.AndIn4",
+   "producer": {
+    "net": "Network6",
+    "order": 261,
+    "fb": "SU_ABORT.RsOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 115,
+    "port": "PS_RND.AndIn4"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "C-RUNDOWN",
+   "planBlock": "E3/E4 SU_ABORT -> FBAndNotRunSu (interlock tolerance) / PS_RND (PLC R&D permit)",
+   "safetyPath": "Emergency interlock tolerance / PLC accept",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "At abort set the same consumers are already blocked by NOT recRndC_SU (prev-scan SU=TRUE), so no permissive window; at abort end permit returns 1 scan late (conservative).",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 88,
+   "kind": "Variable",
+   "key": "V:linkCfgAccept:PA_CFG.AndOut->FBOr1.OrIn1",
+   "producer": {
+    "net": "Network1",
+    "order": 143,
+    "fb": "PA_CFG.AndOut"
+   },
+   "consumer": {
+    "net": "Network3",
+    "order": 2,
+    "port": "FBOr1.OrIn1"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "B-CFG",
+   "planBlock": "E4 Config entry PA_CFG -> STATE_CFG/FBRs5(Step1)/FBRs7/FBRs9 resets",
+   "safetyPath": "Config entry; LV/HV discharge latches reset",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "All 4 consumers of the 1-scan pulse read it in the same scan k+1 -> Step1 reset and STATE_CFG set in the same scan (no 0/2-state scan; stand rule 5 holds in all runs). Partial reordering of only some consumers WOULD create a 0/2-state scan - keep together.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 89,
+   "kind": "Variable",
+   "key": "V:linkHltRunLost:RD_PROT_SET.AndOut->SF_SET.OrIn5",
+   "producer": {
+    "net": "Network6",
+    "order": 248,
+    "fb": "RD_PROT_SET.AndOut"
+   },
+   "consumer": {
+    "net": "RndPhysicalCompact",
+    "order": 211,
+    "port": "SF_SET.OrIn5"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E5",
+   "group": "E-SF",
+   "planBlock": "E5 SF_SET sources linkHltRunLost / linkHltLvLost",
+   "safetyPath": "SafetyFault set",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "1-scan pulses are not lost (value persists until the producer re-writes): targeted probes Run HV/LV faulty 1-scan pulse and R&D LV faulty pulse -> SF latched at scan 2.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 90,
+   "kind": "Variable",
+   "key": "V:linkCfgAccept:PA_CFG.AndOut->STATE_CFG.Set",
+   "producer": {
+    "net": "Network1",
+    "order": 143,
+    "fb": "PA_CFG.AndOut"
+   },
+   "consumer": {
+    "net": "Network3",
+    "order": 17,
+    "port": "STATE_CFG.Set"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "B-CFG",
+   "planBlock": "E4 Config entry PA_CFG -> STATE_CFG/FBRs5(Step1)/FBRs7/FBRs9 resets",
+   "safetyPath": "Config entry; LV/HV discharge latches reset",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "All 4 consumers of the 1-scan pulse read it in the same scan k+1 -> Step1 reset and STATE_CFG set in the same scan (no 0/2-state scan; stand rule 5 holds in all runs). Partial reordering of only some consumers WOULD create a 0/2-state scan - keep together.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 91,
+   "kind": "Variable",
+   "key": "V:linkSafetyFault:SF.RsOut->PF_OR.OrIn2",
+   "producer": {
+    "net": "RndPhysicalCompact",
+    "order": 213,
+    "fb": "SF.RsOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 144,
+    "port": "PF_OR.OrIn2"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E5",
+   "group": "E-SF",
+   "planBlock": "E5 STS_FAULT = PE_ERR OR SafetyFault (PF_OR)",
+   "safetyPath": "status to PLC only",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Status bit 1 scan late; no safety function.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 92,
+   "kind": "Variable",
+   "key": "V:linkCoverClosed:FBAnd81.AndOut->HEALTHY_OK.AndIn3",
+   "producer": {
+    "net": "Network12",
+    "order": 94,
+    "fb": "FBAnd81.AndOut"
+   },
+   "consumer": {
+    "net": "Network6",
+    "order": 91,
+    "port": "HEALTHY_OK.AndIn3"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E2b",
+   "group": "D-ESTOP",
+   "planBlock": "E2b HEALTHY_OK cover term",
+   "safetyPath": "Healthy permit -> Step4",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Cover term of HEALTHY_OK 1 scan late; Emergency path for the cover (FBOrIlRunOk, ord 98 > 94) is same-scan.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 93,
+   "kind": "Variable",
+   "key": "V:linkCfgAccept:PA_CFG.AndOut->FBOr5.OrIn1",
+   "producer": {
+    "net": "Network1",
+    "order": 143,
+    "fb": "PA_CFG.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 47,
+    "port": "FBOr5.OrIn1"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "B-CFG",
+   "planBlock": "E4 Config entry PA_CFG -> STATE_CFG/FBRs5(Step1)/FBRs7/FBRs9 resets",
+   "safetyPath": "Config entry; LV/HV discharge latches reset",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "All 4 consumers of the 1-scan pulse read it in the same scan k+1 -> Step1 reset and STATE_CFG set in the same scan (no 0/2-state scan; stand rule 5 holds in all runs). Partial reordering of only some consumers WOULD create a 0/2-state scan - keep together.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 94,
+   "kind": "Variable",
+   "key": "V:linkSafeRndScope:RND_SCOPE.AndOut->PS_RND.AndIn1",
+   "producer": {
+    "net": "SafeResumption",
+    "order": 165,
+    "fb": "RND_SCOPE.AndOut"
+   },
+   "consumer": {
+    "net": "Network1",
+    "order": 115,
+    "port": "PS_RND.AndIn1"
+   },
+   "status": "NEW",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": false,
+   "firstStage": "E4",
+   "group": "D-ESTOP",
+   "planBlock": "E4 PS_RND scope guard",
+   "safetyPath": "PLC accept in R&D",
+   "extraDelayScans": 1,
+   "extraDelayMsAtStand": 1,
+   "analysis": "Scope from Step_RnD (latched) and GATE_001; EStop/SU/SG terms of PS_RND unaffected; coincidence == legal order.",
+   "verdict": "ACCEPT"
+  },
+  {
+   "n": 95,
+   "kind": "GVL",
+   "key": "G:GVL1.recRndC_L:STATE_L.RsOut->SNAP_0.DecIn4",
+   "producer": {
+    "net": "RndPhysicalCompact",
+    "order": 245,
+    "fb": "STATE_L.RsOut"
+   },
+   "consumer": {
+    "net": "RndPhysicalCompact",
+    "order": 161,
+    "port": "SNAP_0.DecIn4"
+   },
+   "status": "PRE-EXISTING",
+   "inREF_4495a1f": false,
+   "inF1_04b45456": true,
+   "firstStage": "F1",
+   "verdict": "ACCEPT",
+   "rationale": "Same producer->consumer previous-scan read exists in F1 (matched by instanceName/block Id); not changed by E2-E6v ordering."
+  }
+ ],
+ "probes": [
+  {
+   "file": "probe.Run_R_D_green_.out.json",
+   "summary": []
+  },
+  {
+   "file": "probe.Run_R_D_PLC_.out.json",
+   "summary": []
+  },
+  {
+   "file": "probe.Run_steady.out.json",
+   "summary": []
+  },
+  {
+   "file": "probe.R_D_Run_BOTH_.out.json",
+   "summary": []
+  },
+  {
+   "file": "probe.R_D_Safe_PLC_.out.json",
+   "summary": []
+  },
+  {
+   "file": "probe.R_D_steady.out.json",
+   "summary": []
+  },
+  {
+   "file": "probe.Safe_R_D_BOTH_.out.json",
+   "summary": [
+    {
+     "T": "Safe->R&D(BOTH)",
+     "D": "ES",
+     "mode": "pulse",
+     "runs": 40,
+     "viol": 0,
+     "energyRiseAfterEmg": 0,
+     "emgNotReached": 0,
+     "pulseNotLatched": 40,
+     "maxLatency": {
+      "EMG": 0,
+      "EStopOkFalse": 0
+     },
+     "violFirst": []
+    },
+    {
+     "T": "Safe->R&D(BOTH)",
+     "D": "ES_PLC",
+     "mode": "pulse",
+     "runs": 40,
+     "viol": 0,
+     "energyRiseAfterEmg": 0,
+     "emgNotReached": 0,
+     "pulseNotLatched": 40,
+     "maxLatency": {
+      "EMG": 1,
+      "EStopOkFalse": 1
+     },
+     "violFirst": []
+    },
+    {
+     "T": "Safe->R&D(BOTH)",
+     "D": "MENTEE",
+     "mode": "pulse",
+     "runs": 40,
+     "viol": 0,
+     "energyRiseAfterEmg": 0,
+     "emgNotReached": 0,
+     "pulseNotLatched": 40,
+     "maxLatency": {
+      "EMG": 0,
+      "EStopOkFalse": 0
+     },
+     "violFirst": []
+    }
+   ]
+  },
+  {
+   "file": "probe.Safe_R_D_PLC_.out.json",
+   "summary": []
+  }
+ ],
+ "targeted": [
+  {
+   "label": "WD C1 FBK loss in steady R&D (level)",
+   "firstTrue": {
+    "WD_EMG": 1,
+    "FBAnd37": 1
+   },
+   "firstEMG": 3,
+   "firstFault": null
+  },
+  {
+   "label": "WD C1 FBK loss in steady R&D (1-scan glitch)",
+   "firstTrue": {
+    "WD_EMG": 1,
+    "FBAnd37": 1
+   },
+   "firstEMG": 3,
+   "firstFault": null
+  },
+  {
+   "label": "WD C2 FBK loss in steady Run (level)",
+   "firstTrue": {
+    "WD_EMG": 1,
+    "FBAnd37": 1
+   },
+   "firstEMG": 3,
+   "firstFault": null
+  },
+  {
+   "label": "Run: in_HV_Faulty_FBK 1-scan pulse",
+   "firstTrue": {
+    "RD_PROT_SET": 1,
+    "SF_SET": 2,
+    "SF": 2
+   },
+   "firstEMG": null,
+   "firstFault": 2,
+   "check": {
+    "rdProtSetScans": 1,
+    "sfLatchedAtEnd": true
+   }
+  },
+  {
+   "label": "Run: in_LV_Faulty_FBK 1-scan pulse",
+   "firstTrue": {
+    "RD_PROT_SET": 1,
+    "SF_SET": 2,
+    "SF": 2
+   },
+   "firstEMG": null,
+   "firstFault": 2,
+   "check": {
+    "rdProtSetScans": 1,
+    "sfLatchedAtEnd": true
+   }
+  },
+  {
+   "label": "R&D: in_LV_Faulty_FBK 1-scan pulse",
+   "firstTrue": {
+    "HLT_LV": 1,
+    "STATE_SG": 1,
+    "STATE_C": 2,
+    "SF_SET": 2,
+    "SF": 2
+   },
+   "firstEMG": null,
+   "firstFault": 2,
+   "check": {
+    "sgAndCsameScan": 23
+   }
+  },
+  {
+   "label": "R&D: in_LV_Faulty_FBK level",
+   "firstTrue": {
+    "HLT_LV": 1,
+    "STATE_SG": 1,
+    "STATE_C": 2,
+    "SF_SET": 2,
+    "SF": 2
+   },
+   "firstEMG": null,
+   "firstFault": 2,
+   "check": {
+    "sgAndCsameScan": 23
+   }
+  },
+  {
+   "label": "Run: EStop NC1 level",
+   "firstTrue": {
+    "FBAnd29": null,
+    "FBAnd35": 1
+   },
+   "firstEMG": 1,
+   "firstFault": null
+  }
+ ]
+}

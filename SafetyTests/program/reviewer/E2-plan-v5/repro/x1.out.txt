@@ -1,0 +1,27 @@
+base B43-01a from Run pre S6/EMG EMG&E=4998 SAFE&E=0 anyE=4998 end S6 EMG
+base B43-01a from RnD pre S6/EMG EMG&E=4998 SAFE&E=0 anyE=4998 end S6 EMG
+base B43-01c Bypass before e EMG&E=11888 SAFE&E=0 anyE=11888 end S6 EMG
+base Safe+ES held, Bypass S1 EMG EMG&E=0 SAFE&E=0 anyE=0
+base Safe+LV connector lost, Bypass S1 SAFE EMG&E=0 SAFE&E=0 anyE=0
+base B43-02 delta -100  pre S6/EMG firstSAFE k -1 EMG&E=2898 SAFE&E=0 anyE=2898 end S6 EMG
+base B43-02 delta -1    pre S6/EMG firstSAFE k 201 EMG&E=0 SAFE&E=2 anyE=2 end S1 SAFE
+base B43-02 delta 0     pre S6/EMG firstSAFE k 201 EMG&E=0 SAFE&E=1 anyE=1 end S1 SAFE
+base B43-02 delta 1     pre S6/EMG firstSAFE k 201 EMG&E=0 SAFE&E=0 anyE=0 end S1 SAFE
+base B43-02 delta 2     pre S6/EMG firstSAFE k 201 EMG&E=0 SAFE&E=0 anyE=0 end S1 SAFE
+base B43-02 delta held  pre S6/EMG firstSAFE k -1 EMG&E=2998 SAFE&E=0 anyE=2998 end S6 EMG
+(A) B43-01a from Run pre S6/EMG EMG&E=0 SAFE&E=0 anyE=0 end S6 EMG
+(A) B43-01a from RnD pre S6/EMG EMG&E=0 SAFE&E=0 anyE=0 end S6 EMG
+(A) B43-01c Bypass before e EMG&E=7787 SAFE&E=0 anyE=7787 end S6 EMG
+(A) Safe+ES held, Bypass S1 EMG EMG&E=0 SAFE&E=0 anyE=0
+(A) Safe+LV connector lost, Bypass S1 SAFE EMG&E=0 SAFE&E=0 anyE=0
+(A) B43-02 delta -100  pre S6/EMG firstSAFE k 201 EMG&E=0 SAFE&E=0 anyE=0 end S1 SAFE
+(A) B43-02 delta -1    pre S6/EMG firstSAFE k 201 EMG&E=0 SAFE&E=0 anyE=0 end S1 SAFE
+(A) B43-02 delta 0     pre S6/EMG firstSAFE k 201 EMG&E=0 SAFE&E=0 anyE=0 end S1 SAFE
+(A) B43-02 delta 1     pre S6/EMG firstSAFE k 201 EMG&E=0 SAFE&E=0 anyE=0 end S1 SAFE
+(A) B43-02 delta 2     pre S6/EMG firstSAFE k 201 EMG&E=0 SAFE&E=0 anyE=0 end S1 SAFE
+(A) B43-02 delta held  pre S6/EMG firstSAFE k 201 EMG&E=0 SAFE&E=0 anyE=0 end S1 SAFE
+base    boot in_LV_C1_FBK Restart-> S1/SAFE | FBK OFF + Restart -> S1/SAFE | BOTH -> S1 SAFE
+base    boot in_HV_C2_FBK Restart-> S1/SAFE | FBK OFF + Restart -> S1/SAFE | BOTH -> S1 SAFE
+gateFbk boot in_LV_C1_FBK Restart-> none/EMG | FBK OFF + Restart -> none/EMG | BOTH -> none EMG
+gateFbk boot in_HV_C2_FBK Restart-> none/EMG | FBK OFF + Restart -> none/EMG | BOTH -> none EMG
+# NOTE (reviewer): lines 'gateFbk ...' and the 's2/BOTH' columns of the 'base boot' lines are INVALID: the sketch block NOFBK (orderOfExecution 0.5) and the stale held FBK (hold cleared but plant off) make them meaningless. Only 'base boot <FBK> Restart-> S1/SAFE' is a valid observation (reproduces analyst PROBE_BOOT_FBK). B43 lines: for 'B43-01c' the EMG&E count includes the normal emergency chain before C2 OFF, not Bypass energy.

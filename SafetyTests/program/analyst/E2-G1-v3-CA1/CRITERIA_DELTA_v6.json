@@ -1,0 +1,114 @@
+{
+ "schema": "analyst-criteria-delta/v6",
+ "slice": "E2-G1-v3-CA1",
+ "role": "v2-analyst",
+ "date": "2026-10-21",
+ "task": "G1_REVIEW v3 C-A1 (+ m-1, N3/N4 reference)",
+ "base": {
+  "criteriaV2Md": "f2f11d77eba0d3b4441b42ff55666fbfc741bdd2867ebb763829328ad909eaa3",
+  "criteriaDeltaV4Md": "2b405938d002343a65afc73db8d2b83f172106462368121792c2539d70a60c04",
+  "criteriaDeltaV5Md": "29f4288f926ab2459f239ffe3414bbf94f5990d947efc1037c8c12e02ae29b47",
+  "runconfCriteriaMd": "9607276bce6f1bcd70e94da3c6251290e718b183fe99376c77b60b7baa801897",
+  "runconfCriteriaJson": "82950c555382713c85ce1877b28d43677e4998588dd38610194abe88efe18f6f"
+ },
+ "sources": {
+  "scenarioDecisions": "89d561c792053efc61603dd495937b6b4ea2572d33405dfaea7708c59c69d2f4",
+  "g1ReviewV3": "a6afcc8d116c091a89c25f5b44762b1de78780f1c40d46d6b51e935ca8fd482d",
+  "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+  "reference": "4495a1f6049f6a58ebfd436761faa84d17c8d643",
+  "referenceSalPinnedCRLF": "efddc60b1263144ae73b3d5184158100ec09c4de739dc8919309ef7b1b0dc334",
+  "referenceSgvl": "8020e3d679f97d4bff8e99742a71db0dec840fdc0adf48904cbeb0d056b5e757",
+  "testerHelperEmergency": "44d6eafad8e658b9ca3f6758608ff638e9823c6bdc71fc7b43d0aa36f8249820",
+  "testerHelperRuleL": "9942ab6ea609bae4e14bc94abfdbc5c5ae823c1a2827df6e7fff3ecc9893a450",
+  "probe": {"probe-ca1.mjs": "c6e8765c45b893058638f97e8f5326eacc76c7b86c0da80fccd11525c52cc753", "PROBE_RESULTS.json": "9068dcb8571bf125a2c6bf44333a7e46ad721e332d9e7c527228383f57a8bcff", "probe-ca1-unlock.mjs": "04795203689f86d4dcf510830af4b85d23b03a69e4bf7d672e0ab65c061f14d8", "PROBE_UNLOCK.txt": "72ccc2b48bea66268efe1cb75dba2d2d74241474b990136cbe8dfa2fc5125ac0", "note": "diagnostic, not oracle"},
+  "head": "b580920"
+ },
+ "precedence": "v6 over v5 over v4 over deltaV3 over criteriaV2; v6 §1 replaces RC-5/RC-6 of E2-runconf",
+ "offsetConvention": "e = event scan; offset 0 = output changed in scan e (as helpers/e2-rule-l.js)",
+ "criteria": [
+  {
+   "id": "RC-5", "status": "READY", "was": "BLOCKED Q-RC-RUNCONF-01", "ids": ["MOD-002", "WDG-003"],
+   "source": ["Q-RC-RUNCONF-01 «В»", "Q-ARCH-09", "CRITERIA v2 §0 TON"],
+   "definition": "k = first scan of the continuous interval C2_FBK ON and in_HV_Faulty_FBK FALSE lasting until Run",
+   "expected": {"noRunAtOrBefore": "k+99", "runAt": "k+101", "observation": "k+100"},
+   "scenarios": [
+    {"case": "i", "c2fbkOn": "u+1", "hvNormal": "<=u", "k": "u+1", "noRunAtOrBefore": "u+100", "runAt": "u+102"},
+    {"case": "ii", "c2fbkOn": "u+30", "hvNormal": "<=u", "k": "u+30", "noRunAtOrBefore": "u+129", "runAt": "u+131"},
+    {"case": "iii", "c2fbkOn": "u+400", "hvNormal": "<=u", "k": "u+400", "noRunAtOrBefore": "u+499", "runAt": "u+501"},
+    {"case": "iv", "c2fbkOn": "u+1", "hvFaultyTrueUntil": "u+2999", "k": "u+3000", "noRunAtOrBefore": "u+3099", "runAt": "u+3101"}
+   ],
+   "forbidden": ["Run counted from the C2 ON command", "Run at k", "Run without 100 ms continuous"],
+   "keeps": ["RC-2 no Run <= u+99"]
+  },
+  {
+   "id": "RC-6", "status": "READY", "was": "BLOCKED/NV Q-RC-RUNCONF-01", "ids": ["MOD-002", "WDG-003"],
+   "source": ["Q-RC-RUNCONF-01 «В»: HV dip before Run restarts the count", "Q-RC-02/Q-ARCH-05 for dips after Run"],
+   "initial": "RC-5 (i), k = u+1",
+   "variants": [
+    {"hvFaultyTrue": "g = k+50, 1 scan", "kPrime": "g+1", "noRunAtOrBefore": "k'+99", "runAt": "k'+101"},
+    {"hvFaultyTrue": "g..g+19 (20 ms)", "kPrime": "g+20", "noRunAtOrBefore": "k'+99", "runAt": "k'+101"},
+    {"hvFaultyTrue": "k+99, 1 scan", "kPrime": "k+100", "noRunAtOrBefore": "k+199", "runAt": "k+201"}
+   ],
+   "everyScanUntilRun": ["STO released", "C2 ON", "no Emergency", "no SafetyFault/fault", "no abort/rollback", "no SS1/coast"],
+   "forbidden": ["Run at k+101 (count not restarted)", "Emergency or rollback due to an HV dip before Run", "STO re-activated"],
+   "boundaries": {"dipAtKplus100": "observation", "dipAtOrAfterKplus101": "Healthy loss in Run (Q-RC-02), not RUN-CONF"},
+   "notIncluded": "C2_FBK dip after t_f -> RC-7 Emergency",
+   "blockedPart": {"question": "Q-CA1-01", "scope": "repeated dips never reaching 100 ms before t_f+30000; first Healthy near t_f+29950", "until": "observation only"}
+  },
+  {
+   "id": "L3-Safe", "status": "READY-D", "ids": ["EMG-001", "EMG-006"],
+   "source": ["EMG6-01", "decision №12", "SPEC §12-13", "rule L v4 §0.1 L3/L4", "reference 4495a1f (preserved Safe behaviour)"],
+   "initial": "steady Safe by real lifecycle, buttons released >= 2000 ms, R0, no SafetyFault",
+   "event": "in_Estop_PLC TRUE at e, held",
+   "expected": {"statusEmergencyAtOrBefore": "ref_Safe+1 (ref_Safe measured on reference 4495a1f by the same helper; analyst probe ref_Safe = +1 -> <= +2)", "latch": "until Restart", "EMGREF2": "every scan >= e", "energyOutputs": "n/a, stay at target every scan >= e", "restart": "only Safe"},
+   "notApplied": ["L2 in Safe (status and outputs)"],
+   "observation": ["LV/HV discharge request in Safe (reference and canonical: none)"],
+   "otherCauses": "ES_NC_1/2, Mentee: L1 vs in_Estop_PLC in Safe; connector in Safe: EMG-003",
+   "unlockVariant": {"expected": "Unlock FALSE in every Emergency-status scan; L1 tau_X <= tau_R for causes != in_Estop_PLC", "source": "Q-ARCH-10 (Unlock forbidden in Emergency), EMGREF(2)", "referenceDiffers": "reference keeps Unlock TRUE in Emergency in Safe while blue is held (PROBE_UNLOCK.txt) - intentional change"},
+   "canonicalFact": "status +1 in Safe (not oracle)"
+  },
+  {
+   "id": "SS1-EMG", "status": "READY-D", "ids": ["EMG-001", "EMG-011", "EMG-006"], "review": "m-1",
+   "source": ["CRITERIA v2 EMGREF-RUN order and moments as in_Estop_PLC in steady Run", "Q-ARCH-01 chain timings unchanged", "reference 4495a1f: out_SS1_DR1/2 TRUE->FALSE at +3, held to latch end; STO +7006"],
+   "polarity": "out_SS1_DRx FALSE = SS1 requested",
+   "class": "Imm, target FALSE",
+   "rules": {"L3": "<= ref+1 (ref +3 -> <= +4)", "L1": "<= tau_R same phase", "L2": "<= tau_Run+1 where SS1 released before e", "EMG-RD-L": "already requested before e -> stays FALSE every scan >= e"},
+   "invariant": "no SS1 release (FALSE->TRUE) in any scan >= e until Restart",
+   "L4": "status not later than first SS1 change",
+   "forbidden": ["SS1 later than ref+1 in Run", "SS1 re-released after e", "waiting SS1 2 s as a condition of status/latch"],
+   "diagnosticOnly": ["outPLC_STO_*", "b_EStop_Ok"]
+  },
+  {
+   "id": "NU-ii-bound", "status": "READY-D", "ids": ["EMG-002", "CVR-006", "EMG-006"], "review": "N4",
+   "source": ["Q-RC-03(a) «Б»", "Q-ARCH-01", "IL-05a", "rule L1"],
+   "definitions": {"a": "first scan >= u in X with STO of any drive released or C2 ON", "R": "same R&D base and BOTH gesture, NC TRUE; a_R = its first release scan; in_Estop_PLC TRUE from c_R = a_R+1", "d_R(o)": "tau_R(o) - c_R"},
+   "expectedDel": {"outputs": ["STO_DR1/2 active", "out_HV_C2 OFF", "out_HV_Discharge_Request", "out_LV_C1 OFF"], "window": "u + d_R(o) - 1 <= tau_X(o) <= a + 1 + d_R(o)", "measureFrom": "STO/C2: first scan >= a where the output is back at emergency target"},
+   "expectedImm": {"outputs": ["status Emergency", "C3/BMS OFF", "LV discharge", "SS1", "Unlock FALSE"], "bound": "tau_X(o) <= a + 1 + d_R(o)", "L4": true},
+   "increases": "allowed only as the acceptance itself in scans a and a+1; any increase in scan >= a+2 -> FAIL",
+   "unchanged": ["no Run >= u", "latch", "HV discharge performed", "Restart -> only Safe", "outcome (i) as v4 §C"],
+   "forbidden": ["STO released / C2 ON beyond a+1+d_R(o)", "STO back before u+d_R-1", "STO released without Emergency"],
+   "coverageNote": "not executable on reference (no R&D); on canonical raw-false R&D unreachable -> coverage RED until a candidate"
+  },
+  {
+   "id": "RUN-EMG-STATUS", "status": "READY-D", "ids": ["EMG-001", "EMG-011", "MOD-006"], "review": "N3",
+   "source": ["rule L v4 §0.1 (no absolute <= e+1, v4 T3)", "reference 4495a1f: STS_RUN at offset 0, STS_EMG from +1"],
+   "steadyRunEstopPlc": "first Emergency scan tau <= ref+1 = +2",
+   "otherCausesRun": "L1 tau_X(status) <= tau_R(status)",
+   "descents": "status is Imm, unaffected by normal sequence (v5 item 3; Q-T3-1 «А» does not change it)",
+   "stsRunRule": {"preStatusRun": "STS_RUN allowed only in scans e..tau-1; none from first Emergency scan until Restart", "preStatusNotRun": "no STS_RUN in any scan >= e (IL-05a, FBK-03, RC-7); e = r observation"},
+   "stageMemory": "not an oracle of the moment; only status and E2-01 on candidate observation points (reference shows b_Step3 until +2, b_Step3+b_Step4 at +2)",
+   "testerAction": "replace e2-emergency.js:118 with this rule; reference 4495a1f must pass"
+  },
+  {
+   "id": "EMG-RD-L", "status": "READY", "was": "READY-D disjunction, branch BLOCKED Q-T3-1", "ids": ["EMG-001", "EMG-002", "EMG-004", "EMG-011", "MOD-002"],
+   "source": ["SCENARIO_DECISIONS Q-T3-1 «А»: moment = min(normal descent moment, emergency chain moment from event)"],
+   "change": "v5 §2 item 2 narrowed to branch (A): tau in [q_N, q_N+1] when q_N < e+q_R; branch (B) now FAIL; item 1 unchanged ([e+q_R, e+q_R+1] when q_N >= e+q_R)",
+   "rndToSafe": "C1 OFF window [m, m+1], m = min(normal MOD5-01 moment, e + chain C1 offset)",
+   "qN": "normative only (STP-A/B), never from the no-event trace"
+  }
+ ],
+ "questions": ["Q-CA1-01"],
+ "blocked": [{"criterion": "RC-6", "part": "watchdog 30 s vs restarting 100 ms count", "question": "Q-CA1-01"}],
+ "limits": "requirements criteria; SAL software model 1 ms, global orderOfExecution; reference numbers are measurements of the tester helper on pinned reference, to be pinned in tests with SHA; no native/target/hardware claims"
+}

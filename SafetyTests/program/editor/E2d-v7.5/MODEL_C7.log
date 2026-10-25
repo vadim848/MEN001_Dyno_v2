@@ -1,0 +1,27 @@
+== E2d-v7.4.1 candidate a5acf291 (= mutant M-E2d-23)
+A R&D, PLC (1,1) held 5 s                                  C2 4997 (first +3) STO 4396 Run 4397 phases S_RnD,S3
+B R&D, PLC (1,1) pulse 300 ms (KF-5)                       C2 4997 (first +3) STO 0 Run 0 phases S_RnD
+C FFS: R&D, (1,1) held, NC1 FALSE 200 ms at +1, restored   C2 4798 (first +202) STO 4197 Run 4198 phases S_RnD,S3
+D positive: R&D, BOTH 1.1 s -> Run                         C2 3999 (first +1001) STO 3999 Run 3399 phases S_RnD,S3
+E positive: Safe, PLC (1,0) 600 ms -> R&D (legacy kept)    C2 0 (first +-) STO 0 Run 0 phases S1,S12,S_RnD
+   end phase S_RnD
+F KF-3-DESC: Run(S3) green down, (1,1) held 10 s           C2 9894 (first +106) STO 9295 Run 9399 phases S3,S_RnD
+   end phase S3
+== E2c ee8439ae (legacy (1,1) active; LEG11-OFF expected FAIL)
+A R&D, PLC (1,1) held 5 s                                  C2 4997 (first +3) STO 4396 Run 4397 phases S_RnD,S3
+B R&D, PLC (1,1) pulse 300 ms (KF-5)                       C2 4997 (first +3) STO 0 Run 0 phases S_RnD
+C FFS: R&D, (1,1) held, NC1 FALSE 200 ms at +1, restored   C2 4798 (first +202) STO 4197 Run 4198 phases S_RnD,S3
+D positive: R&D, BOTH 1.1 s -> Run                         C2 3999 (first +1001) STO 3999 Run 3399 phases S_RnD,S3
+E positive: Safe, PLC (1,0) 600 ms -> R&D (legacy kept)    C2 0 (first +-) STO 0 Run 0 phases S1,S12,S_RnD
+   end phase S_RnD
+F KF-3-DESC: Run(S3) green down, (1,1) held 10 s           C2 9894 (first +106) STO 9295 Run 9399 phases S3,S_RnD
+   end phase S3
+== E2d v7.5 candidate (real files, no in-memory change)
+A R&D, PLC (1,1) held 5 s                                  C2 0 (first +-) STO 0 Run 0 phases S_RnD
+B R&D, PLC (1,1) pulse 300 ms (KF-5)                       C2 0 (first +-) STO 0 Run 0 phases S_RnD
+C FFS: R&D, (1,1) held, NC1 FALSE 200 ms at +1, restored   C2 0 (first +-) STO 0 Run 0 phases S_RnD
+D positive: R&D, BOTH 1.1 s -> Run                         C2 3999 (first +1001) STO 3999 Run 3399 phases S_RnD,S3
+E positive: Safe, PLC (1,0) 600 ms -> R&D (legacy kept)    C2 0 (first +-) STO 0 Run 0 phases S1,S12,S_RnD
+   end phase S_RnD
+F KF-3-DESC: Run(S3) green down, (1,1) held 10 s           C2 0 (first +-) STO 0 Run 103 phases S3,S_RnD
+   end phase S_RnD

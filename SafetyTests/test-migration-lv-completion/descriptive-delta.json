@@ -1,0 +1,193 @@
+{
+  "audit": "PASS",
+  "counts": {
+    "old": 255,
+    "new": 254,
+    "edgesOld": 342,
+    "edgesNew": 343,
+    "portsOld": 2175,
+    "portsNew": 2172,
+    "globalsOld": 201,
+    "globalsNew": 200
+  },
+  "retired": [
+    "//SafeResumption/RND_DOWN_STEP2_OWNER"
+  ],
+  "added": [],
+  "edges": [
+    [
+      "REMOVE",
+      "//Network12/FBDecouple1/DecOut3",
+      "//SafeResumption/RND_DOWN_STEP2_OWNER/Set"
+    ],
+    [
+      "REMOVE",
+      "//RndPhysicalCompact/GATE_001/AndOut",
+      "//RndPhysicalCompact/STATE_SG/Reset"
+    ],
+    [
+      "REMOVE",
+      "//SafeResumption/RND_DOWN_STEP2_OWNER/RsOut",
+      "//Network5/FBAnd1/AndIn4"
+    ],
+    [
+      "ADD",
+      "//Network1/FBRs1/RsOut",
+      "//Network12/FBAnd15/AndIn3"
+    ],
+    [
+      "ADD",
+      "//Network1/FBRs2/RsOut",
+      "//Network12/FBAnd15/AndIn4"
+    ],
+    [
+      "ADD",
+      "//Network1/FBAndLvCurrentPermit/AndOut",
+      "//Network12/FBAnd15/AndIn6"
+    ],
+    [
+      "ADD",
+      "//SafeResumption/RND_SCOPE/AndOut",
+      "//RndPhysicalCompact/STATE_SG/Reset"
+    ]
+  ],
+  "aliases": [
+    [
+      "in_Mentee_EStop",
+      "ADD",
+      "//Network12/FBAnd15/AndIn7"
+    ],
+    [
+      "in_HV_C2_FBK",
+      "ADD",
+      "//Network12/FBAnd15/AndIn5"
+    ],
+    [
+      "in_False_SI2_CH8",
+      "ADD",
+      "//Network12/FBAnd15/AndIn8"
+    ]
+  ],
+  "portAttributes": [
+    {
+      "path": "//Network3/FBOr2/OrIn5",
+      "attr": "channelInterface",
+      "before": "Deactivated",
+      "after": "Activated"
+    },
+    {
+      "path": "//Network3/FBOr2/OrIn5",
+      "attr": "deactivate1",
+      "after": "Break Contact (NC)"
+    },
+    {
+      "path": "//Network3/FBOr4/OrIn2",
+      "attr": "channelInterface",
+      "before": "Activated",
+      "after": "Deactivated"
+    },
+    {
+      "path": "//Network5/FBAnd1/AndIn4",
+      "attr": "channelInterface",
+      "before": "Activated",
+      "after": "Deactivated"
+    },
+    {
+      "path": "//Network12/FBAnd15/AndIn3",
+      "attr": "channelInterface",
+      "before": "Deactivated",
+      "after": "Activated"
+    },
+    {
+      "path": "//Network12/FBAnd15/AndIn3",
+      "attr": "deactivate1",
+      "after": "Make Contact (NO)"
+    },
+    {
+      "path": "//Network12/FBAnd15/AndIn4",
+      "attr": "channelInterface",
+      "before": "Deactivated",
+      "after": "Activated"
+    },
+    {
+      "path": "//Network12/FBAnd15/AndIn4",
+      "attr": "deactivate1",
+      "after": "Make Contact (NO)"
+    },
+    {
+      "path": "//Network12/FBAnd15/AndIn5",
+      "attr": "channelInterface",
+      "before": "Deactivated",
+      "after": "Activated"
+    },
+    {
+      "path": "//Network12/FBAnd15/AndIn5",
+      "attr": "deactivate1",
+      "after": "Make Contact (NO)"
+    },
+    {
+      "path": "//Network12/FBAnd15/AndIn6",
+      "attr": "channelInterface",
+      "before": "Deactivated",
+      "after": "Activated"
+    },
+    {
+      "path": "//Network12/FBAnd15/AndIn6",
+      "attr": "deactivate1",
+      "after": "Break Contact (NC)"
+    },
+    {
+      "path": "//Network12/FBAnd15/AndIn7",
+      "attr": "channelInterface",
+      "before": "Deactivated",
+      "after": "Activated"
+    },
+    {
+      "path": "//Network12/FBAnd15/AndIn7",
+      "attr": "deactivate1",
+      "after": "Make Contact (NO)"
+    },
+    {
+      "path": "//Network12/FBAnd15/AndIn8",
+      "attr": "channelInterface",
+      "before": "Deactivated",
+      "after": "Activated"
+    },
+    {
+      "path": "//Network12/FBAnd15/AndIn8",
+      "attr": "deactivate1",
+      "after": "Make Contact (NO)"
+    }
+  ],
+  "orders": [
+    [
+      "//Network1/FBAnd1",
+      96
+    ],
+    [
+      "//Network1/FBOr17",
+      222
+    ],
+    [
+      "//Network1/FBOr18",
+      223
+    ],
+    [
+      "//Network1/FBAndUnlockHold",
+      254
+    ],
+    [
+      "//Network3/FBOr2",
+      19
+    ],
+    [
+      "//Network3/FBRs1",
+      20
+    ],
+    [
+      "//Network12/FBAnd15",
+      18
+    ]
+  ],
+  "limits": "Descriptive source delta only; must justify every change from counted plan before expected projection. No oracle refreshed."
+}

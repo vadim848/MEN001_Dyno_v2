@@ -1,0 +1,11 @@
+import fs from 'node:fs';import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'../../..');
+const dest=path.join(import.meta.dirname,'sandbox/v2');fs.mkdirSync(dest,{recursive:true});
+const source=path.join(root,'SafetyTests'),target=path.join(dest,'SafetyTests');fs.mkdirSync(target,{recursive:true});
+for(const e of fs.readdirSync(source,{withFileTypes:true}))if(e.isFile()||['src','test','scripts','fixtures','scenarios','docs'].includes(e.name))fs.cpSync(path.join(source,e.name),path.join(target,e.name),{recursive:true});
+const sub='MEN001_Dyno/Safety_Dyno',out=path.join(dest,sub);fs.mkdirSync(path.join(out,'TwinSafeGroup1'),{recursive:true});fs.mkdirSync(path.join(out,'GVLs'),{recursive:true});
+fs.copyFileSync(path.join(import.meta.dirname,'../editor/candidate/TwinSafeGroup1.sal'),path.join(out,'TwinSafeGroup1/TwinSafeGroup1.sal'));
+fs.copyFileSync(path.join(import.meta.dirname,'../editor/candidate/GVL1.sgvl'),path.join(out,'GVLs/GVL1.sgvl'));
+const ref=path.join(import.meta.dirname,'sandbox/MEN001_Dyno/MEN001_Dyno/Safety_Dyno/TwinSafeGroup1');fs.mkdirSync(ref,{recursive:true});
+fs.copyFileSync(path.resolve(root,'../MEN001_Dyno/MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal'),path.join(ref,'TwinSafeGroup1.sal'));
+console.log(target);

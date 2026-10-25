@@ -1,0 +1,105 @@
+TAP version 13
+# Subtest: F1-green-qualified-lateblue500-cannot-cancel
+ok 1 - F1-green-qualified-lateblue500-cannot-cancel
+  ---
+  duration_ms: 4649.0641
+  type: 'test'
+  ...
+# Subtest: F1-green-qualified-lateblue600-cannot-cancel
+ok 2 - F1-green-qualified-lateblue600-cannot-cancel
+  ---
+  duration_ms: 4234.9081
+  type: 'test'
+  ...
+# Subtest: F1-blue-qualified-lategreen500-cannot-become-down
+ok 3 - F1-blue-qualified-lategreen500-cannot-become-down
+  ---
+  duration_ms: 4760.593
+  type: 'test'
+  ...
+# Subtest: F1-blue-qualified-lategreen600-cannot-become-down
+ok 4 - F1-blue-qualified-lategreen600-cannot-become-down
+  ---
+  duration_ms: 4741.0634
+  type: 'test'
+  ...
+# Subtest: F1-real-lock-producer-rejects-green-and-doesnotqueue
+not ok 5 - F1-real-lock-producer-rejects-green-and-doesnotqueue
+  ---
+  duration_ms: 5200.9315
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\mut\\MU05\\SafetyTests\\test\\current-f1-lock-and-q500.test.js:116:26'
+  failureType: 'testCodeFailure'
+  error: |-
+    F1-real-lock-producer-rejects-green-and-doesnotqueue times={"green":7417,"off":7922,"fresh":10033}
+    + actual - expected
+    
+    + [
+    +   {
+    +     actual: true,
+    +     expected: false,
+    +     label: 'qualifiedgreen while actuallockTRUE cannot own physicaldown'
+    +   },
+    +   {
+    +     actual: true,
+    +     expected: false,
+    +     label: 'clearinglock never queues oldgreen authorization'
+    +   }
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0:
+      label: 'qualifiedgreen while actuallockTRUE cannot own physicaldown'
+      actual: true
+      expected: false
+    1:
+      label: 'clearinglock never queues oldgreen authorization'
+      actual: true
+      expected: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/mut/MU05/SafetyTests/test/current-f1-lock-and-q500.test.js:119:9)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F1-green-qualified-lateblue501-cannot-cancel
+ok 6 - F1-green-qualified-lateblue501-cannot-cancel
+  ---
+  duration_ms: 3774.6357
+  type: 'test'
+  ...
+# Subtest: F1-green-lateblue499-before-single-no-command
+ok 7 - F1-green-lateblue499-before-single-no-command
+  ---
+  duration_ms: 5846.01
+  type: 'test'
+  ...
+# Subtest: F1-blue-qualified-lategreen499-cannot-become-down
+ok 8 - F1-blue-qualified-lategreen499-cannot-become-down
+  ---
+  duration_ms: 4139.1987
+  type: 'test'
+  ...
+# Subtest: F1-blue-qualified-lategreen501-cannot-become-down
+ok 9 - F1-blue-qualified-lategreen501-cannot-become-down
+  ---
+  duration_ms: 4106.6101
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 8
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 41565.4025

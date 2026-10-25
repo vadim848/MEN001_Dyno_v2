@@ -1,0 +1,868 @@
+{
+ "generatedAt": "2026-10-21T21:02:50.732Z",
+ "plan": "program/stand/E0-pilot-F1/sal-mutation-plan.pilot-f1.json",
+ "planSha256": "83f7a34fdc9591b060d9f02b56875ca50da0b9b1838f54de5d0ff849a22dc3ae",
+ "source": {
+  "salSha256": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "sgvlSha256": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+  "diagramSha256": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603"
+ },
+ "patches": [],
+ "detectors": {
+  "testFiles": [
+   "current-door-interlock.test.js",
+   "current-early-sto.test.js",
+   "current-estop-native-pairs.test.js",
+   "current-hv-set-permit.test.js",
+   "current-mentee-set-permit.test.js",
+   "current-plc-pulse-set-permit.test.js",
+   "current-rnd-down-no-reenergy.test.js",
+   "current-rnd-physical-integration.test.js",
+   "current-safe-run-gestures.test.js",
+   "current-step12-lv-permit.test.js",
+   "current-timer-one-ms.test.js",
+   "current-unlock-estop-permit.test.js",
+   "current-unlock-hold.test.js",
+   "current-code-checks.test.js",
+   "sal-runtime.test.js",
+   "sal-semantics.test.js",
+   "timer-observed-clock.test.js"
+  ],
+  "resolvedTestFiles": [
+   "current-door-interlock.test.js",
+   "current-early-sto.test.js",
+   "current-estop-native-pairs.test.js",
+   "current-hv-set-permit.test.js",
+   "current-mentee-set-permit.test.js",
+   "current-plc-pulse-set-permit.test.js",
+   "current-rnd-down-no-reenergy.test.js",
+   "current-rnd-physical-integration.test.js",
+   "current-safe-run-gestures.test.js",
+   "current-step12-lv-permit.test.js",
+   "current-timer-one-ms.test.js",
+   "current-unlock-estop-permit.test.js",
+   "current-unlock-hold.test.js",
+   "current-code-checks.test.js",
+   "sal-runtime.test.js",
+   "sal-semantics.test.js",
+   "timer-observed-clock.test.js"
+  ],
+  "behaviouralTests": [
+   "^DOOR06 (component|actual|existing emergency)",
+   "^EARLYSTO (drive[12]|physical)",
+   "^R3PAIR ",
+   "^MENTEE05 (paired|HV: (all|already)|LV: (all|already))",
+   "^PLCPULSE ",
+   "^RNDPHYS ",
+   "^SR-",
+   "^current SAL",
+   "^UNLOCK07 (component|final component|[^ ]+: healthy|[^ ]+/[^ ]+: fault)",
+   "^CVR (current SAL|approved)",
+   "^(HV|LV) current SAL",
+   "^SAL-RUN0[23]",
+   "^SAL-SEM02",
+   "^Current SAL TON adapter"
+  ],
+  "behaviouralPatternMatches": {
+   "^DOOR06 (component|actual|existing emergency)": 33,
+   "^EARLYSTO (drive[12]|physical)": 86,
+   "^R3PAIR ": 86,
+   "^MENTEE05 (paired|HV: (all|already)|LV: (all|already))": 12,
+   "^PLCPULSE ": 48,
+   "^RNDPHYS ": 69,
+   "^SR-": 15,
+   "^current SAL": 4,
+   "^UNLOCK07 (component|final component|[^ ]+: healthy|[^ ]+/[^ ]+: fault)": 25,
+   "^CVR (current SAL|approved)": 5,
+   "^(HV|LV) current SAL": 4,
+   "^SAL-RUN0[23]": 2,
+   "^SAL-SEM02": 1,
+   "^Current SAL TON adapter": 1
+  },
+  "behaviouralPatternPassingMatches": {
+   "^DOOR06 (component|actual|existing emergency)": 33,
+   "^EARLYSTO (drive[12]|physical)": 86,
+   "^R3PAIR ": 86,
+   "^MENTEE05 (paired|HV: (all|already)|LV: (all|already))": 12,
+   "^PLCPULSE ": 48,
+   "^RNDPHYS ": 69,
+   "^SR-": 15,
+   "^current SAL": 4,
+   "^UNLOCK07 (component|final component|[^ ]+: healthy|[^ ]+/[^ ]+: fault)": 25,
+   "^CVR (current SAL|approved)": 5,
+   "^(HV|LV) current SAL": 4,
+   "^SAL-RUN0[23]": 2,
+   "^SAL-SEM02": 1,
+   "^Current SAL TON adapter": 1
+  },
+  "softwareCheck": false
+ },
+ "baseline": {
+  "tests": 508,
+  "notPassing": [],
+  "softwareCheckNotPass": null
+ },
+ "durationMs": 711454,
+ "summary": {
+  "KILLED": 2,
+  "STRUCTURAL-ONLY": 7,
+  "SURVIVED": 0,
+  "INVALID": 0
+ },
+ "results": [
+  {
+   "id": "IL-01",
+   "guard": "InterLock",
+   "op": "deactivate-input",
+   "block": "//Network12/FBAnd16",
+   "port": "AndIn1",
+   "rationale": "Energy producer loses in_InterLock_NC_1 term (DOOR06 decision)",
+   "change": {
+    "block": "//Network12/FBAnd16",
+    "port": "AndIn1",
+    "attr": "channelInterface",
+    "before": "Activated",
+    "after": "Deactivated",
+    "offset": 855483
+   },
+   "verification": {
+    "parsedDelta": "//Network12/FBAnd16/AndIn1",
+    "attribute": "channelInterface"
+   },
+   "mutantSha256": "9a58aca3364f9f0e8939884bbeae8381db7b932ac103d64b1d80aa2ba28820b8",
+   "newlyFailing": [
+    {
+     "key": "current-door-interlock.test.js :: DOOR06 exact alias targets separate solenoid consumers from energy InterLocks",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "Expected values to be strictly deep-equal:",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-door-interlock.test.js :: DOOR06 component Doorfalse/NC1false/NC2true/Falsefalse",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "energy producer guard must use both InterLock NC, independently of DoorMonitor",
+     "category": "behavioural-assertion",
+     "behavioural": true
+    },
+    {
+     "key": "current-door-interlock.test.js :: DOOR06 component Doortrue/NC1false/NC2true/Falsefalse",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "energy producer guard must use both InterLock NC, independently of DoorMonitor",
+     "category": "behavioural-assertion",
+     "behavioural": true
+    },
+    {
+     "key": "current-door-interlock.test.js :: DOOR06 actual HV chain existing-PLC-levels/Doorfalse/NC1false/NC2true",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "upstream producer must also enforce both NC; downstream guard alone is insufficient",
+     "category": "behavioural-assertion",
+     "behavioural": true
+    },
+    {
+     "key": "current-door-interlock.test.js :: DOOR06 actual HV chain existing-PLC-levels/Doortrue/NC1false/NC2true",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "upstream producer must also enforce both NC; downstream guard alone is insufficient",
+     "category": "behavioural-assertion",
+     "behavioural": true
+    },
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 sole Set path and unchanged aggregate sources, exact reviewed223 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 SGVL declarations and writers unchanged, composed target-usage changes",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-step12-lv-permit.test.js :: LV LV254 sole Set path and original aggregate sources, reviewed222 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-unlock-hold.test.js :: CVR LV254 sole final writer254, exact composed order manifest, timers and physical aliases",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    }
+   ],
+   "killedBy": [
+    "current-door-interlock.test.js :: DOOR06 component Doorfalse/NC1false/NC2true/Falsefalse",
+    "current-door-interlock.test.js :: DOOR06 component Doortrue/NC1false/NC2true/Falsefalse",
+    "current-door-interlock.test.js :: DOOR06 actual HV chain existing-PLC-levels/Doorfalse/NC1false/NC2true",
+    "current-door-interlock.test.js :: DOOR06 actual HV chain existing-PLC-levels/Doortrue/NC1false/NC2true"
+   ],
+   "categories": {
+    "behavioural-assertion": 4,
+    "swcheck-behavioural-fail": 0,
+    "non-behavioural-assertion": 5,
+    "exception": 0,
+    "hook-cancel": 0,
+    "file-level": 0,
+    "absent": 0,
+    "swcheck-structural": 0,
+    "swcheck-error": 0
+   },
+   "verdict": "KILLED"
+  },
+  {
+   "id": "IL-02",
+   "guard": "InterLock",
+   "op": "deactivate-input",
+   "block": "//Network12/FBAnd16",
+   "port": "AndIn3",
+   "rationale": "Energy producer loses in_InterLock_NC_2 term",
+   "change": {
+    "block": "//Network12/FBAnd16",
+    "port": "AndIn3",
+    "attr": "channelInterface",
+    "before": "Activated",
+    "after": "Deactivated",
+    "offset": 856262
+   },
+   "verification": {
+    "parsedDelta": "//Network12/FBAnd16/AndIn3",
+    "attribute": "channelInterface"
+   },
+   "mutantSha256": "390c63988ea7c7e32392a1f884fe8c41c0b0107592cacbe93860b642e1b1f2b6",
+   "newlyFailing": [
+    {
+     "key": "current-door-interlock.test.js :: DOOR06 exact alias targets separate solenoid consumers from energy InterLocks",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "Expected values to be strictly deep-equal:",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-door-interlock.test.js :: DOOR06 component Doorfalse/NC1true/NC2false/Falsefalse",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "energy producer guard must use both InterLock NC, independently of DoorMonitor",
+     "category": "behavioural-assertion",
+     "behavioural": true
+    },
+    {
+     "key": "current-door-interlock.test.js :: DOOR06 component Doortrue/NC1true/NC2false/Falsefalse",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "energy producer guard must use both InterLock NC, independently of DoorMonitor",
+     "category": "behavioural-assertion",
+     "behavioural": true
+    },
+    {
+     "key": "current-door-interlock.test.js :: DOOR06 actual HV chain existing-PLC-levels/Doorfalse/NC1true/NC2false",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "upstream producer must also enforce both NC; downstream guard alone is insufficient",
+     "category": "behavioural-assertion",
+     "behavioural": true
+    },
+    {
+     "key": "current-door-interlock.test.js :: DOOR06 actual HV chain existing-PLC-levels/Doortrue/NC1true/NC2false",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "upstream producer must also enforce both NC; downstream guard alone is insufficient",
+     "category": "behavioural-assertion",
+     "behavioural": true
+    },
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 sole Set path and unchanged aggregate sources, exact reviewed223 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 SGVL declarations and writers unchanged, composed target-usage changes",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-step12-lv-permit.test.js :: LV LV254 sole Set path and original aggregate sources, reviewed222 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-unlock-hold.test.js :: CVR LV254 sole final writer254, exact composed order manifest, timers and physical aliases",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    }
+   ],
+   "killedBy": [
+    "current-door-interlock.test.js :: DOOR06 component Doorfalse/NC1true/NC2false/Falsefalse",
+    "current-door-interlock.test.js :: DOOR06 component Doortrue/NC1true/NC2false/Falsefalse",
+    "current-door-interlock.test.js :: DOOR06 actual HV chain existing-PLC-levels/Doorfalse/NC1true/NC2false",
+    "current-door-interlock.test.js :: DOOR06 actual HV chain existing-PLC-levels/Doortrue/NC1true/NC2false"
+   ],
+   "categories": {
+    "behavioural-assertion": 4,
+    "swcheck-behavioural-fail": 0,
+    "non-behavioural-assertion": 5,
+    "exception": 0,
+    "hook-cancel": 0,
+    "file-level": 0,
+    "absent": 0,
+    "swcheck-structural": 0,
+    "swcheck-error": 0
+   },
+   "verdict": "KILLED"
+  },
+  {
+   "id": "IL-04",
+   "guard": "InterLock",
+   "op": "deactivate-input",
+   "block": "//Network2/FBAnd1",
+   "port": "AndIn5",
+   "rationale": "Network2 connector/interlock aggregate loses NC1",
+   "change": {
+    "block": "//Network2/FBAnd1",
+    "port": "AndIn5",
+    "attr": "channelInterface",
+    "before": "Activated",
+    "after": "Deactivated",
+    "offset": 220472
+   },
+   "verification": {
+    "parsedDelta": "//Network2/FBAnd1/AndIn5",
+    "attribute": "channelInterface"
+   },
+   "mutantSha256": "fd81ababd64890a42e40fb7f3777787f18241910c94743554c469b4fea1bcb44",
+   "newlyFailing": [
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 sole Set path and unchanged aggregate sources, exact reviewed223 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 SGVL declarations and writers unchanged, composed target-usage changes",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-step12-lv-permit.test.js :: LV LV254 sole Set path and original aggregate sources, reviewed222 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-unlock-hold.test.js :: CVR LV254 sole final writer254, exact composed order manifest, timers and physical aliases",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    }
+   ],
+   "killedBy": [],
+   "categories": {
+    "behavioural-assertion": 0,
+    "swcheck-behavioural-fail": 0,
+    "non-behavioural-assertion": 4,
+    "exception": 0,
+    "hook-cancel": 0,
+    "file-level": 0,
+    "absent": 0,
+    "swcheck-structural": 0,
+    "swcheck-error": 0
+   },
+   "verdict": "STRUCTURAL-ONLY"
+  },
+  {
+   "id": "IL-05",
+   "guard": "InterLock",
+   "op": "deactivate-input",
+   "block": "//Network2/FBAnd1",
+   "port": "AndIn6",
+   "rationale": "Network2 connector/interlock aggregate loses NC2",
+   "change": {
+    "block": "//Network2/FBAnd1",
+    "port": "AndIn6",
+    "attr": "channelInterface",
+    "before": "Activated",
+    "after": "Deactivated",
+    "offset": 220863
+   },
+   "verification": {
+    "parsedDelta": "//Network2/FBAnd1/AndIn6",
+    "attribute": "channelInterface"
+   },
+   "mutantSha256": "c29a017bc3805bf5751fd5f02c115505cc3471aa543b17cbed48002864ad983f",
+   "newlyFailing": [
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 sole Set path and unchanged aggregate sources, exact reviewed223 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 SGVL declarations and writers unchanged, composed target-usage changes",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-step12-lv-permit.test.js :: LV LV254 sole Set path and original aggregate sources, reviewed222 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-unlock-hold.test.js :: CVR LV254 sole final writer254, exact composed order manifest, timers and physical aliases",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    }
+   ],
+   "killedBy": [],
+   "categories": {
+    "behavioural-assertion": 0,
+    "swcheck-behavioural-fail": 0,
+    "non-behavioural-assertion": 4,
+    "exception": 0,
+    "hook-cancel": 0,
+    "file-level": 0,
+    "absent": 0,
+    "swcheck-structural": 0,
+    "swcheck-error": 0
+   },
+   "verdict": "STRUCTURAL-ONLY"
+  },
+  {
+   "id": "IL-06",
+   "guard": "InterLock",
+   "op": "deactivate-input",
+   "block": "//Network6/FBAnd9",
+   "port": "AndIn2",
+   "rationale": "Network6 guard loses NC1",
+   "change": {
+    "block": "//Network6/FBAnd9",
+    "port": "AndIn2",
+    "attr": "channelInterface",
+    "before": "Activated",
+    "after": "Deactivated",
+    "offset": 543931
+   },
+   "verification": {
+    "parsedDelta": "//Network6/FBAnd9/AndIn2",
+    "attribute": "channelInterface"
+   },
+   "mutantSha256": "d4203eff336400346657e989eb35a530de86dc4fa416d5da41356746ed6dcabc",
+   "newlyFailing": [
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 sole Set path and unchanged aggregate sources, exact reviewed223 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 SGVL declarations and writers unchanged, composed target-usage changes",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-step12-lv-permit.test.js :: LV LV254 sole Set path and original aggregate sources, reviewed222 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-unlock-hold.test.js :: CVR LV254 sole final writer254, exact composed order manifest, timers and physical aliases",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    }
+   ],
+   "killedBy": [],
+   "categories": {
+    "behavioural-assertion": 0,
+    "swcheck-behavioural-fail": 0,
+    "non-behavioural-assertion": 4,
+    "exception": 0,
+    "hook-cancel": 0,
+    "file-level": 0,
+    "absent": 0,
+    "swcheck-structural": 0,
+    "swcheck-error": 0
+   },
+   "verdict": "STRUCTURAL-ONLY"
+  },
+  {
+   "id": "IL-07",
+   "guard": "InterLock",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_001",
+   "port": "AndIn5",
+   "rationale": "R&D gate permit loses NC1",
+   "change": {
+    "block": "//RndPhysicalCompact/GATE_001",
+    "port": "AndIn5",
+    "attr": "channelInterface",
+    "before": "Activated",
+    "after": "Deactivated",
+    "offset": 887891
+   },
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_001/AndIn5",
+    "attribute": "channelInterface"
+   },
+   "mutantSha256": "02ca7e3d6064b127cc007cf58bb6b59d921af6d5b6da1e82c6d4d4424114f5a6",
+   "newlyFailing": [
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 sole Set path and unchanged aggregate sources, exact reviewed223 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 SGVL declarations and writers unchanged, composed target-usage changes",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-step12-lv-permit.test.js :: LV LV254 sole Set path and original aggregate sources, reviewed222 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-unlock-hold.test.js :: CVR LV254 sole final writer254, exact composed order manifest, timers and physical aliases",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    }
+   ],
+   "killedBy": [],
+   "categories": {
+    "behavioural-assertion": 0,
+    "swcheck-behavioural-fail": 0,
+    "non-behavioural-assertion": 4,
+    "exception": 0,
+    "hook-cancel": 0,
+    "file-level": 0,
+    "absent": 0,
+    "swcheck-structural": 0,
+    "swcheck-error": 0
+   },
+   "verdict": "STRUCTURAL-ONLY"
+  },
+  {
+   "id": "ES-06",
+   "guard": "EStop",
+   "op": "deactivate-input",
+   "block": "//Network3/FBAnd1",
+   "port": "AndIn2",
+   "rationale": "Network3 consumer ignores b_EStop_Ok",
+   "change": {
+    "block": "//Network3/FBAnd1",
+    "port": "AndIn2",
+    "attr": "channelInterface",
+    "before": "Activated",
+    "after": "Deactivated",
+    "offset": 340714
+   },
+   "verification": {
+    "parsedDelta": "//Network3/FBAnd1/AndIn2",
+    "attribute": "channelInterface"
+   },
+   "mutantSha256": "4138a6322c86c5cc2df1bf9ec3c2878a867f2538b022c2a2dc25bd338259b93e",
+   "newlyFailing": [
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 sole Set path and unchanged aggregate sources, exact reviewed223 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 SGVL declarations and writers unchanged, composed target-usage changes",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-step12-lv-permit.test.js :: LV LV254 sole Set path and original aggregate sources, reviewed222 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-unlock-hold.test.js :: CVR LV254 sole final writer254, exact composed order manifest, timers and physical aliases",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    }
+   ],
+   "killedBy": [],
+   "categories": {
+    "behavioural-assertion": 0,
+    "swcheck-behavioural-fail": 0,
+    "non-behavioural-assertion": 4,
+    "exception": 0,
+    "hook-cancel": 0,
+    "file-level": 0,
+    "absent": 0,
+    "swcheck-structural": 0,
+    "swcheck-error": 0
+   },
+   "verdict": "STRUCTURAL-ONLY"
+  },
+  {
+   "id": "ES-07",
+   "guard": "EStop",
+   "op": "deactivate-input",
+   "block": "//Network5/FBAnd1",
+   "port": "AndIn3",
+   "rationale": "Network5 consumer ignores b_EStop_Ok",
+   "change": {
+    "block": "//Network5/FBAnd1",
+    "port": "AndIn3",
+    "attr": "channelInterface",
+    "before": "Activated",
+    "after": "Deactivated",
+    "offset": 424326
+   },
+   "verification": {
+    "parsedDelta": "//Network5/FBAnd1/AndIn3",
+    "attribute": "channelInterface"
+   },
+   "mutantSha256": "0462930283ed7fcac9709731e0750603c50325f0bdab7919511b74d9c64fb326",
+   "newlyFailing": [
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 sole Set path and unchanged aggregate sources, exact reviewed223 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 SGVL declarations and writers unchanged, composed target-usage changes",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-step12-lv-permit.test.js :: LV LV254 sole Set path and original aggregate sources, reviewed222 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-unlock-hold.test.js :: CVR LV254 sole final writer254, exact composed order manifest, timers and physical aliases",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    }
+   ],
+   "killedBy": [],
+   "categories": {
+    "behavioural-assertion": 0,
+    "swcheck-behavioural-fail": 0,
+    "non-behavioural-assertion": 4,
+    "exception": 0,
+    "hook-cancel": 0,
+    "file-level": 0,
+    "absent": 0,
+    "swcheck-structural": 0,
+    "swcheck-error": 0
+   },
+   "verdict": "STRUCTURAL-ONLY"
+  },
+  {
+   "id": "UL-05",
+   "guard": "Unlock",
+   "op": "deactivate-input",
+   "block": "//Network12/FBAnd2",
+   "port": "AndIn3",
+   "rationale": "R&D unlock set ignores green",
+   "change": {
+    "block": "//Network12/FBAnd2",
+    "port": "AndIn3",
+    "attr": "channelInterface",
+    "before": "Activated",
+    "after": "Deactivated",
+    "offset": 770852
+   },
+   "verification": {
+    "parsedDelta": "//Network12/FBAnd2/AndIn3",
+    "attribute": "channelInterface"
+   },
+   "mutantSha256": "57b719e63fe0b50fc90661ff0127fe0ccebb7b4d45eb68d15bd99446aecd85c4",
+   "newlyFailing": [
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 sole Set path and unchanged aggregate sources, exact reviewed223 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-hv-set-permit.test.js :: HV LV254 SGVL declarations and writers unchanged, composed target-usage changes",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-step12-lv-permit.test.js :: LV LV254 sole Set path and original aggregate sources, reviewed222 order",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    },
+    {
+     "key": "current-unlock-hold.test.js :: CVR LV254 sole final writer254, exact composed order manifest, timers and physical aliases",
+     "status": "fail",
+     "failureType": "testCodeFailure",
+     "code": "ERR_ASSERTION",
+     "message": "F1 identity pin (structural): SAL is not canonical F1",
+     "category": "non-behavioural-assertion",
+     "behavioural": false
+    }
+   ],
+   "killedBy": [],
+   "categories": {
+    "behavioural-assertion": 0,
+    "swcheck-behavioural-fail": 0,
+    "non-behavioural-assertion": 4,
+    "exception": 0,
+    "hook-cancel": 0,
+    "file-level": 0,
+    "absent": 0,
+    "swcheck-structural": 0,
+    "swcheck-error": 0
+   },
+   "verdict": "STRUCTURAL-ONLY"
+  }
+ ],
+ "killRule": "KILLED only by (a) a concrete test ok on baseline and not ok on the mutant with an assertion failure (ERR_ASSERTION in the test or a failing nested subtest), in a file without file-level failure in that run, name in behaviouralTests; or (b) a non-BOOT software-check case PASS -> FAIL. Load/SHA pin/file-level ERR_TEST_FAILURE/timeout, non-assertion exceptions, hook/cancel, absent tests never kill (src/sal-mutation-kill.js).",
+ "limits": [
+  "Kills are judged only by the plan's behavioural allowlist and assertion failures; STRUCTURAL-ONLY is not a kill for G3",
+  "Mutations are SAL attribute faults (guard term removed, polarity, channel mode, timing); they are a fault model, not native-valid edits",
+  "Simulator semantics limits apply (program/stand/FB_SEMANTICS.md); an equivalent mutant can survive legitimately and must be argued, not assumed"
+ ]
+}

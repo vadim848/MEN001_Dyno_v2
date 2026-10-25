@@ -1,0 +1,21 @@
+base                 rndEstop      S6 C1=0
+base                 s12Estop      S4 viol=0
+base                 earlyRestart  S6
+base                 c1Stuck       S6 C1FBK=1
+base                 estopHeld     S6
+base                 c1            SU&SG=false
+base                 c2            S12=false
+base                 blueSafe      UL=1
+base                 blueRnd       UL=1
+STAGE_LVON.OrIn2     rndEstop      S_RnD C1=1
+STAGE_LVON.OrIn1     s12Estop      S4 viol=0
+FBAndLvEmg.AndIn2    rndEstop      S6 C1=0
+FBOrS12Reset.OrIn2   s12Estop      S4 viol=1
+G10.AndIn2           estopHeld     S1
+G10.AndIn3           earlyRestart  S6
+G10.AndIn4           earlyRestart  S1
+G10.AndIn5           c1Stuck       S1 C1FBK=1
+GATE_020.AndIn7      c1            SU&SG=true
+GATE_030.OrIn6       c2            S12=true
+IL_SCOPE.OrIn1       blueSafe      UL=0
+IL_SCOPE.OrIn2       blueRnd       UL=0

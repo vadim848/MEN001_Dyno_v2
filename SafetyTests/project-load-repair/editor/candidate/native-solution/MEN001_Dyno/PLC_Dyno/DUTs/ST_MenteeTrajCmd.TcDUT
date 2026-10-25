@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_MenteeTrajCmd" Id="{b1e7c0a2-4d31-4f6a-9c2e-7a5e0f1b2c34}">
+    <Declaration><![CDATA[// V3.2 generic motion-profile command + status, driven by FB_TrajectoryGen at
+// the 1 kHz PLC task (profiling + injection are PLC-side; the app only configures
+// + starts/stops). Profile shapes ported from the Cheetah mtb_serial_gui
+// ProfileGenerator (Sinusoidal / Trapezoidal / Step / S-Curve / Ramp), evaluated
+// online as value(t). The selected field (nField) is driven while running.
+// Position/Impedance profiles are anchored at the rotor's current position
+// (added as an offset) so they never jump at Start; Velocity/Current are absolute.
+// ADS symbol: GVL_MenteeMotorV32_OS.stTraj
+TYPE ST_MenteeTrajCmd :
+STRUCT
+    // --- selection ---
+    nShape       : BYTE;    // 0 Sinusoidal | 1 Trapezoidal | 2 Step | 3 S-Curve | 4 Ramp
+    nField       : BYTE;    // 0 setpoint_position | 1 impedance_p_des | 2 setpoint_velocity | 3 setpoint_current
+
+    // --- shape parameters (union; only the relevant ones are used per shape) ---
+    fAmplitude   : REAL;    // Sinusoidal
+    fFrequency   : REAL;    // Sinusoidal [Hz]
+    fOffset      : REAL;    // Sinusoidal
+    fStartValue  : REAL;    // Trapezoid/S-Curve/Ramp start; Step initial
+    fPeakValue   : REAL;    // Trapezoid/S-Curve peak
+    fEndValue    : REAL;    // Ramp end; Step final
+    fAccelTime   : REAL;    // Trapezoid/S-Curve ramp-up [s]
+    fSteadyTime  : REAL;    // Trapezoid/S-Curve hold [s]
+    fDecelTime   : REAL;    // Trapezoid/S-Curve ramp-down [s]
+    fStepTime    : REAL;    // Step transition time [s]
+    fDuration    : REAL;    // Sinusoidal/Step/Ramp total time [s]
+
+    // --- repeat (loop the whole profile) ---
+    bRepetitive  : BOOL;
+    nReps        : UDINT;   // 0 = infinite
+    fRestS       : REAL;    // rest between reps [s]
+
+    // --- control ---
+    bStart       : BOOL;    // rising edge -> (re)start
+    bStop        : BOOL;    // rising edge -> abort + hold
+
+    // --- status (written by FB_TrajectoryGen) ---
+    bRunning     : BOOL;
+    fSetpoint    : REAL;    // current generated setpoint
+    fElapsed     : REAL;    // elapsed time in the current run [s]
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

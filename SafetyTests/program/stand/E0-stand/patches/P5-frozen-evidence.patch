@@ -1,0 +1,10 @@
+diff --git a/resumed-development-2026-10-21/tester/p0/check-source-pair.mjs b/resumed-development-2026-10-21/tester/p0/check-source-pair.mjs
+index 0a5da79..b605712 100644
+--- a/resumed-development-2026-10-21/tester/p0/check-source-pair.mjs
++++ b/resumed-development-2026-10-21/tester/p0/check-source-pair.mjs
+@@ -54,4 +54,4 @@ for(const n of walk(da).filter(n=>n.attr?.Id&&n.attr.absoluteBounds!==undefined)
+ report.preservedGeometry=preserved;report.status=report.errors.length?'FAIL':'PASS';
+ // Compact successful checks keep exact mismatch evidence without multi-megabyte duplicate trees.
+ report.checks=report.checks.map(c=>c.status==='PASS'?{label:c.label,status:c.status}:c);
+-fs.writeFileSync(new URL('source-pair-results.json',import.meta.url),JSON.stringify(report)+'\n');console.log(JSON.stringify({status:report.status,checks:report.checks.length,geometry:preserved,errors:report.errors}));process.exitCode=report.errors.length?1:0;
++/* E0-stand P5: frozen evidence source-pair-results.json is never rewritten by test runs; write only to an explicit path. */if(process.env.SOURCE_PAIR_RESULTS_PATH)fs.writeFileSync(process.env.SOURCE_PAIR_RESULTS_PATH,JSON.stringify(report)+'\n');console.log(JSON.stringify({status:report.status,checks:report.checks.length,geometry:preserved,errors:report.errors}));process.exitCode=report.errors.length?1:0;

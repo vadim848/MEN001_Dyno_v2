@@ -1,0 +1,226 @@
+WiredLink::ValidateOrderOfExecutionOrder RVA 78984
+0000 ldarg.0 
+0001 call get_InPort
+0006 brfalse 495
+000B ldarg.0 
+000C call get_OutPort
+0011 brfalse 484
+0016 ldnull 
+0017 stloc.0 
+0018 ldnull 
+0019 stloc.1 
+001A ldarg.0 
+001B call get_InPort
+0020 callvirt get_FbBase
+0025 stloc.0 
+0026 ldarg.0 
+0027 call get_OutPort
+002C callvirt get_FbBase
+0031 stloc.1 
+0032 ldloc.0 
+0033 brfalse 450
+0038 ldloc.1 
+0039 brfalse 444
+003E ldc.i4.0 
+003F conv.i8 
+0040 stloc.2 
+0041 ldc.i4.0 
+0042 conv.i8 
+0043 stloc.3 
+0044 ldarg.0 
+0045 call get_InPort
+004A stloc.s 4
+004C ldarg.0 
+004D call get_OutPort
+0052 stloc.s 5
+0054 call get_WiredLink_ValidateOrderOfExecutionOrder1
+0059 ldstr  
+005E call Concat
+0063 stloc.s 6
+0065 call get_WiredLink_ValidateOrderOfExecutionOrder2
+006A ldstr  
+006F call Concat
+0074 stloc.s 7
+0076 call get_WiredLink_ValidateOrderOfExecutionOrder3
+007B ldstr  
+0080 call Concat
+0085 stloc.s 8
+0087 call get_WiredLink_ValidateOrderOfExecutionOrder4
+008C ldstr  
+0091 call Concat
+0096 stloc.s 9
+0098 call get_WiredLink_ValidateOrderOfExecutionOrder5
+009D stloc.s 10
+009F ldloc.0 
+00A0 callvirt get_OrderOfExecutionRange
+00A5 callvirt get_Item2
+00AA stloc.2 
+00AB ldloc.1 
+00AC callvirt get_OrderOfExecutionRange
+00B1 callvirt get_Item1
+00B6 stloc.3 
+00B7 ldloc.3 
+00B8 ldc.i4.0 
+00B9 conv.i8 
+00BA ble.s 127
+00BC ldloc.2 
+00BD ldc.i4.0 
+00BE conv.i8 
+00BF ble.s 122
+00C1 ldloc.3 
+00C2 ldloc.2 
+00C3 ble.s 118
+00C5 ldarg.1 
+00C6 ldc.i4.5 
+00C7 newarr String
+00CC dup 
+00CD ldc.i4.0 
+00CE ldloc.s 6
+00D0 stelem.ref 
+00D1 dup 
+00D2 ldc.i4.1 
+00D3 ldloc.s 7
+00D5 stelem.ref 
+00D6 dup 
+00D7 ldc.i4.2 
+00D8 ldloc.s 8
+00DA stelem.ref 
+00DB dup 
+00DC ldc.i4.3 
+00DD ldloc.s 9
+00DF stelem.ref 
+00E0 dup 
+00E1 ldc.i4.4 
+00E2 ldloc.s 10
+00E4 stelem.ref 
+00E5 call Concat
+00EA ldc.i4.4 
+00EB newarr Object
+00F0 dup 
+00F1 ldc.i4.0 
+00F2 ldloc.s 5
+00F4 callvirt get_PortName
+00F9 stelem.ref 
+00FA dup 
+00FB ldc.i4.1 
+00FC ldloc.1 
+00FD callvirt get_InstanceName
+0102 stelem.ref 
+0103 dup 
+0104 ldc.i4.2 
+0105 ldloc.s 4
+0107 callvirt get_PortName
+010C stelem.ref 
+010D dup 
+010E ldc.i4.3 
+010F ldloc.0 
+0110 callvirt get_InstanceName
+0115 stelem.ref 
+0116 call Format
+011B ldstr VariablesUsageCounts
+0120 ldc.i4.3 
+0121 newarr ModelElement
+0126 dup 
+0127 ldc.i4.0 
+0128 ldarg.0 
+0129 stelem.ref 
+012A dup 
+012B ldc.i4.1 
+012C ldloc.s 4
+012E stelem.ref 
+012F dup 
+0130 ldc.i4.2 
+0131 ldloc.s 5
+0133 stelem.ref 
+0134 callvirt LogWarning
+0139 pop 
+013A ret 
+013B ldloc.3 
+013C ldc.i4.0 
+013D conv.i8 
+013E ble 183
+0143 ldloc.2 
+0144 ldc.i4.0 
+0145 conv.i8 
+0146 ble 175
+014B ldloc.3 
+014C ldloc.2 
+014D bne.un 168
+0152 call get_WiredLink_ValidateOrderOfExecutionOrder2_2
+0157 ldstr  
+015C call Concat
+0161 stloc.s 7
+0163 call get_WiredLink_ValidateOrderOfExecutionOrder2_3
+0168 ldstr  
+016D call Concat
+0172 stloc.s 8
+0174 call get_WiredLink_ValidateOrderOfExecutionOrder2_4
+0179 ldstr  
+017E call Concat
+0183 stloc.s 9
+0185 ldarg.1 
+0186 ldc.i4.5 
+0187 newarr String
+018C dup 
+018D ldc.i4.0 
+018E ldloc.s 6
+0190 stelem.ref 
+0191 dup 
+0192 ldc.i4.1 
+0193 ldloc.s 7
+0195 stelem.ref 
+0196 dup 
+0197 ldc.i4.2 
+0198 ldloc.s 8
+019A stelem.ref 
+019B dup 
+019C ldc.i4.3 
+019D ldloc.s 9
+019F stelem.ref 
+01A0 dup 
+01A1 ldc.i4.4 
+01A2 ldloc.s 10
+01A4 stelem.ref 
+01A5 call Concat
+01AA ldc.i4.4 
+01AB newarr Object
+01B0 dup 
+01B1 ldc.i4.0 
+01B2 ldloc.s 5
+01B4 callvirt get_PortName
+01B9 stelem.ref 
+01BA dup 
+01BB ldc.i4.1 
+01BC ldloc.1 
+01BD callvirt get_InstanceName
+01C2 stelem.ref 
+01C3 dup 
+01C4 ldc.i4.2 
+01C5 ldloc.s 4
+01C7 callvirt get_PortName
+01CC stelem.ref 
+01CD dup 
+01CE ldc.i4.3 
+01CF ldloc.0 
+01D0 callvirt get_InstanceName
+01D5 stelem.ref 
+01D6 call Format
+01DB ldstr VariablesUsageCounts
+01E0 ldc.i4.3 
+01E1 newarr ModelElement
+01E6 dup 
+01E7 ldc.i4.0 
+01E8 ldarg.0 
+01E9 stelem.ref 
+01EA dup 
+01EB ldc.i4.1 
+01EC ldloc.s 4
+01EE stelem.ref 
+01EF dup 
+01F0 ldc.i4.2 
+01F1 ldloc.s 5
+01F3 stelem.ref 
+01F4 callvirt LogWarning
+01F9 pop 
+01FA ret 
+

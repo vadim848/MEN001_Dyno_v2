@@ -1,0 +1,12 @@
+base from Safe: C1_FBK ON whole press -> EOk=false status=EMG stages=Step1
+   after FBK OFF, no press: EOk=false status=EMG
+   new press: status=SAFE viol=0
+base from R&D: C1_FBK ON whole press -> EOk=false status=EMG stages=Step6
+   after FBK OFF, no press: EOk=false status=EMG
+   new press: status=SAFE viol=0
+noFbkFix from Safe: C1_FBK ON whole press -> EOk=true status=SAFE stages=Step1
+   after FBK OFF, no press: EOk=true status=SAFE
+   new press: status=SAFE viol=0
+noFbkFix from R&D: C1_FBK ON whole press -> EOk=true status=EMG stages=Step6
+   after FBK OFF, no press: EOk=true status=EMG
+   new press: status=SAFE viol=0

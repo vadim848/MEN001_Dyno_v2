@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_UartBridgeStatus" Id="{f529ca1e-fdab-422f-b8e0-ea08de5b94d3}">
+    <Declaration><![CDATA[// TxPDO — read by TwinCAT from UART Bridge Slave (0x6000)
+TYPE ST_UartBridgeStatus :
+STRUCT
+    //------------------------------------------------------------------
+    // Status word — decoded by FB_UartBridgeHandler
+    // Bits 3:0:   fsm_state
+    // Bits 7:4:   main_state
+    // Bits 10:8:  op_mode
+    // Bits 12:11: bridge_mode (echo)
+    // Bits 23:16: general_error_bits
+    // Bits 31:24: categorial_error_bits
+    //------------------------------------------------------------------
+    nStatusWord             : UDINT;    // Raw status word
+
+    // Decoded status fields
+    nFsmState               : BYTE;     // Bits 3:0
+    nMainState              : BYTE;     // Bits 7:4
+    nOpMode                 : BYTE;     // Bits 10:8
+    nBridgeModeEcho         : BYTE;     // Bits 12:11
+    nGeneralErrorBits       : BYTE;     // Bits 23:16
+    nCategorialErrorBits    : BYTE;     // Bits 31:24
+    bError                  : BOOL;     // TRUE if any error bit set
+
+    // Diagnostics
+    nPacketCount            : UINT;     // Rolling packet counter
+    nTimestamp              : UDINT;    // Device timestamp
+
+    // Live V3.1 data
+    bldc_pos                : REAL;     // BLDC actual position
+    filtered_p_des          : REAL;     // Filtered position setpoint
+    bldc_vel                : REAL;     // BLDC actual velocity
+    v_des                   : REAL;     // Velocity setpoint echo
+    measured_current        : REAL;     // Measured motor current
+    p_i_input               : REAL;     // PI controller input
+    impedance_output        : REAL;     // Impedance controller output
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

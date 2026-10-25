@@ -1,0 +1,1 @@
+import fs from 'node:fs';const h=import.meta.dirname;fs.cpSync(h+'/candidate-unmodified-run/v2',h+'/candidate-migration-targeted/v2',{recursive:true});for(const n of fs.readdirSync(h+'/proposal'))fs.cpSync(h+'/proposal/'+n,h+'/candidate-migration-targeted/v2/SafetyTests/'+n,{recursive:true});

@@ -1,0 +1,35 @@
+TAP version 13
+# Subtest: DOOR06 existing emergency/connector guards still prevent new HV; constant-FALSE False operand neutral
+not ok 1 - DOOR06 existing emergency/connector guards still prevent new HV; constant-FALSE False operand neutral
+  ---
+  duration_ms: 274.1116
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-door-interlock.test.js:52:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    physical: healthy positive control with constant-FALSE False operand
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-door-interlock.test.js:59:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# \# probe flipped //Network12/FBAnd16/AndIn2 in runtimes: 1
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1836.4418

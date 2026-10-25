@@ -1,0 +1,155 @@
+{
+  "slice": "E1-f1",
+  "role": "v2-reviewer",
+  "gate": "G4",
+  "date": "2026-10-21",
+  "verdict": "ACCEPT_BOUNDED",
+  "source": {
+    "f1": {
+      "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+      "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+      "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+      "path": "SafetyTests/candidates/resumed-f1/native",
+      "shaVerifiedByReviewer": true
+    },
+    "canonicalP0": {
+      "sal": "34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b",
+      "sgvl": "517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635",
+      "diagram": "7b5eb79439011cdf9a3206aa815dec4349a35cf8155bfac7492b7ffd75e578ce",
+      "workingTreeEqualsP0": true
+    },
+    "plan": {
+      "path": "SafetyTests/resumed-development-2026-10-21/architect/F1_RUN_RECOGNIZER_PLAN.json",
+      "sha256": "b52f6b0e440a09ce138ad91e633b2fcd78f431d246a4dbdabc083809a0a08b60",
+      "verified": true
+    }
+  },
+  "independentChecks": {
+    "manualDiffP0toF1": "PASS: matches plan (retire N6/FBTon2; And24.AndIn3<-linkRndGreenQualified; And23.AndIn3 deactivated; And23->RUN_DOWN_OWNER.Set; OWNER->OR5.OrIn1; RUN_DOWN_RESET=b_Step_RnD_Set|b_Step4_Set|!linkRndGatePermit; MODE.OrIn3<-b_Step3; new blocks Network6 ord 238/239; relative order preserved; SGVL +3 FbPortUsage)",
+    "deltaCheckRerun": "DELTA PASS 43/43",
+    "nativeStructurePreflight": {
+      "P0": "14/241/2066/75/306/0 PASS",
+      "F1": "14/242/2076/75/307/0 PASS",
+      "bindings": "PASS both"
+    },
+    "nativeOffline": "accepted from tester NATIVE_F1.json: CRC 3702999762 valid, source-rule 0 violations; NOT IDE Verify/Build/Target/hardware"
+  },
+  "questions": {
+    "a_MU06": {
+      "status": "EQUIVALENT_CONFIRMED_CONDITIONAL",
+      "conditions": [
+        "GRP-2 same-cycle visibility and constant inputs (DERIVED, not DOC)",
+        "TON-2 DOC"
+      ],
+      "excludeFromG3Denominator": "yes, labelled equivalent-by-proof",
+      "Q-MU06-01": "not blocking F1"
+    },
+    "a_MU10": {
+      "status": "EQUIVALENT_CONFIRMED_CONDITIONAL",
+      "conditions": [
+        "current Network3 phase topology (MODE=Step1|RnD|Step3; Step12 reset only by b_Step_RnD_Set; Step1/Step2 reset-dominant by b_Step12)",
+        "independent of Network4 boundary values (N4 writes only resets and b_Step1_Set/b_Step2_Set)"
+      ],
+      "excludeFromG3Denominator": "yes, labelled equivalent-by-proof",
+      "reEvaluateAfterE2": true
+    },
+    "b_MU11": {
+      "status": "OPEN_KILLABLE_E2",
+      "strictG3Met": false,
+      "blocksTransfer": false,
+      "reason": "only observable effect: owner +1 scan (safe-direction fanout) and race window +1 scan; requirement oracle (no Step4&Step12) belongs to E2 and F1 itself violates it in adjacent window",
+      "condition": "matrix must not mark MU11 killed; E2 must kill it by requirement test"
+    },
+    "c_Step4Step12": {
+      "status": "PARTIALLY_REFUTED",
+      "confirmed": "mechanism pre-existing in P0 (N6/FBAnd18 b_Step12_Set_2 without phase/fault guard; Step12 reset only by b_Step_RnD_Set); F1 narrows d-window by one scan (real lifecycle: P0 4 values of d, F1 3)",
+      "refuted": "F1 is not 'only narrowing': in P0 the race needs green held through C2 OFF; in F1 it also occurs when green is released after acceptance (550 ms, 800 ms) where P0 abandoned the stop",
+      "classification": "pre-existing E2 state-assignment defect whose reachability F1 increases; safety-relevant; model scan sensitivity NV",
+      "evidence": [
+        "program/reviewer/E1-f1/repro/race-lifecycle.mjs",
+        "race-P0.txt",
+        "race-F1.txt"
+      ]
+    },
+    "c_otherRegressions": "none found: current 445/445 vs canonical 443/445 (2 Run FAIL fixed), historical 75/75, harness -4 exactly OBS-TON //Network6/FBTon2, scenarios -1 exactly TIMER://Network6/FBTon2, STATE conflicting-set-requests FAIL identical, NV 7=7",
+    "d_migration": {
+      "status": "EXACT_STRUCTURAL_ONLY",
+      "notes": [
+        "MIG-1 shared helper depends on and writes into program/tester/E1-f1 (move to stand scripts, output to temp)",
+        "MIG-1 fixture fixtures/resumed-p0-canonical does not exist yet",
+        "MIG-6 stale comment/name p0RetiredUsageIds",
+        "MIG-8 only after checkpoint",
+        "pre-existing: check:software rewrites frozen tester/p0/source-pair-results.json"
+      ]
+    },
+    "e_coverage": {
+      "status": "SUFFICIENT_FOR_F1_RUN_SLICE_BOUNDED",
+      "limits": [
+        "250/251 window and BOTH 999/1000 not observable in Run; discriminated only by Safe/RnD suites (MU25/MU26)",
+        "most Run cases on fixed-Step3 component fixture; 9 real-lifecycle cases",
+        "MU24 kill only on unreachable fixed-Step3 scenario; full program: IL1/IL2/LVconn/Estop_PLC -> Step4; reachable distinguisher only via in_False_SI2_CH8 pulse (oracle pending Q-MU06-01)",
+        "Healthy loss during Run-down and in_False after acceptance (C04) -> E2",
+        "StartingRun green abort and SS1 stop (F2) out of scope"
+      ]
+    }
+  },
+  "mutantReclassification": {
+    "MU06": "EQUIVALENT (conditional GRP-2)",
+    "MU10": "EQUIVALENT (conditional Network3 topology; re-evaluate after E2)",
+    "MU11": "OPEN KILLABLE E2",
+    "MU12": "killed; reviewer full-program real-lifecycle differential: 93/162 cases distinguishing (Healthy loss not distinguishing, covered by OrIn2)",
+    "MU24": "killed only on component boundary; reachable kill conditional on Q-MU06-01"
+  },
+  "conditions": [
+    "C1 transfer exactly the three F1 native files with the SHA above; migration exactly MIG-1..8 subject to C5",
+    "C2 do not record 'F1 does not introduce / only narrows' the Step4&Step12 race; record narrowing by one scan AND increased reachability (released green); lead informs Vadim as open safety-relevant E2 item",
+    "C3 MU11 stays OPEN (KILLABLE, E2); E2 plan must contain a requirement test killing it",
+    "C4 MU06/MU10 recorded as equivalent-by-proof with their conditions; re-evaluate MU10 after E2",
+    "C5 move delta-check to stand-owned scripts with temp output; create fixtures/resumed-p0-canonical with exact P0 bytes",
+    "C6 no BTN/EMG/STATE/CVR/MOD ID becomes CLOSED from this G4 alone",
+    "C7 after transfer rerun npm run check:software on canonical; expect current 445/445, scenarios 199 PASS/1 FAIL STATE/7 NV; any deviation back to tester"
+  ],
+  "returns": {
+    "analyst": [
+      "E2 oracle for Healthy loss during accepted Run-down (MU11, race)",
+      "Q-MU06-01 role of in_False (affects MU24 reachable kill, C04)"
+    ],
+    "architect": [
+      "E2: FBAnd18 b_Step12_Set_2 without phase/fault guard; Step12 without protective reset",
+      "fate of RUN_DOWN_RESET.OrIn1 (MU10)"
+    ],
+    "stand": [
+      "C5 delta-check relocation and fixture",
+      "GRP-2 documentation basis (MU06 condition)",
+      "check:software overwrites frozen evidence"
+    ],
+    "tester": [
+      "reclassify MU24 kill",
+      "after Q-MU06-01: reachable MU24 kill"
+    ]
+  },
+  "limits": [
+    "model simulator sal-runtime, scan 1 ms; GRP-2 derived",
+    "offline native only; no IDE Verify/Build/Target/hardware",
+    "no safety claim",
+    "reviewer did not rerun full check:software; relied on tester logs plus own targeted reproductions"
+  ],
+  "reproduction": {
+    "repro/diff-MU12.txt": "ad1f7ae85496c9a850431dfe84e7642cade18b647bd8f0142aee7ca1b51f572b",
+    "repro/dump-blocks.mjs": "2f89370676899107ede563299fb776a138ca1ae45a300b7e26103d11fbb4f895",
+    "repro/held-across-reach.mjs": "a6733ef0d70efb39d2db913ba474e565a38dcc30a1feef62964d2d2b5d7ad217",
+    "repro/held-across-reach.txt": "cf82a746c4220858b2cb0d781cedc1cd059cb2cc55f0fe4feb6593884dfe129f",
+    "repro/mutant-lifecycle-diff.mjs": "ebbf3bed338a12d48904e93a381d5b14d7be122cd939edb22f4e48308ff4cab5",
+    "repro/race-F1.txt": "9dfa04ad7c08b3158b145c2e28f35f41b891e820a816214d53f6f8229c6b6106",
+    "repro/race-lifecycle.mjs": "20900e1aabb2e844e6bfc39e3b7872800e091210133cf114008a56753277e19e",
+    "repro/race-P0.txt": "058434430a1118ad116e1751b680006c93d383d597db3a6b0c485e1e8265a44c",
+    "commands": [
+      "MEN001_F1_ROOT=<v2 root> node repro/race-lifecycle.mjs P0",
+      "MEN001_F1_ROOT=<v2>/SafetyTests/candidates/resumed-f1/project node repro/race-lifecycle.mjs F1",
+      "node repro/mutant-lifecycle-diff.mjs MU12",
+      "node repro/held-across-reach.mjs",
+      "MSYS_NO_PATHCONV=1 node repro/dump-blocks.mjs <block suffixes>",
+      "node program/tester/E1-f1/delta-check.mjs candidates/resumed-p0/native candidates/resumed-f1/native <plan> <out>"
+    ]
+  }
+}

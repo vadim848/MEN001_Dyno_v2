@@ -1,0 +1,25 @@
+FB undefined lifecycle S_RnD -> S3
+2 SU                                         S_RnD   RND   EOk=1 C1=1 C2=1 STO=1 SU=1 SG=0 UL=0  viol 0 
+  in_Estop_PLC 3ms pulse +12s (B-1)          S6      EMG   EOk=0 C1=0 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+  Restart                                    S1      SAFE  EOk=1 C1=0 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+3 SU + LV connector lost +12s                S6      EMG   EOk=0 C1=0 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+  connector back + Restart                   S1      SAFE  EOk=1 C1=0 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+4 R&D EStop +2000                            S4      EMG   EOk=0 C1=1 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+  +12s                                       S6      EMG   EOk=0 C1=0 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+  Restart                                    S1      SAFE  EOk=1 C1=0 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+  new BOTH                                   S_RnD   RND   EOk=1 C1=1 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+5 S12 (C1 FBK held off)                      S12     SAFE  EOk=1 C1=1 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+  EStop +1999                                S4      EMG   EOk=0 C1=1 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+  EStop +2003                                S4      EMG   EOk=0 C1=1 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+  +12s                                       S6      EMG   EOk=0 C1=0 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+6 R&D HV connector lost +12s                 S6      EMG   EOk=0 C1=0 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+  Restart with connector still lost          S6      EMG   EOk=0 C1=0 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+  connector back + Restart                   S1      SAFE  EOk=1 C1=0 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+7 C-1 LV faulty 1 scan before BOTH           S1      SAFE  EOk=1 C1=0 C2=0 STO=0 SU=0 SG=0 UL=0 SU&SG ever=false viol 0 
+8 C-2 BOTH held through HLT                  S1      SAFE  EOk=1 C1=0 C2=0 STO=0 SU=0 SG=0 UL=0 S12 ever=false viol 0 
+9a Safe cover open blue 700                  S1      SAFE  EOk=1 C1=0 C2=0 STO=0 SU=0 SG=0 UL=1  viol 0 
+9b R&D cover open blue 700                   S_RnD   RND   EOk=1 C1=1 C2=0 STO=0 SU=0 SG=0 UL=1  viol 0 
+10 Q-REL Safe cover 300ms then BOTH at +1.7s S_RnD   RND   EOk=1 C1=1 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+11 Run EStop, early Restart (energy on)      S4      EMG   EOk=1 C1=1 C2=1 STO=1 SU=0 SG=0 UL=0  viol 0 
+  +12s (no new gesture)                      S6      EMG   EOk=1 C1=0 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 
+  Restart again                              S1      SAFE  EOk=1 C1=0 C2=0 STO=0 SU=0 SG=0 UL=0  viol 0 

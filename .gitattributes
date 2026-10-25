@@ -19,6 +19,26 @@ SafetyTests/next-emergency-tests/** -text
 SafetyTests/user-decisions-tests/** -text
 SafetyTests/working-transfer/** -text
 SafetyTests/test-migration-down-owner/run-001-transfer-manifest.json -text
+SafetyTests/candidates/lv-completion/** -text
+SafetyTests/candidates/lv-completion/**/*.sal -diff
+SafetyTests/candidates/lv-completion/**/*.sgvl -diff
+SafetyTests/test-migration-lv-completion/** -text
+SafetyTests/lv-working-transfer/** -text
+SafetyTests/LV_COMPLETION_COUNTED_PLAN.json -text
+SafetyTests/LV_COMPLETION_LAYER_SPEC.json -text
+SafetyTests/SOFTWARE_CHECK_RESULTS.json -text
+SafetyTests/SOFTWARE_CHECK_RESULTS.md -text
+SafetyTests/BOOT_PREFLIGHT_RESULTS.json -text
+SafetyTests/src/current-code-checks.js -text
+SafetyTests/user-decisions-architecture/LV_COMPLETION_COUNTED_PLAN.json -text
+# Preserve the exact reviewed implementation bytes, including existing mixed EOL.
+SafetyTests/src/sal-runtime.js -text
+SafetyTests/src/sal-parser.js -text
+SafetyTests/src/estop-native-pairs.js -text
+SafetyTests/src/observed-samples.js -text
+SafetyTests/src/sal-binding-validator.js -text
+SafetyTests/src/boot-preflight.js -text
+SafetyTests/src/boot-source-inventory.js -text
 
 # Preserve the reviewed 24-file working transfer and its pinned baseline.
 MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl -text
@@ -35,6 +55,12 @@ SafetyTests/test/current-door-interlock.test.js -text
 SafetyTests/test/current-early-sto-bindings.test.js -text
 SafetyTests/test/current-hv-set-permit.test.js -text
 SafetyTests/test/current-mentee-set-permit.test.js -text
+
+# Preserve the reviewed safe-input-slot repair and portable regression inputs.
+SafetyTests/safe-input-validation-repair/** -text
+SafetyTests/SAFE_INPUT_SLOT_REPAIR_LAYER.json -text
+SafetyTests/test/current-safe-input-slots.test.js -text
+SafetyTests/test/helpers/safe-input-slot-layer.js -text
 SafetyTests/test/current-native-bindings.test.js -text
 SafetyTests/test/current-plc-pulse-set-permit.test.js -text
 SafetyTests/test/current-rnd-compact.test.js -text
@@ -105,3 +131,23 @@ SafetyTests/test/helpers/v2-structural.js -text
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+# Preserve native CRC artifacts and exact reviewed symbol-repair test inputs.
+MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal.diagram -text
+SafetyTests/network-symbol-repair/** -text
+SafetyTests/NETWORK_SYMBOL_REPAIR_LAYER.json -text
+SafetyTests/SAL_NATIVE_STRUCTURE_RESULTS.json -text
+SafetyTests/src/sal-native-structure.js -text
+SafetyTests/scripts/software-check.js -text
+SafetyTests/test/current-native-structure.test.js -text
+SafetyTests/test/current-early-sto.test.js -text
+SafetyTests/test/helpers/network-symbol-layer.js -text
+SafetyTests/test/boot-preflight.test.js -text
+SafetyTests/test/current-mentee-set-permit.test.js -text
+
+# E0-stand P4 (2026-10-21): pinned bytes are bound by SHA256.
+SafetyTests/fixtures/pinned/** -text -diff
+SafetyTests/program/stand/E0-stand/patches/P2-pinned-sources/fixtures/** -text -diff
+# E1-f1 C5 (2026-10-21)
+SafetyTests/fixtures/resumed-p0-canonical/** -text -diff
+SafetyTests/scripts/f1-delta-check.mjs -text

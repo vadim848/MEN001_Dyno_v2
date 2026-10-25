@@ -1,0 +1,35 @@
+PASS source-sha-is-staging-source {"TwinSafeGroup1.sal":"386e208becc94f966c79629653b50c15ab96bd95bf95bf823aa1e7510ea2cfec","GVL1.sgvl":"5b031b0ce47d6868b1fa7ae73c4977aec5650244a26f29d786973d9dcca205d9","TwinSafeGroup1.sal.diagram":"3b3826f8b46113f62e857ebbcf0229e57d06cc144dd4154e6c67b0567d1bf86d"}
+PASS staged-sha-is-staging-result 
+PASS native-equals-staged-semantics blocks/ports/attrs/order/wires/global refs/SAL usages/SGVL usages identical; only CRC/formatting differ
+PASS native-structure-preflight {"status":"PASS","errors":[],"counts":{"networks":14,"blocks":227,"ports":1926,"variables":78,"wires":288,"crossNetworkWires":0}}
+PASS binding-audit {"status":"PASS","errors":[]}
+PASS counts-227-1926-63-78-14 {"source":{"networks":14,"fb":225,"ports":1908,"symbols":63,"salVariables":77,"wires":287,"globalRefs":177,"sgvlUsages":177,"salFbUsages":235,"aliasUsages":76,"safeTon":17},"native":{"networks":14,"fb":227,"ports":1926,"symbols":63,"salVariables":78,"wires":288,"globalRefs":179,"sgvlUsages":179,"salFbUsages":240,"aliasUsages":76,"safeTon":17}}
+PASS wire-count-delta-equals-staging {"source":287,"native":288,"removed":0,"added":1}
+PASS global-refs-equal-sgvl-usages {"native":179,"sgvl":179,"source":177}
+PASS alias-usage-count-unchanged {"source":76,"native":76}
+PASS no-dangling-references []
+PASS global-ref-sgvl-usage-pairing-1to1 []
+PASS every-symbol-single-source-and-consumer []
+PASS symbol-set-and-ids-unchanged 
+PASS every-internal-SAL-variable-single-source-and-consumer []
+PASS single-source-per-input-and-unique-wire-pairs {"dupPairs":0,"multi":[]}
+PASS activated-inputs-have-source []
+PASS deactivated-inputs-have-no-source []
+PASS no-deleted-blocks []
+PASS new-blocks-equal-plan ["RndPhysicalCompact/GATE_SG_SET","SafeResumption/HLT_LV"]
+PASS plan-input-sources-and-contacts []
+PASS new-blocks-native-template-signature []
+PASS instance-names-unique 227
+PASS surviving-port-deltas-only-planned []
+PASS wire-delta-exact {"wRemoved":[],"wAdded":["RndPhysicalCompact/GATE_SG_SET/OrOut>RndPhysicalCompact/STATE_SG/Set"]}
+PASS sal-variables-only-planned-usage-delta []
+PASS symbol-usages-only-planned-delta []
+PASS order-of-execution-per-plan {"contiguous":true,"STATE_SU_SG_OWNER_SET_HLT_LV_GATE_SG_SET_STATE_SG":true,"relativeOrderOfOtherBlocksPreserved":true}
+PASS timer-and-parameter-ports-unchanged {"safeTon":[17,17]}
+PASS networks-unchanged-attrs ["Network1:51","Network2:21","Network3:21","Network4:0","Network5:0","Network6:41","Network7:11","Network8:7","Network9:0","Network10:2","Network11:6","Network12:19","RndPhysicalCompact:40","SafeResumption:8"]
+PASS staged-kept-source-crc-native-new-crc {"source":{"sal":"338929284","sgvl":"2354910773"},"staged":{"sal":"338929284","sgvl":"2354910773"},"native":{"sal":"3449816745","sgvl":"1748442693"}}
+PASS diagram-shapes-match-model {"source":{"fBAndShape":106,"fBOrShape":51,"fBRsShape":27,"fBTonShape":17,"fBDecoupleShape":22,"fBEstopShape":2,"inPortShape":1525,"outPortShape":383,"paramPortShape":19,"wiredLinkConnector":287,"networkSwimLane":14},"native":{"fBAndShape":107,"fBOrShape":52,"fBRsShape":27,"fBTonShape":17,"fBDecoupleShape":22,"fBEstopShape":2,"inPortShape":1541,"outPortShape":385,"paramPortShape":19,"wiredLinkConn
+PASS diagram-connectors-resolve-one-per-wire {"badConn":[],"connectors":288,"wires":288}
+PASS diagram-lane-membership [{"b":"RndPhysicalCompact/GATE_SG_SET","lane":"RndPhysicalCompact"},{"b":"SafeResumption/HLT_LV","lane":"SafeResumption"}]
+
+33/33 self-checks PASS

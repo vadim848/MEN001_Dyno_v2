@@ -1,0 +1,215 @@
+blocks 239 -> 260; networks 14 -> 14
+PORT //Network1/FBAnd2/AndIn4
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Make Contact (NO)","src":[],"g":[],"v":["V:linkDescActive"]}
+PORT //Network1/FBAndNotRunSu/AndIn3
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Make Contact (NO)","src":[],"g":[],"v":["V:linkAbortActive"]}
+PORT //Network6/FBDecouple2/DecIn1
+   {"src":["//Network6/FBOr5/OrOut"],"g":[],"v":[]}
+ -> {"src":["//Network6/DN_STO/OrOut"],"g":[],"v":[]}
+PORT //Network6/FBDecouple2/DecIn2
+   {"src":["//Network6/FBOr5/OrOut"],"g":[],"v":[]}
+ -> {"src":["//Network6/DN_STO/OrOut"],"g":[],"v":[]}
+PORT //Network6/FBDecouple2/DecIn3
+   {"src":["//Network6/FBOr5/OrOut"],"g":[],"v":[]}
+ -> {"src":["//Network6/DN_DIS/OrOut"],"g":[],"v":[]}
+PORT //Network6/FBDecouple2/DecIn4
+   {"src":["//Network6/FBOr5/OrOut"],"g":[],"v":[]}
+ -> {"src":["//Network6/DN_C2/AndOut"],"g":[],"v":[]}
+PORT //Network6/FBOr5/OrIn3
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network6/RD_PROT/RsOut"],"g":[],"v":[]}
+PORT //Network6/RUN_DOWN_RESET/OrIn4
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network6/RD_PROT/RsOut"],"g":[],"v":[]}
+PORT //Network6/HEALTHY_OK/AndIn1
+   {"ci":"Activated","d1":"Make Contact (NO)","src":[],"g":[],"v":["V:in_LV_Faulty_FBK"]}
+ -> {"ci":"Deactivated","src":[],"g":[],"v":[]}
+PORT //Network6/HEALTHY_OK/AndIn2
+   {"ci":"Activated","d1":"Make Contact (NO)","src":[],"g":[],"v":["V:in_HV_Faulty_FBK"]}
+ -> {"ci":"Deactivated","src":[],"g":[],"v":[]}
+PORT //Network12/FBAnd2/AndIn5
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Make Contact (NO)","src":[],"g":["recRndC_SU"],"v":[]}
+PORT //Network12/FBAnd2/AndIn6
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Make Contact (NO)","src":[],"g":[],"v":["V:linkAbortActive"]}
+PORT //RndPhysicalCompact/GATE_008/AndIn4
+   {"ci":"Activated","d1":"Make Contact (NO)","src":["//RndPhysicalCompact/SNAP_0/DecOut7"],"g":[],"v":[]}
+ -> {"ci":"Deactivated","src":[],"g":[],"v":[]}
+PORT //RndPhysicalCompact/GATE_014/AndIn4
+   {"ci":"Activated","d1":"Make Contact (NO)","src":["//RndPhysicalCompact/SNAP_0/DecOut7"],"g":[],"v":[]}
+ -> {"ci":"Deactivated","src":[],"g":[],"v":[]}
+PORT //RndPhysicalCompact/STATE_SU/Reset
+   {"ci":"Activated","d1":"Make Contact (NO)","src":[],"g":[],"v":["V:linkSafeRndScope"]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//RndPhysicalCompact/SU_RESET/OrOut"],"g":[],"v":[]}
+PORT //SafeResumption/SG_OWNER_SET/AndIn3
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Make Contact (NO)","src":[],"g":[],"v":["V:linkAbortActive"]}
+PORT //SafeResumption/HLT_LV/AndIn5
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Make Contact (NO)","src":[],"g":[],"v":["V:linkAbortActive"]}
+PORT //SafeResumption/HLT_DESC_SET/AndIn2
+   {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:linkRunDownOwner"]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:linkDescActive"]}
+global exec order of old blocks preserved: true
+orders contiguous 1..N: true
+ADDED //Network6/RD_HLOSS safeOr order=162 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src= g= v=in_LV_Faulty_FBK
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g= v=in_HV_Faulty_FBK
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network6/RD_PROT_SET safeAnd order=163 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//Network6/FBAnd1/AndOut g= v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src=//Network6/RD_HLOSS/OrOut g= v=
+   AndIn3 ci=Activated d1=Make Contact (NO) src=//Network6/RD_STO/RsOut g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network6/RD_RESET safeOr order=164 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//Network6/FBAnd18/AndOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g=b_Step1 v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network6/RD_PROT safeRs order=165 params=[]
+   Reset ci=Activated d1=Break Contact (NC) src=//Network6/RD_RESET/OrOut g= v=
+   Set ci=Activated d1=Break Contact (NC) src=//Network6/RD_PROT_SET/AndOut g= v=
+ADDED //Network6/RD_SEQ safeRs order=166 params=[]
+   Reset ci=Activated d1=Break Contact (NC) src=//Network6/RD_RESET/OrOut g= v=
+   Set ci=Activated d1=Break Contact (NC) src=//Network6/FBOr5/OrOut g= v=
+ADDED //Network6/RD_T_SS1 safeTon order=167 params=[{"Id":"e3c496e2-dd46-40fc-889f-ae494ef41505","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"2","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}]
+   TonIn ci=Activated d1=Break Contact (NC) src=//Network6/RD_SEQ/RsOut g= v=
+ADDED //Network6/RD_STO_TRIG safeOr order=168 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//Network6/RD_T_SS1/TonOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//Network6/RD_PROT/RsOut g= v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network6/RD_STO safeRs order=169 params=[]
+   Reset ci=Activated d1=Break Contact (NC) src=//Network6/RD_RESET/OrOut g= v=
+   Set ci=Activated d1=Break Contact (NC) src=//Network6/RD_STO_TRIG/OrOut g= v=
+ADDED //Network6/RD_T_COAST safeTon order=170 params=[{"Id":"9e61ac3c-39a6-4ece-9476-48d97dd3c3c9","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"5","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}]
+   TonIn ci=Activated d1=Break Contact (NC) src=//Network6/RD_STO/RsOut g= v=
+ADDED //Network6/RD_DIS safeAnd order=171 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//Network6/RD_SEQ/RsOut g= v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src=//Network6/RD_T_COAST/TonOut g= v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network6/SU_ABORT_CAUSE safeOr order=172 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src= g= v=linkRndGreenQualified
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g= v=in_LV_Faulty_FBK
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network6/SU_ABORT_SET safeAnd order=173 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g=recRndC_SU v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src=//Network6/SU_ABORT_CAUSE/OrOut g= v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network6/SU_ABORT_END safeAnd order=174 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//Network6/DN_T_HOLD/TonOut g= v=
+   AndIn2 ci=Activated d1=Make Contact (NO) src= g= v=out_HV_C2
+   AndIn3 ci=Activated d1=Make Contact (NO) src= g= v=in_HV_C2_FBK
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network6/SU_ABORT_RESET safeOr order=175 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//Network6/SU_ABORT_END/AndOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g=b_Step1 v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network6/SU_ABORT safeRs order=176 params=[]
+   Reset ci=Activated d1=Break Contact (NC) src=//Network6/SU_ABORT_RESET/OrOut g= v=
+   Set ci=Activated d1=Break Contact (NC) src=//Network6/SU_ABORT_SET/AndOut g= v=
+   OUT //Network6/SU_ABORT/RsOut -> V:linkAbortActive
+ADDED //Network6/DN_STO safeOr order=177 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//Network6/RD_STO/RsOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//Network6/SU_ABORT/RsOut g= v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network6/DN_DIS safeOr order=178 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//Network6/RD_DIS/AndOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//Network6/SU_ABORT/RsOut g= v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network6/DN_T_HOLD safeTon order=179 params=[{"Id":"aeb14c5a-4a65-42d2-b1bd-1781a3043d4c","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"1","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}]
+   TonIn ci=Activated d1=Break Contact (NC) src=//Network6/DN_DIS/OrOut g= v=
+ADDED //Network6/DN_C2 safeAnd order=180 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//Network6/DN_DIS/OrOut g= v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src=//Network6/DN_T_HOLD/TonOut g= v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network6/DN_ACTIVE safeOr order=181 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//Network6/RD_SEQ/RsOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//Network6/SU_ABORT/RsOut g= v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+   OUT //Network6/DN_ACTIVE/OrOut -> V:linkDescActive
+ADDED //RndPhysicalCompact/SU_RESET safeOr order=182 params=[]
+   OrIn1 ci=Activated d1=Make Contact (NO) src= g= v=linkSafeRndScope
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g= v=linkAbortActive
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+exec STATE_SU 182 first new 161 last new 181
+VAR USAGE in_HV_C2_FBK: src 0->0 tgt 11->12; +//Network6/SU_ABORT_END/AndIn3 -
+VAR USAGE out_HV_C2: src 1->1 tgt 4->5; +//Network6/SU_ABORT_END/AndIn2 -
+VAR USAGE in_LV_Faulty_FBK: src 0->0 tgt 5->6; +//Network6/RD_HLOSS/OrIn1,//Network6/SU_ABORT_CAUSE/OrIn2 -//Network6/HEALTHY_OK/AndIn1
+VAR USAGE in_HV_Faulty_FBK: src 0->0 tgt 5->5; +//Network6/RD_HLOSS/OrIn2 -//Network6/HEALTHY_OK/AndIn2
+VAR USAGE linkRndGreenQualified: src 1->1 tgt 2->3; +//Network6/SU_ABORT_CAUSE/OrIn1 -
+VAR USAGE linkSafeRndScope: src 1->1 tgt 3->3; +//RndPhysicalCompact/SU_RESET/OrIn1 -//RndPhysicalCompact/STATE_SU/Reset
+VAR USAGE linkRunDownOwner: src 1->1 tgt 2->1; + -//SafeResumption/HLT_DESC_SET/AndIn2
+VAR ADDED linkAbortActive alias=null src=//Network6/SU_ABORT/RsOut tgt=//Network1/FBAndNotRunSu/AndIn3,//SafeResumption/SG_OWNER_SET/AndIn3,//SafeResumption/HLT_LV/AndIn5,//Network12/FBAnd2/AndIn6,//RndPhysicalCompact/SU_RESET/OrIn2
+VAR ADDED linkDescActive alias=null src=//Network6/DN_ACTIVE/OrOut tgt=//Network1/FBAnd2/AndIn4,//SafeResumption/HLT_DESC_SET/AndIn2
+inter-network wire sources: 0
+keys port: Id,name,portName,portNum,objectIndex,varId,filter,portDataType,channelInterface,deactivate1,maxDeviation,resetTime,targets,sources,globals,path

@@ -1,0 +1,230 @@
+NET Network1 49
+NET Network2 21
+NET Network3 20
+NET Network4 0
+NET Network5 0
+NET Network6 36
+NET Network7 11
+NET Network8 7
+NET Network9 0
+NET Network10 2
+NET Network11 5
+NET Network12 18
+NET RndPhysicalCompact 39
+NET SafeResumption 7
+  1 Network2/FBAnd1 And  | AndIn1=W:Network2/FBDecouple3/DecOut1 AndIn2=W:Network2/FBAnd6/AndOut AndIn3=v:in_LV_Connector_Interlock AndIn4=v:in_HV_Connector_Interlock AndIn5=v:in_InterLock_NC_1 AndIn6=v:in_InterLock_NC_2 AndIn7=W:Network2/FBAnd5/AndOut => AndOut=->Network2/FBTon1/TonIn
+  2 Network1/FBAndLvCurrentPermit And  | AndIn1!=v:in_Estop_PLC AndIn2=v:in_ES_NC_1 AndIn3=v:in_ES_NC_2 AndIn4=v:in_InterLock_NC_1 AndIn5=v:in_InterLock_NC_2 AndIn6=v:in_LV_Connector_Interlock AndIn7=v:in_HV_Connector_Interlock AndIn8=b_EStop_Ok => AndOut=v:linkLvCurrentPermit->Network1/FBAndLvSetPermit/AndIn2,Network1/FBAndHvSetPermit/AndIn2,Network1/FBAndSto1SetPermit/AndIn2,Network1/FBAndSto2SetPermit/AndIn2
+  3 Network1/FBAndLvSetPermit And  | AndIn1=W:Network1/FBOr17/OrOut AndIn2=W:Network1/FBAndLvCurrentPermit/AndOut AndIn3!=v:in_Mentee_EStop AndIn4=W:Network1/FBAnd1/AndOut => AndOut=->Network1/FBRs1/Set
+  4 Network1/FBRs1 Rs  | Reset=W:Network1/FBOr11/OrOut Set=W:Network1/FBAndLvSetPermit/AndOut => RsOut=v:out_LV_C1
+  5 Network1/FBAndHvSetPermit And  | AndIn1=W:Network1/FBOr18/OrOut AndIn2=W:Network1/FBAndLvCurrentPermit/AndOut AndIn3!=v:in_Mentee_EStop AndIn4=W:Network1/FBAnd1/AndOut => AndOut=->Network1/FBRs2/Set
+  6 Network1/FBRs2 Rs  | Reset=W:Network1/FBOr16/OrOut Set=W:Network1/FBAndHvSetPermit/AndOut => RsOut=v:out_HV_C2
+  7 Network2/FBTon1 Ton T=0.1 | TonIn=W:Network2/FBAnd1/AndOut => TonOut=->Network2/FBAnd2/AndIn1
+  8 Network2/FBAnd2 And  | AndIn1=W:Network2/FBTon1/TonOut AndIn2!=v:in_LV_C1_FBK AndIn3!=v:in_HV_C2_FBK => AndOut=b_Reset_STO_DR1->Network2/FBDecouple2/DecIn1,Network2/FBTon2/TonIn
+  9 Network2/FBDecouple1 Decouple  | DecIn1=W:Network2/FBAnd12/AndOut DecIn2=W:Network2/FBAnd12/AndOut => DecOut1=b_Reset_LV_C1 DecOut2=b_Reset_HV_C2 DecOut3= DecOut4= DecOut5= DecOut6= DecOut7= DecOut8=
+ 10 Network1/FBAndSto1SetPermit And  | AndIn1=W:Network1/FBOr8/OrOut AndIn2=W:Network1/FBAndLvCurrentPermit/AndOut AndIn3!=v:in_Mentee_EStop AndIn4=W:Network1/FBAnd1/AndOut => AndOut=->Network1/FBRs3/Set
+ 11 Network1/FBRs3 Rs  | Reset=W:Network1/FBOr7/OrOut Set=W:Network1/FBAndSto1SetPermit/AndOut => RsOut=v:STO_DR1
+ 12 Network1/FBAndSto2SetPermit And  | AndIn1=W:Network1/FBOr10/OrOut AndIn2=W:Network1/FBAndLvCurrentPermit/AndOut AndIn3!=v:in_Mentee_EStop AndIn4=W:Network1/FBAnd1/AndOut => AndOut=->Network1/FBRs4/Set
+ 13 Network1/FBRs4 Rs  | Reset=W:Network1/FBOr9/OrOut Set=W:Network1/FBAndSto2SetPermit/AndOut => RsOut=v:STO_DR2
+ 14 Network2/FBDecouple2 Decouple  | DecIn1=W:Network2/FBAnd2/AndOut(b_Reset_STO_DR1) => DecOut1=b_Reset_STO_DR2 DecOut2= DecOut3= DecOut4= DecOut5= DecOut6= DecOut7= DecOut8=
+ 15 Network2/FBTon2 Ton T=0.1 | TonIn=W:Network2/FBAnd2/AndOut(b_Reset_STO_DR1) => TonOut=->Network2/FBAnd3/AndIn1
+ 16 Network2/FBAnd3 And  | AndIn1=W:Network2/FBTon2/TonOut AndIn2=v:in_STO_DR1_FBK AndIn3=v:in_STO_DR2_FBK => AndOut=v:out_ReadyForStep2->Network2/FBAnd4/AndIn2
+ 17 Network3/FBOr1 Or  | OrIn3=b_Step12 OrIn4=b_Step_RnD => OrOut=->Network3/FBRs1/Reset
+ 18 Network12/FBAnd15 And  | AndIn1=W:Network12/FBDecouple1/DecOut4(b_Reset_LV_C1_3) AndIn2!=v:in_LV_C1_FBK AndIn3!=v:out_LV_C1 AndIn4!=v:out_HV_C2 AndIn5!=v:in_HV_C2_FBK AndIn6=v:linkLvCurrentPermit AndIn7!=v:in_Mentee_EStop AndIn8!=v:in_False_SI2_CH8 => AndOut=b_Step2_Set_2
+ 19 Network3/FBOr2 Or  | OrIn2=W:Network3/FBAnd1/AndOut OrIn5=b_Step2_Set_2 => OrOut=->Network3/FBRs1/Set
+ 20 Network3/FBRs1 Rs  | Reset=W:Network3/FBOr1/OrOut Set=W:Network3/FBOr2/OrOut => RsOut=b_Step1->Network3/FBAnd1/AndIn4,Network3/FBOr11/OrIn2,Network3/FBDecouple2/DecIn1
+ 21 Network1/FBEstop1 Estop T=100 | Restart=v:in_Reset_PB EStopIn1=v:in_ES_NC_1[Single-Channel Both Activated] EStopIn2=v:in_ES_NC_2[Both Deactivated] EStopIn3=W:Network1/FBAnd1/AndOut[Single-Channel Both Activated] EStopIn4=v:in_Mentee_EStop[Both Deactivated] EStopIn5=?[Both Deactivated] EStopIn6=?[Both Deactivated] EStopIn7=?[Both Deactivated] EStopIn8=?[Both Deactivated] EDM1=? EDM2=? => Error= EStopOut=b_EStop_Ok->Network1/FBDecouple2/DecIn1 EStopDelOut=
+ 22 Network3/FBAnd1 And  | AndIn1=v:in_Safety_Run AndIn2=b_EStop_Ok AndIn4!=W:Network3/FBRs1/RsOut(b_Step1) AndIn5!=W:Network3/FBRs3/RsOut(b_Step3) AndIn6!=W:Network3/FBRs4/RsOut(b_Step4) AndIn7!=W:Network3/FBRs5/RsOut(b_Step5) AndIn8=W:Network3/FBAnd2/AndOut => AndOut=->Network3/FBOr2/OrIn2
+ 23 Network1/FBOr1 Or  | OrIn2=b_Reset_LV_Discharge_Req2 => OrOut=->Network1/FBRs5/Reset
+ 24 Network1/FBOr2 Or  | OrIn1=b_Set_LV_Discharge_Request OrIn2=b_Set_LV_Discharge_Request_2 => OrOut=->Network1/FBRs5/Set
+ 25 Network1/FBRs5 Rs  | Reset=W:Network1/FBOr1/OrOut Set=W:Network1/FBOr2/OrOut => RsOut=v:out_LV_Discharge_Request
+ 26 Network1/FBOr5 Or  | OrIn2=b_Reset_HV_Discharg_Req2 => OrOut=->Network1/FBRs7/Reset
+ 27 Network1/FBOr6 Or  | OrIn1=b_Set_HV_Discharge_Request OrIn3=b_Set_HV_Discharge_Request_3 => OrOut=->Network1/FBRs7/Set
+ 28 Network1/FBRs7 Rs  | Reset=W:Network1/FBOr5/OrOut Set=W:Network1/FBOr6/OrOut => RsOut=v:out_HV_Discharge_Request
+ 29 Network1/FBOr7 Or  | OrIn1=b_Reset_STO_DR1 OrIn2=b_Reset_STO_DR1_2 OrIn4=b_Reset_STO_DR1_4 => OrOut=->Network1/FBRs3/Reset
+ 30 Network1/FBOr8 Or  | OrIn2=b_Set_STO_DR1_2 OrIn3=recRndC_SU => OrOut=->Network1/FBAndSto1SetPermit/AndIn1
+ 31 Network1/FBOr9 Or  | OrIn1=b_Reset_STO_DR2 OrIn2=b_Reset_STO_DR2_2 OrIn4=b_Reset_STO_DR2_4 => OrOut=->Network1/FBRs4/Reset
+ 32 Network1/FBOr10 Or  | OrIn2=b_Set_STO_DR2_2 OrIn3=recRndC_SU => OrOut=->Network1/FBAndSto2SetPermit/AndIn1
+ 33 Network3/FBOr5 Or  | OrIn2=W:Network3/FBRs4/RsOut(b_Step4) OrIn3=b_Step12_Set_2 => OrOut=->Network3/FBRs3/Reset
+ 34 Network3/FBOr6 Or  | OrIn2=b_Step3_Set_2 => OrOut=->Network3/FBRs3/Set,Network3/FBOr13/OrIn2
+ 35 Network3/FBRs3 Rs  | Reset=W:Network3/FBOr5/OrOut Set=W:Network3/FBOr6/OrOut => RsOut=b_Step3->Network3/FBAnd1/AndIn5,Network3/FBDecouple1/DecIn1,Network3/FBDecouple2/DecIn3
+ 36 Network6/FBAnd1 And  | AndIn1=b_Step3 AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network6/FBAnd2/AndIn1,Network6/FBAnd3/AndIn1,Network6/FBAnd5/AndIn2,Network6/FBAnd6/AndIn2,Network6/FBOr1/OrIn1,Network6/FBAnd17/AndIn3,Network6/FBAnd19/AndIn1,Network6/FBAnd23/AndIn2
+ 37 Network3/FBDecouple1 Decouple  | DecIn1=W:Network3/FBRs3/RsOut(b_Step3) => DecOut1=v:out_Safety_Armed DecOut2= DecOut3= DecOut4= DecOut5= DecOut6= DecOut7= DecOut8=
+ 38 Network6/FBAnd2 And  | AndIn1=W:Network6/FBAnd1/AndOut AndIn2!=W:Network6/FBAnd9/AndOut => AndOut=->Network6/FBDecouple1/DecIn1
+ 39 Network6/FBAnd3 And  | AndIn1=W:Network6/FBAnd1/AndOut AndIn2=W:Network6/FBAnd7/AndOut => AndOut=->Network6/FBOr3/OrIn1
+ 40 Network6/FBAnd4 And  | AndIn1=W:Network6/FBOr1/OrOut AndIn2=W:Network6/FBAnd8/AndOut => AndOut=->Network6/FBRs1/Set
+ 41 Network6/FBRs1 Rs  | Reset=W:Network6/FBOr3/OrOut Set=W:Network6/FBAnd4/AndOut => RsOut=v:out_C3_BatRelay
+ 42 Network6/FBAnd5 And  | AndIn1=v:in_RBM_Manual_Reset AndIn2=W:Network6/FBAnd1/AndOut => AndOut=->Network6/FBOr2/OrIn1
+ 43 Network6/FBAnd6 And  | AndIn1=v:in_RBM_Manual_Set AndIn2=W:Network6/FBAnd1/AndOut => AndOut=->Network6/FBOr4/OrIn1
+ 44 Network6/FBRs2 Rs  | Reset=W:Network6/FBOr2/OrOut Set=W:Network6/FBOr4/OrOut => RsOut=v:out_RBM_Bat
+ 45 Network6/FBOr2 Or  | OrIn1=W:Network6/FBAnd5/AndOut OrIn2=b_RBN_Bat_Reset OrIn3=W:Network6/FBAnd13/AndOut OrIn4=b_RBN_Bat_Reset_2 => OrOut=->Network6/FBRs2/Reset
+ 46 Network6/FBOr3 Or  | OrIn1=W:Network6/FBAnd3/AndOut OrIn2=b_C3_BetReset OrIn3=W:Network6/FBAnd12/AndOut OrIn4=b_C3_BetReset_2 => OrOut=->Network6/FBRs1/Reset
+ 47 Network6/FBDecouple1 Decouple  | DecIn1=W:Network6/FBAnd2/AndOut => DecOut1=b_Step4_Set DecOut2= DecOut3= DecOut4= DecOut5= DecOut6= DecOut7= DecOut8=
+ 48 Network3/FBOr7 Or  | OrIn2=W:Network3/FBRs5/RsOut(b_Step5) => OrOut=->Network3/FBRs4/Reset
+ 49 Network3/FBRs4 Rs  | Reset=W:Network3/FBOr7/OrOut Set=b_Step4_Set => RsOut=b_Step4->Network3/FBOr5/OrIn2,Network3/FBDecouple2/DecIn4,Network3/FBAnd1/AndIn6
+ 50 Network7/FBAnd1 And  | AndIn1=b_Step4 AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network7/FBDecouple1/DecIn1,Network7/FBDecouple1/DecIn2,Network7/FBDecouple1/DecIn3,Network7/FBDecouple1/DecIn4,Network7/FBDecouple1/DecIn5,Network7/FBDecouple1/DecIn6
+ 51 Network7/FBDecouple1 Decouple  | DecIn1=W:Network7/FBAnd1/AndOut DecIn2=W:Network7/FBAnd1/AndOut DecIn3=W:Network7/FBAnd1/AndOut DecIn4=W:Network7/FBAnd1/AndOut DecIn5=W:Network7/FBAnd1/AndOut DecIn6=W:Network7/FBAnd1/AndOut => DecOut1=b_Set_LV_Discharge_Request->Network7/FBTon1/TonIn DecOut2= DecOut3=b_C3_BetReset DecOut4=b_RBN_Bat_Reset DecOut5=->Network7/FBAnd2/AndIn1 DecOut6=->Network7/FBAnd3/AndIn1 DecOut7= DecOut8=
+ 52 Network1/FBOr11 Or  | OrIn1=b_Reset_LV_C1 OrIn2=b_Reset_LV_C1_2 OrIn3=b_Reset_LV_C1_3 OrIn4=W:Network1/FBAnd7/AndOut => OrOut=->Network1/FBRs1/Reset
+ 53 Network7/FBAnd2 And  | AndIn1=W:Network7/FBDecouple1/DecOut5 AndIn2!=v:in_HV_Healthy_FBK AndIn3=W:Network7/FBTon1/TonOut(b_Reset_LV_C1_2) => AndOut=->Network7/FBTon2/TonIn,Network7/FBTon3/TonIn
+ 54 Network7/FBAnd3 And  | AndIn1=W:Network7/FBDecouple1/DecOut6 AndIn2=v:in_HV_Healthy_FBK AndIn3=W:Network7/FBTon1/TonOut(b_Reset_LV_C1_2) => AndOut=->Network7/FBDecouple3/DecIn3,Network7/FBDecouple3/DecIn4
+ 55 Network7/FBOr1 Or  | OrIn1=W:Network7/FBTon2/TonOut OrIn2=W:Network7/FBDecouple3/DecOut4 => OrOut=b_Reset_STO_DR1_2->Network7/FBAnd8/AndIn1
+ 56 Network7/FBOr2 Or  | OrIn1=W:Network7/FBTon3/TonOut OrIn2=W:Network7/FBDecouple3/DecOut3 => OrOut=b_Reset_STO_DR2_2->Network7/FBAnd8/AndIn2
+ 57 Network7/FBAnd8 And  | AndIn1=W:Network7/FBOr1/OrOut(b_Reset_STO_DR1_2) AndIn2=W:Network7/FBOr2/OrOut(b_Reset_STO_DR2_2) AndIn3=v:in_STO_DR1_FBK AndIn4=v:in_STO_DR2_FBK => AndOut=b_Step5_Set
+ 58 Network3/FBOr9 Or  | OrIn2=W:Network3/FBRs6/RsOut => OrOut=->Network3/FBRs5/Reset
+ 59 Network3/FBRs5 Rs  | Reset=W:Network3/FBOr9/OrOut Set=b_Step5_Set => RsOut=b_Step5->Network3/FBOr7/OrIn2,Network3/FBDecouple2/DecIn5,Network3/FBAnd1/AndIn7
+ 60 Network8/FBAnd1 And  | AndIn1=b_Step5 AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network8/FBDecouple1/DecIn3,Network8/FBAnd2/AndIn3,Network8/FBAnd3/AndIn3
+ 61 Network8/FBDecouple1 Decouple  | DecIn3=W:Network8/FBAnd1/AndOut => DecOut1= DecOut2= DecOut3=b_Set_HV_Discharge_Request->Network8/FBTon1/TonIn DecOut4= DecOut5= DecOut6= DecOut7= DecOut8=
+ 62 Network8/FBTon1 Ton T=1 | TonIn=W:Network8/FBDecouple1/DecOut3(b_Set_HV_Discharge_Request) => TonOut=->Network8/FBOr1/OrIn1
+ 63 Network8/FBAnd2 And  | AndIn1=v:out_HV_Discharge_Request AndIn3=W:Network8/FBAnd1/AndOut => AndOut=->Network8/FBOr1/OrIn2
+ 64 Network8/FBOr1 Or  | OrIn1=W:Network8/FBTon1/TonOut OrIn2=W:Network8/FBAnd2/AndOut => OrOut=->Network8/FBTon2/TonIn
+ 65 Network8/FBTon2 Ton T=1 | TonIn=W:Network8/FBOr1/OrOut => TonOut=b_Reset_HV_C2_2->Network8/FBAnd3/AndIn1
+ 66 Network1/FBOr16 Or  | OrIn1=b_Reset_HV_C2 OrIn2=b_Reset_HV_C2_2 OrIn3=W:Network1/FBAnd8/AndOut OrIn4=b_Reset_HV_C2_4 => OrOut=->Network1/FBRs2/Reset
+ 67 Network8/FBAnd3 And  | AndIn1=W:Network8/FBTon2/TonOut(b_Reset_HV_C2_2) AndIn2!=v:in_HV_C2_FBK AndIn3=W:Network8/FBAnd1/AndOut => AndOut=b_Step6_Set
+ 68 Network3/FBOr11 Or  | OrIn2=W:Network3/FBRs1/RsOut(b_Step1) => OrOut=->Network3/FBRs6/Reset
+ 69 Network3/FBRs6 Rs  | Reset=W:Network3/FBOr11/OrOut Set=b_Step6_Set => RsOut=->Network3/FBOr9/OrIn2,Network3/FBDecouple2/DecIn6,Network3/FBAnd2/AndIn4
+ 70 Network6/FBAnd7 And  | AndIn1=v:in_C3_Manual_Reset AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network6/FBAnd3/AndIn2
+ 71 Network6/FBAnd8 And  | AndIn1=v:in_C3_Manual_Set AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network6/FBAnd4/AndIn2
+ 72 Network6/FBAnd9 And  | AndIn1=v:out_EStop_Status AndIn2=v:in_InterLock_NC_1 AndIn3=v:in_InterLock_NC_2 AndIn4=v:in_LV_Connector_Interlock AndIn5=v:in_HV_Connector_Interlock AndIn6!=v:in_LV_Healthy_FBK AndIn7!=v:in_HV_Healthy_FBK => AndOut=->Network6/FBAnd2/AndIn2
+ 73 Network1/FBAnd1 And  | AndIn1!=v:in_Estop_PLC AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network1/FBEstop1/EStopIn3,Network1/FBAndLvSetPermit/AndIn4,Network1/FBAndHvSetPermit/AndIn4,Network1/FBAndSto1SetPermit/AndIn4,Network1/FBAndSto2SetPermit/AndIn4
+ 74 Network2/FBAnd5 And  | AndIn1!=v:in_Estop_PLC AndIn2!=v:in_Mentee_EStop => AndOut=->Network2/FBAnd1/AndIn7,Network2/FBAnd9/AndIn1
+ 75 Network2/FBAnd6 And  | AndIn1=v:in_ES_NC_1 AndIn2=v:in_ES_NC_2 => AndOut=->Network2/FBAnd1/AndIn2
+ 76 Network2/FBDecouple3 Decouple  | DecIn1=b_Step1 => DecOut1=->Network2/FBAnd1/AndIn1,Network2/FBAnd7/AndIn1,Network2/FBAnd8/AndIn2 DecOut2= DecOut3= DecOut4= DecOut5= DecOut6= DecOut7= DecOut8=
+ 77 Network2/FBAnd7 And  | AndIn1=W:Network2/FBDecouple3/DecOut1 AndIn2=recRndC_BA => AndOut=b_Set_Door_Unlock
+ 78 Network7/FBTon1 Ton T=2 | TonIn=W:Network7/FBDecouple1/DecOut1(b_Set_LV_Discharge_Request) => TonOut=b_Reset_LV_C1_2->Network7/FBAnd3/AndIn3,Network7/FBAnd2/AndIn3
+ 79 Network3/FBDecouple2 Decouple  | DecIn1=W:Network3/FBRs1/RsOut(b_Step1) DecIn2=v:in_False_SI2_CH8 DecIn3=W:Network3/FBRs3/RsOut(b_Step3) DecIn4=W:Network3/FBRs4/RsOut(b_Step4) DecIn5=W:Network3/FBRs5/RsOut(b_Step5) DecIn6=W:Network3/FBRs6/RsOut DecIn7=W:Network3/FBRs7/RsOut(b_Step_RnD) DecIn8=W:Network3/FBRs8/RsOut(b_Step12) => DecOut1=v:out_Step1 DecOut2=v:out_Step2 DecOut3=v:out_Step3 DecOut4=v:out_Step4 DecOut5=v:out_Step5 DecOut6=v:out_Step6 DecOut7=v:outPLC_RnD DecOut8=v:out_Step12
+ 80 Network2/FBAnd8 And  | AndIn1!=v:in_Door_Monitor AndIn2=W:Network2/FBDecouple3/DecOut1 => AndOut=b_Reset_Door_Unlock
+ 81 Network1/FBDecouple1 Decouple  | DecIn1=v:in_Reset_PB DecIn2=v:in_Reset_PB => DecOut1=v:out_DR1_ErrorACK DecOut2=v:out_DR2_ErrorACK DecOut3= DecOut4= DecOut5= DecOut6= DecOut7= DecOut8=
+ 82 Network7/FBTon2 Ton T=5 | TonIn=W:Network7/FBAnd2/AndOut => TonOut=->Network7/FBOr1/OrIn1
+ 83 Network7/FBTon3 Ton T=5 | TonIn=W:Network7/FBAnd2/AndOut => TonOut=->Network7/FBOr2/OrIn1
+ 84 Network7/FBDecouple3 Decouple  | DecIn3=W:Network7/FBAnd3/AndOut DecIn4=W:Network7/FBAnd3/AndOut => DecOut1= DecOut2= DecOut3=->Network7/FBOr2/OrIn2 DecOut4=->Network7/FBOr1/OrIn2 DecOut5= DecOut6= DecOut7= DecOut8=
+ 85 Network1/FBOr12 Or  | OrIn1=v:out_Step2 OrIn2=W:Network1/FBAnd2/AndOut => OrOut=v:out_SS1_DR2
+ 86 Network1/FBOr13 Or  | OrIn1=v:out_Step2 OrIn2=W:Network1/FBAnd2/AndOut => OrOut=v:out_SS1_DR1
+ 87 Network1/FBDecouple2 Decouple  | DecIn1=W:Network1/FBEstop1/EStopOut(b_EStop_Ok) => DecOut1=v:out_EStop_Ok_Plc DecOut2= DecOut3= DecOut4= DecOut5= DecOut6= DecOut7= DecOut8=
+ 88 Network2/FBAnd9 And  | AndIn1=W:Network2/FBAnd5/AndOut AndIn2=v:in_ES_NC_2 AndIn3=v:in_ES_NC_1 => AndOut=v:out_EStop_Status
+ 89 Network10/FBDecouple1 Decouple  | DecIn1=v:in_LV_C1_FBK DecIn2=v:in_HV_C2_FBK DecIn3=v:in_Mentee_EStop DecIn4=v:in_ES_NC_1 DecIn5=v:in_ES_NC_2 DecIn6=v:in_HV_Healthy_FBK DecIn7=v:in_LV_Healthy_FBK => DecOut1=v:outPLC_C1_FBK DecOut2=v:outPLC_C2_FBK DecOut3=v:outPLC_EStop_MantiRob DecOut4=v:outPLC_EStop_NC1 DecOut5=v:outPLC_EStop_NC2 DecOut6=v:outPLC_HV_Healthy DecOut7=v:outPLC_LV_Healthy DecOut8=
+ 90 Network10/FBDecouple2 Decouple  | DecIn1=v:in_HV_Connector_Interlock DecIn2=v:in_LV_Connector_Interlock DecIn3=v:STO_DR1 DecIn4=v:STO_DR2 => DecOut1=v:outPLC_HV_Interlock DecOut2=v:outPLC_LV_Interlock DecOut3=v:outPLC_STO_1 DecOut4=v:outPLC_STO_2 DecOut5= DecOut6= DecOut7= DecOut8=
+ 91 Network11/FBAnd1 And  | AndIn1=b_Step12 AndIn2!=v:in_False_SI2_CH8 => AndOut=b_Set_LV_C1_1->Network11/FBTon1/TonIn
+ 92 Network11/FBTon1 Ton T=0.1 | TonIn=W:Network11/FBAnd1/AndOut(b_Set_LV_C1_1) => TonOut=->Network11/FBAnd4/AndIn1
+ 93 Network11/FBAnd4 And  | AndIn1=W:Network11/FBTon1/TonOut AndIn2=v:in_LV_C1_FBK AndIn3=v:in_LV_Healthy_FBK => AndOut=b_Reset_LV_Discharge_Req2->Network11/FBAnd5/AndIn1
+ 94 Network11/FBAnd5 And  | AndIn1=W:Network11/FBAnd4/AndOut(b_Reset_LV_Discharge_Req2) AndIn2!=v:in_False_SI2_CH8 => AndOut=b_Step_RnD_Set->Network11/FBDecouple1/DecIn1
+ 95 RndPhysicalCompact/SNAP_0 Decouple  | DecIn1=recRndC_P DecIn2=recRndC_A DecIn3=recRndC_T DecIn4=recRndC_L DecIn5=recRndC_C DecIn6=recRndC_SG DecIn7=recRndC_SU DecIn8=recRndC_BA => DecOut1=->RndPhysicalCompact/GATE_007/AndIn1,RndPhysicalCompact/GATE_016/AndIn1,RndPhysicalCompact/GATE_022/AndIn1 DecOut2=->RndPhysicalCompact/GATE_004/AndIn2,RndPhysicalCompact/GATE_022/AndIn2 DecOut3=->RndPhysicalCompact/GATE_005/AndIn2,RndPhysicalCompact/GATE_011/OrIn1,RndPhysicalCompact/GATE_020/AndIn2,RndPhysicalCompact/GATE_024/AndIn1 DecOut4=->RndPhysicalCompact/GATE_004/AndIn4,RndPhysicalCompact/GATE_013/OrIn1 DecOut5=->RndPhysicalCompact/GATE_004/AndIn3,RndPhysicalCompact/GATE_013/OrIn2 DecOut6=->RndPhysicalCompact/GATE_008/AndIn3,RndPhysicalCompact/GATE_014/AndIn3 DecOut7=->RndPhysicalCompact/GATE_008/AndIn4,RndPhysicalCompact/GATE_014/AndIn4 DecOut8=
+ 96 RndPhysicalCompact/SNAP_1 Decouple  | DecIn1=recRndC_PrevG DecIn2=recRndC_PrevB DecIn3=W:RndPhysicalCompact/WINDOW/EStopDelOut => DecOut1=->RndPhysicalCompact/GATE_025/AndIn1 DecOut2=->RndPhysicalCompact/GATE_026/AndIn1 DecOut3=->RndPhysicalCompact/GATE_006/AndIn3,RndPhysicalCompact/GATE_023/AndIn3 DecOut4= DecOut5= DecOut6= DecOut7= DecOut8=
+ 97 SafeResumption/MODE Or  | OrIn1=b_Step1 OrIn2=b_Step_RnD OrIn3=b_Step3 => OrOut=v:linkSafeMode
+ 98 SafeResumption/CONNECTORS And  | AndIn1=v:in_LV_Connector_Interlock AndIn2=v:in_HV_Connector_Interlock => AndOut=->SafeResumption/CONNECTOR_SCOPE/OrIn2
+ 99 SafeResumption/CONNECTOR_SCOPE Or  | OrIn1=b_Step1 OrIn2=W:SafeResumption/CONNECTORS/AndOut => OrOut=v:linkSafeConnectorScope
+100 RndPhysicalCompact/GATE_001 And  | AndIn1!=v:in_Estop_PLC AndIn2!=v:in_False_SI2_CH8 AndIn3=b_EStop_Ok AndIn4=v:linkSafeMode AndIn5=v:in_InterLock_NC_1 AndIn6=v:in_InterLock_NC_2 AndIn7=v:linkSafeConnectorScope => AndOut=v:linkRndGatePermit->RndPhysicalCompact/GATE_004/AndIn1,RndPhysicalCompact/GATE_007/AndIn3,RndPhysicalCompact/GATE_008/AndIn1,RndPhysicalCompact/GATE_015/OrIn1,RndPhysicalCompact/STATE_A/Reset
+101 SafeResumption/RND_SCOPE And  | AndIn1=v:linkRndGatePermit AndIn2=b_Step_RnD => AndOut=v:linkSafeRndScope
+102 SafeResumption/SAFE_UP_SCOPE And  | AndIn1=v:linkRndGatePermit AndIn2=b_Step1 AndIn3=v:linkLvCurrentPermit => AndOut=v:linkSafeUpScope->SafeResumption/SAFE_ACCEPTED_UP/Reset
+103 RndPhysicalCompact/GATE_002 And  | AndIn1!=v:in_Reset_PB AndIn2!=v:in_Relase_Door_PB => AndOut=->RndPhysicalCompact/GATE_007/AndIn2,RndPhysicalCompact/WINDOW/EStopIn1,RndPhysicalCompact/GATE_008/AndIn2,RndPhysicalCompact/GATE_016/AndIn2,RndPhysicalCompact/GATE_022/AndIn3,RndPhysicalCompact/GATE_024/AndIn2
+104 RndPhysicalCompact/GATE_003 And  | AndIn1=v:in_Reset_PB AndIn2=v:in_Relase_Door_PB => AndOut=->RndPhysicalCompact/GATE_006/AndIn2,RndPhysicalCompact/GATE_012/AndIn2,RndPhysicalCompact/GATE_020/AndIn3,RndPhysicalCompact/GATE_023/AndIn2
+105 RndPhysicalCompact/GATE_004 And  | AndIn1=W:RndPhysicalCompact/GATE_001/AndOut AndIn2=W:RndPhysicalCompact/SNAP_0/DecOut2 AndIn3!=W:RndPhysicalCompact/SNAP_0/DecOut5 AndIn4!=W:RndPhysicalCompact/SNAP_0/DecOut4 => AndOut=->RndPhysicalCompact/GATE_005/AndIn1,RndPhysicalCompact/GATE_012/AndIn1,RndPhysicalCompact/GATE_020/AndIn1
+106 RndPhysicalCompact/GATE_005 And  | AndIn1=W:RndPhysicalCompact/GATE_004/AndOut AndIn2!=W:RndPhysicalCompact/SNAP_0/DecOut3 => AndOut=->RndPhysicalCompact/GATE_006/AndIn1,RndPhysicalCompact/GATE_009/AndIn1,RndPhysicalCompact/GATE_010/AndIn1,RndPhysicalCompact/GATE_023/AndIn1,RndPhysicalCompact/GATE_025/AndIn3,RndPhysicalCompact/GATE_026/AndIn3
+107 RndPhysicalCompact/GATE_006 And  | AndIn1=W:RndPhysicalCompact/GATE_005/AndOut AndIn2=W:RndPhysicalCompact/GATE_003/AndOut AndIn3=W:RndPhysicalCompact/SNAP_1/DecOut3 => AndOut=->RndPhysicalCompact/GATE_011/OrIn2,RndPhysicalCompact/STATE_T/Set
+108 RndPhysicalCompact/GATE_007 And  | AndIn1!=W:RndPhysicalCompact/SNAP_0/DecOut1 AndIn2=W:RndPhysicalCompact/GATE_002/AndOut AndIn3=W:RndPhysicalCompact/GATE_001/AndOut => AndOut=->RndPhysicalCompact/WINDOW/Restart
+109 RndPhysicalCompact/WINDOW Estop T=250 | Restart=W:RndPhysicalCompact/GATE_007/AndOut EStopIn1=W:RndPhysicalCompact/GATE_002/AndOut[Single-Channel 1 Activated] EStopIn2=?[Both Deactivated] EStopIn3=?[Both Deactivated] EStopIn4=?[Both Deactivated] EStopIn5=?[Both Deactivated] EStopIn6=?[Both Deactivated] EStopIn7=?[Both Deactivated] EStopIn8=?[Both Deactivated] EDM1=? EDM2=? => Error= EStopOut=->RndPhysicalCompact/GATE_016/AndIn3 EStopDelOut=->RndPhysicalCompact/SNAP_1/DecIn3
+110 RndPhysicalCompact/GATE_008 And  | AndIn1=W:RndPhysicalCompact/GATE_001/AndOut AndIn2=W:RndPhysicalCompact/GATE_002/AndOut AndIn3!=W:RndPhysicalCompact/SNAP_0/DecOut6 AndIn4!=W:RndPhysicalCompact/SNAP_0/DecOut7 => AndOut=recRndC_P->RndPhysicalCompact/RELEASE/TonIn
+111 RndPhysicalCompact/GATE_009 And  | AndIn1=W:RndPhysicalCompact/GATE_005/AndOut AndIn2=v:in_Reset_PB => AndOut=->RndPhysicalCompact/GREEN/TonIn
+112 RndPhysicalCompact/GATE_010 And  | AndIn1=W:RndPhysicalCompact/GATE_005/AndOut AndIn2=v:in_Relase_Door_PB => AndOut=->RndPhysicalCompact/BLUE/TonIn
+113 RndPhysicalCompact/GATE_011 Or  | OrIn1=W:RndPhysicalCompact/SNAP_0/DecOut3 OrIn2=W:RndPhysicalCompact/GATE_006/AndOut => OrOut=->RndPhysicalCompact/GATE_012/AndIn3
+114 RndPhysicalCompact/GATE_012 And  | AndIn1=W:RndPhysicalCompact/GATE_004/AndOut AndIn2=W:RndPhysicalCompact/GATE_003/AndOut AndIn3=W:RndPhysicalCompact/GATE_011/OrOut => AndOut=->RndPhysicalCompact/BOTH/TonIn
+115 RndPhysicalCompact/RELEASE Ton T=2 | TonIn=W:RndPhysicalCompact/GATE_008/AndOut(recRndC_P) => TonOut=->RndPhysicalCompact/GATE_014/AndIn1,RndPhysicalCompact/GATE_016/AndIn4
+116 RndPhysicalCompact/GREEN Ton T=0.5 | TonIn=W:RndPhysicalCompact/GATE_009/AndOut => TonOut=v:linkRndGreenQualified->RndPhysicalCompact/GATE_030/OrIn1,RndPhysicalCompact/GATE_023/AndIn4
+117 RndPhysicalCompact/BLUE Ton T=0.5 | TonIn=W:RndPhysicalCompact/GATE_010/AndOut => TonOut=->RndPhysicalCompact/GATE_030/OrIn2,RndPhysicalCompact/STATE_BA/Set,RndPhysicalCompact/GATE_023/AndIn5
+118 RndPhysicalCompact/BOTH Ton T=1 | TonIn=W:RndPhysicalCompact/GATE_012/AndOut => TonOut=v:linkRndBothQualified->RndPhysicalCompact/GATE_020/AndIn4
+119 Network2/FBAnd4 And  | AndIn1=v:linkRndBothQualified AndIn2=W:Network2/FBAnd3/AndOut AndIn3=v:linkSafeUpScope => AndOut=v:linkSafeAcceptedUpSet
+120 SafeResumption/SAFE_ACCEPTED_UP Rs  | Reset!=W:SafeResumption/SAFE_UP_SCOPE/AndOut Set=v:linkSafeAcceptedUpSet => RsOut=v:linkSafeAcceptedUp
+121 RndPhysicalCompact/GATE_013 Or  | OrIn1=W:RndPhysicalCompact/SNAP_0/DecOut4 OrIn2=W:RndPhysicalCompact/SNAP_0/DecOut5 => OrOut=->RndPhysicalCompact/GATE_014/AndIn2
+122 RndPhysicalCompact/GATE_014 And  | AndIn1=W:RndPhysicalCompact/RELEASE/TonOut AndIn2=W:RndPhysicalCompact/GATE_013/OrOut AndIn3!=W:RndPhysicalCompact/SNAP_0/DecOut6 AndIn4!=W:RndPhysicalCompact/SNAP_0/DecOut7 => AndOut=->RndPhysicalCompact/GATE_015/OrIn2
+123 RndPhysicalCompact/GATE_015 Or  | OrIn1!=W:RndPhysicalCompact/GATE_001/AndOut OrIn2=W:RndPhysicalCompact/GATE_014/AndOut => OrOut=->RndPhysicalCompact/GATE_031/OrIn1,RndPhysicalCompact/STATE_T/Reset,RndPhysicalCompact/STATE_L/Reset,RndPhysicalCompact/STATE_C/Reset
+124 RndPhysicalCompact/GATE_016 And  | AndIn1=W:RndPhysicalCompact/SNAP_0/DecOut1 AndIn2=W:RndPhysicalCompact/GATE_002/AndOut AndIn3=W:RndPhysicalCompact/WINDOW/EStopOut AndIn4=W:RndPhysicalCompact/RELEASE/TonOut => AndOut=->RndPhysicalCompact/STATE_A/Set
+125 RndPhysicalCompact/GATE_020 And  | AndIn1=W:RndPhysicalCompact/GATE_004/AndOut AndIn2=W:RndPhysicalCompact/SNAP_0/DecOut3 AndIn3=W:RndPhysicalCompact/GATE_003/AndOut AndIn4=W:RndPhysicalCompact/BOTH/TonOut AndIn5=v:linkSafeRndScope => AndOut=->RndPhysicalCompact/STATE_SU/Set,RndPhysicalCompact/GATE_030/OrIn3
+126 RndPhysicalCompact/GATE_022 And  | AndIn1=W:RndPhysicalCompact/SNAP_0/DecOut1 AndIn2!=W:RndPhysicalCompact/SNAP_0/DecOut2 AndIn3!=W:RndPhysicalCompact/GATE_002/AndOut => AndOut=->RndPhysicalCompact/GATE_029/OrIn1
+127 RndPhysicalCompact/GATE_023 And  | AndIn1=W:RndPhysicalCompact/GATE_005/AndOut AndIn2=W:RndPhysicalCompact/GATE_003/AndOut AndIn3!=W:RndPhysicalCompact/SNAP_1/DecOut3 AndIn4!=W:RndPhysicalCompact/GREEN/TonOut AndIn5!=W:RndPhysicalCompact/BLUE/TonOut => AndOut=->RndPhysicalCompact/GATE_029/OrIn2
+128 RndPhysicalCompact/GATE_024 And  | AndIn1=W:RndPhysicalCompact/SNAP_0/DecOut3 AndIn2=W:RndPhysicalCompact/GATE_002/AndOut => AndOut=->RndPhysicalCompact/GATE_029/OrIn3
+129 RndPhysicalCompact/GATE_025 And  | AndIn1=W:RndPhysicalCompact/SNAP_1/DecOut1 AndIn2!=v:in_Reset_PB AndIn3=W:RndPhysicalCompact/GATE_005/AndOut => AndOut=->RndPhysicalCompact/GATE_029/OrIn5
+130 RndPhysicalCompact/GATE_026 And  | AndIn1=W:RndPhysicalCompact/SNAP_1/DecOut2 AndIn2!=v:in_Relase_Door_PB AndIn3=W:RndPhysicalCompact/GATE_005/AndOut => AndOut=->RndPhysicalCompact/GATE_029/OrIn4
+131 RndPhysicalCompact/GATE_029 Or  | OrIn1=W:RndPhysicalCompact/GATE_022/AndOut OrIn2=W:RndPhysicalCompact/GATE_023/AndOut OrIn3=W:RndPhysicalCompact/GATE_024/AndOut OrIn4=W:RndPhysicalCompact/GATE_026/AndOut OrIn5=W:RndPhysicalCompact/GATE_025/AndOut => OrOut=->RndPhysicalCompact/STATE_L/Set
+132 RndPhysicalCompact/GATE_030 Or  | OrIn1=W:RndPhysicalCompact/GREEN/TonOut OrIn2=W:RndPhysicalCompact/BLUE/TonOut OrIn3=W:RndPhysicalCompact/GATE_020/AndOut OrIn4=v:linkSafeAcceptedUp => OrOut=->RndPhysicalCompact/STATE_C/Set
+133 RndPhysicalCompact/GATE_031 Or  | OrIn1=W:RndPhysicalCompact/GATE_015/OrOut OrIn2!=v:in_Relase_Door_PB OrIn3=v:in_Reset_PB => OrOut=->RndPhysicalCompact/STATE_BA/Reset
+134 RndPhysicalCompact/STATE_A Rs  | Reset!=W:RndPhysicalCompact/GATE_001/AndOut Set=W:RndPhysicalCompact/GATE_016/AndOut => RsOut=recRndC_A
+135 RndPhysicalCompact/STATE_T Rs  | Reset=W:RndPhysicalCompact/GATE_015/OrOut Set=W:RndPhysicalCompact/GATE_006/AndOut => RsOut=recRndC_T
+136 RndPhysicalCompact/STATE_L Rs  | Reset=W:RndPhysicalCompact/GATE_015/OrOut Set=W:RndPhysicalCompact/GATE_029/OrOut => RsOut=recRndC_L
+137 RndPhysicalCompact/STATE_C Rs  | Reset=W:RndPhysicalCompact/GATE_015/OrOut Set=W:RndPhysicalCompact/GATE_030/OrOut => RsOut=recRndC_C
+138 SafeResumption/SG_OWNER_SET And  | AndIn1=v:linkRndGreenQualified AndIn2!=b_Step1 => AndOut=v:linkSafeSgOwnerSet
+139 RndPhysicalCompact/STATE_SG Rs  | Reset!=v:linkSafeRndScope Set=v:linkSafeSgOwnerSet => RsOut=recRndC_SG
+140 RndPhysicalCompact/STATE_SU Rs  | Reset!=v:linkSafeRndScope Set=W:RndPhysicalCompact/GATE_020/AndOut => RsOut=recRndC_SU
+141 RndPhysicalCompact/STATE_BA Rs  | Reset=W:RndPhysicalCompact/GATE_031/OrOut Set=W:RndPhysicalCompact/BLUE/TonOut => RsOut=recRndC_BA
+142 Network12/FBAnd1 And  | AndIn1=b_Step_RnD AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network12/FBAnd2/AndIn1,Network12/FBAnd3/AndIn1,Network12/FBAnd4/AndIn1
+143 Network1/FBOr3 Or  | OrIn1=b_Reset_Door_Unlock OrIn2=b_Reset_Door_Unlock_1 OrIn3!=v:in_Relase_Door_PB OrIn4=v:in_Reset_PB => OrOut=->Network1/FBRs6/Reset
+144 Network1/FBOr4 Or  | OrIn1=b_Set_Door_Unlock OrIn2=b_Set_Door_Unlock_1 => OrOut=->Network1/FBRs6/Set
+145 Network1/FBRs6 Rs  | Reset=W:Network1/FBOr3/OrOut Set=W:Network1/FBOr4/OrOut => RsOut=->Network1/FBAndUnlockHold/AndIn5
+146 Network12/FBAnd2 And  | AndIn1=W:Network12/FBAnd1/AndOut AndIn2=recRndC_BA AndIn3!=v:in_Reset_PB AndIn4=W:Network12/FBAnd11/AndOut => AndOut=b_Set_Door_Unlock_1
+147 Network12/FBAnd3 And  | AndIn1=W:Network12/FBAnd1/AndOut AndIn2=W:Network12/FBAnd17/AndOut AndIn3!=v:in_Relase_Door_PB => AndOut=b_Reset_Door_Unlock_1
+148 Network12/FBAnd4 And  | AndIn1=W:Network12/FBAnd1/AndOut AndIn2=W:Network12/FBAnd16/AndOut AndIn3=W:Network12/FBDecouple3/DecOut1 => AndOut=b_Set_HV_C2_1->Network12/FBTon3/TonIn
+149 Network12/FBTon3 Ton T=0.1 | TonIn=W:Network12/FBAnd4/AndOut(b_Set_HV_C2_1) => TonOut=->Network12/FBAnd6/AndIn1
+150 Network12/FBAnd6 And  | AndIn1=W:Network12/FBTon3/TonOut AndIn2=v:in_HV_C2_FBK AndIn3!=v:in_HV_Healthy_FBK => AndOut=b_Reset_HV_Discharg_Req2->Network12/FBDecouple2/DecIn1,Network12/FBDecouple2/DecIn2,Network12/FBDecouple2/DecIn3,Network12/FBDecouple2/DecIn4
+151 Network12/FBDecouple2 Decouple  | DecIn1=W:Network12/FBAnd6/AndOut(b_Reset_HV_Discharg_Req2) DecIn2=W:Network12/FBAnd6/AndOut(b_Reset_HV_Discharg_Req2) DecIn3=W:Network12/FBAnd6/AndOut(b_Reset_HV_Discharg_Req2) DecIn4=W:Network12/FBAnd6/AndOut(b_Reset_HV_Discharg_Req2) => DecOut1=b_Set_STO_DR2_2 DecOut2=b_Set_STO_DR1_2 DecOut3=b_Step3_Set_2 DecOut4=b_SetLock_ResetPB_2 DecOut5= DecOut6= DecOut7= DecOut8=
+152 Network3/FBOr13 Or  | OrIn2=W:Network3/FBOr6/OrOut OrIn3=b_Step2_Set_2 OrIn4=b_Step3_Set_2 => OrOut=->Network3/FBRs7/Reset
+153 Network3/FBRs7 Rs  | Reset=W:Network3/FBOr13/OrOut Set=b_Step_RnD_Set => RsOut=b_Step_RnD->Network3/FBDecouple2/DecIn7,Network3/FBAnd2/AndIn3
+154 Network3/FBOr16 Or  | OrIn1=b_Step12_Set OrIn2=b_Step12_Set_2 => OrOut=->Network3/FBRs8/Set
+155 Network3/FBRs8 Rs  | Reset=b_Step_RnD_Set Set=W:Network3/FBOr16/OrOut => RsOut=b_Step12->Network3/FBDecouple2/DecIn8
+156 Network6/FBOr1 Or  | OrIn1=W:Network6/FBAnd1/AndOut OrIn2=W:Network6/FBAnd11/AndOut => OrOut=->Network6/FBAnd4/AndIn1
+157 Network6/FBAnd11 And  | AndIn1=b_Step_RnD AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network6/FBOr1/OrIn2
+158 Network6/FBAnd12 And  | AndIn1=b_Step_RnD AndIn2!=v:in_False_SI2_CH8 AndIn3=W:Network6/FBAnd20/AndOut => AndOut=->Network6/FBOr3/OrIn3
+159 Network6/FBAnd13 And  | AndIn1=b_Step_RnD AndIn2=W:Network6/FBAnd22/AndOut AndIn3!=v:in_False_SI2_CH8 => AndOut=->Network6/FBOr2/OrIn3
+160 Network6/FBOr4 Or  | OrIn1=W:Network6/FBAnd6/AndOut OrIn2=W:Network6/FBAnd14/AndOut => OrOut=->Network6/FBRs2/Set
+161 Network6/FBAnd14 And  | AndIn1=b_Step_RnD AndIn2=W:Network6/FBAnd21/AndOut AndIn3!=v:in_False_SI2_CH8 => AndOut=->Network6/FBOr4/OrIn2
+162 Network12/FBOr1 Or  | OrIn1=recRndC_SU OrIn2=W:Network12/FBAnd10/AndOut => OrOut=->Network12/FBDecouple3/DecIn1,Network12/FBDecouple3/DecIn2
+163 Network12/FBAnd8 And  | AndIn1=v:inPLC_RnD_Mode AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network12/FBAnd10/AndIn1
+164 Network12/FBAnd9 And  | AndIn1=v:inPLC_RnD_Mode_2 AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network12/FBAnd10/AndIn2
+165 Network12/FBAnd10 And  | AndIn1=W:Network12/FBAnd8/AndOut AndIn2=W:Network12/FBAnd9/AndOut => AndOut=->Network12/FBOr1/OrIn2
+166 Network12/FBOr2 Or  | OrIn1=recRndC_SG => OrOut=->Network12/FBDecouple1/DecIn1,Network12/FBDecouple1/DecIn2,Network12/FBDecouple1/DecIn3,Network12/FBDecouple1/DecIn4,Network12/FBDecouple1/DecIn5
+167 Network12/FBDecouple1 Decouple  | DecIn1=W:Network12/FBOr2/OrOut DecIn2=W:Network12/FBOr2/OrOut DecIn3=W:Network12/FBOr2/OrOut DecIn4=W:Network12/FBOr2/OrOut DecIn5=W:Network12/FBOr2/OrOut => DecOut1=b_RBN_Bat_Reset_2 DecOut2=b_C3_BetReset_2 DecOut3=b_Set_LV_Discharge_Request_2 DecOut4=b_Reset_LV_C1_3->Network12/FBAnd15/AndIn1 DecOut5=b_Set_Transition_2 DecOut6= DecOut7= DecOut8=
+168 Network6/FBAnd15 And  | AndIn1!=v:inPLC_RnD_Mode AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network6/FBAnd17/AndIn1
+169 Network6/FBAnd16 And  | AndIn1=v:inPLC_RnD_Mode_2 AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network6/FBAnd17/AndIn2
+170 Network6/FBAnd17 And  | AndIn1=W:Network6/FBAnd15/AndOut AndIn2=W:Network6/FBAnd16/AndOut AndIn3=W:Network6/FBAnd1/AndOut => AndOut=->Network6/FBOr5/OrIn2
+171 Network6/FBDecouple2 Decouple  | DecIn1=W:Network6/FBOr5/OrOut DecIn2=W:Network6/FBOr5/OrOut DecIn3=W:Network6/FBOr5/OrOut DecIn4=W:Network6/FBOr5/OrOut DecIn6=v:in_Reset_PB DecIn7=v:in_Relase_Door_PB => DecOut1=b_Reset_STO_DR2_4 DecOut2=b_Reset_STO_DR1_4 DecOut3=b_Set_HV_Discharge_Request_3 DecOut4=b_Reset_HV_C2_4->Network6/FBTon1/TonIn DecOut5=b_Set_Transition_4 DecOut6=recRndC_PrevG DecOut7=recRndC_PrevB DecOut8=
+172 Network6/FBAnd18 And  | AndIn1=W:Network6/FBTon1/TonOut AndIn2!=v:in_HV_C2_FBK => AndOut=b_Step12_Set_2->Network6/FBDecouple3/DecIn1
+173 Network6/FBTon1 Ton T=0.2 | TonIn=W:Network6/FBDecouple2/DecOut4(b_Reset_HV_C2_4) => TonOut=->Network6/FBAnd18/AndIn1
+174 Network1/FBAnd2 And  | AndIn1=v:out_Step3 AndIn2=W:Network1/FBAnd12/AndOut AndIn3=W:Network1/FBAnd10/AndOut => AndOut=->Network1/FBOr13/OrIn2,Network1/FBOr12/OrIn2
+175 Network6/FBOr5 Or  | OrIn1=W:Network6/RUN_DOWN_OWNER/RsOut OrIn2=W:Network6/FBAnd17/AndOut => OrOut=->Network6/FBDecouple2/DecIn1,Network6/FBDecouple2/DecIn2,Network6/FBDecouple2/DecIn3,Network6/FBDecouple2/DecIn4
+176 Network1/FBOr14 Or  | OrIn2=b_Reset_Transition_2 OrIn3=b_Reset_Transition_3 => OrOut=->Network1/FBRs8/Reset
+177 Network1/FBOr15 Or  | OrIn1=b_Set_Transition_1 OrIn2=b_Set_Transition_2 OrIn3=b_Set_Transition_3 OrIn4=b_Set_Transition_4 => OrOut=->Network1/FBRs8/Set
+178 Network1/FBRs8 Rs  | Reset=W:Network1/FBOr14/OrOut Set=W:Network1/FBOr15/OrOut => RsOut=v:out_TransitionStep
+179 Network11/FBDecouple1 Decouple  | DecIn1=W:Network11/FBAnd5/AndOut(b_Step_RnD_Set) => DecOut1=b_Reset_Transition_3 DecOut2= DecOut3= DecOut4= DecOut5= DecOut6= DecOut7= DecOut8=
+180 Network12/FBDecouple3 Decouple  | DecIn1=W:Network12/FBOr1/OrOut DecIn2=W:Network12/FBOr1/OrOut => DecOut1=->Network12/FBAnd4/AndIn3 DecOut2=b_Set_Transition_3 DecOut3= DecOut4= DecOut5= DecOut6= DecOut7= DecOut8=
+181 Network6/FBAnd19 And  | AndIn1=W:Network6/FBAnd1/AndOut AndIn2=v:out_TransitionStep => AndOut=b_Reset_Transition_2
+182 Network1/FBAnd4 And  | AndIn1=v:inPLC_BypassC1C2 AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network1/FBAnd5/AndIn1,Network1/FBAnd6/AndIn1,Network1/FBTon1/TonIn
+183 Network1/FBOr17 Or  | OrIn2=W:Network1/FBAnd5/AndOut OrIn3=b_Set_LV_C1_1 => OrOut=->Network1/FBAndLvSetPermit/AndIn1
+184 Network1/FBOr18 Or  | OrIn2=W:Network1/FBAnd6/AndOut OrIn3=b_Set_HV_C2_1 => OrOut=->Network1/FBAndHvSetPermit/AndIn1
+185 Network1/FBAnd5 And  | AndIn1=W:Network1/FBAnd4/AndOut AndIn2!=v:out_LV_C1 => AndOut=->Network1/FBOr17/OrIn2
+186 Network1/FBAnd6 And  | AndIn1=W:Network1/FBAnd4/AndOut AndIn2!=v:out_HV_C2 => AndOut=->Network1/FBOr18/OrIn2
+187 Network1/FBTon1 Ton T=10 | TonIn=W:Network1/FBAnd4/AndOut => TonOut=->Network1/FBAnd7/AndIn1,Network1/FBAnd8/AndIn1
+188 Network1/FBAnd7 And  | AndIn1=W:Network1/FBTon1/TonOut AndIn2=v:out_LV_C1 => AndOut=->Network1/FBOr11/OrIn4
+189 Network1/FBAnd8 And  | AndIn1=W:Network1/FBTon1/TonOut AndIn2=v:out_HV_C2 => AndOut=->Network1/FBOr16/OrIn3
+190 Network12/FBAnd11 And  | AndIn1=v:in_Door_Monitor AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network12/FBAnd2/AndIn4
+191 Network1/FBAnd10 And  | AndIn1!=v:inPLC_RnD_Mode_2 AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network1/FBAnd2/AndIn3
+192 Network6/FBAnd20 And  | AndIn1=v:in_C3_Manual_Reset AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network6/FBAnd12/AndIn3
+193 Network1/FBAnd12 And  | AndIn1!=v:inPLC_RnD_Mode AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network1/FBAnd2/AndIn2
+194 Network12/FBAnd16 And  | AndIn1=v:in_InterLock_NC_1 AndIn2!=v:in_False_SI2_CH8 AndIn3=v:in_InterLock_NC_2 => AndOut=->Network12/FBAnd4/AndIn2
+195 Network12/FBAnd17 And  | AndIn1=v:in_Door_Monitor AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network12/FBAnd3/AndIn2
+196 Network6/FBAnd21 And  | AndIn1=v:in_RBM_Manual_Set AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network6/FBAnd14/AndIn2
+197 Network6/FBAnd22 And  | AndIn1=v:in_RBM_Manual_Reset AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network6/FBAnd13/AndIn2
+198 Network2/FBOr1 Or  | OrIn1=v:linkSafeAcceptedUp OrIn2=W:Network2/FBAnd91/AndOut => OrOut=b_Step12_Set->Network2/FBDecouple5/DecIn1,Network2/FBDecouple5/DecIn2
+199 Network2/FBAnd61 And  | AndIn1=v:inPLC_RnD_Mode AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network2/FBAnd91/AndIn1
+200 Network2/FBAnd81 And  | AndIn1!=v:inPLC_RnD_Mode_2 AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network2/FBAnd91/AndIn2
+201 Network2/FBAnd91 And  | AndIn1=W:Network2/FBAnd61/AndOut AndIn2=W:Network2/FBAnd81/AndOut AndIn3=W:Network2/FBAnd11/AndOut => AndOut=->Network2/FBOr1/OrIn2
+202 Network2/FBDecouple5 Decouple  | DecIn1=W:Network2/FBOr1/OrOut(b_Step12_Set) DecIn2=W:Network2/FBOr1/OrOut(b_Step12_Set) => DecOut1=b_Set_Transition_1 DecOut2=b_SetLock_ResetPB_1 DecOut3= DecOut4= DecOut5= DecOut6= DecOut7= DecOut8=
+203 Network2/FBAnd11 And  | AndIn1=b_Step1 AndIn2!=v:in_False_SI2_CH8 => AndOut=->Network2/FBAnd91/AndIn3
+204 Network6/FBAnd23 And  | AndIn1=W:Network6/FBAnd24/AndOut AndIn2=W:Network6/FBAnd1/AndOut => AndOut=->Network6/RUN_DOWN_OWNER/Set
+205 Network2/FBAnd12 And  | AndIn1=b_Step1 AndIn2!=v:in_Reset_PB => AndOut=->Network2/FBDecouple1/DecIn1,Network2/FBDecouple1/DecIn2
+206 Network1/FBRs9 Rs  | Reset=W:Network1/FBAnd13/AndOut Set=W:Network1/FBAnd14/AndOut => RsOut=b_ResetPB_Lock
+207 Network1/FBAnd13 And  | AndIn1=b_ResetPB_Lock AndIn2!=v:in_Reset_PB => AndOut=->Network1/FBRs9/Reset
+208 Network1/FBOr19 Or  | OrIn1=b_SetLock_ResetPB_1 OrIn2=b_SetLock_ResetPB_2 OrIn3=b_SetLock_ResetPB_3 => OrOut=->Network1/FBAnd14/AndIn3
+209 Network1/FBAnd14 And  | AndIn1!=b_ResetPB_Lock AndIn2=v:in_Reset_PB AndIn3=W:Network1/FBOr19/OrOut => AndOut=->Network1/FBRs9/Set
+210 Network6/FBAnd24 And  | AndIn1!=b_ResetPB_Lock AndIn2!=v:in_False_SI2_CH8 AndIn3=v:linkRndGreenQualified => AndOut=->Network6/FBAnd23/AndIn1
+211 Network6/RUN_DOWN_RESET Or  | OrIn1=b_Step_RnD_Set OrIn2=b_Step4_Set OrIn3!=v:linkRndGatePermit => OrOut=->Network6/RUN_DOWN_OWNER/Reset
+212 Network6/RUN_DOWN_OWNER Rs  | Reset=W:Network6/RUN_DOWN_RESET/OrOut Set=W:Network6/FBAnd23/AndOut => RsOut=->Network6/FBOr5/OrIn1
+213 Network6/FBDecouple3 Decouple  | DecIn1=W:Network6/FBAnd18/AndOut(b_Step12_Set_2) => DecOut1=b_SetLock_ResetPB_3 DecOut2= DecOut3= DecOut4= DecOut5= DecOut6= DecOut7= DecOut8=
+214 Network3/FBAnd2 And  | AndIn1!=b_Step12 AndIn2!=v:in_False_SI2_CH8 AndIn3!=W:Network3/FBRs7/RsOut(b_Step_RnD) AndIn4!=W:Network3/FBRs6/RsOut => AndOut=->Network3/FBAnd1/AndIn8
+215 Network1/FBAndUnlockHold And  | AndIn1!=v:in_Estop_PLC AndIn2=v:in_Relase_Door_PB AndIn3!=v:in_Reset_PB AndIn4=b_EStop_Ok AndIn5=W:Network1/FBRs6/RsOut => AndOut=v:out_Door_Unlock_Solonoeid
+{"safeAnd":101,"safeRs":27,"safeTon":15,"safeDecouple":22,"safeOr":48,"safeEstop":2} total 215 vars 75

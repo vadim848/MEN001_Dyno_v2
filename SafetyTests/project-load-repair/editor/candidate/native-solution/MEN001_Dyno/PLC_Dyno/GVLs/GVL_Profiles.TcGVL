@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <GVL Name="GVL_Profiles" Id="{6c2a9f17-4e83-4b15-9d2a-0f7b3e1c5a64}">
+    <Declaration><![CDATA[{attribute 'TcGvlVarFlags' := 'OPC'}
+// Synchronized motion-profile coordination. The app configures each enabled half
+// (the Mentee profile lives in GVL_MenteeMotorV32_OS.stTraj; the load motors here)
+// then pulses ONE bStartSync. PRG_Motion detects its rising edge and starts every
+// enabled half in the SAME PLC cycle -> cycle-accurate (<=1 ms) synchronization,
+// because all generators run in the same task at the same fTaskCycleS.
+VAR_GLOBAL
+    // Load-motor profiles (Beckhoff AX5000), one per axis.
+    // ADS: GVL_Profiles.stLoadProfile1 / .stLoadProfile2
+    stLoadProfile1 : ST_LoadProfileCmd;   // Motor 1 (Axis1)
+    stLoadProfile2 : ST_LoadProfileCmd;   // Motor 2 (Axis2)
+
+    // Mentee half participates in the synchronized start (its config + params are
+    // in GVL_MenteeMotorV32_OS.stTraj; this only gates the shared start edge).
+    // ADS: GVL_Profiles.bMenteeEnable
+    bMenteeEnable  : BOOL;
+
+    // Shared start/stop. Pulse bStartSync (rising edge) AFTER writing all enabled
+    // halves' configs; PRG_Motion arms every enabled half that same cycle.
+    // ADS: GVL_Profiles.bStartSync / .bStopSync
+    bStartSync     : BOOL;
+    bStopSync      : BOOL;
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

@@ -1,0 +1,2 @@
+import {cand,boot} from 'file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/program/architect/E2-status/repro/cand.mjs';
+for(const c of ['E2a-RC','E2b','E2c','E2d-v7.5']){try{const r=cand(c);boot(r);r.step(1,{in_LV_Faulty_FBK:true});const P=r.t+1;r.step(1,{in_Relase_Door_PB:true});let on=null;for(let i=0;i<700;i++){r.step(1);if(r.get('out_Door_Unlock_Solonoeid')&&on==null)on=r.t-P;}console.log(c,'Safe LV Faulty blue: Unlock on',on);}catch(e){console.log(c,'ERR',e.message.slice(0,100));}}

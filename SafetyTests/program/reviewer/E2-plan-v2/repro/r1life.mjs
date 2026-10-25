@@ -1,0 +1,14 @@
+import {rt,gesture} from 'file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/program/architect/E2-status/repro/run.mjs';
+const OUTS='STO_DR1 STO_DR2 outPLC_C1_FBK outPLC_C2_FBK outPLC_EStop_MantiRob outPLC_EStop_NC1 outPLC_EStop_NC2 outPLC_HV_Healthy outPLC_HV_Interlock outPLC_LV_Healthy outPLC_LV_Interlock outPLC_RnD outPLC_STO_1 outPLC_STO_2 out_C3_BatRelay out_DR1_ErrorACK out_DR2_ErrorACK out_Door_Unlock_Solonoeid out_EStop_Ok_Plc out_EStop_Status out_HV_C2 out_HV_Discharge_Request out_LV_C1 out_LV_Discharge_Request out_RBM_Bat out_ReadyForStep2 out_SS1_DR1 out_SS1_DR2 out_Safety_Armed out_Step1 out_Step12 out_Step2 out_Step3 out_Step4 out_Step5 out_Step6 out_TransitionStep b_Step1 b_Step12 b_Step_RnD b_Step3 b_Step4 b_Step5 b_Step6 b_EStop_Ok recRndC_SU recRndC_SG'.split(' ');
+const evs=[null,{in_ES_NC_1:false},{in_Estop_PLC:true},{in_Mentee_EStop:true},{in_InterLock_NC_1:false},{in_LV_Connector_Interlock:false},{in_HV_Connector_Interlock:false},{in_HV_Healthy_FBK:true},{in_LV_Healthy_FBK:false},{inPLC_BypassC1C2:true},{inPLC_RnD_Mode:true},{inPLC_RnD_Mode_2:true},{in_Door_Monitor:false},{in_C3_Manual_Set:true},{in_RBM_Manual_Set:true},{in_Relase_Door_PB:true}];
+// lifecycle script: list of [scans, inputs]; event injected at phase p
+const script=[[10,{}],[1,{in_Reset_PB:true}],[1,{in_Reset_PB:false}],[2100,{}],[1,{in_Reset_PB:true,in_Relase_Door_PB:true}],[1100,{}],[1,{in_Reset_PB:false,in_Relase_Door_PB:false}],[2500,{in_LV_Healthy_FBK:true}],[1,{in_Reset_PB:true,in_Relase_Door_PB:true}],[1100,{}],[1,{in_Reset_PB:false,in_Relase_Door_PB:false}],[3000,{in_LV_Healthy_FBK:false}],[1,{in_Reset_PB:true}],[600,{}],[1,{in_Reset_PB:false}],[12000,{}],[2100,{in_LV_Healthy_FBK:true}],[1,{in_Reset_PB:true}],[600,{}],[1,{in_Reset_PB:false}],[3000,{}],[1,{in_Relase_Door_PB:true}],[700,{}],[1,{in_Relase_Door_PB:false}],[1000,{}]];
+let diffs=0,cases=0,stages=new Set();
+for(let ei=0;ei<evs.length;ei++)for(let phase=0;phase<script.length;phase+=(ei?1:100)){
+ const a=rt({r1:false,e2a:false,e2b:false,e2c:false,e2d:false}), b=rt({e2a:false,e2b:false,e2c:false,e2d:false}); cases++;
+ for(let p=0;p<script.length;p++){const [n,inp]=script[p]; let inp2={...inp}; if(p===phase&&evs[ei])Object.assign(inp2,evs[ei]); if(p===phase+1&&evs[ei]){/* release after 1 phase */ for(const k of Object.keys(evs[ei]))inp2[k]=({in_ES_NC_1:true,in_InterLock_NC_1:true,in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,in_Door_Monitor:true}[k]??(k==='in_LV_Healthy_FBK'?inp2[k]??true:false));}
+  a.step(1,inp2);b.step(1,inp2);
+  for(let i=1;i<n;i++){a.step(1);b.step(1);stages.add(a.ph());for(const o of OUTS)if(!!a.get(o)!==!!b.get(o)){diffs++;if(diffs<10)console.log('DIFF',JSON.stringify(evs[ei]),'phase',phase,o,a.ph(),b.ph());}}
+ }
+}
+console.log('cases',cases,'diffs',diffs,'stages',[...stages].join(','));

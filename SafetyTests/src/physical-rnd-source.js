@@ -1,20 +1,25 @@
 import { effectiveEstopInputs } from "./estop-native-pairs.js";
 import { SalRuntime,SAL_CLOCK_CONTRACT } from "./sal-runtime.js";
 import { ObservedSamples } from "./observed-samples.js";
+import { withActualNames } from "./signal-names.js";
 
 export const PHYSICAL_SIGNALS={up:"b_Set_Transition_3",down:"b_Set_Transition_2",blue:"b_Set_Door_Unlock_1",
   hvRequest:"b_Set_HV_C2_1",hv:"out_HV_C2",lv:"out_LV_C1",unlock:"out_Door_Unlock_Solonoeid"};
 const phaseNames=["b_Step1","b_Step2","b_Step3","b_Step4","b_Step5","b_Step6","b_Step12","b_Step_RnD"];
-const external={in_ES_NC_1:true,in_ES_NC_2:true,in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,
+// Raw values. R0 nominal (lead 2026-10-22): LV/HV PS feedback raw FALSE = healthy per D-ARCH-POL on every source
+// (until 2026-10-22 the stand fed raw TRUE = "PS faulty"; shown not load-bearing for any case/test, E2a-rename);
+// keys are mapped to the actual SAL names of the source (signal-names.js), values are never converted.
+const EXTERNAL_RAW={in_ES_NC_1:true,in_ES_NC_2:true,in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,
   in_InterLock_NC_1:true,in_InterLock_NC_2:true,in_Mentee_EStop:false,in_LV_C1_FBK:true,in_HV_C2_FBK:false,
-  in_STO_DR1_FBK:false,in_STO_DR2_FBK:false,in_Reset_PB:false,in_Safety_Run:false,in_LV_Healthy_FBK:true,
-  in_HV_Healthy_FBK:true,in_C3_Manual_Set:false,in_C3_Manual_Reset:false,in_RBM_Manual_Set:false,in_RBM_Manual_Reset:false,
+  in_STO_DR1_FBK:false,in_STO_DR2_FBK:false,in_Reset_PB:false,in_Safety_Run:false,in_LV_Faulty_FBK:false,
+  in_HV_Faulty_FBK:false,in_C3_Manual_Set:false,in_C3_Manual_Reset:false,in_RBM_Manual_Set:false,in_RBM_Manual_Reset:false,
   in_Relase_Door_PB:false,in_Door_Monitor:true,in_False_SI2_CH8:false,in_Estop_PLC:false,
   inPLC_RnD_Mode:false,inPLC_RnD_Mode_2:false,inPLC_BypassC1C2:false};
 
 export function physicalRndSource(model,stepMs=1,{entryButtons={},observedSignals={}}={}) {
   for(const [key,value] of Object.entries(observedSignals))if(Object.hasOwn(PHYSICAL_SIGNALS,key)&&PHYSICAL_SIGNALS[key]!==value)throw Error('Cannot rebind physical observation '+key);
   const signals={...PHYSICAL_SIGNALS,...observedSignals};
+  const external=withActualNames(model,EXTERNAL_RAW);
   if(model.bindingAudit?.status!=="PASS")throw Error("Full actual-source binding audit required before selection");
   const all=model.networks.flatMap(n=>n.blocks),ports=new Map(),owners=new Map(),writers=new Map(),aliasTargets=new Map(),cuts=[],unknown=[];
   const addWriter=(name,port)=>{if(!writers.has(name))writers.set(name,[]);writers.get(name).push(port);};
@@ -68,7 +73,7 @@ export function physicalRndSource(model,stepMs=1,{entryButtons={},observedSignal
     for(const k of Object.keys(current))if(current[k]&&!previous[k])rises[k]++;
     const raw={...Object.fromEntries(Object.keys(external).map(name=>[name,r.get(name)])),b_Step_RnD:r.get("b_Step_RnD")};
     if(Object.keys(current).some(k=>current[k]!==previous[k]))transitions.push({timeMs:observedMs,signals:current,raw});
-    const internal=model.networks.some(n=>n.name==="RndPhysicalCompact")?Object.fromEntries(Object.entries({finishUp:"GATE_020/AndOut",finishGreen:"GREEN/TonOut",finishBlue:"BLUE/TonOut",windowError:"WINDOW/Error",restart:"GATE_007/AndOut",ready:"WINDOW/EStopOut",delayed:"WINDOW/EStopDelOut",release:"RELEASE/TonOut",P:"STATE_P/RsOut",A:"STATE_A/RsOut",C:"STATE_C/RsOut",L:"STATE_L/RsOut",T:"STATE_T/RsOut"}).map(([key,path])=>[key,r.get("//RndPhysicalCompact/"+path)])):undefined;
+    const internal=model.networks.some(n=>n.name==="RndPhysicalCompact")?Object.fromEntries(Object.entries({finishUp:"GATE_020/AndOut",finishGreen:"GREEN/TonOut",finishBlue:"BLUE/TonOut",windowError:"WINDOW/Error",restart:"GATE_007/AndOut",ready:"WINDOW/EStopOut",delayed:"WINDOW/EStopDelOut",release:"RELEASE/TonOut",P:"GATE_008/AndOut",A:"STATE_A/RsOut",C:"STATE_C/RsOut",L:"STATE_L/RsOut",T:"STATE_T/RsOut"}).map(([key,path])=>[key,r.get("//RndPhysicalCompact/"+path)])):undefined;
     frames.push({timeMs:observedMs,signals:current,raw,internal});previous=current;
   }return r;};
   // Real manual restart; state boundary deliberately not R&D until setup ends.

@@ -1,0 +1,1545 @@
+{
+ "generatedAt": "2026-10-22T10:51:56.804Z",
+ "tool": "scratchpad/tools/mutkill.mjs (v2-tester E2-G3)",
+ "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2b_on_E2b.json",
+ "planSha256": "b5dd045fb959f68ab1fadfcfe59509a1b8d21f64d1e48d5c356eac7355909598",
+ "sourceSha256": "4f933433c4dcb6a4ddf3cbad1cad64897965c48f7832613d0481b0195fbce45e",
+ "killBase": {
+  "eligible": 642,
+  "excluded": [
+   "E2a DIS-HOLD-HV issue by STP-A Run->R&D; refused legacy PLC lift (1,1) 300 ms with the cover open (NC1 FALSE); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+   "E2a DIS-HOLD-HV issue by STP-A Run->R&D; Emergency in R&D (in_ES_NC_1 FALSE) while legacy PLC (1,1) held 3000 ms, Restart -> Safe, Safe->R&D; then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+   "E2a DIS-HOLD-HV Emergency from steady Run while legacy PLC (1,1) is held (in_ES_NC_1 FALSE) -> the chain issues the HV discharge request before C2 OFF and keeps it TRUE (Q-V7-01 \"Г\": Discharge -> hold -> C2 OFF; C2 OFF without Discharge = FAIL)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)",
+   "E2d FBK10-PLC-REG steady R&D, legacy PLC (1,1) held, C2_FBK ON from u+1 (after the own C2 command) -> C2 kept, no Run <= u+599, Run at u+601 (RUN-CONF-T, TEAM-DEFAULT TD-02), no Emergency",
+   "E2d FBK10-PLC-REG steady R&D, legacy PLC (1,1) held, C2_FBK ON from u+250 (after the own C2 command) -> C2 kept, no Run <= u+599, Run at u+601 (RUN-CONF-T, TEAM-DEFAULT TD-02), no Emergency",
+   "E2d FBK10-PLC-REG steady R&D, legacy PLC (1,1) held, C2_FBK ON from u+499 (after the own C2 command) -> C2 kept, no Run <= u+599, Run at u+601 (RUN-CONF-T, TEAM-DEFAULT TD-02), no Emergency",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+10, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+10, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+300, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+300, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+499, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+499, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FFS R&D->Run legacy PLC (1,1): ES_NC_1 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (EMGREF(2), rule L Imm)",
+   "E2d FFS R&D->Run legacy PLC (1,1): ES_NC_2 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (EMGREF(2), rule L Imm)",
+   "E2d FFS R&D->Run legacy PLC (1,1): NC1 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later while the cause is held [e, e+299] (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+   "E2d FFS R&D->Run legacy PLC (1,1): NC2 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later while the cause is held [e, e+299] (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+   "E2d FFS R&D->Run legacy PLC (1,1): LV connector in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (EMGREF(2), rule L Imm)",
+   "E2d FFS R&D->Run legacy PLC (1,1): HV connector in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (EMGREF(2), rule L Imm)",
+   "E2d FFS R&D->Run legacy PLC (1,1): in_Estop_PLC in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (EMGREF(2), rule L Imm)",
+   "E2d FFS R&D->Run legacy PLC (1,1): Mentee in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (EMGREF(2), rule L Imm, MENTEE05)"
+  ],
+  "excludeRegex": [
+   "/REL01-e2-LATE R&D/",
+   "/FBK-05/",
+   "/STP-I\\b/",
+   "/existing-PLC-levels/",
+   "/FBK10-PLC-B/",
+   "/FBK10-PLC-REG steady R&D, legacy PLC \\(1,1\\)/",
+   "/^(DIAG \\S+ )?KF-/",
+   "/\\(1,1\\)/"
+  ]
+ },
+ "behaviouralTests": [
+  "^E2[a-d] "
+ ],
+ "summary": {
+  "KILLED": 36,
+  "SURVIVED": 8,
+  "STRUCTURAL-ONLY": 0,
+  "INVALID": 0,
+  "NOT-RUN": 0
+ },
+ "results": [
+  {
+   "id": "M-E2b-01",
+   "op": "deactivate-input",
+   "block": "//Network1/FBOrIlRunOk",
+   "port": "OrIn2",
+   "verification": {
+    "parsedDelta": "//Network1/FBOrIlRunOk/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "a7e1a1bdce42fb6a3bb491f7f137b79c872332b6dd198736383502094f004fee",
+   "killedBy": [
+    {
+     "name": "E2c HLT-02 steady R&D, HV Healthy constantly lost: ignored (R&D, LV kept, no Emergency, no SafetyFault); R&D->Run accepted with HV lost at start",
+     "file": "current-e2a-rnd-cover-healthy.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2c HLT-02 steady R&D, HV Healthy toggling every 100 ms: ignored (R&D, LV kept, no Emergency, no SafetyFault); R&D->Run accepted with HV lost at start",
+     "file": "current-e2a-rnd-cover-healthy.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2a EMG6-01 L3/L1 boundary: Run-down (green 600 ms), in_ES_NC_1 FALSE at e=t_a-1 -> Emergency latch, rule L as in steady Run, Restart -> only Safe",
+     "file": "current-e2a-emg-rd-sweep.test.js",
+     "message": "precondition not reached within 4000 ms: Run after BOTH from R&D (t=11317, stages=b_Step4, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2b EMG4-03 EMGREF-RUN: in_LV_Connector_Interlock FALSE steady in Run -> Emergency latch, energy chain, Restart -> only Safe",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition not reached within 4000 ms: Run after BOTH from R&D (t=11317, stages=b_Step4, statuses=STS_EMG)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-02",
+   "op": "deactivate-input",
+   "block": "//Network1/FBOrIlRunOk",
+   "port": "OrIn1",
+   "verification": {
+    "parsedDelta": "//Network1/FBOrIlRunOk/OrIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "4cbcb2bef86745208f3d0d5701c600501f8442011c0d16c9160b467b7a124766",
+   "killedBy": [
+    {
+     "name": "E2d IL-02 R&D, NC1 FALSE, Door true: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+     "file": "current-e2a-rnd-cover-healthy.test.js",
+     "message": "4 violated checks"
+    },
+    {
+     "name": "E2d IL-02 R&D, NC1 FALSE, Door false: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+     "file": "current-e2a-rnd-cover-healthy.test.js",
+     "message": "4 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-03",
+   "op": "deactivate-input",
+   "block": "//Network1/FBOrIlRunOk",
+   "port": "OrIn3",
+   "verification": {
+    "parsedDelta": "//Network1/FBOrIlRunOk/OrIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "20a88a09294f5f5489514f2b5433a08e4a0e2f68806c87237db7a59f860c9e09",
+   "killedBy": [
+    {
+     "name": "E2b IL-05b(1) normal Run->R&D by green, NC1 FALSE at t_a+1: stop continues with unchanged moments, R&D, then R&D kept with the cover open; no Emergency",
+     "file": "current-e2b-cover-transitions.test.js",
+     "message": "3 violated checks"
+    },
+    {
+     "name": "E2b IL-05b(1) normal Run->R&D by green, NC2 FALSE at t_a+1: stop continues with unchanged moments, R&D, then R&D kept with the cover open; no Emergency",
+     "file": "current-e2b-cover-transitions.test.js",
+     "message": "3 violated checks"
+    },
+    {
+     "name": "E2b IL-05b(1) normal Run->R&D by green, both FALSE at t_a+1: stop continues with unchanged moments, R&D, then R&D kept with the cover open; no Emergency",
+     "file": "current-e2b-cover-transitions.test.js",
+     "message": "3 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-04",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAndNotRunSu",
+   "port": "AndIn2",
+   "verification": {
+    "parsedDelta": "//Network1/FBAndNotRunSu/AndIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "03771b2cd82afb1ef4397dada6777080f069a85053a4ff25865d8dd64b5f6a21",
+   "killedBy": [
+    {
+     "name": "E2b IL-05a StartingRun, NC1 FALSE (Door true) at c=u+1: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+     "file": "current-e2b-cover-transitions.test.js",
+     "message": "17 violated checks (c=u+1=7220, u=7219, r=7819)"
+    },
+    {
+     "name": "E2b IL-05a StartingRun, NC1 FALSE (Door true) at c=u+50: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+     "file": "current-e2b-cover-transitions.test.js",
+     "message": "17 violated checks (c=u+50=7269, u=7219, r=7819)"
+    },
+    {
+     "name": "E2b IL-05a StartingRun, NC1 FALSE (Door true) at c=r-1: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+     "file": "current-e2b-cover-transitions.test.js",
+     "message": "17 violated checks (c=r-1=7818, u=7219, r=7819)"
+    },
+    {
+     "name": "E2d COV-1 R&D->Run accepted (A <= c-1), NC1 FALSE from c=u+1: no C2 ON / STO_DR1 / STO_DR2 release in any scan >= c, Emergency by rule L1 vs in_Estop_PLC at c, Restart -> only Safe",
+     "file": "current-e2b-cover-transitions.test.js",
+     "message": "17 violated checks (COV-1 c=u+1=7220, A=7217, u=7219)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-05",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAndNotRunSu",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//Network1/FBAndNotRunSu/AndIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "a565183a65adb4c671b270b09cb7bbdc92043d21e4b2766e4aae5b8b0e89f383",
+   "killedBy": [
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door false), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door false), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-06",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAnd1",
+   "port": "AndIn3",
+   "verification": {
+    "parsedDelta": "//Network1/FBAnd1/AndIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "1074c92189b760fc1bfcbfa7a20788a25d8f32cb52cb59a44b549b690cff8041",
+   "killedBy": [
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door false), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door false), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-07",
+   "op": "deactivate-input",
+   "block": "//Network12/FBAnd16",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//Network12/FBAnd16/AndIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "e094fe7dd3844a68cb2a314865c75b13a8a2b0b815df889128cc0983a6f2a5c0",
+   "killedBy": [
+    {
+     "name": "E2b IL-05a boundary c=r+1 (Run just confirmed), NC1 FALSE -> IL-03: Emergency, rule L vs in_Estop_PLC at c, Restart -> only Safe",
+     "file": "current-e2b-cover-transitions.test.js",
+     "message": "17 violated checks (c=r+1=7820)"
+    },
+    {
+     "name": "E2b IL-05b boundary: NC1 FALSE in c=t_a (t_a = linkRunDownOwner, TD-09) -> normative disjunction: (i) IL-03 Emergency latched, Restart -> only Safe, or (ii) IL-05b(1) R&D without Emergency; no new energy increase in scan >= c, no Run without Emergency",
+     "file": "current-e2b-cover-transitions.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "19 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "19 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-08",
+   "op": "deactivate-input",
+   "block": "//Network12/FBAnd16",
+   "port": "AndIn3",
+   "verification": {
+    "parsedDelta": "//Network12/FBAnd16/AndIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "fdcdf43a7c755e003cb0af2a1e5759662fc9e798d34b392e49bf22a97ac3f2f3",
+   "killedBy": [
+    {
+     "name": "E2b IL-05b boundary: NC2 FALSE in c=t_a (t_a = linkRunDownOwner, TD-09) -> normative disjunction: (i) IL-03 Emergency latched, Restart -> only Safe, or (ii) IL-05b(1) R&D without Emergency; no new energy increase in scan >= c, no Run without Emergency",
+     "file": "current-e2b-cover-transitions.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC2 FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "19 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC2 FALSE (Door true), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "19 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC2 FALSE (Door false), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "19 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-09",
+   "op": "deactivate-input",
+   "block": "//Network6/HEALTHY_OK",
+   "port": "AndIn3",
+   "verification": {
+    "parsedDelta": "//Network6/HEALTHY_OK/AndIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "13fc7dcf488ab2e0848e124d34d5a22209ed106b8bf68ff87b1b1649d04bcd39",
+   "killedBy": [
+    {
+     "name": "E2b IL-05b boundary: NC1 FALSE in c=t_a (t_a = linkRunDownOwner, TD-09) -> normative disjunction: (i) IL-03 Emergency latched, Restart -> only Safe, or (ii) IL-05b(1) R&D without Emergency; no new energy increase in scan >= c, no Run without Emergency",
+     "file": "current-e2b-cover-transitions.test.js",
+     "message": "4 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "15 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "15 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-10",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAnd1",
+   "port": "AndIn4",
+   "verification": {
+    "parsedDelta": "//Network1/FBAnd1/AndIn4",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "68c899b859ec9d7eed98d296c362cdf4c499415b154f48ef3381a6ce8c94f3cf",
+   "killedBy": [
+    {
+     "name": "E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE steady in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "14 violated checks (phase at e: b_Step_RnD C1=true C2=false STO=false/false)"
+    },
+    {
+     "name": "E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE steady in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "file": "current-e2a-emg-safe.test.js",
+     "message": "13 violated checks (phase at e: b_Step12 C1=true C2=false STO=false/false)"
+    },
+    {
+     "name": "E2b EMG4-03 boundary: LV connector FALSE in u+1 (Safe->R&D accepted) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), R&D never confirmed, Restart -> only Safe",
+     "file": "current-e2b-connector-safe.test.js",
+     "message": "12 violated checks"
+    },
+    {
+     "name": "E2b EMG4-03 boundary: LV connector FALSE in A+1 (TD-08) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), C1 ON in no scan >= e, R&D never, Restart -> only Safe",
+     "file": "current-e2b-connector-safe.test.js",
+     "message": "10 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-11",
+   "op": "deactivate-input",
+   "block": "//Network6/STAGE_LVON",
+   "port": "OrIn2",
+   "verification": {
+    "parsedDelta": "//Network6/STAGE_LVON/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "7a633cbd772ce222792976de26c805b314ead614f1bc609b06c078c08ab03ff2",
+   "killedBy": [
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_ES_NC_1 FALSE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "5 violated checks (phase at e: b_Step_RnD C1=true C2=false STO=false/false)"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_ES_NC_2 FALSE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "5 violated checks (phase at e: b_Step_RnD C1=true C2=false STO=false/false)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-13",
+   "op": "deactivate-input",
+   "block": "//Network6/FBAndLvEmg",
+   "port": "AndIn2",
+   "verification": {
+    "parsedDelta": "//Network6/FBAndLvEmg/AndIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "6a077909424a704da1c8b10fa65d8cd9f1f3a5b590f9cf7c183469f4bcd71ba0",
+   "killedBy": [
+    {
+     "name": "E2a DIS-HOLD-HV issue by Emergency chain from Run (in_ES_NC_1 FALSE 100 ms), Restart -> Safe, Safe->R&D; accepted R&D->Run -> HV discharge request TRUE in [d, a-1], FALSE from u+1 (Q-V7-01 \"Г\", question 73 \"А\")",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "precondition not reached within 3000 ms: R&D after BOTH from Safe (t=6214, stages=b_Step4, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a TD5-EOK positive control (READY: TD-01 / DIS-HOLD-LV): R-T5 Safe without Emergency, legacy PLC (1,0) front held 1000 ms -> Safe->R&D accepted (b_Step12, C1 ON), LV discharge request FALSE from u1+1 (the gate is not constant FALSE)",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "precondition not reached within 3000 ms: R&D after BOTH from Safe (t=6214, stages=b_Step4, statuses=STS_EMG)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-12",
+   "op": "deactivate-input",
+   "block": "//Network6/STAGE_LVON",
+   "port": "OrIn1",
+   "verification": {
+    "parsedDelta": "//Network6/STAGE_LVON/OrIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "ea11c970ec0b8864ce0622b0a22c342f9181f59cdff68a0f308ad406c3b7b791",
+   "killedBy": [
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_Mentee_EStop TRUE in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "file": "current-e2a-emg-safe.test.js",
+     "message": "1 violated checks (phase at e: b_Step12 C1=true C2=false STO=false/false)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 16,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-14",
+   "op": "deactivate-input",
+   "block": "//Network6/FBOrStep4",
+   "port": "OrIn2",
+   "verification": {
+    "parsedDelta": "//Network6/FBOrStep4/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "a8e5c28b52e73ec3e64cf5741975839b292c3f657b78cdb04cfc99238b2679d1",
+   "killedBy": [
+    {
+     "name": "E2a EMG6-01 EMGREF-RUN: in_Estop_PLC TRUE in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "13 violated checks (phase at e: b_Step_RnD C1=true C2=true STO=true/true)"
+    },
+    {
+     "name": "E2b EMG4-03 boundary: LV connector FALSE in u+1 (Safe->R&D accepted) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), R&D never confirmed, Restart -> only Safe",
+     "file": "current-e2b-connector-safe.test.js",
+     "message": "5 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 20,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-15",
+   "op": "deactivate-input",
+   "block": "//Network3/FBOrS12Reset",
+   "port": "OrIn2",
+   "verification": {
+    "parsedDelta": "//Network3/FBOrS12Reset/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "fe19b3d3a72a0cba6b1b196a6e11ff8b081e087266f161e366080e24b81d3cc2",
+   "killedBy": [
+    {
+     "name": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Safe->R&D, Restart",
+     "file": "current-e2a-emg-safe.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in Safe->R&D, Restart",
+     "file": "current-e2a-emg-safe.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 40,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-16",
+   "op": "deactivate-input",
+   "block": "//Network3/G10_EXIT",
+   "port": "AndIn2",
+   "verification": {
+    "parsedDelta": "//Network3/G10_EXIT/AndIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "617ebd5c590707efda9286fac4ecfd6bff85b3f2bec82b06d9bba2455d3913fa",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 642,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-17",
+   "op": "deactivate-input",
+   "block": "//Network3/G10_EXIT",
+   "port": "AndIn3",
+   "verification": {
+    "parsedDelta": "//Network3/G10_EXIT/AndIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "e98f3debd6b613b977c725fbc46d688809d54cdda690c9228add2429cbf148e1",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 642,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-18",
+   "op": "deactivate-input",
+   "block": "//Network3/G10_EXIT",
+   "port": "AndIn4",
+   "verification": {
+    "parsedDelta": "//Network3/G10_EXIT/AndIn4",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "006c2552a24a74a0a27f7dc81e1ec83fe6289a94868257109d6ec34f9c293cb1",
+   "killedBy": [
+    {
+     "name": "E2a EMG6-01 refused Restart: in_Estop_PLC TRUE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "2 violated checks (phase at e: b_Step_RnD C1=true C2=false STO=false/false)"
+    },
+    {
+     "name": "E2a EMG6-01 refused Restart: in_ES_NC_1 FALSE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "2 violated checks (phase at e: b_Step_RnD C1=true C2=false STO=false/false)"
+    },
+    {
+     "name": "E2a EMG6-01 refused Restart: in_ES_NC_2 FALSE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "2 violated checks (phase at e: b_Step_RnD C1=true C2=false STO=false/false)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 20,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-20",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_020",
+   "port": "AndIn6",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_020/AndIn6",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "8baff87c054ff3f4cd734b4e09dc9ddea430cbda70a9ac612c501000be05c7a4",
+   "killedBy": [
+    {
+     "name": "E2d IL-02/IL-05a boundary c=A (NC1 FALSE in the first acceptance-sign scan, TD-08): normative disjunction - (i) UP rejected, R&D, no Emergency, or (ii) Emergency by rule L with EMGREF-RUN; never Run",
+     "file": "current-e2b-cover-transitions.test.js",
+     "message": "2 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 40,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-21",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_030",
+   "port": "OrIn5",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_030/OrIn5",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "2a69d9a789c34c93802958c0ba068da562d5d703f2d18ee6f36c6cfe1c5a7cf9",
+   "killedBy": [
+    {
+     "name": "E2d FBK10-K4 (S1) BOTH-1 qualified while steady Safe, C1_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 \"Б\", E6-Q2, п.13)",
+     "file": "current-e2d-fbk-k3ack.test.js",
+     "message": "3 violated checks (p=5214, g=7214, r=9215)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 28,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-19",
+   "op": "deactivate-input",
+   "block": "//Network3/G10_EXIT",
+   "port": "AndIn5",
+   "verification": {
+    "parsedDelta": "//Network3/G10_EXIT/AndIn5",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "79bd7f9f189501738a4abf053a7b08e8dd915acdf4352742657dad8d6e56e69f",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 642,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-22",
+   "op": "deactivate-input",
+   "block": "//Network3/G10_EXIT",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//Network3/G10_EXIT/AndIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "38ac15066fcdab28c81457c1ec4e5c41bf064b5e1bcc836ddbcd9f8e0d1e580b",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 642,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-26",
+   "op": "deactivate-input",
+   "block": "//Network6/FBAndLvEmg",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//Network6/FBAndLvEmg/AndIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "48eba483b2e85ed9504f70d31ff339b8dac41915c6a071898a94b56511757db7",
+   "killedBy": [
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_ES_NC_1 FALSE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition not reached within 100 ms: Safe after main Restart (t=112, stages=b_Step4, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_ES_NC_2 FALSE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition not reached within 100 ms: Safe after main Restart (t=112, stages=b_Step4, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_ES_NC_1 FALSE in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition not reached within 100 ms: Safe after main Restart (t=112, stages=b_Step4, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_ES_NC_2 FALSE in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition not reached within 100 ms: Safe after main Restart (t=112, stages=b_Step4, statuses=STS_EMG)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-27",
+   "op": "deactivate-input",
+   "block": "//Network6/FBOrStep4",
+   "port": "OrIn1",
+   "verification": {
+    "parsedDelta": "//Network6/FBOrStep4/OrIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "c37f5b61f0d68b5d2d745f5427d91d42e2729e8d8bbca4ee0236fe9fd99a3d0d",
+   "killedBy": [
+    {
+     "name": "E2a EMG6-01 EMGREF-RUN: in_ES_NC_1 FALSE in Run -> Emergency latch, energy chain, Restart -> only Safe",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "5 violated checks (phase at e: b_Step3 C1=true C2=true STO=true/true)"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-RUN: in_ES_NC_2 FALSE in Run -> Emergency latch, energy chain, Restart -> only Safe",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "5 violated checks (phase at e: b_Step3 C1=true C2=true STO=true/true)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-28",
+   "op": "deactivate-input",
+   "block": "//Network3/FBOrS12Reset",
+   "port": "OrIn1",
+   "verification": {
+    "parsedDelta": "//Network3/FBOrS12Reset/OrIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "371d7e73d8eb6b30bd275ecef4fca429164792fcd9c45d7679a2daf6ee0548f0",
+   "killedBy": [
+    {
+     "name": "E2a DIS-HOLD-HV issue by STP-A Run->R&D; R&D->Safe (green 600 ms), steady Safe, Safe->R&D (BOTH); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "precondition: steady R&D (only b_Step_RnD, C1 ON); stages=b_Step12,b_Step_RnD C1=true"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-29",
+   "op": "deactivate-input",
+   "block": "//Network3/FBOr2",
+   "port": "OrIn3",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr2/OrIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "06cbae01be06657bef46589f44875490809a900ebb2b8388fb8ddd9926ae807f",
+   "killedBy": [
+    {
+     "name": "E2a EMG6-01 refused Restart: in_Estop_PLC TRUE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "1 violated checks (phase at e: b_Step_RnD C1=true C2=false STO=false/false)"
+    },
+    {
+     "name": "E2a EMG6-01 refused Restart: in_ES_NC_1 FALSE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "1 violated checks (phase at e: b_Step_RnD C1=true C2=false STO=false/false)"
+    },
+    {
+     "name": "E2a EMG6-01 refused Restart: in_ES_NC_2 FALSE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "1 violated checks (phase at e: b_Step_RnD C1=true C2=false STO=false/false)"
+    },
+    {
+     "name": "E2a EMG6-01 refused Restart: in_Mentee_EStop TRUE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "1 violated checks (phase at e: b_Step_RnD C1=true C2=false STO=false/false)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-31",
+   "op": "swap-order",
+   "block": "//Network12/FBAnd16",
+   "port": "",
+   "value": {
+    "moveAfter": "//Network1/FBAnd1"
+   },
+   "verification": {
+    "parsedDelta": [
+     "//Network1/FBAnd1#block",
+     "//Network1/FBAndNotRunSu#block",
+     "//Network1/FBOrIlRunOk#block",
+     "//Network12/FBAnd16#block",
+     "//SafeResumption/CONNECTORS#block",
+     "//SafeResumption/CONNECTOR_SCOPE#block"
+    ],
+    "attribute": "orderOfExecution",
+    "movedBlocks": 6,
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "05dc076f8747f239dd173061fda7f74eb2d4f63b7cc4b1b2e841f4f2824ba71c",
+   "killedBy": [
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door false), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2b IL-03 steady Run, NC1 FALSE (Door false), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "file": "current-e2b-interlock-run.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-32",
+   "op": "swap-order",
+   "block": "//SafeResumption/CONNECTOR_SCOPE",
+   "port": "",
+   "value": {
+    "moveAfter": "//Network1/FBAnd1"
+   },
+   "verification": {
+    "parsedDelta": [
+     "//Network1/FBAnd1#block",
+     "//Network1/FBAndNotRunSu#block",
+     "//Network1/FBOrIlRunOk#block",
+     "//SafeResumption/CONNECTOR_SCOPE#block"
+    ],
+    "attribute": "orderOfExecution",
+    "movedBlocks": 4,
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "27c4b919a2d8ec5a3d3700d36160dc8bc8dd34e7bc15f9502cd0e6d324fcf037",
+   "killedBy": [
+    {
+     "name": "E2b EMG4-03 boundary: LV connector FALSE in u+1 (Safe->R&D accepted) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), R&D never confirmed, Restart -> only Safe",
+     "file": "current-e2b-connector-safe.test.js",
+     "message": "4 violated checks"
+    },
+    {
+     "name": "E2b EMG4-03 boundary: LV connector FALSE in A+1 (TD-08) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), C1 ON in no scan >= e, R&D never, Restart -> only Safe",
+     "file": "current-e2b-connector-safe.test.js",
+     "message": "3 violated checks"
+    },
+    {
+     "name": "E2b EMG4-03 boundary: HV connector FALSE in u+1 (Safe->R&D accepted) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), R&D never confirmed, Restart -> only Safe",
+     "file": "current-e2b-connector-safe.test.js",
+     "message": "4 violated checks"
+    },
+    {
+     "name": "E2b EMG4-03 boundary: HV connector FALSE in A+1 (TD-08) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), C1 ON in no scan >= e, R&D never, Restart -> only Safe",
+     "file": "current-e2b-connector-safe.test.js",
+     "message": "3 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-23",
+   "op": "deactivate-input",
+   "block": "//Network3/G10_EXIT",
+   "port": "AndIn6",
+   "verification": {
+    "parsedDelta": "//Network3/G10_EXIT/AndIn6",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "9fe8fb1f8086a4e22efa427d0496c21c87089923e26b88711285e4c1f81bbd0d",
+   "killedBy": [
+    {
+     "name": "E2a EMG6-01-BOOT companion: Emergency from Run (in_Estop_PLC), chain complete, C2_FBK held TRUE (welded) -> Restart -> stays Emergency",
+     "file": "current-e2a-boot.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 92,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-33",
+   "op": "swap-order",
+   "block": "//Network3/G10_EXIT",
+   "port": "",
+   "value": {
+    "moveAfter": "//Network6/FBDecouple2"
+   },
+   "verification": {
+    "parsedDelta": [
+     "//Network1/FBAnd1#block",
+     "//Network1/FBAndNotRunSu#block",
+     "//Network1/FBDecouple1#block",
+     "//Network1/FBDecouple2#block",
+     "//Network1/FBOr1#block",
+     "//Network1/FBOr10#block",
+     "//Network1/FBOr11#block",
+     "//Network1/FBOr12#block",
+     "//Network1/FBOr13#block",
+     "//Network1/FBOr16#block",
+     "//Network1/FBOr2#block",
+     "//Network1/FBOr3#block",
+     "//Network1/FBOr4#block",
+     "//Network1/FBOr5#block",
+     "//Network1/FBOr6#block",
+     "//Network1/FBOr7#block",
+     "//Network1/FBOr8#block",
+     "//Network1/FBOr9#block",
+     "//Network1/FBOrIlRunOk#block",
+     "//Network1/FBRs5#block",
+     "//Network1/FBRs6#block",
+     "//Network1/FBRs7#block",
+     "//Network10/FBDecouple1#block",
+     "//Network10/FBDecouple2#block",
+     "//Network11/FBAnd1#block",
+     "//Network11/FBAnd4#block",
+     "//Network11/FBAnd5#block",
+     "//Network11/FBTon1#block",
+     "//Network11/WIN_C1#block",
+     "//Network12/FBAnd1#block",
+     "//Network12/FBAnd10#block",
+     "//Network12/FBAnd15#block",
+     "//Network12/FBAnd16#block",
+     "//Network12/FBAnd2#block",
+     "//Network12/FBAnd3#block",
+     "//Network12/FBAnd4#block",
+     "//Network12/FBAnd6#block",
+     "//Network12/FBAnd8#block",
+     "//Network12/FBAnd9#block",
+     "//Network12/FBDecouple1#block",
+     "//Network12/FBDecouple2#block",
+     "//Network12/FBOr1#block",
+     "//Network12/FBOr2#block",
+     "//Network12/FBTon3#block",
+     "//Network12/WIN_C2#block",
+     "//Network2/FBAnd4#block",
+     "//Network2/FBAnd5#block",
+     "//Network2/FBAnd6#block",
+     "//Network2/FBAnd7#block",
+     "//Network2/FBAnd8#block",
+     "//Network2/FBAnd9#block",
+     "//Network2/FBDecouple3#block",
+     "//Network3/FBAnd1#block",
+     "//Network3/FBAnd2#block",
+     "//Network3/FBAndBootFbkOff#block",
+     "//Network3/FBDecouple1#block",
+     "//Network3/FBDecouple2#block",
+     "//Network3/G10_EXIT#block",
+     "//Network6/FBAnd1#block",
+     "//Network6/FBAnd11#block",
+     "//Network6/FBAnd12#block",
+     "//Network6/FBAnd13#block",
+     "//Network6/FBAnd14#block",
+     "//Network6/FBAnd15#block",
+     "//Network6/FBAnd16#block",
+     "//Network6/FBAnd17#block",
+     "//Network6/FBAnd2#block",
+     "//Network6/FBAnd3#block",
+     "//Network6/FBAnd4#block",
+     "//Network6/FBAnd5#block",
+     "//Network6/FBAnd6#block",
+     "//Network6/FBAnd7#block",
+     "//Network6/FBAnd8#block",
+     "//Network6/FBAnd9#block",
+     "//Network6/FBAndLvEmg#block",
+     "//Network6/FBDecouple1#block",
+     "//Network6/FBDecouple2#block",
+     "//Network6/FBOr1#block",
+     "//Network6/FBOr2#block",
+     "//Network6/FBOr3#block",
+     "//Network6/FBOr4#block",
+     "//Network6/FBOrStep4#block",
+     "//Network6/FBRs1#block",
+     "//Network6/FBRs2#block",
+     "//Network6/HEALTHY_OK#block",
+     "//Network6/HEALTH_GUARD#block",
+     "//Network6/STAGE_LVON#block",
+     "//Network7/FBAnd1#block",
+     "//Network7/FBAnd2#block",
+     "//Network7/FBAnd3#block",
+     "//Network7/FBAnd8#block",
+     "//Network7/FBDecouple1#block",
+     "//Network7/FBDecouple3#block",
+     "//Network7/FBOr1#block",
+     "//Network7/FBOr2#block",
+     "//Network7/FBTon1#block",
+     "//Network7/FBTon2#block",
+     "//Network7/FBTon3#block",
+     "//Network8/FBAnd1#block",
+     "//Network8/FBAnd2#block",
+     "//Network8/FBAnd3#block",
+     "//Network8/FBDecouple1#block",
+     "//Network8/FBOr1#block",
+     "//Network8/FBTon1#block",
+     "//Network8/FBTon2#block",
+     "//RndPhysicalCompact/BLUE#block",
+     "//RndPhysicalCompact/BOTH#block",
+     "//RndPhysicalCompact/GATE_001#block",
+     "//RndPhysicalCompact/GATE_002#block",
+     "//RndPhysicalCompact/GATE_003#block",
+     "//RndPhysicalCompact/GATE_004#block",
+     "//RndPhysicalCompact/GATE_005#block",
+     "//RndPhysicalCompact/GATE_006#block",
+     "//RndPhysicalCompact/GATE_007#block",
+     "//RndPhysicalCompact/GATE_008#block",
+     "//RndPhysicalCompact/GATE_009#block",
+     "//RndPhysicalCompact/GATE_010#block",
+     "//RndPhysicalCompact/GATE_011#block",
+     "//RndPhysicalCompact/GATE_012#block",
+     "//RndPhysicalCompact/GATE_013#block",
+     "//RndPhysicalCompact/GATE_014#block",
+     "//RndPhysicalCompact/GATE_015#block",
+     "//RndPhysicalCompact/GATE_016#block",
+     "//RndPhysicalCompact/GATE_020#block",
+     "//RndPhysicalCompact/GATE_022#block",
+     "//RndPhysicalCompact/GATE_023#block",
+     "//RndPhysicalCompact/GATE_024#block",
+     "//RndPhysicalCompact/GATE_025#block",
+     "//RndPhysicalCompact/GATE_026#block",
+     "//RndPhysicalCompact/GATE_029#block",
+     "//RndPhysicalCompact/GATE_030#block",
+     "//RndPhysicalCompact/GATE_031#block",
+     "//RndPhysicalCompact/GATE_SPOIL_R#block",
+     "//RndPhysicalCompact/GATE_SPOIL_S#block",
+     "//RndPhysicalCompact/GREEN#block",
+     "//RndPhysicalCompact/RELEASE#block",
+     "//RndPhysicalCompact/SNAP_0#block",
+     "//RndPhysicalCompact/SNAP_1#block",
+     "//RndPhysicalCompact/STATE_A#block",
+     "//RndPhysicalCompact/STATE_BA#block",
+     "//RndPhysicalCompact/STATE_C#block",
+     "//RndPhysicalCompact/STATE_L#block",
+     "//RndPhysicalCompact/STATE_SG#block",
+     "//RndPhysicalCompact/STATE_SU#block",
+     "//RndPhysicalCompact/STATE_T#block",
+     "//RndPhysicalCompact/WINDOW#block",
+     "//SafeResumption/CONNECTORS#block",
+     "//SafeResumption/CONNECTOR_SCOPE#block",
+     "//SafeResumption/MODE#block",
+     "//SafeResumption/RND_SCOPE#block",
+     "//SafeResumption/SAFE_ACCEPTED_UP#block",
+     "//SafeResumption/SAFE_UP_SCOPE#block",
+     "//SafeResumption/SG_OWNER_SET#block"
+    ],
+    "attribute": "orderOfExecution",
+    "movedBlocks": 153,
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "00de6d78cea3c67904b0c6a79cfad3a8b281f876e28db1bcedec761ec3810690",
+   "killedBy": [
+    {
+     "name": "E2b EMG4-03 boundary: LV connector FALSE in A+1 (TD-08) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), C1 ON in no scan >= e, R&D never, Restart -> only Safe",
+     "file": "current-e2b-connector-safe.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2b EMG4-03 boundary: HV connector FALSE in A+1 (TD-08) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), C1 ON in no scan >= e, R&D never, Restart -> only Safe",
+     "file": "current-e2b-connector-safe.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d COV-1 R&D->Run accepted (A <= c-1), NC1 FALSE from c=u+1: no C2 ON / STO_DR1 / STO_DR2 release in any scan >= c, Emergency by rule L1 vs in_Estop_PLC at c, Restart -> only Safe",
+     "file": "current-e2b-cover-transitions.test.js",
+     "message": "1 violated checks (COV-1 c=u+1=7220, A=7217, u=7219)"
+    },
+    {
+     "name": "E2d COV-1 R&D->Run accepted (A <= c-1), NC2 FALSE from c=u+1: no C2 ON / STO_DR1 / STO_DR2 release in any scan >= c, Emergency by rule L1 vs in_Estop_PLC at c, Restart -> only Safe",
+     "file": "current-e2b-cover-transitions.test.js",
+     "message": "1 violated checks (COV-1 c=u+1=7220, A=7217, u=7219)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 20,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-37",
+   "op": "deactivate-input",
+   "block": "//Network3/FBAndBootFbkOff",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//Network3/FBAndBootFbkOff/AndIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "a9120630ca17ea6a4b844459aba7ab1f994843b0bc1d27441490ae39b741fd67",
+   "killedBy": [
+    {
+     "name": "E2a EMG6-01-BOOT start with (a) in_LV_C1_FBK TRUE, Restart green 300..399, g = r+1 -> Emergency until a new Restart after g; new Restart -> Safe",
+     "file": "current-e2a-boot.test.js",
+     "message": "2 violated checks (g=401)"
+    },
+    {
+     "name": "E2a EMG6-01-BOOT start with (a) in_LV_C1_FBK TRUE, Restart green 300..399, g = r+2000 -> Emergency until a new Restart after g; new Restart -> Safe",
+     "file": "current-e2a-boot.test.js",
+     "message": "3 violated checks (g=2400)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-38",
+   "op": "deactivate-input",
+   "block": "//Network3/FBAndBootFbkOff",
+   "port": "AndIn2",
+   "verification": {
+    "parsedDelta": "//Network3/FBAndBootFbkOff/AndIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "481f520a1cdb313bb66a4cf8a160a70ceb95d92fa46536f0e51383134e1f45ee",
+   "killedBy": [
+    {
+     "name": "E2a EMG6-01-BOOT start with (b) in_HV_C2_FBK TRUE, Restart green 300..399, g = r+1 -> Emergency until a new Restart after g; new Restart -> Safe",
+     "file": "current-e2a-boot.test.js",
+     "message": "2 violated checks (g=401)"
+    },
+    {
+     "name": "E2a EMG6-01-BOOT start with (b) in_HV_C2_FBK TRUE, Restart green 300..399, g = r+2000 -> Emergency until a new Restart after g; new Restart -> Safe",
+     "file": "current-e2a-boot.test.js",
+     "message": "3 violated checks (g=2400)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-36",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAnd4",
+   "port": "AndIn5",
+   "verification": {
+    "parsedDelta": "//Network1/FBAnd4/AndIn5",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "70b83abadf6defa9b6ace548ec003b1d33e68c1396bd7eb48813c8403c17456d",
+   "killedBy": [
+    {
+     "name": "E2b B43-01 (e) Emergency from R&D (in_ES_NC_1 100 ms, early Restart), Bypass (b) 1 scan at b=C2 OFF-1 -> no energy at status Emergency, ignored (EMG-011, EMGREF(2), V14-Q16, Q-RC-05(a))",
+     "file": "current-e2b-bypass.test.js",
+     "message": "4 violated checks (e=6217, b=8219, chain end 8220)"
+    },
+    {
+     "name": "E2b B43-01 (e) Emergency from R&D (in_ES_NC_1 100 ms, early Restart), Bypass (b) 1 scan at b=C2 OFF -> no energy at status Emergency, ignored (EMG-011, EMGREF(2), V14-Q16, Q-RC-05(a))",
+     "file": "current-e2b-bypass.test.js",
+     "message": "4 violated checks (e=6217, b=8220, chain end 8220)"
+    },
+    {
+     "name": "E2b B43-01 (e) Emergency from R&D (in_ES_NC_1 100 ms, early Restart), Bypass (b) 1 scan at b=C2 OFF+1 -> no energy at status Emergency, ignored (EMG-011, EMGREF(2), V14-Q16, Q-RC-05(a))",
+     "file": "current-e2b-bypass.test.js",
+     "message": "4 violated checks (e=6217, b=8221, chain end 8220)"
+    },
+    {
+     "name": "E2b B43-01 (e) Emergency from Safe->R&D (in_ES_NC_1 100 ms, early Restart), Bypass (b) 1 scan at b=C2 OFF-1 -> no energy at status Emergency, ignored (EMG-011, EMGREF(2), V14-Q16, Q-RC-05(a))",
+     "file": "current-e2b-bypass.test.js",
+     "message": "4 violated checks (e=3147, b=5149, chain end 5150)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-39",
+   "op": "deactivate-input",
+   "block": "//Network3/FBAnd1",
+   "port": "AndIn3",
+   "verification": {
+    "parsedDelta": "//Network3/FBAnd1/AndIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "7318272095487799fafd0488e34f1acce9b4726d11cfc11d5afe0ae48774a365",
+   "killedBy": [
+    {
+     "name": "E2a EMG6-01-BOOT start with (a) in_LV_C1_FBK TRUE, Restart green 300..399, FBK never removed -> Emergency until a new Restart after g; new Restart -> Safe",
+     "file": "current-e2a-boot.test.js",
+     "message": "3 violated checks"
+    },
+    {
+     "name": "E2a EMG6-01-BOOT start with (b) in_HV_C2_FBK TRUE, Restart green 300..399, FBK never removed -> Emergency until a new Restart after g; new Restart -> Safe",
+     "file": "current-e2a-boot.test.js",
+     "message": "3 violated checks"
+    },
+    {
+     "name": "E2a EMG6-01-BOOT start with (c) both FBK TRUE, Restart green 300..399, FBK never removed -> Emergency until a new Restart after g; new Restart -> Safe",
+     "file": "current-e2a-boot.test.js",
+     "message": "3 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-40",
+   "op": "deactivate-input",
+   "block": "//Network3/FBAndBootFbkOff",
+   "port": "AndIn4",
+   "verification": {
+    "parsedDelta": "//Network3/FBAndBootFbkOff/AndIn4",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "c77a45a221598bcf863d6b12f4562e0f926b5813f4d61fc8de705e19e7c01123",
+   "killedBy": [
+    {
+     "name": "E2a EMG6-01-BOOT start with (a) in_LV_C1_FBK TRUE, Restart green 300..399, g = r+1 -> Emergency until a new Restart after g; new Restart -> Safe",
+     "file": "current-e2a-boot.test.js",
+     "message": "2 violated checks (g=401)"
+    },
+    {
+     "name": "E2a EMG6-01-BOOT start with (a) in_LV_C1_FBK TRUE, Restart green 300..399, g = r+2000 -> Emergency until a new Restart after g; new Restart -> Safe",
+     "file": "current-e2a-boot.test.js",
+     "message": "2 violated checks (g=2400)"
+    },
+    {
+     "name": "E2a EMG6-01-BOOT start with (b) in_HV_C2_FBK TRUE, Restart green 300..399, g = r+1 -> Emergency until a new Restart after g; new Restart -> Safe",
+     "file": "current-e2a-boot.test.js",
+     "message": "2 violated checks (g=401)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-42",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_029",
+   "port": "OrIn6",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_029/OrIn6",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "0194f8b6151c04c42c5f204d5ceb2ddf2230ccbf24c8f6777581cac95bcb639e",
+   "killedBy": [
+    {
+     "name": "E2b REL01-e2 R&D NC1: permit FALSE 200 ms [p+500, p+700) while BOTH is held -> stays R&D (no lift, no transition, no Emergency) until rb+2100; new BOTH after 2100 ms full release -> Run (REL-01(c), IL-02, SPEC §5.1, TD-07; MOD-002 / MOD1-01)",
+     "file": "current-e2b-rel01-e2.test.js",
+     "message": "2 violated checks (episode [7217, 7417), p2=9918)"
+    },
+    {
+     "name": "E2b REL01-e2 R&D NC2: permit FALSE 200 ms [p+500, p+700) while BOTH is held -> stays R&D (no lift, no transition, no Emergency) until rb+2100; new BOTH after 2100 ms full release -> Run (REL-01(c), IL-02, SPEC §5.1, TD-07; MOD-002 / MOD1-01)",
+     "file": "current-e2b-rel01-e2.test.js",
+     "message": "2 violated checks (episode [7217, 7417), p2=9918)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-43",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_029",
+   "port": "OrIn7",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_029/OrIn7",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "fd111f629fd7f1d60621bf93a634f96ce2b4e11b522545f568d4d782cc89fa31",
+   "killedBy": [
+    {
+     "name": "E2b REL01-e2 Safe LV connector: permit FALSE 200 ms [p+500, p+700) while BOTH is held -> stays Safe (no lift, no transition, no Emergency) until rb+2100; new BOTH after 2100 ms full release -> R&D (REL-01(c), IL-02, SPEC §5.1, TD-07; MOD-002 / MOD1-01)",
+     "file": "current-e2b-rel01-e2.test.js",
+     "message": "2 violated checks (episode [3414, 3614), p2=6115)"
+    },
+    {
+     "name": "E2b REL01-e2 Safe LV connector: permit FALSE [p+1, p+2) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration",
+     "file": "current-e2b-rel01-e2.test.js",
+     "message": "2 violated checks (f=2814, p=2914, Q=3914, episode [2915, 2916))"
+    },
+    {
+     "name": "E2b REL01-e2 Safe LV connector: permit FALSE [p+500, p+501) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration",
+     "file": "current-e2b-rel01-e2.test.js",
+     "message": "2 violated checks (f=2814, p=2914, Q=3914, episode [3414, 3415))"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-44",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_SPOIL_R",
+   "port": "AndIn3",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_SPOIL_R/AndIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "b2b329a6c7c8f791f263bd6e103eb239f99e57502db8e10357e1766469a2b398",
+   "killedBy": [
+    {
+     "name": "E2a DIS-HOLD-HV issue by STP-A Run->R&D; refused BOTH with the cover open (NC1 FALSE during the whole gesture); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "precondition not reached within 4000 ms: Run after BOTH from R&D (t=11017, stages=b_Step_RnD, statuses=STS_RND)"
+    },
+    {
+     "name": "E2d REL-01(c) R&D, buttons released > 2 s, NC1 open 300 ms then closed, BOTH 1 s 1700 ms later -> R&D->Run accepted (Q-REL-AFTER-PERMIT \"А\")",
+     "file": "current-e2d-release-permit.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d REL-01(c) R&D, buttons released > 2 s, NC2 open 300 ms then closed, BOTH 1 s 1700 ms later -> R&D->Run accepted (Q-REL-AFTER-PERMIT \"А\")",
+     "file": "current-e2d-release-permit.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d REL-01(c) R&D, buttons released > 2 s, both open 300 ms then closed, BOTH 1 s 1700 ms later -> R&D->Run accepted (Q-REL-AFTER-PERMIT \"А\")",
+     "file": "current-e2d-release-permit.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-45",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_SPOIL_S",
+   "port": "AndIn3",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_SPOIL_S/AndIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "cb3e6c652c56d4f8230f234db644556bb29717b358e5582ee2e287679e0bf960",
+   "killedBy": [
+    {
+     "name": "E2a DIS-HOLD-HV issue by STP-A Run->R&D; R&D->Safe (green 600 ms), steady Safe, Safe->R&D (BOTH); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "precondition not reached within 3000 ms: R&D after BOTH from Safe (t=6214, stages=b_Step1, statuses=STS_SAFE)"
+    },
+    {
+     "name": "E2a TD5-EOK positive control (READY: TD-01 / DIS-HOLD-LV): R-T5 Safe without Emergency, legacy PLC (1,0) front held 1000 ms -> Safe->R&D accepted (b_Step12, C1 ON), LV discharge request FALSE from u1+1 (the gate is not constant FALSE)",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "precondition not reached within 3000 ms: R&D after BOTH from Safe (t=6214, stages=b_Step1, statuses=STS_SAFE)"
+    },
+    {
+     "name": "E2b EMG4-03 boundary: LV connector FALSE in u+1 (Safe->R&D accepted) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), R&D never confirmed, Restart -> only Safe",
+     "file": "current-e2b-connector-safe.test.js",
+     "message": "precondition: Safe->R&D accepted (C1 ON) on the no-event fork"
+    },
+    {
+     "name": "E2b EMG4-03 boundary: HV connector FALSE in u+1 (Safe->R&D accepted) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), R&D never confirmed, Restart -> only Safe",
+     "file": "current-e2b-connector-safe.test.js",
+     "message": "precondition: Safe->R&D accepted (C1 ON) on the no-event fork"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-41",
+   "op": "deactivate-input",
+   "block": "//Network3/FBAndBootFbkOff",
+   "port": "AndIn3",
+   "verification": {
+    "parsedDelta": "//Network3/FBAndBootFbkOff/AndIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "4cb96cd9a8413f1170d13e0856f7fb4cc1f8a2c4ee9e957a2626064e9cadb2cb",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 642,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-47",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_SPOIL_R",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_SPOIL_R/AndIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "f1ba3076a442428af0c9644aee5c9dc45d85f77c52c0f160910f490da5f015ab",
+   "killedBy": [
+    {
+     "name": "E2d UNL-04 R&D, cover NC1 open: blue held, green pressed 1000 ms later for 300 ms -> Unlock FALSE in every scan with green pressed",
+     "file": "current-e2d-unlock-cover.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-04 R&D (Q-ARCH-10 \"А\"), cover NC1 open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+     "file": "current-e2d-unlock-cover.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-04 R&D (Q-ARCH-10 \"А\"), cover both open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+     "file": "current-e2d-unlock-cover.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-46",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_SPOIL_R",
+   "port": "AndIn2",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_SPOIL_R/AndIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "8f26b769795b81b398c0fff08623063f73efa08c76d55b597c7bfeed8334fcca",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 642,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-48",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_SPOIL_S",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_SPOIL_S/AndIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "9a5b9d91be1f637bc2b08b13da70ca967224b148eb419a1b3b0b55e6c6c5fa76",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 642,
+   "eligible": 642
+  },
+  {
+   "id": "M-E2b-49",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_SPOIL_S",
+   "port": "AndIn2",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_SPOIL_S/AndIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "31374bfec2aca0722145ec2050b55d23d2ef53ee442cbf86844fc7188f2d77e4",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 642,
+   "eligible": 642
+  }
+ ]
+}

@@ -1,0 +1,156 @@
+{
+ "version": "sal-mutation-plan-v1",
+ "planVersion": 7,
+ "status": "Architect guard-mutation plan v6 for E2c (PLAN.md v6). sourceSha256 filled at G2 (runner exit 3 until then). operatorAvailable:false only for operators the stand does not implement (rebind-global, composite). modelKill = architect prototype (not native, not a test).",
+ "sourceSha256": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b",
+ "sourceSha256Note": "Fill at G2: SHA256 of the editor candidate TwinSafeGroup1.sal for this slice (base: R1 candidate). Then run scripts/sal-mutation-check.js --validate-only before G3.",
+ "testFiles": [
+  "current-e2a-boot.test.js",
+  "current-e2a-dis-hold.test.js",
+  "current-e2a-emg-anchor.test.js",
+  "current-e2a-emg-rd-sweep.test.js",
+  "current-e2a-emg-rnd.test.js",
+  "current-e2a-emg-run.test.js",
+  "current-e2a-emg-rundown.test.js",
+  "current-e2a-emg-safe.test.js",
+  "current-e2a-race.test.js",
+  "current-e2a-rnd-cover-healthy.test.js",
+  "current-e2a-run-conf.test.js",
+  "current-e2a-status.test.js",
+  "current-e2a-sweep-estop.test.js",
+  "current-e2b-bypass.test.js",
+  "current-e2b-connector-safe.test.js",
+  "current-e2b-cover-transitions.test.js",
+  "current-e2b-interlock-run.test.js",
+  "current-e2b-rel01-e2.test.js",
+  "current-e2b-sweep-connector.test.js",
+  "current-e2c-hlt03.test.js",
+  "current-e2c-stp-i.test.js",
+  "current-e2d-fbk-k3ack.test.js",
+  "current-e2d-fbk-unsolicited.test.js",
+  "current-e2d-fbk-window-abort.test.js",
+  "current-e2d-first-fault-scan.test.js",
+  "current-e2d-release-permit.test.js",
+  "current-e2d-unlock-cover.test.js",
+  "current-e2d-unlock-door.test.js"
+ ],
+ "behaviouralTests": [
+  "^E2[a-d] "
+ ],
+ "structuralSoftwareCheckCases": [
+  "^BOOT:"
+ ],
+ "mutations": [
+  {
+   "id": "M-E2c-01",
+   "guard": "HLT",
+   "op": "invert-contact",
+   "block": "//SafeResumption/HLT_LV",
+   "port": "AndIn1",
+   "rationale": "HLT fires on healthy LV",
+   "killingScenario": "Steady R&D healthy: leaves to Safe",
+   "oracle": "HLT-01"
+  },
+  {
+   "id": "M-E2c-02",
+   "guard": "HLT",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_SG_SET",
+   "port": "OrIn2",
+   "rationale": "HLT not latched",
+   "killingScenario": "Steady R&D, in_LV_Faulty_FBK TRUE >=100 ms (cover closed and open): stays R&D",
+   "oracle": "HLT-01, HLT-01b"
+  },
+  {
+   "id": "M-E2c-03",
+   "guard": "HLT",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_SG_SET",
+   "port": "OrIn1",
+   "rationale": "green owner lost",
+   "killingScenario": "Steady R&D + green 500 ms: no R&D->Safe",
+   "oracle": "MOD5-01"
+  },
+  {
+   "id": "M-E2c-04",
+   "guard": "ChildExclusion",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_020",
+   "port": "AndIn7",
+   "rationale": "SU may set while SG (HLT)",
+   "killingScenario": "Steady R&D, BOTH held, in_LV_Faulty_FBK TRUE 1 scan before BOTH qualifies: SU and SG both TRUE",
+   "oracle": "E2-01 (phase belongs to one transition), C-1",
+   "modelKill": "repro/t11.out.txt"
+  },
+  {
+   "id": "M-E2c-05",
+   "guard": "AttemptConsumed",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_030",
+   "port": "OrIn6",
+   "rationale": "HLT does not consume held BOTH",
+   "killingScenario": "Steady R&D, BOTH held, LV Faulty at +500 ms: after HLT reaches Safe the same BOTH starts Safe->R&D",
+   "oracle": "HLT-03 (no UP before ack), BTN one-step-per-attempt, C-2",
+   "modelKill": "repro/t11.out.txt"
+  },
+  {
+   "id": "M-E2c-06",
+   "guard": "Order",
+   "op": "swap-order",
+   "block": "//SafeResumption/HLT_LV",
+   "port": "",
+   "value": {
+    "moveBefore": "//RndPhysicalCompact/STATE_SU"
+   },
+   "rationale": "HLT_LV before STATE_SU (reads previous SU)",
+   "killingScenario": "C-1 race: LV Faulty in the scan BOTH qualifies -> SU and SG both TRUE",
+   "oracle": "E2-01, C-1"
+  }
+ ],
+ "blockedByQuestion": [
+  {
+   "block": "//SafeResumption/HLT_LV",
+   "port": "AndIn2",
+   "question": "isolation until E3 (Q-ARCH-03 B implemented by ABT)"
+  }
+ ],
+ "equivalentByProof": [
+  {
+   "block": "//SafeResumption/HLT_LV",
+   "port": "AndIn3",
+   "ref": "in_False_SI2_CH8 constant FALSE (Q-MU06-01)"
+  }
+ ],
+ "g3Copy": {
+  "by": "v2-tester E2-G3",
+  "from": "program/architect/E2-status/MUTATION_PLAN_E2c.json",
+  "changes": [
+   "sourceSha256 := E2d candidate SAL",
+   "testFiles := all 28 current-e2*.test.js of frozen G1 v8 snapshot (superset of the plan 21)"
+  ],
+  "originalSourceSha256": "FILL_AT_G2",
+  "originalTestFiles": [
+   "current-e2a-status.test.js",
+   "current-e2a-emg-safe.test.js",
+   "current-e2a-emg-rnd.test.js",
+   "current-e2a-emg-run.test.js",
+   "current-e2a-emg-rundown.test.js",
+   "current-e2a-sweep-estop.test.js",
+   "current-e2b-sweep-connector.test.js",
+   "current-e2a-race.test.js",
+   "current-e2a-rnd-cover-healthy.test.js",
+   "current-e2a-run-conf.test.js",
+   "current-e2b-interlock-run.test.js",
+   "current-e2b-cover-transitions.test.js",
+   "current-e2b-connector-safe.test.js",
+   "current-e2c-stp-i.test.js",
+   "current-e2c-hlt03.test.js",
+   "current-e2d-release-permit.test.js",
+   "current-e2d-unlock-cover.test.js",
+   "current-e2a-emg-anchor.test.js",
+   "current-e2a-emg-rd-sweep.test.js",
+   "current-e2d-unlock-door.test.js",
+   "current-e2d-fbk-unsolicited.test.js"
+  ]
+ }
+}

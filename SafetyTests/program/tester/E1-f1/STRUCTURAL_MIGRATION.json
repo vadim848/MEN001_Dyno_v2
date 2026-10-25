@@ -1,0 +1,24 @@
+{
+ "slice": "E1-f1",
+ "author": "v2-tester",
+ "date": "2026-10-21",
+ "status": "PROPOSAL for the lead; NOT applied to shared tests in the working tree. Verified only in the isolated scratch copy.",
+ "authority": "Frozen architect plan resumed-development-2026-10-21/architect/F1_RUN_RECOGNIZER_PLAN.json sha256 b52f6b0e440a09ce138ad91e633b2fcd78f431d246a4dbdabc083809a0a08b60 (retire //Network6/FBTon2, add RUN_DOWN_RESET/RUN_DOWN_OWNER, 2 port attribute deltas, 2 wire removals/3 additions, 3 global readers, 2 local readers added / 2 removed, counts 242/2076/75/209/307).",
+ "patch": "SafetyTests/program/tester/E1-f1/STRUCTURAL_MIGRATION.diff (git diff of the scratch copy, test/ and test/helpers only)",
+ "rule": "Only exact expected structural deltas of the plan are migrated; no behavioral expectation is changed, removed or weakened. All behavioral bodies run unchanged.",
+ "items": [
+  {"id": "MIG-1", "file": "test/helpers/v2-structural.js", "change": "SHA pins of the live source P0 34b5b850/517fdadd -> F1 04b45456/dc103abe. The existing P0 exact-delta proof (tester/p0/check-source-pair.mjs) is re-pointed to a NEW frozen fixture fixtures/resumed-p0-canonical/{TwinSafeGroup1.sal,GVL1.sgvl,TwinSafeGroup1.sal.diagram} (exact P0 bytes, pinned incl. diagram 7b5eb794). ADDED: exact P0->F1 proof via program/tester/E1-f1/delta-check.mjs against the frozen plan (fails the helper on any non-planned delta).", "reason": "Chain 0fc->59bf->P0 stays proven on frozen fixtures; P0->F1 is proven by an independent exact delta checker instead of being masked.", "requires": ["new fixture directory fixtures/resumed-p0-canonical (3 files, exact P0 bytes)", "delta-check.mjs location stays stable (or copy to src/scripts by stand engineer)"]},
+  {"id": "MIG-2", "file": "test/helpers/safe-run-source.js", "change": "diagnostic runTonQ '//Network6/FBTon2/TonOut' -> '//RndPhysicalCompact/GREEN/TonOut'; consumed observer runTonInput '//Network6/FBTon2/TonIn' -> '//RndPhysicalCompact/GREEN/TonIn'.", "reason": "Plan retires the duplicate Run TON; And24.AndIn3 now reads linkRndGreenQualified whose only source is GREEN/TonOut. runTonQ is chronology evidence only; no check asserts it."},
+  {"id": "MIG-3", "file": "test/current-door-interlock.test.js", "change": "DOOR06 exact block count 241 -> 242", "reason": "plan.expectedCounts.blocks"},
+  {"id": "MIG-4", "file": "test/current-mentee-set-permit.test.js", "change": "block count 241 -> 242; recorded SAL CRC 1997263000 -> 3702999762", "reason": "plan counts; CRC 3702999762 independently native-recalculated and valid (NATIVE_F1.json: LoadModelAndDiagram crcValid=True, calculated 3702999762 = recorded)."},
+  {"id": "MIG-5", "file": "test/current-unlock-estop-permit.test.js", "change": "block count 241 -> 242", "reason": "plan counts"},
+  {"id": "MIG-6", "file": "test/current-native-structure.test.js", "change": "native counts {blocks:241,ports:2066,wires:306} -> {242,2076,307}; exactly-retired usage ids += fe3c924f/c74e2d07 (in_Reset_PB reader of retired //Network6/FBTon2/TonIn) and 0587c93c/58d3ae1a (in_Relase_Door_PB reader of //Network6/FBAnd23/AndIn3)", "reason": "plan.localReaderRemove (2 Symbol readers) — the 4 ids are the wrapper/usage ids of exactly those two readers, verified by delta-check (Symbols differ only by planned readers). Last line gained a trailing newline in the scratch edit (no semantic change)."},
+  {"id": "MIG-7", "file": "test/boot-preflight.test.js", "change": "inventory blocks 241 -> 242; mutation negative replaceOnce Crc=\"1997263000\" -> Crc=\"3702999762\" (mutated to ...763)", "reason": "plan counts; native CRC of F1"},
+  {"id": "MIG-8", "file": "BOOT_PREFLIGHT_SOURCE_MANIFEST.json (stand-owned, NOT a test)", "change": "regenerate for F1 via scripts/build-boot-manifest.js after a reviewed checkpoint commit containing F1 (the script requires a git checkpoint). In scratch it was regenerated without the git check (acceptedCheckpoint SCRATCH-UNREVIEWED-F1-04b45456) only to execute the regression.", "reason": "BOOT manifest pins the reviewed source inventory; inventory delta observed: blocks 241->242 (-//Network6/FBTon2, +RUN_DOWN_RESET, +RUN_DOWN_OWNER), globalReaders 121->124, stateful 49->49, all other inventory lists unchanged.", "owner": "v2-stand-engineer / lead after G4"}
+ ],
+ "expectedCountDeltasWithoutTestEdits": [
+  "harness 189 -> 185: four generated tests 'OBS-TON //Network6/FBTon2 fixed1/2/5/10' disappear with the retired TON (per-TON generated cases).",
+  "scenario cases 208 -> 207: TIMER://Network6/FBTon2 (retired TON) disappears; TIMER://RndPhysicalCompact/GREEN remains PASS."
+ ],
+ "notMigrated": "No behavioral test body, timing, oracle or observation window changed."
+}

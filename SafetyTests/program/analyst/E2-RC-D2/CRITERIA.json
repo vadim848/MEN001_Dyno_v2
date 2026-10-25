@@ -1,0 +1,64 @@
+{
+  "slice": "E2-RC-D2",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "basis": "program/editor/E2a-RC/HANDOFF.md D-RC-2",
+  "sources": {
+    "SCENARIO_DECISIONS.md": "c26025c3946f43a9769555f509f11ff47114a3a0848beb5c0e617e604917260a",
+    "analyst/E2-plan-v5-questions/CRITERIA.md": "0a2f7de92239c7cf261ab1f959c613037c1defc2526a0fd8c5cccd24c9476b4c",
+    "architect/E2-status/PLAN.md v7.2": "6557525a20782eaf9650edb9c5078e3ab4237654464b51a9d4e10a3b330e9405",
+    "test/current-e2a-dis-hold.test.js": "67db34dfba583825401240534abee6313c1d122714267f90e5ba660fb8f6a2be",
+    "candidate E2a-RC SAL (fact only)": "5733552a150bfd33df4211da8f97a8fc993ff990ad52c90a8d7758d950660f3f",
+    "candidate E2a-RC SGVL (fact only)": "253de7f39f2c4af83fa8642445a885d18ecfcdccec46fcbf96612d88a810b669"
+  },
+  "teamDecision": null,
+  "questionsToVadim": [],
+  "criteria": [
+    {
+      "id": "LV-A1",
+      "status": "READY",
+      "source": "question 74 'А' (as HV) + DIS-HOLD-HV definition of a (question 73 'А'); clarifies E2-plan-v5-questions §1 DIS-HOLD-LV",
+      "ids": ["MOD-001", "MOD-005", "EMG-011"],
+      "definitions": {
+        "p": "first press scan of the accepted Safe->R&D gesture",
+        "d": "first scan out_LV_Discharge_Request TRUE issued by a descent",
+        "a1": "first scan >= p with stage b_Step12 TRUE or out_LV_C1 TRUE (min)",
+        "u1": "first scan >= p with out_LV_C1 TRUE; a1 <= u1"
+      },
+      "expect": [
+        {"scans": "[d, a1-1]", "out_LV_Discharge_Request": true, "normative": true},
+        {"scans": "[a1, u1]", "out_LV_Discharge_Request": "any", "normative": false, "note": "observation, record in diagnostic"},
+        {"scans": ">= u1+1 until a new issue by a descent", "out_LV_Discharge_Request": false, "normative": true}
+      ],
+      "forbidden": [
+        "any FALSE scan in [d, a1-1], including the g2 scan before b_Step12 is visible",
+        "TRUE at >= u1+1 without a new issue (window/confirmation reset ~u1+600 = FAIL)",
+        "withdrawal by a refused attempt, Restart, Emergency, R&D->Run"
+      ],
+      "answerWindowG2": "No: [g2, u1+1] is not admissible when g2 < a1; g2 scan is in [d, a1-1] (HV a-1 normative, D-TEAM p.1, g2 not an output)",
+      "safety": "FALSE in [a1, u1-1] with C1 OFF adds no energy (energy only via C1 at u1 of an accepted lift); same shape as HV (FBAnd4 at u-1, request FALSE at u). Reference resets after contactors ON; v2 resets at acceptance by question 74.",
+      "candidateFact": {"g2": "u1-2 (= Q)", "b_Step12": "from u1-1", "requestFalse": "from u1-1", "outLvC1": "u1", "verdictByLV-A1": "PASS"}
+    },
+    {
+      "id": "LV-A1-EMG",
+      "status": "READY (requirement exists); known FAIL on E2a-RC until E2b",
+      "source": "DIS-HOLD-HV emergency rows by analogy (question 74), Q-ARCH-01, Q-V7-01 'Г', Q-T3-1",
+      "ids": ["EMG-001", "EMG-011"],
+      "rows": [
+        {"e": "<= a1-1 (incl. g2)", "expect": "no acceptance, request TRUE without break, C1 OFF", "candidate": "PASS (e=g2-3..g2)"},
+        {"e": "a1 or a1+1", "expect": "observation within {TRUE kept, or withdrawn and re-issued by the chain no later than its moment}", "candidate": "request FALSE >= 8 s, b_Step12 kept in Emergency, C1 OFF -> outside allowed set, known FAIL E2b"},
+        {"e": ">= a1+2", "expect": "withdrawn by norm, re-issued by the emergency chain", "candidate": "not re-issued >= 7 s -> known FAIL E2b"}
+      ]
+    }
+  ],
+  "changes": {
+    "tester": [
+      "test/current-e2a-dis-hold.test.js liftRnD: a = first scan >= p with stages including b_Step12 or out_LV_C1 (was a = u1)",
+      "header lines 8-9: replace 'a1 = u1' by LV-A1 definition",
+      "optional diagnostic g2 - a1 if Symbol b_Step12_Set exists (not oracle)",
+      "expected on E2a-RC: 'DIS-HOLD-LV R&D->Safe ... no event' PASS"
+    ],
+    "architect": ["none; PLAN v7.2 §4.2 conforms; emergency rows go to E2b input"]
+  },
+  "repro": ["program/analyst/E2-RC-D2/repro/trace-lv.mjs", "program/analyst/E2-RC-D2/repro/trace-lv2.mjs"]
+}

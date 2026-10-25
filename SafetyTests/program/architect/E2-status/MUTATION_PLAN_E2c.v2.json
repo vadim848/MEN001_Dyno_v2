@@ -1,0 +1,85 @@
+{
+  "version": "sal-mutation-plan-v1",
+  "planVersion": 2,
+  "status": "Architect guard-mutation plan v2 for slice E2c (program/architect/E2-status/PLAN.md v2). Names as specified by the plan. Each mutation names its killing behavioural scenario; oracle = REQ-CONSOLIDATION criteria / SCENARIO_DECISIONS c1e7fe6c. modelKill = result in architect in-memory prototype (not native, not a test).",
+  "sourceSha256": "TBD: G2 candidate SAL of slice E2c",
+  "testFiles": [
+    "current-door-interlock.test.js",
+    "current-early-sto.test.js",
+    "current-estop-native-pairs.test.js",
+    "current-hv-set-permit.test.js",
+    "current-mentee-set-permit.test.js",
+    "current-plc-pulse-set-permit.test.js",
+    "current-rnd-down-no-reenergy.test.js",
+    "current-rnd-physical-integration.test.js",
+    "current-safe-run-gestures.test.js",
+    "current-step12-lv-permit.test.js",
+    "current-timer-one-ms.test.js",
+    "current-unlock-estop-permit.test.js",
+    "current-unlock-hold.test.js",
+    "current-code-checks.test.js",
+    "sal-runtime.test.js",
+    "sal-semantics.test.js",
+    "timer-observed-clock.test.js",
+    "current-e2c-*.test.js (v2-tester, G1)"
+  ],
+  "behaviouralTests": [
+    "^DOOR06 (component|actual|existing emergency)",
+    "^EARLYSTO (drive[12]|physical)",
+    "^R3PAIR ",
+    "^MENTEE05 (paired|HV: (all|already)|LV: (all|already))",
+    "^PLCPULSE ",
+    "^RNDPHYS ",
+    "^SR-",
+    "^current SAL",
+    "^UNLOCK07 (component|final component|[^ ]+: healthy|[^ ]+/[^ ]+: fault)",
+    "^CVR (current SAL|approved)",
+    "^(HV|LV) current SAL",
+    "^SAL-RUN0[23]",
+    "^SAL-SEM02",
+    "^Current SAL TON adapter",
+    "^E2c "
+  ],
+  "structuralSoftwareCheckCases": [
+    "^BOOT:"
+  ],
+  "mutations": [
+    {
+      "id": "M-E2c-01",
+      "guard": "HLT",
+      "op": "invert-contact",
+      "block": "//SafeResumption/HLT_LV",
+      "port": "AndIn1",
+      "rationale": "HLT fires on healthy LV",
+      "killingScenario": "Steady R&D healthy: leaves to Safe",
+      "oracle": "HLT-01"
+    },
+    {
+      "id": "M-E2c-02",
+      "guard": "HLT",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_SG_SET",
+      "port": "OrIn2",
+      "rationale": "HLT not latched",
+      "killingScenario": "Steady R&D, in_LV_Faulty_FBK TRUE >=100 ms (also with cover open): stays R&D",
+      "oracle": "HLT-01"
+    },
+    {
+      "id": "M-E2c-03",
+      "guard": "HLT",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_SG_SET",
+      "port": "OrIn1",
+      "rationale": "green owner lost",
+      "killingScenario": "Steady R&D + green 500 ms: no R&D->Safe",
+      "oracle": "MOD5-01"
+    }
+  ],
+  "blockedByQuestion": [
+    {
+      "block": "//SafeResumption/HLT_LV",
+      "port": "AndIn2",
+      "question": "Q-ARCH-03"
+    }
+  ]
+}

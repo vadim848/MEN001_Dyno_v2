@@ -1,0 +1,218 @@
+TAP version 13
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p-200, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+not ok 1 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p-200, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+  ---
+  duration_ms: 48026.2834
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-fbk-window-abort.test.js:242:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (p=2214, A=3215, t_f=3217)
+    + actual - expected
+    
+    + [
+    +   'no R&D while LV Faulty TRUE'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'no R&D while LV Faulty TRUE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-fbk-window-abort.test.js:249:90)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p-200, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> rollback to Safe + SafetyFault at t_f+30001, no Emergency
+not ok 2 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p-200, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> rollback to Safe + SafetyFault at t_f+30001, no Emergency
+  ---
+  duration_ms: 44017.7258
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-fbk-window-abort.test.js:242:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (p=2214, A=3215, t_f=3217)
+    + actual - expected
+    
+    + [
+    +   'rollback started by t_f+30001 (C1 OFF command, no R&D); {"C1":true,"st":["STS_RND"]}'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'rollback started by t_f+30001 (C1 OFF command, no R&D); {"C1":true,"st":["STS_RND"]}'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-fbk-window-abort.test.js:249:90)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p+900, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+not ok 3 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p+900, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+  ---
+  duration_ms: 42854.824
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-fbk-window-abort.test.js:242:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (p=2214, A=3215, t_f=null)
+    + actual - expected
+    
+    + [
+    +   'C1 ON as in the trace without Faulty (u=3216); observed never (K-2 RED: start refused by LV Faulty, WDG-02 / MOD-001)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'C1 ON as in the trace without Faulty (u=3216); observed never (K-2 RED: start refused by LV Faulty, WDG-02 / MOD-001)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-fbk-window-abort.test.js:249:90)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p+900, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> rollback to Safe + SafetyFault at t_f+30001, no Emergency
+not ok 4 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p+900, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> rollback to Safe + SafetyFault at t_f+30001, no Emergency
+  ---
+  duration_ms: 58861.1034
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-fbk-window-abort.test.js:242:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (p=2214, A=3215, t_f=null)
+    + actual - expected
+    
+    + [
+    +   'C1 ON as in the trace without Faulty (u=3216); observed never (K-2 RED: start refused by LV Faulty, WDG-02 / MOD-001)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'C1 ON as in the trace without Faulty (u=3216); observed never (K-2 RED: start refused by LV Faulty, WDG-02 / MOD-001)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-fbk-window-abort.test.js:249:90)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+ok 5 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+  ---
+  duration_ms: 68832.8494
+  type: 'test'
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> rollback to Safe + SafetyFault at t_f+30001, no Emergency
+not ok 6 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> rollback to Safe + SafetyFault at t_f+30001, no Emergency
+  ---
+  duration_ms: 66628.9361
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-fbk-window-abort.test.js:242:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (p=2214, A=3215, t_f=3217)
+    + actual - expected
+    
+    + [
+    +   'rollback started by t_f+30001 (C1 OFF command, no R&D); {"C1":true,"st":["STS_SAFE"]}'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'rollback started by t_f+30001 (C1 OFF command, no R&D); {"C1":true,"st":["STS_SAFE"]}'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-fbk-window-abort.test.js:249:90)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A+1, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+ok 7 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A+1, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+  ---
+  duration_ms: 67990.5612
+  type: 'test'
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A+1, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> rollback to Safe + SafetyFault at t_f+30001, no Emergency
+not ok 8 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A+1, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> rollback to Safe + SafetyFault at t_f+30001, no Emergency
+  ---
+  duration_ms: 63647.4383
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-fbk-window-abort.test.js:242:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (p=2214, A=3215, t_f=3217)
+    + actual - expected
+    
+    + [
+    +   'rollback started by t_f+30001 (C1 OFF command, no R&D); {"C1":true,"st":["STS_SAFE"]}'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'rollback started by t_f+30001 (C1 OFF command, no R&D); {"C1":true,"st":["STS_SAFE"]}'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-fbk-window-abort.test.js:249:90)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 2
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 461350.7404

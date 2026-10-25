@@ -1,0 +1,1161 @@
+TAP version 13
+# Subtest: E2b REL01-e2 Safe LV connector: permit FALSE [p+500, p+999) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 1 - E2b REL01-e2 Safe LV connector: permit FALSE [p+500, p+999) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 26665.7606
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe LV connector: permit FALSE [p+1, p+2) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 2 - E2b REL01-e2 Safe LV connector: permit FALSE [p+1, p+2) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 16113.0571
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe LV connector: permit FALSE [p+500, p+501) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 3 - E2b REL01-e2 Safe LV connector: permit FALSE [p+500, p+501) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 16151.9983
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe LV connector: permit FALSE [f, p+300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 4 - E2b REL01-e2 Safe LV connector: permit FALSE [f, p+300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 13849.2491
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe LV connector: permit FALSE [f-300, f+10) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+not ok 5 - E2b REL01-e2 Safe LV connector: permit FALSE [f-300, f+10) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+  ---
+  duration_ms: 13387.6553
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:44:26'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (f=2814, p=2914, Q=3914, episode [2514, 2824))
+    + actual - expected
+    
+    + [
+    +   'refused: no lift in any scan (also after the permit restoration r=2824 and after Q=3914: a held gesture is not a new gesture, SPEC §5.1 / IL-02); first lift t=3916',
+    +   'no transition (state b_Step1/STS_SAFE); first change t=3915 b_Step12/STS_SAFE'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: no lift in any scan (also after the permit restoration r=2824 and after Q=3914: a held gesture is not a new gesture, SPEC §5.1 / IL-02); first lift t=3916'
+    1: 'no transition (state b_Step1/STS_SAFE); first change t=3915 b_Step12/STS_SAFE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:45:68)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2b REL01-e2 Safe LV connector: permit FALSE [Q-1, Q+1) (s <= Q-1 < Q < r, covers the threshold) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 6 - E2b REL01-e2 Safe LV connector: permit FALSE [Q-1, Q+1) (s <= Q-1 < Q < r, covers the threshold) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 15596.439
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe LV connector: permit FALSE [p+800, p+1300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 7 - E2b REL01-e2 Safe LV connector: permit FALSE [p+800, p+1300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 12007.2222
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe LV connector: permit restored before the first press (r = f-1) -> BOTH accepted (first lift <= Q+400, TEAM-DEFAULT TD-06)
+ok 8 - E2b REL01-e2 Safe LV connector: permit restored before the first press (r = f-1) -> BOTH accepted (first lift <= Q+400, TEAM-DEFAULT TD-06)
+  ---
+  duration_ms: 13337.2504
+  type: 'test'
+  ...
+# TD-06 observation REL-01(a)/(b)/(c), Q-REL-AFTER-PERMIT: first lift Q+2
+# Subtest: DIAG observation E2b REL01-e2 Safe LV connector: permit restored exactly at the first press (r = f)
+ok 9 - DIAG observation E2b REL01-e2 Safe LV connector: permit restored exactly at the first press (r = f)
+  ---
+  duration_ms: 11336.9118
+  type: 'test'
+  ...
+# first lift Q+2
+# Subtest: E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 10 - E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07) # TODO NOT VERIFIED: refused without fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 18878.0374
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+0, l=never (Q), a=never, first Emergency never
+# Subtest: E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 11 - E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 19581.1972
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+1, l=never (Q), a=s+0, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 12 - E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 21926.1684
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=s-1, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (EMG-004 / Q-RC-14); no new lift after s (TD-07)
+ok 13 - E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (EMG-004 / Q-RC-14); no new lift after s (TD-07)
+  ---
+  duration_ms: 20056.1637
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+401, l=s-399 (Q+2), a=s-400, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+ok 14 - E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 36110.8772
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=s-1, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+ok 15 - E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 17581.8677
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+3, l=s-1 (Q+2), a=s-2, first Emergency s+1
+# Subtest: E2b REL01-e2 Safe LV connector: after the refusal ([p+500, p+999)), both released 1999 ms -> new BOTH refused (BTN-001/002, SPEC §3.1 p.10)
+ok 16 - E2b REL01-e2 Safe LV connector: after the refusal ([p+500, p+999)), both released 1999 ms -> new BOTH refused (BTN-001/002, SPEC §3.1 p.10)
+  ---
+  duration_ms: 18109.2723
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe LV connector: after the refusal ([p+500, p+999)), both released 2001 ms -> new BOTH accepted (first lift <= Q2+400, TD-06) (BTN-001/002, SPEC §3.1 p.10)
+ok 17 - E2b REL01-e2 Safe LV connector: after the refusal ([p+500, p+999)), both released 2001 ms -> new BOTH accepted (first lift <= Q2+400, TD-06) (BTN-001/002, SPEC §3.1 p.10)
+  ---
+  duration_ms: 18620.5873
+  type: 'test'
+  ...
+# TD-06 observation release 2001 ms: new gesture first lift Q+2
+# Subtest: E2b REL01-e2 Safe HV connector: permit FALSE [p+500, p+999) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 18 - E2b REL01-e2 Safe HV connector: permit FALSE [p+500, p+999) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 14390.0966
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe HV connector: permit FALSE [p+1, p+2) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 19 - E2b REL01-e2 Safe HV connector: permit FALSE [p+1, p+2) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 10594.6812
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe HV connector: permit FALSE [p+500, p+501) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 20 - E2b REL01-e2 Safe HV connector: permit FALSE [p+500, p+501) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 13184.1371
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe HV connector: permit FALSE [f, p+300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 21 - E2b REL01-e2 Safe HV connector: permit FALSE [f, p+300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 9675.3268
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe HV connector: permit FALSE [f-300, f+10) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+not ok 22 - E2b REL01-e2 Safe HV connector: permit FALSE [f-300, f+10) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+  ---
+  duration_ms: 12715.0411
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:44:26'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (f=2814, p=2914, Q=3914, episode [2514, 2824))
+    + actual - expected
+    
+    + [
+    +   'refused: no lift in any scan (also after the permit restoration r=2824 and after Q=3914: a held gesture is not a new gesture, SPEC §5.1 / IL-02); first lift t=3916',
+    +   'no transition (state b_Step1/STS_SAFE); first change t=3915 b_Step12/STS_SAFE'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: no lift in any scan (also after the permit restoration r=2824 and after Q=3914: a held gesture is not a new gesture, SPEC §5.1 / IL-02); first lift t=3916'
+    1: 'no transition (state b_Step1/STS_SAFE); first change t=3915 b_Step12/STS_SAFE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:45:68)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2b REL01-e2 Safe HV connector: permit FALSE [Q-1, Q+1) (s <= Q-1 < Q < r, covers the threshold) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 23 - E2b REL01-e2 Safe HV connector: permit FALSE [Q-1, Q+1) (s <= Q-1 < Q < r, covers the threshold) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 9549.0573
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe HV connector: permit FALSE [p+800, p+1300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 24 - E2b REL01-e2 Safe HV connector: permit FALSE [p+800, p+1300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 11517.6689
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe HV connector: permit restored before the first press (r = f-1) -> BOTH accepted (first lift <= Q+400, TEAM-DEFAULT TD-06)
+ok 25 - E2b REL01-e2 Safe HV connector: permit restored before the first press (r = f-1) -> BOTH accepted (first lift <= Q+400, TEAM-DEFAULT TD-06)
+  ---
+  duration_ms: 11954.345
+  type: 'test'
+  ...
+# TD-06 observation REL-01(a)/(b)/(c), Q-REL-AFTER-PERMIT: first lift Q+2
+# Subtest: DIAG observation E2b REL01-e2 Safe HV connector: permit restored exactly at the first press (r = f)
+ok 26 - DIAG observation E2b REL01-e2 Safe HV connector: permit restored exactly at the first press (r = f)
+  ---
+  duration_ms: 12652.7678
+  type: 'test'
+  ...
+# first lift Q+2
+# Subtest: E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 27 - E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07) # TODO NOT VERIFIED: refused without fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 12850.0459
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+0, l=never (Q), a=never, first Emergency never
+# Subtest: E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 28 - E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 12178.1873
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+1, l=never (Q), a=s+0, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 29 - E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 13015.0225
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=s-1, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (EMG-004 / Q-RC-14); no new lift after s (TD-07)
+ok 30 - E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (EMG-004 / Q-RC-14); no new lift after s (TD-07)
+  ---
+  duration_ms: 11980.7905
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+401, l=s-399 (Q+2), a=s-400, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+ok 31 - E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 22904.1036
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=s-1, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+ok 32 - E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 11020.3203
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+3, l=s-1 (Q+2), a=s-2, first Emergency s+1
+# Subtest: E2b REL01-e2 Safe HV connector: after the refusal ([p+500, p+999)), both released 1999 ms -> new BOTH refused (BTN-001/002, SPEC §3.1 p.10)
+ok 33 - E2b REL01-e2 Safe HV connector: after the refusal ([p+500, p+999)), both released 1999 ms -> new BOTH refused (BTN-001/002, SPEC §3.1 p.10)
+  ---
+  duration_ms: 7526.0133
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe HV connector: after the refusal ([p+500, p+999)), both released 2001 ms -> new BOTH accepted (first lift <= Q2+400, TD-06) (BTN-001/002, SPEC §3.1 p.10)
+ok 34 - E2b REL01-e2 Safe HV connector: after the refusal ([p+500, p+999)), both released 2001 ms -> new BOTH accepted (first lift <= Q2+400, TD-06) (BTN-001/002, SPEC §3.1 p.10)
+  ---
+  duration_ms: 7623.404
+  type: 'test'
+  ...
+# TD-06 observation release 2001 ms: new gesture first lift Q+2
+# Subtest: E2b REL01-e2 Safe both connectors: permit FALSE [p+500, p+999) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 35 - E2b REL01-e2 Safe both connectors: permit FALSE [p+500, p+999) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 5478.2341
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe both connectors: permit FALSE [p+1, p+2) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 36 - E2b REL01-e2 Safe both connectors: permit FALSE [p+1, p+2) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 5738.2577
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe both connectors: permit FALSE [p+500, p+501) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 37 - E2b REL01-e2 Safe both connectors: permit FALSE [p+500, p+501) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 5915.3975
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe both connectors: permit FALSE [f, p+300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 38 - E2b REL01-e2 Safe both connectors: permit FALSE [f, p+300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 5256.189
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe both connectors: permit FALSE [f-300, f+10) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+not ok 39 - E2b REL01-e2 Safe both connectors: permit FALSE [f-300, f+10) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+  ---
+  duration_ms: 5058.5532
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:44:26'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (f=2814, p=2914, Q=3914, episode [2514, 2824))
+    + actual - expected
+    
+    + [
+    +   'refused: no lift in any scan (also after the permit restoration r=2824 and after Q=3914: a held gesture is not a new gesture, SPEC §5.1 / IL-02); first lift t=3916',
+    +   'no transition (state b_Step1/STS_SAFE); first change t=3915 b_Step12/STS_SAFE'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: no lift in any scan (also after the permit restoration r=2824 and after Q=3914: a held gesture is not a new gesture, SPEC §5.1 / IL-02); first lift t=3916'
+    1: 'no transition (state b_Step1/STS_SAFE); first change t=3915 b_Step12/STS_SAFE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:45:68)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2b REL01-e2 Safe both connectors: permit FALSE [Q-1, Q+1) (s <= Q-1 < Q < r, covers the threshold) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 40 - E2b REL01-e2 Safe both connectors: permit FALSE [Q-1, Q+1) (s <= Q-1 < Q < r, covers the threshold) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4818.7545
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe both connectors: permit FALSE [p+800, p+1300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 41 - E2b REL01-e2 Safe both connectors: permit FALSE [p+800, p+1300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4687.6388
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe both connectors: permit restored before the first press (r = f-1) -> BOTH accepted (first lift <= Q+400, TEAM-DEFAULT TD-06)
+ok 42 - E2b REL01-e2 Safe both connectors: permit restored before the first press (r = f-1) -> BOTH accepted (first lift <= Q+400, TEAM-DEFAULT TD-06)
+  ---
+  duration_ms: 4897.9488
+  type: 'test'
+  ...
+# TD-06 observation REL-01(a)/(b)/(c), Q-REL-AFTER-PERMIT: first lift Q+2
+# Subtest: DIAG observation E2b REL01-e2 Safe both connectors: permit restored exactly at the first press (r = f)
+ok 43 - DIAG observation E2b REL01-e2 Safe both connectors: permit restored exactly at the first press (r = f)
+  ---
+  duration_ms: 4352.5687
+  type: 'test'
+  ...
+# first lift Q+2
+# Subtest: E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 44 - E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07) # TODO NOT VERIFIED: refused without fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 7796.2654
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+0, l=never (Q), a=never, first Emergency never
+# Subtest: E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 45 - E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 7760.775
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+1, l=never (Q), a=s+0, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 46 - E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 7601.9517
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=s-1, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (EMG-004 / Q-RC-14); no new lift after s (TD-07)
+ok 47 - E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (EMG-004 / Q-RC-14); no new lift after s (TD-07)
+  ---
+  duration_ms: 8011.5882
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+401, l=s-399 (Q+2), a=s-400, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+ok 48 - E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 16680.9298
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=s-1, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+ok 49 - E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 7651.8301
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+3, l=s-1 (Q+2), a=s-2, first Emergency s+1
+# Subtest: E2b REL01-e2 Safe both connectors: after the refusal ([p+500, p+999)), both released 1999 ms -> new BOTH refused (BTN-001/002, SPEC §3.1 p.10)
+ok 50 - E2b REL01-e2 Safe both connectors: after the refusal ([p+500, p+999)), both released 1999 ms -> new BOTH refused (BTN-001/002, SPEC §3.1 p.10)
+  ---
+  duration_ms: 6047.3158
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe both connectors: after the refusal ([p+500, p+999)), both released 2001 ms -> new BOTH accepted (first lift <= Q2+400, TD-06) (BTN-001/002, SPEC §3.1 p.10)
+ok 51 - E2b REL01-e2 Safe both connectors: after the refusal ([p+500, p+999)), both released 2001 ms -> new BOTH accepted (first lift <= Q2+400, TD-06) (BTN-001/002, SPEC §3.1 p.10)
+  ---
+  duration_ms: 6726.6673
+  type: 'test'
+  ...
+# TD-06 observation release 2001 ms: new gesture first lift Q+2
+# Subtest: E2b REL01-e2 R&D NC1: permit FALSE [p+500, p+999) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 52 - E2b REL01-e2 R&D NC1: permit FALSE [p+500, p+999) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 11117.0991
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC1: permit FALSE [p+1, p+2) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 53 - E2b REL01-e2 R&D NC1: permit FALSE [p+1, p+2) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4983.46
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC1: permit FALSE [p+500, p+501) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 54 - E2b REL01-e2 R&D NC1: permit FALSE [p+500, p+501) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4894.2892
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC1: permit FALSE [f, p+300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 55 - E2b REL01-e2 R&D NC1: permit FALSE [f, p+300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4664.2451
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC1: permit FALSE [f-300, f+10) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+not ok 56 - E2b REL01-e2 R&D NC1: permit FALSE [f-300, f+10) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+  ---
+  duration_ms: 4782.9429
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:44:26'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (f=6617, p=6717, Q=7717, episode [6317, 6627))
+    + actual - expected
+    
+    + [
+    +   'refused: no lift in any scan (also after the permit restoration r=6627 and after Q=7717: a held gesture is not a new gesture, SPEC §5.1 / IL-02); first lift t=7719',
+    +   'no transition (state b_Step_RnD/STS_RND); first change t=8319 b_Step3/STS_RUN'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: no lift in any scan (also after the permit restoration r=6627 and after Q=7717: a held gesture is not a new gesture, SPEC §5.1 / IL-02); first lift t=7719'
+    1: 'no transition (state b_Step_RnD/STS_RND); first change t=8319 b_Step3/STS_RUN'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:45:68)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2b REL01-e2 R&D NC1: permit FALSE [Q-1, Q+1) (s <= Q-1 < Q < r, covers the threshold) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 57 - E2b REL01-e2 R&D NC1: permit FALSE [Q-1, Q+1) (s <= Q-1 < Q < r, covers the threshold) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4755.6075
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC1: permit FALSE [p+800, p+1300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 58 - E2b REL01-e2 R&D NC1: permit FALSE [p+800, p+1300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 5347.8463
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC1: permit restored before the first press (r = f-1) -> BOTH accepted (first lift <= Q+400, TEAM-DEFAULT TD-06)
+ok 59 - E2b REL01-e2 R&D NC1: permit restored before the first press (r = f-1) -> BOTH accepted (first lift <= Q+400, TEAM-DEFAULT TD-06)
+  ---
+  duration_ms: 4851.2679
+  type: 'test'
+  ...
+# TD-06 observation REL-01(a)/(b)/(c), Q-REL-AFTER-PERMIT: first lift Q+2
+# Subtest: DIAG observation E2b REL01-e2 R&D NC1: permit restored exactly at the first press (r = f)
+ok 60 - DIAG observation E2b REL01-e2 R&D NC1: permit restored exactly at the first press (r = f)
+  ---
+  duration_ms: 4986.7158
+  type: 'test'
+  ...
+# first lift Q+2
+# Subtest: E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 61 - E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07) # TODO NOT VERIFIED: refused without fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 8397.9546
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+0, l=never (Q), a=never, first Emergency never
+# Subtest: E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+not ok 62 - E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 7405.0826
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:75:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (Q=7717, episode [7718, 7818))
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7720 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7720 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:76:94)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# REL01-e2-LATE observation: s=Q+1, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+not ok 63 - E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 7618.9542
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:75:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (Q=7717, episode [7719, 7819))
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:76:94)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)
+ok 64 - E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)
+  ---
+  duration_ms: 7572.2298
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+401, l=s-399 (Q+2), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+not ok 65 - E2b REL01-e2-LATE R&D NC1: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 15905.7951
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:79:45'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (l0=7719)
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:82:39)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+ok 66 - E2b REL01-e2-LATE R&D NC1: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 7694.6563
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+3, l=s-1 (Q+2), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2 R&D NC1: after the refusal ([p+500, p+999)), both released 1999 ms -> new BOTH refused (BTN-001/002, SPEC §3.1 p.10)
+ok 67 - E2b REL01-e2 R&D NC1: after the refusal ([p+500, p+999)), both released 1999 ms -> new BOTH refused (BTN-001/002, SPEC §3.1 p.10)
+  ---
+  duration_ms: 6431.449
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC1: after the refusal ([p+500, p+999)), both released 2001 ms -> new BOTH accepted (first lift <= Q2+400, TD-06) (BTN-001/002, SPEC §3.1 p.10)
+ok 68 - E2b REL01-e2 R&D NC1: after the refusal ([p+500, p+999)), both released 2001 ms -> new BOTH accepted (first lift <= Q2+400, TD-06) (BTN-001/002, SPEC §3.1 p.10)
+  ---
+  duration_ms: 6687.7053
+  type: 'test'
+  ...
+# TD-06 observation release 2001 ms: new gesture first lift Q+2
+# Subtest: E2b REL01-e2 R&D NC2: permit FALSE [p+500, p+999) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 69 - E2b REL01-e2 R&D NC2: permit FALSE [p+500, p+999) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4704.2577
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC2: permit FALSE [p+1, p+2) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 70 - E2b REL01-e2 R&D NC2: permit FALSE [p+1, p+2) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4575.5945
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC2: permit FALSE [p+500, p+501) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 71 - E2b REL01-e2 R&D NC2: permit FALSE [p+500, p+501) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4025.3328
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC2: permit FALSE [f, p+300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 72 - E2b REL01-e2 R&D NC2: permit FALSE [f, p+300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4648.1265
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC2: permit FALSE [f-300, f+10) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+not ok 73 - E2b REL01-e2 R&D NC2: permit FALSE [f-300, f+10) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+  ---
+  duration_ms: 4308.0048
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:44:26'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (f=6617, p=6717, Q=7717, episode [6317, 6627))
+    + actual - expected
+    
+    + [
+    +   'refused: no lift in any scan (also after the permit restoration r=6627 and after Q=7717: a held gesture is not a new gesture, SPEC §5.1 / IL-02); first lift t=7719',
+    +   'no transition (state b_Step_RnD/STS_RND); first change t=8319 b_Step3/STS_RUN'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: no lift in any scan (also after the permit restoration r=6627 and after Q=7717: a held gesture is not a new gesture, SPEC §5.1 / IL-02); first lift t=7719'
+    1: 'no transition (state b_Step_RnD/STS_RND); first change t=8319 b_Step3/STS_RUN'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:45:68)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2b REL01-e2 R&D NC2: permit FALSE [Q-1, Q+1) (s <= Q-1 < Q < r, covers the threshold) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 74 - E2b REL01-e2 R&D NC2: permit FALSE [Q-1, Q+1) (s <= Q-1 < Q < r, covers the threshold) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 3855.6747
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC2: permit FALSE [p+800, p+1300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 75 - E2b REL01-e2 R&D NC2: permit FALSE [p+800, p+1300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 3775.729
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC2: permit restored before the first press (r = f-1) -> BOTH accepted (first lift <= Q+400, TEAM-DEFAULT TD-06)
+ok 76 - E2b REL01-e2 R&D NC2: permit restored before the first press (r = f-1) -> BOTH accepted (first lift <= Q+400, TEAM-DEFAULT TD-06)
+  ---
+  duration_ms: 3697.6917
+  type: 'test'
+  ...
+# TD-06 observation REL-01(a)/(b)/(c), Q-REL-AFTER-PERMIT: first lift Q+2
+# Subtest: DIAG observation E2b REL01-e2 R&D NC2: permit restored exactly at the first press (r = f)
+ok 77 - DIAG observation E2b REL01-e2 R&D NC2: permit restored exactly at the first press (r = f)
+  ---
+  duration_ms: 3843.1133
+  type: 'test'
+  ...
+# first lift Q+2
+# Subtest: E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 78 - E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07) # TODO NOT VERIFIED: refused without fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 5823.3107
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+0, l=never (Q), a=never, first Emergency never
+# Subtest: E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+not ok 79 - E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 5424.4082
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:75:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (Q=7717, episode [7718, 7818))
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7720 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7720 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:76:94)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# REL01-e2-LATE observation: s=Q+1, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+not ok 80 - E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 5995.8813
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:75:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (Q=7717, episode [7719, 7819))
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:76:94)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)
+ok 81 - E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)
+  ---
+  duration_ms: 5251.99
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+401, l=s-399 (Q+2), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC2: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+not ok 82 - E2b REL01-e2-LATE R&D NC2: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 11768.5863
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:79:45'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (l0=7719)
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:82:39)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC2: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+ok 83 - E2b REL01-e2-LATE R&D NC2: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 5658.4638
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+3, l=s-1 (Q+2), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2 R&D NC2: after the refusal ([p+500, p+999)), both released 1999 ms -> new BOTH refused (BTN-001/002, SPEC §3.1 p.10)
+ok 84 - E2b REL01-e2 R&D NC2: after the refusal ([p+500, p+999)), both released 1999 ms -> new BOTH refused (BTN-001/002, SPEC §3.1 p.10)
+  ---
+  duration_ms: 4462.7901
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC2: after the refusal ([p+500, p+999)), both released 2001 ms -> new BOTH accepted (first lift <= Q2+400, TD-06) (BTN-001/002, SPEC §3.1 p.10)
+ok 85 - E2b REL01-e2 R&D NC2: after the refusal ([p+500, p+999)), both released 2001 ms -> new BOTH accepted (first lift <= Q2+400, TD-06) (BTN-001/002, SPEC §3.1 p.10)
+  ---
+  duration_ms: 3881.841
+  type: 'test'
+  ...
+# TD-06 observation release 2001 ms: new gesture first lift Q+2
+# Subtest: E2b REL01-e2 R&D NC1+NC2: permit FALSE [p+500, p+999) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 86 - E2b REL01-e2 R&D NC1+NC2: permit FALSE [p+500, p+999) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 3407.0196
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC1+NC2: permit FALSE [p+1, p+2) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 87 - E2b REL01-e2 R&D NC1+NC2: permit FALSE [p+1, p+2) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 3176.6098
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC1+NC2: permit FALSE [p+500, p+501) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 88 - E2b REL01-e2 R&D NC1+NC2: permit FALSE [p+500, p+501) (1 scan) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 3063.3082
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC1+NC2: permit FALSE [f, p+300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 89 - E2b REL01-e2 R&D NC1+NC2: permit FALSE [f, p+300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 3068.9089
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC1+NC2: permit FALSE [f-300, f+10) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+not ok 90 - E2b REL01-e2 R&D NC1+NC2: permit FALSE [f-300, f+10) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+  ---
+  duration_ms: 2779.6449
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:44:26'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (f=6617, p=6717, Q=7717, episode [6317, 6627))
+    + actual - expected
+    
+    + [
+    +   'refused: no lift in any scan (also after the permit restoration r=6627 and after Q=7717: a held gesture is not a new gesture, SPEC §5.1 / IL-02); first lift t=7719',
+    +   'no transition (state b_Step_RnD/STS_RND); first change t=8319 b_Step3/STS_RUN'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: no lift in any scan (also after the permit restoration r=6627 and after Q=7717: a held gesture is not a new gesture, SPEC §5.1 / IL-02); first lift t=7719'
+    1: 'no transition (state b_Step_RnD/STS_RND); first change t=8319 b_Step3/STS_RUN'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:45:68)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2b REL01-e2 R&D NC1+NC2: permit FALSE [Q-1, Q+1) (s <= Q-1 < Q < r, covers the threshold) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 91 - E2b REL01-e2 R&D NC1+NC2: permit FALSE [Q-1, Q+1) (s <= Q-1 < Q < r, covers the threshold) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 2591.8876
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC1+NC2: permit FALSE [p+800, p+1300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration
+ok 92 - E2b REL01-e2 R&D NC1+NC2: permit FALSE [p+800, p+1300) during the held BOTH -> refused, no fault/Emergency, the held gesture not executed after restoration # TODO NOT VERIFIED: no fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 2749.4412
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC1+NC2: permit restored before the first press (r = f-1) -> BOTH accepted (first lift <= Q+400, TEAM-DEFAULT TD-06)
+ok 93 - E2b REL01-e2 R&D NC1+NC2: permit restored before the first press (r = f-1) -> BOTH accepted (first lift <= Q+400, TEAM-DEFAULT TD-06)
+  ---
+  duration_ms: 2655.5015
+  type: 'test'
+  ...
+# TD-06 observation REL-01(a)/(b)/(c), Q-REL-AFTER-PERMIT: first lift Q+2
+# Subtest: DIAG observation E2b REL01-e2 R&D NC1+NC2: permit restored exactly at the first press (r = f)
+ok 94 - DIAG observation E2b REL01-e2 R&D NC1+NC2: permit restored exactly at the first press (r = f)
+  ---
+  duration_ms: 2418.8678
+  type: 'test'
+  ...
+# first lift Q+2
+# Subtest: E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 95 - E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07) # TODO NOT VERIFIED: refused without fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 3484.4408
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+0, l=never (Q), a=never, first Emergency never
+# Subtest: E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+not ok 96 - E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 3815.7146
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:75:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (Q=7717, episode [7718, 7818))
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7720 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7720 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:76:94)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# REL01-e2-LATE observation: s=Q+1, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+not ok 97 - E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 3801.432
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:75:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (Q=7717, episode [7719, 7819))
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:76:94)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)
+ok 98 - E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)
+  ---
+  duration_ms: 3295.9165
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+401, l=s-399 (Q+2), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+not ok 99 - E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 6663.7469
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:79:45'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (l0=7719)
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:82:39)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+ok 100 - E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 3611.8135
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+3, l=s-1 (Q+2), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2 R&D NC1+NC2: after the refusal ([p+500, p+999)), both released 1999 ms -> new BOTH refused (BTN-001/002, SPEC §3.1 p.10)
+ok 101 - E2b REL01-e2 R&D NC1+NC2: after the refusal ([p+500, p+999)), both released 1999 ms -> new BOTH refused (BTN-001/002, SPEC §3.1 p.10)
+  ---
+  duration_ms: 2720.3348
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC1+NC2: after the refusal ([p+500, p+999)), both released 2001 ms -> new BOTH accepted (first lift <= Q2+400, TD-06) (BTN-001/002, SPEC §3.1 p.10)
+ok 102 - E2b REL01-e2 R&D NC1+NC2: after the refusal ([p+500, p+999)), both released 2001 ms -> new BOTH accepted (first lift <= Q2+400, TD-06) (BTN-001/002, SPEC §3.1 p.10)
+  ---
+  duration_ms: 2647.731
+  type: 'test'
+  ...
+# TD-06 observation release 2001 ms: new gesture first lift Q+2
+# Subtest: E2b REL01-e2 control: steady Safe, in_InterLock_NC_1 FALSE [p+500, p+999) during BOTH -> Safe->R&D accepted, first C1 ON <= Q+400 (V14-Q7 "Б1": the cover is not a Safe->R&D permit; TD-06)
+ok 103 - E2b REL01-e2 control: steady Safe, in_InterLock_NC_1 FALSE [p+500, p+999) during BOTH -> Safe->R&D accepted, first C1 ON <= Q+400 (V14-Q7 "Б1": the cover is not a Safe->R&D permit; TD-06)
+  ---
+  duration_ms: 1935.0769
+  type: 'test'
+  ...
+# TD-06 observation Safe->R&D first lift Q+2
+# Subtest: E2b REL01-e2 control: steady Safe, in_InterLock_NC_2 FALSE [p+500, p+999) during BOTH -> Safe->R&D accepted, first C1 ON <= Q+400 (V14-Q7 "Б1": the cover is not a Safe->R&D permit; TD-06)
+ok 104 - E2b REL01-e2 control: steady Safe, in_InterLock_NC_2 FALSE [p+500, p+999) during BOTH -> Safe->R&D accepted, first C1 ON <= Q+400 (V14-Q7 "Б1": the cover is not a Safe->R&D permit; TD-06)
+  ---
+  duration_ms: 1876.633
+  type: 'test'
+  ...
+# TD-06 observation Safe->R&D first lift Q+2
+# Subtest: E2b REL01-e2 R&D NC1: permit FALSE 200 ms [p+500, p+700) while BOTH is held -> stays R&D (no lift, no transition, no Emergency) until rb+2100; new BOTH after 2100 ms full release -> Run (REL-01(c), IL-02, SPEC §5.1, TD-07; MOD-002 / MOD1-01)
+ok 105 - E2b REL01-e2 R&D NC1: permit FALSE 200 ms [p+500, p+700) while BOTH is held -> stays R&D (no lift, no transition, no Emergency) until rb+2100; new BOTH after 2100 ms full release -> Run (REL-01(c), IL-02, SPEC §5.1, TD-07; MOD-002 / MOD1-01)
+  ---
+  duration_ms: 2082.1449
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 R&D NC2: permit FALSE 200 ms [p+500, p+700) while BOTH is held -> stays R&D (no lift, no transition, no Emergency) until rb+2100; new BOTH after 2100 ms full release -> Run (REL-01(c), IL-02, SPEC §5.1, TD-07; MOD-002 / MOD1-01)
+ok 106 - E2b REL01-e2 R&D NC2: permit FALSE 200 ms [p+500, p+700) while BOTH is held -> stays R&D (no lift, no transition, no Emergency) until rb+2100; new BOTH after 2100 ms full release -> Run (REL-01(c), IL-02, SPEC §5.1, TD-07; MOD-002 / MOD1-01)
+  ---
+  duration_ms: 2045.0172
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe LV connector: permit FALSE 200 ms [p+500, p+700) while BOTH is held -> stays Safe (no lift, no transition, no Emergency) until rb+2100; new BOTH after 2100 ms full release -> R&D (REL-01(c), IL-02, SPEC §5.1, TD-07; MOD-002 / MOD1-01)
+ok 107 - E2b REL01-e2 Safe LV connector: permit FALSE 200 ms [p+500, p+700) while BOTH is held -> stays Safe (no lift, no transition, no Emergency) until rb+2100; new BOTH after 2100 ms full release -> R&D (REL-01(c), IL-02, SPEC §5.1, TD-07; MOD-002 / MOD1-01)
+  ---
+  duration_ms: 2124.3971
+  type: 'test'
+  ...
+# Subtest: E2b REL01-e2 Safe HV connector: permit FALSE 200 ms [p+500, p+700) while BOTH is held -> stays Safe (no lift, no transition, no Emergency) until rb+2100; new BOTH after 2100 ms full release -> R&D (REL-01(c), IL-02, SPEC §5.1, TD-07; MOD-002 / MOD1-01)
+ok 108 - E2b REL01-e2 Safe HV connector: permit FALSE 200 ms [p+500, p+700) while BOTH is held -> stays Safe (no lift, no transition, no Emergency) until rb+2100; new BOTH after 2100 ms full release -> R&D (REL-01(c), IL-02, SPEC §5.1, TD-07; MOD-002 / MOD1-01)
+  ---
+  duration_ms: 2222.3737
+  type: 'test'
+  ...
+1..108
+# tests 108
+# suites 0
+# pass 51
+# fail 15
+# cancelled 0
+# skipped 0
+# todo 42
+# duration_ms 902845.2284

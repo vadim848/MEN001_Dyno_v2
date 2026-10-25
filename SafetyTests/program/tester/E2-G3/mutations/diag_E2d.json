@@ -1,0 +1,43 @@
+{
+ "generatedAt": "2026-10-22T21:18:29.024Z",
+ "tool": "scratchpad/tools/mutkill.mjs (v2-tester E2-G3)",
+ "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2d_on_E2d.json",
+ "planSha256": "aad9389d011546fd331a10fa0fba2d797761315d666a81b74dd32675dbebc4fb",
+ "sourceSha256": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b",
+ "killBase": {
+  "eligible": 23,
+  "excluded": [],
+  "excludeRegex": [
+   "/^(DIAG \\S+ )?KF-/"
+  ]
+ },
+ "behaviouralTests": [
+  "^E2[a-d] "
+ ],
+ "summary": {
+  "KILLED": 0,
+  "SURVIVED": 1,
+  "STRUCTURAL-ONLY": 0,
+  "INVALID": 0,
+  "NOT-RUN": 0
+ },
+ "results": [
+  {
+   "id": "M-E2d-03",
+   "op": "deactivate-input",
+   "block": "//SafeResumption/MODE",
+   "port": "OrIn4",
+   "verification": {
+    "parsedDelta": "//SafeResumption/MODE/OrIn4",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "6996507e85ccbd6cb4f2b6e003c99952ef6ab0ac8a7933b3ea3a99e9aed7ca31",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 23,
+   "eligible": 23
+  }
+ ]
+}

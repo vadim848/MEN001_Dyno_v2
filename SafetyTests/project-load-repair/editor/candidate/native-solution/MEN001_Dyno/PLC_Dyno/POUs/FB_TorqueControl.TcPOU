@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_TorqueControl" Id="{e624dce2-182d-43e6-89b7-ddff0d4a81d4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_TorqueControl
+VAR_IN_OUT
+    Axis            : AXIS_REF;         // Must be VAR_IN_OUT — passed by reference
+END_VAR
+
+VAR_INPUT
+    stCmd           : ST_MotorCommand;  // Read from GVL_Commands
+    bAxisReady      : BOOL;             // gate: only stream torque while the axis is READY
+END_VAR
+
+VAR_OUTPUT
+    stStatus        : ST_MotorStatus;   // Written to GVL_Status
+END_VAR
+
+VAR
+    fbTorqueCtrl    : MC_TorqueControl;
+    rtExecute       : R_TRIG;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Rising edge on bTorqueExecute triggers MC_TorqueControl
+rtExecute(CLK := stCmd.bTorqueExecute);
+
+// Gate Execute on READY: torque must never be commanded on a DISABLED/ERROR/
+// RESETTING axis. This also drops Execute on a fault (READY->ERROR), which
+// clears MC_TorqueControl's latched Error, and prevents the reset "bounce"
+// where torque errors on the just-disabled axis and re-stamps the fault.
+fbTorqueCtrl(
+    Axis              := Axis,
+    Execute           := stCmd.bTorqueExecute AND bAxisReady,
+    ContinuousUpdate  := TRUE,
+    Relative          := FALSE,
+    Torque            := stCmd.fTargetTorque,
+    TorqueRamp        := stCmd.fTorqueRamp,
+    VelocityLimitHigh := stCmd.fTorqueVelLimitHigh,
+    VelocityLimitLow  := stCmd.fTorqueVelLimitLow,
+    BufferMode        := MC_Aborting
+);
+
+// Write ONLY torque fields back — do not overwrite position/velocity status
+stStatus.bTorqueActive   := fbTorqueCtrl.Active;
+stStatus.bTorqueInTorque := fbTorqueCtrl.InTorque;
+
+// Reflect the LIVE torque-FB error. This was set-only (no ELSE), so once a
+// torque fault set bError it stayed latched forever and PRG_Motion's set-only
+// copy re-stamped it onto the status mirror every scan — the motor recovered
+// but bError/nErrorID never cleared. With Execute gated off on !READY, a reset
+// clears MC_TorqueControl.Error and this ELSE then clears the mirror. A REAL,
+// persistent torque fault keeps fbTorqueCtrl.Error TRUE, so it is not masked.
+IF fbTorqueCtrl.Error THEN
+    stStatus.bError   := TRUE;
+    stStatus.nErrorID := fbTorqueCtrl.ErrorId;
+ELSE
+    stStatus.bError   := FALSE;
+    stStatus.nErrorID := 0;
+END_IF
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

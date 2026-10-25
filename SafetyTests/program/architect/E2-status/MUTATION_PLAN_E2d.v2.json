@@ -1,0 +1,102 @@
+{
+  "version": "sal-mutation-plan-v1",
+  "planVersion": 2,
+  "status": "Architect guard-mutation plan v2 for slice E2d (program/architect/E2-status/PLAN.md v2). Names as specified by the plan. Each mutation names its killing behavioural scenario; oracle = REQ-CONSOLIDATION criteria / SCENARIO_DECISIONS c1e7fe6c. modelKill = result in architect in-memory prototype (not native, not a test).",
+  "sourceSha256": "TBD: G2 candidate SAL of slice E2d",
+  "testFiles": [
+    "current-door-interlock.test.js",
+    "current-early-sto.test.js",
+    "current-estop-native-pairs.test.js",
+    "current-hv-set-permit.test.js",
+    "current-mentee-set-permit.test.js",
+    "current-plc-pulse-set-permit.test.js",
+    "current-rnd-down-no-reenergy.test.js",
+    "current-rnd-physical-integration.test.js",
+    "current-safe-run-gestures.test.js",
+    "current-step12-lv-permit.test.js",
+    "current-timer-one-ms.test.js",
+    "current-unlock-estop-permit.test.js",
+    "current-unlock-hold.test.js",
+    "current-code-checks.test.js",
+    "sal-runtime.test.js",
+    "sal-semantics.test.js",
+    "timer-observed-clock.test.js",
+    "current-e2d-*.test.js (v2-tester, G1)"
+  ],
+  "behaviouralTests": [
+    "^DOOR06 (component|actual|existing emergency)",
+    "^EARLYSTO (drive[12]|physical)",
+    "^R3PAIR ",
+    "^MENTEE05 (paired|HV: (all|already)|LV: (all|already))",
+    "^PLCPULSE ",
+    "^RNDPHYS ",
+    "^SR-",
+    "^current SAL",
+    "^UNLOCK07 (component|final component|[^ ]+: healthy|[^ ]+/[^ ]+: fault)",
+    "^CVR (current SAL|approved)",
+    "^(HV|LV) current SAL",
+    "^SAL-RUN0[23]",
+    "^SAL-SEM02",
+    "^Current SAL TON adapter",
+    "^E2d "
+  ],
+  "structuralSoftwareCheckCases": [
+    "^BOOT:"
+  ],
+  "mutations": [
+    {
+      "id": "M-E2d-01",
+      "guard": "CoverUp",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_020",
+      "port": "AndIn6",
+      "rationale": "R&D->Run without closed cover",
+      "killingScenario": "Steady R&D, NC1 FALSE, BOTH 1000 ms: StartingRun accepted (then Emergency by E2b)",
+      "oracle": "IL-02, CVR-004",
+      "modelKill": "repro/t8.out.txt rndBothOpen: S4"
+    },
+    {
+      "id": "M-E2d-02",
+      "guard": "CoverAttempt",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_030",
+      "port": "OrIn5",
+      "rationale": "rejected BOTH not consumed",
+      "killingScenario": "Steady R&D, NC1 FALSE, BOTH held, NC restored while held: StartingRun/Run executes",
+      "oracle": "IL-02",
+      "modelKill": "repro/t8.out.txt rndBothOpen: S3"
+    },
+    {
+      "id": "M-E2d-03",
+      "guard": "Bypass",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAnd4",
+      "port": "AndIn3",
+      "rationale": "NEW input: legacy Bypass ignores NC1",
+      "killingScenario": "Safe, NC1 FALSE, inPLC_BypassC1C2 TRUE: C1/C2 ON",
+      "oracle": "CFG-02"
+    },
+    {
+      "id": "M-E2d-04",
+      "guard": "Bypass",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAnd4",
+      "port": "AndIn4",
+      "rationale": "NEW input: legacy Bypass ignores NC2",
+      "killingScenario": "Safe, NC2 FALSE, Bypass TRUE: C1/C2 ON",
+      "oracle": "CFG-02"
+    }
+  ],
+  "positiveChecks": [
+    "IL-01 Safe NC open BOTH -> R&D (repro/t6 #9)",
+    "V14-Q21a R&D cover open + green -> Safe (t6 #6)",
+    "Q-RC-03b1 R&D->Safe in progress + cover open -> Safe (t6 #7)"
+  ],
+  "blockedByQuestion": [
+    {
+      "block": "//RndPhysicalCompact/GATE_010",
+      "port": "AndIn3/AndIn4 (NEW inputs)",
+      "question": "Q-ARCH-04 (oracle only preserved F1 behaviour)"
+    }
+  ]
+}

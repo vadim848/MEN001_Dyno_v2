@@ -1,0 +1,212 @@
+{
+  "version": "sal-mutation-plan-v1",
+  "status": "DRAFT v3 - finalized after E2 G4. v3: Q-RC-17 fix (cover exemption only owner and not HEALTH_DESC), ABT sources green+LV (Q-ARCH-03 B), HL_MEM (Q-RC-16), no separate HL_FAULT (SafetyFault cause).",
+  "sourceSha256": "FILL_AT_G2",
+  "testFiles": [
+    "current-door-interlock.test.js",
+    "current-early-sto.test.js",
+    "current-estop-native-pairs.test.js",
+    "current-hv-set-permit.test.js",
+    "current-mentee-set-permit.test.js",
+    "current-plc-pulse-set-permit.test.js",
+    "current-rnd-down-no-reenergy.test.js",
+    "current-rnd-physical-integration.test.js",
+    "current-safe-run-gestures.test.js",
+    "current-step12-lv-permit.test.js",
+    "current-timer-one-ms.test.js",
+    "current-unlock-estop-permit.test.js",
+    "current-unlock-hold.test.js",
+    "current-code-checks.test.js",
+    "sal-runtime.test.js",
+    "sal-semantics.test.js",
+    "timer-observed-clock.test.js"
+  ],
+  "behaviouralTests": [
+    "^DOOR06 (component|actual|existing emergency)",
+    "^EARLYSTO (drive[12]|physical)",
+    "^R3PAIR ",
+    "^MENTEE05 (paired|HV: (all|already)|LV: (all|already))",
+    "^PLCPULSE ",
+    "^RNDPHYS ",
+    "^SR-",
+    "^current SAL",
+    "^UNLOCK07 (component|final component|[^ ]+: healthy|[^ ]+/[^ ]+: fault)",
+    "^CVR (current SAL|approved)",
+    "^(HV|LV) current SAL",
+    "^SAL-RUN0[23]",
+    "^SAL-SEM02",
+    "^Current SAL TON adapter",
+    "^E3 "
+  ],
+  "structuralSoftwareCheckCases": [
+    "^BOOT:"
+  ],
+  "mutations": [
+    {
+      "id": "M-E3-01",
+      "guard": "SS1Timer",
+      "op": "set-parameter",
+      "block": "//Network6/RUN_SS1_TON",
+      "port": "Delay Time (s)",
+      "value": "1.9",
+      "rationale": "SS1 shortened",
+      "killingScenario": "STP-A: STO at t_a+1999 forbidden",
+      "oracle": "STP-A"
+    },
+    {
+      "id": "M-E3-02",
+      "guard": "SS1Timer",
+      "op": "set-parameter",
+      "block": "//Network6/RUN_SS1_TON",
+      "port": "Delay Time (s)",
+      "value": "2.1",
+      "rationale": "SS1 lengthened",
+      "killingScenario": "STP-A: STO mandatory by t_a+2001",
+      "oracle": "STP-A"
+    },
+    {
+      "id": "M-E3-03",
+      "guard": "Coast",
+      "op": "set-parameter",
+      "block": "//Network6/RUN_COAST_TON",
+      "port": "Delay Time (s)",
+      "value": "4.9",
+      "rationale": "coast shortened",
+      "killingScenario": "STP-A: no Discharge at t_s+4999",
+      "oracle": "STP-A, EMG-009"
+    },
+    {
+      "id": "M-E3-04",
+      "guard": "HealthyStop",
+      "op": "deactivate-input",
+      "block": "//Network6/RUN_STO_REQ",
+      "port": "OrIn2",
+      "rationale": "Healthy loss gives no immediate STO",
+      "killingScenario": "STP-D h=t_a+1: STO not at h+1; STP-G steady Run",
+      "oracle": "STP-D, STP-G (Q-RC-02)"
+    },
+    {
+      "id": "M-E3-05",
+      "guard": "DischargeOrder",
+      "op": "deactivate-input",
+      "block": "//Network8/FBOrDis",
+      "port": "OrIn2",
+      "rationale": "run-down never discharges",
+      "killingScenario": "STP-A: no Discharge, no C2 OFF, R&D never reached",
+      "oracle": "STP-A, EMG-010"
+    },
+    {
+      "id": "M-E3-06",
+      "guard": "C2OffOrder",
+      "op": "invert-contact",
+      "block": "//Network6/FBAnd18",
+      "port": "AndIn2",
+      "rationale": "R&D declared with C2_FBK ON",
+      "killingScenario": "STP-A k=1,50,400: R&D before C2_FBK OFF",
+      "oracle": "STP-A, STP-004"
+    },
+    {
+      "id": "M-E3-07",
+      "guard": "SS1Output",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAnd2",
+      "port": "AndIn4",
+      "rationale": "SS1 not requested at down acceptance",
+      "killingScenario": "STP-A t_a(+<=1): SS1 requested to both drives",
+      "oracle": "STP-A"
+    },
+    {
+      "id": "M-E3-09",
+      "guard": "Abort",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/SU_RESET",
+      "port": "OrIn2",
+      "rationale": "StartingRun not cancelled by abort",
+      "killingScenario": "STP-E: Run reached after abort when C2_FBK/Healthy arrive",
+      "oracle": "STP-E"
+    },
+    {
+      "id": "M-E3-10",
+      "guard": "OffWatchdog",
+      "op": "set-parameter",
+      "block": "//Network1/WDG_C2_OFF_TON",
+      "port": "Delay Time (s)",
+      "value": "0.6",
+      "rationale": "C2 OFF watchdog lengthened",
+      "killingScenario": "STP-C: EMGREF mandatory at t_c+501",
+      "oracle": "STP-C, WDG-05"
+    },
+    {
+      "id": "M-E3-11",
+      "guard": "OffWatchdog",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAnd1",
+      "port": "AndIn5",
+      "rationale": "C2 stuck not fed to Emergency",
+      "killingScenario": "STP-C: no Emergency with C2_FBK ON after OFF",
+      "oracle": "STP-C"
+    },
+    {
+      "id": "M-E3-12",
+      "guard": "STOLatch",
+      "op": "swap-order",
+      "block": "//Network6/RUN_STO_PHASE",
+      "port": "",
+      "operatorAvailable": false,
+      "rationale": "STO chain placed before its request producer",
+      "killingScenario": "STP-E: STO later than a+1",
+      "oracle": "STP-E"
+    },
+    {
+      "id": "M-E3-13",
+      "guard": "AbortRecognizer",
+      "op": "deactivate-input",
+      "block": "//SafeResumption/SG_OWNER_SET",
+      "port": "AndIn3",
+      "rationale": "green in StartingRun goes to R&D->Safe owner",
+      "killingScenario": "StartingRun + fresh green 500 ms: C1 OFF/LV discharge while SU (instead of STP-E abort)",
+      "oracle": "STP-E, E2-01"
+    },
+    {
+      "id": "M-E3-14",
+      "guard": "AbortRecognizer",
+      "op": "deactivate-input",
+      "block": "//Network12/FBAnd2",
+      "port": "AndIn5",
+      "rationale": "blue in StartingRun unlocks",
+      "killingScenario": "StartingRun + blue 500 ms: Unlock TRUE",
+      "oracle": "EMG-007, CVR-001"
+    },
+    {
+      "id": "M-E3-15",
+      "guard": "CoverHealthyDescent",
+      "op": "deactivate-input",
+      "block": "//Network6/NORMAL_DOWN",
+      "port": "AndIn2",
+      "rationale": "Healthy descent exempt from cover",
+      "killingScenario": "Run, HV Faulty -> descent; NC1 FALSE during coast: no Emergency",
+      "oracle": "Q-RC-17 B (3)"
+    },
+    {
+      "id": "M-E3-16",
+      "guard": "CoverAbort",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAndNotRunSu",
+      "port": "AndIn3",
+      "rationale": "abort StartingRun exempt from cover",
+      "killingScenario": "StartingRun aborted by green; NC1 FALSE during discharge: no Emergency",
+      "oracle": "Q-RC-17 B (1)"
+    },
+    {
+      "id": "M-E3-17",
+      "guard": "LvMemory",
+      "op": "deactivate-input",
+      "block": "//SafeResumption/HLT_OR",
+      "port": "OrIn2",
+      "rationale": "LV loss forgotten when LV returns",
+      "killingScenario": "Run, LV Faulty 50 ms during coast then back: R&D reached and stays (no chain to Safe)",
+      "oracle": "Q-RC-16 A"
+    }
+  ],
+  "planVersion": 4
+}

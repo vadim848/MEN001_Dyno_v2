@@ -1,0 +1,84 @@
+{
+  "slice": "E2-v73-q",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "basis": ["program/reviewer/E2-plan-v7/PLAN_REVIEW.md V73-A, V73-B (sha256 a3f9b8f8f0c606d4652e86bfd9af42b61955fc2111c806694caa20296db1aa6d)"],
+  "sources": {
+    "SCENARIO_DECISIONS.md.before": "c62582a0c22070fff4e2e8b90bb9ca978aaa58f9d6f05ca6bcd000a355e21028",
+    "SCENARIO_DECISIONS.md.after": "5a148eed902a019b5e078ccdae385447f9fafb4c2fa7fd2f1507c1d33720c8e6",
+    "architect/E2-status/PLAN.md": "f247e310c096c8d59dc7a5f80fb1be7f8cf4276e2aa7d56b8f54b990727ce595",
+    "REQ-CONSOLIDATION/CRITERIA.md": "f2f11d77eba0d3b4441b42ff55666fbfc741bdd2867ebb763829328ad909eaa3",
+    "E2-G1-v2-questions/CRITERIA_DELTA_v4.md": "2b405938d002343a65afc73db8d2b83f172106462368121792c2539d70a60c04",
+    "E2-G1-v3-questions/CRITERIA.md": "29f4288f926ab2459f239ffe3414bbf94f5990d947efc1037c8c12e02ae29b47",
+    "E2-G1-v3-CA1/CRITERIA_DELTA_v6.md": "3d2d8fba7c162b601da39c6094fb35fff115264243a05c35526140f8b3030f02",
+    "E2b-dev/CRITERIA.md": "142b2b9dd820a6d2142d3594a2d095da75916b7fec9dd5c0edfe2363f3efee9a",
+    "canonical.sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "canonical.sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "canonical.diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+    "candidate.E2b.sal": "386e208becc94f966c79629653b50c15ab96bd95bf95bf823aa1e7510ea2cfec",
+    "candidate.E2d.sal": "365f2c2ef0791e6d3b93812cb4920c4f1c93c067d2246f8132f9b08e7df6bd8a"
+  },
+  "teamDecisions": ["TD-09", "TD-10"],
+  "criteria": [
+    {
+      "id": "TA-OWNER-DEF",
+      "decision": "TD-09",
+      "status": "READY-D",
+      "definition": "t_a := first scan >= P with linkRunDownOwner TRUE, measured on the no-event fork (same base, same gesture)",
+      "errors": ["Symbol linkRunDownOwner absent -> ERROR stand/precondition", "Symbol present but never set while down outputs change -> ERROR precondition"],
+      "forbidden": ["fallback to t_a(obs) = first change of STO/SS1/Discharge", "oracle boundary '<= t_a(obs)-3'"],
+      "diagnosticOnly": ["t_a(obs)", "t_a(obs) - t_a"],
+      "plcPath": "CMD_RUN_TO_R&D: same definition if marker set, else ERROR; normative only after E4",
+      "factsNotOracle": {"owner": "P+501", "HV_discharge": "owner+3", "STO_and_C2_OFF": "owner+4", "SS1": "owner+205", "RnD_stage": "P+705"},
+      "sources": ["TD-09", "TD-08 (analogy)", "REQ-CONSOLIDATION §B 't_a — скан принятия down'", "PLAN v7.3 D-E2b-3(а)"],
+      "ids": ["STP-001", "EMG-001", "EMG-002", "CVR-006", "EMG-008", "EMG-009", "EMG-011", "STP-007"]
+    },
+    {
+      "id": "TA-OWNER-BTN",
+      "status": "READY-D",
+      "initial": "steady Run (R0), buttons released >= 2000 ms",
+      "inputs": [{"t": "P", "green": true}, {"t": "P+600", "green": false}],
+      "boundaries": {"q_G-1": "linkRunDownOwner FALSE, no down output", "q_G": "observation", "q_G+1": "linkRunDownOwner TRUE"},
+      "variant": "green released at P+499 -> no marker, Run kept",
+      "sources": ["BTN-003 T_SINGLE 500", "REQ-CONSOLIDATION §0 q-1/q/q+1", "TD-09"],
+      "ids": ["BTN-003", "STP-001"]
+    },
+    {
+      "id": "TA-OWNER-BOUNDS",
+      "decision": "TD-09",
+      "status": "READY-D",
+      "initial": "steady Run (R0); green from P, released P+600; event at scan c, held",
+      "rows": [
+        {"event": "in_InterLock_NC_1 / NC_2 / both FALSE", "c=t_a-1": "IL-03 Emergency (Q-RC-01), L1 vs R (in_Estop_PLC same c, steady Run), latch, Restart -> Safe", "c=t_a": "observation: IL-03 or IL-05b(1)", "c=t_a+1": "IL-05b(1): down continues per STP-A, ends R&D, no Emergency/fault", "sources": ["Q-RC-01", "Q-RC-03(b1)", "IL-05b"]},
+        {"event": "in_HV_Faulty_FBK / in_LV_Faulty_FBK TRUE >= 100 ms", "c=t_a-1": "STP-G", "c=t_a": "observation: STP-G or STP-D/H", "c=t_a+1": "STP-D (HV) / STP-H (LV)", "sources": ["Q-RC-02", "Q-RC-15", "REQ §B STP-G"]},
+        {"event": "in_Estop_PLC, ES_NC_1 (L1 causes)", "c=t_a-1": "L3 / L1 vs R in steady Run", "c=t_a": "observation", "c=t_a+1": "EMG-RD-L (Q-T3-1 А)", "sources": ["E2-G1-v3-questions §2"]}
+      ],
+      "forbiddenAtTa": ["Run without Emergency in any scan >= c+1", "new energy increase (C2 ON, STO release, C1 ON, Unlock) in any scan >= c", "Emergency then return to down without Restart", "mixed outcome"],
+      "combinations": ["cover at t_a-1 with ES_NC / in_Estop_PLC -> common chain as R", "Healthy + cover at t_a+1 -> STP-D/H, cover ignored (IL-05b(1))", "Healthy + cover at t_a-1 -> Emergency (IL-03) over STP-G (v3-questions §2, D-TEAM p.1)", "cover at c>=t_a+1 then in_Estop_PLC -> EMG-RD-L from in_Estop_PLC scan"],
+      "knownRedUntilE3": "STP-A on F1 chain: SS1 owner+205 (norm <= owner+1), STO owner+4 (norm >= owner+2000); canonical has no marker -> ERROR",
+      "ids": ["EMG-002", "CVR-006", "EMG-008", "EMG-009", "STP-007", "EMG-001", "EMG-011", "STP-001"]
+    },
+    {
+      "id": "L2-SU",
+      "decision": "TD-10",
+      "status": "READY-D",
+      "initial": "steady R&D (R0); BOTH from p, release p+1100; StartingRun = [A (TD-08, recRndC_SU), r) of no-event trace",
+      "event": "in_Estop_PLC TRUE at e, held",
+      "reference": "d_Run(o) = tau_Run(o) - e, in_Estop_PLC in steady Run, same base",
+      "delOutputs": ["out_LV_C1 OFF", "STO_DR1 active", "STO_DR2 active", "out_HV_Discharge_Request", "out_HV_C2 OFF"],
+      "window": {"<=d_Run-2": "FAIL", "d_Run-1": "OK (TD-10)", "d_Run": "OK", "d_Run+1": "OK", ">=d_Run+2 or never": "FAIL"},
+      "alreadyAtTarget": "stays at target in every scan >= e (EMGREF(2))",
+      "imm": "unchanged: tau_SU - e <= d_Run + 1",
+      "l1InSU": "unchanged [tau_R-1, tau_R]; plus lower bound tau_X(o) - e >= d_Run - 1 for every cause in StartingRun",
+      "unchanged": ["L3", "L4", "final state", "latch", "Restart -> Safe only", "L2 Del in all other states [d_Run, d_Run+1]"],
+      "sweepE": ["A+1", "u", "u+1", "u+50", "r-1"],
+      "selfTest": {"-2": "FAIL", "-1": "PASS", "0": "PASS", "+1": "PASS", "+2": "FAIL", "absent": "ERROR anti-vacuity"},
+      "combinations": ["in_Estop_PLC + NC1 same e -> as R", "in_Estop_PLC at e=u -> no new energy increase in any scan >= e"],
+      "factsNotOracle": {"SU": {"C1_OFF": 2004, "STO": 7006, "C2_OFF": 8010}, "Run": {"C1_OFF": 2005, "STO": 7007, "C2_OFF": 8011}},
+      "sources": ["TD-10", "CRITERIA_DELTA_v4 §0.1 L2", "E2-G1-v2-questions Т1 п.2-3 (analogy)", "Q-ARCH-01", "Q-RC-03(a)"],
+      "ids": ["EMG-001", "EMG-002", "CVR-006", "EMG-011", "MOD-002"]
+    }
+  ],
+  "blocked": [],
+  "questionsToVadim": []
+}

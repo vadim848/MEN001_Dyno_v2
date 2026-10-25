@@ -1,0 +1,462 @@
+{
+ "generatedAt": "2026-10-22T08:55:16.209Z",
+ "tool": "scratchpad/tools/mutkill.mjs (v2-tester E2-G3)",
+ "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2a-RC_on_E2a-RC.json",
+ "planSha256": "465f7e5912508f651dbb689d9af51fa771f6b385c97c1add48d57b7d610bef56",
+ "sourceSha256": "5733552a150bfd33df4211da8f97a8fc993ff990ad52c90a8d7758d950660f3f",
+ "killBase": {
+  "eligible": 343,
+  "excluded": [
+   "E2a DIS-HOLD-HV issue by STP-A Run->R&D; refused legacy PLC lift (1,1) 300 ms with the cover open (NC1 FALSE); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+   "E2a DIS-HOLD-HV Emergency from steady Run while legacy PLC (1,1) is held (in_ES_NC_1 FALSE) -> the chain issues the HV discharge request before C2 OFF and keeps it TRUE (Q-V7-01 \"Г\": Discharge -> hold -> C2 OFF; C2 OFF without Discharge = FAIL)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)",
+   "E2d FBK10-PLC-REG steady R&D, legacy PLC (1,1) held, C2_FBK ON from u+1 (after the own C2 command) -> C2 kept, no Run <= u+599, Run at u+601 (RUN-CONF-T, TEAM-DEFAULT TD-02), no Emergency",
+   "E2d FBK10-PLC-REG steady R&D, legacy PLC (1,1) held, C2_FBK ON from u+250 (after the own C2 command) -> C2 kept, no Run <= u+599, Run at u+601 (RUN-CONF-T, TEAM-DEFAULT TD-02), no Emergency",
+   "E2d FBK10-PLC-REG steady R&D, legacy PLC (1,1) held, C2_FBK ON from u+499 (after the own C2 command) -> C2 kept, no Run <= u+599, Run at u+601 (RUN-CONF-T, TEAM-DEFAULT TD-02), no Emergency",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+10, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+10, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+300, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+300, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+499, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+499, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FFS R&D->Run legacy PLC (1,1): ES_NC_1 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (EMGREF(2), rule L Imm)",
+   "E2d FFS R&D->Run legacy PLC (1,1): ES_NC_2 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (EMGREF(2), rule L Imm)",
+   "E2d FFS R&D->Run legacy PLC (1,1): NC1 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later while the cause is held [e, e+299] (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+   "E2d FFS R&D->Run legacy PLC (1,1): NC2 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later while the cause is held [e, e+299] (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+   "E2d FFS R&D->Run legacy PLC (1,1): in_Estop_PLC in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (EMGREF(2), rule L Imm)",
+   "E2d FFS R&D->Run legacy PLC (1,1): Mentee in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (EMGREF(2), rule L Imm, MENTEE05)"
+  ],
+  "excludeRegex": [
+   "/REL01-e2-LATE R&D/",
+   "/FBK-05/",
+   "/STP-I\\b/",
+   "/existing-PLC-levels/",
+   "/FBK10-PLC-B/",
+   "/FBK10-PLC-REG steady R&D, legacy PLC \\(1,1\\)/",
+   "/^(DIAG \\S+ )?KF-/",
+   "/\\(1,1\\)/"
+  ]
+ },
+ "behaviouralTests": [
+  "^E2[a-d] "
+ ],
+ "summary": {
+  "KILLED": 10,
+  "SURVIVED": 2,
+  "STRUCTURAL-ONLY": 0,
+  "INVALID": 3,
+  "NOT-RUN": 1
+ },
+ "results": [
+  {
+   "id": "M-E2a-19",
+   "op": "deactivate-input",
+   "block": "//Network12/FBAnd6",
+   "port": "AndIn3",
+   "verification": {
+    "parsedDelta": "//Network12/FBAnd6/AndIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "859b74e7d1479272137956c0c60fddd1fa3859735b3890018b8504ac1393ee20",
+   "killedBy": [
+    {
+     "name": "E2a RUN-CONF HV Faulty TRUE for 3000 ms after C2_FBK ON: no Run meanwhile; HV healthy -> Run at k+101, not at k+99",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "4 violated checks"
+    },
+    {
+     "name": "E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+550 (K+50, after the window): no Run <= u+650, Run at u+652, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 \"В\", question 68 \"Б\")",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 343
+  },
+  {
+   "id": "M-E2a-20",
+   "op": "deactivate-input",
+   "block": "//Network12/FBAnd6",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//Network12/FBAnd6/AndIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "1f648b5e21ab257d32399412d7307e584830881986c39de8a5cd3b43231756e8",
+   "killedBy": [
+    {
+     "name": "E2a RUN-CONF RC-5 (ii) C2_FBK delayed 30 ms (ON from u+30): no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "3 violated checks"
+    },
+    {
+     "name": "E2a RUN-CONF RC-5 (i) natural: C2_FBK ON one scan after the command, HV healthy: no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "3 violated checks"
+    },
+    {
+     "name": "E2a RUN-CONF RC-5 (iii) C2_FBK delayed 400 ms (ON from u+400): no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "2 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 343
+  },
+  {
+   "id": "M-E2a-21",
+   "op": "swap-order",
+   "block": "//Network12/FBAnd6",
+   "port": "",
+   "value": {
+    "moveAfter": "//Network12/FBTon3"
+   },
+   "verification": {
+    "parsedDelta": [
+     "//Network12/FBAnd6#block",
+     "//Network12/FBTon3#block"
+    ],
+    "attribute": "orderOfExecution",
+    "movedBlocks": 2,
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "5c57c4f3d5b8578bb7cc249b015060c256cb4d4be64cf99f2933617605ff2c8a",
+   "killedBy": [
+    {
+     "name": "E2a RUN-CONF HV Faulty TRUE for 3000 ms after C2_FBK ON: no Run meanwhile; HV healthy -> Run at k+101, not at k+99",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+550 (K+50, after the window): no Run <= u+650, Run at u+652, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 \"В\", question 68 \"Б\")",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 20 ms u+550..u+569 (after the window): no Run <= u+669, Run at u+671, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 \"В\", question 68 \"Б\")",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 343
+  },
+  {
+   "id": "M-E2a-22",
+   "op": "set-parameter",
+   "block": "//Network12/WIN_C2",
+   "port": "Delay Time (s)",
+   "value": "0.4",
+   "verification": {
+    "parsedDelta": "//Network12/WIN_C2#param:Delay Time (s)",
+    "attribute": "timing",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "2a697541589be284badd6aa2de7d9b1be8d07f1790b54300535d6c548421e730",
+   "killedBy": [
+    {
+     "name": "E2a RUN-CONF RC-5 (ii) C2_FBK delayed 30 ms (ON from u+30): no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "2 violated checks"
+    },
+    {
+     "name": "E2a RUN-CONF RC-5 (vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency: no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "2 violated checks"
+    },
+    {
+     "name": "E2a RUN-CONF RC-5 (i) natural: C2_FBK ON one scan after the command, HV healthy: no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "2 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 343
+  },
+  {
+   "id": "M-E2a-23",
+   "op": "deactivate-input",
+   "block": "//Network11/FBAnd4",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//Network11/FBAnd4/AndIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "e60c19da5667f0fc5104f2db868f4a19c646aeed1d808663d007cece504e8d45",
+   "killedBy": [
+    {
+     "name": "E2a MOD1-01 (v7 §4.2) Safe->R&D natural: no R&D <= u1+599, R&D at u1+601 and later (question 68 \"Б\": C1 window 500 ms + 100 ms continuous C1_FBK and LV healthy), no Emergency",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2a MOD1-01 / FBK-01 (v7 §4.2) Safe->R&D, C1_FBK FALSE 1 scan at u1+51 inside the window: not an emergency, R&D at u1+601",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2a RND-CONF-T Safe->R&D, LV Faulty TRUE 1 scan at u1+550 after the window: count restarts - no R&D <= u1+650, R&D at u1+652, no Emergency (question 68 \"Б\"; upper bound TEAM-DEFAULT TD-02)",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "1 violated checks (u1=3116)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 343
+  },
+  {
+   "id": "M-E2a-24",
+   "op": "deactivate-input",
+   "block": "//Network11/FBAnd4",
+   "port": "AndIn2",
+   "verification": {
+    "parsedDelta": "//Network11/FBAnd4/AndIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "f0c97cd24df8d8acb80539702626f5d4d184219bcbb72cbba2ce1bc8406cd41a",
+   "killedBy": [
+    {
+     "name": "E2d FBK10-PLC-REG (1) R-T5 Safe, FBK OFF, legacy PLC (1,0) front held, C1_FBK ON from u1+499 (after the own C1 command) -> C1 kept, no R&D <= u1+599, R&D at u1+601 (RND-CONF-T, TEAM-DEFAULT TD-02), no Emergency, no return to Safe",
+     "file": "current-e2d-fbk-unsolicited.test.js",
+     "message": "1 violated checks (p=8619, u1=8623)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 20,
+   "eligible": 343
+  },
+  {
+   "id": "M-E2a-25",
+   "op": "set-parameter",
+   "block": "//Network11/WIN_C1",
+   "port": "Delay Time (s)",
+   "value": "0.4",
+   "verification": {
+    "parsedDelta": "//Network11/WIN_C1#param:Delay Time (s)",
+    "attribute": "timing",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "d06d33b663686144ab06c1c990cbcb5c87997f9e452c7b7dbb6073ee2e35aea1",
+   "killedBy": [
+    {
+     "name": "E2a MOD1-01 (v7 §4.2) Safe->R&D natural: no R&D <= u1+599, R&D at u1+601 and later (question 68 \"Б\": C1 window 500 ms + 100 ms continuous C1_FBK and LV healthy), no Emergency",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2a RND-CONF-T Safe->R&D, LV Faulty TRUE 1 scan at u1+550 after the window: count restarts - no R&D <= u1+650, R&D at u1+652, no Emergency (question 68 \"Б\"; upper bound TEAM-DEFAULT TD-02)",
+     "file": "current-e2a-run-conf.test.js",
+     "message": "1 violated checks (u1=3116)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 343
+  },
+  {
+   "id": "M-E2a-26",
+   "op": "composite",
+   "block": "//Network12/FBTon3",
+   "port": "TonIn",
+   "verdict": "NOT-RUN",
+   "reason": "operator composite not implemented by the stand"
+  },
+  {
+   "id": "M-E2a-30",
+   "op": "deactivate-input",
+   "block": "//Network1/FBOr5",
+   "port": "OrIn2",
+   "verification": {
+    "parsedDelta": "//Network1/FBOr5/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "cdc3d95f06bfe80f79cd001916e7a556626116b2ab7aeaec702431935778fce2",
+   "killedBy": [
+    {
+     "name": "E2a DIS-HOLD-HV issue by STP-A Run->R&D (green 600 ms); accepted R&D->Run -> HV discharge request TRUE in [d, a-1], FALSE from u+1 (Q-V7-01 \"Г\", question 73 \"А\")",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "1 violated checks (a=13428, u=13428)"
+    },
+    {
+     "name": "E2a DIS-HOLD-HV issue by STP-A Run->R&D; refused BOTH at r+1999 after a blue single (pause 2 s not elapsed); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "1 violated checks (a=19427, u=19427)"
+    },
+    {
+     "name": "E2a DIS-HOLD-HV issue by STP-A Run->R&D; R&D->Safe (green 600 ms), steady Safe, Safe->R&D (BOTH); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "1 violated checks (a=19932, u=19932)"
+    },
+    {
+     "name": "E2a DIS-HOLD-HV issue by STP-A Run->R&D; refused BOTH with the cover open (NC1 FALSE during the whole gesture); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "1 violated checks (a=16928, u=16928)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 343
+  },
+  {
+   "id": "M-E2a-31",
+   "op": "deactivate-input",
+   "block": "//Network1/FBOr1",
+   "port": "OrIn2",
+   "verification": {
+    "parsedDelta": "//Network1/FBOr1/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "7126fa72b618e2948df3a0bff181da67cc92e9c50782b63f162a266976e2b6fc",
+   "killedBy": [
+    {
+     "name": "E2a DIS-HOLD-LV issue by R&D->Safe (green 600 ms in steady R&D); no event; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "1 violated checks (u1=9720)"
+    },
+    {
+     "name": "E2a TD5-EOK positive control (READY: TD-01 / DIS-HOLD-LV): R-T5 Safe without Emergency, legacy PLC (1,0) front held 1000 ms -> Safe->R&D accepted (b_Step12, C1 ON), LV discharge request FALSE from u1+1 (the gate is not constant FALSE)",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "1 violated checks (t=8618, u1=8622)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 343
+  },
+  {
+   "id": "M-E2a-32",
+   "op": "rebind-global",
+   "block": "//Network1/FBOr5",
+   "port": "OrIn2",
+   "value": {
+    "global": "linkRndBothQualified"
+   },
+   "verdict": "INVALID",
+   "error": "rebind-global: Symbol linkRndBothQualified not found in SGVL (creating a Symbol is a manual procedure)"
+  },
+  {
+   "id": "M-E2a-33",
+   "op": "rebind-global",
+   "block": "//Network1/FBOr5",
+   "port": "OrIn2",
+   "value": {
+    "global": "temporary SAL variable on Network12/WIN_C2/TonOut"
+   },
+   "verdict": "INVALID",
+   "error": "rebind-global needs value.global = name of an existing GVL Symbol"
+  },
+  {
+   "id": "M-E2a-34",
+   "op": "rebind-global",
+   "block": "//Network1/FBOr5",
+   "port": "OrIn2",
+   "value": {
+    "global": "temporary SAL variable on Network12/FBOr1/OrOut"
+   },
+   "verdict": "INVALID",
+   "error": "rebind-global needs value.global = name of an existing GVL Symbol"
+  },
+  {
+   "id": "M-E2a-35",
+   "op": "deactivate-input",
+   "block": "//Network2/FBAnd91",
+   "port": "AndIn4",
+   "verification": {
+    "parsedDelta": "//Network2/FBAnd91/AndIn4",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "c56b69d41914fb59d5dae927e00747c5cddb20438864590e80c34716e7c18e0a",
+   "killedBy": [
+    {
+     "name": "E2a TD5-EOK (TEAM-DEFAULT TD-05) R-T5 Safe, Emergency by in_ES_NC_1 FALSE, legacy PLC (1,0) held 3000 ms at E+1 -> no S12, LV discharge request TRUE, C1/C2 OFF, STO set, Emergency kept in every scan [t, t+3000]; Restart with (0,0) -> only Safe, no delayed lift",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "6 violated checks (e=8618, E=8618, t=8619)"
+    },
+    {
+     "name": "E2a TD5-EOK (TEAM-DEFAULT TD-05) R-T5 Safe, Emergency by in_ES_NC_1 FALSE, legacy PLC (1,0) pulse 50 ms at E+1 -> no S12, LV discharge request TRUE, C1/C2 OFF, STO set, Emergency kept in every scan [t, t+3000]; Restart with (0,0) -> only Safe, no delayed lift",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "6 violated checks (e=8618, E=8618, t=8619)"
+    },
+    {
+     "name": "E2a TD5-EOK (TEAM-DEFAULT TD-05) R-T5 Safe, Emergency by in_ES_NC_1 FALSE, legacy PLC (1,0) held 3000 ms at E+50 -> no S12, LV discharge request TRUE, C1/C2 OFF, STO set, Emergency kept in every scan [t, t+3000]; Restart with (0,0) -> only Safe, no delayed lift",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "6 violated checks (e=8618, E=8618, t=8668)"
+    },
+    {
+     "name": "E2a TD5-EOK (TEAM-DEFAULT TD-05) R-T5 Safe, Emergency by in_ES_NC_1 FALSE, legacy PLC (1,0) pulse 50 ms at E+50 -> no S12, LV discharge request TRUE, C1/C2 OFF, STO set, Emergency kept in every scan [t, t+3000]; Restart with (0,0) -> only Safe, no delayed lift",
+     "file": "current-e2a-dis-hold.test.js",
+     "message": "6 violated checks (e=8618, E=8618, t=8668)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 343
+  },
+  {
+   "id": "M-E2a-18",
+   "op": "deactivate-input",
+   "block": "//Network12/FBAnd6",
+   "port": "AndIn2",
+   "verification": {
+    "parsedDelta": "//Network12/FBAnd6/AndIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "c6fbdf396f11f8dd169a10f80d63aca2ac54e3ac6d396ecb78a8854f5df57467",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 343,
+   "eligible": 343
+  },
+  {
+   "id": "M-E2a-36",
+   "op": "deactivate-input",
+   "block": "//Network12/FBAnd4",
+   "port": "AndIn2",
+   "verification": {
+    "parsedDelta": "//Network12/FBAnd4/AndIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "8abc1e51b7196a2573800cfca44a80ffb3172d330569e5f79890bd11174f3188",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 343,
+   "eligible": 343
+  }
+ ]
+}

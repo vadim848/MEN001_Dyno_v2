@@ -1,0 +1,1104 @@
+TAP version 13
+# Subtest: E2d FBK-05-W StartingRun accepted (BOTH released from Q+2), in_HV_C2_FBK never ON, INVALID green 600 ms at u+10 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-03 / Q-RC-12 rollback = abort-StartingRun sequence + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+not ok 1 - E2d FBK-05-W StartingRun accepted (BOTH released from Q+2), in_HV_C2_FBK never ON, INVALID green 600 ms at u+10 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-03 / Q-RC-12 rollback = abort-StartingRun sequence + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+  ---
+  duration_ms: 132516.7793
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:74:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (u=7019, w=7519, g0=u+10)
+    + actual - expected
+    
+    + [
+    +   'no rollback inside the window [t0, w-1] (FBK FALSE inside the window is not a fault, CRITERIA_DELTA_v7 §4.0); first sign at u+0',
+    +   'rollback start (STO active, first step of the abort sequence Q-RC-12) not later than w+1: STO active at never',
+    +   'Discharge at once after STO (Q-RC-12 "STO -> сразу Discharge"; <= start+1): Discharge at never',
+    +   'R&D after C2 OFF and C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 7019'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'no rollback inside the window [t0, w-1] (FBK FALSE inside the window is not a fault, CRITERIA_DELTA_v7 §4.0); first sign at u+0'
+    1: 'rollback start (STO active, first step of the abort sequence Q-RC-12) not later than w+1: STO active at never'
+    2: 'Discharge at once after STO (Q-RC-12 "STO -> сразу Discharge"; <= start+1): Discharge at never'
+    3: 'R&D after C2 OFF and C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 7019'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:113:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# stimulus: BOTH 6017..7018, rb=7019, u=Q+2, invalid green g0=u+10=rb+10, w=7519
+# Subtest: E2d FBK-05-W StartingRun accepted (BOTH released from Q+2), in_HV_C2_FBK ON u+1..u+199, then FALSE, INVALID green 600 ms at u+10 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-03 / Q-RC-12 rollback = abort-StartingRun sequence + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+not ok 2 - E2d FBK-05-W StartingRun accepted (BOTH released from Q+2), in_HV_C2_FBK ON u+1..u+199, then FALSE, INVALID green 600 ms at u+10 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-03 / Q-RC-12 rollback = abort-StartingRun sequence + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+  ---
+  duration_ms: 107653.8907
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:74:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (u=7019, w=7519, g0=u+10)
+    + actual - expected
+    
+    + [
+    +   'no rollback inside the window [t0, w-1] (FBK FALSE inside the window is not a fault, CRITERIA_DELTA_v7 §4.0); first sign at u+0',
+    +   'rollback start (STO active, first step of the abort sequence Q-RC-12) not later than w+1: STO active at never',
+    +   'Discharge at once after STO (Q-RC-12 "STO -> сразу Discharge"; <= start+1): Discharge at never',
+    +   'R&D after C2 OFF and C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 7019'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'no rollback inside the window [t0, w-1] (FBK FALSE inside the window is not a fault, CRITERIA_DELTA_v7 §4.0); first sign at u+0'
+    1: 'rollback start (STO active, first step of the abort sequence Q-RC-12) not later than w+1: STO active at never'
+    2: 'Discharge at once after STO (Q-RC-12 "STO -> сразу Discharge"; <= start+1): Discharge at never'
+    3: 'R&D after C2 OFF and C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 7019'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:113:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# stimulus: BOTH 6017..7018, rb=7019, u=Q+2, invalid green g0=u+10=rb+10, w=7519
+# Subtest: E2d FBK-05-W StartingRun accepted (BOTH released from Q+2), in_HV_C2_FBK never ON, INVALID green 600 ms at u+300 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-03 / Q-RC-12 rollback = abort-StartingRun sequence + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+not ok 3 - E2d FBK-05-W StartingRun accepted (BOTH released from Q+2), in_HV_C2_FBK never ON, INVALID green 600 ms at u+300 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-03 / Q-RC-12 rollback = abort-StartingRun sequence + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+  ---
+  duration_ms: 106032.3683
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:74:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (u=7019, w=7519, g0=u+300)
+    + actual - expected
+    
+    + [
+    +   'no rollback inside the window [t0, w-1] (FBK FALSE inside the window is not a fault, CRITERIA_DELTA_v7 §4.0); first sign at u+0',
+    +   'rollback start (STO active, first step of the abort sequence Q-RC-12) not later than w+1: STO active at never',
+    +   'Discharge at once after STO (Q-RC-12 "STO -> сразу Discharge"; <= start+1): Discharge at never',
+    +   'R&D after C2 OFF and C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 7019'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'no rollback inside the window [t0, w-1] (FBK FALSE inside the window is not a fault, CRITERIA_DELTA_v7 §4.0); first sign at u+0'
+    1: 'rollback start (STO active, first step of the abort sequence Q-RC-12) not later than w+1: STO active at never'
+    2: 'Discharge at once after STO (Q-RC-12 "STO -> сразу Discharge"; <= start+1): Discharge at never'
+    3: 'R&D after C2 OFF and C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 7019'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:113:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# stimulus: BOTH 6017..7018, rb=7019, u=Q+2, invalid green g0=u+300=rb+300, w=7519
+# Subtest: E2d FBK-05-W StartingRun accepted (BOTH released from Q+2), in_HV_C2_FBK ON u+1..u+199, then FALSE, INVALID green 600 ms at u+300 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-03 / Q-RC-12 rollback = abort-StartingRun sequence + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+not ok 4 - E2d FBK-05-W StartingRun accepted (BOTH released from Q+2), in_HV_C2_FBK ON u+1..u+199, then FALSE, INVALID green 600 ms at u+300 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-03 / Q-RC-12 rollback = abort-StartingRun sequence + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+  ---
+  duration_ms: 97487.925
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:74:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (u=7019, w=7519, g0=u+300)
+    + actual - expected
+    
+    + [
+    +   'no rollback inside the window [t0, w-1] (FBK FALSE inside the window is not a fault, CRITERIA_DELTA_v7 §4.0); first sign at u+0',
+    +   'rollback start (STO active, first step of the abort sequence Q-RC-12) not later than w+1: STO active at never',
+    +   'Discharge at once after STO (Q-RC-12 "STO -> сразу Discharge"; <= start+1): Discharge at never',
+    +   'R&D after C2 OFF and C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 7019'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'no rollback inside the window [t0, w-1] (FBK FALSE inside the window is not a fault, CRITERIA_DELTA_v7 §4.0); first sign at u+0'
+    1: 'rollback start (STO active, first step of the abort sequence Q-RC-12) not later than w+1: STO active at never'
+    2: 'Discharge at once after STO (Q-RC-12 "STO -> сразу Discharge"; <= start+1): Discharge at never'
+    3: 'R&D after C2 OFF and C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 7019'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:113:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# stimulus: BOTH 6017..7018, rb=7019, u=Q+2, invalid green g0=u+300=rb+300, w=7519
+# Subtest: E2d FBK-05-W StartingRun accepted (BOTH released from Q+2), in_HV_C2_FBK never ON, INVALID green 600 ms at u+499 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-03 / Q-RC-12 rollback = abort-StartingRun sequence + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+not ok 5 - E2d FBK-05-W StartingRun accepted (BOTH released from Q+2), in_HV_C2_FBK never ON, INVALID green 600 ms at u+499 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-03 / Q-RC-12 rollback = abort-StartingRun sequence + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+  ---
+  duration_ms: 63139.5495
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:74:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (u=7019, w=7519, g0=u+499)
+    + actual - expected
+    
+    + [
+    +   'no rollback inside the window [t0, w-1] (FBK FALSE inside the window is not a fault, CRITERIA_DELTA_v7 §4.0); first sign at u+0',
+    +   'rollback start (STO active, first step of the abort sequence Q-RC-12) not later than w+1: STO active at never',
+    +   'Discharge at once after STO (Q-RC-12 "STO -> сразу Discharge"; <= start+1): Discharge at never',
+    +   'R&D after C2 OFF and C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 7019'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'no rollback inside the window [t0, w-1] (FBK FALSE inside the window is not a fault, CRITERIA_DELTA_v7 §4.0); first sign at u+0'
+    1: 'rollback start (STO active, first step of the abort sequence Q-RC-12) not later than w+1: STO active at never'
+    2: 'Discharge at once after STO (Q-RC-12 "STO -> сразу Discharge"; <= start+1): Discharge at never'
+    3: 'R&D after C2 OFF and C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 7019'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:113:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# stimulus: BOTH 6017..7018, rb=7019, u=Q+2, invalid green g0=u+499=rb+499, w=7519
+# Subtest: E2d FBK-05-W StartingRun accepted (BOTH released from Q+2), in_HV_C2_FBK ON u+1..u+199, then FALSE, INVALID green 600 ms at u+499 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-03 / Q-RC-12 rollback = abort-StartingRun sequence + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+not ok 6 - E2d FBK-05-W StartingRun accepted (BOTH released from Q+2), in_HV_C2_FBK ON u+1..u+199, then FALSE, INVALID green 600 ms at u+499 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-03 / Q-RC-12 rollback = abort-StartingRun sequence + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+  ---
+  duration_ms: 45845.2172
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:74:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (u=7019, w=7519, g0=u+499)
+    + actual - expected
+    
+    + [
+    +   'no rollback inside the window [t0, w-1] (FBK FALSE inside the window is not a fault, CRITERIA_DELTA_v7 §4.0); first sign at u+0',
+    +   'rollback start (STO active, first step of the abort sequence Q-RC-12) not later than w+1: STO active at never',
+    +   'Discharge at once after STO (Q-RC-12 "STO -> сразу Discharge"; <= start+1): Discharge at never',
+    +   'R&D after C2 OFF and C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 7019'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'no rollback inside the window [t0, w-1] (FBK FALSE inside the window is not a fault, CRITERIA_DELTA_v7 §4.0); first sign at u+0'
+    1: 'rollback start (STO active, first step of the abort sequence Q-RC-12) not later than w+1: STO active at never'
+    2: 'Discharge at once after STO (Q-RC-12 "STO -> сразу Discharge"; <= start+1): Discharge at never'
+    3: 'R&D after C2 OFF and C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 7019'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:113:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# stimulus: BOTH 6017..7018, rb=7019, u=Q+2, invalid green g0=u+499=rb+499, w=7519
+# Subtest: E2d FBK-06-W Safe->R&D accepted (BOTH released from Q+2), in_LV_C1_FBK never ON, INVALID green 600 ms at u+10 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-01 rollback to Safe + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+not ok 7 - E2d FBK-06-W Safe->R&D accepted (BOTH released from Q+2), in_LV_C1_FBK never ON, INVALID green 600 ms at u+10 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-01 rollback to Safe + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+  ---
+  duration_ms: 42592.7214
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:74:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    3 violated checks (u=3216, w=3716, g0=u+10)
+    + actual - expected
+    
+    + [
+    +   'rollback start (C1 OFF command, WDG-01) not later than w+1: C1 OFF at never',
+    +   'Safe after C1 OFF and C1_FBK OFF: C1 OFF undefined, C1_FBK OFF null, Safe undefined',
+    +   'end state Safe; stages=b_Step12 statuses=STS_SAFE'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'rollback start (C1 OFF command, WDG-01) not later than w+1: C1 OFF at never'
+    1: 'Safe after C1 OFF and C1_FBK OFF: C1 OFF undefined, C1_FBK OFF null, Safe undefined'
+    2: 'end state Safe; stages=b_Step12 statuses=STS_SAFE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:113:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# stimulus: BOTH 2214..3215, rb=3216, u=Q+2, invalid green g0=u+10=rb+10, w=3716
+# Subtest: E2d FBK-06-W Safe->R&D accepted (BOTH released from Q+2), in_LV_C1_FBK ON u+1..u+199, then FALSE, INVALID green 600 ms at u+10 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-01 rollback to Safe + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+not ok 8 - E2d FBK-06-W Safe->R&D accepted (BOTH released from Q+2), in_LV_C1_FBK ON u+1..u+199, then FALSE, INVALID green 600 ms at u+10 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-01 rollback to Safe + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+  ---
+  duration_ms: 40031.2469
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:74:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    3 violated checks (u=3216, w=3716, g0=u+10)
+    + actual - expected
+    
+    + [
+    +   'rollback start (C1 OFF command, WDG-01) not later than w+1: C1 OFF at never',
+    +   'Safe after C1 OFF and C1_FBK OFF: C1 OFF undefined, C1_FBK OFF null, Safe undefined',
+    +   'end state Safe; stages=b_Step12 statuses=STS_SAFE'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'rollback start (C1 OFF command, WDG-01) not later than w+1: C1 OFF at never'
+    1: 'Safe after C1 OFF and C1_FBK OFF: C1 OFF undefined, C1_FBK OFF null, Safe undefined'
+    2: 'end state Safe; stages=b_Step12 statuses=STS_SAFE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:113:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# stimulus: BOTH 2214..3215, rb=3216, u=Q+2, invalid green g0=u+10=rb+10, w=3716
+# Subtest: E2d FBK-06-W Safe->R&D accepted (BOTH released from Q+2), in_LV_C1_FBK never ON, INVALID green 600 ms at u+300 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-01 rollback to Safe + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+not ok 9 - E2d FBK-06-W Safe->R&D accepted (BOTH released from Q+2), in_LV_C1_FBK never ON, INVALID green 600 ms at u+300 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-01 rollback to Safe + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+  ---
+  duration_ms: 40259.7666
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:74:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    3 violated checks (u=3216, w=3716, g0=u+300)
+    + actual - expected
+    
+    + [
+    +   'rollback start (C1 OFF command, WDG-01) not later than w+1: C1 OFF at never',
+    +   'Safe after C1 OFF and C1_FBK OFF: C1 OFF undefined, C1_FBK OFF null, Safe undefined',
+    +   'end state Safe; stages=b_Step12 statuses=STS_SAFE'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'rollback start (C1 OFF command, WDG-01) not later than w+1: C1 OFF at never'
+    1: 'Safe after C1 OFF and C1_FBK OFF: C1 OFF undefined, C1_FBK OFF null, Safe undefined'
+    2: 'end state Safe; stages=b_Step12 statuses=STS_SAFE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:113:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# stimulus: BOTH 2214..3215, rb=3216, u=Q+2, invalid green g0=u+300=rb+300, w=3716
+# Subtest: E2d FBK-06-W Safe->R&D accepted (BOTH released from Q+2), in_LV_C1_FBK ON u+1..u+199, then FALSE, INVALID green 600 ms at u+300 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-01 rollback to Safe + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+not ok 10 - E2d FBK-06-W Safe->R&D accepted (BOTH released from Q+2), in_LV_C1_FBK ON u+1..u+199, then FALSE, INVALID green 600 ms at u+300 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-01 rollback to Safe + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+  ---
+  duration_ms: 39695.5948
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:74:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    3 violated checks (u=3216, w=3716, g0=u+300)
+    + actual - expected
+    
+    + [
+    +   'rollback start (C1 OFF command, WDG-01) not later than w+1: C1 OFF at never',
+    +   'Safe after C1 OFF and C1_FBK OFF: C1 OFF undefined, C1_FBK OFF null, Safe undefined',
+    +   'end state Safe; stages=b_Step12 statuses=STS_SAFE'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'rollback start (C1 OFF command, WDG-01) not later than w+1: C1 OFF at never'
+    1: 'Safe after C1 OFF and C1_FBK OFF: C1 OFF undefined, C1_FBK OFF null, Safe undefined'
+    2: 'end state Safe; stages=b_Step12 statuses=STS_SAFE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:113:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# stimulus: BOTH 2214..3215, rb=3216, u=Q+2, invalid green g0=u+300=rb+300, w=3716
+# Subtest: E2d FBK-06-W Safe->R&D accepted (BOTH released from Q+2), in_LV_C1_FBK never ON, INVALID green 600 ms at u+499 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-01 rollback to Safe + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+not ok 11 - E2d FBK-06-W Safe->R&D accepted (BOTH released from Q+2), in_LV_C1_FBK never ON, INVALID green 600 ms at u+499 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-01 rollback to Safe + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+  ---
+  duration_ms: 40825.874
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:74:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    3 violated checks (u=3216, w=3716, g0=u+499)
+    + actual - expected
+    
+    + [
+    +   'rollback start (C1 OFF command, WDG-01) not later than w+1: C1 OFF at never',
+    +   'Safe after C1 OFF and C1_FBK OFF: C1 OFF undefined, C1_FBK OFF null, Safe undefined',
+    +   'end state Safe; stages=b_Step12 statuses=STS_SAFE'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'rollback start (C1 OFF command, WDG-01) not later than w+1: C1 OFF at never'
+    1: 'Safe after C1 OFF and C1_FBK OFF: C1 OFF undefined, C1_FBK OFF null, Safe undefined'
+    2: 'end state Safe; stages=b_Step12 statuses=STS_SAFE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:113:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# stimulus: BOTH 2214..3215, rb=3216, u=Q+2, invalid green g0=u+499=rb+499, w=3716
+# Subtest: E2d FBK-06-W Safe->R&D accepted (BOTH released from Q+2), in_LV_C1_FBK ON u+1..u+199, then FALSE, INVALID green 600 ms at u+499 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-01 rollback to Safe + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+not ok 12 - E2d FBK-06-W Safe->R&D accepted (BOTH released from Q+2), in_LV_C1_FBK ON u+1..u+199, then FALSE, INVALID green 600 ms at u+499 (< 2 s clearing, v7-q §1) -> same as without the green: window end w=u+500 -> WDG-01 rollback to Safe + SafetyFault, rollback start <= w+1 (none in [u, w-1]), SafetyFault <= w+1 (NV), no Emergency
+  ---
+  duration_ms: 33455.7616
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:74:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    3 violated checks (u=3216, w=3716, g0=u+499)
+    + actual - expected
+    
+    + [
+    +   'rollback start (C1 OFF command, WDG-01) not later than w+1: C1 OFF at never',
+    +   'Safe after C1 OFF and C1_FBK OFF: C1 OFF undefined, C1_FBK OFF null, Safe undefined',
+    +   'end state Safe; stages=b_Step12 statuses=STS_SAFE'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'rollback start (C1 OFF command, WDG-01) not later than w+1: C1 OFF at never'
+    1: 'Safe after C1 OFF and C1_FBK OFF: C1 OFF undefined, C1_FBK OFF null, Safe undefined'
+    2: 'end state Safe; stages=b_Step12 statuses=STS_SAFE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:113:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# stimulus: BOTH 2214..3215, rb=3216, u=Q+2, invalid green g0=u+499=rb+499, w=3716
+# Subtest: E2d FBK-05-NEG StartingRun held by in_HV_Faulty_FBK TRUE (from before BOTH), INVALID green (a) g0=rb+10, 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> Run not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+not ok 13 - E2d FBK-05-NEG StartingRun held by in_HV_Faulty_FBK TRUE (from before BOTH), INVALID green (a) g0=rb+10, 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> Run not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+  ---
+  duration_ms: 8149.5958
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:119:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (rb=7020, g0=7030, h=11520)
+    + actual - expected
+    
+    + [
+    +   'StartingRun held in every scan [g0, h-1]: STO released, C2 ON, no SS1, HV Discharge FALSE (question 73), neither R&D nor Run; first violation t=7030 (rb+10) {"o":{"out_LV_C1":true,"out_HV_C2":true,"STO_DR1":true,"STO_DR2":true,"out_SS1_DR1":false,"out_SS1_DR2":false,"out_LV_Discharge_Request":false,"out_HV_Discharge_Request":false,"out_Door_Unlock_Solonoe'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'StartingRun held in every scan [g0, h-1]: STO released, C2 ON, no SS1, HV Discharge FALSE (question 73), neither R&D nor Run; first violation t=7030 (rb+10) {"o":{"out_LV_C1":true,"out_HV_C2":true,"STO_DR1":true,"STO_DR2":true,"out_SS1_DR1":false,"out_SS1_DR2":false,"out_LV_Discharge_Request":false,"out_HV_Discharge_Request":false,"out_Door_Unlock_Solonoe'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:135:79)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# rb=7020, u=rb+0, greens rb+10..rb+609, h=rb+4500
+# Subtest: E2d FBK-05-NEG StartingRun held by in_HV_Faulty_FBK TRUE (from before BOTH), INVALID green (a) g0=rb+300, 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> Run not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+not ok 14 - E2d FBK-05-NEG StartingRun held by in_HV_Faulty_FBK TRUE (from before BOTH), INVALID green (a) g0=rb+300, 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> Run not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+  ---
+  duration_ms: 8245.2612
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:119:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (rb=7020, g0=7320, h=11520)
+    + actual - expected
+    
+    + [
+    +   'StartingRun held in every scan [g0, h-1]: STO released, C2 ON, no SS1, HV Discharge FALSE (question 73), neither R&D nor Run; first violation t=7320 (rb+300) {"o":{"out_LV_C1":true,"out_HV_C2":true,"STO_DR1":true,"STO_DR2":true,"out_SS1_DR1":false,"out_SS1_DR2":false,"out_LV_Discharge_Request":false,"out_HV_Discharge_Request":false,"out_Door_Unlock_Solonoe'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'StartingRun held in every scan [g0, h-1]: STO released, C2 ON, no SS1, HV Discharge FALSE (question 73), neither R&D nor Run; first violation t=7320 (rb+300) {"o":{"out_LV_C1":true,"out_HV_C2":true,"STO_DR1":true,"STO_DR2":true,"out_SS1_DR1":false,"out_SS1_DR2":false,"out_LV_Discharge_Request":false,"out_HV_Discharge_Request":false,"out_Door_Unlock_Solonoe'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:135:79)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# rb=7020, u=rb+0, greens rb+300..rb+899, h=rb+4500
+# Subtest: E2d FBK-05-NEG StartingRun held by in_HV_Faulty_FBK TRUE (from before BOTH), INVALID green (a) g0=rb+1999, 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> Run not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+not ok 15 - E2d FBK-05-NEG StartingRun held by in_HV_Faulty_FBK TRUE (from before BOTH), INVALID green (a) g0=rb+1999, 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> Run not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+  ---
+  duration_ms: 10217.4944
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:119:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (rb=7020, g0=9019, h=11520)
+    + actual - expected
+    
+    + [
+    +   'StartingRun held in every scan [g0, h-1]: STO released, C2 ON, no SS1, HV Discharge FALSE (question 73), neither R&D nor Run; first violation t=9019 (rb+1999) {"o":{"out_LV_C1":true,"out_HV_C2":true,"STO_DR1":true,"STO_DR2":true,"out_SS1_DR1":false,"out_SS1_DR2":false,"out_LV_Discharge_Request":false,"out_HV_Discharge_Request":false,"out_Door_Unlock_Solonoe'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'StartingRun held in every scan [g0, h-1]: STO released, C2 ON, no SS1, HV Discharge FALSE (question 73), neither R&D nor Run; first violation t=9019 (rb+1999) {"o":{"out_LV_C1":true,"out_HV_C2":true,"STO_DR1":true,"STO_DR2":true,"out_SS1_DR1":false,"out_SS1_DR2":false,"out_LV_Discharge_Request":false,"out_HV_Discharge_Request":false,"out_Door_Unlock_Solonoe'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:135:79)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# rb=7020, u=rb+0, greens rb+1999..rb+2598, h=rb+4500
+# Subtest: E2d FBK-05-NEG StartingRun held by in_HV_Faulty_FBK TRUE (from before BOTH), INVALID green (b) g0=rb+1999 held until rb+3000 (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> Run not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+not ok 16 - E2d FBK-05-NEG StartingRun held by in_HV_Faulty_FBK TRUE (from before BOTH), INVALID green (b) g0=rb+1999 held until rb+3000 (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> Run not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+  ---
+  duration_ms: 9735.2042
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:119:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (rb=7020, g0=9019, h=11520)
+    + actual - expected
+    
+    + [
+    +   'StartingRun held in every scan [g0, h-1]: STO released, C2 ON, no SS1, HV Discharge FALSE (question 73), neither R&D nor Run; first violation t=9019 (rb+1999) {"o":{"out_LV_C1":true,"out_HV_C2":true,"STO_DR1":true,"STO_DR2":true,"out_SS1_DR1":false,"out_SS1_DR2":false,"out_LV_Discharge_Request":false,"out_HV_Discharge_Request":false,"out_Door_Unlock_Solonoe'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'StartingRun held in every scan [g0, h-1]: STO released, C2 ON, no SS1, HV Discharge FALSE (question 73), neither R&D nor Run; first violation t=9019 (rb+1999) {"o":{"out_LV_C1":true,"out_HV_C2":true,"STO_DR1":true,"STO_DR2":true,"out_SS1_DR1":false,"out_SS1_DR2":false,"out_LV_Discharge_Request":false,"out_HV_Discharge_Request":false,"out_Door_Unlock_Solonoe'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:135:79)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# rb=7020, u=rb+0, greens rb+1999..rb+2999, h=rb+4500
+# Subtest: E2d FBK-05-NEG StartingRun held by in_HV_Faulty_FBK TRUE (from before BOTH), INVALID green (c) g0=rb+300 600 ms, again 1999 ms after its release (rb+2899) 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> Run not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+not ok 17 - E2d FBK-05-NEG StartingRun held by in_HV_Faulty_FBK TRUE (from before BOTH), INVALID green (c) g0=rb+300 600 ms, again 1999 ms after its release (rb+2899) 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> Run not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+  ---
+  duration_ms: 9084.8631
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:119:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (rb=7020, g0=7320, h=11520)
+    + actual - expected
+    
+    + [
+    +   'StartingRun held in every scan [g0, h-1]: STO released, C2 ON, no SS1, HV Discharge FALSE (question 73), neither R&D nor Run; first violation t=7320 (rb+300) {"o":{"out_LV_C1":true,"out_HV_C2":true,"STO_DR1":true,"STO_DR2":true,"out_SS1_DR1":false,"out_SS1_DR2":false,"out_LV_Discharge_Request":false,"out_HV_Discharge_Request":false,"out_Door_Unlock_Solonoe'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'StartingRun held in every scan [g0, h-1]: STO released, C2 ON, no SS1, HV Discharge FALSE (question 73), neither R&D nor Run; first violation t=7320 (rb+300) {"o":{"out_LV_C1":true,"out_HV_C2":true,"STO_DR1":true,"STO_DR2":true,"out_SS1_DR1":false,"out_SS1_DR2":false,"out_LV_Discharge_Request":false,"out_HV_Discharge_Request":false,"out_Door_Unlock_Solonoe'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:135:79)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# rb=7020, u=rb+0, greens rb+300..rb+899,rb+2899..rb+3498, h=rb+4500
+# Subtest: E2d FBK-06-NEG Safe->R&D held by in_LV_Faulty_FBK TRUE (from before BOTH), INVALID green (a) g0=rb+10, 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> R&D not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+not ok 18 - E2d FBK-06-NEG Safe->R&D held by in_LV_Faulty_FBK TRUE (from before BOTH), INVALID green (a) g0=rb+10, 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> R&D not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+  ---
+  duration_ms: 1149.7941
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:119:2'
+  failureType: 'testCodeFailure'
+  error: 'precondition not reached: out_LV_C1 ON within 1500 ms of BOTH from Safe (stages=b_Step1, statuses=STS_SAFE)'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    drive (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:57:36)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:121:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK-06-NEG Safe->R&D held by in_LV_Faulty_FBK TRUE (from before BOTH), INVALID green (a) g0=rb+300, 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> R&D not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+not ok 19 - E2d FBK-06-NEG Safe->R&D held by in_LV_Faulty_FBK TRUE (from before BOTH), INVALID green (a) g0=rb+300, 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> R&D not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+  ---
+  duration_ms: 1218.0563
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:119:2'
+  failureType: 'testCodeFailure'
+  error: 'precondition not reached: out_LV_C1 ON within 1500 ms of BOTH from Safe (stages=b_Step1, statuses=STS_SAFE)'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    drive (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:57:36)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:121:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK-06-NEG Safe->R&D held by in_LV_Faulty_FBK TRUE (from before BOTH), INVALID green (a) g0=rb+1999, 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> R&D not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+not ok 20 - E2d FBK-06-NEG Safe->R&D held by in_LV_Faulty_FBK TRUE (from before BOTH), INVALID green (a) g0=rb+1999, 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> R&D not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+  ---
+  duration_ms: 1056.0262
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:119:2'
+  failureType: 'testCodeFailure'
+  error: 'precondition not reached: out_LV_C1 ON within 1500 ms of BOTH from Safe (stages=b_Step1, statuses=STS_SAFE)'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    drive (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:57:36)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:121:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK-06-NEG Safe->R&D held by in_LV_Faulty_FBK TRUE (from before BOTH), INVALID green (b) g0=rb+1999 held until rb+3000 (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> R&D not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+not ok 21 - E2d FBK-06-NEG Safe->R&D held by in_LV_Faulty_FBK TRUE (from before BOTH), INVALID green (b) g0=rb+1999 held until rb+3000 (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> R&D not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+  ---
+  duration_ms: 1095.5428
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:119:2'
+  failureType: 'testCodeFailure'
+  error: 'precondition not reached: out_LV_C1 ON within 1500 ms of BOTH from Safe (stages=b_Step1, statuses=STS_SAFE)'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    drive (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:57:36)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:121:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK-06-NEG Safe->R&D held by in_LV_Faulty_FBK TRUE (from before BOTH), INVALID green (c) g0=rb+300 600 ms, again 1999 ms after its release (rb+2899) 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> R&D not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+not ok 22 - E2d FBK-06-NEG Safe->R&D held by in_LV_Faulty_FBK TRUE (from before BOTH), INVALID green (c) g0=rb+300 600 ms, again 1999 ms after its release (rb+2899) 600 ms (front <= rb+1999 after the BOTH release, v7-q §1) -> no abort / descent / SafetyFault in [g0, h-1]; Faulty FALSE at h -> R&D not <= h+99, at h+101 and kept (no deferred execution), no Emergency
+  ---
+  duration_ms: 1155.9942
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:119:2'
+  failureType: 'testCodeFailure'
+  error: 'precondition not reached: out_LV_C1 ON within 1500 ms of BOTH from Safe (stages=b_Step1, statuses=STS_SAFE)'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    drive (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:57:36)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:121:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK-05-POS StartingRun held by in_HV_Faulty_FBK TRUE, VALID green 600 ms at rb+2001 (full 2 s clearing, v7-q §1/§3.4) -> abort StartingRun: STO <= g0+502, Discharge <= g0+503 held, no SS1, C2 OFF not before t_d+T_DIS, R&D after C2_FBK OFF, C1 kept; HV Faulty FALSE -> not resumed 3000 ms; no Emergency
+not ok 23 - E2d FBK-05-POS StartingRun held by in_HV_Faulty_FBK TRUE, VALID green 600 ms at rb+2001 (full 2 s clearing, v7-q §1/§3.4) -> abort StartingRun: STO <= g0+502, Discharge <= g0+503 held, no SS1, C2 OFF not before t_d+T_DIS, R&D after C2_FBK OFF, C1 kept; HV Faulty FALSE -> not resumed 3000 ms; no Emergency
+  ---
+  duration_ms: 9091.1438
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:165:30'
+  failureType: 'testCodeFailure'
+  error: |-
+    7 violated checks (rb=7020, g0=9021)
+    + actual - expected
+    
+    + [
+    +   'no abort signs in [g0, g0+499] (BTN-003): STO released, C2 ON, Discharge FALSE; first t=9021 (rb+2001)',
+    +   'STO active not later than a+1 <= g0+502 (STP-E); first at never',
+    +   'Discharge not later than a+2 <= g0+503 (STP-E); first never',
+    +   'no SS1 / coast 5 s (D-STARTINGRUN-NO-COAST)',
+    +   'R&D after C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 9021',
+    +   'after HV Faulty FALSE: no Run, C2 not ON again, STO not released (not resumed); first t=9022 (rb+2002)',
+    +   'never Run'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'no abort signs in [g0, g0+499] (BTN-003): STO released, C2 ON, Discharge FALSE; first t=9021 (rb+2001)'
+    1: 'STO active not later than a+1 <= g0+502 (STP-E); first at never'
+    2: 'Discharge not later than a+2 <= g0+503 (STP-E); first never'
+    3: 'no SS1 / coast 5 s (D-STARTINGRUN-NO-COAST)'
+    4: 'R&D after C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 9021'
+    5: 'after HV Faulty FALSE: no Run, C2 not ON again, STO not released (not resumed); first t=9022 (rb+2002)'
+    6: 'never Run'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:166:75)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK-05-POS StartingRun held by in_HV_Faulty_FBK TRUE, VALID green 600 ms at rb+5000 (full 2 s clearing, v7-q §1/§3.4) -> abort StartingRun: STO <= g0+502, Discharge <= g0+503 held, no SS1, C2 OFF not before t_d+T_DIS, R&D after C2_FBK OFF, C1 kept; HV Faulty FALSE -> not resumed 3000 ms; no Emergency
+not ok 24 - E2d FBK-05-POS StartingRun held by in_HV_Faulty_FBK TRUE, VALID green 600 ms at rb+5000 (full 2 s clearing, v7-q §1/§3.4) -> abort StartingRun: STO <= g0+502, Discharge <= g0+503 held, no SS1, C2 OFF not before t_d+T_DIS, R&D after C2_FBK OFF, C1 kept; HV Faulty FALSE -> not resumed 3000 ms; no Emergency
+  ---
+  duration_ms: 10242.9449
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:165:30'
+  failureType: 'testCodeFailure'
+  error: |-
+    7 violated checks (rb=7020, g0=12020)
+    + actual - expected
+    
+    + [
+    +   'no abort signs in [g0, g0+499] (BTN-003): STO released, C2 ON, Discharge FALSE; first t=12020 (rb+5000)',
+    +   'STO active not later than a+1 <= g0+502 (STP-E); first at never',
+    +   'Discharge not later than a+2 <= g0+503 (STP-E); first never',
+    +   'no SS1 / coast 5 s (D-STARTINGRUN-NO-COAST)',
+    +   'R&D after C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 12020',
+    +   'after HV Faulty FALSE: no Run, C2 not ON again, STO not released (not resumed); first t=12021 (rb+5001)',
+    +   'never Run'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'no abort signs in [g0, g0+499] (BTN-003): STO released, C2 ON, Discharge FALSE; first t=12020 (rb+5000)'
+    1: 'STO active not later than a+1 <= g0+502 (STP-E); first at never'
+    2: 'Discharge not later than a+2 <= g0+503 (STP-E); first never'
+    3: 'no SS1 / coast 5 s (D-STARTINGRUN-NO-COAST)'
+    4: 'R&D after C2_FBK OFF: C2 OFF undefined, C2_FBK OFF null, R&D 12020'
+    5: 'after HV Faulty FALSE: no Run, C2 not ON again, STO not released (not resumed); first t=12021 (rb+5001)'
+    6: 'never Run'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:166:75)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG observation E2d FBK-05-POS valid-clearing boundary: green 600 ms at exactly rb+2000 (convention q)
+ok 25 - DIAG observation E2d FBK-05-POS valid-clearing boundary: green 600 ms at exactly rb+2000 (convention q)
+  ---
+  duration_ms: 7631.5832
+  type: 'test'
+  ...
+# g0=rb+2000: first abort sign undefined (g0=9020)
+# Subtest: E2d FBK-05-POS StartingRun held by in_HV_Faulty_FBK TRUE, green held only 499 ms at rb+2001 (BTN-003 q-1) -> no abort in every scan [g0, g0+3000], no Emergency
+not ok 26 - E2d FBK-05-POS StartingRun held by in_HV_Faulty_FBK TRUE, green held only 499 ms at rb+2001 (BTN-003 q-1) -> no abort in every scan [g0, g0+3000], no Emergency
+  ---
+  duration_ms: 3016.0447
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:170:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks
+    + actual - expected
+    
+    + [
+    +   'StartingRun unchanged in every scan [g0, g0+3000] (499 ms is not a qualified single); first violation t=9021 (rb+2001)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'StartingRun unchanged in every scan [g0, g0+3000] (499 ms is not a qualified single); first violation t=9021 (rb+2001)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:173:170)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK-06-POS Safe->R&D held by in_LV_Faulty_FBK TRUE, VALID green 600 ms at rb+2001 (full 2 s clearing, v7-q §1/§3.4) -> abort Safe->R&D: C1 OFF after a, Safe after C1_FBK OFF; LV Faulty FALSE -> no R&D / C1 ON 3000 ms; no Emergency
+not ok 27 - E2d FBK-06-POS Safe->R&D held by in_LV_Faulty_FBK TRUE, VALID green 600 ms at rb+2001 (full 2 s clearing, v7-q §1/§3.4) -> abort Safe->R&D: C1 OFF after a, Safe after C1_FBK OFF; LV Faulty FALSE -> no R&D / C1 ON 3000 ms; no Emergency
+  ---
+  duration_ms: 675.975
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:165:30'
+  failureType: 'testCodeFailure'
+  error: 'precondition not reached: out_LV_C1 ON within 1500 ms of BOTH from Safe (stages=b_Step1, statuses=STS_SAFE)'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    drive (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:57:36)
+    pos (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:140:9)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:166:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK-06-POS Safe->R&D held by in_LV_Faulty_FBK TRUE, VALID green 600 ms at rb+5000 (full 2 s clearing, v7-q §1/§3.4) -> abort Safe->R&D: C1 OFF after a, Safe after C1_FBK OFF; LV Faulty FALSE -> no R&D / C1 ON 3000 ms; no Emergency
+not ok 28 - E2d FBK-06-POS Safe->R&D held by in_LV_Faulty_FBK TRUE, VALID green 600 ms at rb+5000 (full 2 s clearing, v7-q §1/§3.4) -> abort Safe->R&D: C1 OFF after a, Safe after C1_FBK OFF; LV Faulty FALSE -> no R&D / C1 ON 3000 ms; no Emergency
+  ---
+  duration_ms: 681.3855
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:165:30'
+  failureType: 'testCodeFailure'
+  error: 'precondition not reached: out_LV_C1 ON within 1500 ms of BOTH from Safe (stages=b_Step1, statuses=STS_SAFE)'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    drive (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:57:36)
+    pos (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:140:9)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:166:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG observation E2d FBK-06-POS valid-clearing boundary: green 600 ms at exactly rb+2000 (convention q)
+ok 29 - DIAG observation E2d FBK-06-POS valid-clearing boundary: green 600 ms at exactly rb+2000 (convention q)
+  ---
+  duration_ms: 702.0778
+  type: 'test'
+  ...
+# unavailable: precondition not reached: out_LV_C1 ON within 1500 ms of BOTH from Safe (stages=b_Step1, statuses=STS_SAFE)
+# Subtest: E2d FBK-06-POS Safe->R&D held by in_LV_Faulty_FBK TRUE, green held only 499 ms at rb+2001 (BTN-003 q-1) -> no abort in every scan [g0, g0+3000], no Emergency
+not ok 30 - E2d FBK-06-POS Safe->R&D held by in_LV_Faulty_FBK TRUE, green held only 499 ms at rb+2001 (BTN-003 q-1) -> no abort in every scan [g0, g0+3000], no Emergency
+  ---
+  duration_ms: 721.9424
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:170:2'
+  failureType: 'testCodeFailure'
+  error: 'precondition not reached: out_LV_C1 ON within 1500 ms of BOTH from Safe (stages=b_Step1, statuses=STS_SAFE)'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    drive (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:57:36)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:171:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK-05-POS emergency combination: valid abort StartingRun, C2_FBK FALSE at a+100 (before the C2 OFF command) -> Emergency (Q-RC-19, EMGREF-RUN), latched, Restart -> only Safe
+not ok 31 - E2d FBK-05-POS emergency combination: valid abort StartingRun, C2_FBK FALSE at a+100 (before the C2 OFF command) -> Emergency (Q-RC-19, EMGREF-RUN), latched, Restart -> only Safe
+  ---
+  duration_ms: 8259.9982
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:188:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (a=null, ev=null)
+    + actual - expected
+    
+    + [
+    +   'stand precondition: abort observed (a=null) and event at a+100 (null)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'stand precondition: abort observed (a=null) and event at a+100 (null)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    emgAfterAbort (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:187:4)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:189:2)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK-05-POS emergency combination: valid abort StartingRun, in_Estop_PLC TRUE at a+100 -> Emergency (V14-Q9), latched, Restart -> only Safe
+not ok 32 - E2d FBK-05-POS emergency combination: valid abort StartingRun, in_Estop_PLC TRUE at a+100 -> Emergency (V14-Q9), latched, Restart -> only Safe
+  ---
+  duration_ms: 7742.3957
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:190:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (a=null, ev=null)
+    + actual - expected
+    
+    + [
+    +   'stand precondition: abort observed (a=null) and event at a+100 (null)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'stand precondition: abort observed (a=null) and event at a+100 (null)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    emgAfterAbort (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:187:4)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:191:2)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK-06-POS emergency combination: valid abort Safe->R&D, in_Estop_PLC TRUE at a+1 -> Emergency (V14-Q9), latched, Restart -> only Safe
+not ok 33 - E2d FBK-06-POS emergency combination: valid abort Safe->R&D, in_Estop_PLC TRUE at a+1 -> Emergency (V14-Q9), latched, Restart -> only Safe
+  ---
+  duration_ms: 709.8527
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-window-abort.test.js:192:1'
+  failureType: 'testCodeFailure'
+  error: 'precondition not reached: out_LV_C1 ON within 1500 ms of BOTH from Safe (stages=b_Step1, statuses=STS_SAFE)'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    drive (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:57:36)
+    emgAfterAbort (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:176:10)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-window-abort.test.js:193:2)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DIAG observation E2d FBK-06-POS C1_FBK FALSE between the abort qualification a and the C1 OFF command (gap 0-1 scan, FBK-06 v4 observation)
+ok 34 - DIAG observation E2d FBK-06-POS C1_FBK FALSE between the abort qualification a and the C1 OFF command (gap 0-1 scan, FBK-06 v4 observation)
+  ---
+  duration_ms: 619.0859
+  type: 'test'
+  ...
+# unavailable: precondition not reached: out_LV_C1 ON within 1500 ms of BOTH from Safe (stages=b_Step1, statuses=STS_SAFE)
+# Subtest: E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+10, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А")
+ok 35 - E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+10, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А") # TODO BLOCKED-E4: E4 (PLC commands) frozen until new documentation from Vadim; no CMD_* signal in the interface (v7-q §3.1). Not executed, not PASS.
+  ---
+  duration_ms: 0.1819
+  type: 'test'
+  ...
+# Subtest: E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+10, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А")
+ok 36 - E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+10, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А") # TODO BLOCKED-E4: E4 (PLC commands) frozen until new documentation from Vadim; no CMD_* signal in the interface (v7-q §3.1). Not executed, not PASS.
+  ---
+  duration_ms: 0.1304
+  type: 'test'
+  ...
+# Subtest: E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+300, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А")
+ok 37 - E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+300, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А") # TODO BLOCKED-E4: E4 (PLC commands) frozen until new documentation from Vadim; no CMD_* signal in the interface (v7-q §3.1). Not executed, not PASS.
+  ---
+  duration_ms: 0.0593
+  type: 'test'
+  ...
+# Subtest: E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+300, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А")
+ok 38 - E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+300, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А") # TODO BLOCKED-E4: E4 (PLC commands) frozen until new documentation from Vadim; no CMD_* signal in the interface (v7-q §3.1). Not executed, not PASS.
+  ---
+  duration_ms: 0.0525
+  type: 'test'
+  ...
+# Subtest: E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+499, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А")
+ok 39 - E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+499, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А") # TODO BLOCKED-E4: E4 (PLC commands) frozen until new documentation from Vadim; no CMD_* signal in the interface (v7-q §3.1). Not executed, not PASS.
+  ---
+  duration_ms: 0.0677
+  type: 'test'
+  ...
+# Subtest: E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+499, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А")
+ok 40 - E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+499, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А") # TODO BLOCKED-E4: E4 (PLC commands) frozen until new documentation from Vadim; no CMD_* signal in the interface (v7-q §3.1). Not executed, not PASS.
+  ---
+  duration_ms: 0.0521
+  type: 'test'
+  ...
+# Subtest: E2d FBK-06-CMD BLOCKED-E4 Safe->R&D: front CMD_R&D_TO_SAFE at u+10, in_LV_C1_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А")
+ok 41 - E2d FBK-06-CMD BLOCKED-E4 Safe->R&D: front CMD_R&D_TO_SAFE at u+10, in_LV_C1_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А") # TODO BLOCKED-E4: E4 (PLC commands) frozen until new documentation from Vadim; no CMD_* signal in the interface (v7-q §3.1). Not executed, not PASS.
+  ---
+  duration_ms: 0.0564
+  type: 'test'
+  ...
+# Subtest: E2d FBK-06-CMD BLOCKED-E4 Safe->R&D: front CMD_R&D_TO_SAFE at u+10, in_LV_C1_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А")
+ok 42 - E2d FBK-06-CMD BLOCKED-E4 Safe->R&D: front CMD_R&D_TO_SAFE at u+10, in_LV_C1_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А") # TODO BLOCKED-E4: E4 (PLC commands) frozen until new documentation from Vadim; no CMD_* signal in the interface (v7-q §3.1). Not executed, not PASS.
+  ---
+  duration_ms: 0.049
+  type: 'test'
+  ...
+# Subtest: E2d FBK-06-CMD BLOCKED-E4 Safe->R&D: front CMD_R&D_TO_SAFE at u+300, in_LV_C1_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А")
+ok 43 - E2d FBK-06-CMD BLOCKED-E4 Safe->R&D: front CMD_R&D_TO_SAFE at u+300, in_LV_C1_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А") # TODO BLOCKED-E4: E4 (PLC commands) frozen until new documentation from Vadim; no CMD_* signal in the interface (v7-q §3.1). Not executed, not PASS.
+  ---
+  duration_ms: 0.0482
+  type: 'test'
+  ...
+# Subtest: E2d FBK-06-CMD BLOCKED-E4 Safe->R&D: front CMD_R&D_TO_SAFE at u+300, in_LV_C1_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А")
+ok 44 - E2d FBK-06-CMD BLOCKED-E4 Safe->R&D: front CMD_R&D_TO_SAFE at u+300, in_LV_C1_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А") # TODO BLOCKED-E4: E4 (PLC commands) frozen until new documentation from Vadim; no CMD_* signal in the interface (v7-q §3.1). Not executed, not PASS.
+  ---
+  duration_ms: 0.0577
+  type: 'test'
+  ...
+# Subtest: E2d FBK-06-CMD BLOCKED-E4 Safe->R&D: front CMD_R&D_TO_SAFE at u+499, in_LV_C1_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А")
+ok 45 - E2d FBK-06-CMD BLOCKED-E4 Safe->R&D: front CMD_R&D_TO_SAFE at u+499, in_LV_C1_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А") # TODO BLOCKED-E4: E4 (PLC commands) frozen until new documentation from Vadim; no CMD_* signal in the interface (v7-q §3.1). Not executed, not PASS.
+  ---
+  duration_ms: 0.0659
+  type: 'test'
+  ...
+# Subtest: E2d FBK-06-CMD BLOCKED-E4 Safe->R&D: front CMD_R&D_TO_SAFE at u+499, in_LV_C1_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А")
+ok 46 - E2d FBK-06-CMD BLOCKED-E4 Safe->R&D: front CMD_R&D_TO_SAFE at u+499, in_LV_C1_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 "А") # TODO BLOCKED-E4: E4 (PLC commands) frozen until new documentation from Vadim; no CMD_* signal in the interface (v7-q §3.1). Not executed, not PASS.
+  ---
+  duration_ms: 0.0453
+  type: 'test'
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 3
+# fail 31
+# cancelled 0
+# skipped 0
+# todo 12
+# duration_ms 893198.9284

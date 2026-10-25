@@ -1,0 +1,688 @@
+{
+ "generatedAt": "2026-10-22T09:11:35.935Z",
+ "tool": "scratchpad/tools/mutkill.mjs (v2-tester E2-G3)",
+ "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2a_on_E2a.json",
+ "planSha256": "54010eb2e39f80c033cca6477ef4fb2b95535078154375bb9986e0edbc056178",
+ "sourceSha256": "5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b",
+ "killBase": {
+  "eligible": 293,
+  "excluded": [
+   "E2a DIS-HOLD-HV Emergency from steady Run while legacy PLC (1,1) is held (in_ES_NC_1 FALSE) -> the chain issues the HV discharge request before C2 OFF and keeps it TRUE (Q-V7-01 \"Г\": Discharge -> hold -> C2 OFF; C2 OFF without Discharge = FAIL)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+10, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+10, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+300, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+300, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+499, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+499, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FFS R&D->Run legacy PLC (1,1): ES_NC_1 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (EMGREF(2), rule L Imm)",
+   "E2d FFS R&D->Run legacy PLC (1,1): ES_NC_2 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (EMGREF(2), rule L Imm)",
+   "E2d FFS R&D->Run legacy PLC (1,1): NC1 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later while the cause is held [e, e+299] (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+   "E2d FFS R&D->Run legacy PLC (1,1): NC2 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later while the cause is held [e, e+299] (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+   "E2d FFS R&D->Run legacy PLC (1,1): in_Estop_PLC in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (EMGREF(2), rule L Imm)",
+   "E2d FFS R&D->Run legacy PLC (1,1): Mentee in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (EMGREF(2), rule L Imm, MENTEE05)"
+  ],
+  "excludeRegex": [
+   "/REL01-e2-LATE R&D/",
+   "/FBK-05/",
+   "/STP-I\\b/",
+   "/existing-PLC-levels/",
+   "/FBK10-PLC-B/",
+   "/FBK10-PLC-REG steady R&D, legacy PLC \\(1,1\\)/",
+   "/^(DIAG \\S+ )?KF-/",
+   "/\\(1,1\\)/"
+  ]
+ },
+ "behaviouralTests": [
+  "^E2[a-d] "
+ ],
+ "summary": {
+  "KILLED": 16,
+  "SURVIVED": 3,
+  "STRUCTURAL-ONLY": 0,
+  "INVALID": 0,
+  "NOT-RUN": 0
+ },
+ "results": [
+  {
+   "id": "M-E2a-01",
+   "op": "deactivate-input",
+   "block": "//Network3/FBOr1",
+   "port": "OrIn3",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr1/OrIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "1d9242ad4827175a4508c1a8d7ca79bf4ab8b0952ef3c6253bc7f5bbc2ed8eb5",
+   "killedBy": [
+    {
+     "name": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Safe->R&D, Restart",
+     "file": "current-e2a-emg-safe.test.js",
+     "message": "2 violated checks"
+    },
+    {
+     "name": "E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in Safe->R&D, Restart",
+     "file": "current-e2a-emg-safe.test.js",
+     "message": "2 violated checks"
+    },
+    {
+     "name": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in R&D, Restart",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition: steady R&D (only b_Step_RnD, C1 ON); stages=b_Step1,b_Step12,b_Step_RnD C1=false"
+    },
+    {
+     "name": "E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in R&D, Restart",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition: steady R&D (only b_Step_RnD, C1 ON); stages=b_Step1,b_Step12,b_Step_RnD C1=false"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-03",
+   "op": "deactivate-input",
+   "block": "//Network3/FBOr13",
+   "port": "OrIn4",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr13/OrIn4",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "aed87f41fb2f53a1030925cf9b64e6d2078318f54d7344f5da4cfeb885a02345",
+   "killedBy": [
+    {
+     "name": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Run, Restart",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition: steady Run (only b_Step3, C1 ON, C2 ON, STO released); stages=b_Step_RnD,b_Step3 C1=true C2=true STO=true/true"
+    },
+    {
+     "name": "E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in Run, Restart",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition: steady Run (only b_Step3, C1 ON, C2 ON, STO released); stages=b_Step_RnD,b_Step3 C1=true C2=true STO=true/true"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-02",
+   "op": "deactivate-input",
+   "block": "//Network3/FBOr13",
+   "port": "OrIn3",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr13/OrIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "58a36df94782f8da378525fc265b39f73681cf625d9011aa731954a9ef66ff71",
+   "killedBy": [
+    {
+     "name": "E2a E2-01 stages<=1: lifecycle Safe->R&D->Run->green held->R&D->Run->R&D->Safe",
+     "file": "current-e2a-status.test.js",
+     "message": "more than one stage memory active (E2-01; phase at injection: ); total 597 scans"
+    },
+    {
+     "name": "E2a E2-01 exactly one status: lifecycle Safe->R&D->Run->green held->R&D->Run->R&D->Safe",
+     "file": "current-e2a-status.test.js",
+     "message": "not exactly one main status (E2-01/MOD-006; phase at injection: ); total 597"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 36,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-05",
+   "op": "deactivate-input",
+   "block": "//Network3/FBOr5",
+   "port": "OrIn2",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr5/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "06da2455208bd30494187f42d37e0bef00501a198b197fbf50e671c58290fc98",
+   "killedBy": [
+    {
+     "name": "E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in Run, Restart",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in Run, Restart",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-06",
+   "op": "deactivate-input",
+   "block": "//Network3/FBOr5",
+   "port": "OrIn3",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr5/OrIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "072958bada4099a1e90e2a27153137525b3efa47f6ca695444c2dbd66152a51c",
+   "killedBy": [
+    {
+     "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+1; green held; h=C2 OFF cmd+50",
+     "file": "current-e2a-race.test.js",
+     "message": "5 violated checks"
+    },
+    {
+     "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+2; green held; h=C2 OFF cmd+50",
+     "file": "current-e2a-race.test.js",
+     "message": "5 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 20,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-07",
+   "op": "deactivate-input",
+   "block": "//Network3/FBOr16",
+   "port": "OrIn2",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr16/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "10ef49fffe5690f402d3adcd8f1557e807d39307aa34494b69d336b8f948d087",
+   "killedBy": [
+    {
+     "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+1; green held; h=C2 OFF cmd+50",
+     "file": "current-e2a-race.test.js",
+     "message": "4 violated checks"
+    },
+    {
+     "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+2; green held; h=C2 OFF cmd+50",
+     "file": "current-e2a-race.test.js",
+     "message": "4 violated checks"
+    },
+    {
+     "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+3; green held; h=C2 OFF cmd+50",
+     "file": "current-e2a-race.test.js",
+     "message": "4 violated checks"
+    },
+    {
+     "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+4; green held; h=C2 OFF cmd+50",
+     "file": "current-e2a-race.test.js",
+     "message": "4 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-08",
+   "op": "deactivate-input",
+   "block": "//Network3/FBOr16",
+   "port": "OrIn1",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr16/OrIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "3f8eca8cf7c6d2ae47c69518ffe4048775d621d02466a8eac73c1361c7630a54",
+   "killedBy": [
+    {
+     "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in R&D, Restart",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition not reached within 3000 ms: R&D after BOTH from Safe (t=6214, stages=b_Step1, statuses=STS_SAFE)"
+    },
+    {
+     "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE 1 scan in R&D, Restart",
+     "file": "current-e2a-emg-rnd.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition not reached within 3000 ms: R&D after BOTH from Safe (t=6214, stages=b_Step1, statuses=STS_SAFE)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-09",
+   "op": "deactivate-input",
+   "block": "//Network6/RUN_DOWN_RESET",
+   "port": "OrIn1",
+   "verification": {
+    "parsedDelta": "//Network6/RUN_DOWN_RESET/OrIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "648b315020a9e39da4449c0ce9a8ab36c891332102f4027bba064d59ada7ca97",
+   "killedBy": [
+    {
+     "name": "E2a E2-01 endpoints: lifecycle Safe->R&D->Run->green held->R&D->Run->R&D->Safe",
+     "file": "current-e2a-status.test.js",
+     "message": "lifecycle endpoints (MOD1-01, MOD-002, STP-A, MOD5-01)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 16,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-10",
+   "op": "deactivate-input",
+   "block": "//Network3/FBOr7",
+   "port": "OrIn2",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr7/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "cd6373ae7788afe79c780ebb914ea0b4e1ccf938040d49d4ec4fca0bd39035c3",
+   "killedBy": [
+    {
+     "name": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Run, Restart",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in Run, Restart",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-11",
+   "op": "deactivate-input",
+   "block": "//Network3/FBOr9",
+   "port": "OrIn2",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr9/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "9fce20beddb8c2187a8de1c6854d285e2bba0ec775dfa7cbe8cf7d99d400a120",
+   "killedBy": [
+    {
+     "name": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Run, Restart",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in Run, Restart",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-12",
+   "op": "invert-contact",
+   "block": "//Network3/FBRs8",
+   "port": "Reset",
+   "verification": {
+    "parsedDelta": "//Network3/FBRs8/Reset",
+    "attribute": "deactivate1",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "f1b665c043b7dd43e6a80fdb354861257817db0a177281679b731e4dd4fb6f16",
+   "killedBy": [
+    {
+     "name": "E2b EMG4-03 boundary: LV connector FALSE in A-1 (one scan before the first Safe->R&D acceptance sign, TD-08) -> EMG-003: UP rejected, no S12, no Emergency",
+     "file": "current-e2b-connector-safe.test.js",
+     "message": "precondition: Safe->R&D accepted (C1 ON) on the no-event fork"
+    },
+    {
+     "name": "E2b EMG4-03 boundary: HV connector FALSE in A-1 (one scan before the first Safe->R&D acceptance sign, TD-08) -> EMG-003: UP rejected, no S12, no Emergency",
+     "file": "current-e2b-connector-safe.test.js",
+     "message": "precondition: Safe->R&D accepted (C1 ON) on the no-event fork"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-13",
+   "op": "deactivate-input",
+   "block": "//Network6/HEALTH_GUARD",
+   "port": "OrIn1",
+   "verification": {
+    "parsedDelta": "//Network6/HEALTH_GUARD/OrIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "c12269de4b718fcf0964f1995ae75b34bb45caf7fcecdaa6daf57deb2586801d",
+   "killedBy": [
+    {
+     "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+1; green held; h=C2 OFF cmd+50",
+     "file": "current-e2a-race.test.js",
+     "message": "5 violated checks"
+    },
+    {
+     "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+2; green held; h=C2 OFF cmd+50",
+     "file": "current-e2a-race.test.js",
+     "message": "5 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-14",
+   "op": "invert-contact",
+   "block": "//Network6/HEALTHY_OK",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//Network6/HEALTHY_OK/AndIn1",
+    "attribute": "deactivate1",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "333aa87d0ed1a0abec52fd6917700d059bc321b94d2be7f0896ab2a3b54aac56",
+   "killedBy": [
+    {
+     "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in Run, Restart",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition: steady Run (only b_Step3, C1 ON, C2 ON, STO released); stages=b_Step4 C1=false C2=true STO=true/true"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-15",
+   "op": "invert-contact",
+   "block": "//Network6/HEALTHY_OK",
+   "port": "AndIn2",
+   "verification": {
+    "parsedDelta": "//Network6/HEALTHY_OK/AndIn2",
+    "attribute": "deactivate1",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "3067b41fed209ff2c04878c5f3230281dfdfd1df22ac0a9475266dbf79b74ecd",
+   "killedBy": [
+    {
+     "name": "E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE steady in Run, Restart",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition: steady Run (only b_Step3, C1 ON, C2 ON, STO released); stages=b_Step4 C1=false C2=true STO=true/true"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-16",
+   "op": "invert-contact",
+   "block": "//Network11/FBAnd4",
+   "port": "AndIn3",
+   "verification": {
+    "parsedDelta": "//Network11/FBAnd4/AndIn3",
+    "attribute": "deactivate1",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "4f8ff7246c319b56150e192246fdb1bf406c32591c0ff4b13f1ad3a06bba41c4",
+   "killedBy": [
+    {
+     "name": "E2d FBK-06-POS Safe->R&D held by in_LV_Faulty_FBK TRUE, green held only 499 ms at rb+2001 (BTN-003 q-1) -> no abort in every scan [g0, g0+3000], no Emergency",
+     "file": "current-e2d-fbk-window-abort.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-17",
+   "op": "swap-order",
+   "block": "//Network3/FBRs7",
+   "port": "",
+   "value": {
+    "moveAfter": "//RndPhysicalCompact/GATE_001"
+   },
+   "verification": {
+    "parsedDelta": [
+     "//Network1/FBAnd1#block",
+     "//Network1/FBAndHvSetPermit#block",
+     "//Network1/FBAndLvCurrentPermit#block",
+     "//Network1/FBAndLvSetPermit#block",
+     "//Network1/FBAndSto1SetPermit#block",
+     "//Network1/FBAndSto2SetPermit#block",
+     "//Network1/FBDecouple1#block",
+     "//Network1/FBDecouple2#block",
+     "//Network1/FBEstop1#block",
+     "//Network1/FBOr1#block",
+     "//Network1/FBOr10#block",
+     "//Network1/FBOr11#block",
+     "//Network1/FBOr12#block",
+     "//Network1/FBOr13#block",
+     "//Network1/FBOr16#block",
+     "//Network1/FBOr2#block",
+     "//Network1/FBOr5#block",
+     "//Network1/FBOr6#block",
+     "//Network1/FBOr7#block",
+     "//Network1/FBOr8#block",
+     "//Network1/FBOr9#block",
+     "//Network1/FBRs1#block",
+     "//Network1/FBRs2#block",
+     "//Network1/FBRs3#block",
+     "//Network1/FBRs4#block",
+     "//Network1/FBRs5#block",
+     "//Network1/FBRs7#block",
+     "//Network10/FBDecouple1#block",
+     "//Network10/FBDecouple2#block",
+     "//Network11/FBAnd1#block",
+     "//Network11/FBAnd4#block",
+     "//Network11/FBAnd5#block",
+     "//Network11/FBTon1#block",
+     "//Network12/FBAnd16#block",
+     "//Network2/FBAnd1#block",
+     "//Network2/FBAnd2#block",
+     "//Network2/FBAnd3#block",
+     "//Network2/FBAnd5#block",
+     "//Network2/FBAnd6#block",
+     "//Network2/FBAnd7#block",
+     "//Network2/FBAnd8#block",
+     "//Network2/FBAnd9#block",
+     "//Network2/FBDecouple1#block",
+     "//Network2/FBDecouple2#block",
+     "//Network2/FBDecouple3#block",
+     "//Network2/FBTon1#block",
+     "//Network2/FBTon2#block",
+     "//Network3/FBAnd1#block",
+     "//Network3/FBAnd2#block",
+     "//Network3/FBDecouple1#block",
+     "//Network3/FBDecouple2#block",
+     "//Network3/FBRs3#block",
+     "//Network3/FBRs4#block",
+     "//Network3/FBRs5#block",
+     "//Network3/FBRs6#block",
+     "//Network3/FBRs7#block",
+     "//Network6/FBAnd1#block",
+     "//Network6/FBAnd2#block",
+     "//Network6/FBAnd3#block",
+     "//Network6/FBAnd4#block",
+     "//Network6/FBAnd5#block",
+     "//Network6/FBAnd6#block",
+     "//Network6/FBAnd7#block",
+     "//Network6/FBAnd8#block",
+     "//Network6/FBAnd9#block",
+     "//Network6/FBDecouple1#block",
+     "//Network6/FBOr2#block",
+     "//Network6/FBOr3#block",
+     "//Network6/FBRs1#block",
+     "//Network6/FBRs2#block",
+     "//Network6/HEALTHY_OK#block",
+     "//Network6/HEALTH_GUARD#block",
+     "//Network7/FBAnd1#block",
+     "//Network7/FBAnd2#block",
+     "//Network7/FBAnd3#block",
+     "//Network7/FBAnd8#block",
+     "//Network7/FBDecouple1#block",
+     "//Network7/FBDecouple3#block",
+     "//Network7/FBOr1#block",
+     "//Network7/FBOr2#block",
+     "//Network7/FBTon1#block",
+     "//Network7/FBTon2#block",
+     "//Network7/FBTon3#block",
+     "//Network8/FBAnd1#block",
+     "//Network8/FBAnd2#block",
+     "//Network8/FBAnd3#block",
+     "//Network8/FBDecouple1#block",
+     "//Network8/FBOr1#block",
+     "//Network8/FBTon1#block",
+     "//Network8/FBTon2#block",
+     "//RndPhysicalCompact/GATE_001#block",
+     "//RndPhysicalCompact/SNAP_0#block",
+     "//RndPhysicalCompact/SNAP_1#block",
+     "//SafeResumption/CONNECTORS#block",
+     "//SafeResumption/CONNECTOR_SCOPE#block",
+     "//SafeResumption/MODE#block"
+    ],
+    "attribute": "orderOfExecution",
+    "movedBlocks": 96,
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "7a8e63d2323118e135ae499615e8d57d3b7cf9e33b742a504858292ae8b5d0dd",
+   "killedBy": [
+    {
+     "name": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Run, Restart",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition: steady R&D (only b_Step_RnD, C1 ON); stages=b_Step1,b_Step_RnD C1=false"
+    },
+    {
+     "name": "E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in Run, Restart",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition: steady R&D (only b_Step_RnD, C1 ON); stages=b_Step1,b_Step_RnD C1=false"
+    },
+    {
+     "name": "E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in Run, Restart",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition: steady R&D (only b_Step_RnD, C1 ON); stages=b_Step1,b_Step_RnD C1=false"
+    },
+    {
+     "name": "E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in Run, Restart",
+     "file": "current-e2a-emg-run.test.js",
+     "message": "scenario aborted (coverage incomplete): precondition: steady R&D (only b_Step_RnD, C1 ON); stages=b_Step1,b_Step_RnD C1=false"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-04",
+   "op": "deactivate-input",
+   "block": "//Network3/FBOr13",
+   "port": "OrIn2",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr13/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "0c683d3942967cd623a19b034a18d60f8d88be3df2119865aede8a01411d1b28",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 293,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-28",
+   "op": "swap-order",
+   "block": "//Network12/FBAnd16",
+   "port": "",
+   "value": {
+    "moveAfter": "//Network1/FBAnd1"
+   },
+   "verification": {
+    "parsedDelta": [
+     "//Network1/FBAnd1#block",
+     "//Network12/FBAnd16#block",
+     "//SafeResumption/CONNECTORS#block",
+     "//SafeResumption/CONNECTOR_SCOPE#block"
+    ],
+    "attribute": "orderOfExecution",
+    "movedBlocks": 4,
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "d943f124ce3a1845c33c8916ecb59cec325ca671eabdba54120d28ce761549ac",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 293,
+   "eligible": 293
+  },
+  {
+   "id": "M-E2a-29",
+   "op": "swap-order",
+   "block": "//SafeResumption/CONNECTOR_SCOPE",
+   "port": "",
+   "value": {
+    "moveAfter": "//Network1/FBAnd1"
+   },
+   "verification": {
+    "parsedDelta": [
+     "//Network1/FBAnd1#block",
+     "//SafeResumption/CONNECTOR_SCOPE#block"
+    ],
+    "attribute": "orderOfExecution",
+    "movedBlocks": 2,
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "8604f351681a978e17ed6c91d6d476a42e6d82ce5258d1a6828c82d0253bcb33",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 293,
+   "eligible": 293
+  }
+ ]
+}

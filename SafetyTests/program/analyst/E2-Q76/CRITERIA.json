@@ -1,0 +1,515 @@
+{
+  "slice": "E2-Q76",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "decision": "SCENARIO_DECISIONS 'Вопрос 76 (KF-5)', answer B: legacy R&D->Run by M=(inPLC_RnD_Mode,inPLC_RnD_Mode_2)=(1,1) disabled already in E2; until E4 R&D->Run only by physical BOTH; legacy Safe->R&D (1,0) and descents NOT disabled",
+  "sources": {
+    "scenarioDecisions": "de4996a67abc8869d4c388418ff56a3215b14ebc4a5c65c4b0e3aafbb311a456",
+    "scope": "03facdcebc8b54763d5bbfa0fc634dba85a5ed6bb5070e1b82ca33e76f9e9537",
+    "traceMatrix": "f14feb820701473186cb3e9f076083d4f16f9d85d09147d63439f6196c62caa5",
+    "spec": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472",
+    "e2PlanV7TdCriteriaMd": "7ea3793ef5b158ca5e36cd1e81b073101283a29275905582d10507495cd567b9",
+    "e2PlanV7TdCriteriaJson": "d6e3b4f0686efe16d681a10aed51b101f8e93a580cca5f5145661b41a5c3153b",
+    "e2G1V6qCriteriaMd": "f86f8ed53e062e30405c1201a723d6e9c9ccbe509c782204191ba7adaf7723ee",
+    "planMd_v7_4_1": "f247e310c096c8d59dc7a5f80fb1be7f8cf4276e2aa7d56b8f54b990727ce595",
+    "planJson": "096ebdadf766c1d9ca97697a1ef05275e647c88ee96f5f13c3c895edab9dcdbb",
+    "canonicalSal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "candidateE2dV72Sal": "365f2c2ef0791e6d3b93812cb4920c4f1c93c067d2246f8132f9b08e7df6bd8a",
+    "head": "dbca5dd",
+    "planV75": "not present at time of writing",
+    "referenceNote": "reference 4495a1f has no inPLC_RnD_Mode*; no oracle from reference",
+    "planNote": "PLAN v7.5 read for LEG11-OFF/M-E2d-23 naming (PLAN.md/.json at time of r2)"
+  },
+  "conventions": "REQ-CONSOLIDATION/CRITERIA.md §0; scan 1 ms; 'HV lift' in a scan = out_HV_C2 | b_Set_HV_C2_1 | STO_DR1/2 released | recRndC_SU | stage SR or S3",
+  "statusValues": [
+    "READY-Q76",
+    "READY-D",
+    "READY",
+    "OBS",
+    "N/A",
+    "known FAIL"
+  ],
+  "disabled": [
+    "C2 command via P2 (N12/FBAnd10 -> N12/FBOr1 -> FBAnd4)",
+    "Run confirmation / STO release via P2",
+    "HV discharge request clear via P2 (DIS-HOLD b_Set_HV_C2_1)",
+    "SR entry via P2"
+  ],
+  "notDisabled": [
+    "P1 N2/FBAnd91 -> g2 Safe->R&D (1,0)",
+    "N6/FBAnd17 Run->R&D (0,1)",
+    "N1/FBAnd2 Run & !M1 & !M2 -> out_SS1_DR1/2 (OBS)"
+  ],
+  "baseState": {
+    "R-RND": "steady R&D: out_Step12 TRUE, C1 ON, C1_FBK ON, LV ok; C2 OFF, C2_FBK OFF, STO set both drives; out_HV_Discharge_Request TRUE (variant FALSE if never issued -> unchanged); cover closed NC1&NC2; EOk; connectors ok; HV Faulty FALSE; no SafetyFault; M=(0,0); buttons released >=2100 ms",
+    "R-T5": "E2-plan-v7-TD §1"
+  },
+  "criteria": [
+    {
+      "id": "Q76-N0",
+      "status": "READY-Q76",
+      "matrixIds": [
+        "MOD-007",
+        "MOD-002"
+      ],
+      "rule": "In E2 M=(1,1) is not an R&D->Run command: in no state, for no length/front/level does it give HV lift, clear out_HV_Discharge_Request, raise out_Step*, set SafetyFault or Emergency",
+      "sources": [
+        "Q76 B"
+      ]
+    },
+    {
+      "id": "Q76-N1",
+      "status": "READY-Q76",
+      "replaces": [
+        "KF-5"
+      ],
+      "matrixIds": [
+        "MOD-002",
+        "MOD-007",
+        "STP-004",
+        "MOD-005",
+        "MOD-006"
+      ],
+      "initial": "R-RND",
+      "sequence": "M=(1,1) from t for w ms, then (0,0); w in {1,50,300,499,500,501,599,600,601,1500} and held 10000; C2_FBK variants: (i) OFF, (ii) follows C2 command +1 scan (no command expected), (iii) ON without command from t-3000 (see Q76-N2); variant HV Faulty TRUE (ex KF-4)",
+      "boundaries": {
+        "499/500/501": "C2 window 500 ms",
+        "599/600/601": "former Run confirmation (TD-02)",
+        "expectation": "identical for all"
+      },
+      "expected": "every scan [t, t+10000]: S12, no SR/S3, out_HV_C2 FALSE, b_Set_HV_C2_1 FALSE, STO_DR1/2 set, recRndC_SU FALSE, out_HV_Discharge_Request unchanged, out_LV_C1 TRUE, no Emergency, no SafetyFault from (1,1)",
+      "then": "M=(0,0) >=100 ms, buttons released >=2100 ms, green 0.5 s at t+10000 -> R&D->Safe (MOD-005); Safe with C1 OFF and C2 OFF by t+25000",
+      "forbidden": [
+        "HV lift in any scan [t, t+25000]",
+        "R&D with out_HV_C2 TRUE",
+        "HV request FALSE if TRUE before t",
+        "no Safe with C1/C2 OFF by t+25000",
+        "Emergency as only exit"
+      ],
+      "sources": [
+        "Q76 B",
+        "Q-V7-01 G + Q73 A (DIS-HOLD)",
+        "MOD-005",
+        "SPEC p.527 / STP-004"
+      ],
+      "noteVsOld": "old outcome (a) 'Run by RUN-CONF-T' is now forbidden; only (b), from the first scan",
+      "variantV75_1": "steady R&D (by legacy (1,0) or BOTH), M=(1,0) held >=2100 ms; at t M2:=TRUE (code (1,1)), then pulse w / hold as above: same expectation; boundary M2 TRUE at r-1, r, r+1 vs first S12 scan after Safe->R&D by (1,0): no HV lift until r+3000"
+    },
+    {
+      "id": "Q76-N2",
+      "status": "READY-Q76 (FBK part READY-D)",
+      "replaces": [
+        "FBK10-PLC-B",
+        "KF-1 (1,1) part",
+        "FBK OFF boundaries for (1,1)"
+      ],
+      "matrixIds": [
+        "MOD-008",
+        "MOD-002",
+        "MOD-007",
+        "WDG-004"
+      ],
+      "initial": "R-RND; from f C2_FBK ON without C2 command",
+      "sequence": "M=(1,1) at t in {f+1,f+100,f+3000}, held 1500 ms; variants: (a) FBK OFF at g=f+3000 with M held through g to g+1000; (b) FBK OFF at g, new (1,1) front at g+2100 for 1000 ms without button ack; boundary: (1,1) front at g-1, g, g+1",
+      "expected": "every scan to end+1500: R&D, no SR/Run, out_HV_C2 FALSE, b_Set_HV_C2_1 FALSE, STO set, HV request TRUE",
+      "forbidden": [
+        "HV lift in any scan incl. after g and at g-1/g/g+1",
+        "Emergency due to FBK-10"
+      ],
+      "notNormed": "SafetyFault from FBK-10 (Q-V4-02/Q-V7-04, E5)",
+      "sources": [
+        "Q76 B",
+        "Q-V4-02 B"
+      ]
+    },
+    {
+      "id": "Q76-N3",
+      "status": "READY-Q76",
+      "replaces": [
+        "KF-2 (1,1) part"
+      ],
+      "matrixIds": [
+        "PLC-004",
+        "MOD-007"
+      ],
+      "initial": "R-RND",
+      "sequence": "blue pressed 1500 ms (Unlock by its own criteria), (1,1) front at press+100: pulse 200 ms inside press | held until release+1500; same with green 400 ms (not qualified)",
+      "expected": "no HV lift until release+3000; HV request TRUE",
+      "forbidden": [
+        "HV lift during press or after release"
+      ],
+      "sources": [
+        "Q76 B",
+        "V14-Q14 A (redundant for (1,1))"
+      ]
+    },
+    {
+      "id": "Q76-N4",
+      "status": "READY-Q76",
+      "replaces": [
+        "KF-1 (1,1) part"
+      ],
+      "matrixIds": [
+        "WDG-004",
+        "MOD-008",
+        "MOD-007"
+      ],
+      "initial": "R-RND with active SafetyFault (FBK-10 after FBK OFF without ack | window C2 without FBK after rollback, Q-V7-03/E6-Q1)",
+      "sequence": "(1,1) front pulse 50 ms and held 3000 ms; then BOTH-1 (ack only), release >=2001 ms, BOTH-2; (1,1) held throughout",
+      "expected": "no HV lift before BOTH-2; HV request TRUE; SafetyFault not cleared by (1,1); BOTH-2 lifts with u <= Q2+400 (TD-06)",
+      "forbidden": [
+        "HV lift before BOTH-2",
+        "SafetyFault cleared by (1,1)"
+      ],
+      "sources": [
+        "Q76 B",
+        "E6-Q2 A",
+        "Q-V7-04 B",
+        "TD-06"
+      ]
+    },
+    {
+      "id": "Q76-N5",
+      "status": "READY-Q76 (Safe->R&D by button with (1,1) held: READY-D)",
+      "replaces": [
+        "KF-3 '(1,1) set in Safe + BOTH'"
+      ],
+      "matrixIds": [
+        "MOD-003",
+        "PLC-001",
+        "MOD-007"
+      ],
+      "initial": "R-T5 without Emergency",
+      "sequence": "M=(1,1) from t0 held; BOTH at t0+200 for 1100 ms -> Safe->R&D; r = first S12 scan; (1,1) held to r+3000 then (0,0); boundary runs: (1,1) first front at r-1, r, r+1",
+      "expected": "Safe->R&D executes by button as without (1,1) ((1,1) is not (1,0), P1 not triggered); no HV lift and no HV request clear in [r, r+4500]",
+      "forbidden": [
+        "HV lift after r",
+        "Safe->R&D refused because of held (1,1)"
+      ],
+      "sources": [
+        "Q76 B",
+        "Q-RC-18(b) A"
+      ]
+    },
+    {
+      "id": "Q76-N6",
+      "status": "READY-Q76",
+      "replaces": [
+        "KF-3-DESC"
+      ],
+      "matrixIds": [
+        "MOD-003",
+        "PLC-001",
+        "STP-004",
+        "MOD-002",
+        "MOD-007"
+      ],
+      "initial": "steady Run raised by BOTH (legacy-Run base unreachable on E2); C2 ON, C2_FBK ON, HV ok, STO released, cover closed, EOk, buttons released >=2100 ms; M=(1,1) set in Run at t0 <= t_a-2100 and held",
+      "sequence": "green 0.5 s -> Run->R&D accepted, t_a = first scan linkRunDownOwner TRUE (V73-A); M=(1,1) held to t_a+10000 then (0,0); r = first S12 scan after descent; boundary: first (1,1) front at r-1, r, r+1 -> same expectation to r+3000",
+      "expected": "descent per STP-001/STP-004 (moments not normed here); every scan [r, t_a+10000]: R&D, no SR/Run, out_HV_C2 FALSE, STO set, out_HV_Discharge_Request TRUE",
+      "forbidden": [
+        "re-entry SR/Run",
+        "C2 ON",
+        "STO released",
+        "HV request cleared by (1,1) level"
+      ],
+      "replacedPositiveControl": "old 'after (0,0) 600 ms new (1,1) front accepted' -> now prohibition: no HV lift within +3000; positive control is BOTH (Q76-P1)",
+      "sources": [
+        "Q76 B",
+        "V14-Q11",
+        "PLC-001",
+        "MOD-003",
+        "D-TEAM p.1",
+        "Q-V7-01 G"
+      ]
+    },
+    {
+      "id": "Q76-N7",
+      "status": "READY-D",
+      "matrixIds": [
+        "STP-006",
+        "MOD-004",
+        "MOD-002",
+        "MOD-007"
+      ],
+      "initial": "R-RND; BOTH -> R&D->Run accepted (SU at a), stage SR; variant HV Faulty TRUE from t0-100 holds SR; M=(1,1) from a+x, x in {1,100,1000}, held",
+      "cases": {
+        "a_noEvent": "per scan, (1,1)-trace has no HV lift / Run where control trace with M=(0,0) (same candidate, same gesture) has none; earlier de-energisation not forbidden here",
+        "b_abortGreen": "green 0.5 s in SR (V14-Q12); (1,1) held to r+10000 after arrival in R&D: every scan [r, r+10000] R&D, C2 OFF, STO set, HV request TRUE, no re-SR/Run; abort moments are STP-006 (E3), not normed here",
+        "c_windowRollback": "C2 window without C2_FBK (E6-Q1) with (1,1) held: after return to R&D no re-lift until ack + new BOTH"
+      },
+      "forbidden": [
+        "(1,1) creates, prolongs or resumes SR/Run, C2 ON or released STO after abort/rollback"
+      ],
+      "comparisonExcludes": [
+        "out_SS1_DR1",
+        "out_SS1_DR2"
+      ],
+      "sources": [
+        "Q76 B (only BOTH)",
+        "MOD-003 new gesture per step"
+      ]
+    },
+    {
+      "id": "Q76-N8",
+      "status": "READY-Q76 (emergency chain by EMG criteria)",
+      "matrixIds": [
+        "EMG-011",
+        "MOD-002",
+        "MOD-007",
+        "CVR-004"
+      ],
+      "emergency": "R-RND; Emergency source at e (in_ES_NC_1/2 FALSE | in_Mentee_EStop); E = first b_EStop_Ok FALSE; (1,1) front at E-1, E, E+1 held 3000 ms, variant through Restart -> no HV lift in any scan, HV request TRUE continuously, after Restart Safe and held (1,1) gives no S12 and no lift",
+      "cover": "R-RND, NC1 FALSE (variant NC2) from c; (1,1) at c+50 for 300 ms, then cover closes with (1,1) held or removed -> no HV lift until +3000, HV request TRUE",
+      "sources": [
+        "Q76 B",
+        "DIS-HOLD (B)/(C) PLAN v7 §4.2 unchanged"
+      ]
+    },
+    {
+      "id": "Q76-P1",
+      "status": "READY (TD-06, RUN-CONF-T, DIS-HOLD-HV)",
+      "matrixIds": [
+        "MOD-002",
+        "BTN-006"
+      ],
+      "initial": "R-RND, M=(0,0)",
+      "sequence": "BOTH delta=0 1100 ms; C2_FBK follows command +1 scan; HV ok",
+      "expected": "no lift in [p, Q-1]; u in [Q, Q+400]; Run per RUN-CONF-T (Q68 B, TD-02); HV request FALSE <= u+1"
+    },
+    {
+      "id": "Q76-P2",
+      "status": "READY-D",
+      "matrixIds": [
+        "MOD-002",
+        "MOD-007"
+      ],
+      "initial": "R-RND; M=(1,1) from p-3000 (variant from p+500) to p+5000",
+      "expected": "same as Q76-P1, u and Run moment equal to control trace with M=(0,0) (+-0 scans); no repeats",
+      "sources": [
+        "Q76 B",
+        "Q-RC-18(b) A",
+        "V14-Q14"
+      ]
+    },
+    {
+      "id": "Q76-P3",
+      "status": "READY-D",
+      "replaces": [
+        "FBK10-PLC-REG (2)"
+      ],
+      "matrixIds": [
+        "MOD-008",
+        "MOD-002"
+      ],
+      "initial": "R-RND, BOTH as Q76-P1; C2_FBK ON at u+x, x in {1,250,499}",
+      "expected": "C2 kept, no return to R&D/SR, Run per RUN-CONF-T (TD-02), no SafetyFault/Emergency",
+      "sources": [
+        "Q-V4-02 'without ON command'"
+      ],
+      "note": "if an equivalent button test exists elsewhere, this only records the replacement"
+    },
+    {
+      "id": "Q76-P4",
+      "status": "READY-Q76 (unchanged FBK10-PLC-REG (1) / TD5-EOK positive control)",
+      "matrixIds": [
+        "MOD-001",
+        "MOD-007"
+      ],
+      "expected": "R-T5 without Emergency, FBK OFF, (1,0) front: S12 accepted, R&D per RND-CONF-T, LV request FALSE <= u1+1"
+    },
+    {
+      "id": "Q76-P5",
+      "status": "READY-Q76 (moments OBS)",
+      "matrixIds": [
+        "MOD-007",
+        "STP-001"
+      ],
+      "initial": "steady Run by BOTH, M=(0,0), buttons released >=2100 ms",
+      "sequence": "M=(0,1) front held 3000 ms",
+      "expected": "Run->R&D descent starts (N6/FBAnd17 -> N6/FBOr5); arrival R&D, C2 OFF, STO set, HV request TRUE (Q-V7-01 G); moments not normed"
+    }
+  ],
+  "oldCriteriaMapping": [
+    {
+      "old": "FBK10-PLC-A (1,0)",
+      "file": "E2-plan-v7-TD §2",
+      "status": "unchanged READY-D"
+    },
+    {
+      "old": "FBK10-PLC-B (1,1)",
+      "file": "E2-plan-v7-TD §2",
+      "status": "REPLACED by LEG11-OFF (Q76-N2, N1 variant iii); N/A as FBK test (gate removed in v7.5)"
+    },
+    {
+      "old": "FBK OFF boundaries g-1/g/g+1 for (1,1)",
+      "file": "E2-plan-v7-TD §2",
+      "status": "normative prohibition at any g (Q76-N2)"
+    },
+    {
+      "old": "FBK10-PLC-REG (1)",
+      "file": "E2-plan-v7-TD §2",
+      "status": "unchanged, NOT replaced ((1,0) not disabled); PLAN.json v7.5 note listing REG(1) as obsolete is inaccurate"
+    },
+    {
+      "old": "FBK10-PLC-REG (2)",
+      "file": "E2-plan-v7-TD §2",
+      "status": "REPLACED by LEG11-OFF (Q76-N1); positive Run at u+600/601 forbidden; own-FBK positive by BOTH Q76-P3"
+    },
+    {
+      "old": "E6-Q1 off-window subcase for (1,1)",
+      "file": "E2-plan-v7-TD §2",
+      "status": "N/A"
+    },
+    {
+      "old": "positive '(1,1) -> Run' (KF-3-DESC new front accepted; legacy-Run base)",
+      "file": "E2-plan-v7-TD §3",
+      "status": "N/A, replaced by prohibition Q76-N6 and Q76-P1"
+    },
+    {
+      "old": "DIS-HOLD-HV source 'SU or legacy (1,1)'",
+      "file": "PLAN v7 §4.2",
+      "status": "legacy branch N/A; button DIS-HOLD-HV unchanged"
+    },
+    {
+      "old": "E2b-dev §1.2 'legacy (1,1) A = u'",
+      "file": "E2b-dev/CRITERIA.md",
+      "status": "N/A"
+    },
+    {
+      "old": "KF-5",
+      "file": "E2-plan-v7-TD §3",
+      "status": "(1,1) part REPLACED by LEG11-OFF (Q76-N1), normative"
+    },
+    {
+      "old": "KF-3-DESC",
+      "file": "E2-plan-v7-TD §3",
+      "status": "(1,1) part REPLACED by LEG11-OFF (Q76-N6), normative"
+    },
+    {
+      "old": "KF-1/KF-2/KF-3 P2 parts",
+      "file": "E2-plan-v7-TD §3",
+      "status": "normative Q76-N4/N3/N5,N6"
+    },
+    {
+      "old": "KF-4",
+      "file": "E2-plan-v7-TD §3",
+      "status": "N/A (P2 only); Q76-N1 HV Faulty variant, Q76-N7"
+    },
+    {
+      "old": "D-V74-2 (FFS cover 200 ms with (1,1))",
+      "file": "PLAN v7.5",
+      "status": "normative, LEG11-OFF Q76-N8 cover"
+    }
+  ],
+  "mutationsNote": "M-E2d-14/15/16 removed with v7.5 (blocks deleted), not equivalent; their old killers N/A. M-E2d-23 killed by LEG11-OFF per V75-B",
+  "remainingKnownFail": [
+    {
+      "kf": "KF-1",
+      "path": "P1 (1,0)",
+      "what": "legacy lift under active SafetyFault executes; PLC does not acknowledge",
+      "req": [
+        "Q-V4-02 B",
+        "Q-V7-04 B",
+        "E6-Q2"
+      ],
+      "ids": [
+        "WDG-004",
+        "MOD-008"
+      ],
+      "stage": "E5 (E4)"
+    },
+    {
+      "kf": "KF-2",
+      "path": "P1 (1,0)",
+      "what": "(1,0) executes while a button is pressed",
+      "req": [
+        "V14-Q14"
+      ],
+      "ids": [
+        "PLC-004"
+      ],
+      "stage": "E4"
+    },
+    {
+      "kf": "KF-3",
+      "path": "P1 (1,0); N6/FBAnd17 (0,1)",
+      "what": "level not front: (1,0) held through Restart / R&D->Safe descent / FBK OFF executes later and repeats; (0,1) held in Run executes descent by level and repeats it after next BOTH Run while still held (expectation per MOD-003: ignored; NV on candidate); (1,1)->(1,0) in Safe is a (1,0) front -> P1",
+      "req": [
+        "V14-Q11",
+        "MOD-003",
+        "PLC-001",
+        "D-TEAM p.1"
+      ],
+      "ids": [
+        "MOD-003",
+        "PLC-001"
+      ],
+      "stage": "E4"
+    },
+    {
+      "kf": "KF-4",
+      "status": "N/A (P2 only)"
+    },
+    {
+      "kf": "KF-5",
+      "status": "normative (Q76-N1)"
+    },
+    {
+      "kf": "v7.1 item 4",
+      "what": "simultaneous commands not detected; legacy 2-bit code has no conflicting combinations; concerns future CMD_*",
+      "ids": [
+        "PLC-002"
+      ],
+      "stage": "E4"
+    }
+  ],
+  "idMap": {
+    "MOD-007": "(1,1) part of 'old 2-bit path creates no transitions' met from E2; (1,0)/(0,1) until E4",
+    "MOD-002": "only R&D->Run source until E4 is BOTH",
+    "MOD-003": "P2 part normative; P1 and descents known FAIL",
+    "PLC-001": "same as MOD-003",
+    "PLC-004": "P2 part normative (Q76-N3); KF-2 (1,0)",
+    "WDG-004": "P2 part normative (Q76-N2, N4); KF-1 (1,0)",
+    "MOD-008": "FBK10-PLC-B absorbed into Q76-N2",
+    "STP-004": "ex KF-5 normative",
+    "MOD-005": "ex KF-5 normative (green exit)",
+    "MOD-006": "ex KF-5 normative",
+    "STP-006": "KF-4 N/A; Q76-N7",
+    "PLC-006": "KF-4 N/A",
+    "MOD-004": "Q76-N7",
+    "EMG-011": "Q76-N8",
+    "CVR-004": "Q76-N8 cover",
+    "BTN-006": "TD-06 measure in Q76-P1",
+    "PLC-002": "unchanged (E4)"
+  },
+  "scopeDeltaProposal": {
+    "MOD-007": "Since E2 (Q76 B, 2026-10-22) legacy M=(1,1) gives no R&D->Run, C2, STO release, SR or HV request clear; until E4 R&D->Run only by BOTH; legacy (1,0) Safe->R&D and (0,1) descents remain known limitations until E4 (KF-1..KF-3)",
+    "MOD-002": "No PLC-only R&D->Run in E2 (Q76)",
+    "E4 row": "unchanged"
+  },
+  "affectedTests": {
+    "current-e2d-fbk-unsolicited.test.js": "FBK10-PLC-B -> Q76-N2; FBK10-PLC-REG (1,1) + M-E2d-14/15/16 -> N/A, Q76-P3; KF-1/KF-2 (1,1) -> normative; KF-3 '(1,1) in Safe + BOTH' -> Q76-N5; KF-3-DESC -> Q76-N6; KF-4 -> Q76-N1 (HV Faulty)/N7; KF-5 -> Q76-N1",
+    "current-door-interlock.test.js": "DOOR06 route existing-PLC-levels: hv==nc1&&nc2 and healthy positive control become prohibition (HV and b_Set_HV_C2_1 FALSE for any NC); physical route unchanged",
+    "current-e2d-first-fault-scan.test.js": "case 'R&D->Run legacy PLC (1,1)' N/A (no lift); replace by Q76-N8 prohibition or exclude with note",
+    "current-e2a-dis-hold.test.js": "(1,1) with open cover / with Emergency in R&D unchanged; Run (BOTH) with (1,1) held + Emergency unchanged",
+    "program/tester/E1-f1/**": "historical, not normative for E2"
+  },
+  "observation": "N1/FBAnd2 = out_Step3 & !M1 & !M2 -> out_SS1_DR1/2 (FBOr12/13): M level in Run affects SS1 outputs; old legacy path, not P2, not disabled by Q76; Q76-N6/N7/P2 do not require trace equality on out_SS1_DR*; if architect touches N1/FBAnd2 a separate question is needed",
+  "questionsToVadim": [],
+  "blocked": [],
+  "limits": "criteria only; model/tests not run; netlist read via stand parser on candidate E2d v7.2 (reference); not native/IDE/target/hardware; real PLC code semantics NV",
+  "revision": "2026-10-22 r2: lead request + review V75-C (PLAN v7.5): LEG11-OFF naming, V75-1 (1,0)->(1,1) variant, M-E2d-14/15/16 removed with v7.5, M-E2d-23",
+  "leg11Off": {
+    "name": "LEG11-OFF",
+    "origin": "MUTATION_PLAN_E2d M-E2d-23 / PLAN v7.5",
+    "killsMutant": "M-E2d-23 (legacy (1,1) active again); kill-equivalent per V75-B: FAIL on frozen E2d-v7.4.1, PASS on new E2d, exact delta = v7.5",
+    "requiredScenarios": [
+      "Q76-N1 hold (1,1) >=5 s",
+      "Q76-N1 pulse w=50,300,601 (ex KF-5)",
+      "Q76-N1 variant V75-1 (1,0)->(1,1)",
+      "Q76-N6 (ex KF-3-DESC)"
+    ],
+    "additional": "Q76-N2..N8"
+  }
+}

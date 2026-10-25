@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.19">
+  <POU Name="MAIN" Id="{0726ba31-cfa3-4f4b-8cfa-b894f8445811}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	i: INT;
+	ton_TwinSAFE_ACK_reset: TON;
+	BlinkLED: ton;
+
+	Pulse_On_TON: TON;
+	Pulse_Off_TON: TON;
+	bPulse	:	BOOL	;
+	
+	t_BlinkTime : TIME	;
+	
+	//TwinSAFE heartbeat (interface v1.4): level toggles every 0.5 s
+	HB_On_TON: TON;
+	HB_Off_TON: TON;
+	bHeartbeat	:	BOOL	;
+
+	//S7 HMI transition commands (Visualization buttons are Toggle inputs on bHmi_*; PLC consumes the press and clears the flag)
+	bHmi_SafeToRnD	:	BOOL	;
+	bHmi_RnDToRun	:	BOOL	;
+	bHmi_RunToRnD	:	BOOL	;
+	bHmi_RnDToSafe	:	BOOL	;
+	bHmi_CfgReq	:	BOOL	;//Config switch: request (step 1)
+	bHmi_CfgConfirm	:	BOOL	;//Config switch: confirmation (step 2)
+	//Transition allowed (from STS_*), shown by lamps next to the buttons
+	bEn_SafeToRnD	:	BOOL	;
+	bEn_RnDToRun	:	BOOL	;
+	bEn_RunToRnD	:	BOOL	;
+	bEn_RnDToSafe	:	BOOL	;
+	nCmdState	:	INT	;//0 idle, 1..4 pulse on CMD_SAFE_TO_RND/CMD_RND_TO_RUN/CMD_RUN_TO_RND/CMD_RND_TO_SAFE, 9 dead time
+	tonCmdPulse	:	TON	;
+	tonCmdGap	:	TON	;
+	nCfgPending	:	INT	;//0 none, 1 confirm Config ON, 2 confirm Config OFF
+	bCfgPending	:	BOOL	;
+	tonCfgConfirm	:	TON	;
+	nPressCnt	:	INT	;
+	bP1	:	BOOL	;
+	bP2	:	BOOL	;
+	bP3	:	BOOL	;
+	bP4	:	BOOL	;
+	bC1	:	BOOL	;
+	bC2	:	BOOL	;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[i:=i+1;
+
+
+ton_TwinSAFE_ACK_reset(IN:=GVL_Safety.stTwinSAFE_OUT.ErrACK, PT:=T#10S);
+IF ton_TwinSAFE_ACK_reset.Q THEN;
+	GVL_Safety.stTwinSAFE_OUT.ErrACK:=FALSE;
+END_IF
+GVL_Safety.stTwinSAFE_OUT.DoorMonitor:=GVL_Safety.DoorMonitorFromPLC;
+
+//Battery Relay CMD
+IF GVL_Safety.stTwinSAFE_OUT.BatRelay_CMD THEN
+	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_Off:=FALSE;
+	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_On:=TRUE;
+ELSE
+	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_Off:=TRUE;
+	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_On:=FALSE;
+END_IF
+
+//Battery BMS Relay CMD
+IF GVL_Safety.stTwinSAFE_OUT.BatBMS_Cmd THEN
+	GVL_Safety.stTwinSAFE_OUT.RB_BatBMS_Manual_Off:=FALSE;
+	GVL_Safety.stTwinSAFE_OUT.RB_BatBMS_Manual_On:=TRUE;
+ELSE
+	GVL_Safety.stTwinSAFE_OUT.RB_BatBMS_Manual_Off:=TRUE;
+	GVL_Safety.stTwinSAFE_OUT.RB_BatBMS_Manual_On:=FALSE;
+
+END_IF
+
+act_LED_Control();
+act_LogicMap();
+
+//TwinSAFE heartbeat: toggle every 0.5 s (no level change for 3 s -> TwinSAFE Emergency)
+HB_On_TON(IN:=NOT bHeartbeat, PT:=T#500MS);
+HB_Off_TON(IN:=bHeartbeat, PT:=T#500MS);
+IF HB_On_TON.Q AND NOT bHeartbeat THEN bHeartbeat:=TRUE; END_IF;
+IF HB_Off_TON.Q AND bHeartbeat THEN bHeartbeat:=FALSE; END_IF;
+GVL_Safety.stTwinSAFE_OUT.Heartbeat:=bHeartbeat;
+
+
+
+
+
+
+
+
+
+]]></ST>
+    </Implementation>
+    <Action Name="act_LED_Control" Id="{3c867c17-f4c4-4546-bd10-836abda837f5}">
+      <Implementation>
+        <ST><![CDATA[//Red 
+IF GVL_Safety.stTwinSAFE_IN.EStop_Ok AND GVL_Safety.stTwinSAFE_IN.EStop_Status THEN
+	//Red Off
+	GVL_IO.RedLED:= FALSE;
+ELSIF GVL_Safety.stTwinSAFE_IN.EStop_Ok=FALSE AND GVL_Safety.stTwinSAFE_IN.EStop_Status  THEN
+	//Red Blink 
+	GVL_IO.RedLED:=bPulse;
+ELSIF GVL_Safety.stTwinSAFE_IN.EStop_Ok=FALSE AND GVL_Safety.stTwinSAFE_IN.EStop_Status=FALSE THEN
+	//Red On
+	GVL_IO.RedLED:= TRUE;
+END_IF
+
+//Blue
+IF (GVL_Safety.stTwinSAFE_OUT.DoorMonitor AND GVL_Safety.stTwinSAFE_IN.Speps.step1) 
+OR (GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE AND GVL_Safety.stTwinSAFE_IN.Speps.stepRnD) THEN
+	//Blue Blink
+	GVL_IO.BlueLED:=bPulse;
+ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor AND GVL_Safety.stTwinSAFE_OUT.SolenoedMonitor=FALSE AND NOT GVL_Safety.stTwinSAFE_IN.Speps.stepRnD THEN
+	//Blue Off
+	GVL_IO.BlueLED:=FALSE;
+ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE OR (GVL_Safety.stTwinSAFE_IN.Speps.stepRnD AND GVL_Safety.stTwinSAFE_OUT.DoorMonitor) THEN
+	//Blue On
+	GVL_IO.BlueLED:=TRUE;
+END_IF
+
+//Green
+IF (GVL_Safety.stTwinSAFE_IN.Speps.step1 AND GVL_Safety.stTwinSAFE_IN.EStop_Ok AND GVL_Safety.stTwinSAFE_OUT.DoorMonitor=TRUE) OR GVL_Safety.stTwinSAFE_IN.TransitionStep THEN
+	//Green Blink
+	GVL_IO.GreenLED:=bPulse;
+ELSIF GVL_Safety.stTwinSAFE_IN.Safety_Armed OR (GVL_Safety.stTwinSAFE_IN.Speps.stepRnD) OR GVL_Safety.stTwinSAFE_IN.Speps.step2 THEN
+	//Green On
+	GVL_IO.GreenLED:=TRUE;
+ELSIF GVL_Safety.stTwinSAFE_IN.Speps.step4 OR GVL_Safety.stTwinSAFE_IN.Speps.step5 
+OR GVL_Safety.stTwinSAFE_IN.Speps.step6 OR GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE THEN
+	//Green Off
+	GVL_IO.GreenLED:=FALSE;
+END_IF
+
+IF GVL_Safety.stTwinSAFE_IN.Speps.step2 OR GVL_Safety.stTwinSAFE_IN.TransitionStep THEN
+	t_BlinkTime:=T#0.5S;
+ELSE
+	t_BlinkTime:=T#1.5S;
+END_IF
+
+Pulse_On_TON(IN:=NOT bPulse , PT:=t_BlinkTime , Q=> , ET=> );
+Pulse_Off_TON(IN:=bPulse , PT:=t_BlinkTime , Q=> , ET=> );
+IF Pulse_On_TON.Q AND NOT bPulse THEN bPulse:=TRUE; END_IF;
+IF Pulse_Off_TON.Q AND bPulse THEN bPulse:=FALSE; END_IF;
+
+
+GVL_Safety.stTwinSAFE_IN.HV_Healthy:=NOT GVL_Safety.stTwinSAFE_IN.HV_Faulty;
+GVL_Safety.stTwinSAFE_IN.LV_Healthy:=NOT GVL_Safety.stTwinSAFE_IN.LV_Faulty;
+]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="act_LogicMap" Id="{0f0c44db-ccbd-41ab-9cfc-1e821c520f71}">
+      <Implementation>
+        <ST><![CDATA[(*
+S7: HMI source of the interface v1.4 commands. All CMD_* are FALSE (idle) by default; a button press gives a 200 ms one-shot on exactly one CMD_*.
+Transition buttons are allowed only by TwinSAFE status STS_* (and Bypass FALSE: CMD + Bypass at the same time is a TwinSAFE conflict). Never two CMD_* TRUE at once.
+Function				|	Command (GVL_Safety.stTwinSAFE_OUT....)	|	Allowed when
+From Safe to RnD		|	CMD_SAFE_TO_RND	|	STS_SAFE
+From RnD to Run			|	CMD_RND_TO_RUN	|	STS_RND
+From Run to RnD			|	CMD_RUN_TO_RND	|	STS_RUN
+From RnD to Safe		|	CMD_RND_TO_SAFE	|	STS_RND
+EstopPLC (CMD_TRIGGER_EMERGENCY) is not touched here. The PLC does not stop the process by itself (S7 item 7).
+*)
+;
+
+//Pulse / dead time sequencing (200 ms pulse, then 200 ms dead time so that TwinSAFE sees a new rising edge)
+tonCmdPulse(IN:=(nCmdState>=1) AND (nCmdState<=4), PT:=T#200MS);
+tonCmdGap(IN:=(nCmdState=9), PT:=T#200MS);
+IF tonCmdPulse.Q THEN
+	nCmdState:=9;
+ELSIF tonCmdGap.Q THEN
+	nCmdState:=0;
+END_IF
+
+//Consume HMI presses (Toggle inputs): read and clear
+bP1:=bHmi_SafeToRnD; bHmi_SafeToRnD:=FALSE;
+bP2:=bHmi_RnDToRun; bHmi_RnDToRun:=FALSE;
+bP3:=bHmi_RunToRnD; bHmi_RunToRnD:=FALSE;
+bP4:=bHmi_RnDToSafe; bHmi_RnDToSafe:=FALSE;
+bC1:=bHmi_CfgReq; bHmi_CfgReq:=FALSE;
+bC2:=bHmi_CfgConfirm; bHmi_CfgConfirm:=FALSE;
+
+//Config switch with confirmation (level on Bypass_C1C2). Request, then Confirm within 5 s. Not while a command pulse / dead time is running.
+tonCfgConfirm(IN:=(nCfgPending<>0), PT:=T#5S);
+IF tonCfgConfirm.Q THEN
+	nCfgPending:=0;
+END_IF
+IF nCmdState=0 THEN
+	IF bC1 AND NOT bC2 THEN
+		IF GVL_Safety.stTwinSAFE_OUT.Bypass_C1C2 THEN
+			nCfgPending:=2;//request Config OFF (always possible)
+		ELSIF GVL_Safety.stTwinSAFE_IN.STS_SAFE THEN
+			nCfgPending:=1;//request Config ON (only from Safe)
+		ELSE
+			nCfgPending:=0;
+		END_IF
+	ELSIF bC2 AND NOT bC1 THEN
+		IF nCfgPending=1 AND GVL_Safety.stTwinSAFE_IN.STS_SAFE AND NOT GVL_Safety.stTwinSAFE_OUT.Bypass_C1C2 THEN
+			GVL_Safety.stTwinSAFE_OUT.Bypass_C1C2:=TRUE;
+		ELSIF nCfgPending=2 THEN
+			GVL_Safety.stTwinSAFE_OUT.Bypass_C1C2:=FALSE;
+		END_IF
+		nCfgPending:=0;
+	ELSIF bC1 AND bC2 THEN
+		nCfgPending:=0;
+	END_IF
+END_IF
+bCfgPending:=(nCfgPending<>0);
+
+//Allowed transitions: only from the TwinSAFE status; Bypass must be FALSE
+bEn_SafeToRnD:=GVL_Safety.stTwinSAFE_IN.STS_SAFE AND NOT GVL_Safety.stTwinSAFE_OUT.Bypass_C1C2;
+bEn_RnDToRun:=GVL_Safety.stTwinSAFE_IN.STS_RND AND NOT GVL_Safety.stTwinSAFE_OUT.Bypass_C1C2;
+bEn_RunToRnD:=GVL_Safety.stTwinSAFE_IN.STS_RUN AND NOT GVL_Safety.stTwinSAFE_OUT.Bypass_C1C2;
+bEn_RnDToSafe:=GVL_Safety.stTwinSAFE_IN.STS_RND AND NOT GVL_Safety.stTwinSAFE_OUT.Bypass_C1C2;
+
+//Accept exactly one press when idle; two or more presses in the same scan are discarded; presses during pulse / dead time are discarded
+nPressCnt:=BOOL_TO_INT(bP1)+BOOL_TO_INT(bP2)+BOOL_TO_INT(bP3)+BOOL_TO_INT(bP4);
+IF nPressCnt=1 AND nCmdState=0 AND NOT bC1 AND NOT bC2 THEN
+	IF bP1 AND bEn_SafeToRnD THEN
+		nCmdState:=1;
+	ELSIF bP2 AND bEn_RnDToRun THEN
+		nCmdState:=2;
+	ELSIF bP3 AND bEn_RunToRnD THEN
+		nCmdState:=3;
+	ELSIF bP4 AND bEn_RnDToSafe THEN
+		nCmdState:=4;
+	END_IF
+END_IF
+
+//Outputs: at most one CMD_* TRUE (derived from the single nCmdState)
+GVL_Safety.stTwinSAFE_OUT.CMD_SAFE_TO_RND:=(nCmdState=1);
+GVL_Safety.stTwinSAFE_OUT.CMD_RND_TO_RUN:=(nCmdState=2);
+GVL_Safety.stTwinSAFE_OUT.CMD_RUN_TO_RND:=(nCmdState=3);
+GVL_Safety.stTwinSAFE_OUT.CMD_RND_TO_SAFE:=(nCmdState=4);]]></ST>
+      </Implementation>
+    </Action>
+  </POU>
+</TcPlcObject>

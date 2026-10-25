@@ -1,0 +1,1 @@
+import fs from 'node:fs';const p=new URL('run.mjs',import.meta.url);let s=fs.readFileSync(p,'utf8');s=s.replace("const r=spawnSync(process.execPath,['scripts/software-check.js']","if(process.argv.includes('--prepare-only')){console.log('Prepared only: no full-check child');process.exit(0);}\nconst r=spawnSync(process.execPath,['scripts/software-check.js']");fs.writeFileSync(p,s);

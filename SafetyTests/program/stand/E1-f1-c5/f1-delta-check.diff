@@ -1,0 +1,27 @@
+1a2,4
+> // Stand copy (E1-f1-c5, review condition C5) of SafetyTests/program/tester/E1-f1/delta-check.mjs
+> // (source SHA256 654a041a39eccfe345c98ac49efd7fa906044ce8da6349d595173184a8de81c7). Check logic unchanged;
+> // only the output location handling and the self-reported tool path differ.
+4c7,9
+< // Usage: node delta-check.mjs <p0Dir> <f1Dir> <plan.json> <out.json>
+---
+> // Usage: node scripts/f1-delta-check.mjs <p0Dir> <f1Dir> <plan.json> [out.json]
+> //   out.json omitted -> written to a fresh os.tmpdir() mkdtemp directory (path printed).
+> //   Writing into SafetyTests/program/tester/ is refused (role-owned evidence).
+8a14,15
+> import os from 'node:os';
+> import { fileURLToPath } from 'node:url';
+10,11c17,22
+< const [p0Dir, f1Dir, planPath, outPath] = process.argv.slice(2);
+< if (!outPath) { console.error('usage: node delta-check.mjs <p0Dir> <f1Dir> <plan.json> <out.json>'); process.exit(64); }
+---
+> const [p0Dir, f1Dir, planPath, outArg] = process.argv.slice(2);
+> if (!planPath) { console.error('usage: node scripts/f1-delta-check.mjs <p0Dir> <f1Dir> <plan.json> [out.json]'); process.exit(64); }
+> const testerDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'program', 'tester');
+> const outPath = outArg ? path.resolve(outArg) : path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'f1-delta-check-')), 'DELTA_CHECK.json');
+> if ((outPath.toLowerCase() + path.sep).startsWith(testerDir.toLowerCase() + path.sep)) { console.error('refusing to write into ' + testerDir + ' (tester-owned evidence); pass an out path elsewhere or omit it'); process.exit(64); }
+> console.log('DELTA OUT', outPath);
+111c122
+< const report = { generatedAt: new Date().toISOString(), tool: 'SafetyTests/program/tester/E1-f1/delta-check.mjs', toolSha256: sha(new URL(import.meta.url)),
+---
+> const report = { generatedAt: new Date().toISOString(), tool: 'SafetyTests/scripts/f1-delta-check.mjs', toolOrigin: { path: 'SafetyTests/program/tester/E1-f1/delta-check.mjs', sha256: '654a041a39eccfe345c98ac49efd7fa906044ce8da6349d595173184a8de81c7' }, toolSha256: sha(new URL(import.meta.url)),

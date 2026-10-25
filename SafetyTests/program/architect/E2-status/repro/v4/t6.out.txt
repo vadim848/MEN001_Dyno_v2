@@ -1,0 +1,16 @@
+FB 230 lifecycle S_RnD -> S3
+1 lifecycle Run->R&D->Safe         S1       SAFE  EOk=true C1=false C2=false STO1=false SU=false SG=false  viol 0 
+2 steady Run IL loss +5ms          S4       EMG   EOk=false C1=true C2=true STO1=true SU=false SG=false  viol 0 
+  +12s                             S6       EMG   EOk=false C1=false C2=false STO1=false SU=false SG=false  viol 0 
+3 Run-down + IL loss (b1)          S_RnD    RND   EOk=true C1=true C2=false STO1=false SU=false SG=false  viol 0 
+4 StartingRun (C2 FBK held off)    S3       RUN   EOk=true C1=true C2=true STO1=true SU=false SG=false  viol 0 
+  +IL loss 20ms                    S4       EMG   EOk=false C1=true C2=true STO1=true SU=false SG=false  viol 0 
+  +12s                             S6       EMG   EOk=false C1=false C2=false STO1=false SU=false SG=false  viol 0 
+5 StartingRun + EStop +12s         S6       EMG   EOk=false C1=false C2=false STO1=false SU=false SG=false  viol 0 
+6 R&D cover open + green           S1       SAFE  EOk=true C1=false C2=false STO1=false SU=false SG=false  viol 0 
+7 R&D->Safe in progress + cover open S1       SAFE  EOk=true C1=false C2=false STO1=false SU=false SG=false  viol 0 
+8 R&D NC open BOTH held, restore   S_RnD    RND   EOk=true C1=true C2=false STO1=false SU=false SG=false (expect no SU) viol 0 
+  new BOTH after release           S3       RUN   EOk=true C1=true C2=true STO1=true SU=false SG=false (expect SU or Run) viol 0 
+9 Safe NC open BOTH -> R&D         S_RnD    RND   EOk=true C1=true C2=false STO1=false SU=false SG=false  viol 0 
+10 R&D LV Healthy lost (HLT-01)    S1       SAFE  EOk=true C1=false C2=false STO1=false SU=false SG=false  viol 0 
+11 R&D HV connector lost (EMG-004) S4       EMG   EOk=false C1=true C2=false STO1=false SU=false SG=false  viol 0 

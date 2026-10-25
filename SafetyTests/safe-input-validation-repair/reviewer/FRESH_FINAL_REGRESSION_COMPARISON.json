@@ -1,0 +1,71 @@
+{
+  "status": "PASS_PRESERVATION_WITH_KNOWN_GAPS",
+  "sha256": "59bf4ec1fe83d49f50b32ea89a230f42a1f18cb20122649cf5c4de435d552c33",
+  "sgvlSha256": "c31e129072e2837234e376e51038ff988a92373cbfea97b383fbf23536c7946b",
+  "reportSha256": "32f193112d4f57eddf0b100932e36ebe40b85d90b2ef23a29b63fb698d610cfc",
+  "stages": [
+    {
+      "name": "harness",
+      "status": "PASS",
+      "counts": {
+        "tests": 189,
+        "pass": 189,
+        "fail": 0,
+        "skipped": 0
+      },
+      "failures": []
+    },
+    {
+      "name": "historical",
+      "status": "PASS",
+      "counts": {
+        "tests": 75,
+        "pass": 75,
+        "fail": 0,
+        "skipped": 0
+      },
+      "failures": []
+    },
+    {
+      "name": "current",
+      "status": "FAIL",
+      "counts": {
+        "tests": 445,
+        "pass": 443,
+        "fail": 2,
+        "skipped": 0
+      },
+      "failures": [
+        "SR-RG-INVALID-green-remain-green failed chord cannot degrade",
+        "SR-RG-INVALID-blue-remain-green failed chord cannot degrade"
+      ]
+    }
+  ],
+  "summary": {
+    "PASS": 200,
+    "FAIL": 1,
+    "NOT VERIFIED": 7,
+    "ERROR": 0
+  },
+  "checks": [
+    {
+      "name": "all stage files counts and statuses preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "exact two old failed tests preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "summary and all 208 case statuses preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "all observations failures and assumptions preserved",
+      "status": "PASS"
+    }
+  ],
+  "limits": [
+    "Software regression only, not compiler/safe-source validation, IDE Verify/Build or target reachability. Existing failures are preserved, not accepted as fixed."
+  ]
+}

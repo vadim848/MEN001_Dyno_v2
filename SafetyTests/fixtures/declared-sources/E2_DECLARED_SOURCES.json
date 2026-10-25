@@ -1,0 +1,336 @@
+{
+ "schema": "declared-sources-v1",
+ "generatedBy": "SafetyTests/scripts/build-declared-sources.mjs",
+ "plans": [
+  {
+   "path": "program/architect/E2-status/PLAN.v7_7.json",
+   "sha256": "c71f9a54744f0dda53591ba82f348713bda9c292379f0b1d97a136ecbf03dff4",
+   "planVersion": 7
+  },
+  {
+   "path": "program/architect/E2-status/PLAN.json",
+   "sha256": "bf55168d2368787843d4c36343ac057d2efc80457c52519d4e4b8c928784b1b6",
+   "planVersion": 7
+  }
+ ],
+ "note": "Run-time checks read only this file (no PLAN, no git). A source is identified by its SAL SHA; SGVL/diagram must equal the record. F1 BOOT stays on BOOT_PREFLIGHT_SOURCE_MANIFEST.json.",
+ "sources": [
+  {
+   "id": "F1",
+   "location": [
+    "candidates/resumed-f1/native"
+   ],
+   "rawSha256": {
+    "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603"
+   },
+   "normalizedSha256": {
+    "sal": "cfdc0d8bd88c55b8b16e7c9144aab6702b625619a950385efcca577e0ecd113d",
+    "sgvl": "dd99b05d8290c15b83bc80f9fe24349f83933d0776a89279fafcd1ecbdb06a86"
+   },
+   "declared": {
+    "sal": "full",
+    "sgvl": "full",
+    "diagram": "full"
+   },
+   "declaredIn": [
+    "program/architect/E2-status/PLAN.v7_7.json@c71f9a54744f source.sal/sgvl/diagram",
+    "program/architect/E2-status/PLAN.json@bf55168d2368 source.sal/sgvl/diagram"
+   ],
+   "stateNorm": "F1",
+   "stateNormCitation": "canonical F1: original STATE injection points (b_Step1_Set, b_Step3_Set_3, b_Step1_Set_2 present)",
+   "boot": {
+    "manifest": "BOOT_PREFLIGHT_SOURCE_MANIFEST.json (reviewed checkpoint 0391fae, unchanged)"
+   }
+  },
+  {
+   "id": "R1",
+   "location": [
+    "candidates/E2-R1/native"
+   ],
+   "rawSha256": {
+    "sal": "ca841a01fe44f776a5868968fde70cce728657aaf411d6b8bfa6689cfadc7bb3",
+    "sgvl": "4f205138337ea3de3660d5ef2d8978db438e3e8d19f2e9dd393ec7a5816cdb36",
+    "diagram": "b82aa41a6ee065267852d78ccaff961714eca1e8e8c006f087de715fb2a137b6"
+   },
+   "normalizedSha256": {
+    "sal": "c88881c5d0e7bca04fa644b086803c9d8b1c772249c50fe3b87145bb3ca2cd86",
+    "sgvl": "bf0f09b2ce4dd9d599ba6902503c4d5a82435822f06319b729ffdd5425d62f28"
+   },
+   "declared": {
+    "sal": "full",
+    "sgvl": "not declared by PLAN (measured)",
+    "diagram": "not declared by PLAN (measured)"
+   },
+   "declaredIn": [
+    "program/architect/E2-status/PLAN.v7_7.json@c71f9a54744f source.r1Candidate",
+    "program/architect/E2-status/PLAN.json@bf55168d2368 source.r1Candidate"
+   ],
+   "stateNorm": "R1",
+   "stateNormCitation": "slices[R1] (Q-ARCH-06 A): Network4/Network5/Step2 removed; F1 grants otherwise unchanged (b_Step12_Set_2 -> FBRs8)",
+   "boot": {
+    "inventorySha256": "fcb3776f7fba25f66b6c891fde0098e33ef1b760a3c8d803d432861ec4fa6444",
+    "blocks": 215,
+    "networks": 14,
+    "runtimeNormalizedSha256": "21f7161288b762cb8460188654dc4e8e2623d09d5e44d15b8b29dbe511cde7bf"
+   }
+  },
+  {
+   "id": "E2a-core",
+   "location": [
+    "candidates/E2a/native"
+   ],
+   "rawSha256": {
+    "sal": "5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b",
+    "sgvl": "e60698840e556dbd6d838958eadb8545735a81aaff8efbfceabc3613a4e08010",
+    "diagram": "27d7f20d890d48fc175fbd25af21a5b0c874ce4cf248b37ac73df26fe0624785"
+   },
+   "normalizedSha256": {
+    "sal": "c363f2eb7ceae5f6f09b2876b300edc7d50b122fcfe27360ee1dfcb9369c79bc",
+    "sgvl": "c86641bea65567e7f2385c9dda12ec6281de12d175176f8b5115b9bb83ca85be"
+   },
+   "declared": {
+    "sal": "full",
+    "sgvl": "not declared by PLAN (measured)",
+    "diagram": "not declared by PLAN (measured)"
+   },
+   "declaredIn": [
+    "program/architect/E2-status/PLAN.v7_7.json@c71f9a54744f source.e2aCoreCandidate",
+    "program/architect/E2-status/PLAN.json@bf55168d2368 source.e2aCoreCandidate"
+   ],
+   "stateNorm": "E2a",
+   "stateNormCitation": "slices[E2a-core].changes: FBOr16.OrIn1 := b_Step_RnD_Set; FBRs7.Set := wire FBOr16 (g6 S3->SR); mechanism.grants g1..g9; no g10",
+   "boot": {
+    "inventorySha256": "36e1e8b7feaf9b2577daa8c463cab7aefc96801f2fe869305ab26c568789254a",
+    "blocks": 215,
+    "networks": 14,
+    "runtimeNormalizedSha256": "21f7161288b762cb8460188654dc4e8e2623d09d5e44d15b8b29dbe511cde7bf"
+   }
+  },
+  {
+   "id": "E2a-RC",
+   "location": [
+    "candidates/E2a-RC/native"
+   ],
+   "rawSha256": {
+    "sal": "5733552a150bfd33df4211da8f97a8fc993ff990ad52c90a8d7758d950660f3f",
+    "sgvl": "253de7f39f2c4af83fa8642445a885d18ecfcdccec46fcbf96612d88a810b669",
+    "diagram": "5fa942384352033814f2d51bf8c4a847098d6a3322d4b733995de64b7b759bb2"
+   },
+   "normalizedSha256": {
+    "sal": "a39d27ba455f72955368d6f6094edc5f7bab30f42baa0e0415dd4f3625319403",
+    "sgvl": "ba94d1516d40f190467c14898fc95c905f4469266edb32498b2856f2be02566c"
+   },
+   "declared": {
+    "sal": "full",
+    "sgvl": "not declared by PLAN (measured)",
+    "diagram": "not declared by PLAN (measured)"
+   },
+   "declaredIn": [
+    "program/architect/E2-status/PLAN.v7_7.json@c71f9a54744f source.e2aRcCandidate",
+    "program/architect/E2-status/PLAN.json@bf55168d2368 source.e2aRcCandidate"
+   ],
+   "stateNorm": "E2a",
+   "stateNormCitation": "as E2a-core (Network3 unchanged by E2a-RC)",
+   "boot": {
+    "inventorySha256": "4bb9666b9c2e31753a62cb28fe8d37d6a0720ea841ddfdd3f862c94fe8209183",
+    "blocks": 217,
+    "networks": 14,
+    "runtimeNormalizedSha256": "21f7161288b762cb8460188654dc4e8e2623d09d5e44d15b8b29dbe511cde7bf"
+   }
+  },
+  {
+   "id": "E2b",
+   "location": [
+    "candidates/E2b/native"
+   ],
+   "rawSha256": {
+    "sal": "4f933433c4dcb6a4ddf3cbad1cad64897965c48f7832613d0481b0195fbce45e",
+    "sgvl": "7ae241165ec0321bcae684d726925b178bb8ef354ca68fce72160dbdc334129c",
+    "diagram": "a413ca1f1ebfcaa7d94a4789770f14170e7528852f5c6a5af2ba0a8d16b45e94"
+   },
+   "normalizedSha256": {
+    "sal": "ce7250828abac0e845b4894871301294e7f82f72462cfed1eacae480b498dab7",
+    "sgvl": "e377e725dd7d8672bf878320aedab6bc036fceb81f806c080116fe99ddcbe99b"
+   },
+   "declared": {
+    "sal": "full",
+    "sgvl": "not declared by PLAN (measured)",
+    "diagram": "not declared by PLAN (measured)"
+   },
+   "declaredIn": [
+    "program/architect/E2-status/PLAN.v7_7.json@c71f9a54744f source.candidates.E2b",
+    "program/architect/E2-status/PLAN.json@bf55168d2368 source.candidates.E2b"
+   ],
+   "stateNorm": "E2b",
+   "stateNormCitation": "slices[E2b].newBlocks: Network3/G10_EXIT (g10 S6->S1), Network3/FBAndBootFbkOff (FBAnd1.AndIn3), Network3/FBOrS12Reset",
+   "boot": {
+    "inventorySha256": "4cf0ba921060b8839566bba1cf56851155c324ba288bce79bdf45f4ded67c8e4",
+    "blocks": 227,
+    "networks": 14,
+    "runtimeNormalizedSha256": "21f7161288b762cb8460188654dc4e8e2623d09d5e44d15b8b29dbe511cde7bf"
+   }
+  },
+  {
+   "id": "E2c",
+   "location": [
+    "candidates/E2c/native"
+   ],
+   "rawSha256": {
+    "sal": "ee8439ae2a58c4e51eba8bcba225831d4a024b06975c7eb3e19b8e859aaa4d97",
+    "sgvl": "281c9597365fb745553c57dad826fd12217cd07e3a8dc1ef0943782412800f18",
+    "diagram": "66f94c13b187a9d0cc5348335ddaad6cdf3ec1b113f3340dd728b6e33820588a"
+   },
+   "normalizedSha256": {
+    "sal": "7fce1294cca6b29f345c3b5e02d026df1e68f52c32653e0943def4075b3f8f1f",
+    "sgvl": "51ba609c607ce883074afeb1adc8a54825fa3938260b96912d202b6f17a30056"
+   },
+   "declared": {
+    "sal": "full",
+    "sgvl": "not declared by PLAN (measured)",
+    "diagram": "not declared by PLAN (measured)"
+   },
+   "declaredIn": [
+    "program/architect/E2-status/PLAN.v7_7.json@c71f9a54744f source.candidates.E2c",
+    "program/architect/E2-status/PLAN.json@bf55168d2368 source.candidates.E2c"
+   ],
+   "stateNorm": "E2b",
+   "stateNormCitation": "E2b Network3 grants (E2c changes SafeResumption/RndPhysicalCompact only)",
+   "boot": {
+    "inventorySha256": "b20803950d40991190f02d5608b724fa1757fe02affcc01124a85ec8cb499ce2",
+    "blocks": 229,
+    "networks": 14,
+    "runtimeNormalizedSha256": "21f7161288b762cb8460188654dc4e8e2623d09d5e44d15b8b29dbe511cde7bf"
+   }
+  },
+  {
+   "id": "E2d-v7.4.1",
+   "location": [
+    "candidates/E2d-v7.4.1/native"
+   ],
+   "rawSha256": {
+    "sal": "a5acf29175b041d243aac19e5ffee4c260f0c6cab3b538679c36ed1e59286c1b",
+    "sgvl": "140806334cf751348a301c82ed91b0e8f131bf05609727461ff2f16fdd295371",
+    "diagram": "c5b28c07070559b78d8bfa581be7d99e892a6857f5f142ee9dab398fc55aa95b"
+   },
+   "normalizedSha256": {
+    "sal": "1d81fcb91e931c3ee46a06f4fcad1039c154a9180085008fdac090fe6fff26af",
+    "sgvl": "8595e5b886211cb9c81a074689945af5e4f58c9ca7cef4f429a781a2507c70cb"
+   },
+   "declared": {
+    "sal": "full",
+    "sgvl": "not declared by PLAN (measured)",
+    "diagram": "not declared by PLAN (measured)"
+   },
+   "declaredIn": [
+    "program/architect/E2-status/PLAN.v7_7.json@c71f9a54744f source.frozenMutantSources.E2d-v7.4.1",
+    "program/architect/E2-status/PLAN.json@bf55168d2368 source.frozenMutantSources.E2d-v7.4.1"
+   ],
+   "stateNorm": "E2b",
+   "stateNormCitation": "E2b Network3 grants (E2d changes Network12/RndPhysicalCompact/Network11)",
+   "boot": {
+    "inventorySha256": "14d323a891e18f8af83d87e112ddf086b17b430e93c97ea3a1ca081a2f614045",
+    "blocks": 230,
+    "networks": 14,
+    "runtimeNormalizedSha256": "21f7161288b762cb8460188654dc4e8e2623d09d5e44d15b8b29dbe511cde7bf"
+   }
+  },
+  {
+   "id": "E2d-v7.5",
+   "location": [
+    "candidates/E2d-v7.5/native"
+   ],
+   "rawSha256": {
+    "sal": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b",
+    "sgvl": "140806334cf751348a301c82ed91b0e8f131bf05609727461ff2f16fdd295371",
+    "diagram": "94e9b231cef30cf50ee6e61d0770d696f1e77a28ed1d286051ea653729e4cbfb"
+   },
+   "normalizedSha256": {
+    "sal": "9dc76b7afc69de27d5f7125b335ba1b5a58cc021d48fc0384459a0e9f3c2e33c",
+    "sgvl": "8595e5b886211cb9c81a074689945af5e4f58c9ca7cef4f429a781a2507c70cb"
+   },
+   "declared": {
+    "sal": "full",
+    "sgvl": "not declared by PLAN (measured)",
+    "diagram": "not declared by PLAN (measured)"
+   },
+   "declaredIn": [
+    "program/architect/E2-status/PLAN.v7_7.json@c71f9a54744f source.frozenMutantSources.E2d-v7.5",
+    "program/architect/E2-status/PLAN.json@bf55168d2368 source.frozenMutantSources.E2d-v7.5"
+   ],
+   "stateNorm": "E2b",
+   "stateNormCitation": "E2b Network3 grants (E2d changes Network12/RndPhysicalCompact/Network11)",
+   "boot": {
+    "inventorySha256": "f84980f32cdd9fde3e36ec711143eeb1b3b8dded564450e794145ad898e77b94",
+    "blocks": 226,
+    "networks": 14,
+    "runtimeNormalizedSha256": "21f7161288b762cb8460188654dc4e8e2623d09d5e44d15b8b29dbe511cde7bf"
+   }
+  },
+  {
+   "id": "E2d-v7.6",
+   "location": [
+    "candidates/E2d-v7.6/native"
+   ],
+   "rawSha256": {
+    "sal": "e4cf767e912e946b86e4039d1fbe23c34d73689c6fee4baa45cbfb80f1bc86bc",
+    "sgvl": "da69870c6721e7f27431b8fdc2007cbd747f4d0eae7b7eb8f7aea7394c315120",
+    "diagram": "72fea99c6763c3e854860df3f5b3b25030075831a2fe496d34c22a625376ef60"
+   },
+   "normalizedSha256": {
+    "sal": "177eb04a1b2f7370abcf06aef8347100627dd3c3909d090bb10c865cfb8951c3",
+    "sgvl": "f3b27ff41f050fa8bebbecd999647b7517dc974f968d34c85d160c5cd542b889"
+   },
+   "declared": {
+    "sal": "full",
+    "sgvl": "prefix",
+    "diagram": "prefix"
+   },
+   "declaredIn": [
+    "program/architect/E2-status/PLAN.v7_7.json@c71f9a54744f source.frozenMutantSources.E2d-v7.6",
+    "program/architect/E2-status/PLAN.json@bf55168d2368 source.frozenMutantSources.E2d-v7.6"
+   ],
+   "stateNorm": "E2b",
+   "stateNormCitation": "E2b Network3 grants (E2d changes Network12/RndPhysicalCompact/Network11)",
+   "boot": {
+    "inventorySha256": "8226340511c4422ba1836cd703fac949cd54873c799a843391240172fc204741",
+    "blocks": 229,
+    "networks": 14,
+    "runtimeNormalizedSha256": "21f7161288b762cb8460188654dc4e8e2623d09d5e44d15b8b29dbe511cde7bf"
+   }
+  },
+  {
+   "id": "E2d-v7.7",
+   "location": [
+    "candidates/E2d/native"
+   ],
+   "rawSha256": {
+    "sal": "c2f9ccd7a901e40f1ad5a3db780898c32b19180d6993528ce34afaffdb903689",
+    "sgvl": "d845bd26331cfb166e13094c2a4c9cf9918252bb2cb34b6644acccc4c4564433",
+    "diagram": "8797b832fee722dc068dce8e7f37ce4390acc8303abea1237f670bd394d71469"
+   },
+   "normalizedSha256": {
+    "sal": "1669def802bfeeff2e04b1d4c3d4a3305887ecc15a8775aa25382cab06628d72",
+    "sgvl": "30651d3eb639501f3c3831c1ef7fd04217fc386c3ec0963c731bd8c3f5205b3c"
+   },
+   "declared": {
+    "sal": "full",
+    "sgvl": "full",
+    "diagram": "full"
+   },
+   "declaredIn": [
+    "program/architect/E2-status/PLAN.json@bf55168d2368 source.frozenMutantSources.E2d-v7.7",
+    "program/architect/E2-status/PLAN.v7_7.json@c71f9a54744f source.candidates.E2d + candidatesE2dFiles"
+   ],
+   "stateNorm": "E2b",
+   "stateNormCitation": "E2b Network3 grants (E2d changes Network12/RndPhysicalCompact/Network11)",
+   "boot": {
+    "inventorySha256": "93093c79ff22f6ff2aebcb31061eb19eff5aae2344a2a6bbe688bd5acc3d0ce8",
+    "blocks": 230,
+    "networks": 14,
+    "runtimeNormalizedSha256": "21f7161288b762cb8460188654dc4e8e2623d09d5e44d15b8b29dbe511cde7bf"
+   }
+  }
+ ]
+}

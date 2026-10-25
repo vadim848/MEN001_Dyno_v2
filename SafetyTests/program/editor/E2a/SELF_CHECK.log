@@ -1,0 +1,38 @@
+PASS source-is-R1-candidate {"TwinSafeGroup1.sal":"ca841a01fe44f776a5868968fde70cce728657aaf411d6b8bfa6689cfadc7bb3","GVL1.sgvl":"4f205138337ea3de3660d5ef2d8978db438e3e8d19f2e9dd393ec7a5816cdb36","TwinSafeGroup1.sal.diagram":"b82aa41a6ee065267852d78ccaff961714eca1e8e8c006f087de715fb2a137b6"}
+PASS native-equals-staged-semantics blocks/ports/attrs/order/wires/global refs/SAL usages/SGVL usages identical; only CRC/formatting differ
+PASS native-structure-preflight {"status":"PASS","errors":[],"counts":{"networks":14,"blocks":215,"ports":1832,"variables":75,"wires":275,"crossNetworkWires":0}}
+PASS binding-audit {"status":"PASS","errors":[]}
+PASS counts-215-1832-65-75-14 {"source":{"networks":14,"fb":215,"ports":1832,"symbols":65,"salVariables":75,"wires":277,"globalRefs":163,"sgvlUsages":163,"salFbUsages":223,"aliasUsages":76},"native":{"networks":14,"fb":215,"ports":1832,"symbols":65,"salVariables":75,"wires":275,"globalRefs":168,"sgvlUsages":168,"salFbUsages":223,"aliasUsages":76}}
+PASS wire-delta-minus8-plus6 {"source":277,"native":275}
+PASS global-refs-equal-sgvl-usages {"native":168,"sgvl":168,"source":163}
+PASS sal-usage-counts-unchanged {"source":[223,76],"native":[223,76]}
+PASS no-dangling-references []
+PASS global-ref-sgvl-usage-pairing-1to1 []
+PASS every-symbol-has-source-and-consumer []
+PASS every-symbol-single-source []
+PASS symbol-set-and-ids-unchanged 
+PASS single-source-per-input-and-unique-wire-pairs {"dupPairs":0,"multi":[]}
+PASS activated-inputs-have-source {"native":[],"R1baseline":[]}
+PASS deactivated-inputs-have-no-source []
+PASS deleted-blocks-equal-plan ["Network3/FBOr11","Network3/FBOr6"]
+PASS new-blocks-equal-plan ["Network6/HEALTHY_OK","Network6/HEALTH_GUARD"]
+PASS plan-input-sources-and-contacts []
+PASS new-block-outputs [{"k":"Network6/HEALTHY_OK/AndOut","wires":["Network6/HEALTH_GUARD/OrIn2"],"globals":0},{"k":"Network6/HEALTH_GUARD/OrOut","wires":["Network6/FBAnd9/AndIn6"],"globals":0}]
+PASS new-blocks-native-template-signature 
+PASS surviving-port-deltas-only-planned []
+PASS wire-delta-exact {"wRemoved":["Network3/FBOr11/OrOut>Network3/FBRs6/Reset","Network3/FBOr16/OrOut>Network3/FBRs8/Set","Network3/FBOr6/OrOut>Network3/FBOr13/OrIn2","Network3/FBOr6/OrOut>Network3/FBRs3/Set","Network3/FBRs1/RsOut>Network3/FBOr11/OrIn2","Network3/FBRs4/RsOut>Network3/FBOr5/OrIn2","Network3/FBRs5/RsOut>Network3/FBOr7/OrIn2","Network3/FBRs6/RsOut>Network3/FBOr9/OrIn2"],"wAdded":["Network3/FBOr16/OrOut>N
+PASS sal-variables-only-renames-and-planned-usage-moves []
+PASS rename-4-name-attributes-only-same-Id [{"o":"in_LV_Healthy_FBK","n":"in_LV_Faulty_FBK","id":"a75a2b7d-a269-4bb3-9fb3-0a7bd5b9f0d5","srcId":"a75a2b7d-a269-4bb3-9fb3-0a7bd5b9f0d5"},{"o":"in_HV_Healthy_FBK","n":"in_HV_Faulty_FBK","id":"8f4a3944-7d6e-4f21-aabe-1e3ec85efd28","srcId":"8f4a3944-7d6e-4f21-aabe-1e3ec85efd28"},{"o":"outPLC_LV_Healthy","n":"outPLC_LV_Faulty","id":"33e570eb-ccb5-477a-857a-0c55c5bee442","srcId":"33e570eb-ccb5-477a
+PASS rename-not-in-sgvl-or-diagram 
+PASS renamed-variables-alias-usage-unchanged [{"nn":"in_LV_Faulty_FBK","alias":["{\"sdsId\":\"61\",\"channelId\":\"7\",\"functionId\":\"1613824257\"}"]},{"nn":"in_HV_Faulty_FBK","alias":["{\"sdsId\":\"61\",\"channelId\":\"3\",\"functionId\":\"1611727105\"}"]},{"nn":"outPLC_LV_Faulty","alias":["{\"sdsId\":\"89\",\"channelId\":\"1\",\"functionId\":\"1131179972\"}"]},{"nn":"outPLC_HV_Faulty","alias":["{\"sdsId\":\"90\",\"channelId\":\"1\",\"fun
+PASS order-of-execution-per-plan {"contiguous":true,"head14":true,"FBAnd15_after_N12FBDecouple1":true,"N3FBAnd2_before_N3FBAnd1":true,"N2FBAnd11_before_N2FBAnd91":true,"HEALTHY_OK_HEALTH_GUARD_before_FBAnd9":true,"B3_2_FBAnd16_CONNECTORS_SCOPE_before_N1FBAnd1":true,"relativeOrderOfUnmovedBlocksPreserved":true}
+PASS timer-and-parameter-ports-unchanged 
+PASS no-new-or-removed-timers {"source":15,"native":15}
+PASS networks-unchanged-attrs ["Network1:49","Network2:21","Network3:18","Network4:0","Network5:0","Network6:38","Network7:11","Network8:7","Network9:0","Network10:2","Network11:5","Network12:18","RndPhysicalCompact:39","SafeResumption:7"]
+PASS staged-kept-source-crc {"source":{"sal":"1331029666","sgvl":"2739962901"},"staged":{"sal":"1331029666","sgvl":"2739962901"},"native":{"sal":"522332563","sgvl":"99786432"}}
+PASS new-variable-slots-use-sds61-fsoe-safe-inputs [{"k":"Network6/HEALTHY_OK/AndIn1","filter":"3","alias":["{\"sdsId\":\"61\",\"channelId\":\"7\",\"functionId\":\"1613824257\"}"]},{"k":"Network6/HEALTHY_OK/AndIn2","filter":"2","alias":["{\"sdsId\":\"61\",\"channelId\":\"3\",\"functionId\":\"1611727105\"}"]}]
+PASS diagram-shapes-match-model {"source":{"fBAndShape":101,"fBOrShape":48,"fBRsShape":27,"fBTonShape":15,"fBDecoupleShape":22,"fBEstopShape":2,"inPortShape":1459,"outPortShape":373,"wiredLinkConnector":277,"networkSwimLane":14},"native":{"fBAndShape":102,"fBOrShape":47,"fBRsShape":27,"fBTonShape":15,"fBDecoupleShape":22,"fBEstopShape":2,"inPortShape":1459,"outPortShape":373,"wiredLinkConnector":275,"networkSwimLane":14}}
+PASS diagram-connectors-resolve-one-per-wire {"badConn":[],"connectors":275,"wires":275}
+PASS diagram-no-deleted-block-refs-and-lane-membership [{"b":"Network6/HEALTHY_OK","lane":"Network6"},{"b":"Network6/HEALTH_GUARD","lane":"Network6"}]
+
+36/36 self-checks PASS

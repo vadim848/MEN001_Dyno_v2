@@ -1,0 +1,535 @@
+TAP version 13
+# Subtest: E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 1 - E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07) # TODO NOT VERIFIED: refused without fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 5327.3838
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+0, l=never (Q), a=never, first Emergency never
+# Subtest: E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 2 - E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 3694.1992
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+1, l=never (Q), a=s+0, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 3 - E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 3769.4326
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=s-1, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (EMG-004 / Q-RC-14); no new lift after s (TD-07)
+ok 4 - E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (EMG-004 / Q-RC-14); no new lift after s (TD-07)
+  ---
+  duration_ms: 3758.7849
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+401, l=s-399 (Q+2), a=s-400, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+ok 5 - E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 7862.9038
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=s-1, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+ok 6 - E2b REL01-e2-LATE Safe LV connector: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 3589.1607
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+3, l=s-1 (Q+2), a=s-2, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 7 - E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07) # TODO NOT VERIFIED: refused without fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 3616.2879
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+0, l=never (Q), a=never, first Emergency never
+# Subtest: E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 8 - E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 3070.6195
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+1, l=never (Q), a=s+0, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 9 - E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 2962.5383
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=s-1, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (EMG-004 / Q-RC-14); no new lift after s (TD-07)
+ok 10 - E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (EMG-004 / Q-RC-14); no new lift after s (TD-07)
+  ---
+  duration_ms: 2684.0328
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+401, l=s-399 (Q+2), a=s-400, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+ok 11 - E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 5401.4255
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=s-1, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+ok 12 - E2b REL01-e2-LATE Safe HV connector: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 2867.3669
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+3, l=s-1 (Q+2), a=s-2, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 13 - E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07) # TODO NOT VERIFIED: refused without fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 2966.5011
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+0, l=never (Q), a=never, first Emergency never
+# Subtest: E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 14 - E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 2818.9205
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+1, l=never (Q), a=s+0, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 15 - E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 2585.7904
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=s-1, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (EMG-004 / Q-RC-14); no new lift after s (TD-07)
+ok 16 - E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (EMG-004 / Q-RC-14); no new lift after s (TD-07)
+  ---
+  duration_ms: 2703.5334
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+401, l=s-399 (Q+2), a=s-400, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+ok 17 - E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 5197.5186
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=s-1, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+ok 18 - E2b REL01-e2-LATE Safe both connectors: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 2618.3526
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+3, l=s-1 (Q+2), a=s-2, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 19 - E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07) # TODO NOT VERIFIED: refused without fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4709.6089
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+0, l=never (Q), a=never, first Emergency never
+# Subtest: E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+not ok 20 - E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 2529.5908
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:75:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (Q=7717, episode [7718, 7818))
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7720 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7720 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:76:94)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# REL01-e2-LATE observation: s=Q+1, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+not ok 21 - E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 2660.1149
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:75:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (Q=7717, episode [7719, 7819))
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:76:94)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)
+ok 22 - E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)
+  ---
+  duration_ms: 2716.7536
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+401, l=s-399 (Q+2), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+not ok 23 - E2b REL01-e2-LATE R&D NC1: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 5142.7904
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:79:45'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (l0=7719)
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:82:39)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+ok 24 - E2b REL01-e2-LATE R&D NC1: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 2844.9844
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+3, l=s-1 (Q+2), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 25 - E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07) # TODO NOT VERIFIED: refused without fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 2783.4517
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+0, l=never (Q), a=never, first Emergency never
+# Subtest: E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+not ok 26 - E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 2689.5136
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:75:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (Q=7717, episode [7718, 7818))
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7720 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7720 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:76:94)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# REL01-e2-LATE observation: s=Q+1, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+not ok 27 - E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 2819.2259
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:75:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (Q=7717, episode [7719, 7819))
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:76:94)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)
+ok 28 - E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)
+  ---
+  duration_ms: 2651.8545
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+401, l=s-399 (Q+2), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC2: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+not ok 29 - E2b REL01-e2-LATE R&D NC2: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 5461.4944
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:79:45'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (l0=7719)
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:82:39)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC2: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+ok 30 - E2b REL01-e2-LATE R&D NC2: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 2751.456
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+3, l=s-1 (Q+2), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+ok 31 - E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07) # TODO NOT VERIFIED: refused without fault - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 2596.3867
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+0, l=never (Q), a=never, first Emergency never
+# Subtest: E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+not ok 32 - E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+1 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 2686.5757
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:75:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (Q=7717, episode [7718, 7818))
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7720 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7720 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:76:94)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# REL01-e2-LATE observation: s=Q+1, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+not ok 33 - E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+2 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)
+  ---
+  duration_ms: 2721.885
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:75:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (Q=7717, episode [7719, 7819))
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:76:94)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)
+ok 34 - E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)
+  ---
+  duration_ms: 2757.8811
+  type: 'test'
+  ...
+# REL01-e2-LATE observation: s=Q+401, l=s-399 (Q+2), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+not ok 35 - E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = l0 for 100 ms (l0 = first lift of the no-episode control X0) -> coinciding scan (q): refused without energy or accepted with Emergency; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 5273.6082
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2b-rel01-e2.test.js:79:45'
+  failureType: 'testCodeFailure'
+  error: |-
+    2 violated checks (l0=7719)
+    + actual - expected
+    
+    + [
+    +   'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4',
+    +   'refused without Emergency (EMG-003, IL-02); first s+1'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'refused: initial stage b_Step_RnD in every scan to the end; first change t=7721 b_Step4'
+    1: 'refused without Emergency (EMG-003, IL-02); first s+1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2b-rel01-e2.test.js:82:39)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+2, l=never (Q), a=never, first Emergency s+1
+# Subtest: E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+ok 36 - E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)
+  ---
+  duration_ms: 2503.4542
+  type: 'test'
+  ...
+# l0=Q+2
+# REL01-e2-LATE observation: s=Q+3, l=s-1 (Q+2), a=never, first Emergency s+1
+1..36
+# tests 36
+# suites 0
+# pass 21
+# fail 9
+# cancelled 0
+# skipped 0
+# todo 6
+# duration_ms 125943.1257

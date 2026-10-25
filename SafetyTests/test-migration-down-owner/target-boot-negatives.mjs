@@ -1,0 +1,2 @@
+import fs from'node:fs';import{spawnSync}from'node:child_process';const b=new URL('./',import.meta.url),r=spawnSync(process.execPath,['--test','sandbox/SafetyTests/test/boot-preflight.test.js','sandbox/SafetyTests/test/current-v2-migration-negatives.test.js'],{cwd:b,encoding:'utf8',maxBuffer:8*1024*1024});fs.writeFileSync(new URL('boot-negative-target.log',b),r.stdout+r.stderr);console.log(r.stdout.split('\n').filter(l=>l.startsWith('not ok')||/^# (tests|pass|fail)/.test(l)).join('\n'));
+process.exitCode=r.status??3;

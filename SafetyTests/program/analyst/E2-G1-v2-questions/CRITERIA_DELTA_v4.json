@@ -1,0 +1,800 @@
+{
+ "schema": "analyst-criteria-delta/v4",
+ "slice": "E2-G1-v2-questions",
+ "role": "v2-analyst",
+ "date": "2026-10-21",
+ "base": {
+  "criteriaV2Md": "f2f11d77eba0d3b4441b42ff55666fbfc741bdd2867ebb763829328ad909eaa3",
+  "criteriaV2Json": "49d534c8a311fecdf6eb6a197968e3ce51cd34f4ee9118e9eae80357978baeb4",
+  "deltaV3Md": "a017cbde326bde62c1d1bda8381e5687d98fa35eb6c95e0e26d593985e6ea15f",
+  "deltaV3Json": "7e94b53bc3cf531418ca7abed0ca06f21230800a33b65bb79b518432b67ea5a2"
+ },
+ "sources": {
+  "scenarioDecisions": "bdf55216dab6e4aa3e3a1c01ae51f9441d2a3664c5ec8fd93955379bbbdb86fe",
+  "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+  "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+  "spec": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472",
+  "scope": "7db88835f9796b161e94c53f6253c8376d926257f416922e4023cff3959b13a6",
+  "traceMatrix": "066315b12902ba9227f12149b58dfc3387034c8b173e0dfeb7454556f5e11a71",
+  "testerHandoffV2": "ad575086b493cbd3da756bee64958e5d50434c54b8c1a222eef0f5d63c8832e4",
+  "reference": "4495a1f6049f6a58ebfd436761faa84d17c8d643",
+  "head": "b580920"
+ },
+ "precedence": "v4 over deltaV3 over criteriaV2",
+ "general": {
+  "ruleL": {
+   "status": "READY-D",
+   "replaces": [
+    "EMGREF-LV abs <=e+1",
+    "IL-05a <=c+1",
+    "EMG4-03 <=e+1",
+    "EMGREF(3)/IL-03/IL-05a same-scan"
+   ],
+   "imm": [
+    "status Emergency",
+    "C3/BMS OFF",
+    "out_LV_Discharge_Request",
+    "Unlock FALSE",
+    "no new energy increase (invariant)"
+   ],
+   "del": [
+    "C1 OFF (2 s)",
+    "STO",
+    "HV discharge",
+    "C2 OFF (emergency chain)"
+   ],
+   "L1": "cause X != in_Estop_PLC/TRIGGER (ES_NC_1/2, Mentee, LV/HV connector, NC1/NC2, heartbeat, FBK-loss, WDG-05): Imm tau_X<=tau_R; Del tau_R-1<=tau_X<=tau_R; lag forbidden; R = in_Estop_PLC same state/phase same e",
+   "L2": "in_Estop_PLC in state S != steady Run vs steady Run: Imm offset <= Run offset +1; Del offset in [d_Run, d_Run+1]",
+   "L3": "steady Run in_Estop_PLC candidate vs reference 4495a1f measured on stand with SHA: Imm <= ref+1; Del in [ref, ref+1]; F1 split observation +2/+4/+2005/+7007/+7009/+8010 not oracle",
+   "L4": "status Emergency not later than first emergency output of same trace (E2-01)",
+   "basis": "reference+F1: in_Estop_PLC->FBAnd1 (order 92/90) ->FBEstop1.EStopIn3 (order 18/24) one cycle longer than ES_NC_1->EStopIn1; Q-ARCH-01, Q-E2Q-01; AGENTS: instant = program processing"
+  },
+  "fbkConfirmed": {
+   "status": "READY-D",
+   "definition": "t_f = first scan >= t_on with FBK ON while same command ON, t_f<=t_on+500; confirmed until OFF command scan o; loss = FBK FALSE at l, t_f<l<o, no filter (1 scan); FBK first ON after t_on+500 is not confirmed",
+   "basis": "Q-RC-19, E6 definition (30 s starts after FBK arrives)",
+   "confirmPending": "Q-V4-01 (non-blocking)"
+  }
+ },
+ "criteria": [
+  {
+   "id": "E2-02",
+   "status": "READY",
+   "ids": [
+    "STP-004",
+    "EMG-012"
+   ],
+   "stage": "E2/E3",
+   "initial": "Run, down accepted, waiting C2_FBK OFF",
+   "inputs": "(L) LV Faulty TRUE at h; (Lr) LV returns before C2_FBK OFF",
+   "expected": "R&D then chained R&D->Safe; SafetyFault HealthyLost TRUE not later than Safe, held to E6-Q2",
+   "forbidden": [
+    "Step4&Step12",
+    "stay R&D in Lr",
+    "Emergency"
+   ],
+   "boundaries": [],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-E2Q-02 A",
+    "Q-RC-16 A",
+    "E2-Q1"
+   ]
+  },
+  {
+   "id": "STP-F",
+   "status": "READY",
+   "ids": [
+    "STP-002",
+    "EMG-008",
+    "EMG-009",
+    "HLT-001"
+   ],
+   "stage": "E3",
+   "initial": "STP-A/B after STO",
+   "inputs": "LV or HV Faulty TRUE at h in {t_s+1,t_s+2500,t_s+4999,t_d+1,t_d+T_DIS-1}; LV return at h+100/h+3000 variant",
+   "expected": "STP-A moments unchanged; LV: after R&D chained R&D->Safe + SafetyFault not later than Safe; HV: no fault, stays R&D",
+   "forbidden": [
+    "shortened/extended holds",
+    "Emergency",
+    "stay R&D after LV loss"
+   ],
+   "boundaries": [],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-E2Q-02 A",
+    "Q-RC-16 A",
+    "Q-RC-09"
+   ]
+  },
+  {
+   "id": "STP-G4",
+   "status": "READY",
+   "ids": [
+    "EMG-008",
+    "STP-007"
+   ],
+   "stage": "E3",
+   "initial": "steady Run",
+   "inputs": "LV Faulty TRUE at h (>=100 ms), FALSE at h+3000 held",
+   "expected": "G1 moments; on R&D chained R&D->Safe; SafetyFault TRUE",
+   "forbidden": [
+    "stay R&D",
+    "Run"
+   ],
+   "boundaries": [
+    "return after R&D before C1_FBK OFF -> HLT-01"
+   ],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-RC-16 A",
+    "Q-RC-02"
+   ]
+  },
+  {
+   "id": "STP-H",
+   "status": "READY",
+   "ids": [
+    "EMG-008",
+    "EMG-009",
+    "STP-001",
+    "STP-007"
+   ],
+   "stage": "E3",
+   "initial": "STP-A/B, SS1 running",
+   "inputs": "in_LV_Faulty_FBK TRUE at h in {t_a+1,t_a+1000,t_a+1999} held >=100 ms; optional return h+100",
+   "expected": {
+    "h(<=h+1)": "STO active",
+    "t_s+4999/5000/5001": "no Discharge / observation / Discharge",
+    "t_d+T_DIS-1/q/+1": "C2 ON / observation / C2 OFF",
+    "after C2_FBK OFF": "R&D then chained R&D->Safe without command",
+    "fault": "SafetyFault HealthyLost not later than R&D; HealthyLostDuringSS1 for LV observation"
+   },
+   "forbidden": [
+    "wait t_a+2000",
+    "C1 OFF before C2_FBK OFF",
+    "Emergency",
+    "return cancels chain"
+   ],
+   "boundaries": [
+    "h=t_a-1 -> STP-G",
+    "h=t_s -> STP-F",
+    "h=t_a observation"
+   ],
+   "emergencyCombos": [
+    "NC FALSE -> IL-05d(3) Emergency",
+    "HV also lost -> same",
+    "EStop -> EMGREF-RUN rule L"
+   ],
+   "sources": [
+    "Q-RC-15 B",
+    "Q-ARCH-05",
+    "Q-RC-16"
+   ]
+  },
+  {
+   "id": "STP-G5/HLT-03-chained",
+   "status": "READY",
+   "ids": [
+    "MOD-005",
+    "HLT-001",
+    "WDG-004"
+   ],
+   "stage": "E3/E5",
+   "initial": "Safe reached by chain from STP-F/G3/G4/H/I, E2-02(L)",
+   "inputs": "HLT-03 (a)-(e)",
+   "expected": "SafetyFault behaviour per HLT-03",
+   "forbidden": [],
+   "boundaries": [],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-E2Q-02 A",
+    "Q-RC-11"
+   ]
+  },
+  {
+   "id": "STP-I(4)",
+   "status": "READY",
+   "ids": [
+    "MOD-002",
+    "HLT-001"
+   ],
+   "stage": "E3",
+   "initial": "STP-I",
+   "inputs": "LV returns before R&D",
+   "expected": "chained R&D->Safe and SafetyFault anyway",
+   "forbidden": [
+    "stay R&D"
+   ],
+   "boundaries": [],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-RC-16 A"
+   ]
+  },
+  {
+   "id": "WDG-03",
+   "status": "READY",
+   "ids": [
+    "WDG-002",
+    "WDG-003",
+    "MOD-002"
+   ],
+   "stage": "E6",
+   "initial": "R&D->Run accepted at u, STO released, C2 ON at t_on",
+   "inputs": "(a) C2_FBK not ON; (b) C2_FBK ON t_f, HV Faulty TRUE; (c) never ON",
+   "expected": "rollback: STO immediate, Discharge <=+1 after STO, T_DIS (q-1 C2 ON, q+1 OFF), C2_FBK OFF -> R&D, C1 ON kept; SafetyFault not later than R&D",
+   "forbidden": [
+    "SS1",
+    "coast 5 s",
+    "Run",
+    "Emergency",
+    "resume"
+   ],
+   "boundaries": [
+    "(a) ON at t_on+499 continue; none at q=t_on+500 observation, q+1 rollback",
+    "(b) FALSE at t_f+29999 continue; TRUE to t_f+30000 observation, +30001 rollback"
+   ],
+   "emergencyCombos": [
+    "NC -> IL-05d(2) Emergency",
+    "C1_FBK loss -> FBK-05 Emergency",
+    "late C2_FBK after t_on+500 -> no Emergency",
+    "EStop -> EMGREF-RUN"
+   ],
+   "sources": [
+    "Q-RC-12 A",
+    "E6-Q1",
+    "Q-RC-17",
+    "Q-RC-19"
+   ]
+  },
+  {
+   "id": "IL-02/IL-05a N=u",
+   "status": "READY-D",
+   "ids": [
+    "EMG-002",
+    "CVR-004",
+    "CVR-006"
+   ],
+   "stage": "E2/E3",
+   "initial": "steady R&D, BOTH accepted at u on no-event fork",
+   "inputs": "NC FALSE from u held",
+   "expected": "disjunction: (i) no STO release/C2 ON in any scan >=u, R&D, no Emergency/fault; or (ii) if STO released/C2 ON in any scan >=u then Emergency per rule L (ref in_Estop_PLC in StartingRun at u) with full EMGREF-RUN",
+   "forbidden": [
+    "Run",
+    "STO released or C2 ON without later Emergency latch"
+   ],
+   "boundaries": [
+    "N=u-1 -> (i)",
+    "N=u+1 -> (ii)"
+   ],
+   "emergencyCombos": [],
+   "sources": [
+    "V14-Q21(a)",
+    "CVR-004",
+    "Q-RC-03(a)",
+    "CRITERIA v2 section 0"
+   ]
+  },
+  {
+   "id": "IL-03/IL-05a/IL-04/IL-05c timing",
+   "status": "READY-D",
+   "ids": [
+    "EMG-002",
+    "CVR-006"
+   ],
+   "stage": "E3/E4",
+   "initial": "as v2",
+   "inputs": "as v2",
+   "expected": "moments per rule L1",
+   "forbidden": [
+    "lag vs in_Estop_PLC"
+   ],
+   "boundaries": [],
+   "emergencyCombos": [],
+   "sources": [
+    "review G1 v2 N2",
+    "rule L"
+   ]
+  },
+  {
+   "id": "IL-05d",
+   "status": "READY",
+   "ids": [
+    "EMG-002",
+    "CVR-006"
+   ],
+   "stage": "E3/E6/E4",
+   "initial": "(1) abort StartingRun after abort event; (2) WDG-03 rollback; (3) STP-G/STP-H before R&D; (4) CFG-08 rollback before Safe",
+   "inputs": "NC1/NC2/both FALSE, 1 scan and sustained, Door TRUE/FALSE",
+   "expected": "EMGREF-RUN per rule L (ref in_Estop_PLC same phase), Restart -> Safe only; (4) EMGREF, energy E4",
+   "forbidden": [
+    "continue descent without Emergency"
+   ],
+   "boundaries": [
+    "before abort -> IL-05a (Emergency)",
+    "NC at R&D arrival scan observation; +1 after R&D -> IL-02",
+    "(3) after R&D chained R&D->Safe -> IL-05b(3)",
+    "(4) after Safe -> IL-01"
+   ],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-RC-17 B"
+   ]
+  },
+  {
+   "id": "CFG-09",
+   "status": "READY",
+   "ids": [
+    "CFG-001",
+    "MOD-007",
+    "PLC-002"
+   ],
+   "stage": "E4",
+   "initial": "(a) steady Safe NC1&NC2; (b) steady Safe/R&D/Run",
+   "inputs": "(a) BOTH qualified at b + Bypass edge at b; (b) Bypass TRUE with any CMD transition TRUE",
+   "expected": "(a) Safe->R&D, no Config, no PLC error/fault; held Bypass needs new edge in steady Safe; (b) PLC command error, none executed; clear: all incl. Bypass FALSE 1 s",
+   "forbidden": [
+    "Config entry in (a)",
+    "execution in (b)",
+    "error in Config/transitions"
+   ],
+   "boundaries": [
+    "(a) edge b-1 (buttons pressed) ignored, b+1 ignored (CFG-02)",
+    "(b) clear q-1 error, q+1 no error"
+   ],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-ARCH-08 B",
+    "Q-RC-18(a) A",
+    "Q-RC-04",
+    "Q-RC-05"
+   ]
+  },
+  {
+   "id": "PLC-14",
+   "status": "READY (green part READY-D)",
+   "ids": [
+    "EMG-011",
+    "PLC-002"
+   ],
+   "stage": "E4",
+   "initial": "steady Safe or R&D, PLC command error active",
+   "inputs": "full BOTH after 2 s release; green 500 ms in R&D",
+   "expected": "BOTH executes with other permissions, error remains; green R&D->Safe; Config forbidden",
+   "forbidden": [
+    "blocking buttons by PLC error"
+   ],
+   "boundaries": [],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-RC-18(b) A",
+    "CFG-03(g)"
+   ]
+  },
+  {
+   "id": "FLT-01",
+   "status": "READY",
+   "ids": [
+    "WDG-004"
+   ],
+   "stage": "E5 (PLC part E4)",
+   "initial": "various",
+   "inputs": "SafetyFault only / PLC error only / both, cleared in either order",
+   "expected": "Fault = PLC error OR SafetyFault; each cause cleared by its rule; bit FALSE only when both cleared",
+   "forbidden": [
+    "PLC clears SafetyFault",
+    "button clears PLC error"
+   ],
+   "boundaries": [
+    "PLC clear f+999 TRUE, f+1001 FALSE, f+1000 observation"
+   ],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-RC-13 B",
+    "V14-Q10",
+    "E6-Q2"
+   ]
+  },
+  {
+   "id": "FBK-01",
+   "status": "READY-D",
+   "ids": [
+    "EMG-011",
+    "MOD-008",
+    "WDG-001"
+   ],
+   "stage": "E6",
+   "initial": "Safe->R&D, C1 confirmed, waiting LV Healthy",
+   "inputs": "C1_FBK FALSE at l>t_f, 1 scan and sustained",
+   "expected": "EMGREF-LV variant (2), R&D not confirmed, Restart -> Safe",
+   "forbidden": [
+    "rollback instead of Emergency",
+    "R&D"
+   ],
+   "boundaries": [
+    "FBK ON t_on+k (1,10,499), loss t_f+1/t_f+50 -> Emergency",
+    "no FBK by t_on+500 -> WDG rollback",
+    "first ON after t_on+500 then loss -> no Emergency"
+   ],
+   "emergencyCombos": [
+    "loss with Healthy-30s expiry same scan -> Emergency"
+   ],
+   "sources": [
+    "Q-RC-19 C",
+    "E6"
+   ]
+  },
+  {
+   "id": "FBK-02",
+   "status": "READY",
+   "ids": [
+    "EMG-011",
+    "MOD-008"
+   ],
+   "stage": "E2/EX",
+   "initial": "steady R&D",
+   "inputs": "C1_FBK FALSE",
+   "expected": "EMGREF-LV (1)",
+   "forbidden": [],
+   "boundaries": [
+    "restore after 1-100 ms does not cancel (EMG-005)"
+   ],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-RC-19 C",
+    "Q-ARCH-01"
+   ]
+  },
+  {
+   "id": "FBK-03",
+   "status": "READY-D",
+   "ids": [
+    "EMG-011",
+    "MOD-002"
+   ],
+   "stage": "E3/E6",
+   "initial": "StartingRun; C2 after its t_f incl. RUN-CONF 100 ms window",
+   "inputs": "C1_FBK or C2_FBK FALSE",
+   "expected": "EMGREF-RUN, Run not confirmed",
+   "forbidden": [
+    "Run",
+    "rollback"
+   ],
+   "boundaries": [
+    "C2 before t_f -> WDG-03"
+   ],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-RC-19 C"
+   ]
+  },
+  {
+   "id": "FBK-04",
+   "status": "READY",
+   "ids": [
+    "EMG-011",
+    "MOD-008"
+   ],
+   "stage": "E3",
+   "initial": "steady Run",
+   "inputs": "C1_FBK or C2_FBK FALSE",
+   "expected": "EMGREF-RUN",
+   "forbidden": [],
+   "boundaries": [],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-RC-19 C"
+   ]
+  },
+  {
+   "id": "FBK-05",
+   "status": "READY-D",
+   "ids": [
+    "EMG-011",
+    "STP-001",
+    "STP-006",
+    "STP-007"
+   ],
+   "stage": "E3/E6",
+   "initial": "Run->R&D phases (C2 until C2 OFF command; C1 whole), abort StartingRun, WDG-03 rollback, STP-G/H, STP-I",
+   "inputs": "C1_FBK or C2_FBK FALSE before its OFF command",
+   "expected": "EMGREF-RUN (ref in_Estop_PLC same phase)",
+   "forbidden": [],
+   "boundaries": [
+    "C2_FBK OFF at/after C2 OFF command -> normal"
+   ],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-RC-19 C"
+   ]
+  },
+  {
+   "id": "FBK-06",
+   "status": "READY-D/observation",
+   "ids": [
+    "EMG-011",
+    "MOD-005"
+   ],
+   "stage": "E6",
+   "initial": "R&D->Safe (incl. chained, HLT-01), WDG-01/02 rollback, abort Safe->R&D",
+   "inputs": "C1_FBK FALSE at l",
+   "expected": "l<=a-1 -> FBK-01/02; a<=l<o observation; l>=o expected OFF, no Emergency",
+   "forbidden": [],
+   "boundaries": [],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-RC-19 C"
+   ]
+  },
+  {
+   "id": "FBK-07",
+   "status": "READY (energy BLOCKED E4)",
+   "ids": [
+    "CFG-005",
+    "EMG-011"
+   ],
+   "stage": "E4/E6",
+   "initial": "Config, C1 and/or C2 after their t_f",
+   "inputs": "FBK FALSE",
+   "expected": "EMGREF; not rollback",
+   "forbidden": [
+    "rollback",
+    "ignore"
+   ],
+   "boundaries": [
+    "unconfirmed contactor -> CFG-08"
+   ],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-RC-19 C",
+    "V14-Q19"
+   ]
+  },
+  {
+   "id": "FBK-08",
+   "status": "READY-D",
+   "ids": [
+    "CFG-006",
+    "EMG-011"
+   ],
+   "stage": "E4/E6",
+   "initial": "Config exit before OFF commands; CFG-08 rollback for confirmed contactor",
+   "inputs": "FBK FALSE",
+   "expected": "EMGREF",
+   "forbidden": [],
+   "boundaries": [],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-RC-19 C",
+    "Q-RC-03(b2)"
+   ]
+  },
+  {
+   "id": "FBK-09",
+   "status": "READY-D",
+   "ids": [
+    "EMG-006"
+   ],
+   "stage": "E2/EX",
+   "initial": "Emergency latched, chain still holds C1",
+   "inputs": "C1_FBK FALSE",
+   "expected": "stays Emergency, no increase; chain moments observation",
+   "forbidden": [],
+   "boundaries": [],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-RC-19 C"
+   ]
+  },
+  {
+   "id": "UNL-04",
+   "status": "READY (Safe); BLOCKED Q-V4-03 (R&D)",
+   "ids": [
+    "CVR-001",
+    "CVR-002",
+    "CVR-003"
+   ],
+   "stage": "Unlock/E5",
+   "initial": "steady Safe, NC1/NC2/both FALSE, Door TRUE/FALSE, EStop OK, buttons released >=2 s",
+   "inputs": "blue held from s",
+   "expected": "Unlock FALSE at s+499, TRUE by s+501 (s+500 observation), held while blue without green, FALSE on release",
+   "forbidden": [
+    "refuse due to open cover",
+    "Unlock <500 ms",
+    "with green",
+    "in Emergency/transitions"
+   ],
+   "boundaries": [
+    "closed-cover control same result"
+   ],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-ARCH-04 A",
+    "BTN-004",
+    "SPEC section 5"
+   ]
+  },
+  {
+   "id": "REL-01",
+   "status": "READY ((b)(c)(e) READY-D)",
+   "ids": [
+    "BTN-001",
+    "BTN-002",
+    "CVR-004",
+    "EMG-003"
+   ],
+   "stage": "E2d/E5",
+   "initial": "(a)(b) steady Safe, (c) steady R&D, buttons released >2 s",
+   "inputs": "(a) cover 300 ms; (b) LV/HV/both connector 300 ms; (c) cover 300 ms in R&D; then BOTH after 1700 ms",
+   "expected": "attempt accepted (Safe->R&D / R&D->Run), no fault",
+   "forbidden": [
+    "restart of 2 s count by permission return"
+   ],
+   "boundaries": [
+    "(d) release 1999 rejected, 2000 observation, 2001 accepted, with and without episode",
+    "(e) episode overlapping BOTH qualification -> rejected; held gesture not executed after restore"
+   ],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-REL-AFTER-PERMIT A",
+    "EMG-003",
+    "IL-01",
+    "IL-02"
+   ]
+  },
+  {
+   "id": "EMGREF-LV",
+   "status": "READY",
+   "ids": [
+    "EMG-001",
+    "EMG-004",
+    "EMG-006"
+   ],
+   "stage": "EX",
+   "initial": "as delta v3",
+   "inputs": "as delta v3",
+   "expected": "variant (2) C1 OFF per L2 (q-1 ON, q+1 OFF vs Run); C3/BMS OFF and LV discharge per L2 Imm; absolute <=e+1 removed",
+   "forbidden": [],
+   "boundaries": [],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-E2Q-01 A",
+    "Q-ARCH-01"
+   ]
+  },
+  {
+   "id": "EMG4-03 timing",
+   "status": "READY-D",
+   "ids": [
+    "EMG-004"
+   ],
+   "stage": "EX",
+   "initial": "as delta v3",
+   "inputs": "as delta v3",
+   "expected": "moments per rule L1",
+   "forbidden": [
+    "lag"
+   ],
+   "boundaries": [],
+   "emergencyCombos": [],
+   "sources": [
+    "Q-RC-14",
+    "rule L"
+   ]
+  }
+ ],
+ "answersToTester": {
+  "T1_A10_and_N2": "Rule L1 for all causes != in_Estop_PLC incl. NC: lead <=1 scan allowed (Del), any lead for Imm, lag forbidden; IL-03/IL-05a/IL-05d move from same-scan to L1",
+  "T2_IL02_Nu": "normative disjunction (i) rejected / (ii) Emergency, one test in both",
+  "T3_EMGREF_LV": "absolute <=e+1 withdrawn; L2 (<= Run+1) normative; add L3 anchor vs reference measured on stand",
+  "T4_QRC19": "FBK-01..09 with WDG boundaries",
+  "N1_permissions": "Safe->R&D permissions after E2: no Emergency (ES/PLC/Mentee/heartbeat - not usable as episode, latch), LV/HV connector (EMG-003; usable, main REL variant), no SafetyFault (not episode), PLC error (does not block buttons), steady Safe, MOD-008 FBK (conditional, Q-V4-02); cover not a permission; for R&D->Run cover is"
+ },
+ "blocked": [
+  {
+   "item": "UNL-04 R&D open cover",
+   "on": "Q-V4-03"
+  },
+  {
+   "item": "FBK-07 energy in Config, IL-05d(4) energy",
+   "on": "E4 documentation"
+  },
+  {
+   "item": "FBK ON without command reaction beyond UP block",
+   "on": "Q-V4-02"
+  },
+  {
+   "item": "SafetyFault/Fault observation",
+   "on": "architect symbol name (NV until then)"
+  }
+ ],
+ "questions": [
+  {
+   "id": "Q-V4-01",
+   "priority": "low",
+   "blocking": false,
+   "topic": "Q-RC-19 confirmation literal reading (bounce)",
+   "options": [
+    "A Emergency on any loss after first FBK ON",
+    "B watchdog owns until t_on+500",
+    "C debounce N ms"
+   ],
+   "default": "A"
+  },
+  {
+   "id": "Q-V4-02",
+   "priority": "low",
+   "blocking": false,
+   "topic": "FBK ON without ON command in Safe/R&D",
+   "options": [
+    "A UP block only",
+    "B SafetyFault",
+    "C Emergency"
+   ]
+  },
+  {
+   "id": "Q-V4-03",
+   "priority": "low",
+   "blocking": "UNL-04 R&D only",
+   "topic": "Unlock in R&D with open cover",
+   "options": [
+    "A as Safe",
+    "B keep F1"
+   ]
+  }
+ ],
+ "scopeDelta": [
+  {
+   "id": "EMG-002",
+   "add": "NC loss in abort StartingRun, WDG-003 rollback, STP-007, Config-entry rollback -> Emergency",
+   "basis": "Q-RC-17"
+  },
+  {
+   "id": "EMG-011/MOD-008",
+   "add": "loss of confirmed C1/C2 FBK with ON command -> Emergency everywhere; before confirmation watchdog; after OFF WDG-003",
+   "basis": "Q-RC-19"
+  },
+  {
+   "id": "WDG-003/MOD-002",
+   "add": "rollback sequence abort StartingRun, also if C2_FBK never ON (confirmed)",
+   "basis": "Q-RC-12"
+  },
+  {
+   "id": "STP-007/EMG-008",
+   "add": "LV in SS1 like HV + chained to Safe + SafetyFault; LV loss remembered until Safe",
+   "basis": "Q-RC-15, Q-RC-16"
+  },
+  {
+   "id": "STP-002/HLT-001",
+   "add": "LV loss after STO -> chained R&D->Safe + SafetyFault",
+   "basis": "Q-E2Q-02"
+  },
+  {
+   "id": "EMG-006",
+   "add": "emergency reaction timing rule L",
+   "basis": "Q-ARCH-01, Q-E2Q-01"
+  },
+  {
+   "id": "WDG-004",
+   "add": "common Fault bit = PLC error OR SafetyFault",
+   "basis": "Q-RC-13"
+  },
+  {
+   "id": "CFG-001/PLC-002",
+   "add": "BOTH+Bypass same scan -> Safe->R&D; Bypass is a transition command for simultaneity; PLC error does not block buttons",
+   "basis": "Q-ARCH-08, Q-RC-18"
+  },
+  {
+   "id": "CVR-001",
+   "add": "Safe: Unlock regardless of already open cover",
+   "basis": "Q-ARCH-04"
+  },
+  {
+   "id": "BTN-001",
+   "add": "release count by buttons only; permission blip does not restart",
+   "basis": "Q-REL-AFTER-PERMIT"
+  }
+ ]
+}

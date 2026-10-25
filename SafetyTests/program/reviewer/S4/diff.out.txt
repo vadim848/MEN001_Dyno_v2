@@ -1,0 +1,517 @@
+blocks 260 -> 297; networks 14 -> 14
+REMOVED //Network1/FBTon1
+REMOVED //Network1/FBAnd10
+REMOVED //Network1/FBAnd12
+REMOVED //Network2/FBAnd61
+REMOVED //Network2/FBAnd81
+REMOVED //Network2/FBAnd91
+REMOVED //Network2/FBAnd11
+REMOVED //Network6/FBAnd15
+REMOVED //Network6/FBAnd16
+REMOVED //Network6/FBAnd17
+PORT //Network1/FBEstop1/EStopIn7
+   {"ci":"Both Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Single-Channel 1 Activated","d1":"Break Contact (NC)","src":["//Network1/HB_OK/AndOut"],"g":[],"v":[]}
+PORT //Network1/FBOr1/OrIn1
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:linkCfgAccept"]}
+PORT //Network1/FBOr2/OrIn3
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network1/CFG_OFF/AndOut"],"g":[],"v":[]}
+PORT //Network1/FBOr5/OrIn1
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:linkCfgAccept"]}
+PORT //Network1/FBOr6/OrIn2
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network1/CFG_EX/RsOut"],"g":[],"v":[]}
+PORT //Network1/FBAnd2/AndIn2
+   {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network1/FBAnd12/AndOut"],"g":[],"v":[]}
+ -> {"ci":"Deactivated","src":[],"g":[],"v":[]}
+PORT //Network1/FBAnd2/AndIn3
+   {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network1/FBAnd10/AndOut"],"g":[],"v":[]}
+ -> {"ci":"Deactivated","src":[],"g":[],"v":[]}
+PORT //Network1/FBAnd4/AndIn1
+   {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:inPLC_BypassC1C2"]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:linkCfgActive"]}
+PORT //Network1/FBAnd4/AndIn5
+   {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":["b_Step1"],"v":[]}
+ -> {"ci":"Activated","d1":"Make Contact (NO)","src":["//Network1/CFG_EX/RsOut"],"g":[],"v":[]}
+PORT //Network1/FBAnd7/AndIn1
+   {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network1/FBTon1/TonOut"],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network1/CFG_OFF/AndOut"],"g":[],"v":[]}
+PORT //Network1/FBAnd8/AndIn1
+   {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network1/FBTon1/TonOut"],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network1/CFG_OFF/AndOut"],"g":[],"v":[]}
+PORT //Network1/FBAndNotRunSu/AndIn4
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Make Contact (NO)","src":[],"g":[],"v":["V:linkCfgActive"]}
+PORT //Network2/FBAnd4/AndIn1
+   {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:linkRndBothQualified"]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network2/S2R_REQ/OrOut"],"g":[],"v":[]}
+PORT //Network2/FBOr1/OrIn2
+   {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network2/FBAnd91/AndOut"],"g":[],"v":[]}
+ -> {"ci":"Deactivated","src":[],"g":[],"v":[]}
+PORT //Network3/FBOr1/OrIn1
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:linkCfgAccept"]}
+PORT //Network3/FBOr2/OrIn1
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:linkCfgDone"]}
+PORT //Network3/FBAnd2/AndIn5
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Make Contact (NO)","src":["//Network3/STATE_CFG/RsOut"],"g":[],"v":[]}
+PORT //Network6/FBOr5/OrIn2
+   {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network6/FBAnd17/AndOut"],"g":[],"v":[]}
+ -> {"ci":"Deactivated","src":[],"g":[],"v":[]}
+PORT //Network6/FBAnd23/AndIn1
+   {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network6/FBAnd24/AndOut"],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network6/RUN_DOWN_REQ/OrOut"],"g":[],"v":[]}
+PORT //Network6/STAGE_LVON/OrIn3
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:linkCfgActive"]}
+PORT //Network6/SU_ABORT_CAUSE/OrIn3
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:linkPlcAbortSu"]}
+PORT //Network10/FBDecouple2/DecIn5
+   {"src":[],"g":[],"v":[]}
+ -> {"src":[],"g":[],"v":["V:linkCoverClosed"]}
+OUTVAR //Network10/FBDecouple2/DecOut5 [] -> ["V:STS_COVER_LOCKED"]
+PORT //RndPhysicalCompact/STATE_SU/Set
+   {"ci":"Activated","d1":"Break Contact (NC)","src":["//RndPhysicalCompact/GATE_020/AndOut"],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//RndPhysicalCompact/SU_SET/OrOut"],"g":[],"v":[]}
+PORT //RndPhysicalCompact/GATE_SG_SET/OrIn3
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:linkPlcAccR2S"]}
+global exec order of old blocks preserved: false
+orders contiguous 1..N: true
+ADDED //Network3/CFG_RST safeOr order=16 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src= g= v=linkCfgDone
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g=b_Step4_Set v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network3/STATE_CFG safeRs order=17 params=[]
+   Reset ci=Activated d1=Break Contact (NC) src=//Network3/CFG_RST/OrOut g= v=
+   Set ci=Activated d1=Break Contact (NC) src= g= v=linkCfgAccept
+   OUT //Network3/STATE_CFG/RsOut -> V:linkCfgActive
+ADDED //Network1/HB_LO safeAnd order=36 params=[]
+   AndIn1 ci=Activated d1=Make Contact (NO) src= g= v=in_PLC_Heartbeat
+   AndIn2 ci=Deactivated d1= src= g= v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/HB_T_HI safeTon order=37 params=[{"Id":"b3d01407-849c-48d2-b39f-58e9e291526a","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"3","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}]
+   TonIn ci=Activated d1=Break Contact (NC) src= g= v=in_PLC_Heartbeat
+ADDED //Network1/HB_T_LO safeTon order=38 params=[{"Id":"0021ac65-ddb9-4968-97e6-01fc8e8b2768","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"3","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}]
+   TonIn ci=Activated d1=Break Contact (NC) src=//Network1/HB_LO/AndOut g= v=
+ADDED //Network1/HB_OK safeAnd order=39 params=[]
+   AndIn1 ci=Activated d1=Make Contact (NO) src=//Network1/HB_T_HI/TonOut g= v=
+   AndIn2 ci=Activated d1=Make Contact (NO) src=//Network1/HB_T_LO/TonOut g= v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PS_SAFE safeAnd order=112 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g=b_Step1 v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g=b_EStop_Ok v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PS_RND safeAnd order=113 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=linkSafeRndScope
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g=b_EStop_Ok v=
+   AndIn3 ci=Activated d1=Make Contact (NO) src= g=recRndC_SU v=
+   AndIn4 ci=Activated d1=Make Contact (NO) src= g= v=linkAbortActive
+   AndIn5 ci=Activated d1=Make Contact (NO) src= g=recRndC_SG v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PS_RUN safeAnd order=114 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g=b_Step3 v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g=b_EStop_Ok v=
+   AndIn3 ci=Activated d1=Make Contact (NO) src= g= v=linkDescActive
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PS_ANY safeOr order=115 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//Network1/PS_SAFE/AndOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//Network1/PS_RND/AndOut g= v=
+   OrIn3 ci=Activated d1=Break Contact (NC) src=//Network1/PS_RUN/AndOut g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PC_O2 safeOr order=116 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src= g= v=CMD_SAFE_TO_RND
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g= v=CMD_RND_TO_RUN
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PC_A2 safeAnd order=117 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=CMD_SAFE_TO_RND
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g= v=CMD_RND_TO_RUN
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PC_A3 safeAnd order=118 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=CMD_RUN_TO_RND
+   AndIn2 ci=Activated d1=Break Contact (NC) src=//Network1/PC_O2/OrOut g= v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PC_O3 safeOr order=119 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//Network1/PC_O2/OrOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g= v=CMD_RUN_TO_RND
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PC_A4 safeAnd order=120 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=CMD_RND_TO_SAFE
+   AndIn2 ci=Activated d1=Break Contact (NC) src=//Network1/PC_O3/OrOut g= v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PC_O4 safeOr order=121 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//Network1/PC_O3/OrOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g= v=CMD_RND_TO_SAFE
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PC_A5 safeAnd order=122 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=inPLC_BypassC1C2
+   AndIn2 ci=Activated d1=Break Contact (NC) src=//Network1/PC_O4/OrOut g= v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PC_TWO safeOr order=123 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//Network1/PC_A2/AndOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//Network1/PC_A3/AndOut g= v=
+   OrIn3 ci=Activated d1=Break Contact (NC) src=//Network1/PC_A4/AndOut g= v=
+   OrIn4 ci=Activated d1=Break Contact (NC) src=//Network1/PC_A5/AndOut g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PE_SET safeAnd order=124 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//Network1/PC_TWO/OrOut g= v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src=//Network1/PS_ANY/OrOut g= v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PE_ALLF safeAnd order=125 params=[]
+   AndIn1 ci=Activated d1=Make Contact (NO) src= g= v=CMD_SAFE_TO_RND
+   AndIn2 ci=Activated d1=Make Contact (NO) src= g= v=CMD_RND_TO_RUN
+   AndIn3 ci=Activated d1=Make Contact (NO) src= g= v=CMD_RUN_TO_RND
+   AndIn4 ci=Activated d1=Make Contact (NO) src= g= v=CMD_RND_TO_SAFE
+   AndIn5 ci=Activated d1=Make Contact (NO) src= g= v=inPLC_BypassC1C2
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PE_T_CLR safeTon order=126 params=[{"Id":"357eb3f4-d5ad-46b5-8a43-460eb046b345","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"1","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}]
+   TonIn ci=Activated d1=Break Contact (NC) src=//Network1/PE_ALLF/AndOut g= v=
+ADDED //Network1/PE_ERR safeRs order=127 params=[]
+   Reset ci=Activated d1=Break Contact (NC) src=//Network1/PE_T_CLR/TonOut g= v=
+   Set ci=Activated d1=Break Contact (NC) src=//Network1/PE_SET/AndOut g= v=
+ADDED //Network1/PK_OK safeAnd order=128 params=[]
+   AndIn1 ci=Activated d1=Make Contact (NO) src= g= v=in_Reset_PB
+   AndIn2 ci=Activated d1=Make Contact (NO) src= g= v=in_Relase_Door_PB
+   AndIn3 ci=Activated d1=Make Contact (NO) src=//Network1/PE_ERR/RsOut g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PA_S2R safeAnd order=129 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=CMD_SAFE_TO_RND
+   AndIn2 ci=Activated d1=Make Contact (NO) src=//Network1/PK_PREV/DecOut1 g= v=
+   AndIn3 ci=Activated d1=Break Contact (NC) src=//Network1/PS_SAFE/AndOut g= v=
+   AndIn4 ci=Activated d1=Break Contact (NC) src=//Network1/PK_OK/AndOut g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+   OUT //Network1/PA_S2R/AndOut -> V:linkPlcAccS2R
+ADDED //Network1/PA_R2RUN safeAnd order=130 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=CMD_RND_TO_RUN
+   AndIn2 ci=Activated d1=Make Contact (NO) src=//Network1/PK_PREV/DecOut2 g= v=
+   AndIn3 ci=Activated d1=Break Contact (NC) src=//Network1/PS_RND/AndOut g= v=
+   AndIn4 ci=Activated d1=Break Contact (NC) src=//Network1/PK_OK/AndOut g= v=
+   AndIn5 ci=Activated d1=Break Contact (NC) src= g= v=linkCoverClosed
+   AndIn6 ci=Activated d1=Make Contact (NO) src= g= v=in_HV_C2_FBK
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+   OUT //Network1/PA_R2RUN/AndOut -> V:linkPlcAccR2Run
+ADDED //Network1/PA_RUN2R_T safeAnd order=131 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=CMD_RUN_TO_RND
+   AndIn2 ci=Activated d1=Make Contact (NO) src=//Network1/PK_PREV/DecOut3 g= v=
+   AndIn3 ci=Activated d1=Break Contact (NC) src=//Network1/PK_OK/AndOut g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+   OUT //Network1/PA_RUN2R_T/AndOut -> V:linkPlcAbortSu
+ADDED //Network1/PA_RUN2R safeAnd order=132 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//Network1/PA_RUN2R_T/AndOut g= v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src=//Network1/PS_RUN/AndOut g= v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+   OUT //Network1/PA_RUN2R/AndOut -> V:linkPlcAccRun2R
+ADDED //Network1/PA_R2S_ST safeAnd order=133 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=CMD_RND_TO_SAFE
+   AndIn2 ci=Activated d1=Make Contact (NO) src=//Network1/PK_PREV/DecOut4 g= v=
+   AndIn3 ci=Activated d1=Break Contact (NC) src=//Network1/PS_RND/AndOut g= v=
+   AndIn4 ci=Activated d1=Break Contact (NC) src=//Network1/PK_OK/AndOut g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PA_R2S_AB safeAnd order=134 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=CMD_RND_TO_SAFE
+   AndIn2 ci=Activated d1=Make Contact (NO) src=//Network1/PK_PREV/DecOut4 g= v=
+   AndIn3 ci=Activated d1=Break Contact (NC) src= g=b_Step12 v=
+   AndIn4 ci=Activated d1=Break Contact (NC) src=//Network1/PK_OK/AndOut g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/PA_R2S safeOr order=135 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//Network1/PA_R2S_ST/AndOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//Network1/PA_R2S_AB/AndOut g= v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+   OUT //Network1/PA_R2S/OrOut -> V:linkPlcAccR2S
+ADDED //Network1/PA_CFG safeAnd order=136 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=inPLC_BypassC1C2
+   AndIn2 ci=Activated d1=Make Contact (NO) src=//Network1/PK_PREV/DecOut5 g= v=
+   AndIn3 ci=Activated d1=Break Contact (NC) src=//Network1/PS_SAFE/AndOut g= v=
+   AndIn4 ci=Activated d1=Break Contact (NC) src=//Network1/PK_OK/AndOut g= v=
+   AndIn5 ci=Activated d1=Break Contact (NC) src= g= v=linkSafeUpScope
+   AndIn6 ci=Activated d1=Break Contact (NC) src= g= v=linkCoverClosed
+   AndIn7 ci=Activated d1=Break Contact (NC) src= g= v=out_ReadyForStep2
+   AndIn8 ci=Deactivated d1= src= g= v=
+   OUT //Network1/PA_CFG/AndOut -> V:linkCfgAccept
+ADDED //Network1/PF_OR safeOr order=137 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//Network1/PE_ERR/RsOut g= v=
+   OrIn2 ci=Deactivated d1= src= g= v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+   OUT //Network1/PF_OR/OrOut -> V:STS_FAULT
+ADDED //Network1/CFG_EX_SET safeAnd order=138 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=linkCfgActive
+   AndIn2 ci=Activated d1=Make Contact (NO) src= g= v=inPLC_BypassC1C2
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/CFG_EX safeRs order=139 params=[]
+   Reset ci=Activated d1=Make Contact (NO) src= g= v=linkCfgActive
+   Set ci=Activated d1=Break Contact (NC) src=//Network1/CFG_EX_SET/AndOut g= v=
+ADDED //Network1/CFG_T_HOLD safeTon order=140 params=[{"Id":"8b87b4c9-7e52-4ff0-bea3-df29abae56b0","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"1","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}]
+   TonIn ci=Activated d1=Break Contact (NC) src=//Network1/CFG_EX/RsOut g= v=
+ADDED //Network1/CFG_OFF safeAnd order=141 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//Network1/CFG_EX/RsOut g= v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src=//Network1/CFG_T_HOLD/TonOut g= v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network1/CFG_DONE safeAnd order=142 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//Network1/CFG_OFF/AndOut g= v=
+   AndIn2 ci=Activated d1=Make Contact (NO) src= g= v=out_LV_C1
+   AndIn3 ci=Activated d1=Make Contact (NO) src= g= v=out_HV_C2
+   AndIn4 ci=Activated d1=Make Contact (NO) src= g= v=in_LV_C1_FBK
+   AndIn5 ci=Activated d1=Make Contact (NO) src= g= v=in_HV_C2_FBK
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+   OUT //Network1/CFG_DONE/AndOut -> V:linkCfgDone
+ADDED //Network1/PK_PREV safeDecouple order=143 params=[]
+   DecIn1 ci=undefined d1= src= g= v=CMD_SAFE_TO_RND
+   DecIn2 ci=undefined d1= src= g= v=CMD_RND_TO_RUN
+   DecIn3 ci=undefined d1= src= g= v=CMD_RUN_TO_RND
+   DecIn4 ci=undefined d1= src= g= v=CMD_RND_TO_SAFE
+   DecIn5 ci=undefined d1= src= g= v=inPLC_BypassC1C2
+   DecIn6 ci=undefined d1= src= g= v=
+   DecIn7 ci=undefined d1= src= g= v=
+   DecIn8 ci=undefined d1= src= g= v=
+ADDED //Network2/S2R_REQ safeOr order=175 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src= g= v=linkRndBothQualified
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g= v=linkPlcAccS2R
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/SU_SET safeOr order=222 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/GATE_020/AndOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g= v=linkPlcAccR2Run
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network6/RUN_DOWN_REQ safeOr order=280 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//Network6/FBAnd24/AndOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g= v=linkPlcAccRun2R
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network3/DEC_S safeOr order=292 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src= g=b_Step1 v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g=b_Step12 v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //Network3/DEC_SAFE safeAnd order=293 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//Network3/DEC_S/OrOut g= v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g=b_EStop_Ok v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+   OUT //Network3/DEC_SAFE/AndOut -> V:STS_SAFE
+ADDED //Network3/DEC_RND safeAnd order=294 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g=b_Step_RnD v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g=b_EStop_Ok v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+   OUT //Network3/DEC_RND/AndOut -> V:STS_RND
+ADDED //Network3/DEC_RUN safeAnd order=295 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g=b_Step3 v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g=b_EStop_Ok v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+   OUT //Network3/DEC_RUN/AndOut -> V:STS_RUN
+ADDED //Network3/DEC_CFG safeAnd order=296 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//Network3/STATE_CFG/RsOut g= v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g=b_EStop_Ok v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+   OUT //Network3/DEC_CFG/AndOut -> V:STS_CFG
+ADDED //Network3/DEC_EMG safeAnd order=297 params=[]
+   AndIn1 ci=Activated d1=Make Contact (NO) src=//Network3/DEC_SAFE/AndOut g= v=
+   AndIn2 ci=Activated d1=Make Contact (NO) src=//Network3/DEC_RND/AndOut g= v=
+   AndIn3 ci=Activated d1=Make Contact (NO) src=//Network3/DEC_RUN/AndOut g= v=
+   AndIn4 ci=Activated d1=Make Contact (NO) src=//Network3/DEC_CFG/AndOut g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+   OUT //Network3/DEC_EMG/AndOut -> V:STS_EMG
+exec STATE_SU 222 first new 15 last new 296
+VAR USAGE in_LV_C1_FBK: src 0->0 tgt 8->8; +//Network1/CFG_DONE/AndIn4 -//Network2/FBAnd91/AndIn5
+VAR USAGE in_HV_C2_FBK: src 0->0 tgt 12->13; +//Network1/PA_R2RUN/AndIn6,//Network1/CFG_DONE/AndIn5 -//Network2/FBAnd91/AndIn6
+VAR USAGE out_LV_C1: src 1->1 tgt 5->6; +//Network1/CFG_DONE/AndIn2 -
+VAR USAGE out_HV_C2: src 1->1 tgt 5->6; +//Network1/CFG_DONE/AndIn3 -
+VAR USAGE in_Reset_PB: src 0->0 tgt 17->18; +//Network1/PK_OK/AndIn1 -
+VAR USAGE out_ReadyForStep2: src 1->1 tgt 0->1; +//Network1/PA_CFG/AndIn7 -
+VAR USAGE in_Relase_Door_PB: src 0->0 tgt 9->10; +//Network1/PK_OK/AndIn2 -
+VAR USAGE in_False_SI2_CH8: src 0->0 tgt 35->28; + -//Network6/FBAnd15/AndIn2,//Network6/FBAnd16/AndIn2,//Network1/FBAnd10/AndIn2,//Network1/FBAnd12/AndIn2,//Network2/FBAnd61/AndIn2,//Network2/FBAnd81/AndIn2,//Network2/FBAnd11/AndIn2
+VAR ADDED CMD_SAFE_TO_RND alias=[object Object] src= tgt=//Network1/PC_O2/OrIn1,//Network1/PC_A2/AndIn1,//Network1/PE_ALLF/AndIn1,//Network1/PA_S2R/AndIn1,//Network1/PK_PREV/DecIn1
+VAR ADDED CMD_RND_TO_RUN alias=[object Object] src= tgt=//Network1/PC_O2/OrIn2,//Network1/PC_A2/AndIn2,//Network1/PE_ALLF/AndIn2,//Network1/PA_R2RUN/AndIn1,//Network1/PK_PREV/DecIn2
+VAR USAGE inPLC_BypassC1C2: src 0->0 tgt 1->5; +//Network1/PC_A5/AndIn1,//Network1/PE_ALLF/AndIn5,//Network1/PA_CFG/AndIn1,//Network1/CFG_EX_SET/AndIn2,//Network1/PK_PREV/DecIn5 -//Network1/FBAnd4/AndIn1
+VAR USAGE linkRndBothQualified: src 1->1 tgt 1->1; +//Network2/S2R_REQ/OrIn1 -//Network2/FBAnd4/AndIn1
+VAR USAGE linkSafeRndScope: src 1->1 tgt 3->4; +//Network1/PS_RND/AndIn1 -
+VAR USAGE linkSafeUpScope: src 1->1 tgt 1->2; +//Network1/PA_CFG/AndIn5 -
+VAR USAGE linkCoverClosed: src 1->1 tgt 4->7; +//Network10/FBDecouple2/DecIn5,//Network1/PA_R2RUN/AndIn5,//Network1/PA_CFG/AndIn6 -
+VAR USAGE linkAbortActive: src 1->1 tgt 5->6; +//Network1/PS_RND/AndIn4 -
+VAR USAGE linkDescActive: src 1->1 tgt 2->3; +//Network1/PS_RUN/AndIn3 -
+VAR ADDED in_PLC_Heartbeat alias=[object Object] src= tgt=//Network1/HB_LO/AndIn1,//Network1/HB_T_HI/TonIn
+VAR ADDED CMD_RUN_TO_RND alias=[object Object] src= tgt=//Network1/PC_A3/AndIn1,//Network1/PC_O3/OrIn2,//Network1/PE_ALLF/AndIn3,//Network1/PA_RUN2R_T/AndIn1,//Network1/PK_PREV/DecIn3
+VAR ADDED CMD_RND_TO_SAFE alias=[object Object] src= tgt=//Network1/PC_A4/AndIn1,//Network1/PC_O4/OrIn2,//Network1/PE_ALLF/AndIn4,//Network1/PA_R2S_ST/AndIn1,//Network1/PA_R2S_AB/AndIn1,//Network1/PK_PREV/DecIn4
+VAR ADDED linkPlcAccS2R alias=null src=//Network1/PA_S2R/AndOut tgt=//Network2/S2R_REQ/OrIn2
+VAR ADDED linkPlcAccR2Run alias=null src=//Network1/PA_R2RUN/AndOut tgt=//RndPhysicalCompact/SU_SET/OrIn2
+VAR ADDED linkPlcAbortSu alias=null src=//Network1/PA_RUN2R_T/AndOut tgt=//Network6/SU_ABORT_CAUSE/OrIn3
+VAR ADDED linkPlcAccRun2R alias=null src=//Network1/PA_RUN2R/AndOut tgt=//Network6/RUN_DOWN_REQ/OrIn2
+VAR ADDED linkPlcAccR2S alias=null src=//Network1/PA_R2S/OrOut tgt=//RndPhysicalCompact/GATE_SG_SET/OrIn3
+VAR ADDED linkCfgAccept alias=null src=//Network1/PA_CFG/AndOut tgt=//Network1/FBOr1/OrIn1,//Network1/FBOr5/OrIn1,//Network3/FBOr1/OrIn1,//Network3/STATE_CFG/Set
+VAR ADDED STS_FAULT alias=[object Object] src=//Network1/PF_OR/OrOut tgt=
+VAR ADDED linkCfgActive alias=null src=//Network3/STATE_CFG/RsOut tgt=//Network1/FBAnd4/AndIn1,//Network1/FBAndNotRunSu/AndIn4,//Network6/STAGE_LVON/OrIn3,//Network1/CFG_EX_SET/AndIn1,//Network1/CFG_EX/Reset
+VAR ADDED linkCfgDone alias=null src=//Network1/CFG_DONE/AndOut tgt=//Network3/FBOr2/OrIn1,//Network3/CFG_RST/OrIn1
+VAR ADDED STS_SAFE alias=[object Object] src=//Network3/DEC_SAFE/AndOut tgt=
+VAR ADDED STS_RND alias=[object Object] src=//Network3/DEC_RND/AndOut tgt=
+VAR ADDED STS_RUN alias=[object Object] src=//Network3/DEC_RUN/AndOut tgt=
+VAR ADDED STS_CFG alias=[object Object] src=//Network3/DEC_CFG/AndOut tgt=
+VAR ADDED STS_EMG alias=[object Object] src=//Network3/DEC_EMG/AndOut tgt=
+VAR ADDED STS_COVER_LOCKED alias=[object Object] src=//Network10/FBDecouple2/DecOut5 tgt=
+VAR REMOVED inPLC_RnD_Mode
+VAR REMOVED inPLC_RnD_Mode_2
+inter-network wire sources: 0
+keys port: Id,name,portName,portNum,objectIndex,varId,filter,portDataType,channelInterface,deactivate1,maxDeviation,resetTime,targets,sources,globals,path

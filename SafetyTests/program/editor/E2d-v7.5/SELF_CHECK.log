@@ -1,0 +1,35 @@
+PASS source-sha-is-staging-source {"TwinSafeGroup1.sal":"ee8439ae2a58c4e51eba8bcba225831d4a024b06975c7eb3e19b8e859aaa4d97","GVL1.sgvl":"281c9597365fb745553c57dad826fd12217cd07e3a8dc1ef0943782412800f18","TwinSafeGroup1.sal.diagram":"66f94c13b187a9d0cc5348335ddaad6cdf3ec1b113f3340dd728b6e33820588a"}
+PASS staged-sha-is-staging-result 
+PASS native-equals-staged-semantics blocks/ports/attrs/order/wires/global refs/SAL usages/SGVL usages identical; only CRC/formatting differ
+PASS native-structure-preflight {"status":"PASS","errors":[],"counts":{"networks":14,"blocks":226,"ports":1917,"variables":79,"wires":289,"crossNetworkWires":0}}
+PASS binding-audit {"status":"PASS","errors":[]}
+PASS counts-226-1917-63-79-14 {"source":{"networks":14,"fb":229,"ports":1944,"symbols":63,"salVariables":79,"wires":292,"globalRefs":181,"sgvlUsages":181,"salFbUsages":243,"aliasUsages":76,"safeTon":17},"native":{"networks":14,"fb":226,"ports":1917,"symbols":63,"salVariables":79,"wires":289,"globalRefs":182,"sgvlUsages":182,"salFbUsages":244,"aliasUsages":76,"safeTon":17}}
+PASS wire-count-delta-equals-staging {"source":292,"native":289,"removed":3,"added":0}
+PASS global-refs-equal-sgvl-usages {"native":182,"sgvl":182,"source":181}
+PASS alias-usage-count-unchanged {"source":76,"native":76}
+PASS no-dangling-references []
+PASS global-ref-sgvl-usage-pairing-1to1 []
+PASS every-symbol-single-source-and-consumer []
+PASS symbol-set-and-ids-unchanged 
+PASS every-internal-SAL-variable-single-source-and-consumer []
+PASS single-source-per-input-and-unique-wire-pairs {"dupPairs":0,"multi":[]}
+PASS activated-inputs-have-source []
+PASS deactivated-inputs-have-no-source []
+PASS deleted-blocks-equal-plan {"deleted":["Network12/FBAnd10","Network12/FBAnd8","Network12/FBAnd9"],"planned":["Network12/FBAnd10","Network12/FBAnd8","Network12/FBAnd9"]}
+PASS new-blocks-equal-plan []
+PASS plan-input-sources-and-contacts []
+PASS new-blocks-native-template-signature []
+PASS instance-names-unique 226
+PASS surviving-port-deltas-only-planned []
+PASS wire-delta-exact {"wRemoved":["Network12/FBAnd10/AndOut>Network12/FBOr1/OrIn2","Network12/FBAnd8/AndOut>Network12/FBAnd10/AndIn1","Network12/FBAnd9/AndOut>Network12/FBAnd10/AndIn2"],"wAdded":[]}
+PASS sal-variables-only-planned-usage-delta []
+PASS symbol-usages-only-planned-delta []
+PASS order-of-execution-per-plan {"contiguous":true,"v75_no_FBOrFbk10C2_and_deleted_blocks_absent":true,"relativeOrderOfOtherBlocksPreserved":true}
+PASS timer-and-parameter-ports-unchanged {"safeTon":[17,17]}
+PASS networks-unchanged-attrs ["Network1:51","Network2:21","Network3:21","Network4:0","Network5:0","Network6:41","Network7:11","Network8:7","Network9:0","Network10:2","Network11:6","Network12:16","RndPhysicalCompact:42","SafeResumption:8"]
+PASS staged-kept-source-crc-native-new-crc {"source":{"sal":"3664285160","sgvl":"4057329294"},"staged":{"sal":"3664285160","sgvl":"4057329294"},"native":{"sal":"3789493881","sgvl":"4118103293"}}
+PASS diagram-shapes-match-model {"source":{"fBAndShape":109,"fBOrShape":52,"fBRsShape":27,"fBTonShape":17,"fBDecoupleShape":22,"fBEstopShape":2,"inPortShape":1557,"outPortShape":387,"paramPortShape":19,"wiredLinkConnector":292,"networkSwimLane":14},"native":{"fBAndShape":106,"fBOrShape":52,"fBRsShape":27,"fBTonShape":17,"fBDecoupleShape":22,"fBEstopShape":2,"inPortShape":1533,"outPortShape":384,"paramPortShape":19,"wiredLinkConn
+PASS diagram-connectors-resolve-one-per-wire {"badConn":[],"connectors":289,"wires":289}
+PASS diagram-lane-membership []
+
+33/33 self-checks PASS

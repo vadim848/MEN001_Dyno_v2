@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import {parseSalFile} from '../../src/sal-parser.js';
+const base=new URL('./',import.meta.url);
+const m=parseSalFile(new URL('TwinSafeGroup1.sal',base),{bindingMode:'current',sgvlPath:new URL('GVL1.sgvl',base)});
+const all=m.networks.flatMap(n=>n.blocks),n4=all.find(b=>b.path==='//Network4/FBDecouple1');
+const aliases=new Map(m.variables.flatMap(v=>v.targetPorts.map(p=>[p,v.name])));
+const channels=n4.inputs.map((p,i)=>({input:{path:p.path,id:p.Id,sources:p.sources,globals:p.globals,alias:aliases.get(p.path)??null},output:n4.outputs[i],nativeUnboundValue:'UNSPECIFIED'}));
+const phase=/^b_Step(?:1|2|3|4|5|6|12|_RnD)$/;
+const writers=all.flatMap(b=>b.outputs.flatMap(p=>p.globals.filter(g=>phase.test(g.resolvedName)).map(g=>({phase:g.resolvedName,port:p.path,id:p.Id,order:b.orderOfExecution}))));
+const report={status:'NOT VERIFIED',performedExecution:false,sourceBindingAudit:m.bindingAudit.status,channels,phaseWriters:writers,groupLifecycleEngine:false,phaseSeeds:[],recognizerOwnerSeeds:[],proposal:'A component handoff harness could execute actual Network3 writers with an explicit Network4 boundary. It cannot assert full BOOT/group lifecycle acceptance; no fallback is selected here.'};
+fs.writeFileSync(new URL('handoff-capability.json',base),JSON.stringify(report,null,2));console.log({status:report.status,network4Channels:channels.length,phaseWriters:writers.length});

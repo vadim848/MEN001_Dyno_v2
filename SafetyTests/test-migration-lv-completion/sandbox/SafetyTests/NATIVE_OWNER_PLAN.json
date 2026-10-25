@@ -1,0 +1,1363 @@
+{
+  "kind": "isolated native-style owner plan; no deployment aliases or SAL CRC",
+  "snapshot": {
+    "name": "OWNER_SNAPSHOT",
+    "type": "safeDecouple",
+    "relativeExecutionOrder": 1,
+    "channels": [
+      {
+        "input": "State.SafeToRnD",
+        "output": "Snapshot.SafeToRnD"
+      },
+      {
+        "input": "State.RnDToRun",
+        "output": "Snapshot.RnDToRun"
+      },
+      {
+        "input": "State.RunToRnD",
+        "output": "Snapshot.RunToRnD"
+      },
+      {
+        "input": "State.RnDToSafe",
+        "output": "Snapshot.RnDToSafe"
+      },
+      {
+        "input": "State.Emergency",
+        "output": "Snapshot.Emergency"
+      },
+      {
+        "input": "State.PrevUp",
+        "output": "Snapshot.PrevUp"
+      },
+      {
+        "input": "State.PrevDown",
+        "output": "Snapshot.PrevDown"
+      },
+      {
+        "input": "State.PrevAck",
+        "output": "Snapshot.PrevAck"
+      }
+    ]
+  },
+  "memories": [
+    "SafeToRnD",
+    "RnDToRun",
+    "RunToRnD",
+    "RnDToSafe",
+    "Emergency",
+    "PrevUp",
+    "PrevDown",
+    "PrevAck"
+  ],
+  "externalInputs": [
+    "StepUp",
+    "StepDown",
+    "ManualRecovery",
+    "ModeSafe",
+    "ModeRnD",
+    "ModeRun",
+    "Emergency",
+    "Fault",
+    "InvalidState",
+    "Complete.SafeToRnD",
+    "Complete.RnDToRun",
+    "Complete.RunToRnD",
+    "Complete.RnDToSafe",
+    "Timeout.SafeToRnD",
+    "Timeout.RnDToRun",
+    "Timeout.RunToRnD",
+    "Timeout.RnDToSafe",
+    "HazardRemoved",
+    "AllowUp",
+    "AllowDown"
+  ],
+  "blocks": [
+    {
+      "name": "OWNER_GATE_1",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Input.ModeSafe",
+          "inverted": false
+        },
+        {
+          "signal": "Input.ModeRnD",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 2
+    },
+    {
+      "name": "OWNER_GATE_2",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Input.ModeSafe",
+          "inverted": false
+        },
+        {
+          "signal": "Input.ModeRun",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 3
+    },
+    {
+      "name": "OWNER_GATE_3",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Input.ModeRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Input.ModeRun",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 4
+    },
+    {
+      "name": "OWNER_GATE_4",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_1.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_2.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_3.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 5
+    },
+    {
+      "name": "OWNER_GATE_5",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "Input.ModeSafe",
+          "inverted": false
+        },
+        {
+          "signal": "Input.ModeRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Input.ModeRun",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 6
+    },
+    {
+      "name": "OWNER_GATE_6",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_5.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_4.Out",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 7
+    },
+    {
+      "name": "OWNER_GATE_7",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.SafeToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.RnDToRun",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 8
+    },
+    {
+      "name": "OWNER_GATE_8",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.SafeToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.RunToRnD",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 9
+    },
+    {
+      "name": "OWNER_GATE_9",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.SafeToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.RnDToSafe",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 10
+    },
+    {
+      "name": "OWNER_GATE_10",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.SafeToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 11
+    },
+    {
+      "name": "OWNER_GATE_11",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.RnDToRun",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.RunToRnD",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 12
+    },
+    {
+      "name": "OWNER_GATE_12",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.RnDToRun",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.RnDToSafe",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 13
+    },
+    {
+      "name": "OWNER_GATE_13",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.RnDToRun",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 14
+    },
+    {
+      "name": "OWNER_GATE_14",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.RunToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.RnDToSafe",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 15
+    },
+    {
+      "name": "OWNER_GATE_15",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.RunToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 16
+    },
+    {
+      "name": "OWNER_GATE_16",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.RnDToSafe",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 17
+    },
+    {
+      "name": "OWNER_GATE_17",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_7.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_8.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_9.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_10.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_11.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 18
+    },
+    {
+      "name": "OWNER_GATE_18",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_12.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_13.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_14.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_15.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_16.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 19
+    },
+    {
+      "name": "OWNER_GATE_19",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_17.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_18.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 20
+    },
+    {
+      "name": "OWNER_GATE_20",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "Input.Emergency",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Fault",
+          "inverted": false
+        },
+        {
+          "signal": "Input.InvalidState",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_6.Out",
+          "inverted": true
+        },
+        {
+          "signal": "OWNER_GATE_19.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 21
+    },
+    {
+      "name": "OWNER_GATE_21",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Input.StepUp",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.PrevUp",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 22
+    },
+    {
+      "name": "OWNER_GATE_22",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Input.StepDown",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.PrevDown",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 23
+    },
+    {
+      "name": "OWNER_GATE_23",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Input.ManualRecovery",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.PrevAck",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 24
+    },
+    {
+      "name": "OWNER_GATE_24",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "Snapshot.SafeToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.RnDToRun",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.RunToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.RnDToSafe",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 25
+    },
+    {
+      "name": "OWNER_GATE_25",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.SafeToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Timeout.SafeToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.SafeToRnD",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 26
+    },
+    {
+      "name": "OWNER_GATE_26",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.RnDToRun",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Timeout.RnDToRun",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.RnDToRun",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 27
+    },
+    {
+      "name": "OWNER_GATE_27",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.RunToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Timeout.RunToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.RunToRnD",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 28
+    },
+    {
+      "name": "OWNER_GATE_28",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.RnDToSafe",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Timeout.RnDToSafe",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.RnDToSafe",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 29
+    },
+    {
+      "name": "OWNER_GATE_29",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_25.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_26.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_27.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_28.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 30
+    },
+    {
+      "name": "OWNER_GATE_30",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_20.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_29.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 31
+    },
+    {
+      "name": "OWNER_GATE_31",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": false
+        },
+        {
+          "signal": "Input.HazardRemoved",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_23.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 32
+    },
+    {
+      "name": "OWNER_GATE_32",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 33
+    },
+    {
+      "name": "OWNER_GATE_33",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_32.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_31.Out",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 34
+    },
+    {
+      "name": "OWNER_GATE_34",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_21.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_22.Out",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 35
+    },
+    {
+      "name": "OWNER_GATE_35",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_24.Out",
+          "inverted": true
+        },
+        {
+          "signal": "OWNER_GATE_6.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        },
+        {
+          "signal": "Input.ModeSafe",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_34.Out",
+          "inverted": false
+        },
+        {
+          "signal": "Input.AllowUp",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.SafeToRnD",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 36
+    },
+    {
+      "name": "OWNER_GATE_36",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.SafeToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.SafeToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        },
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 37
+    },
+    {
+      "name": "OWNER_GATE_37",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "Snapshot.SafeToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_35.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 38
+    },
+    {
+      "name": "OWNER_GATE_38",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_37.Out",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.SafeToRnD",
+          "inverted": true
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        },
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 39
+    },
+    {
+      "name": "OWNER_GATE_39",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_21.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_22.Out",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 40
+    },
+    {
+      "name": "OWNER_GATE_40",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_24.Out",
+          "inverted": true
+        },
+        {
+          "signal": "OWNER_GATE_6.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        },
+        {
+          "signal": "Input.ModeRnD",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_39.Out",
+          "inverted": false
+        },
+        {
+          "signal": "Input.AllowUp",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.RnDToRun",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 41
+    },
+    {
+      "name": "OWNER_GATE_41",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.RnDToRun",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.RnDToRun",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        },
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 42
+    },
+    {
+      "name": "OWNER_GATE_42",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "Snapshot.RnDToRun",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_40.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 43
+    },
+    {
+      "name": "OWNER_GATE_43",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_42.Out",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.RnDToRun",
+          "inverted": true
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        },
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 44
+    },
+    {
+      "name": "OWNER_GATE_44",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_24.Out",
+          "inverted": true
+        },
+        {
+          "signal": "OWNER_GATE_6.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        },
+        {
+          "signal": "Input.ModeRun",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_22.Out",
+          "inverted": false
+        },
+        {
+          "signal": "Input.AllowDown",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.RunToRnD",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 45
+    },
+    {
+      "name": "OWNER_GATE_45",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.RunToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.RunToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        },
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 46
+    },
+    {
+      "name": "OWNER_GATE_46",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "Snapshot.RunToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_44.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 47
+    },
+    {
+      "name": "OWNER_GATE_47",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_46.Out",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.RunToRnD",
+          "inverted": true
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        },
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 48
+    },
+    {
+      "name": "OWNER_GATE_48",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_24.Out",
+          "inverted": true
+        },
+        {
+          "signal": "OWNER_GATE_6.Out",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        },
+        {
+          "signal": "Input.ModeRnD",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_22.Out",
+          "inverted": false
+        },
+        {
+          "signal": "Input.AllowDown",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.RnDToSafe",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 49
+    },
+    {
+      "name": "OWNER_GATE_49",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.RnDToSafe",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.RnDToSafe",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        },
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 50
+    },
+    {
+      "name": "OWNER_GATE_50",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "Snapshot.RnDToSafe",
+          "inverted": false
+        },
+        {
+          "signal": "OWNER_GATE_48.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 51
+    },
+    {
+      "name": "OWNER_GATE_51",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "OWNER_GATE_50.Out",
+          "inverted": false
+        },
+        {
+          "signal": "Input.Complete.RnDToSafe",
+          "inverted": true
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        },
+        {
+          "signal": "Snapshot.Emergency",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 52
+    },
+    {
+      "name": "OWNER_STATE_SafeToRnD",
+      "type": "safeRs",
+      "set": {
+        "signal": "OWNER_GATE_38.Out",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "OWNER_GATE_38.Out",
+        "inverted": true
+      },
+      "output": "State.SafeToRnD",
+      "relativeExecutionOrder": 53
+    },
+    {
+      "name": "OWNER_STATE_RnDToRun",
+      "type": "safeRs",
+      "set": {
+        "signal": "OWNER_GATE_43.Out",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "OWNER_GATE_43.Out",
+        "inverted": true
+      },
+      "output": "State.RnDToRun",
+      "relativeExecutionOrder": 54
+    },
+    {
+      "name": "OWNER_STATE_RunToRnD",
+      "type": "safeRs",
+      "set": {
+        "signal": "OWNER_GATE_47.Out",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "OWNER_GATE_47.Out",
+        "inverted": true
+      },
+      "output": "State.RunToRnD",
+      "relativeExecutionOrder": 55
+    },
+    {
+      "name": "OWNER_STATE_RnDToSafe",
+      "type": "safeRs",
+      "set": {
+        "signal": "OWNER_GATE_51.Out",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "OWNER_GATE_51.Out",
+        "inverted": true
+      },
+      "output": "State.RnDToSafe",
+      "relativeExecutionOrder": 56
+    },
+    {
+      "name": "OWNER_STATE_Emergency",
+      "type": "safeRs",
+      "set": {
+        "signal": "OWNER_GATE_33.Out",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "OWNER_GATE_33.Out",
+        "inverted": true
+      },
+      "output": "State.Emergency",
+      "relativeExecutionOrder": 57
+    },
+    {
+      "name": "OWNER_STATE_PrevUp",
+      "type": "safeRs",
+      "set": {
+        "signal": "Input.StepUp",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "Input.StepUp",
+        "inverted": true
+      },
+      "output": "State.PrevUp",
+      "relativeExecutionOrder": 58
+    },
+    {
+      "name": "OWNER_STATE_PrevDown",
+      "type": "safeRs",
+      "set": {
+        "signal": "Input.StepDown",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "Input.StepDown",
+        "inverted": true
+      },
+      "output": "State.PrevDown",
+      "relativeExecutionOrder": 59
+    },
+    {
+      "name": "OWNER_STATE_PrevAck",
+      "type": "safeRs",
+      "set": {
+        "signal": "Input.ManualRecovery",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "Input.ManualRecovery",
+        "inverted": true
+      },
+      "output": "State.PrevAck",
+      "relativeExecutionOrder": 60
+    },
+    {
+      "name": "OWNER_GATE_60",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "State.SafeToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "State.Emergency",
+          "inverted": true
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 61
+    },
+    {
+      "name": "OWNER_GATE_61",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "State.RnDToRun",
+          "inverted": false
+        },
+        {
+          "signal": "State.Emergency",
+          "inverted": true
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 62
+    },
+    {
+      "name": "OWNER_GATE_62",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "State.RunToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "State.Emergency",
+          "inverted": true
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 63
+    },
+    {
+      "name": "OWNER_GATE_63",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "State.RnDToSafe",
+          "inverted": false
+        },
+        {
+          "signal": "State.Emergency",
+          "inverted": true
+        },
+        {
+          "signal": "OWNER_GATE_30.Out",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 64
+    },
+    {
+      "name": "OWNER_GATE_64",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "State.SafeToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "State.RnDToRun",
+          "inverted": false
+        },
+        {
+          "signal": "State.RunToRnD",
+          "inverted": false
+        },
+        {
+          "signal": "State.RnDToSafe",
+          "inverted": false
+        },
+        {
+          "signal": "State.Emergency",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 65
+    }
+  ],
+  "outputs": {
+    "accepted": {
+      "SafeToRnD": {
+        "signal": "OWNER_GATE_35.Out",
+        "inverted": false
+      },
+      "RnDToRun": {
+        "signal": "OWNER_GATE_40.Out",
+        "inverted": false
+      },
+      "RunToRnD": {
+        "signal": "OWNER_GATE_44.Out",
+        "inverted": false
+      },
+      "RnDToSafe": {
+        "signal": "OWNER_GATE_48.Out",
+        "inverted": false
+      }
+    },
+    "completed": {
+      "SafeToRnD": {
+        "signal": "OWNER_GATE_36.Out",
+        "inverted": false
+      },
+      "RnDToRun": {
+        "signal": "OWNER_GATE_41.Out",
+        "inverted": false
+      },
+      "RunToRnD": {
+        "signal": "OWNER_GATE_45.Out",
+        "inverted": false
+      },
+      "RnDToSafe": {
+        "signal": "OWNER_GATE_49.Out",
+        "inverted": false
+      }
+    },
+    "recovery": {
+      "signal": "OWNER_GATE_31.Out",
+      "inverted": false
+    },
+    "requests": {
+      "SafeToRnD": {
+        "signal": "OWNER_GATE_60.Out",
+        "inverted": false
+      },
+      "RnDToRun": {
+        "signal": "OWNER_GATE_61.Out",
+        "inverted": false
+      },
+      "RunToRnD": {
+        "signal": "OWNER_GATE_62.Out",
+        "inverted": false
+      },
+      "RnDToSafe": {
+        "signal": "OWNER_GATE_63.Out",
+        "inverted": false
+      }
+    },
+    "emergency": {
+      "signal": "State.Emergency",
+      "inverted": false
+    },
+    "busy": {
+      "signal": "OWNER_GATE_64.Out",
+      "inverted": false
+    }
+  },
+  "unresolved": [
+    "native initialization",
+    "timeout producers and approved deadlines",
+    "qualified completion and guard bindings",
+    "safe Emergency sequencer and interrupted-context diagnostics",
+    "editor capacity/order/Verify/CRC"
+  ]
+}

@@ -1,0 +1,53 @@
+WiredLinkConnectionBuilder::CanAcceptOutPortAndInPortAsSourceAndTarget RVA 244580
+0000 ldarg.1 
+0001 callvirt get_PossibleDataTypes
+0006 ldsfld <>c::<>9__22_0
+000B dup 
+000C brtrue.s 23
+000E pop 
+000F ldsfld <>c::<>9
+0014 ldftn <CanAcceptOutPortAndInPortAsSourceAndTarget>b__22_0
+001A newobj .ctor
+001F dup 
+0020 stsfld <>c::<>9__22_0
+0025 call MethodSpecification
+002A stloc.0 
+002B ldarg.0 
+002C callvirt get_PossibleDataTypes
+0031 ldsfld <>c::<>9__22_1
+0036 dup 
+0037 brtrue.s 23
+0039 pop 
+003A ldsfld <>c::<>9
+003F ldftn <CanAcceptOutPortAndInPortAsSourceAndTarget>b__22_1
+0045 newobj .ctor
+004A dup 
+004B stsfld <>c::<>9__22_1
+0050 call MethodSpecification
+0055 stloc.1 
+0056 ldarg.0 
+0057 callvirt get_FunctionBlockBase
+005C callvirt get_Network
+0061 callvirt get_Id
+0066 ldarg.1 
+0067 callvirt get_FunctionBlockBase
+006C callvirt get_Network
+0071 callvirt get_Id
+0076 call op_Equality
+007B brfalse.s 31
+007D ldarg.1 
+007E callvirt get_TargetFunctionBlockPorts
+0083 callvirt get_Count
+0088 ldarg.1 
+0089 callvirt get_SourceFunctionBlockPorts
+008E callvirt get_Count
+0093 add 
+0094 brtrue.s 6
+0096 ldloc.0 
+0097 ldloc.1 
+0098 bne.un.s 2
+009A ldc.i4.1 
+009B ret 
+009C ldc.i4.0 
+009D ret 
+

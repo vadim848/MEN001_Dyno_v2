@@ -1,5 +1,23 @@
 # Разряд: фактическая последовательность и недостающий oracle
 
+LatestD-STARTINGRUN-NO-COAST: StartingRunabort STO→сразуDischarge→existinghold
+→C2OFF→C2FBKOFF; noSS1/no5s coast. Старыеpendingabortwait фразы ниже история.
+HealthyLossRunSS1 full5s retains. No newtimer/input; sourceorder/timerhold
+semantics still require actualwriter tests. LVworking boundedtransfer now
+independentlyACCEPT, notwhole41/nativeBOOT or Runstopimplementation acceptance.
+
+## Актуализация прямых ответов 2026-10-20
+
+Нижние pendingHVsuccess вопросы superseded: existing dischargehold, затем
+C2OFF и C2FBKOFF достаточны; отдельный completioninput не нужен. SS1timer2с,
+STO/coasttimer5с. StartingRunabort безSS1: STO→Discharge&delay→C2,
+relevant existingwaits; не включать отменённый запуск. Все значения сохранять.
+N8TON1/TON2 по1с с ORbypass не складывать в новый guaranteed2с delay;
+N6TON0.2 не назначать dischargehold. LVcompletion тоже answered LVoff+LVFBKOFF.
+Подробный source-mapping handoff: USER_STOP_SEQUENCE_HANDOFF.md. HVfailure/
+timeout command-reset детали не выводятся из successконтракта; fullimplementation
+ещё не принята. Нижние source predicates остаются исторической трассировкой.
+
 2026-10-19, архитектор, read-only. Reference Prodoction4495a1f и рабочий v2
 прочитаны напрямую через typed parser/canonical wires. SHA v2 при чтении
 ea2443b0ea92f95584496360e103f4f9a8b5fd61bb2f492f88a9a9d60628564e.

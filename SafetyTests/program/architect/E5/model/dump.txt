@@ -1,0 +1,311 @@
+=== Network1
+19 FBAndLvCurrentPermit safeAnd  ( AndIn1=!V:in_Estop_PLC; AndIn2=V:in_ES_NC_1; AndIn3=V:in_ES_NC_2; AndIn6=V:in_LV_Connector_Interlock; AndIn7=V:in_HV_Connector_Interlock; AndIn8=G:b_EStop_Ok ) => AndOut->V:linkLvCurrentPermit
+20 FBAndLvSetPermit safeAnd  ( AndIn1=FBOr17/OrOut; AndIn2=FBAndLvCurrentPermit/AndOut; AndIn3=!V:in_Mentee_EStop; AndIn4=FBAnd1/AndOut ) 
+21 FBRs1 safeRs  ( Reset=FBOr11/OrOut; Set=FBAndLvSetPermit/AndOut ) => RsOut->V:out_LV_C1
+22 FBAndHvSetPermit safeAnd  ( AndIn1=FBOr18/OrOut; AndIn2=FBAndLvCurrentPermit/AndOut; AndIn3=!V:in_Mentee_EStop; AndIn4=FBAnd1/AndOut; AndIn5=V:in_InterLock_NC_1; AndIn6=V:in_InterLock_NC_2 ) 
+23 FBRs2 safeRs  ( Reset=FBOr16/OrOut; Set=FBAndHvSetPermit/AndOut ) => RsOut->V:out_HV_C2
+27 FBAndSto1SetPermit safeAnd  ( AndIn1=FBOr8/OrOut; AndIn2=FBAndLvCurrentPermit/AndOut; AndIn3=!V:in_Mentee_EStop; AndIn4=FBAnd1/AndOut; AndIn5=V:in_InterLock_NC_1; AndIn6=V:in_InterLock_NC_2 ) 
+28 FBRs3 safeRs  ( Reset=FBOr7/OrOut; Set=FBAndSto1SetPermit/AndOut ) => RsOut->V:STO_DR1
+29 FBAndSto2SetPermit safeAnd  ( AndIn1=FBOr10/OrOut; AndIn2=FBAndLvCurrentPermit/AndOut; AndIn3=!V:in_Mentee_EStop; AndIn4=FBAnd1/AndOut; AndIn5=V:in_InterLock_NC_1; AndIn6=V:in_InterLock_NC_2 ) 
+30 FBRs4 safeRs  ( Reset=FBOr9/OrOut; Set=FBAndSto2SetPermit/AndOut ) => RsOut->V:STO_DR2
+34 FBK_OFF safeAnd  ( AndIn1=!V:in_LV_C1_FBK; AndIn2=!V:in_HV_C2_FBK ) 
+35 EXIT_FBK_OK safeOr  ( OrIn1=G:b_EStop_Ok; OrIn2=FBK_OFF/AndOut ) 
+36 HB_LO safeAnd  ( AndIn1=!V:in_PLC_Heartbeat ) 
+37 HB_T_HI safeTon  T=[{"Id":"b3d01407-849c-48d2-b39f-58e9e291526a","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"3","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=V:in_PLC_Heartbeat ) 
+38 HB_T_LO safeTon  T=[{"Id":"0021ac65-ddb9-4968-97e6-01fc8e8b2768","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"3","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=HB_LO/AndOut ) 
+39 HB_OK safeAnd  ( AndIn1=!HB_T_HI/TonOut; AndIn2=!HB_T_LO/TonOut ) 
+40 FBEstop1 safeEstop  T=[{"Id":"c8f26210-2299-4c15-9348-a830ebf47877","name":"Delay Time (ms)","portName":"Delay Time (ms)","portNum":"8","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"100","userFbPortName":"Delay Time (ms)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( Restart=V:in_Reset_PB; EStopIn1=V:in_ES_NC_1; EStopIn2=V:in_ES_NC_2; EStopIn3=FBAnd1/AndOut; EStopIn4=V:in_Mentee_EStop; EStopIn5=EXIT_FBK_OK/OrOut; EStopIn6=?; EStopIn7=HB_OK/AndOut; EStopIn8=?; EDM1=?; EDM2=? ) => EStopOut->G:b_EStop_Ok
+45 FBOr1 safeOr  ( OrIn1=V:linkCfgAccept; OrIn2=G:b_Step12_Set ) 
+46 FBOr2 safeOr  ( OrIn1=G:b_Set_LV_Discharge_Request; OrIn2=G:b_Set_LV_Discharge_Request_2; OrIn3=CFG_OFF/AndOut ) 
+47 FBRs5 safeRs  ( Reset=FBOr1/OrOut; Set=FBOr2/OrOut ) => RsOut->V:out_LV_Discharge_Request
+48 FBOr5 safeOr  ( OrIn1=V:linkCfgAccept; OrIn2=G:b_Set_HV_C2_1 ) 
+49 FBOr6 safeOr  ( OrIn1=G:b_Set_HV_Discharge_Request; OrIn2=CFG_EX/RsOut; OrIn3=G:b_Set_HV_Discharge_Request_3 ) 
+50 FBRs7 safeRs  ( Reset=FBOr5/OrOut; Set=FBOr6/OrOut ) => RsOut->V:out_HV_Discharge_Request
+51 FBOr7 safeOr  ( OrIn1=G:b_Reset_STO_DR1; OrIn2=G:b_Reset_STO_DR1_2; OrIn4=G:b_Reset_STO_DR1_4 ) 
+52 FBOr8 safeOr  ( OrIn2=G:b_Set_STO_DR1_2; OrIn3=G:recRndC_SU ) 
+53 FBOr9 safeOr  ( OrIn1=G:b_Reset_STO_DR2; OrIn2=G:b_Reset_STO_DR2_2; OrIn4=G:b_Reset_STO_DR2_4 ) 
+54 FBOr10 safeOr  ( OrIn2=G:b_Set_STO_DR2_2; OrIn3=G:recRndC_SU ) 
+72 FBOr11 safeOr  ( OrIn1=G:b_Reset_LV_C1; OrIn2=G:b_Reset_LV_C1_2; OrIn3=G:b_Reset_LV_C1_3; OrIn4=FBAnd7/AndOut ) 
+85 FBOr16 safeOr  ( OrIn1=G:b_Reset_HV_C2; OrIn2=G:b_Reset_HV_C2_2; OrIn3=FBAnd8/AndOut; OrIn4=G:b_Reset_HV_C2_4 ) 
+95 FBAndNotRunSu safeAnd  ( AndIn1=!G:b_Step3; AndIn2=!G:recRndC_SU; AndIn3=!V:linkAbortActive; AndIn4=!V:linkCfgActive ) 
+96 FBOrIlRunOk safeOr  ( OrIn1=FBAndNotRunSu/AndOut; OrIn2=V:linkCoverClosed; OrIn3=V:linkRunDownOwner ) 
+97 FBAnd1 safeAnd  ( AndIn1=!V:in_Estop_PLC; AndIn2=!V:in_False_SI2_CH8; AndIn3=FBOrIlRunOk/OrOut; AndIn4=V:linkSafeConnectorScope ) 
+105 FBDecouple1 safeDecouple  ( DecIn1=V:in_Reset_PB; DecIn2=V:in_Reset_PB; DecIn3=?; DecIn4=?; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) => DecOut1->V:out_DR1_ErrorACK DecOut2->V:out_DR2_ErrorACK
+109 FBOr12 safeOr  ( OrIn1=V:out_Step2; OrIn2=FBAnd2/AndOut ) => OrOut->V:out_SS1_DR2
+110 FBOr13 safeOr  ( OrIn1=V:out_Step2; OrIn2=FBAnd2/AndOut ) => OrOut->V:out_SS1_DR1
+111 FBDecouple2 safeDecouple  ( DecIn1=FBEstop1/EStopOut; DecIn2=?; DecIn3=?; DecIn4=?; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) => DecOut1->V:out_EStop_Ok_Plc
+112 PS_SAFE safeAnd  ( AndIn1=G:b_Step1; AndIn2=G:b_EStop_Ok ) 
+113 PS_RND safeAnd  ( AndIn1=V:linkSafeRndScope; AndIn2=G:b_EStop_Ok; AndIn3=!G:recRndC_SU; AndIn4=!V:linkAbortActive; AndIn5=!G:recRndC_SG ) 
+114 PS_RUN safeAnd  ( AndIn1=G:b_Step3; AndIn2=G:b_EStop_Ok; AndIn3=!V:linkDescActive ) 
+115 PS_ANY safeOr  ( OrIn1=PS_SAFE/AndOut; OrIn2=PS_RND/AndOut; OrIn3=PS_RUN/AndOut ) 
+116 PC_O2 safeOr  ( OrIn1=V:CMD_SAFE_TO_RND; OrIn2=V:CMD_RND_TO_RUN ) 
+117 PC_A2 safeAnd  ( AndIn1=V:CMD_SAFE_TO_RND; AndIn2=V:CMD_RND_TO_RUN ) 
+118 PC_A3 safeAnd  ( AndIn1=V:CMD_RUN_TO_RND; AndIn2=PC_O2/OrOut ) 
+119 PC_O3 safeOr  ( OrIn1=PC_O2/OrOut; OrIn2=V:CMD_RUN_TO_RND ) 
+120 PC_A4 safeAnd  ( AndIn1=V:CMD_RND_TO_SAFE; AndIn2=PC_O3/OrOut ) 
+121 PC_O4 safeOr  ( OrIn1=PC_O3/OrOut; OrIn2=V:CMD_RND_TO_SAFE ) 
+122 PC_A5 safeAnd  ( AndIn1=V:inPLC_BypassC1C2; AndIn2=PC_O4/OrOut ) 
+123 PC_TWO safeOr  ( OrIn1=PC_A2/AndOut; OrIn2=PC_A3/AndOut; OrIn3=PC_A4/AndOut; OrIn4=PC_A5/AndOut ) 
+124 PE_SET safeAnd  ( AndIn1=PC_TWO/OrOut; AndIn2=PS_ANY/OrOut ) 
+125 PE_ALLF safeAnd  ( AndIn1=!V:CMD_SAFE_TO_RND; AndIn2=!V:CMD_RND_TO_RUN; AndIn3=!V:CMD_RUN_TO_RND; AndIn4=!V:CMD_RND_TO_SAFE; AndIn5=!V:inPLC_BypassC1C2 ) 
+126 PE_T_CLR safeTon  T=[{"Id":"357eb3f4-d5ad-46b5-8a43-460eb046b345","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"1","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=PE_ALLF/AndOut ) 
+127 PE_ERR safeRs  ( Reset=PE_T_CLR/TonOut; Set=PE_SET/AndOut ) 
+128 PK_OK safeAnd  ( AndIn1=!V:in_Reset_PB; AndIn2=!V:in_Relase_Door_PB; AndIn3=!PE_ERR/RsOut ) 
+129 PA_S2R safeAnd  ( AndIn1=V:CMD_SAFE_TO_RND; AndIn2=!PK_PREV/DecOut1; AndIn3=PS_SAFE/AndOut; AndIn4=PK_OK/AndOut ) => AndOut->V:linkPlcAccS2R
+130 PA_R2RUN safeAnd  ( AndIn1=V:CMD_RND_TO_RUN; AndIn2=!PK_PREV/DecOut2; AndIn3=PS_RND/AndOut; AndIn4=PK_OK/AndOut; AndIn5=V:linkCoverClosed; AndIn6=!V:in_HV_C2_FBK ) => AndOut->V:linkPlcAccR2Run
+131 PA_RUN2R_T safeAnd  ( AndIn1=V:CMD_RUN_TO_RND; AndIn2=!PK_PREV/DecOut3; AndIn3=PK_OK/AndOut ) => AndOut->V:linkPlcAbortSu
+132 PA_RUN2R safeAnd  ( AndIn1=PA_RUN2R_T/AndOut; AndIn2=PS_RUN/AndOut ) => AndOut->V:linkPlcAccRun2R
+133 PA_R2S_ST safeAnd  ( AndIn1=V:CMD_RND_TO_SAFE; AndIn2=!PK_PREV/DecOut4; AndIn3=PS_RND/AndOut; AndIn4=PK_OK/AndOut ) 
+134 PA_R2S_AB safeAnd  ( AndIn1=V:CMD_RND_TO_SAFE; AndIn2=!PK_PREV/DecOut4; AndIn3=G:b_Step12; AndIn4=PK_OK/AndOut ) 
+135 PA_R2S safeOr  ( OrIn1=PA_R2S_ST/AndOut; OrIn2=PA_R2S_AB/AndOut ) => OrOut->V:linkPlcAccR2S
+136 PA_CFG safeAnd  ( AndIn1=V:inPLC_BypassC1C2; AndIn2=!PK_PREV/DecOut5; AndIn3=PS_SAFE/AndOut; AndIn4=PK_OK/AndOut; AndIn5=V:linkSafeUpScope; AndIn6=V:linkCoverClosed; AndIn7=V:out_ReadyForStep2 ) => AndOut->V:linkCfgAccept
+137 PF_OR safeOr  ( OrIn1=PE_ERR/RsOut ) => OrOut->V:STS_FAULT
+138 CFG_EX_SET safeAnd  ( AndIn1=V:linkCfgActive; AndIn2=!V:inPLC_BypassC1C2 ) 
+139 CFG_EX safeRs  ( Reset=!V:linkCfgActive; Set=CFG_EX_SET/AndOut ) 
+140 CFG_T_HOLD safeTon  T=[{"Id":"8b87b4c9-7e52-4ff0-bea3-df29abae56b0","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"1","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=CFG_EX/RsOut ) 
+141 CFG_OFF safeAnd  ( AndIn1=CFG_EX/RsOut; AndIn2=CFG_T_HOLD/TonOut ) 
+142 CFG_DONE safeAnd  ( AndIn1=CFG_OFF/AndOut; AndIn2=!V:out_LV_C1; AndIn3=!V:out_HV_C2; AndIn4=!V:in_LV_C1_FBK; AndIn5=!V:in_HV_C2_FBK ) => AndOut->V:linkCfgDone
+143 PK_PREV safeDecouple  ( DecIn1=V:CMD_SAFE_TO_RND; DecIn2=V:CMD_RND_TO_RUN; DecIn3=V:CMD_RUN_TO_RND; DecIn4=V:CMD_RND_TO_SAFE; DecIn5=V:inPLC_BypassC1C2; DecIn6=?; DecIn7=?; DecIn8=? ) 
+235 FBOr3 safeOr  ( OrIn1=G:b_Reset_Door_Unlock; OrIn2=G:b_Reset_Door_Unlock_1; OrIn3=!V:in_Relase_Door_PB; OrIn4=V:in_Reset_PB ) 
+236 FBOr4 safeOr  ( OrIn1=G:b_Set_Door_Unlock; OrIn2=G:b_Set_Door_Unlock_1 ) 
+237 FBRs6 safeRs  ( Reset=FBOr3/OrOut; Set=FBOr4/OrOut ) 
+258 FBAnd2 safeAnd  ( AndIn1=V:out_Step3; AndIn4=!V:linkDescActive ) 
+260 FBOr14 safeOr  ( OrIn2=G:b_Reset_Transition_2; OrIn3=G:b_Reset_Transition_3 ) 
+261 FBOr15 safeOr  ( OrIn1=G:b_Set_Transition_1; OrIn2=G:b_Set_Transition_2; OrIn3=G:b_Set_Transition_3; OrIn4=G:b_Set_Transition_4 ) 
+262 FBRs8 safeRs  ( Reset=FBOr14/OrOut; Set=FBOr15/OrOut ) => RsOut->V:out_TransitionStep
+266 FBAnd4 safeAnd  ( AndIn1=V:linkCfgActive; AndIn2=!V:in_False_SI2_CH8; AndIn5=!CFG_EX/RsOut ) 
+267 FBOr17 safeOr  ( OrIn2=FBAnd5/AndOut; OrIn3=G:b_Set_LV_C1_1 ) 
+268 FBOr18 safeOr  ( OrIn2=FBAnd6/AndOut; OrIn3=G:b_Set_HV_C2_1 ) 
+269 FBAnd5 safeAnd  ( AndIn1=FBAnd4/AndOut; AndIn2=!V:out_LV_C1 ) 
+270 FBAnd6 safeAnd  ( AndIn1=FBAnd4/AndOut; AndIn2=!V:out_HV_C2 ) 
+271 FBAnd7 safeAnd  ( AndIn1=CFG_OFF/AndOut; AndIn2=V:out_LV_C1 ) 
+272 FBAnd8 safeAnd  ( AndIn1=CFG_OFF/AndOut; AndIn2=V:out_HV_C2 ) 
+283 FBRs9 safeRs  ( Reset=FBAnd13/AndOut; Set=FBAnd14/AndOut ) => RsOut->G:b_ResetPB_Lock
+284 FBAnd13 safeAnd  ( AndIn1=G:b_ResetPB_Lock; AndIn2=!V:in_Reset_PB ) 
+285 FBOr19 safeOr  ( OrIn1=G:b_SetLock_ResetPB_1; OrIn2=G:b_SetLock_ResetPB_2; OrIn3=G:b_SetLock_ResetPB_3 ) 
+286 FBAnd14 safeAnd  ( AndIn1=!G:b_ResetPB_Lock; AndIn2=V:in_Reset_PB; AndIn3=FBOr19/OrOut ) 
+291 FBAndUnlockHold safeAnd  ( AndIn1=!V:in_Estop_PLC; AndIn2=V:in_Relase_Door_PB; AndIn3=!V:in_Reset_PB; AndIn4=G:b_EStop_Ok; AndIn5=FBRs6/RsOut ) => AndOut->V:out_Door_Unlock_Solonoeid
+=== Network2
+18 FBAnd1 safeAnd  ( AndIn1=FBDecouple3/DecOut1; AndIn2=FBAnd6/AndOut; AndIn3=V:in_LV_Connector_Interlock; AndIn4=V:in_HV_Connector_Interlock; AndIn7=FBAnd5/AndOut ) 
+24 FBTon1 safeTon  T=[{"Id":"8c19cedc-26e3-45d4-8e5d-b175a7c06b48","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"0.1","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=FBAnd1/AndOut ) 
+25 FBAnd2 safeAnd  ( AndIn1=FBTon1/TonOut; AndIn2=!V:in_LV_C1_FBK; AndIn3=!V:in_HV_C2_FBK ) => AndOut->G:b_Reset_STO_DR1
+26 FBDecouple1 safeDecouple  ( DecIn1=FBAnd12/AndOut; DecIn2=FBAnd12/AndOut; DecIn3=?; DecIn4=?; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) => DecOut1->G:b_Reset_LV_C1 DecOut2->G:b_Reset_HV_C2
+31 FBDecouple2 safeDecouple  ( DecIn1=FBAnd2/AndOut; DecIn2=?; DecIn3=?; DecIn4=?; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) => DecOut1->G:b_Reset_STO_DR2
+32 FBTon2 safeTon  T=[{"Id":"0cd6c934-e5d7-4c86-8880-42c4b3deb6eb","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"0.1","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=FBAnd2/AndOut ) 
+33 FBAnd3 safeAnd  ( AndIn1=FBTon2/TonOut; AndIn2=V:in_STO_DR1_FBK; AndIn3=V:in_STO_DR2_FBK ) => AndOut->V:out_ReadyForStep2
+98 FBAnd5 safeAnd  ( AndIn1=!V:in_Estop_PLC; AndIn2=!V:in_Mentee_EStop ) 
+99 FBAnd6 safeAnd  ( AndIn1=V:in_ES_NC_1; AndIn2=V:in_ES_NC_2 ) 
+100 FBDecouple3 safeDecouple  ( DecIn1=G:b_Step1; DecIn2=?; DecIn3=?; DecIn4=?; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) 
+101 FBAnd7 safeAnd  ( AndIn1=FBDecouple3/DecOut1; AndIn2=G:recRndC_BA ) => AndOut->G:b_Set_Door_Unlock
+104 FBAnd8 safeAnd  ( AndIn1=!V:in_Door_Monitor; AndIn2=FBDecouple3/DecOut1 ) => AndOut->G:b_Reset_Door_Unlock
+144 FBAnd9 safeAnd  ( AndIn1=FBAnd5/AndOut; AndIn2=V:in_ES_NC_2; AndIn3=V:in_ES_NC_1 ) => AndOut->V:out_EStop_Status
+175 S2R_REQ safeOr  ( OrIn1=V:linkRndBothQualified; OrIn2=V:linkPlcAccS2R ) 
+176 FBAnd4 safeAnd  ( AndIn1=S2R_REQ/OrOut; AndIn2=FBAnd3/AndOut; AndIn3=V:linkSafeUpScope ) => AndOut->V:linkSafeAcceptedUpSet
+278 FBOr1 safeOr  ( OrIn1=V:linkSafeAcceptedUp ) => OrOut->G:b_Step12_Set
+279 FBDecouple5 safeDecouple  ( DecIn1=FBOr1/OrOut; DecIn2=FBOr1/OrOut; DecIn3=?; DecIn4=?; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) => DecOut1->G:b_Set_Transition_1 DecOut2->G:b_SetLock_ResetPB_1
+282 FBAnd12 safeAnd  ( AndIn1=G:b_Step1; AndIn2=!V:in_Reset_PB ) 
+=== Network3
+1 FBOr2 safeOr  ( OrIn1=V:linkCfgDone; OrIn2=FBAnd1/AndOut; OrIn3=G10_EXIT/AndOut; OrIn5=G:b_Step2_Set_2 ) 
+2 FBOr1 safeOr  ( OrIn1=V:linkCfgAccept; OrIn3=G:b_Step12_Set; OrIn4=G:b_Step4_Set ) 
+3 FBOrS12Reset safeOr  ( OrIn1=G:b_Step_RnD_Set; OrIn2=G:b_Step4_Set; OrIn3=G:b_Step2_Set_2 ) 
+4 FBOr16 safeOr  ( OrIn1=G:b_Step_RnD_Set; OrIn2=G:b_Step12_Set_2 ) 
+5 FBOr13 safeOr  ( OrIn2=G:b_Step4_Set; OrIn3=G:b_Step2_Set_2; OrIn4=G:b_Step3_Set_2 ) 
+6 FBOr5 safeOr  ( OrIn2=G:b_Step4_Set; OrIn3=G:b_Step12_Set_2 ) 
+7 FBOr7 safeOr  ( OrIn2=G:b_Step5_Set ) 
+8 FBOr9 safeOr  ( OrIn2=G:b_Step6_Set ) 
+9 FBRs1 safeRs  ( Reset=FBOr1/OrOut; Set=FBOr2/OrOut ) => RsOut->G:b_Step1
+10 FBRs8 safeRs  ( Reset=FBOrS12Reset/OrOut; Set=G:b_Step12_Set ) => RsOut->G:b_Step12
+11 FBRs7 safeRs  ( Reset=FBOr13/OrOut; Set=FBOr16/OrOut ) => RsOut->G:b_Step_RnD
+12 FBRs3 safeRs  ( Reset=FBOr5/OrOut; Set=G:b_Step3_Set_2 ) => RsOut->G:b_Step3
+13 FBRs4 safeRs  ( Reset=FBOr7/OrOut; Set=G:b_Step4_Set ) => RsOut->G:b_Step4
+14 FBRs5 safeRs  ( Reset=FBOr9/OrOut; Set=G:b_Step5_Set ) => RsOut->G:b_Step5
+15 FBRs6 safeRs  ( Reset=FBOr2/OrOut; Set=G:b_Step6_Set ) 
+16 CFG_RST safeOr  ( OrIn1=V:linkCfgDone; OrIn2=G:b_Step4_Set ) 
+17 STATE_CFG safeRs  ( Reset=CFG_RST/OrOut; Set=V:linkCfgAccept ) => RsOut->V:linkCfgActive
+41 G10_EXIT safeAnd  ( AndIn1=FBRs6/RsOut; AndIn2=G:b_EStop_Ok; AndIn3=!V:in_Reset_PB; AndIn4=G:recRndC_PrevG; AndIn5=!V:in_LV_C1_FBK; AndIn6=!V:in_HV_C2_FBK; AndIn7=!V:out_LV_C1; AndIn8=!V:out_HV_C2 ) 
+42 FBAndBootFbkOff safeAnd  ( AndIn1=!V:in_LV_C1_FBK; AndIn2=!V:in_HV_C2_FBK; AndIn3=!V:in_Reset_PB; AndIn4=G:recRndC_PrevG ) 
+43 FBAnd2 safeAnd  ( AndIn1=!G:b_Step12; AndIn2=!V:in_False_SI2_CH8; AndIn3=!FBRs7/RsOut; AndIn4=!FBRs6/RsOut; AndIn5=!STATE_CFG/RsOut ) 
+44 FBAnd1 safeAnd  ( AndIn1=V:in_Safety_Run; AndIn2=G:b_EStop_Ok; AndIn3=FBAndBootFbkOff/AndOut; AndIn4=!FBRs1/RsOut; AndIn5=!FBRs3/RsOut; AndIn6=!FBRs4/RsOut; AndIn7=!FBRs5/RsOut; AndIn8=FBAnd2/AndOut ) 
+56 FBDecouple1 safeDecouple  ( DecIn1=FBRs3/RsOut; DecIn2=?; DecIn3=?; DecIn4=?; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) => DecOut1->V:out_Safety_Armed
+103 FBDecouple2 safeDecouple  ( DecIn1=FBRs1/RsOut; DecIn2=V:in_False_SI2_CH8; DecIn3=FBRs3/RsOut; DecIn4=FBRs4/RsOut; DecIn5=FBRs5/RsOut; DecIn6=FBRs6/RsOut; DecIn7=FBRs7/RsOut; DecIn8=FBRs8/RsOut ) => DecOut1->V:out_Step1 DecOut2->V:out_Step2 DecOut3->V:out_Step3 DecOut4->V:out_Step4 DecOut5->V:out_Step5 DecOut6->V:out_Step6 DecOut7->V:outPLC_RnD DecOut8->V:out_Step12
+292 DEC_S safeOr  ( OrIn1=G:b_Step1; OrIn2=G:b_Step12 ) 
+293 DEC_SAFE safeAnd  ( AndIn1=DEC_S/OrOut; AndIn2=G:b_EStop_Ok ) => AndOut->V:STS_SAFE
+294 DEC_RND safeAnd  ( AndIn1=G:b_Step_RnD; AndIn2=G:b_EStop_Ok ) => AndOut->V:STS_RND
+295 DEC_RUN safeAnd  ( AndIn1=G:b_Step3; AndIn2=G:b_EStop_Ok ) => AndOut->V:STS_RUN
+296 DEC_CFG safeAnd  ( AndIn1=STATE_CFG/RsOut; AndIn2=G:b_EStop_Ok ) => AndOut->V:STS_CFG
+297 DEC_EMG safeAnd  ( AndIn1=!DEC_SAFE/AndOut; AndIn2=!DEC_RND/AndOut; AndIn3=!DEC_RUN/AndOut; AndIn4=!DEC_CFG/AndOut ) => AndOut->V:STS_EMG
+=== Network4
+=== Network5
+=== Network6
+55 FBAnd1 safeAnd  ( AndIn1=G:b_Step3; AndIn2=!V:in_False_SI2_CH8 ) 
+57 FBAnd2 safeAnd  ( AndIn1=FBAnd1/AndOut; AndIn2=!FBAnd9/AndOut ) 
+58 FBAnd3 safeAnd  ( AndIn1=FBAnd1/AndOut; AndIn2=FBAnd7/AndOut ) 
+59 FBAnd4 safeAnd  ( AndIn1=FBOr1/OrOut; AndIn2=FBAnd8/AndOut ) 
+60 FBRs1 safeRs  ( Reset=FBOr3/OrOut; Set=FBAnd4/AndOut ) => RsOut->V:out_C3_BatRelay
+61 FBAnd5 safeAnd  ( AndIn1=V:in_RBM_Manual_Reset; AndIn2=FBAnd1/AndOut ) 
+62 FBAnd6 safeAnd  ( AndIn1=V:in_RBM_Manual_Set; AndIn2=FBAnd1/AndOut ) 
+63 FBRs2 safeRs  ( Reset=FBOr2/OrOut; Set=FBOr4/OrOut ) => RsOut->V:out_RBM_Bat
+64 FBOr2 safeOr  ( OrIn1=FBAnd5/AndOut; OrIn2=G:b_RBN_Bat_Reset; OrIn3=FBAnd13/AndOut; OrIn4=G:b_RBN_Bat_Reset_2 ) 
+65 FBOr3 safeOr  ( OrIn1=FBAnd3/AndOut; OrIn2=G:b_C3_BetReset; OrIn3=FBAnd12/AndOut; OrIn4=G:b_C3_BetReset_2 ) 
+66 STAGE_LVON safeOr  ( OrIn1=G:b_Step12; OrIn2=G:b_Step_RnD; OrIn3=V:linkCfgActive ) 
+67 FBAndLvEmg safeAnd  ( AndIn1=STAGE_LVON/OrOut; AndIn2=!G:b_EStop_Ok; AndIn3=!V:in_False_SI2_CH8 ) 
+68 FBOrStep4 safeOr  ( OrIn1=FBAnd2/AndOut; OrIn2=FBAndLvEmg/AndOut ) 
+69 FBDecouple1 safeDecouple  ( DecIn1=FBOrStep4/OrOut; DecIn2=?; DecIn3=?; DecIn4=?; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) => DecOut1->G:b_Step4_Set
+87 FBAnd7 safeAnd  ( AndIn1=V:in_C3_Manual_Reset; AndIn2=!V:in_False_SI2_CH8 ) 
+88 FBAnd8 safeAnd  ( AndIn1=V:in_C3_Manual_Set; AndIn2=!V:in_False_SI2_CH8 ) 
+89 HEALTHY_OK safeAnd  ( AndIn3=V:linkCoverClosed ) 
+90 HEALTH_GUARD safeOr  ( OrIn1=RUN_DOWN_OWNER/RsOut; OrIn2=HEALTHY_OK/AndOut ) 
+91 FBAnd9 safeAnd  ( AndIn1=V:out_EStop_Status; AndIn4=V:in_LV_Connector_Interlock; AndIn5=V:in_HV_Connector_Interlock; AndIn6=HEALTH_GUARD/OrOut ) 
+201 RD_HLOSS safeOr  ( OrIn1=V:in_LV_Faulty_FBK; OrIn2=V:in_HV_Faulty_FBK ) 
+202 RD_PROT_SET safeAnd  ( AndIn1=FBAnd1/AndOut; AndIn2=RD_HLOSS/OrOut; AndIn3=!RD_STO/RsOut ) 
+203 RD_RESET safeOr  ( OrIn1=FBAnd18/AndOut; OrIn2=G:b_Step1 ) 
+204 RD_PROT safeRs  ( Reset=RD_RESET/OrOut; Set=RD_PROT_SET/AndOut ) 
+205 RD_SEQ safeRs  ( Reset=RD_RESET/OrOut; Set=FBOr5/OrOut ) 
+206 RD_T_SS1 safeTon  T=[{"Id":"e3c496e2-dd46-40fc-889f-ae494ef41505","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"2","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=RD_SEQ/RsOut ) 
+207 RD_STO_TRIG safeOr  ( OrIn1=RD_T_SS1/TonOut; OrIn2=RD_PROT/RsOut ) 
+208 RD_STO safeRs  ( Reset=RD_RESET/OrOut; Set=RD_STO_TRIG/OrOut ) 
+209 RD_T_COAST safeTon  T=[{"Id":"9e61ac3c-39a6-4ece-9476-48d97dd3c3c9","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"5","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=RD_STO/RsOut ) 
+210 RD_DIS safeAnd  ( AndIn1=RD_SEQ/RsOut; AndIn2=RD_T_COAST/TonOut ) 
+211 SU_ABORT_CAUSE safeOr  ( OrIn1=V:linkRndGreenQualified; OrIn2=V:in_LV_Faulty_FBK; OrIn3=V:linkPlcAbortSu ) 
+212 SU_ABORT_SET safeAnd  ( AndIn1=G:recRndC_SU; AndIn2=SU_ABORT_CAUSE/OrOut ) 
+213 SU_ABORT_END safeAnd  ( AndIn1=DN_T_HOLD/TonOut; AndIn2=!V:out_HV_C2; AndIn3=!V:in_HV_C2_FBK ) 
+214 SU_ABORT_RESET safeOr  ( OrIn1=SU_ABORT_END/AndOut; OrIn2=G:b_Step1 ) 
+215 SU_ABORT safeRs  ( Reset=SU_ABORT_RESET/OrOut; Set=SU_ABORT_SET/AndOut ) => RsOut->V:linkAbortActive
+216 DN_STO safeOr  ( OrIn1=RD_STO/RsOut; OrIn2=SU_ABORT/RsOut ) 
+217 DN_DIS safeOr  ( OrIn1=RD_DIS/AndOut; OrIn2=SU_ABORT/RsOut ) 
+218 DN_T_HOLD safeTon  T=[{"Id":"aeb14c5a-4a65-42d2-b1bd-1781a3043d4c","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"1","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=DN_DIS/OrOut ) 
+219 DN_C2 safeAnd  ( AndIn1=DN_DIS/OrOut; AndIn2=DN_T_HOLD/TonOut ) 
+220 DN_ACTIVE safeOr  ( OrIn1=RD_SEQ/RsOut; OrIn2=SU_ABORT/RsOut ) => OrOut->V:linkDescActive
+245 FBOr1 safeOr  ( OrIn1=FBAnd1/AndOut; OrIn2=FBAnd11/AndOut ) 
+246 FBAnd11 safeAnd  ( AndIn1=G:b_Step_RnD; AndIn2=!V:in_False_SI2_CH8 ) 
+247 FBAnd12 safeAnd  ( AndIn1=G:b_Step_RnD; AndIn2=!V:in_False_SI2_CH8; AndIn3=FBAnd20/AndOut ) 
+248 FBAnd13 safeAnd  ( AndIn1=G:b_Step_RnD; AndIn2=FBAnd22/AndOut; AndIn3=!V:in_False_SI2_CH8 ) 
+249 FBOr4 safeOr  ( OrIn1=FBAnd6/AndOut; OrIn2=FBAnd14/AndOut ) 
+250 FBAnd14 safeAnd  ( AndIn1=G:b_Step_RnD; AndIn2=FBAnd21/AndOut; AndIn3=!V:in_False_SI2_CH8 ) 
+255 FBDecouple2 safeDecouple  ( DecIn1=DN_STO/OrOut; DecIn2=DN_STO/OrOut; DecIn3=DN_DIS/OrOut; DecIn4=DN_C2/AndOut; DecIn5=?; DecIn6=V:in_Reset_PB; DecIn7=V:in_Relase_Door_PB; DecIn8=? ) => DecOut1->G:b_Reset_STO_DR2_4 DecOut2->G:b_Reset_STO_DR1_4 DecOut3->G:b_Set_HV_Discharge_Request_3 DecOut4->G:b_Reset_HV_C2_4 DecOut5->G:b_Set_Transition_4 DecOut6->G:recRndC_PrevG DecOut7->G:recRndC_PrevB
+256 FBAnd18 safeAnd  ( AndIn1=FBTon1/TonOut; AndIn2=!V:in_HV_C2_FBK; AndIn4=FBAnd1/AndOut ) => AndOut->G:b_Step12_Set_2
+257 FBTon1 safeTon  T=[{"Id":"043aee20-9e45-4e04-aaad-b0210b0fd303","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"0.2","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=FBDecouple2/DecOut4 ) 
+259 FBOr5 safeOr  ( OrIn1=RUN_DOWN_OWNER/RsOut; OrIn3=RD_PROT/RsOut ) 
+265 FBAnd19 safeAnd  ( AndIn1=FBAnd1/AndOut; AndIn2=V:out_TransitionStep ) => AndOut->G:b_Reset_Transition_2
+274 FBAnd20 safeAnd  ( AndIn1=V:in_C3_Manual_Reset; AndIn2=!V:in_False_SI2_CH8 ) 
+276 FBAnd21 safeAnd  ( AndIn1=V:in_RBM_Manual_Set; AndIn2=!V:in_False_SI2_CH8 ) 
+277 FBAnd22 safeAnd  ( AndIn1=V:in_RBM_Manual_Reset; AndIn2=!V:in_False_SI2_CH8 ) 
+280 RUN_DOWN_REQ safeOr  ( OrIn1=FBAnd24/AndOut; OrIn2=V:linkPlcAccRun2R ) 
+281 FBAnd23 safeAnd  ( AndIn1=RUN_DOWN_REQ/OrOut; AndIn2=FBAnd1/AndOut ) 
+287 FBAnd24 safeAnd  ( AndIn1=!G:b_ResetPB_Lock; AndIn2=!V:in_False_SI2_CH8; AndIn3=V:linkRndGreenQualified ) 
+288 RUN_DOWN_RESET safeOr  ( OrIn1=G:b_Step12_Set_2; OrIn2=G:b_Step4_Set; OrIn3=!V:linkRndGatePermit; OrIn4=RD_PROT/RsOut ) 
+289 RUN_DOWN_OWNER safeRs  ( Reset=RUN_DOWN_RESET/OrOut; Set=FBAnd23/AndOut ) => RsOut->V:linkRunDownOwner
+290 FBDecouple3 safeDecouple  ( DecIn1=FBAnd18/AndOut; DecIn2=?; DecIn3=?; DecIn4=?; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) => DecOut1->G:b_SetLock_ResetPB_3
+=== Network7
+70 FBAnd1 safeAnd  ( AndIn1=G:b_Step4; AndIn2=!V:in_False_SI2_CH8 ) 
+71 FBDecouple1 safeDecouple  ( DecIn1=FBAnd1/AndOut; DecIn2=FBAnd1/AndOut; DecIn3=FBAnd1/AndOut; DecIn4=FBAnd1/AndOut; DecIn5=FBAnd1/AndOut; DecIn6=FBAnd1/AndOut; DecIn7=?; DecIn8=? ) => DecOut1->G:b_Set_LV_Discharge_Request DecOut3->G:b_C3_BetReset DecOut4->G:b_RBN_Bat_Reset
+73 FBAnd2 safeAnd  ( AndIn1=FBDecouple1/DecOut5; AndIn2=!V:in_HV_Faulty_FBK; AndIn3=FBTon1/TonOut ) 
+74 FBAnd3 safeAnd  ( AndIn1=FBDecouple1/DecOut6; AndIn2=V:in_HV_Faulty_FBK; AndIn3=FBTon1/TonOut ) 
+75 FBOr1 safeOr  ( OrIn1=FBTon2/TonOut; OrIn2=FBDecouple3/DecOut4 ) => OrOut->G:b_Reset_STO_DR1_2
+76 FBOr2 safeOr  ( OrIn1=FBTon3/TonOut; OrIn2=FBDecouple3/DecOut3 ) => OrOut->G:b_Reset_STO_DR2_2
+77 FBAnd8 safeAnd  ( AndIn1=FBOr1/OrOut; AndIn2=FBOr2/OrOut; AndIn3=V:in_STO_DR1_FBK; AndIn4=V:in_STO_DR2_FBK; AndIn5=G:b_Step4 ) => AndOut->G:b_Step5_Set
+102 FBTon1 safeTon  T=[{"Id":"fe29b38d-a1c2-4d62-b861-f4350a7b1bac","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"2","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=FBDecouple1/DecOut1 ) => TonOut->G:b_Reset_LV_C1_2
+106 FBTon2 safeTon  T=[{"Id":"f3b9940d-d90d-4369-9d0a-08270dc9f89c","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"5","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=FBAnd2/AndOut ) 
+107 FBTon3 safeTon  T=[{"Id":"7f7fa076-8e18-47e0-8be9-e6ed158a1a03","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"5","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=FBAnd2/AndOut ) 
+108 FBDecouple3 safeDecouple  ( DecIn1=?; DecIn2=?; DecIn3=FBAnd3/AndOut; DecIn4=FBAnd3/AndOut; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) 
+=== Network8
+78 FBOrS5 safeOr  ( OrIn1=G:b_Step5; OrIn2=G:b_Step5_Set ) 
+79 FBAnd1 safeAnd  ( AndIn1=FBOrS5/OrOut; AndIn2=!V:in_False_SI2_CH8 ) 
+80 FBDecouple1 safeDecouple  ( DecIn1=?; DecIn2=?; DecIn3=FBAnd1/AndOut; DecIn4=?; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) => DecOut3->G:b_Set_HV_Discharge_Request
+81 FBTon1 safeTon  T=[{"Id":"1b95d56b-aad8-4002-a408-8c9b34571662","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"1","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=FBDecouple1/DecOut3 ) 
+82 FBAnd2 safeAnd  ( AndIn1=V:out_HV_Discharge_Request; AndIn3=FBAnd1/AndOut ) 
+83 FBOr1 safeOr  ( OrIn1=FBTon1/TonOut; OrIn2=FBAnd2/AndOut ) 
+84 FBTon2 safeTon  T=[{"Id":"e8135991-ce47-4fd7-8c0f-b94442c54c32","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"1","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=FBOr1/OrOut ) => TonOut->G:b_Reset_HV_C2_2
+86 FBAnd3 safeAnd  ( AndIn1=FBTon2/TonOut; AndIn2=!V:in_HV_C2_FBK; AndIn3=FBAnd1/AndOut ) => AndOut->G:b_Step6_Set
+=== Network9
+=== Network10
+145 FBDecouple1 safeDecouple  ( DecIn1=V:in_LV_C1_FBK; DecIn2=V:in_HV_C2_FBK; DecIn3=V:in_Mentee_EStop; DecIn4=V:in_ES_NC_1; DecIn5=V:in_ES_NC_2; DecIn6=V:in_HV_Faulty_FBK; DecIn7=V:in_LV_Faulty_FBK; DecIn8=? ) => DecOut1->V:outPLC_C1_FBK DecOut2->V:outPLC_C2_FBK DecOut3->V:outPLC_EStop_MantiRob DecOut4->V:outPLC_EStop_NC1 DecOut5->V:outPLC_EStop_NC2 DecOut6->V:outPLC_HV_Faulty DecOut7->V:outPLC_LV_Faulty
+146 FBDecouple2 safeDecouple  ( DecIn1=V:in_HV_Connector_Interlock; DecIn2=V:in_LV_Connector_Interlock; DecIn3=V:STO_DR1; DecIn4=V:STO_DR2; DecIn5=V:linkCoverClosed; DecIn6=?; DecIn7=?; DecIn8=? ) => DecOut1->V:outPLC_HV_Interlock DecOut2->V:outPLC_LV_Interlock DecOut3->V:outPLC_STO_1 DecOut4->V:outPLC_STO_2 DecOut5->V:STS_COVER_LOCKED
+=== Network11
+147 FBAnd1 safeAnd  ( AndIn1=G:b_Step12; AndIn2=!V:in_False_SI2_CH8 ) => AndOut->G:b_Set_LV_C1_1
+148 WIN_C1_IN safeAnd  ( AndIn1=FBAnd1/AndOut; AndIn2=V:out_LV_C1 ) 
+149 WIN_C1 safeTon  T=[{"Id":"62d532c3-cc57-4b2b-bb9b-80e5a959e912","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"0.5","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=WIN_C1_IN/AndOut ) 
+150 FBAnd4 safeAnd  ( AndIn1=WIN_C1/TonOut; AndIn2=V:in_LV_C1_FBK; AndIn3=!V:in_LV_Faulty_FBK ) 
+151 FBTon1 safeTon  T=[{"Id":"1af181df-aed0-49d7-a1d2-331bd0495c6d","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"0.1","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=FBAnd4/AndOut ) 
+152 FBAnd5 safeAnd  ( AndIn1=FBTon1/TonOut; AndIn2=!V:in_False_SI2_CH8 ) => AndOut->G:b_Step_RnD_Set
+263 FBDecouple1 safeDecouple  ( DecIn1=FBAnd5/AndOut; DecIn2=?; DecIn3=?; DecIn4=?; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) => DecOut1->G:b_Reset_Transition_3
+=== Network12
+92 FBAnd16 safeAnd  ( AndIn1=V:in_InterLock_NC_1; AndIn2=!V:in_False_SI2_CH8; AndIn3=V:in_InterLock_NC_2 ) => AndOut->V:linkCoverClosed
+234 FBAnd1 safeAnd  ( AndIn1=G:b_Step_RnD; AndIn2=!V:in_False_SI2_CH8 ) 
+238 FBAnd2 safeAnd  ( AndIn1=FBAnd1/AndOut; AndIn2=G:recRndC_BA; AndIn3=!V:in_Reset_PB; AndIn4=FBAnd11/AndOut; AndIn5=!G:recRndC_SU; AndIn6=!V:linkAbortActive ) => AndOut->G:b_Set_Door_Unlock_1
+239 FBAnd3 safeAnd  ( AndIn1=FBAnd1/AndOut; AndIn2=FBAnd17/AndOut; AndIn3=!V:in_Relase_Door_PB ) => AndOut->G:b_Reset_Door_Unlock_1
+240 FBAnd4 safeAnd  ( AndIn1=FBAnd1/AndOut; AndIn2=FBAnd16/AndOut; AndIn3=FBDecouple3/DecOut1 ) => AndOut->G:b_Set_HV_C2_1
+241 WIN_C2 safeTon  T=[{"Id":"ab4171ad-ae88-461b-b49f-cca259416410","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"0.5","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=FBAnd4/AndOut ) 
+242 FBAnd6 safeAnd  ( AndIn1=WIN_C2/TonOut; AndIn2=V:in_HV_C2_FBK; AndIn3=!V:in_HV_Faulty_FBK ) 
+243 FBTon3 safeTon  T=[{"Id":"b3e648e4-2e44-49be-a320-c9bad83a047c","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"0.1","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=FBAnd6/AndOut ) 
+244 FBDecouple2 safeDecouple  ( DecIn1=FBTon3/TonOut; DecIn2=FBTon3/TonOut; DecIn3=FBTon3/TonOut; DecIn4=FBTon3/TonOut; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) => DecOut1->G:b_Set_STO_DR2_2 DecOut2->G:b_Set_STO_DR1_2 DecOut3->G:b_Step3_Set_2 DecOut4->G:b_SetLock_ResetPB_2
+251 FBOr1 safeOr  ( OrIn1=G:recRndC_SU ) 
+252 FBOr2 safeOr  ( OrIn1=G:recRndC_SG ) 
+253 FBDecouple1 safeDecouple  ( DecIn1=FBOr2/OrOut; DecIn2=FBOr2/OrOut; DecIn3=FBOr2/OrOut; DecIn4=FBOr2/OrOut; DecIn5=FBOr2/OrOut; DecIn6=?; DecIn7=?; DecIn8=? ) => DecOut1->G:b_RBN_Bat_Reset_2 DecOut2->G:b_C3_BetReset_2 DecOut3->G:b_Set_LV_Discharge_Request_2 DecOut4->G:b_Reset_LV_C1_3 DecOut5->G:b_Set_Transition_2
+254 FBAnd15 safeAnd  ( AndIn1=FBDecouple1/DecOut4; AndIn2=!V:in_LV_C1_FBK; AndIn3=!V:out_LV_C1; AndIn4=!V:out_HV_C2; AndIn5=!V:in_HV_C2_FBK; AndIn6=V:linkLvCurrentPermit; AndIn7=!V:in_Mentee_EStop; AndIn8=!V:in_False_SI2_CH8 ) => AndOut->G:b_Step2_Set_2
+264 FBDecouple3 safeDecouple  ( DecIn1=FBOr1/OrOut; DecIn2=FBOr1/OrOut; DecIn3=?; DecIn4=?; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) => DecOut2->G:b_Set_Transition_3
+273 FBAnd11 safeAnd  ( AndIn1=V:in_Door_Monitor; AndIn2=!V:in_False_SI2_CH8 ) 
+275 FBAnd17 safeAnd  ( AndIn1=V:in_Door_Monitor; AndIn2=!V:in_False_SI2_CH8 ) 
+=== RndPhysicalCompact
+153 SNAP_0 safeDecouple  ( DecIn1=G:recRndC_P; DecIn2=G:recRndC_A; DecIn3=G:recRndC_T; DecIn4=G:recRndC_L; DecIn5=G:recRndC_C; DecIn6=G:recRndC_SG; DecIn7=G:recRndC_SU; DecIn8=G:recRndC_BA ) 
+154 SNAP_1 safeDecouple  ( DecIn1=G:recRndC_PrevG; DecIn2=G:recRndC_PrevB; DecIn3=WINDOW/EStopDelOut; DecIn4=?; DecIn5=?; DecIn6=?; DecIn7=?; DecIn8=? ) 
+156 GATE_001 safeAnd  ( AndIn1=!V:in_Estop_PLC; AndIn2=!V:in_False_SI2_CH8; AndIn3=G:b_EStop_Ok; AndIn4=V:linkSafeMode; AndIn7=V:linkSafeConnectorScope ) => AndOut->V:linkRndGatePermit
+159 GATE_002 safeAnd  ( AndIn1=!V:in_Reset_PB; AndIn2=!V:in_Relase_Door_PB ) 
+160 GATE_003 safeAnd  ( AndIn1=V:in_Reset_PB; AndIn2=V:in_Relase_Door_PB ) 
+161 GATE_004 safeAnd  ( AndIn1=GATE_001/AndOut; AndIn2=SNAP_0/DecOut2; AndIn3=!SNAP_0/DecOut5; AndIn4=!SNAP_0/DecOut4 ) 
+162 GATE_005 safeAnd  ( AndIn1=GATE_004/AndOut; AndIn2=!SNAP_0/DecOut3 ) 
+163 GATE_006 safeAnd  ( AndIn1=GATE_005/AndOut; AndIn2=GATE_003/AndOut; AndIn3=SNAP_1/DecOut3 ) 
+164 GATE_007 safeAnd  ( AndIn1=!SNAP_0/DecOut1; AndIn2=GATE_002/AndOut; AndIn3=GATE_001/AndOut ) 
+165 WINDOW safeEstop  T=[{"Id":"4ed281dc-c451-d673-981d-42150f8a1863","name":"Delay Time (ms)","portName":"Delay Time (ms)","portNum":"8","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"250","userFbPortName":"Delay Time (ms)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( Restart=GATE_007/AndOut; EStopIn1=GATE_002/AndOut; EStopIn2=?; EStopIn3=?; EStopIn4=?; EStopIn5=?; EStopIn6=?; EStopIn7=?; EStopIn8=?; EDM1=?; EDM2=? ) 
+166 GATE_008 safeAnd  ( AndIn1=GATE_001/AndOut; AndIn2=GATE_002/AndOut; AndIn3=!SNAP_0/DecOut6 ) => AndOut->G:recRndC_P
+167 GATE_009 safeAnd  ( AndIn1=GATE_005/AndOut; AndIn2=V:in_Reset_PB ) 
+168 GATE_010 safeAnd  ( AndIn1=GATE_005/AndOut; AndIn2=V:in_Relase_Door_PB ) 
+169 GATE_011 safeOr  ( OrIn1=SNAP_0/DecOut3; OrIn2=GATE_006/AndOut ) 
+170 GATE_012 safeAnd  ( AndIn1=GATE_004/AndOut; AndIn2=GATE_003/AndOut; AndIn3=GATE_011/OrOut ) 
+171 RELEASE safeTon  T=[{"Id":"2747d120-dcdf-8a2e-92b2-49728d7a16a7","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"2","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=GATE_008/AndOut ) 
+172 GREEN safeTon  T=[{"Id":"3c8bcc1a-9816-43e2-a1ca-9411c8faffc0","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"0.5","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=GATE_009/AndOut ) => TonOut->V:linkRndGreenQualified
+173 BLUE safeTon  T=[{"Id":"51077f29-c09c-424e-b9df-40c1b2ea0231","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"0.5","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=GATE_010/AndOut ) 
+174 BOTH safeTon  T=[{"Id":"9695d7db-95b2-450a-a8da-d28b1761aeb7","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"1","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}] ( TonIn=GATE_012/AndOut ) => TonOut->V:linkRndBothQualified
+178 GATE_013 safeOr  ( OrIn1=SNAP_0/DecOut4; OrIn2=SNAP_0/DecOut5 ) 
+179 GATE_014 safeAnd  ( AndIn1=RELEASE/TonOut; AndIn2=GATE_013/OrOut; AndIn3=!SNAP_0/DecOut6 ) 
+180 GATE_015 safeOr  ( OrIn1=!GATE_001/AndOut; OrIn2=GATE_014/AndOut ) 
+181 GATE_016 safeAnd  ( AndIn1=SNAP_0/DecOut1; AndIn2=GATE_002/AndOut; AndIn3=WINDOW/EStopOut; AndIn4=RELEASE/TonOut ) 
+182 GATE_020 safeAnd  ( AndIn1=GATE_004/AndOut; AndIn2=SNAP_0/DecOut3; AndIn3=GATE_003/AndOut; AndIn4=BOTH/TonOut; AndIn5=V:linkSafeRndScope; AndIn6=V:linkCoverClosed; AndIn7=!G:recRndC_SG; AndIn8=!V:in_HV_C2_FBK ) 
+183 GATE_022 safeAnd  ( AndIn1=SNAP_0/DecOut1; AndIn2=!SNAP_0/DecOut2; AndIn3=!GATE_002/AndOut ) 
+184 GATE_023 safeAnd  ( AndIn1=GATE_005/AndOut; AndIn2=GATE_003/AndOut; AndIn3=!SNAP_1/DecOut3; AndIn4=!GREEN/TonOut; AndIn5=!BLUE/TonOut ) 
+185 GATE_024 safeAnd  ( AndIn1=SNAP_0/DecOut3; AndIn2=GATE_002/AndOut ) 
+186 GATE_025 safeAnd  ( AndIn1=SNAP_1/DecOut1; AndIn2=!V:in_Reset_PB; AndIn3=GATE_005/AndOut ) 
+187 GATE_026 safeAnd  ( AndIn1=SNAP_1/DecOut2; AndIn2=!V:in_Relase_Door_PB; AndIn3=GATE_005/AndOut ) 
+188 GATE_SPOIL_R safeAnd  ( AndIn1=!GATE_002/AndOut; AndIn2=G:b_Step_RnD; AndIn3=!V:linkCoverClosed ) 
+189 GATE_SPOIL_S safeAnd  ( AndIn1=!GATE_002/AndOut; AndIn2=G:b_Step1; AndIn3=!V:linkConnectorsOk ) 
+190 GATE_PHASE safeOr  ( OrIn1=G:b_Step12; OrIn2=G:b_Step3 ) 
+191 GATE_PF_SET safeOr  ( OrIn1=GATE_SPOIL_R/AndOut; OrIn2=GATE_SPOIL_S/AndOut; OrIn3=GATE_PHASE/OrOut ) 
+192 STATE_PF safeRs  ( Reset=RELEASE/TonOut; Set=GATE_PF_SET/OrOut ) 
+193 GATE_SPOIL_PF safeAnd  ( AndIn1=GATE_003/AndOut; AndIn2=STATE_PF/RsOut ) 
+194 GATE_029 safeOr  ( OrIn1=GATE_022/AndOut; OrIn2=GATE_023/AndOut; OrIn3=GATE_024/AndOut; OrIn4=GATE_026/AndOut; OrIn5=GATE_025/AndOut; OrIn6=GATE_SPOIL_PF/AndOut ) 
+195 GATE_030 safeOr  ( OrIn1=GREEN/TonOut; OrIn2=BLUE/TonOut; OrIn3=GATE_020/AndOut; OrIn4=V:linkSafeAcceptedUp; OrIn5=BOTH/TonOut; OrIn6=V:linkHltLvLost ) 
+196 GATE_031 safeOr  ( OrIn1=GATE_015/OrOut; OrIn2=!V:in_Relase_Door_PB; OrIn3=V:in_Reset_PB ) 
+197 STATE_A safeRs  ( Reset=!GATE_001/AndOut; Set=GATE_016/AndOut ) => RsOut->G:recRndC_A
+198 STATE_T safeRs  ( Reset=GATE_015/OrOut; Set=GATE_006/AndOut ) => RsOut->G:recRndC_T
+199 STATE_L safeRs  ( Reset=GATE_015/OrOut; Set=GATE_029/OrOut ) => RsOut->G:recRndC_L
+200 STATE_C safeRs  ( Reset=GATE_015/OrOut; Set=GATE_030/OrOut ) => RsOut->G:recRndC_C
+221 SU_RESET safeOr  ( OrIn1=!V:linkSafeRndScope; OrIn2=V:linkAbortActive ) 
+222 SU_SET safeOr  ( OrIn1=GATE_020/AndOut; OrIn2=V:linkPlcAccR2Run ) 
+223 STATE_SU safeRs  ( Reset=SU_RESET/OrOut; Set=SU_SET/OrOut ) => RsOut->G:recRndC_SU
+229 GATE_SG_SET safeOr  ( OrIn1=V:linkSafeSgOwnerSet; OrIn2=V:linkHltLvLost; OrIn3=V:linkPlcAccR2S ) 
+230 SG_S12_SCOPE safeAnd  ( AndIn1=V:linkRndGatePermit; AndIn2=G:b_Step12 ) 
+231 SG_SCOPE safeOr  ( OrIn1=V:linkSafeRndScope; OrIn2=SG_S12_SCOPE/AndOut ) 
+232 STATE_SG safeRs  ( Reset=!SG_SCOPE/OrOut; Set=GATE_SG_SET/OrOut ) => RsOut->G:recRndC_SG
+233 STATE_BA safeRs  ( Reset=GATE_031/OrOut; Set=BLUE/TonOut ) => RsOut->G:recRndC_BA
+=== SafeResumption
+93 CONNECTORS safeAnd  ( AndIn1=V:in_LV_Connector_Interlock; AndIn2=V:in_HV_Connector_Interlock ) => AndOut->V:linkConnectorsOk
+94 CONNECTOR_SCOPE safeOr  ( OrIn1=G:b_Step1; OrIn2=CONNECTORS/AndOut ) => OrOut->V:linkSafeConnectorScope
+155 MODE safeOr  ( OrIn1=G:b_Step1; OrIn2=G:b_Step_RnD; OrIn3=G:b_Step3; OrIn4=G:b_Step12 ) => OrOut->V:linkSafeMode
+157 RND_SCOPE safeAnd  ( AndIn1=V:linkRndGatePermit; AndIn2=G:b_Step_RnD ) => AndOut->V:linkSafeRndScope
+158 SAFE_UP_SCOPE safeAnd  ( AndIn1=V:linkRndGatePermit; AndIn2=G:b_Step1; AndIn3=V:linkLvCurrentPermit ) => AndOut->V:linkSafeUpScope
+177 SAFE_ACCEPTED_UP safeRs  ( Reset=!SAFE_UP_SCOPE/AndOut; Set=V:linkSafeAcceptedUpSet ) => RsOut->V:linkSafeAcceptedUp
+224 SG_OWNER_SET safeAnd  ( AndIn1=V:linkRndGreenQualified; AndIn2=!G:b_Step1; AndIn3=!V:linkAbortActive ) => AndOut->V:linkSafeSgOwnerSet
+225 HLT_DESC_SET safeAnd  ( AndIn1=V:in_LV_Faulty_FBK; AndIn2=V:linkDescActive; AndIn3=!V:in_False_SI2_CH8 ) 
+226 HLT_MEM safeRs  ( Reset=G:b_Step1; Set=HLT_DESC_SET/AndOut ) 
+227 HLT_LV_SRC safeOr  ( OrIn1=V:in_LV_Faulty_FBK; OrIn2=HLT_MEM/RsOut ) 
+228 HLT_LV safeAnd  ( AndIn1=HLT_LV_SRC/OrOut; AndIn2=!G:recRndC_SU; AndIn3=!V:in_False_SI2_CH8; AndIn4=G:b_Step_RnD; AndIn5=!V:linkAbortActive ) => AndOut->V:linkHltLvLost

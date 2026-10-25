@@ -1,0 +1,2040 @@
+{
+ "slice": "E2 G3-pre (frozen G1 v8 snapshot)",
+ "role": "v2-tester",
+ "date": "2026-10-22..23",
+ "scope": {
+  "final": [
+   "E2a-core",
+   "E2a-RC",
+   "E2b",
+   "E2c"
+  ],
+  "preliminary": {
+   "E2d": "v7.5 2276d773 - superseded by v7.6, re-run required"
+  },
+  "notRun": [
+   "E2d v7.6/v7.7",
+   "M-E2d-24..33"
+  ]
+ },
+ "sources": {
+  "planStart": "4a2155790477c24aeaadd07f70325a861ff910d9ebd3ce5f43a0f8fb61901cef (now PLAN.v7_5.json)",
+  "candidates": [
+   "4f205138337ea3de3660d5ef2d8978db438e3e8d19f2e9dd393ec7a5816cdb36 *candidates/E2-R1/native/GVL1.sgvl",
+   "ca841a01fe44f776a5868968fde70cce728657aaf411d6b8bfa6689cfadc7bb3 *candidates/E2-R1/native/TwinSafeGroup1.sal",
+   "b82aa41a6ee065267852d78ccaff961714eca1e8e8c006f087de715fb2a137b6 *candidates/E2-R1/native/TwinSafeGroup1.sal.diagram",
+   "e60698840e556dbd6d838958eadb8545735a81aaff8efbfceabc3613a4e08010 *candidates/E2a/native/GVL1.sgvl",
+   "5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b *candidates/E2a/native/TwinSafeGroup1.sal",
+   "27d7f20d890d48fc175fbd25af21a5b0c874ce4cf248b37ac73df26fe0624785 *candidates/E2a/native/TwinSafeGroup1.sal.diagram",
+   "253de7f39f2c4af83fa8642445a885d18ecfcdccec46fcbf96612d88a810b669 *candidates/E2a-RC/native/GVL1.sgvl",
+   "5733552a150bfd33df4211da8f97a8fc993ff990ad52c90a8d7758d950660f3f *candidates/E2a-RC/native/TwinSafeGroup1.sal",
+   "5fa942384352033814f2d51bf8c4a847098d6a3322d4b733995de64b7b759bb2 *candidates/E2a-RC/native/TwinSafeGroup1.sal.diagram",
+   "7ae241165ec0321bcae684d726925b178bb8ef354ca68fce72160dbdc334129c *candidates/E2b/native/GVL1.sgvl",
+   "4f933433c4dcb6a4ddf3cbad1cad64897965c48f7832613d0481b0195fbce45e *candidates/E2b/native/TwinSafeGroup1.sal",
+   "a413ca1f1ebfcaa7d94a4789770f14170e7528852f5c6a5af2ba0a8d16b45e94 *candidates/E2b/native/TwinSafeGroup1.sal.diagram",
+   "281c9597365fb745553c57dad826fd12217cd07e3a8dc1ef0943782412800f18 *candidates/E2c/native/GVL1.sgvl",
+   "ee8439ae2a58c4e51eba8bcba225831d4a024b06975c7eb3e19b8e859aaa4d97 *candidates/E2c/native/TwinSafeGroup1.sal",
+   "66f94c13b187a9d0cc5348335ddaad6cdf3ec1b113f3340dd728b6e33820588a *candidates/E2c/native/TwinSafeGroup1.sal.diagram",
+   "140806334cf751348a301c82ed91b0e8f131bf05609727461ff2f16fdd295371 *candidates/E2d/native/GVL1.sgvl",
+   "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b *candidates/E2d/native/TwinSafeGroup1.sal",
+   "94e9b231cef30cf50ee6e61d0770d696f1e77a28ed1d286051ea653729e4cbfb *candidates/E2d/native/TwinSafeGroup1.sal.diagram",
+   "140806334cf751348a301c82ed91b0e8f131bf05609727461ff2f16fdd295371 *candidates/E2d-v7.4.1/native/GVL1.sgvl",
+   "a5acf29175b041d243aac19e5ffee4c260f0c6cab3b538679c36ed1e59286c1b *candidates/E2d-v7.4.1/native/TwinSafeGroup1.sal",
+   "c5b28c07070559b78d8bfa581be7d99e892a6857f5f142ee9dab398fc55aa95b *candidates/E2d-v7.4.1/native/TwinSafeGroup1.sal.diagram"
+  ],
+  "testSnapshot": {
+   "v8Manifest": "reviewer/E2-G1-v8/repro/v8-test-snapshot.sha256 111/111 OK (8 restored by exact SHA)",
+   "testsSha": "hashes/snapshot-test-final.sha256 6b24824b...",
+   "srcScriptsSha": "hashes/snapshot-src-scripts.sha256 46357b63... (not in v8 manifest)",
+   "takenAt": "2026-10-22T09:51:20+03:00"
+  }
+ },
+ "delta": {
+  "status": "PASS",
+  "pairs": {
+   "R1": "PASS",
+   "E2a-core": "PASS",
+   "E2a-RC": "PASS",
+   "E2b": "PASS",
+   "E2c": "PASS",
+   "E2d": "PASS"
+  },
+  "plan": "4a215579",
+  "m_e2d_23_delta": "exact v7.5 (4 blocks, 6 usages, 4 wires, OrIn2 deactivated; relative order preserved)"
+ },
+ "regression": {
+  "summary": {
+   "F1": {
+    "harness": "harness: ERROR {\"tests\":284,\"pass\":283,\"fail\":1,\"skipped\":0}",
+    "historical": "historical: PASS {\"tests\":75,\"pass\":75,\"fail\":0,\"skipped\":0}",
+    "current": "current: FAIL {\"tests\":1484,\"pass\":597,\"fail\":839,\"skipped\":0}",
+    "salCases": "current SAL: {\"PASS\":199,\"FAIL\":1,\"NOT VERIFIED\":7,\"ERROR\":0,\"NOT APPLICABLE\":0}",
+    "exit": "3",
+    "e2norm": {
+     "PASS": 94,
+     "FAIL": 794,
+     "ERR": 2,
+     "NV": 48,
+     "SKIP": 0
+    },
+    "e2diag": {
+     "PASS": 39,
+     "FAIL": 0,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "e2kf": {
+     "PASS": 0,
+     "FAIL": 22,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "nonE2": {
+     "PASS": 464,
+     "FAIL": 21,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    }
+   },
+   "R1": {
+    "harness": "harness: ERROR {\"tests\":268,\"pass\":260,\"fail\":8,\"skipped\":0}",
+    "historical": "historical: PASS {\"tests\":75,\"pass\":75,\"fail\":0,\"skipped\":0}",
+    "current": "current: FAIL {\"tests\":1484,\"pass\":477,\"fail\":916,\"skipped\":42}",
+    "salCases": "current SAL: {\"PASS\":177,\"FAIL\":0,\"NOT VERIFIED\":5,\"ERROR\":4,\"NOT APPLICABLE\":16}",
+    "exit": "3",
+    "e2norm": {
+     "PASS": 94,
+     "FAIL": 794,
+     "ERR": 2,
+     "NV": 48,
+     "SKIP": 0
+    },
+    "e2diag": {
+     "PASS": 39,
+     "FAIL": 0,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "e2kf": {
+     "PASS": 0,
+     "FAIL": 22,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "nonE2": {
+     "PASS": 344,
+     "FAIL": 98,
+     "ERR": 0,
+     "NV": 1,
+     "SKIP": 42
+    }
+   },
+   "E2a": {
+    "harness": "harness: ERROR {\"tests\":268,\"pass\":260,\"fail\":8,\"skipped\":0}",
+    "historical": "historical: PASS {\"tests\":75,\"pass\":75,\"fail\":0,\"skipped\":0}",
+    "current": "current: FAIL {\"tests\":1484,\"pass\":586,\"fail\":735,\"skipped\":42}",
+    "salCases": "current SAL: {\"PASS\":176,\"FAIL\":1,\"NOT VERIFIED\":5,\"ERROR\":4,\"NOT APPLICABLE\":16}",
+    "exit": "3",
+    "e2norm": {
+     "PASS": 201,
+     "FAIL": 492,
+     "ERR": 125,
+     "NV": 120,
+     "SKIP": 0
+    },
+    "e2diag": {
+     "PASS": 39,
+     "FAIL": 0,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "e2kf": {
+     "PASS": 2,
+     "FAIL": 20,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "nonE2": {
+     "PASS": 344,
+     "FAIL": 98,
+     "ERR": 0,
+     "NV": 1,
+     "SKIP": 42
+    }
+   },
+   "E2a-RC": {
+    "harness": "harness: ERROR {\"tests\":276,\"pass\":268,\"fail\":8,\"skipped\":0}",
+    "historical": "historical: PASS {\"tests\":75,\"pass\":75,\"fail\":0,\"skipped\":0}",
+    "current": "current: FAIL {\"tests\":1484,\"pass\":612,\"fail\":686,\"skipped\":42}",
+    "salCases": "current SAL: {\"PASS\":178,\"FAIL\":1,\"NOT VERIFIED\":5,\"ERROR\":4,\"NOT APPLICABLE\":16}",
+    "exit": "3",
+    "e2norm": {
+     "PASS": 229,
+     "FAIL": 441,
+     "ERR": 125,
+     "NV": 143,
+     "SKIP": 0
+    },
+    "e2diag": {
+     "PASS": 39,
+     "FAIL": 0,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "e2kf": {
+     "PASS": 0,
+     "FAIL": 22,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "nonE2": {
+     "PASS": 344,
+     "FAIL": 98,
+     "ERR": 0,
+     "NV": 1,
+     "SKIP": 42
+    }
+   },
+   "E2b": {
+    "harness": "harness: ERROR {\"tests\":276,\"pass\":268,\"fail\":8,\"skipped\":0}",
+    "historical": "historical: PASS {\"tests\":75,\"pass\":75,\"fail\":0,\"skipped\":0}",
+    "current": "current: FAIL {\"tests\":1484,\"pass\":812,\"fail\":432,\"skipped\":42}",
+    "salCases": "current SAL: {\"PASS\":177,\"FAIL\":2,\"NOT VERIFIED\":5,\"ERROR\":4,\"NOT APPLICABLE\":16}",
+    "exit": "3",
+    "e2norm": {
+     "PASS": 474,
+     "FAIL": 267,
+     "ERR": 0,
+     "NV": 197,
+     "SKIP": 0
+    },
+    "e2diag": {
+     "PASS": 39,
+     "FAIL": 0,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "e2kf": {
+     "PASS": 0,
+     "FAIL": 22,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "nonE2": {
+     "PASS": 299,
+     "FAIL": 143,
+     "ERR": 0,
+     "NV": 1,
+     "SKIP": 42
+    }
+   },
+   "E2c": {
+    "harness": "harness: ERROR {\"tests\":276,\"pass\":268,\"fail\":8,\"skipped\":0}",
+    "historical": "historical: PASS {\"tests\":75,\"pass\":75,\"fail\":0,\"skipped\":0}",
+    "current": "current: FAIL {\"tests\":1484,\"pass\":811,\"fail\":416,\"skipped\":42}",
+    "salCases": "current SAL: {\"PASS\":177,\"FAIL\":2,\"NOT VERIFIED\":5,\"ERROR\":4,\"NOT APPLICABLE\":16}",
+    "exit": "3",
+    "e2norm": {
+     "PASS": 473,
+     "FAIL": 251,
+     "ERR": 0,
+     "NV": 214,
+     "SKIP": 0
+    },
+    "e2diag": {
+     "PASS": 39,
+     "FAIL": 0,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "e2kf": {
+     "PASS": 0,
+     "FAIL": 22,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "nonE2": {
+     "PASS": 299,
+     "FAIL": 143,
+     "ERR": 0,
+     "NV": 1,
+     "SKIP": 42
+    }
+   },
+   "E2d741": {
+    "harness": "harness: ERROR {\"tests\":276,\"pass\":268,\"fail\":8,\"skipped\":0}",
+    "historical": "historical: PASS {\"tests\":75,\"pass\":75,\"fail\":0,\"skipped\":0}",
+    "current": "current: FAIL {\"tests\":1484,\"pass\":866,\"fail\":353,\"skipped\":42}",
+    "salCases": "current SAL: {\"PASS\":173,\"FAIL\":6,\"NOT VERIFIED\":5,\"ERROR\":4,\"NOT APPLICABLE\":16}",
+    "exit": "3",
+    "e2norm": {
+     "PASS": 526,
+     "FAIL": 190,
+     "ERR": 0,
+     "NV": 222,
+     "SKIP": 0
+    },
+    "e2diag": {
+     "PASS": 39,
+     "FAIL": 0,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "e2kf": {
+     "PASS": 0,
+     "FAIL": 22,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "nonE2": {
+     "PASS": 301,
+     "FAIL": 141,
+     "ERR": 0,
+     "NV": 1,
+     "SKIP": 42
+    }
+   },
+   "E2d": {
+    "harness": "harness: ERROR {\"tests\":276,\"pass\":268,\"fail\":8,\"skipped\":0}",
+    "historical": "historical: PASS {\"tests\":75,\"pass\":75,\"fail\":0,\"skipped\":0}",
+    "current": "current: FAIL {\"tests\":1484,\"pass\":859,\"fail\":359,\"skipped\":42}",
+    "salCases": "current SAL: {\"PASS\":173,\"FAIL\":6,\"NOT VERIFIED\":5,\"ERROR\":4,\"NOT APPLICABLE\":16}",
+    "exit": "3",
+    "e2norm": {
+     "PASS": 515,
+     "FAIL": 201,
+     "ERR": 0,
+     "NV": 222,
+     "SKIP": 0
+    },
+    "e2diag": {
+     "PASS": 39,
+     "FAIL": 0,
+     "ERR": 0,
+     "NV": 0,
+     "SKIP": 0
+    },
+    "e2kf": {
+     "PASS": 7,
+     "FAIL": 14,
+     "ERR": 0,
+     "NV": 1,
+     "SKIP": 0
+    },
+    "nonE2": {
+     "PASS": 298,
+     "FAIL": 144,
+     "ERR": 0,
+     "NV": 1,
+     "SKIP": 42
+    }
+   }
+  },
+  "classificationCounts": {
+   "F1": {
+    "a": 251,
+    "b": 0,
+    "c": 42,
+    "d": 0,
+    "L": 546,
+    "S": 0
+   },
+   "R1": {
+    "a": 249,
+    "b": 0,
+    "c": 42,
+    "d": 0,
+    "L": 546,
+    "S": 79
+   },
+   "E2a": {
+    "a": 465,
+    "b": 0,
+    "c": 27,
+    "d": 0,
+    "L": 164,
+    "S": 79
+   },
+   "E2a-RC": {
+    "a": 470,
+    "b": 0,
+    "c": 30,
+    "d": 0,
+    "L": 107,
+    "S": 79
+   },
+   "E2b": {
+    "a": 146,
+    "b": 0,
+    "c": 36,
+    "d": 30,
+    "L": 96,
+    "S": 124
+   },
+   "E2c": {
+    "a": 155,
+    "b": 0,
+    "c": 36,
+    "d": 38,
+    "L": 63,
+    "S": 124
+   },
+   "E2d741": {
+    "a": 151,
+    "b": 0,
+    "c": 36,
+    "d": 37,
+    "L": 4,
+    "S": 125
+   },
+   "E2d": {
+    "a": 138,
+    "b": 19,
+    "c": 36,
+    "d": 37,
+    "L": 4,
+    "S": 125
+   }
+  },
+  "classes": {
+   "a": "known/explained",
+   "b": "superseded by Q76, v9",
+   "c": "blocked by G1 v8 N18/N19/TD-14",
+   "d": "unexplained/open",
+   "L": "later slice",
+   "S": "structural F1 pin"
+  },
+  "unexplained": {
+   "E2b": [
+    {
+     "name": "E2a DIS-HOLD-HV issue by STP-A Run->R&D; Emergency in R&D (in_ES_NC_1 FALSE 100 ms), Restart -> Safe, Safe->R&D; then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=38626, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; no event; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; refused late second button in Safe (green 300 ms after blue); accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; refused BOTH at r+1999 after a blue single in Safe; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; refused BOTH with a connector permit episode in Safe (in_LV_Connector_Interlock FALSE [p+500, p+999)); accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; Emergency in Safe (in_ES_NC_1 FALSE) with legacy PLC (1,0) 300 ms [TEAM-DEFAULT TD-05], ES normal, Restart -> Safe; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; Emergency in Safe (in_ES_NC_1 FALSE 100 ms), Restart -> Safe; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in steady R&D (in_ES_NC_1 FALSE 100 ms), Restart -> Safe; no event; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=32117, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "label": "L2/L3 timing −1/+2 scan (EMGREF R&D/Safe→R&D L2 C1 +2004 vs +2005; Run L3 Discharge +7010 vs ref +7008)",
+     "error": "2 violated checks (phase at e: b_Step_RnD C1=true C2=false STO=false/false) :: +   'L2 Del out_LV_C1: +2004 vs steady Run +2005 (allowed [2005, 2006])',"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+     "label": "L2/L3 timing −1/+2 scan (EMGREF R&D/Safe→R&D L2 C1 +2004 vs +2005; Run L3 Discharge +7010 vs ref +7008)",
+     "error": "1 violated checks (phase at e: b_Step_RnD C1=false C2=false STO=false/false) :: +   'L2 Del out_HV_Discharge_Request: +7006 vs steady Run +7010 (allowed [7010, 7011])'"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-RUN: in_Estop_PLC TRUE in Run -> Emergency latch, energy chain, Restart -> only Safe",
+     "label": "L2/L3 timing −1/+2 scan (EMGREF R&D/Safe→R&D L2 C1 +2004 vs +2005; Run L3 Discharge +7010 vs ref +7008)",
+     "error": "2 violated checks (phase at e: b_Step3 C1=true C2=true STO=true/true) :: +   'L3 Del out_HV_Discharge_Request: candidate +7010 vs reference 4495a1f +7008 (allowed [7008, 7009])',"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "label": "L2/L3 timing −1/+2 scan (EMGREF R&D/Safe→R&D L2 C1 +2004 vs +2005; Run L3 Discharge +7010 vs ref +7008)",
+     "error": "2 violated checks (phase at e: b_Step12 C1=true C2=false STO=false/false) :: +   'L2 Del out_LV_C1: +2004 vs steady Run +2005 (allowed [2005, 2006])',"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-100, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+0, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+2, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass TRUE before the press and held through the exit -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-100, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+0, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+2, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass TRUE before the press and held through the exit -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-100, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+0, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+2, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass TRUE before the press and held through the exit -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    }
+   ],
+   "E2c": [
+    {
+     "name": "E2a DIS-HOLD-HV issue by STP-A Run->R&D; Emergency in R&D (in_ES_NC_1 FALSE 100 ms), Restart -> Safe, Safe->R&D; then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=38626, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; no event; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; refused late second button in Safe (green 300 ms after blue); accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; refused BOTH at r+1999 after a blue single in Safe; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; refused BOTH with a connector permit episode in Safe (in_LV_Connector_Interlock FALSE [p+500, p+999)); accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; Emergency in Safe (in_ES_NC_1 FALSE) with legacy PLC (1,0) 300 ms [TEAM-DEFAULT TD-05], ES normal, Restart -> Safe; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; Emergency in Safe (in_ES_NC_1 FALSE 100 ms), Restart -> Safe; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in steady R&D (in_ES_NC_1 FALSE 100 ms), Restart -> Safe; no event; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=32117, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "label": "L2/L3 timing −1/+2 scan (EMGREF R&D/Safe→R&D L2 C1 +2004 vs +2005; Run L3 Discharge +7010 vs ref +7008)",
+     "error": "2 violated checks (phase at e: b_Step_RnD C1=true C2=false STO=false/false) :: +   'L2 Del out_LV_C1: +2004 vs steady Run +2005 (allowed [2005, 2006])',"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+     "label": "L2/L3 timing −1/+2 scan (EMGREF R&D/Safe→R&D L2 C1 +2004 vs +2005; Run L3 Discharge +7010 vs ref +7008)",
+     "error": "1 violated checks (phase at e: b_Step_RnD C1=false C2=false STO=false/false) :: +   'L2 Del out_HV_Discharge_Request: +7006 vs steady Run +7010 (allowed [7010, 7011])'"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-RUN: in_Estop_PLC TRUE in Run -> Emergency latch, energy chain, Restart -> only Safe",
+     "label": "L2/L3 timing −1/+2 scan (EMGREF R&D/Safe→R&D L2 C1 +2004 vs +2005; Run L3 Discharge +7010 vs ref +7008)",
+     "error": "2 violated checks (phase at e: b_Step3 C1=true C2=true STO=true/true) :: +   'L3 Del out_HV_Discharge_Request: candidate +7010 vs reference 4495a1f +7008 (allowed [7008, 7009])',"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "label": "L2/L3 timing −1/+2 scan (EMGREF R&D/Safe→R&D L2 C1 +2004 vs +2005; Run L3 Discharge +7010 vs ref +7008)",
+     "error": "2 violated checks (phase at e: b_Step12 C1=true C2=false STO=false/false) :: +   'L2 Del out_LV_C1: +2004 vs steady Run +2005 (allowed [2005, 2006])',"
+    },
+    {
+     "name": "E2a E2-02 LV Healthy lost at h and restored at h+3 (Q-RC-16), C2_FBK OFF at h+3; green held; h=C2 OFF cmd+50",
+     "label": "unexplained",
+     "error": "3 violated checks :: +   'LV Healthy lost: R&D then R&D->Safe (E2-Q2a/HLT-01); final stages=b_Step_RnD',"
+    },
+    {
+     "name": "E2a E2-02 LV Healthy lost at h and restored at h+1 (Q-RC-16), C2_FBK OFF at h+1; green released 800 ms; h=C2 OFF cmd+300",
+     "label": "unexplained",
+     "error": "3 violated checks :: +   'LV Healthy lost: R&D then R&D->Safe (E2-Q2a/HLT-01); final stages=b_Step_RnD',"
+    },
+    {
+     "name": "E2c HLT-01b R&D, NC1 FALSE, Door true: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+     "label": "unexplained",
+     "error": "1 violated checks :: +   'LV lost in R&D with the cover open -> Safe (E2-Q2a); stages=b_Step_RnD'"
+    },
+    {
+     "name": "E2c HLT-01b R&D, NC1 FALSE, Door false: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+     "label": "unexplained",
+     "error": "1 violated checks :: +   'LV lost in R&D with the cover open -> Safe (E2-Q2a); stages=b_Step_RnD'"
+    },
+    {
+     "name": "E2c HLT-01b R&D, NC2 FALSE, Door true: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+     "label": "unexplained",
+     "error": "1 violated checks :: +   'LV lost in R&D with the cover open -> Safe (E2-Q2a); stages=b_Step_RnD'"
+    },
+    {
+     "name": "E2c HLT-01b R&D, NC2 FALSE, Door false: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+     "label": "unexplained",
+     "error": "1 violated checks :: +   'LV lost in R&D with the cover open -> Safe (E2-Q2a); stages=b_Step_RnD'"
+    },
+    {
+     "name": "E2c HLT-01b R&D, both FALSE, Door true: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+     "label": "unexplained",
+     "error": "1 violated checks :: +   'LV lost in R&D with the cover open -> Safe (E2-Q2a); stages=b_Step_RnD'"
+    },
+    {
+     "name": "E2c HLT-01b R&D, both FALSE, Door false: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+     "label": "unexplained",
+     "error": "1 violated checks :: +   'LV lost in R&D with the cover open -> Safe (E2-Q2a); stages=b_Step_RnD'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-100, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+0, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+2, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass TRUE before the press and held through the exit -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-100, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+0, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+2, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass TRUE before the press and held through the exit -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-100, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+0, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+2, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass TRUE before the press and held through the exit -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    }
+   ],
+   "E2d": [
+    {
+     "name": "E2a DIS-HOLD-HV issue by STP-A Run->R&D; Emergency in R&D (in_ES_NC_1 FALSE 100 ms), Restart -> Safe, Safe->R&D; then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=38626, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; no event; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; refused late second button in Safe (green 300 ms after blue); accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; refused BOTH at r+1999 after a blue single in Safe; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; refused BOTH with a connector permit episode in Safe (in_LV_Connector_Interlock FALSE [p+500, p+999)); accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; Emergency in Safe (in_ES_NC_1 FALSE) with legacy PLC (1,0) 300 ms [TEAM-DEFAULT TD-05], ES normal, Restart -> Safe; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in Safe->R&D (in_ES_NC_1 FALSE 100 ms, C1_FBK not yet ON), Restart -> Safe; Emergency in Safe (in_ES_NC_1 FALSE 100 ms), Restart -> Safe; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=29347, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a DIS-HOLD-LV issue by Emergency in steady R&D (in_ES_NC_1 FALSE 100 ms), Restart -> Safe; no event; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "label": "DIS-HOLD: стимул Restart на e+6100 до конца цепочки (S6 на e+8006 на E2b/E2d, проба independent/probe-emg-rnd-chain.mjs) — вероятно стимул теста, v9; не доказанный дефект",
+     "error": "precondition not reached within 20000 ms: Safe after Restart (t=32117, stages=b_Step6, statuses=STS_EMG)"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "label": "L2/L3 timing −1/+2 scan (EMGREF R&D/Safe→R&D L2 C1 +2004 vs +2005; Run L3 Discharge +7010 vs ref +7008)",
+     "error": "2 violated checks (phase at e: b_Step_RnD C1=true C2=false STO=false/false) :: +   'L2 Del out_LV_C1: +2004 vs steady Run +2005 (allowed [2005, 2006])',"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+     "label": "L2/L3 timing −1/+2 scan (EMGREF R&D/Safe→R&D L2 C1 +2004 vs +2005; Run L3 Discharge +7010 vs ref +7008)",
+     "error": "1 violated checks (phase at e: b_Step_RnD C1=false C2=false STO=false/false) :: +   'L2 Del out_HV_Discharge_Request: +7006 vs steady Run +7010 (allowed [7010, 7011])'"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-RUN: in_Estop_PLC TRUE in Run -> Emergency latch, energy chain, Restart -> only Safe",
+     "label": "L2/L3 timing −1/+2 scan (EMGREF R&D/Safe→R&D L2 C1 +2004 vs +2005; Run L3 Discharge +7010 vs ref +7008)",
+     "error": "2 violated checks (phase at e: b_Step3 C1=true C2=true STO=true/true) :: +   'L3 Del out_HV_Discharge_Request: candidate +7010 vs reference 4495a1f +7008 (allowed [7008, 7009])',"
+    },
+    {
+     "name": "E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "label": "L2/L3 timing −1/+2 scan (EMGREF R&D/Safe→R&D L2 C1 +2004 vs +2005; Run L3 Discharge +7010 vs ref +7008)",
+     "error": "2 violated checks (phase at e: b_Step12 C1=true C2=false STO=false/false) :: +   'L2 Del out_LV_C1: +2004 vs steady Run +2005 (allowed [2005, 2006])',"
+    },
+    {
+     "name": "E2a E2-02 LV Healthy lost at h and restored at h+3 (Q-RC-16), C2_FBK OFF at h+3; green held; h=C2 OFF cmd+50",
+     "label": "unexplained",
+     "error": "3 violated checks :: +   'LV Healthy lost: R&D then R&D->Safe (E2-Q2a/HLT-01); final stages=b_Step_RnD',"
+    },
+    {
+     "name": "E2a E2-02 LV Healthy lost at h and restored at h+1 (Q-RC-16), C2_FBK OFF at h+1; green released 800 ms; h=C2 OFF cmd+300",
+     "label": "unexplained",
+     "error": "3 violated checks :: +   'LV Healthy lost: R&D then R&D->Safe (E2-Q2a/HLT-01); final stages=b_Step_RnD',"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-100, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+0, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+2, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 Restart exit (green 100 ms at g = e+12000) with Bypass TRUE before the press and held through the exit -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=9920, g=21920, g_r=22020) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-100, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+0, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+2, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (R&D) Restart exit (green 100 ms at g = e+12000) with Bypass TRUE before the press and held through the exit -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=6217, g=18217, g_r=18317) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-100, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r-1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+0, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+1, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass rising at g_r+2, 300 ms -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2b B43-02 (Safe->R&D) Restart exit (green 100 ms at g = e+12000) with Bypass TRUE before the press and held through the exit -> one EMG->SAFE, no SAFE/EMG scan with energy, no R&D/Run/Config",
+     "label": "B43-02: stand precondition «chain complete … before the Restart press» не достигнут",
+     "error": "1 violated checks (e=3147, g=15147, g_r=15247) :: +   'stand precondition: chain complete, Emergency, FBK OFF before the Restart press'"
+    },
+    {
+     "name": "E2d FBK-10 (R) steady R&D, C2_FBK TRUE without command from f, LV Healthy lost at f+500 (held) -> HLT-01 R&D->Safe not blocked (C1 OFF, Safe), no Emergency (v7 §4.5)",
+     "label": "unexplained",
+     "error": "1 violated checks :: +   'HLT-01: Safe reached within 3000 ms of the LV loss; stages=b_Step_RnD statuses=STS_RND'"
+    },
+    {
+     "name": "E2d FBK-10 (S1) + in_Estop_PLC: Restart while steady Safe, C1_FBK still ON -> stays Emergency (SPEC §12, v7 §4.5); after FBK OFF, Restart -> only Safe",
+     "label": "unexplained",
+     "error": "2 violated checks (f=4214, e=4714, refused Restart 16714) :: +   'Restart while in_LV_C1_FBK ON: stays Emergency (no exit, no delayed exit); first non-Emergency t=16814',"
+    },
+    {
+     "name": "E2d FBK-10 (S2) + in_Estop_PLC: Restart while steady Safe, C2_FBK still ON -> stays Emergency (SPEC §12, v7 §4.5); after FBK OFF, Restart -> only Safe",
+     "label": "unexplained",
+     "error": "2 violated checks (f=4214, e=4714, refused Restart 16714) :: +   'Restart while in_HV_C2_FBK ON: stays Emergency (no exit, no delayed exit); first non-Emergency t=16814',"
+    },
+    {
+     "name": "E2d FBK10-PLC-REG (1) R-T5 Safe, FBK OFF, legacy PLC (1,0) front held, C1_FBK ON from u1+1 (after the own C1 command) -> C1 kept, no R&D <= u1+599, R&D at u1+601 (RND-CONF-T, TEAM-DEFAULT TD-02), no Emergency, no return to Safe",
+     "label": "unexplained",
+     "error": "1 violated checks (p=8619, u1=8623) :: +   'no R&D <= u1+599; R&D first at u1+599'"
+    },
+    {
+     "name": "E2d FBK10-PLC-REG (1) R-T5 Safe, FBK OFF, legacy PLC (1,0) front held, C1_FBK ON from u1+250 (after the own C1 command) -> C1 kept, no R&D <= u1+599, R&D at u1+601 (RND-CONF-T, TEAM-DEFAULT TD-02), no Emergency, no return to Safe",
+     "label": "unexplained",
+     "error": "1 violated checks (p=8619, u1=8623) :: +   'no R&D <= u1+599; R&D first at u1+599'"
+    }
+   ]
+  },
+  "knownDefects": {
+   "K-1": "present from E2b (regression vs E2a-RC), fixed in E2d v7.6",
+   "K-2/K-2b": "present on E2c, E2d v7.5 (regression vs E2b), fixed in E2d v7.6"
+  }
+ },
+ "mutations": {
+  "diag_E2a-RC": {
+   "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2a-RC_on_E2a-RC.json",
+   "planSha256": "465f7e5912508f651dbb689d9af51fa771f6b385c97c1add48d57b7d610bef56",
+   "sourceSha256": "5733552a150bfd33df4211da8f97a8fc993ff990ad52c90a8d7758d950660f3f",
+   "summary": {
+    "KILLED": 1,
+    "SURVIVED": 1,
+    "STRUCTURAL-ONLY": 0,
+    "INVALID": 0,
+    "NOT-RUN": 0
+   },
+   "results": [
+    {
+     "id": "M-E2a-36",
+     "verdict": "KILLED",
+     "killedBy": "E2a DIS-HOLD-HV issue by STP-A Run->R&D; refused legacy PLC lift (1,1) 300 ms with the cover open (NC1 FALSE); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+     "ran": 2,
+     "eligible": 29
+    },
+    {
+     "id": "M-E2a-18",
+     "verdict": "SURVIVED",
+     "ran": 29,
+     "eligible": 29
+    }
+   ]
+  },
+  "diag_E2a": {
+   "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2a_on_E2a.json",
+   "planSha256": "54010eb2e39f80c033cca6477ef4fb2b95535078154375bb9986e0edbc056178",
+   "sourceSha256": "5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b",
+   "summary": {
+    "KILLED": 0,
+    "SURVIVED": 3,
+    "STRUCTURAL-ONLY": 0,
+    "INVALID": 0,
+    "NOT-RUN": 0
+   },
+   "results": [
+    {
+     "id": "M-E2a-04",
+     "verdict": "SURVIVED",
+     "ran": 28,
+     "eligible": 28
+    },
+    {
+     "id": "M-E2a-28",
+     "verdict": "SURVIVED",
+     "ran": 28,
+     "eligible": 28
+    },
+    {
+     "id": "M-E2a-29",
+     "verdict": "SURVIVED",
+     "ran": 28,
+     "eligible": 28
+    }
+   ]
+  },
+  "diag_E2b": {
+   "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2b_on_E2b.json",
+   "planSha256": "b5dd045fb959f68ab1fadfcfe59509a1b8d21f64d1e48d5c356eac7355909598",
+   "sourceSha256": "4f933433c4dcb6a4ddf3cbad1cad64897965c48f7832613d0481b0195fbce45e",
+   "summary": {
+    "KILLED": 0,
+    "SURVIVED": 8,
+    "STRUCTURAL-ONLY": 0,
+    "INVALID": 0,
+    "NOT-RUN": 0
+   },
+   "results": [
+    {
+     "id": "M-E2b-19",
+     "verdict": "SURVIVED",
+     "ran": 29,
+     "eligible": 29
+    },
+    {
+     "id": "M-E2b-17",
+     "verdict": "SURVIVED",
+     "ran": 29,
+     "eligible": 29
+    },
+    {
+     "id": "M-E2b-16",
+     "verdict": "SURVIVED",
+     "ran": 29,
+     "eligible": 29
+    },
+    {
+     "id": "M-E2b-22",
+     "verdict": "SURVIVED",
+     "ran": 29,
+     "eligible": 29
+    },
+    {
+     "id": "M-E2b-46",
+     "verdict": "SURVIVED",
+     "ran": 29,
+     "eligible": 29
+    },
+    {
+     "id": "M-E2b-41",
+     "verdict": "SURVIVED",
+     "ran": 29,
+     "eligible": 29
+    },
+    {
+     "id": "M-E2b-48",
+     "verdict": "SURVIVED",
+     "ran": 29,
+     "eligible": 29
+    },
+    {
+     "id": "M-E2b-49",
+     "verdict": "SURVIVED",
+     "ran": 29,
+     "eligible": 29
+    }
+   ]
+  },
+  "diag_E2c": {
+   "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2c_on_E2c.json",
+   "planSha256": "74db718093e11178a10f2b184d429114a7182fd6a903a561a5b59dbeca953a57",
+   "sourceSha256": "ee8439ae2a58c4e51eba8bcba225831d4a024b06975c7eb3e19b8e859aaa4d97",
+   "summary": {
+    "KILLED": 0,
+    "SURVIVED": 3,
+    "STRUCTURAL-ONLY": 0,
+    "INVALID": 0,
+    "NOT-RUN": 0
+   },
+   "results": [
+    {
+     "id": "M-E2c-05",
+     "verdict": "SURVIVED",
+     "ran": 29,
+     "eligible": 29
+    },
+    {
+     "id": "M-E2c-06",
+     "verdict": "SURVIVED",
+     "ran": 29,
+     "eligible": 29
+    },
+    {
+     "id": "M-E2c-04",
+     "verdict": "SURVIVED",
+     "ran": 29,
+     "eligible": 29
+    }
+   ]
+  },
+  "diag_E2d": {
+   "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2d_on_E2d.json",
+   "planSha256": "aad9389d011546fd331a10fa0fba2d797761315d666a81b74dd32675dbebc4fb",
+   "sourceSha256": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b",
+   "summary": {
+    "KILLED": 0,
+    "SURVIVED": 1,
+    "STRUCTURAL-ONLY": 0,
+    "INVALID": 0,
+    "NOT-RUN": 0
+   },
+   "results": [
+    {
+     "id": "M-E2d-03",
+     "verdict": "SURVIVED",
+     "ran": 23,
+     "eligible": 23
+    }
+   ]
+  },
+  "E2a-RC_on_E2a-RC": {
+   "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2a-RC_on_E2a-RC.json",
+   "planSha256": "465f7e5912508f651dbb689d9af51fa771f6b385c97c1add48d57b7d610bef56",
+   "sourceSha256": "5733552a150bfd33df4211da8f97a8fc993ff990ad52c90a8d7758d950660f3f",
+   "summary": {
+    "KILLED": 10,
+    "SURVIVED": 2,
+    "STRUCTURAL-ONLY": 0,
+    "INVALID": 3,
+    "NOT-RUN": 1
+   },
+   "results": [
+    {
+     "id": "M-E2a-19",
+     "verdict": "KILLED",
+     "killedBy": "E2a RUN-CONF HV Faulty TRUE for 3000 ms after C2_FBK ON: no Run meanwhile; HV healthy -> Run at k+101, not at k+99",
+     "ran": 4,
+     "eligible": 343
+    },
+    {
+     "id": "M-E2a-20",
+     "verdict": "KILLED",
+     "killedBy": "E2a RUN-CONF RC-5 (ii) C2_FBK delayed 30 ms (ON from u+30): no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+     "ran": 4,
+     "eligible": 343
+    },
+    {
+     "id": "M-E2a-21",
+     "verdict": "KILLED",
+     "killedBy": "E2a RUN-CONF HV Faulty TRUE for 3000 ms after C2_FBK ON: no Run meanwhile; HV healthy -> Run at k+101, not at k+99",
+     "ran": 4,
+     "eligible": 343
+    },
+    {
+     "id": "M-E2a-22",
+     "verdict": "KILLED",
+     "killedBy": "E2a RUN-CONF RC-5 (ii) C2_FBK delayed 30 ms (ON from u+30): no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+     "ran": 4,
+     "eligible": 343
+    },
+    {
+     "id": "M-E2a-23",
+     "verdict": "KILLED",
+     "killedBy": "E2a MOD1-01 (v7 §4.2) Safe->R&D natural: no R&D <= u1+599, R&D at u1+601 and later (question 68 \"Б\": C1 window 500 ms + 100 ms continuous C1_FBK and LV healthy), no Emergency",
+     "ran": 4,
+     "eligible": 343
+    },
+    {
+     "id": "M-E2a-24",
+     "verdict": "KILLED",
+     "killedBy": "E2d FBK10-PLC-REG (1) R-T5 Safe, FBK OFF, legacy PLC (1,0) front held, C1_FBK ON from u1+499 (after the own C1 command) -> C1 kept, no R&D <= u1+599, R&D at u1+601 (RND-CONF-T, TEAM-DEFAULT TD-02), no Emergency, no return to Safe",
+     "ran": 20,
+     "eligible": 343
+    },
+    {
+     "id": "M-E2a-25",
+     "verdict": "KILLED",
+     "killedBy": "E2a MOD1-01 (v7 §4.2) Safe->R&D natural: no R&D <= u1+599, R&D at u1+601 and later (question 68 \"Б\": C1 window 500 ms + 100 ms continuous C1_FBK and LV healthy), no Emergency",
+     "ran": 4,
+     "eligible": 343
+    },
+    {
+     "id": "M-E2a-26",
+     "verdict": "NOT-RUN",
+     "reason": "operator composite not implemented by the stand"
+    },
+    {
+     "id": "M-E2a-30",
+     "verdict": "KILLED",
+     "killedBy": "E2a DIS-HOLD-HV issue by STP-A Run->R&D (green 600 ms); accepted R&D->Run -> HV discharge request TRUE in [d, a-1], FALSE from u+1 (Q-V7-01 \"Г\", question 73 \"А\")",
+     "ran": 4,
+     "eligible": 343
+    },
+    {
+     "id": "M-E2a-31",
+     "verdict": "KILLED",
+     "killedBy": "E2a DIS-HOLD-LV issue by R&D->Safe (green 600 ms in steady R&D); no event; accepted Safe->R&D -> LV discharge request TRUE in [d, a1-1], FALSE from u1+1 (question 74 \"А\", as HV question 73)",
+     "ran": 4,
+     "eligible": 343
+    },
+    {
+     "id": "M-E2a-32",
+     "verdict": "INVALID",
+     "error": "rebind-global: Symbol linkRndBothQualified not found in SGVL (creating a Symbol is a manual procedure)"
+    },
+    {
+     "id": "M-E2a-33",
+     "verdict": "INVALID",
+     "error": "rebind-global needs value.global = name of an existing GVL Symbol"
+    },
+    {
+     "id": "M-E2a-34",
+     "verdict": "INVALID",
+     "error": "rebind-global needs value.global = name of an existing GVL Symbol"
+    },
+    {
+     "id": "M-E2a-35",
+     "verdict": "KILLED",
+     "killedBy": "E2a TD5-EOK (TEAM-DEFAULT TD-05) R-T5 Safe, Emergency by in_ES_NC_1 FALSE, legacy PLC (1,0) held 3000 ms at E+1 -> no S12, LV discharge request TRUE, C1/C2 OFF, STO set, Emergency kept in every scan [t, t+3000]; Restart with (0,0) -> only Safe, no delayed lift",
+     "ran": 4,
+     "eligible": 343
+    },
+    {
+     "id": "M-E2a-18",
+     "verdict": "SURVIVED",
+     "ran": 343,
+     "eligible": 343
+    },
+    {
+     "id": "M-E2a-36",
+     "verdict": "SURVIVED",
+     "ran": 343,
+     "eligible": 343
+    }
+   ]
+  },
+  "E2a_on_E2a": {
+   "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2a_on_E2a.json",
+   "planSha256": "54010eb2e39f80c033cca6477ef4fb2b95535078154375bb9986e0edbc056178",
+   "sourceSha256": "5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b",
+   "summary": {
+    "KILLED": 16,
+    "SURVIVED": 3,
+    "STRUCTURAL-ONLY": 0,
+    "INVALID": 0,
+    "NOT-RUN": 0
+   },
+   "results": [
+    {
+     "id": "M-E2a-01",
+     "verdict": "KILLED",
+     "killedBy": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Safe->R&D, Restart",
+     "ran": 4,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-03",
+     "verdict": "KILLED",
+     "killedBy": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Run, Restart",
+     "ran": 4,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-02",
+     "verdict": "KILLED",
+     "killedBy": "E2a E2-01 stages<=1: lifecycle Safe->R&D->Run->green held->R&D->Run->R&D->Safe",
+     "ran": 36,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-05",
+     "verdict": "KILLED",
+     "killedBy": "E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in Run, Restart",
+     "ran": 4,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-06",
+     "verdict": "KILLED",
+     "killedBy": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+1; green held; h=C2 OFF cmd+50",
+     "ran": 20,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-07",
+     "verdict": "KILLED",
+     "killedBy": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+1; green held; h=C2 OFF cmd+50",
+     "ran": 4,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-08",
+     "verdict": "KILLED",
+     "killedBy": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in R&D, Restart",
+     "ran": 4,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-09",
+     "verdict": "KILLED",
+     "killedBy": "E2a E2-01 endpoints: lifecycle Safe->R&D->Run->green held->R&D->Run->R&D->Safe",
+     "ran": 16,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-10",
+     "verdict": "KILLED",
+     "killedBy": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Run, Restart",
+     "ran": 4,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-11",
+     "verdict": "KILLED",
+     "killedBy": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Run, Restart",
+     "ran": 4,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-12",
+     "verdict": "KILLED",
+     "killedBy": "E2b EMG4-03 boundary: LV connector FALSE in A-1 (one scan before the first Safe->R&D acceptance sign, TD-08) -> EMG-003: UP rejected, no S12, no Emergency",
+     "ran": 4,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-13",
+     "verdict": "KILLED",
+     "killedBy": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+1; green held; h=C2 OFF cmd+50",
+     "ran": 4,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-14",
+     "verdict": "KILLED",
+     "killedBy": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in Run, Restart",
+     "ran": 4,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-15",
+     "verdict": "KILLED",
+     "killedBy": "E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE steady in Run, Restart",
+     "ran": 4,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-16",
+     "verdict": "KILLED",
+     "killedBy": "E2d FBK-06-POS Safe->R&D held by in_LV_Faulty_FBK TRUE, green held only 499 ms at rb+2001 (BTN-003 q-1) -> no abort in every scan [g0, g0+3000], no Emergency",
+     "ran": 4,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-17",
+     "verdict": "KILLED",
+     "killedBy": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Run, Restart",
+     "ran": 4,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-04",
+     "verdict": "SURVIVED",
+     "ran": 293,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-28",
+     "verdict": "SURVIVED",
+     "ran": 293,
+     "eligible": 293
+    },
+    {
+     "id": "M-E2a-29",
+     "verdict": "SURVIVED",
+     "ran": 293,
+     "eligible": 293
+    }
+   ]
+  },
+  "E2b_on_E2b": {
+   "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2b_on_E2b.json",
+   "planSha256": "b5dd045fb959f68ab1fadfcfe59509a1b8d21f64d1e48d5c356eac7355909598",
+   "sourceSha256": "4f933433c4dcb6a4ddf3cbad1cad64897965c48f7832613d0481b0195fbce45e",
+   "summary": {
+    "KILLED": 36,
+    "SURVIVED": 8,
+    "STRUCTURAL-ONLY": 0,
+    "INVALID": 0,
+    "NOT-RUN": 0
+   },
+   "results": [
+    {
+     "id": "M-E2b-01",
+     "verdict": "KILLED",
+     "killedBy": "E2c HLT-02 steady R&D, HV Healthy constantly lost: ignored (R&D, LV kept, no Emergency, no SafetyFault); R&D->Run accepted with HV lost at start",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-02",
+     "verdict": "KILLED",
+     "killedBy": "E2d IL-02 R&D, NC1 FALSE, Door true: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-03",
+     "verdict": "KILLED",
+     "killedBy": "E2b IL-05b(1) normal Run->R&D by green, NC1 FALSE at t_a+1: stop continues with unchanged moments, R&D, then R&D kept with the cover open; no Emergency",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-04",
+     "verdict": "KILLED",
+     "killedBy": "E2b IL-05a StartingRun, NC1 FALSE (Door true) at c=u+1: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-05",
+     "verdict": "KILLED",
+     "killedBy": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-06",
+     "verdict": "KILLED",
+     "killedBy": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-07",
+     "verdict": "KILLED",
+     "killedBy": "E2b IL-05a boundary c=r+1 (Run just confirmed), NC1 FALSE -> IL-03: Emergency, rule L vs in_Estop_PLC at c, Restart -> only Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-08",
+     "verdict": "KILLED",
+     "killedBy": "E2b IL-05b boundary: NC2 FALSE in c=t_a (t_a = linkRunDownOwner, TD-09) -> normative disjunction: (i) IL-03 Emergency latched, Restart -> only Safe, or (ii) IL-05b(1) R&D without Emergency; no new energy increase in scan >= c, no Run without Emergency",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-09",
+     "verdict": "KILLED",
+     "killedBy": "E2b IL-05b boundary: NC1 FALSE in c=t_a (t_a = linkRunDownOwner, TD-09) -> normative disjunction: (i) IL-03 Emergency latched, Restart -> only Safe, or (ii) IL-05b(1) R&D without Emergency; no new energy increase in scan >= c, no Run without Emergency",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-10",
+     "verdict": "KILLED",
+     "killedBy": "E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE steady in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-11",
+     "verdict": "KILLED",
+     "killedBy": "E2a EMG6-01 EMGREF-LV: in_ES_NC_1 FALSE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-13",
+     "verdict": "KILLED",
+     "killedBy": "E2a DIS-HOLD-HV issue by Emergency chain from Run (in_ES_NC_1 FALSE 100 ms), Restart -> Safe, Safe->R&D; accepted R&D->Run -> HV discharge request TRUE in [d, a-1], FALSE from u+1 (Q-V7-01 \"Г\", question 73 \"А\")",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-12",
+     "verdict": "KILLED",
+     "killedBy": "E2a EMG6-01 EMGREF-LV: in_Mentee_EStop TRUE in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "ran": 16,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-14",
+     "verdict": "KILLED",
+     "killedBy": "E2a EMG6-01 EMGREF-RUN: in_Estop_PLC TRUE in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+     "ran": 20,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-15",
+     "verdict": "KILLED",
+     "killedBy": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Safe->R&D, Restart",
+     "ran": 40,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-16",
+     "verdict": "SURVIVED",
+     "ran": 642,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-17",
+     "verdict": "SURVIVED",
+     "ran": 642,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-18",
+     "verdict": "KILLED",
+     "killedBy": "E2a EMG6-01 refused Restart: in_Estop_PLC TRUE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+     "ran": 20,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-20",
+     "verdict": "KILLED",
+     "killedBy": "E2d IL-02/IL-05a boundary c=A (NC1 FALSE in the first acceptance-sign scan, TD-08): normative disjunction - (i) UP rejected, R&D, no Emergency, or (ii) Emergency by rule L with EMGREF-RUN; never Run",
+     "ran": 40,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-21",
+     "verdict": "KILLED",
+     "killedBy": "E2d FBK10-K4 (S1) BOTH-1 qualified while steady Safe, C1_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 \"Б\", E6-Q2, п.13)",
+     "ran": 28,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-19",
+     "verdict": "SURVIVED",
+     "ran": 642,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-22",
+     "verdict": "SURVIVED",
+     "ran": 642,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-26",
+     "verdict": "KILLED",
+     "killedBy": "E2a EMG6-01 EMGREF-LV: in_ES_NC_1 FALSE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-27",
+     "verdict": "KILLED",
+     "killedBy": "E2a EMG6-01 EMGREF-RUN: in_ES_NC_1 FALSE in Run -> Emergency latch, energy chain, Restart -> only Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-28",
+     "verdict": "KILLED",
+     "killedBy": "E2a DIS-HOLD-HV issue by STP-A Run->R&D; R&D->Safe (green 600 ms), steady Safe, Safe->R&D (BOTH); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-29",
+     "verdict": "KILLED",
+     "killedBy": "E2a EMG6-01 refused Restart: in_Estop_PLC TRUE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-31",
+     "verdict": "KILLED",
+     "killedBy": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-32",
+     "verdict": "KILLED",
+     "killedBy": "E2b EMG4-03 boundary: LV connector FALSE in u+1 (Safe->R&D accepted) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), R&D never confirmed, Restart -> only Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-23",
+     "verdict": "KILLED",
+     "killedBy": "E2a EMG6-01-BOOT companion: Emergency from Run (in_Estop_PLC), chain complete, C2_FBK held TRUE (welded) -> Restart -> stays Emergency",
+     "ran": 92,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-33",
+     "verdict": "KILLED",
+     "killedBy": "E2b EMG4-03 boundary: LV connector FALSE in A+1 (TD-08) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), C1 ON in no scan >= e, R&D never, Restart -> only Safe",
+     "ran": 20,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-37",
+     "verdict": "KILLED",
+     "killedBy": "E2a EMG6-01-BOOT start with (a) in_LV_C1_FBK TRUE, Restart green 300..399, g = r+1 -> Emergency until a new Restart after g; new Restart -> Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-38",
+     "verdict": "KILLED",
+     "killedBy": "E2a EMG6-01-BOOT start with (b) in_HV_C2_FBK TRUE, Restart green 300..399, g = r+1 -> Emergency until a new Restart after g; new Restart -> Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-36",
+     "verdict": "KILLED",
+     "killedBy": "E2b B43-01 (e) Emergency from R&D (in_ES_NC_1 100 ms, early Restart), Bypass (b) 1 scan at b=C2 OFF-1 -> no energy at status Emergency, ignored (EMG-011, EMGREF(2), V14-Q16, Q-RC-05(a))",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-39",
+     "verdict": "KILLED",
+     "killedBy": "E2a EMG6-01-BOOT start with (a) in_LV_C1_FBK TRUE, Restart green 300..399, FBK never removed -> Emergency until a new Restart after g; new Restart -> Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-40",
+     "verdict": "KILLED",
+     "killedBy": "E2a EMG6-01-BOOT start with (a) in_LV_C1_FBK TRUE, Restart green 300..399, g = r+1 -> Emergency until a new Restart after g; new Restart -> Safe",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-42",
+     "verdict": "KILLED",
+     "killedBy": "E2b REL01-e2 R&D NC1: permit FALSE 200 ms [p+500, p+700) while BOTH is held -> stays R&D (no lift, no transition, no Emergency) until rb+2100; new BOTH after 2100 ms full release -> Run (REL-01(c), IL-02, SPEC §5.1, TD-07; MOD-002 / MOD1-01)",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-43",
+     "verdict": "KILLED",
+     "killedBy": "E2b REL01-e2 Safe LV connector: permit FALSE 200 ms [p+500, p+700) while BOTH is held -> stays Safe (no lift, no transition, no Emergency) until rb+2100; new BOTH after 2100 ms full release -> R&D (REL-01(c), IL-02, SPEC §5.1, TD-07; MOD-002 / MOD1-01)",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-44",
+     "verdict": "KILLED",
+     "killedBy": "E2a DIS-HOLD-HV issue by STP-A Run->R&D; refused BOTH with the cover open (NC1 FALSE during the whole gesture); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-45",
+     "verdict": "KILLED",
+     "killedBy": "E2a DIS-HOLD-HV issue by STP-A Run->R&D; R&D->Safe (green 600 ms), steady Safe, Safe->R&D (BOTH); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-41",
+     "verdict": "SURVIVED",
+     "ran": 642,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-47",
+     "verdict": "KILLED",
+     "killedBy": "E2d UNL-04 R&D, cover NC1 open: blue held, green pressed 1000 ms later for 300 ms -> Unlock FALSE in every scan with green pressed",
+     "ran": 4,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-46",
+     "verdict": "SURVIVED",
+     "ran": 642,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-48",
+     "verdict": "SURVIVED",
+     "ran": 642,
+     "eligible": 642
+    },
+    {
+     "id": "M-E2b-49",
+     "verdict": "SURVIVED",
+     "ran": 642,
+     "eligible": 642
+    }
+   ]
+  },
+  "E2b_on_E2d": {
+   "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2b_on_E2d.json",
+   "planSha256": "2bd085653dbfcea3983976622199b0c11ce94835cbfa40414bc1170cc01eddcd",
+   "sourceSha256": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b",
+   "summary": {
+    "KILLED": 3,
+    "SURVIVED": 2,
+    "STRUCTURAL-ONLY": 0,
+    "INVALID": 0,
+    "NOT-RUN": 0
+   },
+   "results": [
+    {
+     "id": "M-E2b-46",
+     "verdict": "KILLED",
+     "killedBy": "E2d IL-01 Safe, NC1 FALSE, Door true: no Emergency; BOTH Safe->R&D accepted with the cover open",
+     "ran": 3,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2b-47",
+     "verdict": "KILLED",
+     "killedBy": "E2d UNL-04 R&D, cover NC1 open: blue held, green pressed 1000 ms later for 300 ms -> Unlock FALSE in every scan with green pressed",
+     "ran": 3,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2b-21",
+     "verdict": "KILLED",
+     "killedBy": "E2d FBK10-K4 (S1) BOTH-1 qualified while steady Safe, C1_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 \"Б\", E6-Q2, п.13)",
+     "ran": 27,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2b-49",
+     "verdict": "SURVIVED",
+     "ran": 714,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2b-48",
+     "verdict": "SURVIVED",
+     "ran": 714,
+     "eligible": 714
+    }
+   ]
+  },
+  "E2c_on_E2c": {
+   "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2c_on_E2c.json",
+   "planSha256": "74db718093e11178a10f2b184d429114a7182fd6a903a561a5b59dbeca953a57",
+   "sourceSha256": "ee8439ae2a58c4e51eba8bcba225831d4a024b06975c7eb3e19b8e859aaa4d97",
+   "summary": {
+    "KILLED": 3,
+    "SURVIVED": 3,
+    "STRUCTURAL-ONLY": 0,
+    "INVALID": 0,
+    "NOT-RUN": 0
+   },
+   "results": [
+    {
+     "id": "M-E2c-01",
+     "verdict": "KILLED",
+     "killedBy": "E2c HLT-01 steady R&D with C3/BMS ON, LV lost for 100 ms then restored: R&D->Safe, C1/C3/BMS OFF, no return to R&D, SafetyFault",
+     "ran": 4,
+     "eligible": 658
+    },
+    {
+     "id": "M-E2c-02",
+     "verdict": "KILLED",
+     "killedBy": "E2c HLT-01 steady R&D with C3/BMS ON, LV lost for 100 ms then restored: R&D->Safe, C1/C3/BMS OFF, no return to R&D, SafetyFault",
+     "ran": 4,
+     "eligible": 658
+    },
+    {
+     "id": "M-E2c-03",
+     "verdict": "KILLED",
+     "killedBy": "E2a DIS-HOLD-HV issue by STP-A Run->R&D; R&D->Safe (green 600 ms), steady Safe, Safe->R&D (BOTH); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+     "ran": 4,
+     "eligible": 658
+    },
+    {
+     "id": "M-E2c-05",
+     "verdict": "SURVIVED",
+     "ran": 658,
+     "eligible": 658
+    },
+    {
+     "id": "M-E2c-04",
+     "verdict": "SURVIVED",
+     "ran": 658,
+     "eligible": 658
+    },
+    {
+     "id": "M-E2c-06",
+     "verdict": "SURVIVED",
+     "ran": 658,
+     "eligible": 658
+    }
+   ]
+  },
+  "E2d_on_E2d": {
+   "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2d_on_E2d.json",
+   "planSha256": "aad9389d011546fd331a10fa0fba2d797761315d666a81b74dd32675dbebc4fb",
+   "sourceSha256": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b",
+   "summary": {
+    "KILLED": 16,
+    "SURVIVED": 1,
+    "STRUCTURAL-ONLY": 0,
+    "INVALID": 0,
+    "NOT-RUN": 1
+   },
+   "results": [
+    {
+     "id": "M-E2d-04",
+     "verdict": "KILLED",
+     "killedBy": "E2d UNL-05 Safe, Door FALSE >= 2 s, cover a_NC1: blue held 1000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-05",
+     "verdict": "KILLED",
+     "killedBy": "E2d UNL-05 Safe, Door FALSE >= 2 s, cover a_NC1: blue held 1000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-06",
+     "verdict": "KILLED",
+     "killedBy": "E2d UNL-05 R&D, Door FALSE >= 2 s, cover a_NC1: blue held 1000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-07",
+     "verdict": "KILLED",
+     "killedBy": "E2d UNL-05 R&D, Door FALSE >= 2 s, cover a_NC1: blue held 1000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-08",
+     "verdict": "KILLED",
+     "killedBy": "E2d UNL-04 Safe, cover NC1 open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-09",
+     "verdict": "KILLED",
+     "killedBy": "E2d FBK-10 (S1) BOTH qualified at Q, steady Safe, C1_FBK TRUE from f = Q (FBK ON in the qualification scan) without a command -> no lift in f+1 or later (v7 §4.5 boundary; lift in f itself observation)",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-10",
+     "verdict": "KILLED",
+     "killedBy": "E2d FBK-10 (S2) BOTH qualified at Q, steady Safe, C2_FBK TRUE from f = Q (FBK ON in the qualification scan) without a command -> no lift in f+1 or later (v7 §4.5 boundary; lift in f itself observation)",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-11",
+     "verdict": "KILLED",
+     "killedBy": "E2d FBK-10 (R) BOTH qualified at Q, steady R&D, C2_FBK TRUE from f = Q (FBK ON in the qualification scan) without a command -> no lift in f+1 or later (v7 §4.5 boundary; lift in f itself observation)",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-12",
+     "verdict": "KILLED",
+     "killedBy": "E2d FBK-10 (S1) steady Safe, C1_FBK TRUE without command, legacy PLC (1,0) 1000 ms at f+500 while FBK ON -> no lift (C1 not switched on), state unchanged, no Emergency",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-13",
+     "verdict": "KILLED",
+     "killedBy": "E2d FBK-10 (S2) steady Safe, C2_FBK TRUE without command, legacy PLC (1,0) 1000 ms at f+500 while FBK ON -> no lift (C1 not switched on), state unchanged, no Emergency",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-17",
+     "verdict": "KILLED",
+     "killedBy": "E2d FFS R&D->Run buttons BOTH: NC1 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-18",
+     "verdict": "KILLED",
+     "killedBy": "E2d FFS R&D->Run buttons BOTH: NC2 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-19",
+     "verdict": "KILLED",
+     "killedBy": "E2d FFS R&D->Run buttons BOTH: NC1 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-20",
+     "verdict": "KILLED",
+     "killedBy": "E2d FFS R&D->Run buttons BOTH: NC2 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-21",
+     "verdict": "KILLED",
+     "killedBy": "E2d FFS R&D->Run buttons BOTH: NC1 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-22",
+     "verdict": "KILLED",
+     "killedBy": "E2d FFS R&D->Run buttons BOTH: NC2 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+     "ran": 4,
+     "eligible": 714
+    },
+    {
+     "id": "M-E2d-23",
+     "verdict": "NOT-RUN",
+     "reason": "operator restore-legacy-11-path not implemented by the stand"
+    },
+    {
+     "id": "M-E2d-03",
+     "verdict": "SURVIVED",
+     "ran": 714,
+     "eligible": 714
+    }
+   ]
+  }
+ },
+ "survivorScenarios": {
+  "M-E2a-04": "probe-survivors-e2a P04 d=2: b_Step_RnD+b_Step4",
+  "M-E2a-18": "probe-survivors-e2a P18: Run at p+1602 with C2_FBK never ON",
+  "M-E2b-16": "probe-survivors S16: stage b_Step1 under Emergency (internal only)",
+  "M-E2b-17": "S17: Safe during green hold (+2 vs +301)",
+  "M-E2b-19": "S19: Safe at +101 with C1_FBK stuck ON",
+  "M-E2b-22": "S22: b_Step1+b_Step4 from +101",
+  "M-E2b-41": "S41: Safe during green hold after boot FBK",
+  "M-E2c-04": "probe-diff C04 k=999: C2 ON/STO released with C1 OFF, Run, Emergency",
+  "M-E2c-05": "probe-diff C05: held BOTH executes Safe->R&D after HLT with LV Faulty",
+  "M-E2c-06": "probe-diff C04 k=1000: C1 OFF + launch in same transition",
+  "M-E2d-03": "probe-diff D03: new BOTH at release+2050 rejected (base accepts)"
+ },
+ "mutationVerdicts": {
+  "pendingV9": 0,
+  "M-E2d-23": "killed by frozen mutant source (KF-5 R&D(HV) x3, KF-2 (1,1) x2, KF-3 (1,1), KF-1 (R) x2: FAIL on E2d-v7.4.1, PASS on E2d v7.5; delta exact)",
+  "M-E2d-14/15/16": "removed with v7.5",
+  "M-E2b-21": "killed on exact E2b 4f933433",
+  "M-E2a-36": "killed by DIS-HOLD (1,1) test (not on official Q76 list)",
+  "M-E2a-26/32/33/34": "not-run (composite / rebind-global to non-existent Symbol)",
+  "G3rule": "NOT satisfied: 16 survivors"
+ },
+ "independent": {
+  "ind.E2a-RC.json": [
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from p-200",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from p+900",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A+1",
+   "PASS: UNL-LVF Safe single blue 1000 ms, LV Faulty FALSE (control)",
+   "PASS: UNL-LVF Safe single blue 1000 ms, LV Faulty TRUE"
+  ],
+  "ind.E2a.json": [
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from p-200",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from p+900",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A+1",
+   "PASS: UNL-LVF Safe single blue 1000 ms, LV Faulty FALSE (control)",
+   "PASS: UNL-LVF Safe single blue 1000 ms, LV Faulty TRUE"
+  ],
+  "ind.E2b.json": [
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from p-200",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from p+900",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A+1",
+   "PASS: UNL-LVF Safe single blue 1000 ms, LV Faulty FALSE (control)",
+   "PASS: UNL-LVF Safe single blue 1000 ms, LV Faulty TRUE"
+  ],
+  "ind.E2c.json": [
+   "FAIL: K2 Safe->R&D, LV Faulty TRUE from p-200",
+   "FAIL: K2 Safe->R&D, LV Faulty TRUE from p+900",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A+1",
+   "PASS: UNL-LVF Safe single blue 1000 ms, LV Faulty FALSE (control)",
+   "FAIL: UNL-LVF Safe single blue 1000 ms, LV Faulty TRUE"
+  ],
+  "ind.E2d.json": [
+   "FAIL: K2 Safe->R&D, LV Faulty TRUE from p-200",
+   "FAIL: K2 Safe->R&D, LV Faulty TRUE from p+900",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A+1",
+   "PASS: UNL-LVF Safe single blue 1000 ms, LV Faulty FALSE (control)",
+   "FAIL: UNL-LVF Safe single blue 1000 ms, LV Faulty TRUE"
+  ],
+  "ind.E2d741.json": [
+   "FAIL: K2 Safe->R&D, LV Faulty TRUE from p-200",
+   "FAIL: K2 Safe->R&D, LV Faulty TRUE from p+900",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A+1",
+   "PASS: UNL-LVF Safe single blue 1000 ms, LV Faulty FALSE (control)",
+   "FAIL: UNL-LVF Safe single blue 1000 ms, LV Faulty TRUE"
+  ],
+  "ind.F1.json": [
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from p-200",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from p+900",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A+1",
+   "PASS: UNL-LVF Safe single blue 1000 ms, LV Faulty FALSE (control)",
+   "PASS: UNL-LVF Safe single blue 1000 ms, LV Faulty TRUE"
+  ],
+  "ind.R1.json": [
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from p-200",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from p+900",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A",
+   "PASS: K2 Safe->R&D, LV Faulty TRUE from A+1",
+   "PASS: UNL-LVF Safe single blue 1000 ms, LV Faulty FALSE (control)",
+   "PASS: UNL-LVF Safe single blue 1000 ms, LV Faulty TRUE"
+  ]
+ },
+ "limits": [
+  "SAL software model only, 1 ms scan, plant A2; no native CRC/IDE/Target/hardware",
+  "own mutation executor (tools/mutkill.mjs), same kill rule as stand, early stop; survivors exhausted full base",
+  "classification textual; coarse on E2a-core/E2a-RC",
+  "src/scripts snapshot not in v8 manifest; fixtures drift (D2 33 vs 25)"
+ ]
+}

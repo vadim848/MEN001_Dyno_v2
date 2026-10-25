@@ -1,0 +1,49 @@
+{
+  "slice": "E2-runconf",
+  "role": "v2-analyst",
+  "date": "2026-10-21",
+  "sources": {
+    "canonical_sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "canonical_sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "canonical_diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+    "reference_commit": "4495a1f6049f6a58ebfd436761faa84d17c8d643",
+    "reference_sal": "c5f0c0cea479f65e3a11fbe9cf2520a2b54d2cbf85602fd7a2cbab8e27132153",
+    "scenario_decisions": "bdf55216dab6e4aa3e3a1c01ae51f9441d2a3664c5ec8fd93955379bbbdb86fe",
+    "test_run_conf": "ca26320ae4b5515047b5071fb806614ac045fb2c88ae49df6f07fd82e580e41c"
+  },
+  "supersedes": "program/analyst/E2-G1-questions/CRITERIA_DELTA.md §B RUN-CONF (\"непрерывно 100 мс\" — вывод сверх источника)",
+  "matrix_ids": ["MOD-002"],
+  "answer_to_architect": {
+    "derivable": false,
+    "reason": "Q-ARCH-09 «В» = «как в v2»; canonical N12 считает 0,1 с от команды C2 (FBAnd4→FBTon3→FBAnd6∧C2_FBK∧HV норма), а текст вопроса описал v2 как «0,1 с после C2_FBK». Reference N5 тоже от команды, непрерывность давали отменённые 5 с.",
+    "question": "Q-RC-RUNCONF-01",
+    "e2a_rc": "BLOCKED"
+  },
+  "definitions": {
+    "u": "скан принятия R&D→Run: команда C2 ON и снятие STO",
+    "t_f": "первый скан in_HV_C2_FBK ON, <= u+500",
+    "k": "первый скан C2_FBK ON и in_HV_Faulty_FBK FALSE",
+    "scan_ms": 1
+  },
+  "initial_state": "устойчивый R&D: C1 ON, C1_FBK ON, LV норма, STO активен, C2 OFF; NC1/NC2 TRUE; EStop OK; нет SafetyFault/PLC-ошибки; кнопки отпущены >=2 с; in_Safety_Run TRUE; запуск BOTH 1 с",
+  "criteria": [
+    {"id": "RC-1", "status": "READY", "expect": "нет Run ни в одном скане < k; (a) C2_FBK OFF до u+499 при HV норме; (b) C2_FBK ON с u+1, HV Faulty TRUE до u+3000", "source": ["Q-ARCH-09", "MOD-002", "SPEC §7 п.5"]},
+    {"id": "RC-2", "status": "READY", "expect": "нет Run ни в одном скане <= u+99; u+100 — наблюдение", "source": ["Q-ARCH-09 (все трактовки)"]},
+    {"id": "RC-3", "status": "READY", "expect": "при устойчивых условиях с k — Run на k+101 и далее", "source": ["Q-ARCH-09 (все трактовки)"]},
+    {"id": "RC-4", "status": "READY", "expect": "STO FBK закреплён «активен» — Run на k+101; не ждать 5 с", "source": ["Q-ARCH-09"]},
+    {"id": "RC-5", "status": "BLOCKED", "blocked_by": "Q-RC-RUNCONF-01", "variants": {"a": "Run в max(u+100,k) (±1 наблюдение); нет Run в max(u+100,k)-1", "b_c": "нет Run на k+99; Run на k+101; k+100 наблюдение"}, "scenarios": ["t_f=u+1,h<=u", "t_f=u+30,h<=u", "t_f=u+400", "h=u+3000"]},
+    {"id": "RC-6", "status": "BLOCKED", "blocked_by": "Q-RC-RUNCONF-01", "expect": "провал HV Faulty TRUE 1 скан / 20 мс после k до Run: момент Run по варианту; (в) — перезапуск отсчёта и судьба watchdog 30 с; Emergency/SafetyFault — наблюдение"},
+    {"id": "RC-7", "status": "READY", "expect": "C2_FBK FALSE в t_f+1 / t_f+50 до Run при сохраняющейся команде → Emergency (EMGREF-RUN), Run нет", "source": ["Q-RC-19", "FBK-03 (CRITERIA_DELTA_v4)"]}
+  ],
+  "forbidden": ["Run при C2_FBK OFF", "Run при HV Faulty TRUE", "Run <= u+99", "ожидание 5 с / STO FBK", "SS1/выбег без события спуска", "повторное поднятие STO при штатном подтверждении"],
+  "emergency_combinations": ["EStop/NC/connector в окне u..Run → EMGREF-RUN / IL-05a / EMG-004", "потеря LV → abort StartingRun (Q-ARCH-03)", "истечение 500 мс / 30 с → WDG-03"],
+  "test_assessment": {
+    "file": "SafetyTests/test/current-e2a-run-conf.test.js",
+    "no_run_before_k": "valid",
+    "run_at_k_plus_101": "valid",
+    "no_run_at_k_plus_99": "depends on Q-RC-RUNCONF-01 (encodes б/в); not a proven defect; mark NV/BLOCKED",
+    "sto_fbk_not_required": "valid",
+    "add": ["RC-2 no Run <= u+99", "RC-7 C2_FBK bounce → Emergency"],
+    "reviewer_note": "G1_REVIEW v2 строка RUN-CONF «Верно» пересмотреть"
+  }
+}

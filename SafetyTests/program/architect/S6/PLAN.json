@@ -1,0 +1,193 @@
+{
+ "stage": "S6-fix (native input rule)",
+ "base": {
+  "sal": "MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal (= candidates/E5/native)",
+  "sha256": "4c4be64b7e52862e14d1d8037ca496486cb69299596cb63c6d0b0f0ee9ce7cde",
+  "sgvlSha256": "27864ca301abf9c651527c66ff15194ef802a9016e344f02ec3e6b1681995db1",
+  "fb": 337
+ },
+ "fbAfter": 344,
+ "deleted": [],
+ "newVariables": [],
+ "removedVariables": [],
+ "orderNote": "fractional orders = insertion points; editor renumbers contiguously 1..N keeping relative order",
+ "added": {
+  "//Network1/S6_TRUE": {
+   "fn": "safeOr",
+   "order": 35.1,
+   "in": {
+    "OrIn1": "V:in_ES_NC_1",
+    "OrIn2": "!V:in_ES_NC_1"
+   },
+   "out": {}
+  },
+  "//Network1/S6_G_HB": {
+   "fn": "safeAnd",
+   "order": 35.2,
+   "in": {
+    "AndIn1": "V:in_PLC_Heartbeat",
+    "AndIn2": "W://Network1/S6_TRUE/OrOut"
+   },
+   "out": {}
+  },
+  "//Network1/S6_G_S2R": {
+   "fn": "safeAnd",
+   "order": 115.1,
+   "in": {
+    "AndIn1": "V:CMD_SAFE_TO_RND",
+    "AndIn2": "W://Network1/S6_TRUE/OrOut"
+   },
+   "out": {}
+  },
+  "//Network1/S6_G_R2RUN": {
+   "fn": "safeAnd",
+   "order": 115.2,
+   "in": {
+    "AndIn1": "V:CMD_RND_TO_RUN",
+    "AndIn2": "W://Network1/S6_TRUE/OrOut"
+   },
+   "out": {}
+  },
+  "//Network1/S6_G_RUN2R": {
+   "fn": "safeAnd",
+   "order": 115.3,
+   "in": {
+    "AndIn1": "V:CMD_RUN_TO_RND",
+    "AndIn2": "W://Network1/S6_TRUE/OrOut"
+   },
+   "out": {}
+  },
+  "//Network1/S6_G_R2S": {
+   "fn": "safeAnd",
+   "order": 115.4,
+   "in": {
+    "AndIn1": "V:CMD_RND_TO_SAFE",
+    "AndIn2": "W://Network1/S6_TRUE/OrOut"
+   },
+   "out": {}
+  },
+  "//Network1/S6_G_BYP": {
+   "fn": "safeAnd",
+   "order": 115.5,
+   "in": {
+    "AndIn1": "V:inPLC_BypassC1C2",
+    "AndIn2": "W://Network1/S6_TRUE/OrOut"
+   },
+   "out": {}
+  }
+ },
+ "changed": {
+  "//Network1/HB_LO": {
+   "inputs": {
+    "AndIn2": {
+     "from": "(deactivated)",
+     "to": "W://Network1/S6_TRUE/OrOut"
+    }
+   }
+  },
+  "//Network1/HB_T_HI": {
+   "inputs": {
+    "TonIn": {
+     "from": "V:in_PLC_Heartbeat",
+     "to": "W://Network1/S6_G_HB/AndOut"
+    }
+   }
+  },
+  "//Network1/PC_O2": {
+   "inputs": {
+    "OrIn1": {
+     "from": "V:CMD_SAFE_TO_RND",
+     "to": "W://Network1/S6_G_S2R/AndOut"
+    },
+    "OrIn2": {
+     "from": "V:CMD_RND_TO_RUN",
+     "to": "W://Network1/S6_G_R2RUN/AndOut"
+    }
+   }
+  },
+  "//Network1/PC_A2": {
+   "inputs": {
+    "AndIn2": {
+     "from": "V:CMD_RND_TO_RUN",
+     "to": "W://Network1/S6_G_R2RUN/AndOut"
+    }
+   }
+  },
+  "//Network1/PC_O3": {
+   "inputs": {
+    "OrIn2": {
+     "from": "V:CMD_RUN_TO_RND",
+     "to": "W://Network1/S6_G_RUN2R/AndOut"
+    }
+   }
+  },
+  "//Network1/PC_O4": {
+   "inputs": {
+    "OrIn2": {
+     "from": "V:CMD_RND_TO_SAFE",
+     "to": "W://Network1/S6_G_R2S/AndOut"
+    }
+   }
+  },
+  "//Network1/PE_ALLF": {
+   "inputs": {
+    "AndIn2": {
+     "from": "!V:CMD_RND_TO_RUN",
+     "to": "!W://Network1/S6_G_R2RUN/AndOut"
+    },
+    "AndIn3": {
+     "from": "!V:CMD_RUN_TO_RND",
+     "to": "!W://Network1/S6_G_RUN2R/AndOut"
+    },
+    "AndIn4": {
+     "from": "!V:CMD_RND_TO_SAFE",
+     "to": "!W://Network1/S6_G_R2S/AndOut"
+    },
+    "AndIn5": {
+     "from": "!V:inPLC_BypassC1C2",
+     "to": "!W://Network1/S6_G_BYP/AndOut"
+    }
+   }
+  },
+  "//Network1/CFG_EX_SET": {
+   "inputs": {
+    "AndIn2": {
+     "from": "!V:inPLC_BypassC1C2",
+     "to": "!W://Network1/S6_G_BYP/AndOut"
+    }
+   }
+  },
+  "//Network1/PK_PREV": {
+   "inputs": {
+    "DecIn1": {
+     "from": "V:CMD_SAFE_TO_RND",
+     "to": "W://Network1/S6_G_S2R/AndOut"
+    },
+    "DecIn2": {
+     "from": "V:CMD_RND_TO_RUN",
+     "to": "W://Network1/S6_G_R2RUN/AndOut"
+    },
+    "DecIn3": {
+     "from": "V:CMD_RUN_TO_RND",
+     "to": "W://Network1/S6_G_RUN2R/AndOut"
+    },
+    "DecIn4": {
+     "from": "V:CMD_RND_TO_SAFE",
+     "to": "W://Network1/S6_G_R2S/AndOut"
+    },
+    "DecIn5": {
+     "from": "V:inPLC_BypassC1C2",
+     "to": "W://Network1/S6_G_BYP/AndOut"
+    }
+   }
+  },
+  "//Network6/HEALTHY_OK": {
+   "inputs": {
+    "AndIn4": {
+     "from": "(deactivated)",
+     "to": "V:linkCoverClosed"
+    }
+   }
+  }
+ }
+}

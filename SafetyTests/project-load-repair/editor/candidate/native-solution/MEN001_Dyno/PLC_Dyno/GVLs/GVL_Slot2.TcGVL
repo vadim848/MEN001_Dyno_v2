@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <GVL Name="GVL_Slot2" Id="{9d4f2b68-1a37-4c05-b8e9-6f0d3a5c2e71}">
+    <Declaration><![CDATA[{attribute 'TcGvlVarFlags' := 'OPC'}
+// Generic slot-2 debug-PDO pipe coordination (new Mentee 3.2 pipeline).
+// The app writes stCfg (binding addresses from the FW build's .map/.elf) and pulses
+// bConfigure; FB_Slot2PipeHandler binds the lanes/slots and then runs the pipe,
+// presenting the SAME ST_MenteeMotorV32OsCmd/Status contract as the legacy fixed pipe
+// (GVL_MenteeMotorV32_OS) so profiles/CSV/recorder/GUI stay unchanged above it.
+// FSM/main/mode commands go via CoE SDO 0x2000:01 (FB_MenteeSdoCmd) — the debug RxPDO
+// has no control word.
+VAR_GLOBAL
+    // ── binding configuration (app -> PLC) ─────────────────────────────
+    stCfg        : ST_Slot2Cfg;
+    bConfigure   : BOOL;      // rising edge -> CLEAR_ALL + walk stCfg bindings
+    bClearAll    : BOOL;      // rising edge -> CLEAR_ALL only (pipe goes idle)
+
+    // ── pipe status (PLC -> app) ───────────────────────────────────────
+    nBindState   : BYTE;      // 0 idle | 1 clearing | 2 binding | 3 RUN | 4 error
+    bPipeActive  : BOOL;      // TRUE = bindings applied, adapter running
+    bBindError   : BOOL;      // a bind command was rejected (fault=1) or timed out
+    nFailedSlot  : BYTE;      // which walk step failed (16#FF = none)
+    nCaptureCount: UDINT;     // raw 0x6001:0x0A capture counter (new FW semantics)
+    nVarCount    : UDINT;     // slave-reported bound monitor lanes
+    nLastOp      : UDINT;     // slave op echo (diagnostics)
+    nFault       : UDINT;     // slave fault echo (diagnostics)
+
+    // ── CoE SDO command channel (app -> PLC -> slave 0x2000:01) ────────
+    nSdoOpcode   : BYTE;      // ec_command_id_e opcode to send
+    bSdoExecute  : BOOL;      // rising edge -> send nSdoOpcode
+    bSdoBusy     : BOOL;
+    bSdoDone     : BOOL;      // last send completed OK (cleared on next execute)
+    bSdoError    : BOOL;
+    nSdoErrId    : UDINT;     // ADS error from FB_EcCoESdoWrite
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

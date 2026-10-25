@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_EncoderHandler" Id="{a139b786-2ef6-416e-8c70-65cddc3145f5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_EncoderHandler
+VAR_IN_OUT
+    stEncoder           : ST_EncoderData;
+END_VAR
+
+VAR_INPUT
+    fCountsPerUnit      : LREAL := 1.0;
+END_VAR
+
+VAR
+    nStatusWord_Raw      AT %I* : WORD;
+    nCounterValue_Raw    AT %I* : DWORD;
+    nFrequencyValue_Raw  AT %I* : DWORD;
+    nState_Raw           AT %I* : BYTE;
+
+    nSetCounterValue_Raw AT %Q* : DWORD;
+    nControlWord_Raw     AT %Q* : WORD;
+
+    rtSetCounter        : R_TRIG;
+    rtZeroPosition      : R_TRIG;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//----------------------------------------------------------------------
+// READ INPUTS
+//----------------------------------------------------------------------
+stEncoder.nStatusWord     := nStatusWord_Raw;
+stEncoder.nCounterValue   := nCounterValue_Raw;
+stEncoder.nFrequencyValue := nFrequencyValue_Raw;
+stEncoder.nState          := nState_Raw;
+
+stEncoder.bInputA           := nStatusWord_Raw.0;
+stEncoder.bInputB           := nStatusWord_Raw.1;
+stEncoder.bInputC           := nStatusWord_Raw.2;
+stEncoder.bCounterUnderflow := nStatusWord_Raw.4;
+stEncoder.bCounterOverflow  := nStatusWord_Raw.5;
+stEncoder.bLatchValid       := nStatusWord_Raw.8;
+stEncoder.bError            := nStatusWord_Raw.14;
+
+IF fCountsPerUnit <> 0 THEN
+    stEncoder.fPosition := DWORD_TO_LREAL(nCounterValue_Raw) / fCountsPerUnit;
+END_IF
+
+//----------------------------------------------------------------------
+// WRITE OUTPUTS
+//----------------------------------------------------------------------
+rtSetCounter  (CLK := stEncoder.bSetCounter);
+rtZeroPosition(CLK := stEncoder.bZeroPosition);
+
+IF rtZeroPosition.Q THEN
+    stEncoder.nSetCounterValue := 0;
+    nSetCounterValue_Raw       := 0;
+    nControlWord_Raw.2         := TRUE;   // bit 2 = 0x7000:03 Set counter
+ELSIF rtSetCounter.Q THEN
+    nSetCounterValue_Raw       := stEncoder.nSetCounterValue;
+    nControlWord_Raw.2         := TRUE;
+ELSE
+    nControlWord_Raw.2         := FALSE;
+END_IF
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

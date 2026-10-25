@@ -1,0 +1,114 @@
+{
+  "version": "sal-mutation-plan-v1",
+  "status": "Architect guard-mutation plan for slice E2d (program/architect/E2-status/PLAN.md). Block/port names are those specified by the plan; editor must keep them. Each mutation names its intended killing behavioural scenario (oracle = REQ-CONSOLIDATION criteria). Tester fills sourceSha256 with the G2 candidate SAL and authors killing tests in G1.",
+  "sourceSha256": "TBD: G2 candidate SAL of slice E2d",
+  "testFiles": [
+    "current-door-interlock.test.js",
+    "current-early-sto.test.js",
+    "current-estop-native-pairs.test.js",
+    "current-hv-set-permit.test.js",
+    "current-mentee-set-permit.test.js",
+    "current-plc-pulse-set-permit.test.js",
+    "current-rnd-down-no-reenergy.test.js",
+    "current-rnd-physical-integration.test.js",
+    "current-safe-run-gestures.test.js",
+    "current-step12-lv-permit.test.js",
+    "current-timer-one-ms.test.js",
+    "current-unlock-estop-permit.test.js",
+    "current-unlock-hold.test.js",
+    "current-code-checks.test.js",
+    "sal-runtime.test.js",
+    "sal-semantics.test.js",
+    "timer-observed-clock.test.js",
+    "current-e2d-*.test.js (to be authored by v2-tester in G1)"
+  ],
+  "behaviouralTests": [
+    "^DOOR06 (component|actual|existing emergency)",
+    "^EARLYSTO (drive[12]|physical)",
+    "^R3PAIR ",
+    "^MENTEE05 (paired|HV: (all|already)|LV: (all|already))",
+    "^PLCPULSE ",
+    "^RNDPHYS ",
+    "^SR-",
+    "^current SAL",
+    "^UNLOCK07 (component|final component|[^ ]+: healthy|[^ ]+/[^ ]+: fault)",
+    "^CVR (current SAL|approved)",
+    "^(HV|LV) current SAL",
+    "^SAL-RUN0[23]",
+    "^SAL-SEM02",
+    "^Current SAL TON adapter",
+    "^E2d "
+  ],
+  "structuralSoftwareCheckCases": [
+    "^BOOT:"
+  ],
+  "mutations": [
+    {
+      "id": "M-E2d-01",
+      "guard": "InterLockSafe",
+      "op": "deactivate-input",
+      "block": "//SafeResumption/IL_SCOPE",
+      "port": "OrIn1",
+      "rationale": "Safe no longer exempt from cover",
+      "killingScenario": "Safe, NC1 FALSE, BOTH 1000 ms: Safe->R&D rejected",
+      "oracle": "IL-01, V14-Q7"
+    },
+    {
+      "id": "M-E2d-02",
+      "guard": "InterLockRnd",
+      "op": "deactivate-input",
+      "block": "//SafeResumption/IL_SCOPE",
+      "port": "OrIn2",
+      "rationale": "cover term lost: permit only in Safe",
+      "killingScenario": "Steady R&D, cover closed, BOTH: R&D->Run rejected",
+      "oracle": "CVR-004, MOD-002 positive"
+    },
+    {
+      "id": "M-E2d-03",
+      "guard": "InterLockRnd",
+      "op": "invert-contact",
+      "block": "//SafeResumption/IL_SCOPE",
+      "port": "OrIn2",
+      "rationale": "cover polarity inverted",
+      "killingScenario": "Steady R&D, NC1 FALSE, BOTH: StartingRun accepted (STO released via recRndC_SU)",
+      "oracle": "IL-02"
+    },
+    {
+      "id": "M-E2d-04",
+      "guard": "InterLockRnd",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_001",
+      "port": "AndIn5",
+      "rationale": "cover scope dropped from common permit",
+      "killingScenario": "Steady R&D, NC1 FALSE, BOTH: StartingRun accepted; NC restored while held executes",
+      "oracle": "IL-02"
+    },
+    {
+      "id": "M-E2d-05",
+      "guard": "Bypass",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAnd4",
+      "port": "AndIn3",
+      "rationale": "legacy Bypass ignores NC1",
+      "killingScenario": "Safe, NC1 FALSE, inPLC_BypassC1C2 TRUE: C1/C2 ON",
+      "oracle": "CFG-02 (Bypass ignored with open cover)"
+    },
+    {
+      "id": "M-E2d-06",
+      "guard": "Bypass",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAnd4",
+      "port": "AndIn4",
+      "rationale": "legacy Bypass ignores NC2",
+      "killingScenario": "Safe, NC2 FALSE, Bypass TRUE: C1/C2 ON",
+      "oracle": "CFG-02"
+    }
+  ],
+  "blockedByQuestion": [
+    {
+      "block": "//RndPhysicalCompact/GATE_010",
+      "port": "AndIn3/AndIn4",
+      "question": "Q-ARCH-04 (oracle is only preserved F1 behaviour until answered)"
+    }
+  ]
+}

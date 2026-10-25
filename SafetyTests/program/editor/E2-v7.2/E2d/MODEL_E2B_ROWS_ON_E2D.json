@@ -1,0 +1,202 @@
+{
+ "note": "stand runtime model on real candidate files (cand-run.mjs); editor self-check only, not a requirement PASS",
+ "base": "candidates/E2b/native",
+ "candidate": "candidates/E2d/native",
+ "rows": [
+  {
+   "name": "t18 HV",
+   "base": "pre=1 SU@17019 reqOFF@17021 (reqOFF-a=2) end req=0 S_RnD",
+   "cand": "pre=1 SU@17019 reqOFF@17021 (reqOFF-a=2) end req=0 S_RnD"
+  },
+  {
+   "name": "t18 HV rejected (cover open)",
+   "base": "pre=1 SU@-1 reqOFF@-1 end req=1 S_RnD/RND",
+   "cand": "pre=1 SU@-1 reqOFF@-1 end req=1 S_RnD/RND"
+  },
+  {
+   "name": "t18 LV",
+   "base": "pre=1 g2@14017 reqOFF@14018 (reqOFF-a=1)",
+   "cand": "pre=1 g2@14017 reqOFF@14018 (reqOFF-a=1)"
+  },
+  {
+   "name": "t18 BOOT (C1_FBK ON at start)",
+   "base": "FBK ON Restart -> none/EMG; FBK OFF Restart -> S1/SAFE",
+   "cand": "FBK ON Restart -> none/EMG; FBK OFF Restart -> S1/SAFE"
+  },
+  {
+   "name": "t18 BYP R&D Bypass 3 s",
+   "base": "R&D Bypass 3 s: C2=0 S_RnD",
+   "cand": "R&D Bypass 3 s: C2=0 S_RnD"
+  },
+  {
+   "name": "t20 B rejected PLC cover open",
+   "base": "min=1 S_RnD",
+   "cand": "min=1 S_RnD"
+  },
+  {
+   "name": "t20 C R&D EStop PLC(1,1)",
+   "base": "min=1 S4 C1=0 C2=0",
+   "cand": "min=1 S4 C1=0 C2=0"
+  },
+  {
+   "name": "t20 C delta -2",
+   "base": "min=0 firstFALSE@+2 S4 C1=0 C2=0 STO=0",
+   "cand": "min=0 firstFALSE@+2 S4 C1=0 C2=0 STO=0"
+  },
+  {
+   "name": "t20 C delta -1",
+   "base": "min=1 S4 C1=0 C2=0 STO=0",
+   "cand": "min=1 S4 C1=0 C2=0 STO=0"
+  },
+  {
+   "name": "t20 C delta 0",
+   "base": "min=1 S4 C1=0 C2=0 STO=0",
+   "cand": "min=1 S4 C1=0 C2=0 STO=0"
+  },
+  {
+   "name": "t20 C delta 1",
+   "base": "min=1 S4 C1=0 C2=0 STO=0",
+   "cand": "min=1 S4 C1=0 C2=0 STO=0"
+  },
+  {
+   "name": "t20 C delta 2",
+   "base": "min=1 S4 C1=0 C2=0 STO=0",
+   "cand": "min=1 S4 C1=0 C2=0 STO=0"
+  },
+  {
+   "name": "t20 C delta 5",
+   "base": "min=1 S4 C1=0 C2=0 STO=0",
+   "cand": "min=1 S4 C1=0 C2=0 STO=0"
+  },
+  {
+   "name": "t20 D Safe EStop PLC(1,0) LV",
+   "base": "pre=1 min=1 S1",
+   "cand": "pre=1 min=1 S1"
+  },
+  {
+   "name": "t20 E button R&D->Run",
+   "base": "a=0 u=+2 reqOFF=+2",
+   "cand": "a=0 u=+2 reqOFF=+2"
+  },
+  {
+   "name": "t20 BOOT FBK OFF at r+1",
+   "base": "3 s later: none/EMG -> new Restart S1/SAFE",
+   "cand": "3 s later: none/EMG -> new Restart S1/SAFE"
+  },
+  {
+   "name": "t20 BOOT FBK OFF at r+2000",
+   "base": "3 s later: none/EMG -> new Restart S1/SAFE",
+   "cand": "3 s later: none/EMG -> new Restart S1/SAFE"
+  },
+  {
+   "name": "x1 A ES at SU+49 (StartingRun)",
+   "base": "pre S_RnD RND HVreq 1; ES at a+49: 1:S_RnD|EMG|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=0  2:S4|EMG|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=0  3:S4|EMG|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=1  2004:S4|EMG|HV_C2=1,LV_C1=0,HVREQ=0,LVREQ=1  7008:S5|EMG|HV_C2=1,LV_C1=0,HVREQ=0,LVREQ=1  7009:S5|EMG|HV_C2=1,LV_C1=0,HVREQ=1,LVREQ=1  8010:S5|EMG|HV_C2=0,LV_C1=0,HVREQ=1,LVREQ=1  8012:S6|EMG|HV_C2=0,LV_C1=0,HVREQ=1,LVREQ=1",
+   "cand": "pre S_RnD RND HVreq 1; ES at a+49: 1:S_RnD|EMG|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=0  2:S4|EMG|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=0  3:S4|EMG|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=1  2004:S4|EMG|HV_C2=1,LV_C1=0,HVREQ=0,LVREQ=1  7008:S5|EMG|HV_C2=1,LV_C1=0,HVREQ=0,LVREQ=1  7009:S5|EMG|HV_C2=1,LV_C1=0,HVREQ=1,LVREQ=1  8010:S5|EMG|HV_C2=0,LV_C1=0,HVREQ=1,LVREQ=1  8012:S6|EMG|HV_C2=0,LV_C1=0,HVREQ=1,LVREQ=1"
+  },
+  {
+   "name": "x1 B legacy Safe->R&D->Run, ES in Run PLC(1,1) held",
+   "base": "R&D? S_RnD RND; Run? S3 RUN C2 1 HVreq 0; ES: 1:S3|EMG|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=0  4:S4|EMG|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=0  5:S4|EMG|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=1  2006:S4|EMG|HV_C2=1,LV_C1=0,HVREQ=0,LVREQ=1  7010:S5|EMG|HV_C2=1,LV_C1=0,HVREQ=0,LVREQ=1  7011:S5|EMG|HV_C2=1,LV_C1=0,HVREQ=1,LVREQ=1  8012:S5|EMG|HV_C2=0,LV_C1=0,HVREQ=1,LVREQ=1  8014:S6|EMG|HV_C2=0,LV_C1=0,HVREQ=1,LVREQ=1",
+   "cand": "R&D? S_RnD RND; Run? S3 RUN C2 1 HVreq 0; ES: 1:S3|EMG|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=0  4:S4|EMG|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=0  5:S4|EMG|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=1  2006:S4|EMG|HV_C2=1,LV_C1=0,HVREQ=0,LVREQ=1  7010:S5|EMG|HV_C2=1,LV_C1=0,HVREQ=0,LVREQ=1  7011:S5|EMG|HV_C2=1,LV_C1=0,HVREQ=1,LVREQ=1  8012:S5|EMG|HV_C2=0,LV_C1=0,HVREQ=1,LVREQ=1  8014:S6|EMG|HV_C2=0,LV_C1=0,HVREQ=1,LVREQ=1"
+  },
+  {
+   "name": "x1 C R&D req, PLC(1,1) cover open",
+   "base": "pre S_RnD HVreq 1: 1:S_RnD|RND|HV_C2=0,LV_C1=1,HVREQ=1,LVREQ=0",
+   "cand": "pre S_RnD HVreq 1: 1:S_RnD|RND|HV_C2=0,LV_C1=1,HVREQ=1,LVREQ=0"
+  },
+  {
+   "name": "x1 D Safe ES then PLC(1,0)",
+   "base": "pre S1 SAFE HV 0 LV 1: 1:S1|EMG|HV_C2=0,LV_C1=0,HVREQ=0,LVREQ=1,b_Step12_Set=0",
+   "cand": "pre S1 SAFE HV 0 LV 1: 1:S1|EMG|HV_C2=0,LV_C1=0,HVREQ=0,LVREQ=1,b_Step12_Set=0"
+  },
+  {
+   "name": "x1 E Safe->R&D keeps HV; R&D->Run keeps LV",
+   "base": "pre S1 HV 1 LV 1; Safe->R&D: 1:S12|SAFE|HV_C2=0,LV_C1=1,HVREQ=1,LVREQ=0  501:S_RnD|RND|HV_C2=0,LV_C1=1,HVREQ=1,LVREQ=0; R&D->Run: 1:S_RnD|RND|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=0  501:S3|RUN|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=0",
+   "cand": "pre S1 HV 1 LV 1; Safe->R&D: 1:S12|SAFE|HV_C2=0,LV_C1=1,HVREQ=1,LVREQ=0  501:S_RnD|RND|HV_C2=0,LV_C1=1,HVREQ=1,LVREQ=0; R&D->Run: 1:S_RnD|RND|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=0  501:S3|RUN|HV_C2=1,LV_C1=1,HVREQ=0,LVREQ=0"
+  },
+  {
+   "name": "x4 C1_FBK FBK OFF at r+1",
+   "base": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1",
+   "cand": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1"
+  },
+  {
+   "name": "x4 C1_FBK FBK OFF at r+2000",
+   "base": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1",
+   "cand": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1"
+  },
+  {
+   "name": "x4 C1_FBK FBK OFF at never",
+   "base": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1",
+   "cand": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1"
+  },
+  {
+   "name": "x4 C2_FBK FBK OFF at r+1",
+   "base": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1",
+   "cand": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1"
+  },
+  {
+   "name": "x4 C2_FBK FBK OFF at r+2000",
+   "base": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1",
+   "cand": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1"
+  },
+  {
+   "name": "x4 C2_FBK FBK OFF at never",
+   "base": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1",
+   "cand": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1"
+  },
+  {
+   "name": "x4 both FBK OFF at r+1",
+   "base": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1",
+   "cand": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1"
+  },
+  {
+   "name": "x4 both FBK OFF at r+2000",
+   "base": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1",
+   "cand": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1"
+  },
+  {
+   "name": "x4 both FBK OFF at never",
+   "base": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1",
+   "cand": "before g none/EMG; after g without new Restart: stays none/EMG EOk=1"
+  },
+  {
+   "name": "MUTANT //Network1/FBOr5.OrIn2 :: t18 HV",
+   "cand": "pre=1 SU@17019 reqOFF@-1 (-) end req=1 S_RnD"
+  },
+  {
+   "name": "MUTANT //Network1/FBOr1.OrIn2 :: t18 LV",
+   "cand": "pre=1 g2@14017 reqOFF@-1 (-)"
+  },
+  {
+   "name": "MUTANT //Network3/FBAndBootFbkOff.AndIn1 :: t18 BOOT (C1_FBK ON at start)",
+   "cand": "FBK ON Restart -> S1/SAFE; FBK OFF Restart -> S1/SAFE"
+  },
+  {
+   "name": "MUTANT //Network3/FBAnd1.AndIn3 :: t18 BOOT (C1_FBK ON at start)",
+   "cand": "FBK ON Restart -> S1/SAFE; FBK OFF Restart -> S1/SAFE"
+  },
+  {
+   "name": "MUTANT //Network1/FBAnd4.AndIn5 :: t18 BYP R&D Bypass 3 s",
+   "cand": "R&D Bypass 3 s: C2=1 S_RnD"
+  },
+  {
+   "name": "MUTANT //Network12/FBAnd4.AndIn2 :: t20 B rejected PLC cover open",
+   "cand": "min=0 firstFALSE@+4 S4"
+  },
+  {
+   "name": "MUTANT //Network2/FBAnd91.AndIn4 :: t20 D Safe EStop PLC(1,0) LV",
+   "cand": "pre=1 min=0 firstFALSE@+3 S4"
+  },
+  {
+   "name": "MUTANT //Network3/FBAndBootFbkOff.AndIn4 :: t20 BOOT FBK OFF at r+1",
+   "cand": "3 s later: S1/SAFE -> new Restart S1/SAFE"
+  },
+  {
+   "name": "MUTANT //Network3/FBAndBootFbkOff.AndIn3 :: t20 BOOT FBK OFF at r+2000",
+   "cand": "3 s later: none/EMG -> new Restart S1/SAFE"
+  },
+  {
+   "name": "MUTANT //Network6/FBOrStep4.OrIn2 :: t20 C R&D EStop PLC(1,1)",
+   "cand": "min=0 firstFALSE@+4 S_RnD C1=1 C2=0"
+  }
+ ]
+}

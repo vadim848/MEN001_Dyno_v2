@@ -1,0 +1,19 @@
+
+> check:software
+> node scripts/software-check.js
+
+signal names: legacy (in_LV_Healthy_FBK, in_HV_Healthy_FBK, outPLC_LV_Healthy, outPLC_HV_Healthy)
+harness: PASS {"tests":282,"pass":282,"fail":0,"skipped":0}
+historical: PASS {"tests":75,"pass":75,"fail":0,"skipped":0}
+current: FAIL {"tests":1423,"pass":590,"fail":785,"skipped":0}
+current SAL: {"PASS":199,"FAIL":1,"NOT VERIFIED":7,"ERROR":0,"NOT APPLICABLE":0}
+case IDs vs baseline: {"baseline":207,"current":207,"missing":0,"added":0,"statusChanged":0,"duplicates":0}
+tests harness vs baseline: {"baseline":228,"current":282,"missing":1,"added":55,"statusChanged":0}
+tests historical vs baseline: {"baseline":75,"current":75,"missing":0,"added":0,"statusChanged":0}
+tests current vs baseline: {"baseline":845,"current":1423,"missing":27,"added":605,"statusChanged":3}
+expected deltas: C:\Users\user\AppData\Local\Temp\claude\C--Users-user-source-repos-MEN001-Dyno-v2\ccd06a82-39c5-4519-838f-df9bc38d59d9\scratchpad\isoV7c\SafetyTests\fixtures\case-baselines\expected-deltas\04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3.json {"deltas":28,"explained":26,"unexplained":2,"stale":0} approval APPROVED
+Declared replacements: none for this SAL.
+  UNEXPLAINED test-missing [current] E2b IL-05d(1) StartingRun (HV Faulty TRUE holds it) aborted by green 600 ms, NC1 FALSE 100 ms after the abort -> Emergency (rule L vs in_Estop_PLC in the same phase), Restart -> only Safe
+  UNEXPLAINED test-missing [current] E2c STP-I green 600 ms pressed during the abort (c=u+50, press c+10): not executed - C1 not dropped before C2_FBK OFF
+Reports: SOFTWARE_CHECK_RESULTS.md / .json
+exit 4

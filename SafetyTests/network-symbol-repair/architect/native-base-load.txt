@@ -1,0 +1,250 @@
+SafetyApplicationLanguageSerializationHelperBase::LoadModelAndDiagram RVA 289853
+0000 ldarg.0 
+0001 newobj .ctor
+0006 ldarg.1 
+0007 ldarg.2 
+0008 ldarg.3 
+0009 ldarg.s 4
+000B ldarg.s 5
+000D ldarg.s 6
+000F callvirt LoadModelAndDiagram
+0014 ret 
+SafetyApplicationLanguageSerializationHelperBase::LoadModelAndDiagram RVA 289876
+0000 ldarg.2 
+0001 brtrue.s 11
+0003 ldstr store
+0008 newobj .ctor
+000D throw 
+000E ldarg.2 
+000F newobj .ctor
+0014 stloc.0 
+0015 ldarg.0 
+0016 ldarg.1 
+0017 ldarg.2 
+0018 callvirt get_DefaultPartition
+001D ldarg.3 
+001E ldloc.0 
+001F ldarg.s 4
+0021 ldarg.s 5
+0023 ldarg.s 6
+0025 ldarg.s 7
+0027 callvirt LoadModelAndDiagram
+002C ret 
+SafetyApplicationLanguageSerializationHelperBase::LoadModelAndDiagram RVA 289936
+0000 ldarg.1 
+0001 brtrue.s 11
+0003 ldstr serializationResult
+0008 newobj .ctor
+000D throw 
+000E ldarg.2 
+000F brtrue.s 11
+0011 ldstr modelPartition
+0016 newobj .ctor
+001B throw 
+001C ldarg.s 4
+001E brtrue.s 11
+0020 ldstr diagramPartition
+0025 newobj .ctor
+002A throw 
+002B ldarg.s 5
+002D call IsNullOrEmpty
+0032 brfalse.s 11
+0034 ldstr diagramFileName
+0039 newobj .ctor
+003E throw 
+003F ldarg.s 4
+0041 callvirt get_Store
+0046 callvirt get_TransactionActive
+004B brtrue.s 21
+004D call get_SingletonResourceManager
+0052 ldstr MissingTransaction
+0057 callvirt GetString
+005C newobj .ctor
+0061 throw 
+0062 ldarg.0 
+0063 ldarg.1 
+0064 ldarg.2 
+0065 ldarg.3 
+0066 ldarg.s 6
+0068 ldarg.s 7
+006A ldarg.s 8
+006C callvirt LoadModel
+0071 stloc.0 
+0072 ldarg.1 
+0073 callvirt get_Failed
+0078 brfalse.s 2
+007A ldloc.0 
+007B ret 
+007C ldnull 
+007D stloc.1 
+007E ldarg.0 
+007F ldarg.s 4
+0081 callvirt get_Store
+0086 callvirt GetDirectory
+008B stloc.2 
+008C ldloc.2 
+008D ldsfld SafetyApplicationLanguageDiagramBase::DomainClassId
+0092 callvirt GetSerializer
+0097 stloc.3 
+0098 ldloc.3 
+0099 brfalse 399
+009E ldarg.s 5
+00A0 call Exists
+00A5 brtrue.s 15
+00A7 ldarg.0 
+00A8 ldarg.s 4
+00AA ldloc.0 
+00AB callvirt CreateDiagramHelper
+00B0 stloc.1 
+00B1 br 333
+00B6 ldarg.s 5
+00B8 call OpenRead
+00BD stloc.s 4
+00BF ldloc.2 
+00C0 ldloc.s 4
+00C2 callvirt get_Name
+00C7 ldarg.1 
+00C8 newobj .ctor
+00CD stloc.s 5
+00CF ldarg.0 
+00D0 ldarg.s 4
+00D2 ldloc.s 5
+00D4 ldc.i4.1 
+00D5 callvirt InitializeSerializationContext
+00DA newobj .ctor
+00DF stloc.s 6
+00E1 ldloc.s 6
+00E3 ldsfld TransactionContextKey
+00E8 box Guid
+00ED ldloc.s 5
+00EF callvirt Add
+00F4 ldarg.s 4
+00F6 callvirt get_Store
+00FB callvirt get_TransactionManager
+0100 ldstr LoadDiagram
+0105 ldc.i4.1 
+0106 ldloc.s 6
+0108 callvirt BeginTransaction
+010D stloc.s 7
+010F ldloc.s 4
+0111 callvirt get_Length
+0116 ldc.i4.5 
+0117 conv.i8 
+0118 ble.s 120
+011A call get_Instance
+011F ldloc.s 5
+0121 ldc.i4.0 
+0122 callvirt CreateXmlReaderSettings
+0127 stloc.s 8
+0129 ldloc.s 4
+012B ldloc.s 8
+012D call Create
+0132 stloc.s 9
+0134 ldloc.s 9
+0136 callvirt MoveToContent
+013B pop 
+013C ldloc.3 
+013D ldloc.s 5
+013F ldloc.s 9
+0141 ldarg.s 4
+0143 callvirt TryCreateInstance
+0148 isinst TypeDefinition
+014D stloc.1 
+014E ldloc.1 
+014F brfalse.s 13
+0151 ldarg.0 
+0152 ldloc.s 5
+0154 ldloc.1 
+0155 ldloc.s 9
+0157 ldarg.s 6
+0159 callvirt ReadRootElement
+015E leave.s 12
+0160 ldloc.s 9
+0162 brfalse.s 7
+0164 ldloc.s 9
+0166 callvirt Dispose
+016B endfinally 
+016C leave.s 19
+016E stloc.s 10
+0170 ldloc.s 5
+0172 ldc.i4.3 
+0173 ldloc.s 10
+0175 call MethodSpecification
+017A call AddMessage
+017F leave.s 0
+0181 ldarg.1 
+0182 callvirt get_Failed
+0187 brfalse.s 9
+0189 ldnull 
+018A stloc.1 
+018B ldloc.s 7
+018D callvirt Rollback
+0192 ldloc.1 
+0193 brtrue.s 18
+0195 ldarg.1 
+0196 callvirt get_Failed
+019B brtrue.s 10
+019D ldarg.0 
+019E ldarg.s 4
+01A0 ldloc.0 
+01A1 callvirt CreateDiagramHelper
+01A6 stloc.1 
+01A7 ldloc.s 7
+01A9 callvirt get_IsActive
+01AE brfalse.s 7
+01B0 ldloc.s 7
+01B2 callvirt Commit
+01B7 leave.s 12
+01B9 ldloc.s 7
+01BB brfalse.s 7
+01BD ldloc.s 7
+01BF callvirt Dispose
+01C4 endfinally 
+01C5 ldarg.1 
+01C6 callvirt get_Failed
+01CB brtrue.s 40
+01CD ldarg.s 7
+01CF brfalse.s 36
+01D1 ldarg.1 
+01D2 ldarg.s 7
+01D4 newobj .ctor
+01D9 stloc.s 11
+01DB ldarg.s 7
+01DD ldarg.s 4
+01DF ldc.i4.s 16
+01E1 callvirt Validate
+01E6 pop 
+01E7 leave.s 26
+01E9 ldloc.s 11
+01EB brfalse.s 7
+01ED ldloc.s 11
+01EF callvirt Dispose
+01F4 endfinally 
+01F5 leave.s 12
+01F7 ldloc.s 4
+01F9 brfalse.s 7
+01FB ldloc.s 4
+01FD callvirt Dispose
+0202 endfinally 
+0203 ldloc.1 
+0204 brfalse.s 39
+0206 ldarg.1 
+0207 callvirt get_Failed
+020C brtrue.s 24
+020E ldloc.1 
+020F ldloc.0 
+0210 callvirt set_ModelElement
+0215 ldloc.1 
+0216 ldc.i4.1 
+0217 callvirt PostDeserialization
+021C ldarg.0 
+021D ldloc.1 
+021E ldarg.1 
+021F callvirt CheckForOrphanedShapes
+0224 br.s 7
+0226 ldloc.1 
+0227 ldc.i4.0 
+0228 callvirt PostDeserialization
+022D ldloc.0 
+022E ret 
+

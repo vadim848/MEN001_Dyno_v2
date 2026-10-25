@@ -1,0 +1,332 @@
+TAP version 13
+# Subtest: E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE from <= P-200 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+not ok 1 - E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE from <= P-200 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+  ---
+  duration_ms: 5029.612
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-unlock-door.test.js:86:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (P=4514, LV Faulty 4314..end)
+    + actual - expected
+    
+    + [
+    +   'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-unlock-door.test.js:93:157)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE from P+250 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+not ok 2 - E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE from P+250 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+  ---
+  duration_ms: 4055.7894
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-unlock-door.test.js:86:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (P=4514, LV Faulty 4764..end)
+    + actual - expected
+    
+    + [
+    +   'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-unlock-door.test.js:93:157)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE from P+499 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+ok 3 - E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE from P+499 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2) # TODO NOT VERIFIED: no SafetyFault from LV Faulty in Safe - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4331.9453
+  type: 'test'
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE from P+500 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+ok 4 - E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE from P+500 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2) # TODO NOT VERIFIED: no SafetyFault from LV Faulty in Safe - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 3916.886
+  type: 'test'
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE from P+501 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+ok 5 - E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE from P+501 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2) # TODO NOT VERIFIED: no SafetyFault from LV Faulty in Safe - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4061.0069
+  type: 'test'
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE from P+700 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+ok 6 - E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE from P+700 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2) # TODO NOT VERIFIED: no SafetyFault from LV Faulty in Safe - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4105.8818
+  type: 'test'
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE pulse 100 ms [P-100, P-1] -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+not ok 7 - E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE pulse 100 ms [P-100, P-1] -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+  ---
+  duration_ms: 3708.8932
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-unlock-door.test.js:86:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (P=4514, LV Faulty 4414..4514)
+    + actual - expected
+    
+    + [
+    +   'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-unlock-door.test.js:93:157)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE pulse 100 ms [P+250, P+349] -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+not ok 8 - E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE pulse 100 ms [P+250, P+349] -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+  ---
+  duration_ms: 3797.5802
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-unlock-door.test.js:86:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (P=4514, LV Faulty 4764..4864)
+    + actual - expected
+    
+    + [
+    +   'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-unlock-door.test.js:93:157)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE pulse 100 ms [P+500, P+599] -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+ok 9 - E2d UNL-LVF steady Safe, single blue held 600 ms, in_LV_Faulty_FBK TRUE pulse 100 ms [P+500, P+599] -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2) # TODO NOT VERIFIED: no SafetyFault from LV Faulty in Safe - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 3920.0005
+  type: 'test'
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE from <= P-200 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+not ok 10 - E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE from <= P-200 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+  ---
+  duration_ms: 4863.0523
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-unlock-door.test.js:86:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (P=4514, LV Faulty 4314..end)
+    + actual - expected
+    
+    + [
+    +   'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-unlock-door.test.js:93:157)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE from P+250 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+not ok 11 - E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE from P+250 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+  ---
+  duration_ms: 4498.7059
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-unlock-door.test.js:86:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (P=4514, LV Faulty 4764..end)
+    + actual - expected
+    
+    + [
+    +   'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-unlock-door.test.js:93:157)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE from P+499 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+ok 12 - E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE from P+499 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2) # TODO NOT VERIFIED: no SafetyFault from LV Faulty in Safe - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 5193.2854
+  type: 'test'
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE from P+500 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+ok 13 - E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE from P+500 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2) # TODO NOT VERIFIED: no SafetyFault from LV Faulty in Safe - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 5262.7519
+  type: 'test'
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE from P+501 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+ok 14 - E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE from P+501 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2) # TODO NOT VERIFIED: no SafetyFault from LV Faulty in Safe - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4687.0137
+  type: 'test'
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE from P+700 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+ok 15 - E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE from P+700 (held) -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2) # TODO NOT VERIFIED: no SafetyFault from LV Faulty in Safe - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 4987.0888
+  type: 'test'
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE pulse 100 ms [P-100, P-1] -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+not ok 16 - E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE pulse 100 ms [P-100, P-1] -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+  ---
+  duration_ms: 4854.68
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-unlock-door.test.js:86:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (P=4514, LV Faulty 4414..4514)
+    + actual - expected
+    
+    + [
+    +   'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-unlock-door.test.js:93:157)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE pulse 100 ms [P+250, P+349] -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+not ok 17 - E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE pulse 100 ms [P+250, P+349] -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+  ---
+  duration_ms: 5089.6069
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-unlock-door.test.js:86:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (P=4514, LV Faulty 4764..4864)
+    + actual - expected
+    
+    + [
+    +   'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'Unlock equal to X0 in every scan (no refusal/delay/earlier Unlock because of LV Faulty); first differences P+501:false,P+502:false,P+503:false,P+504:false'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-unlock-door.test.js:93:157)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE pulse 100 ms [P+500, P+599] -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2)
+ok 18 - E2d UNL-LVF steady Safe, single blue held 2000 ms, in_LV_Faulty_FBK TRUE pulse 100 ms [P+500, P+599] -> out_Door_Unlock_Solonoeid equal to the trace without LV Faulty in every scan; Safe, no Emergency/SafetyFault, no C1/C2, STO set (Q-ARCH-04 "А", reference Network2) # TODO NOT VERIFIED: no SafetyFault from LV Faulty in Safe - no SafetyFault symbol (A8)
+  ---
+  duration_ms: 5470.3474
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 0
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 10
+# duration_ms 81968.2439

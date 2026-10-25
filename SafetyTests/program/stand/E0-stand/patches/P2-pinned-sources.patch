@@ -1,0 +1,79 @@
+diff --git a/scripts/software-check.js b/scripts/software-check.js
+index a8c4489..5a55679 100644
+--- a/scripts/software-check.js
++++ b/scripts/software-check.js
+@@ -11,6 +11,7 @@ import { currentCodeChecks } from "../src/current-code-checks.js";
+ import { referenceBehavior } from "../src/reference-behavior.js";
+ import { SAL_CLOCK_CONTRACT } from "../src/sal-runtime.js";
+ import { preflightWorkingProgram } from "../src/boot-preflight.js";
++import { pinnedReferenceSalPath } from "../src/pinned-sources.js";
+ 
+ const root = fileURLToPath(new URL("../", import.meta.url));
+ const sal = path.resolve(root, "../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal");
+@@ -44,7 +45,7 @@ for (const name of ["harness", "historical", "current"]) {
+ const requirements = candidateButtonCoverChecks(model).map(row => ({ ...row,
+   ...(row.id === "ACC-C02-F" ? { reason: "Full-phase coverage of both InterLock NC energy guards and separate DoorMonitor solenoid reactions remains incomplete; no locked-feedback gate is required" } : {}),
+   ...(row.id === "ACC-C01-E" ? { reason: "Software coverage of all transition phases and fault/button combinations remains incomplete" } : {}) }));
+-const reference = referenceBehavior(path.resolve(root, "../../MEN001_Dyno/MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal"), model);
++const reference = referenceBehavior(pinnedReferenceSalPath(), model); // frozen reference copy, no sibling repository at runtime
+ const bootPreflight = preflightWorkingProgram();
+ const cases = [...requirements, ...currentCodeChecks(model), ...reference.cases, ...bootPreflight.cases];
+ const summary = Object.fromEntries(["PASS", "FAIL", "NOT VERIFIED", "ERROR"].map(s => [s, cases.filter(c => c.status === s).length]));
+diff --git a/test/current-door-interlock.test.js b/test/current-door-interlock.test.js
+index 1fdde52..e1faae2 100644
+--- a/test/current-door-interlock.test.js
++++ b/test/current-door-interlock.test.js
+@@ -2,7 +2,7 @@ import * as V2 from './helpers/v2-structural.js';
+ import test from "node:test";
+ import assert from "node:assert/strict";
+ import fs from "node:fs";
+-import { spawnSync } from "node:child_process";
++import { pinnedGitShow } from "../src/pinned-sources.js";
+ import { parseSalFile } from "../src/sal-parser.js";
+ import { SalRuntime } from "../src/sal-runtime.js";
+ const file=new URL("../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal",import.meta.url),model=parseSalFile(file);
+@@ -57,7 +57,7 @@ test("DOOR06 existing emergency/connector/False guards still prevent new HV",()=
+ });
+ 
+ test("DOOR06 preserve all three original unlock consumers and their component truth tables",()=>{
+-  const baseline=spawnSync("git",["show","0e4ab09:MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal"],{encoding:"utf8",maxBuffer:4*1024*1024});assert.equal(baseline.status,0);
++  const baseline=pinnedGitShow("0e4ab09","MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal");assert.ok(baseline.length>0); // frozen SHA-verified copy, no runtime git
+   const xml=fs.readFileSync(file,"utf8");
+   const blockText=(source,network,name)=>source.match(new RegExp('<Network\\b[^>]*name="'+network+'"[\\s\\S]*?</Network>'))[0]
+     .match(new RegExp('<fBAnd\\b[^>]*name="'+name+'"[\\s\\S]*?</fBAnd>'))[0].replaceAll("\r\n","\n").replace(/orderOfExecution="\d+"/,'orderOfExecution="ORDER"');
+diff --git a/test/current-early-sto-bindings.test.js b/test/current-early-sto-bindings.test.js
+index 1ae9368..3791598 100644
+--- a/test/current-early-sto-bindings.test.js
++++ b/test/current-early-sto-bindings.test.js
+@@ -3,12 +3,12 @@ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import fs from 'node:fs';
+ import crypto from 'node:crypto';
+-import {execFileSync} from 'node:child_process';
++import {pinnedGitShow} from '../src/pinned-sources.js';
+ import {parseSalFile} from '../src/sal-parser.js';
+ import {readBindingXml,validateSalBindings} from '../src/sal-binding-validator.js';
+ const source='MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',sgvl='MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl';
+ const file=new URL('../../'+source,import.meta.url),gvl=fs.readFileSync(new URL('../../'+sgvl,import.meta.url),'utf8'),xml=fs.readFileSync(file,'utf8');
+-const old=execFileSync('git',['show','2ddafef:'+source],{encoding:'utf8',maxBuffer:4*1024*1024});
++const old=pinnedGitShow('2ddafef',source); // frozen SHA-verified copy, no runtime git
+ const model=parseSalFile(file),all=model.networks.flatMap(n=>n.blocks),get=path=>all.find(b=>b.path===path);
+ const walk=n=>[n,...n.children.flatMap(walk)],before=walk(readBindingXml(old)),now=walk(readBindingXml(xml));
+ const manifest=JSON.parse(fs.readFileSync(new URL('../EARLY_STO_NATIVE_MANIFEST.json',import.meta.url)));
+diff --git a/test/sal-emergency-baseline.test.js b/test/sal-emergency-baseline.test.js
+index 21b0310..6fd155e 100644
+--- a/test/sal-emergency-baseline.test.js
++++ b/test/sal-emergency-baseline.test.js
+@@ -6,10 +6,11 @@ import path from "node:path";
+ import fs from "node:fs";
+ import { fileURLToPath } from "node:url";
+ import { parseSalFile, buildDependencyGraph, findPath } from "../src/sal-parser.js";
++import { pinnedReferenceSalPath } from "../src/pinned-sources.js";
+ 
+ const here = path.dirname(fileURLToPath(import.meta.url));
+ const v2Sal = baselineSalPath;
+-const originalSal = path.resolve(here, "../../../MEN001_Dyno/MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal");
++const originalSal = pinnedReferenceSalPath(); // frozen SHA-verified reference copy; throws if absent (no silent skip)
+ const model = parseSalFile(v2Sal);
+ const graph = buildDependencyGraph(model);
+ const estop = source => source.networks.flatMap(network => network.blocks).find(block => block.functionName === "safeEstop");

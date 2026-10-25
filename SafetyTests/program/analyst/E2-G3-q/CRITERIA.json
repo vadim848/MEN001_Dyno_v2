@@ -1,0 +1,37 @@
+{
+  "slice": "E2-G3-q",
+  "role": "v2-analyst",
+  "date": "2026-10-23",
+  "basis": ["program/tester/E2-G3/G3_REPORT.md questions 1-3, 2.2 (g)"],
+  "sources": {
+    "tester/E2-G3/G3_REPORT.md": "202dfa74ba29f5a41b31e4cd61a73b60ae90017344b828c3f645f85807402b82",
+    "SCENARIO_DECISIONS.md.before": "76b72eb6b624b5be01a485d3d94c4f84572e7bbe3cab6b6d0e0580c6631859c4",
+    "SCENARIO_DECISIONS.md.after": "4040452333d3c08a64e323c57b416e15aa1a3835022560da348ac8922766d97f",
+    "SAFETY_STATE_MACHINE_SPEC.md": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472"
+  },
+  "criteria": [
+    {"id": "L2-RD", "decision": "REC-ACCEPTED G3Q-1", "status": "READY-D", "oracleChange": "weakening by 1 scan outside SU",
+     "states": ["steady R&D", "R&D->Safe", "Safe->R&D"], "event": "in_Estop_PLC or L1 cause at e",
+     "norms": {"R": "d_Run-1 <= tau_R-e <= d_Run+1, C1 >= 2000", "X": "tau_R-1 <= tau_X <= tau_R, tau_X-e >= d_Run-2, C1 >= 2000", "inTarget": "STO, C2 OFF, HV discharge stay in target", "SafeToRnD e<u1": "no C1 ON at >= e"},
+     "selfTest": {"R -2": "FAIL", "R -1": "PASS", "R +2": "FAIL", "X -3": "FAIL", "X -2": "PASS", "C1 1999": "FAIL"},
+     "ids": ["EMG-001", "EMG-004", "EMG-011", "MOD-001", "MOD-005"]},
+    {"id": "L3-KEEP", "decision": "REC-ACCEPTED G3Q-2", "status": "READY", "oracleChange": "none",
+     "norm": "steady Run, in_Estop_PLC: Del tau-e in [ref, ref+1] vs reference 4495a1f; Discharge +7010 vs ref +7008 -> FAIL", "ids": ["EMG-001", "EMG-011"]},
+    {"id": "E2-02-R", "decision": "Q-RC-16 A (direct) + REC-ACCEPTED G3Q-3 (1 scan counts)", "status": "READY",
+     "initial": "Run, down accepted, waiting C2_FBK OFF after C2 OFF command", "event": "LV Faulty TRUE at h, FALSE from h+r (r in 1,3,100); C2_FBK OFF at h+d (d 1..5)",
+     "expected": "E2-01 each scan; R&D; then chained R&D->Safe without command; SafetyFault by Safe (NV until symbol)",
+     "forbidden": ["steady R&D remains", "Emergency", "Step4&&Step12", "back to Run", "C1 OFF before C2_FBK OFF"],
+     "scope": "descents with Q-RC-16 memory; STP-G steady-Run 1-scan convention unchanged",
+     "ids": ["STP-004", "HLT-001", "EMG-012", "MOD-005"]},
+    {"id": "EMG6-FBK", "decision": "normative SPEC 12 p.4, V14-Q6, reference Network2", "status": "READY",
+     "initial": "Safe, C1/C2_FBK ON without command, in_Estop_PLC TRUE then FALSE", "event": "Restart at g while FBK ON",
+     "expected": {"FBK ON throughout": "Emergency to end", "released then FBK OFF": "Emergency kept, no deferred exit", "held through FBK OFF at f": "exit only via reference chain timers, no Safe <= f", "after exit": "Safe only"},
+     "forbidden": ["Safe in any scan with C1_FBK or C2_FBK ON", "R&D/Run after Restart"],
+     "fact": "E2b..E2d exit at +100 with FBK ON -> FAIL", "ids": ["EMG-006", "MOD-008"]},
+    {"id": "RNDCONF-PLC", "decision": "normative RND-CONF-T (question 68 B, TD-02)", "status": "READY",
+     "norm": "no R&D <= u1+599, u1+600 observation, R&D at u1+601; u1 = first observable out_LV_C1, route-independent",
+     "fact": "FBK10-PLC-REG (1) R&D at u1+599 -> FAIL; known-until-E4 classification only by lead if cause in legacy decoder",
+     "ids": ["MOD-001", "WDG-002"]}
+  ],
+  "questionsToVadim": []
+}

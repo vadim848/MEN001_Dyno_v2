@@ -1,0 +1,308 @@
+PLAN program/architect/E2-status/PLAN.json e5397b7373e57e661a9cb29781082a8b4f52bf41e82eeccace4a96ef1e7aff34
+
+== F1 -> R1: PASS  base SAL 04b45456 cand SAL ca841a01
+  PASS [inputs] base SAL is the plan-declared F1 (04b45456)
+  PASS [inputs] candidate SAL is the plan-declared R1 (ca841a01)
+  PASS [inputs] plan.source SGVL/diagram equal the F1 base
+  PASS [model] base model has no binding anomalies
+  PASS [model] candidate model has no binding anomalies
+  PASS [plan] every structural plan item of R1 is interpreted (56)
+  PASS [plan] no plan addendum carries structural changes for R1 outside slices[] (not interpreted by this tool)
+  PASS [plan-assert] Network5/* deletes 15 blocks
+  PASS [plan-assert] //Network3/FBRs6/RsOut writes b_Step6 in base
+  PASS [plan-assert] //Network3/FBRs6/RsOut: wires kept (3 in base)
+  PASS [blocks] block set equals base with planned deletions/additions
+  PASS [blocks] block attributes (all except orderOfExecution) and port lists: retained unchanged, new = native template of the same functionName
+  PASS [ports] port sets and native port attributes (portNum/objectIndex/varId/filter/type/timing ...) as planned
+  PASS [ports] input states (channelInterface, contact NC/NO) as planned
+  PASS [wires] every wire (driver -> input) equals base with planned changes; nothing else
+  PASS [symbols] every Symbol binding (inputs read, outputs write) equals base with planned changes
+  PASS [sgvl] SGVL Symbols: base 85 - deleted 20 + created 0 = 65; candidate 65
+  PASS [sgvl] retained SGVL declarations unchanged (type/initial/attributes)
+  PASS [aliases] SAL variables: expected 75, candidate 75; names (incl. planned renames) equal
+  PASS [aliases] physical aliases: every SAL variable keeps its alias-device and group-port usages (ids, sdsId, channelId, functionId) and attributes
+  PASS [aliases] alias ports / non-program SAL records byte-canonical identical
+  PASS [plc] PLC fanout: 16 PLC alias variables - consumers and producers equal base with planned changes
+  PASS [plc] PLC producer Network1/FBAnd1: inputs, contacts and sources as planned
+  PASS [counts] candidate counts equal the plan-applied base model (fb/ports/params/salVars/sgvlSymbols/wires/globalRefs)
+  PASS [counts] fb = 215 (plan slice R1)
+  PASS [counts] ports = 1832 (plan slice R1)
+  PASS [counts] sgvlSymbols = 65 (plan slice R1)
+  PASS [counts] salVars = 75 (plan slice R1)
+  PASS [counts] fb = 215 (plan budget.exact R1)
+  PASS [ledger] usage ledger: every missing SAL/SGVL usage belongs to a deleted block/Symbol or a planned rebinding (75)
+  PASS [ledger] usage ledger: every new SAL/SGVL usage belongs to a new block/Symbol or a planned binding (2)
+  PASS [ledger] every other native difference (blocks, Symbols, wires, port states, renames, identity) is a planned item
+  PASS [identity] retained blocks/ports/variables/usages keep ids, relationship wrappers and usage order; root (except Crc) and networks unchanged
+  PASS [identity] all candidate SAL object/relationship Ids unique
+  PASS [sgvl] candidate SGVL FbPortUsages equal SAL fbPortGlobalVariableReferences (variable, port, side)
+  PASS [wires] no cross-network graphical wiredLink in candidate
+  PASS [wires] no input has more than one source (wire or Symbol)
+  PASS [wires] every input touched by the plan: active (not Deactivated) <=> exactly one source
+  PASS [wires] inputs violating active <=> one source: base 155, candidate 122; none new
+  PASS [order] candidate orderOfExecution is a permutation 1..215
+  PASS [order] relative execution order of the 215 retained blocks not moved by the plan is preserved
+  PASS [diagram] every candidate block/port has exactly one shape (2064)
+  PASS [diagram] no shape references a block/port absent from the candidate
+  PASS [diagram] one connector per wire (277) and connector nodes reference existing shapes
+
+== R1 -> E2a-core: PASS  base SAL ca841a01 cand SAL 5648e31c
+  PASS [inputs] base SAL is the plan-declared R1 (ca841a01)
+  PASS [inputs] candidate SAL is the plan-declared E2a-core (5648e31c)
+  PASS [model] base model has no binding anomalies
+  PASS [model] candidate model has no binding anomalies
+  PASS [plan] every structural plan item of E2a-core is interpreted (24)
+  PASS [plan] no plan addendum carries structural changes for E2a-core outside slices[] (not interpreted by this tool)
+  PASS [plan-assert] (remove wire FBRs4->FBOr5): base source of //Network3/FBOr5/OrIn2 is a wire from //Network3/FBRs4
+  PASS [plan-assert] //Network11/FBAnd4/AndIn3 contact was NC
+  PASS [blocks] block set equals base with planned deletions/additions
+  PASS [blocks] block attributes (all except orderOfExecution) and port lists: retained unchanged, new = native template of the same functionName
+  PASS [ports] port sets and native port attributes (portNum/objectIndex/varId/filter/type/timing ...) as planned
+  PASS [ports] input states (channelInterface, contact NC/NO) as planned
+  PASS [wires] every wire (driver -> input) equals base with planned changes; nothing else
+  PASS [symbols] every Symbol binding (inputs read, outputs write) equals base with planned changes
+  PASS [sgvl] SGVL Symbols: base 65 - deleted 0 + created 0 = 65; candidate 65
+  PASS [sgvl] retained SGVL declarations unchanged (type/initial/attributes)
+  PASS [aliases] SAL variables: expected 75, candidate 75; names (incl. planned renames) equal
+  PASS [aliases] physical aliases: every SAL variable keeps its alias-device and group-port usages (ids, sdsId, channelId, functionId) and attributes
+  PASS [aliases] alias ports / non-program SAL records byte-canonical identical
+  PASS [plc] PLC fanout: 16 PLC alias variables - consumers and producers equal base with planned changes
+  PASS [plc] PLC producer Network1/FBAnd1: inputs, contacts and sources as planned
+  PASS [counts] candidate counts equal the plan-applied base model (fb/ports/params/salVars/sgvlSymbols/wires/globalRefs)
+  PASS [counts] fb = 215 (plan slice E2a-core)
+  PASS [counts] ports = 1832 (plan slice E2a-core)
+  PASS [counts] sgvlSymbols = 65 (plan slice E2a-core)
+  PASS [counts] salVars = 75 (plan slice E2a-core)
+  PASS [counts] fb = 215 (plan budget.exact E2a-core)
+  PASS [ledger] usage ledger: every missing SAL/SGVL usage belongs to a deleted block/Symbol or a planned rebinding (14)
+  PASS [ledger] usage ledger: every new SAL/SGVL usage belongs to a new block/Symbol or a planned binding (22)
+  PASS [ledger] every other native difference (blocks, Symbols, wires, port states, renames, identity) is a planned item
+  PASS [identity] retained blocks/ports/variables/usages keep ids, relationship wrappers and usage order; root (except Crc) and networks unchanged
+  PASS [identity] all candidate SAL object/relationship Ids unique
+  PASS [sgvl] candidate SGVL FbPortUsages equal SAL fbPortGlobalVariableReferences (variable, port, side)
+  PASS [wires] no cross-network graphical wiredLink in candidate
+  PASS [wires] no input has more than one source (wire or Symbol)
+  PASS [wires] every input touched by the plan: active (not Deactivated) <=> exactly one source
+  PASS [wires] inputs violating active <=> one source: base 122, candidate 122; none new
+  PASS [order] candidate orderOfExecution is a permutation 1..215
+  PASS [order] Network12/FBAnd16, SafeResumption/CONNECTORS, SafeResumption/CONNECTOR_SCOPE before Network1/FBAnd1 (changes)
+  PASS [order] Network12/FBAnd15 after Network12/FBDecouple1 (mechanism.order.moves)
+  PASS [order] Network3/FBAnd2 before Network3/FBAnd1 (mechanism.order.moves)
+  PASS [order] Network2/FBAnd11 before Network2/FBAnd91 (mechanism.order.moves)
+  PASS [order] head (mechanism.order.head15 (PLAN.v4.md 2.2)): 14 blocks occupy orders 1..14 in the listed sequence
+  PASS [order] relative execution order of the 193 retained blocks not moved by the plan is preserved
+  PASS [diagram] every candidate block/port has exactly one shape (2064)
+  PASS [diagram] no shape references a block/port absent from the candidate
+  PASS [diagram] one connector per wire (275) and connector nodes reference existing shapes
+
+== E2a-core -> E2a-RC: PASS  base SAL 5648e31c cand SAL 5733552a
+  PASS [inputs] base SAL is the plan-declared E2a-core (5648e31c)
+  PASS [inputs] candidate SAL is the plan-declared E2a-RC (5733552a)
+  PASS [model] base model has no binding anomalies
+  PASS [model] candidate model has no binding anomalies
+  PASS [plan] every structural plan item of E2a-RC is interpreted (14)
+  PASS [plan] no plan addendum carries structural changes for E2a-RC outside slices[] (not interpreted by this tool)
+  PASS [plan-assert] (AndIn2 in_LV_C1_FBK) holds on base //Network11/FBAnd4/AndIn2
+  PASS [plan-assert] (AndIn3 in_LV_Faulty_FBK NO) holds on base //Network11/FBAnd4/AndIn3
+  PASS [plan-assert] (existing Symbol on Network12/FBAnd4.AndOut; second targetUsage): //Network12/FBAnd4/AndOut writes an existing Symbol
+  PASS [plan-assert] (AndIn2 in_LV_C1_FBK) holds on candidate //Network11/FBAnd4/AndIn2
+  PASS [plan-assert] (AndIn3 in_LV_Faulty_FBK NO) holds on candidate //Network11/FBAnd4/AndIn3
+  PASS [plan-assert] (existing Symbol on Network12/FBAnd4.AndOut; second targetUsage): the Symbol bound to //Network1/FBOr5/OrIn2 is written by //Network12/FBAnd4/AndOut and has exactly 2 target usages
+  PASS [blocks] block set equals base with planned deletions/additions
+  PASS [blocks] block attributes (all except orderOfExecution) and port lists: retained unchanged, new = native template of the same functionName
+  PASS [ports] port sets and native port attributes (portNum/objectIndex/varId/filter/type/timing ...) as planned
+  PASS [ports] input states (channelInterface, contact NC/NO) as planned
+  PASS [wires] every wire (driver -> input) equals base with planned changes; nothing else
+  PASS [symbols] every Symbol binding (inputs read, outputs write) equals base with planned changes
+  PASS [sgvl] SGVL Symbols: base 65 - deleted 2 + created 0 = 63; candidate 63
+  PASS [sgvl] retained SGVL declarations unchanged (type/initial/attributes)
+  PASS [aliases] SAL variables: expected 75, candidate 75; names (incl. planned renames) equal
+  PASS [aliases] physical aliases: every SAL variable keeps its alias-device and group-port usages (ids, sdsId, channelId, functionId) and attributes
+  PASS [aliases] alias ports / non-program SAL records byte-canonical identical
+  PASS [plc] PLC fanout: 16 PLC alias variables - consumers and producers equal base with planned changes
+  PASS [plc] PLC producer Network1/FBAnd1: inputs, contacts and sources as planned
+  PASS [counts] candidate counts equal the plan-applied base model (fb/ports/params/salVars/sgvlSymbols/wires/globalRefs)
+  PASS [counts] fb = 217 (plan slice E2a-RC)
+  PASS [counts] ports = 1836 (plan slice E2a-RC)
+  PASS [counts] sgvlSymbols = 63 (plan slice E2a-RC)
+  PASS [counts] salVars = 75 (plan slice E2a-RC)
+  PASS [counts] fb = 217 (plan budget.exact E2a-RC)
+  PASS [ledger] usage ledger: every missing SAL/SGVL usage belongs to a deleted block/Symbol or a planned rebinding (4)
+  PASS [ledger] usage ledger: every new SAL/SGVL usage belongs to a new block/Symbol or a planned binding (6)
+  PASS [ledger] every other native difference (blocks, Symbols, wires, port states, renames, identity) is a planned item
+  PASS [identity] retained blocks/ports/variables/usages keep ids, relationship wrappers and usage order; root (except Crc) and networks unchanged
+  PASS [identity] all candidate SAL object/relationship Ids unique
+  PASS [sgvl] candidate SGVL FbPortUsages equal SAL fbPortGlobalVariableReferences (variable, port, side)
+  PASS [wires] no cross-network graphical wiredLink in candidate
+  PASS [wires] no input has more than one source (wire or Symbol)
+  PASS [wires] every input touched by the plan: active (not Deactivated) <=> exactly one source
+  PASS [wires] inputs violating active <=> one source: base 122, candidate 122; none new
+  PASS [order] candidate orderOfExecution is a permutation 1..217
+  PASS [order] chain WIN_C2 -> FBAnd6 -> FBTon3 (order)
+  PASS [order] chain WIN_C1 -> N11/FBAnd4 -> N11/FBTon1 -> N11/FBAnd5 (order)
+  PASS [order] Network12/FBAnd6 before Network12/FBTon3 (E2a-RC) (mechanism.order.moves)
+  PASS [order] head (mechanism.order.head15 (PLAN.v4.md 2.2)): 14 blocks occupy orders 1..14 in the listed sequence
+  PASS [order] relative execution order of the 196 retained blocks not moved by the plan is preserved
+  PASS [plan-assert] no Symbol on the outputs of the new blocks of the slice
+  PASS [plan-assert] cancelled Symbol linkRunUpAccepted absent in candidate
+  PASS [diagram] every candidate block/port has exactly one shape (2072)
+  PASS [diagram] no shape references a block/port absent from the candidate
+  PASS [diagram] one connector per wire (277) and connector nodes reference existing shapes
+
+== E2a-RC -> E2b: PASS  base SAL 5733552a cand SAL 4f933433
+  PASS [inputs] base SAL is the plan-declared E2a-RC (5733552a)
+  PASS [inputs] candidate SAL is the plan-declared E2b (4f933433)
+  PASS [model] base model has no binding anomalies
+  PASS [model] candidate model has no binding anomalies
+  PASS [plan] every structural plan item of E2b is interpreted (39)
+  PASS [plan] no plan addendum carries structural changes for E2b outside slices[] (not interpreted by this tool)
+  PASS [plan-assert] (remove wire FBAnd2->FBDecouple1): base source of //Network6/FBDecouple1/DecIn1 is a wire from //Network6/FBAnd2
+  PASS [blocks] block set equals base with planned deletions/additions
+  PASS [blocks] block attributes (all except orderOfExecution) and port lists: retained unchanged, new = native template of the same functionName
+  PASS [ports] port sets and native port attributes (portNum/objectIndex/varId/filter/type/timing ...) as planned
+  PASS [ports] input states (channelInterface, contact NC/NO) as planned
+  PASS [wires] every wire (driver -> input) equals base with planned changes; nothing else
+  PASS [symbols] every Symbol binding (inputs read, outputs write) equals base with planned changes
+  PASS [sgvl] SGVL Symbols: base 63 - deleted 0 + created 0 = 63; candidate 63
+  PASS [sgvl] retained SGVL declarations unchanged (type/initial/attributes)
+  PASS [aliases] SAL variables: expected 78, candidate 78; names (incl. planned renames) equal
+  PASS [aliases] physical aliases: every SAL variable keeps its alias-device and group-port usages (ids, sdsId, channelId, functionId) and attributes
+  PASS [aliases] alias ports / non-program SAL records byte-canonical identical
+  PASS [plc] PLC fanout: 16 PLC alias variables - consumers and producers equal base with planned changes
+  PASS [plc] PLC producer Network1/FBAnd1: inputs, contacts and sources as planned
+  PASS [counts] candidate counts equal the plan-applied base model (fb/ports/params/salVars/sgvlSymbols/wires/globalRefs)
+  PASS [counts] fb = 227 (plan slice E2b)
+  PASS [counts] ports = 1926 (plan slice E2b)
+  PASS [counts] sgvlSymbols = 63 (plan slice E2b)
+  PASS [counts] salVars = 78 (plan slice E2b)
+  PASS [counts] fb = 227 (plan budget.exact E2b)
+  PASS [ledger] usage ledger: every missing SAL/SGVL usage belongs to a deleted block/Symbol or a planned rebinding (6)
+  PASS [ledger] usage ledger: every new SAL/SGVL usage belongs to a new block/Symbol or a planned binding (36)
+  PASS [ledger] every other native difference (blocks, Symbols, wires, port states, renames, identity) is a planned item
+  PASS [identity] retained blocks/ports/variables/usages keep ids, relationship wrappers and usage order; root (except Crc) and networks unchanged
+  PASS [identity] all candidate SAL object/relationship Ids unique
+  PASS [sgvl] candidate SGVL FbPortUsages equal SAL fbPortGlobalVariableReferences (variable, port, side)
+  PASS [wires] no cross-network graphical wiredLink in candidate
+  PASS [wires] no input has more than one source (wire or Symbol)
+  PASS [wires] every input touched by the plan: active (not Deactivated) <=> exactly one source
+  PASS [wires] inputs violating active <=> one source: base 122, candidate 122; none new
+  PASS [order] candidate orderOfExecution is a permutation 1..227
+  PASS [order] Network1/FBAndNotRunSu before Network1/FBOrIlRunOk (order)
+  PASS [order] Network1/FBOrIlRunOk before Network1/FBAnd1 (order)
+  PASS [order] Network6/STAGE_LVON after Network6/FBAnd2 (order)
+  PASS [order] Network6/STAGE_LVON before Network6/FBAndLvEmg (order)
+  PASS [order] Network6/FBAndLvEmg before Network6/FBOrStep4 (order)
+  PASS [order] Network6/FBOrStep4 before Network6/FBDecouple1 (order)
+  PASS [order] Network3/G10_EXIT after Network1/FBEstop1 (order)
+  PASS [order] Network3/G10_EXIT before Network6/FBDecouple2 (order)
+  PASS [order] Network3/FBAndBootFbkOff before Network3/FBAnd2 (order)
+  PASS [order] RndPhysicalCompact/GATE_SPOIL_R before RndPhysicalCompact/GATE_SPOIL_S (order)
+  PASS [order] RndPhysicalCompact/GATE_SPOIL_R after RndPhysicalCompact/GATE_003 (order)
+  PASS [order] RndPhysicalCompact/GATE_SPOIL_S before RndPhysicalCompact/GATE_029 (order)
+  PASS [order] head (mechanism.order.head15 (PLAN.v4.md 2.2)): 15 blocks occupy orders 1..15 in the listed sequence
+  PASS [order] relative execution order of the 203 retained blocks not moved by the plan is preserved
+  PASS [diagram] every candidate block/port has exactly one shape (2172)
+  PASS [diagram] no shape references a block/port absent from the candidate
+  PASS [diagram] one connector per wire (291) and connector nodes reference existing shapes
+
+== E2b -> E2c: PASS  base SAL 4f933433 cand SAL ee8439ae
+  PASS [inputs] base SAL is the plan-declared E2b (4f933433)
+  PASS [inputs] candidate SAL is the plan-declared E2c (ee8439ae)
+  PASS [model] base model has no binding anomalies
+  PASS [model] candidate model has no binding anomalies
+  PASS [plan] every structural plan item of E2c is interpreted (9)
+  PASS [plan] no plan addendum carries structural changes for E2c outside slices[] (not interpreted by this tool)
+  PASS [blocks] block set equals base with planned deletions/additions
+  PASS [blocks] block attributes (all except orderOfExecution) and port lists: retained unchanged, new = native template of the same functionName
+  PASS [ports] port sets and native port attributes (portNum/objectIndex/varId/filter/type/timing ...) as planned
+  PASS [ports] input states (channelInterface, contact NC/NO) as planned
+  PASS [wires] every wire (driver -> input) equals base with planned changes; nothing else
+  PASS [symbols] every Symbol binding (inputs read, outputs write) equals base with planned changes
+  PASS [sgvl] SGVL Symbols: base 63 - deleted 0 + created 0 = 63; candidate 63
+  PASS [sgvl] retained SGVL declarations unchanged (type/initial/attributes)
+  PASS [aliases] SAL variables: expected 79, candidate 79; names (incl. planned renames) equal
+  PASS [aliases] physical aliases: every SAL variable keeps its alias-device and group-port usages (ids, sdsId, channelId, functionId) and attributes
+  PASS [aliases] alias ports / non-program SAL records byte-canonical identical
+  PASS [plc] PLC fanout: 16 PLC alias variables - consumers and producers equal base with planned changes
+  PASS [plc] PLC producer Network1/FBAnd1: inputs, contacts and sources as planned
+  PASS [counts] candidate counts equal the plan-applied base model (fb/ports/params/salVars/sgvlSymbols/wires/globalRefs)
+  PASS [counts] fb = 229 (plan slice E2c)
+  PASS [counts] ports = 1944 (plan slice E2c)
+  PASS [counts] sgvlSymbols = 63 (plan slice E2c)
+  PASS [counts] salVars = 79 (plan slice E2c)
+  PASS [counts] fb = 229 (plan budget.exact E2c)
+  PASS [ledger] usage ledger: every missing SAL/SGVL usage belongs to a deleted block/Symbol or a planned rebinding (1)
+  PASS [ledger] usage ledger: every new SAL/SGVL usage belongs to a new block/Symbol or a planned binding (7)
+  PASS [ledger] every other native difference (blocks, Symbols, wires, port states, renames, identity) is a planned item
+  PASS [identity] retained blocks/ports/variables/usages keep ids, relationship wrappers and usage order; root (except Crc) and networks unchanged
+  PASS [identity] all candidate SAL object/relationship Ids unique
+  PASS [sgvl] candidate SGVL FbPortUsages equal SAL fbPortGlobalVariableReferences (variable, port, side)
+  PASS [wires] no cross-network graphical wiredLink in candidate
+  PASS [wires] no input has more than one source (wire or Symbol)
+  PASS [wires] every input touched by the plan: active (not Deactivated) <=> exactly one source
+  PASS [wires] inputs violating active <=> one source: base 122, candidate 122; none new
+  PASS [order] candidate orderOfExecution is a permutation 1..229
+  PASS [order] SafeResumption/SG_OWNER_SET after RndPhysicalCompact/STATE_SU (order)
+  PASS [order] SafeResumption/HLT_LV after SafeResumption/SG_OWNER_SET (order)
+  PASS [order] RndPhysicalCompact/GATE_SG_SET after SafeResumption/HLT_LV (order)
+  PASS [order] RndPhysicalCompact/STATE_SG after RndPhysicalCompact/GATE_SG_SET (order)
+  PASS [order] head (mechanism.order.head15 (PLAN.v4.md 2.2)): 15 blocks occupy orders 1..15 in the listed sequence
+  PASS [order] relative execution order of the 210 retained blocks not moved by the plan is preserved
+  PASS [diagram] every candidate block/port has exactly one shape (2192)
+  PASS [diagram] no shape references a block/port absent from the candidate
+  PASS [diagram] one connector per wire (292) and connector nodes reference existing shapes
+
+== E2c -> E2d: PASS  base SAL ee8439ae cand SAL e4cf767e
+  PASS [inputs] base SAL is the plan-declared E2c (ee8439ae)
+  NV   [inputs] plan declares no SHA for candidate E2d
+  PASS [model] base model has no binding anomalies
+  PASS [model] candidate model has no binding anomalies
+  PASS [plan] every structural plan item of E2d is interpreted (30)
+  PASS [plan] no plan addendum carries structural changes for E2d outside slices[] (not interpreted by this tool)
+  PASS [plan-assert] (remove wire GATE_003->GATE_SPOIL_R): base source of //RndPhysicalCompact/GATE_SPOIL_R/AndIn1 is a wire from //RndPhysicalCompact/GATE_003
+  PASS [plan-assert] //RndPhysicalCompact/GATE_SPOIL_R/AndIn1 contact was NC
+  PASS [plan-assert] (remove wire GATE_003->GATE_SPOIL_S): base source of //RndPhysicalCompact/GATE_SPOIL_S/AndIn1 is a wire from //RndPhysicalCompact/GATE_003
+  PASS [plan-assert] //RndPhysicalCompact/GATE_SPOIL_S/AndIn1 contact was NC
+  PASS [plan-assert] (remove wire GATE_SPOIL_R->GATE_029): base source of //RndPhysicalCompact/GATE_029/OrIn6 is a wire from //RndPhysicalCompact/GATE_SPOIL_R
+  PASS [blocks] block set equals base with planned deletions/additions
+  PASS [blocks] block attributes (all except orderOfExecution) and port lists: retained unchanged, new = native template of the same functionName
+  PASS [ports] port sets and native port attributes (portNum/objectIndex/varId/filter/type/timing ...) as planned
+  PASS [ports] input states (channelInterface, contact NC/NO) as planned
+  PASS [wires] every wire (driver -> input) equals base with planned changes; nothing else
+  PASS [symbols] every Symbol binding (inputs read, outputs write) equals base with planned changes
+  PASS [sgvl] SGVL Symbols: base 63 - deleted 0 + created 0 = 63; candidate 63
+  PASS [sgvl] retained SGVL declarations unchanged (type/initial/attributes)
+  PASS [aliases] SAL variables: expected 79, candidate 79; names (incl. planned renames) equal
+  PASS [aliases] physical aliases: every SAL variable keeps its alias-device and group-port usages (ids, sdsId, channelId, functionId) and attributes
+  PASS [aliases] alias ports / non-program SAL records byte-canonical identical
+  PASS [plc] PLC fanout: 16 PLC alias variables - consumers and producers equal base with planned changes
+  PASS [plc] PLC producer Network1/FBAnd1: inputs, contacts and sources as planned
+  PASS [counts] candidate counts equal the plan-applied base model (fb/ports/params/salVars/sgvlSymbols/wires/globalRefs)
+  PASS [counts] fb = 229 (plan slice E2d)
+  PASS [counts] ports = 1938 (plan slice E2d)
+  PASS [counts] sgvlSymbols = 63 (plan slice E2d)
+  PASS [counts] salVars = 79 (plan slice E2d)
+  PASS [counts] fb = 229 (plan budget.exact E2d)
+  PASS [ledger] usage ledger: every missing SAL/SGVL usage belongs to a deleted block/Symbol or a planned rebinding (8)
+  PASS [ledger] usage ledger: every new SAL/SGVL usage belongs to a new block/Symbol or a planned binding (13)
+  PASS [ledger] every other native difference (blocks, Symbols, wires, port states, renames, identity) is a planned item
+  PASS [identity] retained blocks/ports/variables/usages keep ids, relationship wrappers and usage order; root (except Crc) and networks unchanged
+  PASS [identity] all candidate SAL object/relationship Ids unique
+  PASS [sgvl] candidate SGVL FbPortUsages equal SAL fbPortGlobalVariableReferences (variable, port, side)
+  PASS [wires] no cross-network graphical wiredLink in candidate
+  PASS [wires] no input has more than one source (wire or Symbol)
+  PASS [wires] every input touched by the plan: active (not Deactivated) <=> exactly one source
+  PASS [wires] inputs violating active <=> one source: base 122, candidate 122; none new
+  PASS [order] candidate orderOfExecution is a permutation 1..229
+  PASS [order] RndPhysicalCompact/GATE_PF_SET after RndPhysicalCompact/GATE_SPOIL_S (order)
+  PASS [order] RndPhysicalCompact/STATE_PF after RndPhysicalCompact/GATE_PF_SET (order)
+  PASS [order] RndPhysicalCompact/GATE_SPOIL_PF after RndPhysicalCompact/STATE_PF (order)
+  PASS [order] RndPhysicalCompact/GATE_SPOIL_PF before RndPhysicalCompact/GATE_029 (order)
+  PASS [order] head (mechanism.order.head15 (PLAN.v4.md 2.2)): 15 blocks occupy orders 1..15 in the listed sequence
+  PASS [order] relative execution order of the 211 retained blocks not moved by the plan is preserved
+  PASS [diagram] every candidate block/port has exactly one shape (2186)
+  PASS [diagram] no shape references a block/port absent from the candidate
+  PASS [diagram] one connector per wire (294) and connector nodes reference existing shapes
+
+E2-DELTA PASS: R1=PASS E2a-core=PASS E2a-RC=PASS E2b=PASS E2c=PASS E2d=PASS
+report: C:\Users\user\AppData\Local\Temp\claude\C--Users-user-source-repos-MEN001-Dyno-v2\ccd06a82-39c5-4519-838f-df9bc38d59d9\scratchpad\e2delta76b.json

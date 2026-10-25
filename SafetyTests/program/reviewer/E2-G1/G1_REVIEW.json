@@ -1,0 +1,27 @@
+{
+  "gate": "G1", "slice": "E2", "role": "v2-reviewer", "date": "2026-10-21",
+  "verdict": "PASS WITH CONDITIONS",
+  "source": {"sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3", "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "decisionsUsedByTester": "c1e7fe6c…", "decisionsAtReview": "f363aae89acc653797d102dda45f90bbd1b1ee4c0a0afbfd98a86eac8931c64b", "criteria": "f2f11d77eba0d3b4441b42ff55666fbfc741bdd2867ebb763829328ad909eaa3", "plan": "c443079d28bc1c9e5a7259004c8d8f615a7c51a05642bbb0c1e1d6ca1a5aa39e"},
+  "tests": {"helper": "f8b15f38b8d76120c241772dfe61bf3a0123c302e7c3ec06d1212acdd331ed56", "status": "20ba98ba33591cdc61e09ae8bedf837d84c61fbde35ccd8efe0174e65c92d1a4", "race": "281a23312dbf92967cb0582e6a25965820bfab0018d352940608665c432cc1a7", "interlockRun": "c9d93125f55122512e24292a2cef8caf430050361c3e030e2261bb5e34b51b3c", "rndCoverHealthy": "9fa8de79ed9453eb4d6031dacf820fc168b6a050b94b0ea6038e2fa88dcfeff7"},
+  "reviewerRun": {"normative": {"tests": 131, "pass": 5, "fail": 126}, "split": {"tests": 131, "pass": 33, "fail": 98}, "matchesBaseline": true},
+  "oracleTraceability": "requirement-derived; no assertion derived from canonical behaviour found",
+  "conditions": [
+    {"id": "C1", "to": ["tester", "analyst"], "blocks": "G3", "text": "in_Safety_Run is bound to group //RunStop (SAL 12341-12370): FALSE+b_Step1 injection is unreachable and contradicts CRITERIA §0; normative mode must be TRUE without injection, FALSE diagnostic only; rebaseline. Probe repro/safety-run-probe.mjs: TRUE gives S1^S3 through Run and S1+S5 after EStop+Restart."},
+    {"id": "C2", "to": ["tester"], "blocks": "G3", "text": "Add Restart endpoint (EMG6-01, V14-Q6, Q-ARCH-01: only Safe, energy off) to all Emergency scenarios; canonical stays in b_Step6 (FALSE) / S1+S5 (TRUE) after Restart and no test detects it."},
+    {"id": "C3", "to": ["architect", "stand"], "blocks": "G3 mutation run", "text": "MUTATION_PLAN_E2a..d testFiles are glob strings filtered by fs.existsSync in scripts/sal-mutation-check.js:60 -> E2 tests silently not run; list 4 exact files, behaviouralTests ^E2[a-d] ; make missing testFiles an ERROR."},
+    {"id": "C4", "to": ["tester", "analyst"], "blocks": "G3 for affected IDs", "text": "Tests for new answers: Q-ARCH-01 (energy chain, Restart->Safe, LV rise stops), Q-ARCH-03 (LV loss in StartingRun), Q-RC-11/Q-ARCH-05 (SafetyFault HealthyLost in HLT-01/01b, UP blocked until E6-Q2 ack; HLT-03 unblocked), Q-RC-14 (connector -> Emergency, kills E2b-12), Q-ARCH-09 (Run confirm 0.1 s boundary), outPLC_*_Faulty rename in POL-01(b). Ambiguity to analyst: E2-02 L chain - Q-RC-09 'no fault' vs Q-RC-11 'SafetyFault in steady R&D'."}
+  ],
+  "majors": [
+    {"id": "M1", "text": "IL-03 compares b_Step*/STS_* with reference: broader than EMGREF(3) (outputs)."},
+    {"id": "M2", "text": "HLT-01 does not assert C3/BMS ON precondition; OFF check may be vacuous."},
+    {"id": "M3", "text": "IL-02 boundaries N/N+1 not written."},
+    {"id": "M4", "text": "Emergency sweep lacks ES_NC_2/Mentee/connector; E2-04 only 50 ms."},
+    {"id": "M5", "text": "sweepAroundC2Off keeps green pressed through 'Restart'."},
+    {"id": "M6", "text": "Diagnostics show first failed assertion only; later assertions unobserved until G3."}
+  ],
+  "d2a": "Observation means acceptable; under D2-A 'exactly one status' is implied by stages<=1 and is not independent evidence; S12->Safe mapping is architect's choice; timing/EMG checks are requirement-derived.",
+  "mutationsNotKillable": ["E2b-03", "E2b-04", "E2b-11", "E2b-12 (now READY via Q-RC-14)", "E2d-03", "E2d-04", "E2a-17 (NV)"],
+  "mutationKillClaims": "NV until G3 (no candidate)",
+  "limits": "Model-level software tests; no native CRC/Verify, Target or hardware safety claims."
+}

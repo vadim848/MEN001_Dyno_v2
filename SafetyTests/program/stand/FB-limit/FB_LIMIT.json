@@ -1,0 +1,325 @@
+{
+  "slice": "E-FB-limit / v2-stand-engineer / 2026-10-21",
+  "scope": "Read-only. No download, no Target/ADS, no hardware. Reference read-only. Canonical not changed.",
+  "confidenceScale": {
+    "DOC": "public Beckhoff documentation (web page)",
+    "ESI": "installed Beckhoff device description XML (vendor data consumed by the editor)",
+    "SDK-CODE": "IL of installed SDK assemblies (static reading)",
+    "SDK-RUNTIME": "SDK getter invoked offline on a constructor-less instance (no IDE, no project node)",
+    "OFFLINE-VALIDATED": "native verifier run on a synthetic project, error observed",
+    "EMPIRICAL": "observed on the real target (reported, not re-verified here)",
+    "NV": "not verified"
+  },
+  "target": {
+    "file": "MEN001_Dyno/Safety_Dyno/TargetSystemConfig.xml",
+    "sha256_v2": "b455dc24c085d376d53d792347a1dab7e0790435cd0e0ad8852e4dc40aef36c4",
+    "sha256_reference_4495a1f": "a0a506cf6c52d43876db4564e876f066273d49c4c3cf00f9fd960c71b08cfee1",
+    "TargetSystemType": "HSafetyPLC",
+    "TargetSystemSubType": "EL1918",
+    "SoftwareVersion": "02 (V01.08)",
+    "tsproj": {
+      "file": "MEN001_Dyno/MEN001_Dyno.tsproj",
+      "sha256": "0748769ab6c012e4d90d8ebfbac32896815297d2396f297b8105d78e423e818a",
+      "logicTerminal": "A1 - SI1 (EL1918)_1",
+      "ProductCode": "#x077e3052",
+      "RevisionNo": "#x00100000"
+    }
+  },
+  "sdk": {
+    "root": "C:/Program Files (x86)/Beckhoff/TwinCAT/3.1/Components/Safety/1.4.16",
+    "shell": "C:/Program Files/Beckhoff/TcXaeShell/Common7/IDE/TcXaeShell.exe 17.0.0.0 -> v170 assemblies",
+    "assemblies": {
+      "v170/SALDesignerControl.dll": {
+        "fileVersion": "1.4.16.13",
+        "assemblyVersion": "1.4.16.0",
+        "sha256": "a4e62e496df3f2c2cfccd8b3d1ead8b750582d1e4e1c35dd6dfc06da2585295f"
+      },
+      "v170/SALDesigner.dll": {
+        "fileVersion": "1.4.16.13",
+        "assemblyVersion": "1.4.16.0",
+        "sha256": "a0860695d503eb1e81bf07e5810bdb72cf8f3e76c1fcafd79af2ca7cc919481c"
+      },
+      "Common/Esi.dll": {
+        "fileVersion": "1.4.16.13",
+        "assemblyVersion": "1.4.16.0",
+        "sha256": "81af0ab65d42154e354912c8ae3af39746b930f88bf6dc2b004cb9cde00532df"
+      },
+      "Common/Resources.dll": {
+        "fileVersion": "1.4.16.13",
+        "assemblyVersion": "1.4.16.0",
+        "sha256": "5ae286fdfd0f4fc4f99769fd6ccc7a90690963671d9e052f4dccb4ccaabf256e"
+      }
+    },
+    "templates": {
+      "TargetSystemTemplateSettings/TargetSystemSettings.xml": "2390ab7a27c83203e3b8c9203d274ba53fd9678b7fb674ceb081984c5aaa9c5b"
+    },
+    "esi": {
+      "file": "C:/Program Files (x86)/Beckhoff/TwinCAT/3.1/Config/Io/EtherCAT/Beckhoff EL19xx.xml",
+      "sha256": "b11c315acfe3a7b48df87ee3bb4d9a9c23f3705f7519330aa1d8c6e42598f9d0",
+      "relevantBlocks": {
+        "device EL1918 rev #x00100000 (line 19, TwinSAFELogic line 45)": "FBs 512, Groups 128, Connections 128, MaxProcessImageSize 24576",
+        "module FSOE ModuleIdent #x0010077e (line 12517, TwinSAFELogic line 14755)": "identical to the device block above",
+        "device EL1918 rev #x00110000 (line 6085, TwinSAFELogic line 6113) and module #x0110077e (line 14787/17596)": "FBs 512, Groups 128, Connections 128, MaxProcessImageSize 20224, MaxTwinSAFESCMasterConnections 128 -- NOT our revision"
+      }
+    }
+  },
+  "selectionChain": [
+    "TargetSystemConfig.xml /TargetSystemConfig/TargetSystemSubType = 'EL1918' (TargetSystemType HSafetyPLC)",
+    "TargetSystemHandler::.ctor and ::RefreshStoredTargetSystemConfigFromHardDisk read that XPath; if empty/whitespace they use the default 'EL6900'",
+    "TargetSystemHandler::CreateNewTargetSystemConfigHSafetyPlcObject: string switch, IL 0x0139 ldstr \"EL1918\" -> branch to 0x0361 -> newobj TargetSystemConfigEL1918::.ctor",
+    "TargetSystemConfigEL1918 : TargetSystemConfigLogicAndIOEK1960Based : TargetSystemConfigEK1960Base : TargetSystemConfigEL6910 : TargetSystemConfigHSafetyPLC",
+    "TargetSystemConfigLogicAndIOEK1960Based::get_Max_FunctionBlockNumber: if (ModuleTwinSAFELogic != null) return ModuleTwinSAFELogic.FBs; else return TargetSystemConfigEL6910::get_Max_FunctionBlockNumber (ldc.i4 512)",
+    "TargetSystemConfigEL6910::get_ModuleTwinSAFELogic: the first local safety alias device (EsiFsoeAliasDevice) whose ESI TwinSAFELogic has LogicType == 2 -> its BaseTwinSAFELogic (Esi.dll TwinSAFELogicBase, ESI <FBs> element)",
+    "Result: ESI path -> 512 (ESI <FBs>512</FBs>); fallback without ESI -> 512 (EL6910 constant). Both paths give 512"
+  ],
+  "verifierCheck": {
+    "method": "TargetSystemConfigHSafetyPLC+VerifierHSafetyPLC::VerifyProcessImage (IL 0x029D..0x030B)",
+    "condition": "ApplicationLanguage.AllFunctionBlocks.Count > Max_FunctionBlockNumber -> error (ble.s skips the error when count <= max). 512 is allowed; 513 is the first error",
+    "counted": "SafetyDsl.AllFunctionBlocks = the union of the FB lists of all TwinSAFE groups on this target; User-FB instances are expanded into their internal FBs (SafetyDsl::CacheFunctionBlocks -> AddFunctionBlocksFromUserFb)",
+    "errorKey": "TargetSystemConfigHSafetyPLC_VerifyProcessImage_MaxFunctionBlockNumber",
+    "errorText": "Too many function blocks configured for chosen target system {0} (maximum number of {1} allowed).",
+    "errorCategory": "\"ProjectDownload\" / \"error\" / \"verifyProcessImage\""
+  },
+  "limits_EL1918_rev00100000": [
+    {
+      "resource": "Function blocks (all groups)",
+      "limit": 512,
+      "confidence": [
+        "SDK-CODE",
+        "SDK-RUNTIME(fallback)",
+        "ESI",
+        "DOC(EL6910 page; EL1918 page says its functions correspond to EL6910's)"
+      ],
+      "project_HEAD": 242,
+      "note": "03B 290-block plan is under this count limit; the page budget is still NV"
+    },
+    {
+      "resource": "TwinSAFE groups",
+      "limit": 128,
+      "confidence": [
+        "SDK-CODE",
+        "ESI",
+        "DOC(EL6910)"
+      ],
+      "project_HEAD": 1
+    },
+    {
+      "resource": "TwinSAFE connections = SafetyAliasDevices (FSoE alias devices with IOs)",
+      "limit": 128,
+      "confidence": [
+        "SDK-CODE",
+        "ESI",
+        "DOC(EL1918 page: 128 safe connections)"
+      ],
+      "project_HEAD": 7,
+      "note": "7 SafetyAliasDevice .sds files; the 45 StandardAliasDevice .sds files do not count here"
+    },
+    {
+      "resource": "Internal process image (bytes)",
+      "limit": 24576,
+      "confidence": [
+        "SDK-CODE",
+        "ESI"
+      ],
+      "errorText": "The total byte size of the local process image of the chosen target system '{0}' is too large (expected maximal {1} bytes)"
+    },
+    {
+      "resource": "Near process image (bytes)",
+      "limit": 8192,
+      "confidence": [
+        "SDK-CODE",
+        "ESI"
+      ]
+    },
+    {
+      "resource": "Standard PLC inputs / outputs (bytes)",
+      "limit": "1484 / 1484",
+      "confidence": [
+        "SDK-CODE",
+        "ESI"
+      ]
+    },
+    {
+      "resource": "EtherCAT PDO size per direction (bytes)",
+      "limit": 1486,
+      "confidence": [
+        "SDK-CODE",
+        "ESI"
+      ]
+    },
+    {
+      "resource": "Safe logic cfg data pages",
+      "limit": 12,
+      "pageBytes": "2048-byte buffers (2040/2029 usable constants in PublisherEL6910::BuildLogicDataSets)",
+      "confidence": [
+        "SDK-CODE",
+        "ESI"
+      ],
+      "errorText": "Too many functionblocks, connections or groups have been added for the selected target system.",
+      "note": "This byte budget is shared by groups, connections and FB data sets. The FB count that exhausts it depends on FB types and ports and is NV. It can bind before 512 FBs"
+    },
+    {
+      "resource": "Mapping code size (bytes)",
+      "limit": 24572,
+      "confidence": [
+        "SDK-CODE",
+        "ESI"
+      ],
+      "errorText": "Too many mappings exist for the selected target system."
+    },
+    {
+      "resource": "Safe user parameter pages",
+      "limit": 4,
+      "confidence": [
+        "SDK-CODE",
+        "ESI"
+      ]
+    },
+    {
+      "resource": "FSoE message size / user param size (bytes)",
+      "limit": "255 / 244",
+      "confidence": [
+        "SDK-CODE",
+        "ESI"
+      ]
+    },
+    {
+      "resource": "Send-message CRCs",
+      "limit": 255,
+      "confidence": [
+        "SDK-CODE",
+        "ESI"
+      ]
+    },
+    {
+      "resource": "TwinSAFE SC master connections",
+      "limit": 212,
+      "confidence": [
+        "SDK-CODE",
+        "ESI(rev 00100000)"
+      ]
+    },
+    {
+      "resource": "PROFIsafe master / slave connections",
+      "limit": "128 / 128",
+      "confidence": [
+        "ESI"
+      ]
+    },
+    {
+      "resource": "FRAM data (bytes)",
+      "limit": 2048,
+      "confidence": [
+        "SDK-CODE",
+        "ESI"
+      ]
+    },
+    {
+      "resource": "FSoE address",
+      "limit": 1023,
+      "confidence": [
+        "SDK-CODE"
+      ]
+    },
+    {
+      "resource": "Networks per group (Network.IntId 1..255)",
+      "limit": 255,
+      "confidence": [
+        "SDK-CODE (SALDesigner.dll Network::.ctor, mod 256, 0 invalid -> 'Maximum number of networks reached')"
+      ],
+      "project_HEAD": 14
+    },
+    {
+      "resource": "Symbols / SGVL variables, ports per project",
+      "limit": null,
+      "confidence": [
+        "NV"
+      ],
+      "note": "No explicit count check was found in the verifier error resources. They are bounded indirectly by the process-image, mapping and page budgets",
+      "project_HEAD": {
+        "salSymbols": 75,
+        "sgvlVariables": 85
+      }
+    }
+  ],
+  "comparison_EL6900_class": {
+    "Max_FunctionBlockNumber": 255,
+    "Max_GroupNumber": 32,
+    "Max_TsConnnectionNumber": 128,
+    "Max_ByteSizeOfInternalProcessImage": 2912,
+    "note": "Applies only when TargetSystemSubType is EL6900, or when the subtype is missing or empty (the default). Not our target"
+  },
+  "comparison_EL6910_class": {
+    "Max_FunctionBlockNumber": 512,
+    "Max_GroupNumber": 128,
+    "Max_TsConnnectionNumber": 212,
+    "Max_ByteSizeOfInternalProcessImage": 28672,
+    "Max_SafeLogicPages": 16
+  },
+  "docs": [
+    {
+      "url": "https://www.beckhoff.com/en-en/products/i-o/ethercat-terminals/el1xxx-digital-input/el1918.html",
+      "fetched": "2026-10-21",
+      "content": "range of functions corresponds to that of the EL6910; limitation of the number of possible safe connections to 128; no FB number stated"
+    },
+    {
+      "url": "https://www.beckhoff.com/en-en/products/i-o/ethercat-terminals/el6xxx-communication/el6910.html",
+      "fetched": "2026-10-21",
+      "content": "up to 512 function blocks, up to 212 safe connections, up to 128 TwinSAFE groups; cycle time approx. 1 ms depending on project size"
+    },
+    {
+      "url": "https://www.beckhoff.com/en-en/products/i-o/ethercat-terminals/el6xxx-communication/el6900.html",
+      "fetched": "2026-10-21",
+      "content": "up to 255 function blocks, up to 128 safe connections, up to 32 TwinSAFE groups, up to 8 users"
+    },
+    {
+      "url": "https://document.beckhoff.com/el1918.pdf?target=el1918&lang=en-en",
+      "fetched": "2026-10-21",
+      "content": "HTTP 403 - not read (NV)"
+    }
+  ],
+  "empirical": {
+    "reportedByLead": "Per the lead, these downloaded and ran on hardware. Not re-verified here",
+    "fbCounts_measured_here": {
+      "reference 4495a1f": 112,
+      "v2 9c0a9ad": 185,
+      "v2 77546cb": 205,
+      "v2 HEAD b580920 canonical": 242
+    },
+    "canonicalHEAD": {
+      "sal_sha256": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+      "diagram_sha256": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+      "sgvl_sha256": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+      "fbByType": {
+        "fBAnd": 115,
+        "fBOr": 51,
+        "fBRs": 28,
+        "fBDecouple": 27,
+        "fBTon": 19,
+        "fBEstop": 2
+      }
+    },
+    "note": "77546cb commit message says 'not operational'. The hardware-proven bound is >=205 per the lead's statement. The 242-FB canonical has not been downloaded (NV on hardware)"
+  },
+  "offlineSyntheticCheck": {
+    "status": "NOT RUN",
+    "reason": "The FB-count check and the page/mapping checks live in VerifierHSafetyPLC/VerifierEL6910 and PublisherEL6910. They need a SafetyProjectNode (VS hierarchy/ErrorListHandler, alias-device directory, ApplicationLanguageHandler). The SDK DLLs expose no headless verifier entry point. The only offline route is IDE 'Verify Safety Project' in TcXaeShell (no target needed). That was not started here: it is outside this read-only slice, and IDE results must stay separate",
+    "proposedProcedure": "Isolated copy of the solution (no target connection): add dummy FBAnd blocks in TwinSafeGroup1 until AllFunctionBlocks = 512, run Verify -> expect no MaxFunctionBlockNumber error; add one more (513) -> expect 'Too many function blocks configured for chosen target system EL1918 (maximum number of 512 allowed).' Also record whether 'Too many functionblocks, connections or groups have been added for the selected target system.' (pages) appears earlier, and at which count"
+  },
+  "risks": [
+    "R1 page budget: 12 x 2048-byte safe-logic pages can be exhausted before 512 FBs. The FB count at which this happens is NV. It is the most likely real limit for a large AND/OR-heavy graph",
+    "R2 editor vs firmware: the editor takes the limit from ESI/SDK. The firmware (V01.08) has its own download-time checks ('The received number of FBs (%d) was too big, the maximum allowed value is %d', ESI diag text). The firmware value is not exposed offline (NV). ESI and the public docs both say 512",
+    "R3 default fallback: if TargetSystemSubType is ever empty or missing (for example after a regenerated TargetSystemConfig.xml during V14-Q2 hardware-config work), the editor selects EL6900 -> 255 FBs / 32 groups / 2912-byte process image",
+    "R4 revision: a replacement EL1918 with RevisionNo #x00110000 has a different ESI block (process image 20224, TwinSAFE SC master 128). FB/group/connection limits are unchanged",
+    "R5 counting: the limit is per target across all groups. User-FB instances count as their internal FBs",
+    "R6 cycle time grows with project size (EL6910 doc ~1 ms depending on project size). This is not a hard limit, but it affects FSoE watchdogs. Not assessed (out of scope; timers are not changed)"
+  ],
+  "reproduce": [
+    "powershell -NoProfile -ExecutionPolicy Bypass -File SafetyTests/program/stand/FB-limit/tools/sdk-il-dump.ps1 -TypeRegex 'TargetSystemConfigLogicAndIOEK1960Based$' -MemberRegex 'get_Max_FunctionBlockNumber'",
+    "powershell -NoProfile -ExecutionPolicy Bypass -File SafetyTests/program/stand/FB-limit/tools/sdk-il-dump.ps1 -TypeRegex 'VerifierHSafetyPLC$' -MemberRegex '^VerifyProcessImage$'",
+    "powershell -NoProfile -ExecutionPolicy Bypass -File SafetyTests/program/stand/FB-limit/tools/sdk-il-dump.ps1 -TypeRegex 'TargetSystemHandler$' -MemberRegex 'CreateNewTargetSystemConfigHSafetyPlcObject'",
+    "powershell -NoProfile -ExecutionPolicy Bypass -File SafetyTests/program/stand/FB-limit/tools/sdk-limit-getters.ps1   (output: sdk-limit-getters.out.json)",
+    "powershell -NoProfile -ExecutionPolicy Bypass -File SafetyTests/program/stand/FB-limit/tools/sdk-resources.ps1 -Path 'C:\\Program Files (x86)\\Beckhoff\\TwinCAT\\3.1\\Components\\Safety\\1.4.16\\Common\\Resources.dll' -KeyRegex 'MaxFunctionBlockNumber|MaxSafeLogicPages'",
+    "grep -n -A26 '<TwinSAFELogic>' 'C:/Program Files (x86)/Beckhoff/TwinCAT/3.1/Config/Io/EtherCAT/Beckhoff EL19xx.xml'"
+  ]
+}

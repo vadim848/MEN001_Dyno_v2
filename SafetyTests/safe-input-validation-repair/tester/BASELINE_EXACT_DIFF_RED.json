@@ -1,0 +1,18 @@
+{
+  "status": "FAIL_EXACT_ARCHITECTURE_DIFF",
+  "checks": [
+    {
+      "name": "full SAL AST exactly equals baseline after inverse of only three specified source/contact permutations and root CRC exclusion",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'Break Contact (NC)'\n- 'Make Contact (NO)'\n"
+    },
+    {
+      "name": "full SGVL AST has only exact one allowed b_EStop_Ok consumer GUID transfer plus native root CRC",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'e38bf21e-15b3-448f-89c8-2795d5bf62db'\n- '75f42369-fbd7-49b1-a11b-18df643208ea'\n"
+    }
+  ],
+  "limits": [
+    "Only root CRC attributes excluded; native writer/reload evidence remains mandatory. All other full SAL/SGVL AST content including source alias IO identity, Symbols, usage IDs, wrappers, source mappings, parameters and unrelated content must equal baseline after inverse of explicit architecture edits."
+  ]
+}

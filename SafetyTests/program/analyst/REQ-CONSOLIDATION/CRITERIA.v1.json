@@ -1,0 +1,908 @@
+{
+ "schema": "men001-v2-analyst-criteria/1",
+ "slice": "REQ-CONSOLIDATION",
+ "date": "2026-10-21",
+ "source": {
+  "head": "ea6b52d9e27ad507483ad76337f9b372e4ac67fc",
+  "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+  "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+  "scenarioDecisions": "42aaf5dbd9c75aee42a99017162d816f8c9897f51d6e6b53fb87ca93ccf762e4",
+  "scope": "132e39ed4fe3f20fd8a642f7b10a3a3b9b94b3c42dc7280a57e3e2204d360dfb",
+  "spec": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472",
+  "traceMatrix": "4b9cf236082ca97fa7e7fb450fd45760948fde744166c17b27b3d9ec1bea6fa5",
+  "reference": "MEN001_Dyno 4495a1f6049f6a58ebfd436761faa84d17c8d643"
+ },
+ "statusValues": [
+  "READY",
+  "READY-D",
+  "BLOCKED"
+ ],
+ "timers": {
+  "T_SINGLE": 500,
+  "T_BOTH": 1000,
+  "T_WINDOW": 250,
+  "T_RELEASE": 2000,
+  "T_SS1": 2000,
+  "T_COAST": 5000,
+  "T_DIS": "existing Network8 discharge hold (1 s timers in SAL), unchanged",
+  "T_CMDERR": 1000,
+  "T_HB": 3000,
+  "HB_PERIOD": 500,
+  "T_FBK": 500,
+  "T_HEALTHY": 30000
+ },
+ "emergencyOracle": "EMGREF: same reaction/latch as in_Estop_PLC TRUE in the same state and scan, plus no energy increase, Unlock FALSE, release only by EMG6-01",
+ "criteria": [
+  {
+   "id": "E2-01",
+   "status": "READY",
+   "ids": [
+    "EMG-012",
+    "MOD-006"
+   ],
+   "stage": "E2",
+   "sources": [
+    "E2",
+    "V14-Q16",
+    "SPEC §14"
+   ],
+   "blockedBy": null,
+   "summary": "exactly one of Emergency/Safe/R&D/Run/Config every scan; phases owned by one transition"
+  },
+  {
+   "id": "E2-02",
+   "status": "READY",
+   "ids": [
+    "EMG-012",
+    "MOD-006",
+    "STP-004"
+   ],
+   "stage": "E2",
+   "sources": [
+    "E2-Q1",
+    "E2-Q2",
+    "E1 findings"
+   ],
+   "blockedBy": null,
+   "summary": "Run-down C2 OFF wait + Healthy loss, C2_FBK OFF after d=1..5 scans -> single R&D; kills MU11"
+  },
+  {
+   "id": "E2-03",
+   "status": "READY",
+   "ids": [
+    "EMG-012"
+   ],
+   "stage": "E2",
+   "sources": [
+    "E2"
+   ],
+   "blockedBy": null,
+   "summary": "detected/injected conflict -> Emergency (conditional on architecture)"
+  },
+  {
+   "id": "E2-04",
+   "status": "BLOCKED",
+   "ids": [
+    "EMG-012",
+    "MOD-006"
+   ],
+   "stage": "E2",
+   "sources": [
+    "E2"
+   ],
+   "blockedBy": "Q-RC-10",
+   "summary": "none-active main state"
+  },
+  {
+   "id": "STP-A",
+   "status": "READY",
+   "ids": [
+    "STP-001",
+    "STP-002",
+    "STP-004",
+    "EMG-010",
+    "EMG-007",
+    "MOD-004"
+   ],
+   "stage": "E3",
+   "sources": [
+    "E2-Q1",
+    "D-RUN-STOP-WAITS",
+    "D-HV-TIMED-COMPLETE",
+    "V14-Q3"
+   ],
+   "blockedBy": null,
+   "summary": "SS1 at t_a; STO t_a+2000; Discharge t_s+5000; C2 OFF t_d+T_DIS; R&D after C2_FBK OFF"
+  },
+  {
+   "id": "STP-B",
+   "status": "READY",
+   "ids": [
+    "STP-001",
+    "MOD-007"
+   ],
+   "stage": "E3",
+   "sources": [
+    "V14-Q3",
+    "V14-Q11"
+   ],
+   "blockedBy": null,
+   "summary": "same sequence for CMD_RUN_TO_R&D edge"
+  },
+  {
+   "id": "STP-C",
+   "status": "READY",
+   "ids": [
+    "STP-003",
+    "STP-004",
+    "EMG-010"
+   ],
+   "stage": "E3/E6",
+   "sources": [
+    "E6-Q1"
+   ],
+   "blockedBy": null,
+   "summary": "C2_FBK ON 500 ms after OFF -> Emergency"
+  },
+  {
+   "id": "STP-D",
+   "status": "READY",
+   "ids": [
+    "EMG-008",
+    "EMG-009",
+    "STP-001"
+   ],
+   "stage": "E3",
+   "sources": [
+    "SPEC §9",
+    "D-HEALTHY-FAULT-RESET-EDGE"
+   ],
+   "blockedBy": null,
+   "summary": "Healthy loss in SS1 -> immediate STO, full 5 s coast"
+  },
+  {
+   "id": "STP-E",
+   "status": "READY",
+   "ids": [
+    "MOD-002",
+    "MOD-004",
+    "STP-004",
+    "STP-006"
+   ],
+   "stage": "E3",
+   "sources": [
+    "D-STARTINGRUN-GREEN-DOWN",
+    "D-STARTINGRUN-NO-COAST",
+    "V14-Q12"
+   ],
+   "blockedBy": null,
+   "summary": "StartingRun abort: STO -> Discharge at once -> T_DIS -> C2 OFF -> R&D"
+  },
+  {
+   "id": "STP-F",
+   "status": "BLOCKED",
+   "ids": [
+    "EMG-008",
+    "STP-004"
+   ],
+   "stage": "E3",
+   "sources": [
+    "E2-Q1"
+   ],
+   "blockedBy": "Q-RC-09",
+   "summary": "Healthy loss during coast/discharge hold"
+  },
+  {
+   "id": "STP-G",
+   "status": "BLOCKED",
+   "ids": [
+    "STP-001"
+   ],
+   "stage": "E3",
+   "sources": [],
+   "blockedBy": "Q-RC-02",
+   "summary": "Healthy loss in steady Run"
+  },
+  {
+   "id": "IL-01",
+   "status": "READY",
+   "ids": [
+    "EMG-002",
+    "CVR-004",
+    "CVR-006"
+   ],
+   "stage": "E2",
+   "sources": [
+    "V14-Q21(a)",
+    "V14-Q7"
+   ],
+   "blockedBy": null,
+   "summary": "Safe: no emergency, Safe->R&D allowed, Config blocked"
+  },
+  {
+   "id": "IL-02",
+   "status": "READY",
+   "ids": [
+    "EMG-002",
+    "CVR-004",
+    "CVR-006",
+    "EMG-011"
+   ],
+   "stage": "E2",
+   "sources": [
+    "V14-Q21(a)",
+    "V14-Q5",
+    "V14-Q11"
+   ],
+   "blockedBy": null,
+   "summary": "R&D: no emergency, R&D->Run rejected without fault, no queue"
+  },
+  {
+   "id": "IL-03a",
+   "status": "READY",
+   "ids": [
+    "EMG-002",
+    "CVR-006"
+   ],
+   "stage": "E3",
+   "sources": [
+    "V14-Q21(b)",
+    "MOD-003"
+   ],
+   "blockedBy": null,
+   "summary": "Run: no Emergency latch, SS1 before STO, discharge before C2 OFF, no return to Run"
+  },
+  {
+   "id": "IL-03b",
+   "status": "BLOCKED",
+   "ids": [
+    "EMG-002",
+    "CVR-006",
+    "STP-001"
+   ],
+   "stage": "E3",
+   "sources": [
+    "V14-Q21(b)"
+   ],
+   "blockedBy": "Q-RC-01",
+   "summary": "exact sequence/endpoint (R&D with LV vs current Step4)"
+  },
+  {
+   "id": "IL-04",
+   "status": "READY",
+   "ids": [
+    "EMG-002",
+    "CFG-005"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q16",
+    "V14-Q21(c)"
+   ],
+   "blockedBy": null,
+   "summary": "Config: NC loss -> Emergency"
+  },
+  {
+   "id": "IL-05",
+   "status": "BLOCKED",
+   "ids": [
+    "EMG-002",
+    "CVR-006"
+   ],
+   "stage": "E3",
+   "sources": [],
+   "blockedBy": "Q-RC-03",
+   "summary": "StartingRun and other transition phases"
+  },
+  {
+   "id": "CFG-01",
+   "status": "READY",
+   "ids": [
+    "CFG-001",
+    "CFG-002",
+    "MOD-006"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q16"
+   ],
+   "blockedBy": null,
+   "summary": "entry positive"
+  },
+  {
+   "id": "CFG-02",
+   "status": "READY",
+   "ids": [
+    "CFG-001",
+    "MOD-007"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q16"
+   ],
+   "blockedBy": null,
+   "summary": "Bypass ignored outside stable Safe / with cover open"
+  },
+  {
+   "id": "CFG-03",
+   "status": "BLOCKED",
+   "ids": [
+    "CFG-001",
+    "MOD-003",
+    "EMG-003",
+    "BOOT-001"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q16"
+   ],
+   "blockedBy": "Q-RC-05",
+   "summary": "level vs edge, buttons, faults, connectors"
+  },
+  {
+   "id": "CFG-04",
+   "status": "READY",
+   "ids": [
+    "CFG-002",
+    "CVR-001",
+    "EMG-007"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q16",
+    "V14-Q15"
+   ],
+   "blockedBy": null,
+   "summary": "everything else ignored in Config"
+  },
+  {
+   "id": "CFG-05",
+   "status": "READY",
+   "ids": [
+    "CFG-003"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q17"
+   ],
+   "blockedBy": null,
+   "summary": "no 10 s auto-off"
+  },
+  {
+   "id": "CFG-06",
+   "status": "READY",
+   "ids": [
+    "CFG-004",
+    "STP-005",
+    "EMG-010"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q18",
+    "E6-Q1"
+   ],
+   "blockedBy": null,
+   "summary": "exit: discharge first, contactors after hold, Safe when both FBK OFF"
+  },
+  {
+   "id": "CFG-07",
+   "status": "READY",
+   "ids": [
+    "CFG-005",
+    "EMG-001",
+    "EMG-004"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q19",
+    "V14-Q20"
+   ],
+   "blockedBy": null,
+   "summary": "Config emergencies; Healthy ignored"
+  },
+  {
+   "id": "CFG-08",
+   "status": "BLOCKED",
+   "ids": [
+    "CFG-001",
+    "WDG-001"
+   ],
+   "stage": "E4/E6",
+   "sources": [
+    "E6"
+   ],
+   "blockedBy": "Q-RC-06",
+   "summary": "contactor watchdog at Config entry"
+  },
+  {
+   "id": "PLC-01",
+   "status": "READY",
+   "ids": [
+    "PLC-001",
+    "MOD-003",
+    "MOD-007",
+    "CVR-004"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q11",
+    "V14-Q4",
+    "V14-Q7"
+   ],
+   "blockedBy": null,
+   "summary": "edge in source stable state executes"
+  },
+  {
+   "id": "PLC-02",
+   "status": "READY",
+   "ids": [
+    "PLC-001",
+    "MOD-003"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q11"
+   ],
+   "blockedBy": null,
+   "summary": "held command not repeated"
+  },
+  {
+   "id": "PLC-03",
+   "status": "READY",
+   "ids": [
+    "PLC-001",
+    "MOD-004"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q11"
+   ],
+   "blockedBy": null,
+   "summary": "edge outside source state ignored without error"
+  },
+  {
+   "id": "PLC-04",
+   "status": "READY",
+   "ids": [
+    "PLC-002",
+    "MOD-007"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q8"
+   ],
+   "blockedBy": null,
+   "summary": "same-scan edges -> error, none executed"
+  },
+  {
+   "id": "PLC-05",
+   "status": "BLOCKED",
+   "ids": [
+    "PLC-002"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q8"
+   ],
+   "blockedBy": "Q-RC-04",
+   "summary": "overlap of levels without common edge scan"
+  },
+  {
+   "id": "PLC-06",
+   "status": "READY",
+   "ids": [
+    "PLC-002"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q10",
+    "V14-Q11"
+   ],
+   "blockedBy": null,
+   "summary": "error clears after 1 s all FALSE; blip restarts"
+  },
+  {
+   "id": "PLC-07",
+   "status": "READY",
+   "ids": [
+    "PLC-003",
+    "EMG-001",
+    "EMG-011"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q9",
+    "V14-Q19"
+   ],
+   "blockedBy": null,
+   "summary": "CMD_TRIGGER_EMERGENCY always"
+  },
+  {
+   "id": "PLC-08",
+   "status": "READY",
+   "ids": [
+    "PLC-004",
+    "CVR-005"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q14"
+   ],
+   "blockedBy": null,
+   "summary": "button pressed -> PLC edge ignored forever"
+  },
+  {
+   "id": "PLC-09",
+   "status": "READY",
+   "ids": [
+    "PLC-006",
+    "MOD-004",
+    "STP-005",
+    "STP-006"
+   ],
+   "stage": "E3/E4",
+   "sources": [
+    "V14-Q12",
+    "V14-Q13"
+   ],
+   "blockedBy": null,
+   "summary": "transition down exceptions"
+  },
+  {
+   "id": "PLC-10",
+   "status": "BLOCKED",
+   "ids": [
+    "MOD-004"
+   ],
+   "stage": "E3/E4",
+   "sources": [],
+   "blockedBy": "Q-RC-08",
+   "summary": "down in other transitions"
+  },
+  {
+   "id": "PLC-11",
+   "status": "READY",
+   "ids": [
+    "PLC-005",
+    "CVR-004"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q5"
+   ],
+   "blockedBy": null,
+   "summary": "STS_COVER_LOCKED = NC1 AND NC2"
+  },
+  {
+   "id": "PLC-12",
+   "status": "READY",
+   "ids": [
+    "EMG-006",
+    "EMG-007",
+    "CVR-001"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q4",
+    "V14-Q6"
+   ],
+   "blockedBy": null,
+   "summary": "PLC never unlocks cover nor clears Emergency"
+  },
+  {
+   "id": "PLC-13",
+   "status": "READY-D",
+   "ids": [
+    "MOD-007"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q2"
+   ],
+   "blockedBy": null,
+   "summary": "legacy 2-bit path makes no transitions"
+  },
+  {
+   "id": "HB-01",
+   "status": "READY",
+   "ids": [
+    "HB-001"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q20"
+   ],
+   "blockedBy": null,
+   "summary": "healthy heartbeat has no effect"
+  },
+  {
+   "id": "HB-02",
+   "status": "READY",
+   "ids": [
+    "HB-001",
+    "EMG-001"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q20"
+   ],
+   "blockedBy": null,
+   "summary": "no level change 3 s -> Emergency in all states"
+  },
+  {
+   "id": "HB-03",
+   "status": "READY",
+   "ids": [
+    "HB-001",
+    "EMG-005",
+    "EMG-006"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q20",
+    "SPEC §12"
+   ],
+   "blockedBy": null,
+   "summary": "latched; restart needs resumed heartbeat"
+  },
+  {
+   "id": "HB-04",
+   "status": "BLOCKED",
+   "ids": [
+    "HB-001",
+    "BOOT-001"
+   ],
+   "stage": "E4/E7",
+   "sources": [
+    "V14-Q20"
+   ],
+   "blockedBy": "ARCH",
+   "summary": "startup before first pulse"
+  },
+  {
+   "id": "WDG-01",
+   "status": "READY",
+   "ids": [
+    "WDG-001",
+    "MOD-001"
+   ],
+   "stage": "E6",
+   "sources": [
+    "E6",
+    "E6-Q1"
+   ],
+   "blockedBy": null,
+   "summary": "Safe->R&D no C1_FBK 500 ms -> rollback Safe + SafetyFault"
+  },
+  {
+   "id": "WDG-02",
+   "status": "READY",
+   "ids": [
+    "WDG-002",
+    "MOD-001"
+   ],
+   "stage": "E6",
+   "sources": [
+    "E6",
+    "E6-Q1"
+   ],
+   "blockedBy": null,
+   "summary": "no LV Healthy 30 s -> rollback"
+  },
+  {
+   "id": "WDG-03",
+   "status": "READY-D",
+   "ids": [
+    "WDG-001",
+    "WDG-002",
+    "MOD-002"
+   ],
+   "stage": "E6",
+   "sources": [
+    "E6-Q1",
+    "D-STARTINGRUN-NO-COAST"
+   ],
+   "blockedBy": null,
+   "summary": "R&D->Run failure -> abort sequence + SafetyFault (confirm Q-RC-12)"
+  },
+  {
+   "id": "WDG-04",
+   "status": "READY",
+   "ids": [
+    "WDG-002",
+    "EMG-008"
+   ],
+   "stage": "E6",
+   "sources": [
+    "timeouts answer 2026-10-21"
+   ],
+   "blockedBy": null,
+   "summary": "30 s not applied in SS1"
+  },
+  {
+   "id": "WDG-05",
+   "status": "READY",
+   "ids": [
+    "WDG-003",
+    "STP-003",
+    "EMG-010",
+    "MOD-005"
+   ],
+   "stage": "E6",
+   "sources": [
+    "E6-Q1"
+   ],
+   "blockedBy": null,
+   "summary": "FBK ON >500 ms after OFF -> Emergency"
+  },
+  {
+   "id": "WDG-06",
+   "status": "READY",
+   "ids": [
+    "WDG-004",
+    "BTN-001",
+    "BTN-007"
+   ],
+   "stage": "E5",
+   "sources": [
+    "E6-Q2",
+    "item 13"
+   ],
+   "blockedBy": null,
+   "summary": "any button acks, consumes attempt, 2 s release, PLC cannot ack, UP blocked"
+  },
+  {
+   "id": "WDG-07",
+   "status": "BLOCKED",
+   "ids": [
+    "WDG-004"
+   ],
+   "stage": "E5",
+   "sources": [],
+   "blockedBy": "Q-RC-07",
+   "summary": "PLC down / Bypass while SafetyFault"
+  },
+  {
+   "id": "HLT-01",
+   "status": "READY",
+   "ids": [
+    "HLT-001",
+    "MOD-005",
+    "STP-005"
+   ],
+   "stage": "E2",
+   "sources": [
+    "E2-Q2(a)",
+    "D-LV-OFF-COMPLETE",
+    "V14-Q15"
+   ],
+   "blockedBy": null,
+   "summary": "R&D LV Healthy loss -> Safe"
+  },
+  {
+   "id": "HLT-02",
+   "status": "READY",
+   "ids": [
+    "HLT-001",
+    "MOD-008"
+   ],
+   "stage": "E2",
+   "sources": [
+    "E2-Q2(b)"
+   ],
+   "blockedBy": null,
+   "summary": "HV Healthy ignored in R&D"
+  },
+  {
+   "id": "HLT-03",
+   "status": "BLOCKED",
+   "ids": [
+    "HLT-001"
+   ],
+   "stage": "E2/E5",
+   "sources": [],
+   "blockedBy": "Q-RC-11",
+   "summary": "fault status on HLT-01"
+  },
+  {
+   "id": "EMG6-01",
+   "status": "READY",
+   "ids": [
+    "EMG-006",
+    "EMG-005",
+    "EMG-001"
+   ],
+   "stage": "E2/E4",
+   "sources": [
+    "V14-Q6",
+    "decision 12",
+    "SPEC §12"
+   ],
+   "blockedBy": null,
+   "summary": "release only by green Restart, only to Safe, all origins"
+  },
+  {
+   "id": "EMG6-02",
+   "status": "READY",
+   "ids": [
+    "EMG-006",
+    "PLC-001"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q4"
+   ],
+   "blockedBy": null,
+   "summary": "PLC UP after Emergency->Safe by new edge"
+  },
+  {
+   "id": "MOD1-01",
+   "status": "READY",
+   "ids": [
+    "MOD-001",
+    "CVR-004"
+   ],
+   "stage": "E2/E6",
+   "sources": [
+    "V14-Q7",
+    "V14-Q15",
+    "E6"
+   ],
+   "blockedBy": null,
+   "summary": "Safe->R&D: C1 only, cover may be open"
+  },
+  {
+   "id": "MOD5-01",
+   "status": "READY",
+   "ids": [
+    "MOD-005",
+    "STP-005"
+   ],
+   "stage": "E2/E6",
+   "sources": [
+    "D-LV-OFF-COMPLETE",
+    "V14-Q15",
+    "E6-Q1"
+   ],
+   "blockedBy": null,
+   "summary": "R&D->Safe: C1/C3/BMS off, C1_FBK OFF"
+  },
+  {
+   "id": "MOD-C3",
+   "status": "READY",
+   "ids": [
+    "MOD-005",
+    "CFG-002"
+   ],
+   "stage": "E4",
+   "sources": [
+    "V14-Q15",
+    "V14-Q16"
+   ],
+   "blockedBy": null,
+   "summary": "C3/BMS manual only in R&D/Run"
+  },
+  {
+   "id": "MU06-S",
+   "status": "READY",
+   "ids": [
+    "MOD-005",
+    "STP-005"
+   ],
+   "stage": "E2",
+   "sources": [
+    "Q-MU06-01",
+    "Q-MU06-02"
+   ],
+   "blockedBy": null,
+   "summary": "disabled branches give no output (structural)"
+  }
+ ],
+ "counts": {
+  "total": 58,
+  "ready": 44,
+  "readyDerived": 2,
+  "blocked": 12
+ }
+}

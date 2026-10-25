@@ -1,0 +1,488 @@
+TAP version 13
+# Subtest: RNDPHYS green window249 fixed1
+ok 1 - RNDPHYS green window249 fixed1
+  ---
+  duration_ms: 650.229
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green window250 fixed1
+ok 2 - RNDPHYS green window250 fixed1
+  ---
+  duration_ms: 689.0098
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green window251 fixed1
+ok 3 - RNDPHYS green window251 fixed1
+  ---
+  duration_ms: 657.9596
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green window248 fixed2
+ok 4 - RNDPHYS green window248 fixed2
+  ---
+  duration_ms: 301.9604
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green window250 fixed2
+ok 5 - RNDPHYS green window250 fixed2
+  ---
+  duration_ms: 300.3832
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green window252 fixed2
+ok 6 - RNDPHYS green window252 fixed2
+  ---
+  duration_ms: 306.9167
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green window245 fixed5
+ok 7 - RNDPHYS green window245 fixed5
+  ---
+  duration_ms: 123.3677
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green window250 fixed5
+ok 8 - RNDPHYS green window250 fixed5
+  ---
+  duration_ms: 123.0597
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green window255 fixed5
+ok 9 - RNDPHYS green window255 fixed5
+  ---
+  duration_ms: 128.5736
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green window240 fixed10
+ok 10 - RNDPHYS green window240 fixed10
+  ---
+  duration_ms: 68.6277
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green window250 fixed10
+ok 11 - RNDPHYS green window250 fixed10
+  ---
+  duration_ms: 68.7342
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green window260 fixed10
+ok 12 - RNDPHYS green window260 fixed10
+  ---
+  duration_ms: 65.8937
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green single threshold fixed1
+ok 13 - RNDPHYS green single threshold fixed1
+  ---
+  duration_ms: 470.5258
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green late300 fixed1
+ok 14 - RNDPHYS green late300 fixed1
+  ---
+  duration_ms: 663.0478
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green late500 fixed1
+ok 15 - RNDPHYS green late500 fixed1
+  ---
+  duration_ms: 697.5073
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green late600 fixed1
+ok 16 - RNDPHYS green late600 fixed1
+  ---
+  duration_ms: 740.7368
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green primary swap without sampled both-off fixed1
+ok 17 - RNDPHYS green primary swap without sampled both-off fixed1
+  ---
+  duration_ms: 612.4824
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green piano then held primary without release fixed1
+ok 18 - RNDPHYS green piano then held primary without release fixed1
+  ---
+  duration_ms: 701.6042
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green chord flicker requires fresh1000 and never degrades fixed1
+ok 19 - RNDPHYS green chord flicker requires fresh1000 and never degrades fixed1
+  ---
+  duration_ms: 694.8808
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green short neutral cannot rearm fixed1
+not ok 20 - RNDPHYS green short neutral cannot rearm fixed1
+  ---
+  duration_ms: 803.6318
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\safe-resumption\\sandbox\\SafetyTests\\test\\current-rnd-physical-integration.test.js:9:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    [{"label":"first actual up/HV positive","actual":true,"expected":true},{"label":"no second up request edge before complete release filter","actual":1,"expected":1},{"label":"no second native FinishUp acceptance in held request interval","actual":0,"expected":1},{"label":"adapter Error stub observation only; native/group fault semantics remain unverified","actual":false,"expected":false},{"label":"no unresolved input in demanded command dependency cone","actual":0,"expected":0}]
+    + actual - expected
+    
+    + [
+    +   {
+    +     actual: 0,
+    +     expected: 1,
+    +     label: 'no second native FinishUp acceptance in held request interval'
+    +   }
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0:
+      label: 'no second native FinishUp acceptance in held request interval'
+      actual: 0
+      expected: 1
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/candidates/safe-resumption/sandbox/SafetyTests/test/current-rnd-physical-integration.test.js:17:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: RNDPHYS green full release permits a fresh single after blue cycle fixed1
+ok 21 - RNDPHYS green full release permits a fresh single after blue cycle fixed1
+  ---
+  duration_ms: 940.7415
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue window249 fixed1
+ok 22 - RNDPHYS blue window249 fixed1
+  ---
+  duration_ms: 626.2963
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue window250 fixed1
+ok 23 - RNDPHYS blue window250 fixed1
+  ---
+  duration_ms: 609.7943
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue window251 fixed1
+ok 24 - RNDPHYS blue window251 fixed1
+  ---
+  duration_ms: 626.1285
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue window248 fixed2
+ok 25 - RNDPHYS blue window248 fixed2
+  ---
+  duration_ms: 307.7419
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue window250 fixed2
+ok 26 - RNDPHYS blue window250 fixed2
+  ---
+  duration_ms: 307.154
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue window252 fixed2
+ok 27 - RNDPHYS blue window252 fixed2
+  ---
+  duration_ms: 309.6515
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue window245 fixed5
+ok 28 - RNDPHYS blue window245 fixed5
+  ---
+  duration_ms: 124.8052
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue window250 fixed5
+ok 29 - RNDPHYS blue window250 fixed5
+  ---
+  duration_ms: 129.2293
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue window255 fixed5
+ok 30 - RNDPHYS blue window255 fixed5
+  ---
+  duration_ms: 124.749
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue window240 fixed10
+ok 31 - RNDPHYS blue window240 fixed10
+  ---
+  duration_ms: 64.3023
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue window250 fixed10
+ok 32 - RNDPHYS blue window250 fixed10
+  ---
+  duration_ms: 65.6798
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue window260 fixed10
+ok 33 - RNDPHYS blue window260 fixed10
+  ---
+  duration_ms: 104.1389
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue single threshold fixed1
+ok 34 - RNDPHYS blue single threshold fixed1
+  ---
+  duration_ms: 475.1483
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue late300 fixed1
+ok 35 - RNDPHYS blue late300 fixed1
+  ---
+  duration_ms: 655.1021
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue late500 fixed1
+ok 36 - RNDPHYS blue late500 fixed1
+  ---
+  duration_ms: 846.3231
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue late600 fixed1
+ok 37 - RNDPHYS blue late600 fixed1
+  ---
+  duration_ms: 827.3627
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue primary swap without sampled both-off fixed1
+ok 38 - RNDPHYS blue primary swap without sampled both-off fixed1
+  ---
+  duration_ms: 616.5941
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue piano then held primary without release fixed1
+ok 39 - RNDPHYS blue piano then held primary without release fixed1
+  ---
+  duration_ms: 709.1695
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue chord flicker requires fresh1000 and never degrades fixed1
+ok 40 - RNDPHYS blue chord flicker requires fresh1000 and never degrades fixed1
+  ---
+  duration_ms: 687.7843
+  type: 'test'
+  ...
+# Subtest: RNDPHYS blue short neutral cannot rearm fixed1
+not ok 41 - RNDPHYS blue short neutral cannot rearm fixed1
+  ---
+  duration_ms: 795.2751
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\safe-resumption\\sandbox\\SafetyTests\\test\\current-rnd-physical-integration.test.js:9:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    [{"label":"first actual up/HV positive","actual":true,"expected":true},{"label":"no second up request edge before complete release filter","actual":1,"expected":1},{"label":"no second native FinishUp acceptance in held request interval","actual":0,"expected":1},{"label":"adapter Error stub observation only; native/group fault semantics remain unverified","actual":false,"expected":false},{"label":"no unresolved input in demanded command dependency cone","actual":0,"expected":0}]
+    + actual - expected
+    
+    + [
+    +   {
+    +     actual: 0,
+    +     expected: 1,
+    +     label: 'no second native FinishUp acceptance in held request interval'
+    +   }
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0:
+      label: 'no second native FinishUp acceptance in held request interval'
+      actual: 0
+      expected: 1
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/candidates/safe-resumption/sandbox/SafetyTests/test/current-rnd-physical-integration.test.js:17:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: RNDPHYS blue full release permits a fresh single after blue cycle fixed1
+ok 42 - RNDPHYS blue full release permits a fresh single after blue cycle fixed1
+  ---
+  duration_ms: 961.1951
+  type: 'test'
+  ...
+# Subtest: RNDPHYS held-at-RnD-entry green fixed1
+ok 43 - RNDPHYS held-at-RnD-entry green fixed1
+  ---
+  duration_ms: 612.2458
+  type: 'test'
+  ...
+# Subtest: RNDPHYS held-at-RnD-entry blue fixed1
+ok 44 - RNDPHYS held-at-RnD-entry blue fixed1
+  ---
+  duration_ms: 596.6517
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green request retained after release until explicit phase exit fixed1
+ok 45 - RNDPHYS green request retained after release until explicit phase exit fixed1
+  ---
+  duration_ms: 645.6889
+  type: 'test'
+  ...
+# Subtest: RNDPHYS up request retained after release until explicit phase exit fixed1
+ok 46 - RNDPHYS up request retained after release until explicit phase exit fixed1
+  ---
+  duration_ms: 766.2228
+  type: 'test'
+  ...
+# Subtest: RNDPHYS reentry with held chord requires new release fixed1
+ok 47 - RNDPHYS reentry with held chord requires new release fixed1
+  ---
+  duration_ms: 836.7487
+  type: 'test'
+  ...
+# Subtest: RNDPHYS safety inhibit in_ES_NC_1 blocks new physical request fixed1
+ok 48 - RNDPHYS safety inhibit in_ES_NC_1 blocks new physical request fixed1
+  ---
+  duration_ms: 597.3413
+  type: 'test'
+  ...
+# Subtest: RNDPHYS safety inhibit in_Estop_PLC blocks new physical request fixed1
+ok 49 - RNDPHYS safety inhibit in_Estop_PLC blocks new physical request fixed1
+  ---
+  duration_ms: 596.5526
+  type: 'test'
+  ...
+# Subtest: RNDPHYS safety inhibit in_Mentee_EStop blocks new physical request fixed1
+ok 50 - RNDPHYS safety inhibit in_Mentee_EStop blocks new physical request fixed1
+  ---
+  duration_ms: 633.2657
+  type: 'test'
+  ...
+# Subtest: RNDPHYS Doorfalse energy requires both NC fixed1
+ok 51 - RNDPHYS Doorfalse energy requires both NC fixed1
+  ---
+  duration_ms: 566.3894
+  type: 'test'
+  ...
+# Subtest: RNDPHYS Doortrue energy requires both NC fixed1
+ok 52 - RNDPHYS Doortrue energy requires both NC fixed1
+  ---
+  duration_ms: 604.5635
+  type: 'test'
+  ...
+# Subtest: RNDPHYS Doorfalse missingin_InterLock_NC_1 never energizes HV fixed1
+ok 53 - RNDPHYS Doorfalse missingin_InterLock_NC_1 never energizes HV fixed1
+  ---
+  duration_ms: 597.2003
+  type: 'test'
+  ...
+# Subtest: RNDPHYS Doorfalse missingin_InterLock_NC_2 never energizes HV fixed1
+ok 54 - RNDPHYS Doorfalse missingin_InterLock_NC_2 never energizes HV fixed1
+  ---
+  duration_ms: 618.8607
+  type: 'test'
+  ...
+# Subtest: RNDPHYS Doortrue missingin_InterLock_NC_1 never energizes HV fixed1
+ok 55 - RNDPHYS Doortrue missingin_InterLock_NC_1 never energizes HV fixed1
+  ---
+  duration_ms: 656.2076
+  type: 'test'
+  ...
+# Subtest: RNDPHYS Doortrue missingin_InterLock_NC_2 never energizes HV fixed1
+ok 56 - RNDPHYS Doortrue missingin_InterLock_NC_2 never energizes HV fixed1
+  ---
+  duration_ms: 609.3975
+  type: 'test'
+  ...
+# Subtest: RNDPHYS green consumes qualified blue authorization without automatic resumption fixed1
+ok 57 - RNDPHYS green consumes qualified blue authorization without automatic resumption fixed1
+  ---
+  duration_ms: 621.1329
+  type: 'test'
+  ...
+# Subtest: RNDPHYS qualified blue plus in_ES_NC_1 raw restoration never unlocks without Restart fixed1
+ok 58 - RNDPHYS qualified blue plus in_ES_NC_1 raw restoration never unlocks without Restart fixed1
+  ---
+  duration_ms: 499.3742
+  type: 'test'
+  ...
+# Subtest: RNDPHYS qualified blue plus in_Estop_PLC raw restoration never unlocks without Restart fixed1
+ok 59 - RNDPHYS qualified blue plus in_Estop_PLC raw restoration never unlocks without Restart fixed1
+  ---
+  duration_ms: 491.9211
+  type: 'test'
+  ...
+# Subtest: RNDPHYS accepted green cleared by actual NC1 inhibit fixed1
+ok 60 - RNDPHYS accepted green cleared by actual NC1 inhibit fixed1
+  ---
+  duration_ms: 480.876
+  type: 'test'
+  ...
+# Subtest: RNDPHYS accepted up cleared by actual NC1 inhibit fixed1
+ok 61 - RNDPHYS accepted up cleared by actual NC1 inhibit fixed1
+  ---
+  duration_ms: 570.9443
+  type: 'test'
+  ...
+# Subtest: RNDPHYS fresh green chord249 after accepted blue and full2000 release fixed1
+ok 62 - RNDPHYS fresh green chord249 after accepted blue and full2000 release fixed1
+  ---
+  duration_ms: 1062.7194
+  type: 'test'
+  ...
+# Subtest: RNDPHYS fresh green chord250 after accepted blue and full2000 release fixed1
+ok 63 - RNDPHYS fresh green chord250 after accepted blue and full2000 release fixed1
+  ---
+  duration_ms: 1056.7197
+  type: 'test'
+  ...
+# Subtest: RNDPHYS fresh green chord251 after accepted blue and full2000 release fixed1
+ok 64 - RNDPHYS fresh green chord251 after accepted blue and full2000 release fixed1
+  ---
+  duration_ms: 1064.999
+  type: 'test'
+  ...
+# Subtest: RNDPHYS fresh blue chord249 after accepted blue and full2000 release fixed1
+ok 65 - RNDPHYS fresh blue chord249 after accepted blue and full2000 release fixed1
+  ---
+  duration_ms: 1067.3091
+  type: 'test'
+  ...
+# Subtest: RNDPHYS fresh blue chord250 after accepted blue and full2000 release fixed1
+ok 66 - RNDPHYS fresh blue chord250 after accepted blue and full2000 release fixed1
+  ---
+  duration_ms: 1061.5554
+  type: 'test'
+  ...
+# Subtest: RNDPHYS fresh blue chord251 after accepted blue and full2000 release fixed1
+ok 67 - RNDPHYS fresh blue chord251 after accepted blue and full2000 release fixed1
+  ---
+  duration_ms: 1086.6279
+  type: 'test'
+  ...
+# Subtest: RNDPHYS new green before full1999 release remains invalid fixed1
+ok 68 - RNDPHYS new green before full1999 release remains invalid fixed1
+  ---
+  duration_ms: 1053.5141
+  type: 'test'
+  ...
+# Subtest: RNDPHYS new blue before full1999 release remains invalid fixed1
+ok 69 - RNDPHYS new blue before full1999 release remains invalid fixed1
+  ---
+  duration_ms: 1066.0358
+  type: 'test'
+  ...
+1..69
+# tests 69
+# suites 0
+# pass 67
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 40211.7921

@@ -1,0 +1,168 @@
+[
+ {
+  "label": "WD C1 FBK loss in steady R&D (level)",
+  "firstTrue": {
+   "WD_EMG": 1,
+   "FBAnd37": 1
+  },
+  "firstEMG": 3,
+  "firstFault": null,
+  "end": {
+   "t": 1500,
+   "st": "EMG",
+   "stg": "Step4",
+   "fault": false,
+   "WD_EMG": 1,
+   "FBAnd37": 0
+  }
+ },
+ {
+  "label": "WD C1 FBK loss in steady R&D (1-scan glitch)",
+  "firstTrue": {
+   "WD_EMG": 1,
+   "FBAnd37": 1
+  },
+  "firstEMG": 3,
+  "firstFault": null,
+  "end": {
+   "t": 1500,
+   "st": "EMG",
+   "stg": "Step4",
+   "fault": false,
+   "WD_EMG": 0,
+   "FBAnd37": 1
+  }
+ },
+ {
+  "label": "WD C2 FBK loss in steady Run (level)",
+  "firstTrue": {
+   "WD_EMG": 1,
+   "FBAnd37": 1
+  },
+  "firstEMG": 3,
+  "firstFault": null,
+  "end": {
+   "t": 1500,
+   "st": "EMG",
+   "stg": "Step3",
+   "fault": false,
+   "WD_EMG": 1,
+   "FBAnd37": 0
+  }
+ },
+ {
+  "label": "Run: in_HV_Faulty_FBK 1-scan pulse",
+  "firstTrue": {
+   "RD_PROT_SET": 1,
+   "SF_SET": 2,
+   "SF": 2
+  },
+  "firstEMG": null,
+  "firstFault": 2,
+  "end": {
+   "t": 3000,
+   "st": "RUN",
+   "stg": "Step3",
+   "fault": true,
+   "RD_PROT_SET": 0,
+   "SF_SET": 0,
+   "SF": 1
+  },
+  "check": {
+   "rdProtSetScans": 1,
+   "sfLatchedAtEnd": true
+  }
+ },
+ {
+  "label": "Run: in_LV_Faulty_FBK 1-scan pulse",
+  "firstTrue": {
+   "RD_PROT_SET": 1,
+   "SF_SET": 2,
+   "SF": 2
+  },
+  "firstEMG": null,
+  "firstFault": 2,
+  "end": {
+   "t": 3000,
+   "st": "RUN",
+   "stg": "Step3",
+   "fault": true,
+   "RD_PROT_SET": 0,
+   "SF_SET": 0,
+   "SF": 1
+  },
+  "check": {
+   "rdProtSetScans": 1,
+   "sfLatchedAtEnd": true
+  }
+ },
+ {
+  "label": "R&D: in_LV_Faulty_FBK 1-scan pulse",
+  "firstTrue": {
+   "HLT_LV": 1,
+   "STATE_SG": 1,
+   "STATE_C": 2,
+   "SF_SET": 2,
+   "SF": 2
+  },
+  "firstEMG": null,
+  "firstFault": 2,
+  "end": {
+   "t": 3000,
+   "st": "SAFE",
+   "stg": "Step1",
+   "fault": true,
+   "HLT_LV": 0,
+   "STATE_SG": 0,
+   "STATE_C": 0,
+   "SF_SET": 0,
+   "SF": 1
+  },
+  "check": {
+   "sgAndCsameScan": 23
+  }
+ },
+ {
+  "label": "R&D: in_LV_Faulty_FBK level",
+  "firstTrue": {
+   "HLT_LV": 1,
+   "STATE_SG": 1,
+   "STATE_C": 2,
+   "SF_SET": 2,
+   "SF": 2
+  },
+  "firstEMG": null,
+  "firstFault": 2,
+  "end": {
+   "t": 4000,
+   "st": "SAFE",
+   "stg": "Step1",
+   "fault": true,
+   "HLT_LV": 0,
+   "STATE_SG": 0,
+   "STATE_C": 0,
+   "SF_SET": 0,
+   "SF": 1
+  },
+  "check": {
+   "sgAndCsameScan": 23
+  }
+ },
+ {
+  "label": "Run: EStop NC1 level",
+  "firstTrue": {
+   "FBAnd29": null,
+   "FBAnd35": 1
+  },
+  "firstEMG": 1,
+  "firstFault": null,
+  "end": {
+   "t": 50,
+   "st": "EMG",
+   "stg": "Step4",
+   "fault": false,
+   "FBAnd29": 0,
+   "FBAnd35": 0
+  }
+ }
+]

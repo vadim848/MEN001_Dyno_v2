@@ -1,0 +1,1469 @@
+{
+ "generatedAt": "2026-10-22T21:38:20.525Z",
+ "tool": "SafetyTests/scripts/e2-frozen-delta-check.mjs",
+ "toolSha256": "3f834fbd2000f5c5ccc0504d6c99a0efb54df9635e659840fa34812ec152fb66",
+ "libs": {
+  "native-delta-model.mjs": "718bf77bb763ae18f7042cdd908fe61c9734c441308f1e4117fe37abad165ecf",
+  "native-delta-diff.mjs": "9af48bc7074d4bcc7a36480e066c0e40db445f9ddf2525105f824cf293a6891f"
+ },
+ "plan": {
+  "path": "program/architect/E2-status/PLAN.v7_7.json",
+  "sha256": "c71f9a54744f0dda53591ba82f348713bda9c292379f0b1d97a136ecbf03dff4",
+  "planVersion": 7
+ },
+ "pairs": [
+  {
+   "key": "vsFrozenE2dV741",
+   "from": "E2d-v7.4.1",
+   "to": "E2d-v7.5",
+   "declared": {
+    "base": "E2d-v7.4.1 a5acf291 (230 FB / 1953 ports / 293 wires / 79 SAL vars / 63 SGVL / 182 globalRefs)",
+    "blocksRemoved": [
+     "Network12/FBAnd8",
+     "Network12/FBAnd9",
+     "Network12/FBAnd10",
+     "Network12/FBOrFbk10C2"
+    ],
+    "targetUsagesRemoved": [
+     "inPLC_RnD_Mode -> Network12/FBAnd8.AndIn1",
+     "in_False_SI2_CH8 -> Network12/FBAnd8.AndIn2",
+     "inPLC_RnD_Mode_2 -> Network12/FBAnd9.AndIn1",
+     "in_False_SI2_CH8 -> Network12/FBAnd9.AndIn2",
+     "in_HV_C2_FBK -> Network12/FBOrFbk10C2.OrIn1",
+     "out_HV_C2 -> Network12/FBOrFbk10C2.OrIn2"
+    ],
+    "wiresRemoved": [
+     "Network12/FBAnd8.AndOut -> Network12/FBAnd10.AndIn1",
+     "Network12/FBAnd9.AndOut -> Network12/FBAnd10.AndIn2",
+     "Network12/FBOrFbk10C2.OrOut -> Network12/FBAnd10.AndIn3",
+     "Network12/FBAnd10.AndOut -> Network12/FBOr1.OrIn2"
+    ],
+    "portStateChanged": [
+     "Network12/FBOr1.OrIn2 Activated NC -> Deactivated"
+    ],
+    "added": [],
+    "after": "226 FB / 1917 ports / 289 wires / 79 SAL vars / 63 SGVL / 182 globalRefs (= E2d-v7.5; v7.6 on top: see vsFrozenE2dV75)",
+    "targetUsageCounts": {
+     "inPLC_RnD_Mode": "4 -> 3",
+     "inPLC_RnD_Mode_2": "4 -> 3",
+     "in_False_SI2_CH8": "36 -> 34",
+     "in_HV_C2_FBK": "11 -> 10",
+     "out_HV_C2": "5 -> 4"
+    }
+   },
+   "base": {
+    "dir": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\E2d-v7.4.1\\native",
+    "sha256": {
+     "TwinSafeGroup1.sal": "a5acf29175b041d243aac19e5ffee4c260f0c6cab3b538679c36ed1e59286c1b",
+     "GVL1.sgvl": "140806334cf751348a301c82ed91b0e8f131bf05609727461ff2f16fdd295371",
+     "TwinSafeGroup1.sal.diagram": "c5b28c07070559b78d8bfa581be7d99e892a6857f5f142ee9dab398fc55aa95b"
+    }
+   },
+   "candidate": {
+    "dir": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\E2d-v7.5\\native",
+    "sha256": {
+     "TwinSafeGroup1.sal": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b",
+     "GVL1.sgvl": "140806334cf751348a301c82ed91b0e8f131bf05609727461ff2f16fdd295371",
+     "TwinSafeGroup1.sal.diagram": "94e9b231cef30cf50ee6e61d0770d696f1e77a28ed1d286051ea653729e4cbfb"
+    }
+   },
+   "expectedAtoms": [
+    {
+     "t": "block-removed",
+     "path": "//Network12/FBAnd8"
+    },
+    {
+     "t": "block-removed",
+     "path": "//Network12/FBAnd9"
+    },
+    {
+     "t": "block-removed",
+     "path": "//Network12/FBAnd10"
+    },
+    {
+     "t": "block-removed",
+     "path": "//Network12/FBOrFbk10C2"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//Network12/FBAnd8/AndOut",
+     "to": "//Network12/FBAnd10/AndIn1"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//Network12/FBAnd9/AndOut",
+     "to": "//Network12/FBAnd10/AndIn2"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//Network12/FBOrFbk10C2/OrOut",
+     "to": "//Network12/FBAnd10/AndIn3"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//Network12/FBAnd10/AndOut",
+     "to": "//Network12/FBOr1/OrIn2"
+    },
+    {
+     "t": "port-attr",
+     "path": "//Network12/FBOr1/OrIn2",
+     "attr": "channelInterface",
+     "a": "Activated",
+     "b": "Deactivated"
+    },
+    {
+     "t": "port-attr",
+     "path": "//Network12/FBOr1/OrIn2",
+     "attr": "deactivate1",
+     "a": "Break Contact (NC)",
+     "b": null
+    },
+    {
+     "t": "salusage-removed",
+     "name": "inPLC_RnD_Mode",
+     "side": "target",
+     "kind": "port",
+     "at": "port://Network12/FBAnd8/AndIn1"
+    },
+    {
+     "t": "salusage-removed",
+     "name": "in_False_SI2_CH8",
+     "side": "target",
+     "kind": "port",
+     "at": "port://Network12/FBAnd8/AndIn2"
+    },
+    {
+     "t": "salusage-removed",
+     "name": "inPLC_RnD_Mode_2",
+     "side": "target",
+     "kind": "port",
+     "at": "port://Network12/FBAnd9/AndIn1"
+    },
+    {
+     "t": "salusage-removed",
+     "name": "in_False_SI2_CH8",
+     "side": "target",
+     "kind": "port",
+     "at": "port://Network12/FBAnd9/AndIn2"
+    },
+    {
+     "t": "salusage-removed",
+     "name": "in_HV_C2_FBK",
+     "side": "target",
+     "kind": "port",
+     "at": "port://Network12/FBOrFbk10C2/OrIn1"
+    },
+    {
+     "t": "salusage-removed",
+     "name": "out_HV_C2",
+     "side": "target",
+     "kind": "port",
+     "at": "port://Network12/FBOrFbk10C2/OrIn2"
+    }
+   ],
+   "observedAtoms": [
+    {
+     "t": "block-removed",
+     "path": "//Network12/FBAnd10",
+     "fn": "safeAnd"
+    },
+    {
+     "t": "block-removed",
+     "path": "//Network12/FBAnd8",
+     "fn": "safeAnd"
+    },
+    {
+     "t": "block-removed",
+     "path": "//Network12/FBAnd9",
+     "fn": "safeAnd"
+    },
+    {
+     "t": "block-removed",
+     "path": "//Network12/FBOrFbk10C2",
+     "fn": "safeOr"
+    },
+    {
+     "t": "port-attr",
+     "path": "//Network12/FBOr1/OrIn2",
+     "attr": "channelInterface",
+     "a": "Activated",
+     "b": "Deactivated"
+    },
+    {
+     "t": "port-attr",
+     "path": "//Network12/FBOr1/OrIn2",
+     "attr": "deactivate1",
+     "a": "Break Contact (NC)",
+     "b": null
+    },
+    {
+     "t": "salusage-removed",
+     "name": "inPLC_RnD_Mode",
+     "side": "target",
+     "kind": "port",
+     "at": "port://Network12/FBAnd8/AndIn1"
+    },
+    {
+     "t": "salusage-removed",
+     "name": "inPLC_RnD_Mode_2",
+     "side": "target",
+     "kind": "port",
+     "at": "port://Network12/FBAnd9/AndIn1"
+    },
+    {
+     "t": "salusage-removed",
+     "name": "in_False_SI2_CH8",
+     "side": "target",
+     "kind": "port",
+     "at": "port://Network12/FBAnd8/AndIn2"
+    },
+    {
+     "t": "salusage-removed",
+     "name": "in_False_SI2_CH8",
+     "side": "target",
+     "kind": "port",
+     "at": "port://Network12/FBAnd9/AndIn2"
+    },
+    {
+     "t": "salusage-removed",
+     "name": "in_HV_C2_FBK",
+     "side": "target",
+     "kind": "port",
+     "at": "port://Network12/FBOrFbk10C2/OrIn1"
+    },
+    {
+     "t": "salusage-removed",
+     "name": "out_HV_C2",
+     "side": "target",
+     "kind": "port",
+     "at": "port://Network12/FBOrFbk10C2/OrIn2"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//Network12/FBAnd10/AndOut",
+     "to": "//Network12/FBOr1/OrIn2"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//Network12/FBAnd8/AndOut",
+     "to": "//Network12/FBAnd10/AndIn1"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//Network12/FBAnd9/AndOut",
+     "to": "//Network12/FBAnd10/AndIn2"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//Network12/FBOrFbk10C2/OrOut",
+     "to": "//Network12/FBAnd10/AndIn3"
+    }
+   ],
+   "addedBlockPorts": [],
+   "counts": {
+    "base": {
+     "networks": 14,
+     "fb": 230,
+     "ports": 1953,
+     "params": 19,
+     "salVars": 79,
+     "sgvlSymbols": 63,
+     "globalRefs": 182,
+     "wires": 293,
+     "salPortUsages": 326,
+     "sgvlUsages": 182
+    },
+    "candidate": {
+     "networks": 14,
+     "fb": 226,
+     "ports": 1917,
+     "params": 19,
+     "salVars": 79,
+     "sgvlSymbols": 63,
+     "globalRefs": 182,
+     "wires": 289,
+     "salPortUsages": 320,
+     "sgvlUsages": 182
+    }
+   },
+   "checks": [
+    {
+     "group": "inputs",
+     "name": "base SAL is the plan-declared E2d-v7.4.1 (a5acf291)",
+     "status": "PASS",
+     "detail": "a5acf29175b041d243aac19e5ffee4c260f0c6cab3b538679c36ed1e59286c1b"
+    },
+    {
+     "group": "inputs",
+     "name": "plan declares no SGVL SHA for E2d-v7.4.1",
+     "status": "NV",
+     "detail": "140806334cf751348a301c82ed91b0e8f131bf05609727461ff2f16fdd295371"
+    },
+    {
+     "group": "inputs",
+     "name": "plan declares no diagram SHA for E2d-v7.4.1",
+     "status": "NV",
+     "detail": "c5b28c07070559b78d8bfa581be7d99e892a6857f5f142ee9dab398fc55aa95b"
+    },
+    {
+     "group": "inputs",
+     "name": "candidate SAL is the plan-declared E2d-v7.5 (2276d773)",
+     "status": "PASS",
+     "detail": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b"
+    },
+    {
+     "group": "inputs",
+     "name": "plan declares no SGVL SHA for E2d-v7.5",
+     "status": "NV",
+     "detail": "140806334cf751348a301c82ed91b0e8f131bf05609727461ff2f16fdd295371"
+    },
+    {
+     "group": "inputs",
+     "name": "plan declares no diagram SHA for E2d-v7.5",
+     "status": "NV",
+     "detail": "94e9b231cef30cf50ee6e61d0770d696f1e77a28ed1d286051ea653729e4cbfb"
+    },
+    {
+     "group": "inputs",
+     "name": "declared base text names a5acf291",
+     "status": "PASS",
+     "detail": "E2d-v7.4.1 a5acf291 (230 FB / 1953 ports / 293 wires / 79 SAL vars / 63 SGVL / 182 globalRefs)"
+    },
+    {
+     "group": "plan",
+     "name": "every declared item is interpreted (16 atoms, 0 new-port states)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "delta",
+     "name": "every declared atom is observed (16)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "delta",
+     "name": "no undeclared native change (16 observed atoms)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "delta",
+     "name": "declared states of new-block ports hold in the candidate",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "counts",
+     "name": "base counts equal the plan text (fb 230, ports 1953, wires 293, salVars 79, sgvlSymbols 63, globalRefs 182)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "counts",
+     "name": "after counts equal the plan text (fb 226, ports 1917, wires 289, salVars 79, sgvlSymbols 63, globalRefs 182)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "counts",
+     "name": "SGVL FbPortUsages equal SAL globalRefs in the candidate",
+     "status": "PASS",
+     "detail": {
+      "sgvlUsages": 182,
+      "globalRefs": 182
+     }
+    },
+    {
+     "group": "order",
+     "name": "candidate orderOfExecution is a permutation 1..226",
+     "status": "PASS"
+    },
+    {
+     "group": "order",
+     "name": "relative execution order of the 226 retained blocks is preserved",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "diagram",
+     "name": "every candidate block/port has exactly one shape (2162)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "diagram",
+     "name": "no shape references a block/port absent from the candidate",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "diagram",
+     "name": "one connector per wire (289) and connector nodes reference existing shapes",
+     "status": "PASS",
+     "detail": {
+      "connectors": 289,
+      "wires": 289
+     }
+    }
+   ],
+   "failed": [],
+   "nv": [
+    "inputs: plan declares no SGVL SHA for E2d-v7.4.1",
+    "inputs: plan declares no diagram SHA for E2d-v7.4.1",
+    "inputs: plan declares no SGVL SHA for E2d-v7.5",
+    "inputs: plan declares no diagram SHA for E2d-v7.5"
+   ],
+   "status": "PASS"
+  },
+  {
+   "key": "vsFrozenE2dV75",
+   "from": "E2d-v7.5",
+   "to": "E2d-v7.6",
+   "declared": {
+    "base": "E2d-v7.5 2276d773 (226 FB / 1917 ports / 289 wires / 79 SAL vars / 63 SGVL / 182 globalRefs)",
+    "blocksAdded": [
+     "RndPhysicalCompact/GATE_PF_SET (safeOr)",
+     "RndPhysicalCompact/STATE_PF (safeRs)",
+     "RndPhysicalCompact/GATE_SPOIL_PF (safeAnd)"
+    ],
+    "ports": "+21 (safeOr 9, safeRs 3, safeAnd 9)",
+    "wiresAdded": [
+     "RndPhysicalCompact/GATE_SPOIL_R.AndOut -> RndPhysicalCompact/GATE_PF_SET.OrIn1",
+     "RndPhysicalCompact/GATE_SPOIL_S.AndOut -> RndPhysicalCompact/GATE_PF_SET.OrIn2",
+     "RndPhysicalCompact/GATE_PF_SET.OrOut -> RndPhysicalCompact/STATE_PF.Set",
+     "RndPhysicalCompact/RELEASE.TonOut -> RndPhysicalCompact/STATE_PF.Reset",
+     "RndPhysicalCompact/GATE_003.AndOut -> RndPhysicalCompact/GATE_SPOIL_PF.AndIn1",
+     "RndPhysicalCompact/STATE_PF.RsOut -> RndPhysicalCompact/GATE_SPOIL_PF.AndIn2",
+     "RndPhysicalCompact/GATE_SPOIL_PF.AndOut -> RndPhysicalCompact/GATE_029.OrIn6"
+    ],
+    "wiresRemoved": [
+     "RndPhysicalCompact/GATE_SPOIL_R.AndOut -> RndPhysicalCompact/GATE_029.OrIn6",
+     "RndPhysicalCompact/GATE_SPOIL_S.AndOut -> RndPhysicalCompact/GATE_029.OrIn7"
+    ],
+    "wiresRebound": [
+     "RndPhysicalCompact/GATE_SPOIL_R.AndIn1: GATE_003.AndOut -> GATE_002.AndOut",
+     "RndPhysicalCompact/GATE_SPOIL_S.AndIn1: GATE_003.AndOut -> GATE_002.AndOut"
+    ],
+    "wiresNet": "+7 / -2 (rebound 2, count unchanged) = +5",
+    "portStates": [
+     "RndPhysicalCompact/GATE_SPOIL_R.AndIn1 NC -> NO",
+     "RndPhysicalCompact/GATE_SPOIL_S.AndIn1 NC -> NO",
+     "RndPhysicalCompact/GATE_029.OrIn7 Activated NC -> Deactivated",
+     "RndPhysicalCompact/STATE_PF.Reset/Set Activated NC (new)",
+     "SafeResumption/HLT_LV.AndIn4 Deactivated -> Activated NC"
+    ],
+    "usages": "+1 SGVL target usage b_Step_RnD -> SafeResumption/HLT_LV.AndIn4 (globalRefs +1); SGVL file changes: FbPortUsages must equal SAL globalRefs; no SAL-variable usage change",
+    "after": "229 FB / 1938 ports / 294 wires / 79 SAL vars / 63 SGVL / 183 globalRefs"
+   },
+   "base": {
+    "dir": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\E2d-v7.5\\native",
+    "sha256": {
+     "TwinSafeGroup1.sal": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b",
+     "GVL1.sgvl": "140806334cf751348a301c82ed91b0e8f131bf05609727461ff2f16fdd295371",
+     "TwinSafeGroup1.sal.diagram": "94e9b231cef30cf50ee6e61d0770d696f1e77a28ed1d286051ea653729e4cbfb"
+    }
+   },
+   "candidate": {
+    "dir": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\E2d-v7.6\\native",
+    "sha256": {
+     "TwinSafeGroup1.sal": "e4cf767e912e946b86e4039d1fbe23c34d73689c6fee4baa45cbfb80f1bc86bc",
+     "GVL1.sgvl": "da69870c6721e7f27431b8fdc2007cbd747f4d0eae7b7eb8f7aea7394c315120",
+     "TwinSafeGroup1.sal.diagram": "72fea99c6763c3e854860df3f5b3b25030075831a2fe496d34c22a625376ef60"
+    }
+   },
+   "expectedAtoms": [
+    {
+     "t": "block-added",
+     "path": "//RndPhysicalCompact/GATE_PF_SET",
+     "fn": "safeOr"
+    },
+    {
+     "t": "block-added",
+     "path": "//RndPhysicalCompact/STATE_PF",
+     "fn": "safeRs"
+    },
+    {
+     "t": "block-added",
+     "path": "//RndPhysicalCompact/GATE_SPOIL_PF",
+     "fn": "safeAnd"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_SPOIL_R/AndOut",
+     "to": "//RndPhysicalCompact/GATE_PF_SET/OrIn1"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_SPOIL_S/AndOut",
+     "to": "//RndPhysicalCompact/GATE_PF_SET/OrIn2"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_PF_SET/OrOut",
+     "to": "//RndPhysicalCompact/STATE_PF/Set"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/RELEASE/TonOut",
+     "to": "//RndPhysicalCompact/STATE_PF/Reset"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_003/AndOut",
+     "to": "//RndPhysicalCompact/GATE_SPOIL_PF/AndIn1"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/STATE_PF/RsOut",
+     "to": "//RndPhysicalCompact/GATE_SPOIL_PF/AndIn2"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_SPOIL_PF/AndOut",
+     "to": "//RndPhysicalCompact/GATE_029/OrIn6"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//RndPhysicalCompact/GATE_SPOIL_R/AndOut",
+     "to": "//RndPhysicalCompact/GATE_029/OrIn6"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//RndPhysicalCompact/GATE_SPOIL_S/AndOut",
+     "to": "//RndPhysicalCompact/GATE_029/OrIn7"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//RndPhysicalCompact/GATE_003/AndOut",
+     "to": "//RndPhysicalCompact/GATE_SPOIL_R/AndIn1"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_002/AndOut",
+     "to": "//RndPhysicalCompact/GATE_SPOIL_R/AndIn1"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//RndPhysicalCompact/GATE_003/AndOut",
+     "to": "//RndPhysicalCompact/GATE_SPOIL_S/AndIn1"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_002/AndOut",
+     "to": "//RndPhysicalCompact/GATE_SPOIL_S/AndIn1"
+    },
+    {
+     "t": "port-attr",
+     "path": "//RndPhysicalCompact/GATE_SPOIL_R/AndIn1",
+     "attr": "deactivate1",
+     "a": "Break Contact (NC)",
+     "b": "Make Contact (NO)"
+    },
+    {
+     "t": "port-attr",
+     "path": "//RndPhysicalCompact/GATE_SPOIL_S/AndIn1",
+     "attr": "deactivate1",
+     "a": "Break Contact (NC)",
+     "b": "Make Contact (NO)"
+    },
+    {
+     "t": "port-attr",
+     "path": "//RndPhysicalCompact/GATE_029/OrIn7",
+     "attr": "channelInterface",
+     "a": "Activated",
+     "b": "Deactivated"
+    },
+    {
+     "t": "port-attr",
+     "path": "//RndPhysicalCompact/GATE_029/OrIn7",
+     "attr": "deactivate1",
+     "a": "Break Contact (NC)",
+     "b": null
+    },
+    {
+     "t": "port-attr",
+     "path": "//SafeResumption/HLT_LV/AndIn4",
+     "attr": "channelInterface",
+     "a": "Deactivated",
+     "b": "Activated"
+    },
+    {
+     "t": "port-attr",
+     "path": "//SafeResumption/HLT_LV/AndIn4",
+     "attr": "deactivate1",
+     "a": null,
+     "b": "Break Contact (NC)"
+    },
+    {
+     "t": "gref-added",
+     "port": "//SafeResumption/HLT_LV/AndIn4",
+     "symbol": "b_Step_RnD"
+    },
+    {
+     "t": "sgvl-usage-added",
+     "name": "b_Step_RnD",
+     "side": "target",
+     "port": "//SafeResumption/HLT_LV/AndIn4"
+    }
+   ],
+   "observedAtoms": [
+    {
+     "t": "block-added",
+     "path": "//RndPhysicalCompact/GATE_PF_SET",
+     "fn": "safeOr",
+     "ports": 9
+    },
+    {
+     "t": "block-added",
+     "path": "//RndPhysicalCompact/GATE_SPOIL_PF",
+     "fn": "safeAnd",
+     "ports": 9
+    },
+    {
+     "t": "block-added",
+     "path": "//RndPhysicalCompact/STATE_PF",
+     "fn": "safeRs",
+     "ports": 3
+    },
+    {
+     "t": "gref-added",
+     "port": "//SafeResumption/HLT_LV/AndIn4",
+     "symbol": "b_Step_RnD"
+    },
+    {
+     "t": "port-attr",
+     "path": "//RndPhysicalCompact/GATE_029/OrIn7",
+     "attr": "channelInterface",
+     "a": "Activated",
+     "b": "Deactivated"
+    },
+    {
+     "t": "port-attr",
+     "path": "//RndPhysicalCompact/GATE_029/OrIn7",
+     "attr": "deactivate1",
+     "a": "Break Contact (NC)",
+     "b": null
+    },
+    {
+     "t": "port-attr",
+     "path": "//RndPhysicalCompact/GATE_SPOIL_R/AndIn1",
+     "attr": "deactivate1",
+     "a": "Break Contact (NC)",
+     "b": "Make Contact (NO)"
+    },
+    {
+     "t": "port-attr",
+     "path": "//RndPhysicalCompact/GATE_SPOIL_S/AndIn1",
+     "attr": "deactivate1",
+     "a": "Break Contact (NC)",
+     "b": "Make Contact (NO)"
+    },
+    {
+     "t": "port-attr",
+     "path": "//SafeResumption/HLT_LV/AndIn4",
+     "attr": "channelInterface",
+     "a": "Deactivated",
+     "b": "Activated"
+    },
+    {
+     "t": "port-attr",
+     "path": "//SafeResumption/HLT_LV/AndIn4",
+     "attr": "deactivate1",
+     "a": null,
+     "b": "Break Contact (NC)"
+    },
+    {
+     "t": "sgvl-usage-added",
+     "name": "b_Step_RnD",
+     "side": "target",
+     "port": "//SafeResumption/HLT_LV/AndIn4"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_002/AndOut",
+     "to": "//RndPhysicalCompact/GATE_SPOIL_R/AndIn1"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_002/AndOut",
+     "to": "//RndPhysicalCompact/GATE_SPOIL_S/AndIn1"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_003/AndOut",
+     "to": "//RndPhysicalCompact/GATE_SPOIL_PF/AndIn1"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_PF_SET/OrOut",
+     "to": "//RndPhysicalCompact/STATE_PF/Set"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_SPOIL_PF/AndOut",
+     "to": "//RndPhysicalCompact/GATE_029/OrIn6"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_SPOIL_R/AndOut",
+     "to": "//RndPhysicalCompact/GATE_PF_SET/OrIn1"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_SPOIL_S/AndOut",
+     "to": "//RndPhysicalCompact/GATE_PF_SET/OrIn2"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/RELEASE/TonOut",
+     "to": "//RndPhysicalCompact/STATE_PF/Reset"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/STATE_PF/RsOut",
+     "to": "//RndPhysicalCompact/GATE_SPOIL_PF/AndIn2"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//RndPhysicalCompact/GATE_003/AndOut",
+     "to": "//RndPhysicalCompact/GATE_SPOIL_R/AndIn1"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//RndPhysicalCompact/GATE_003/AndOut",
+     "to": "//RndPhysicalCompact/GATE_SPOIL_S/AndIn1"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//RndPhysicalCompact/GATE_SPOIL_R/AndOut",
+     "to": "//RndPhysicalCompact/GATE_029/OrIn6"
+    },
+    {
+     "t": "wire-removed",
+     "from": "//RndPhysicalCompact/GATE_SPOIL_S/AndOut",
+     "to": "//RndPhysicalCompact/GATE_029/OrIn7"
+    }
+   ],
+   "addedBlockPorts": [
+    {
+     "path": "//RndPhysicalCompact/GATE_PF_SET/OrIn1",
+     "channelInterface": "Activated",
+     "deactivate1": "Break Contact (NC)"
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PF_SET/OrIn2",
+     "channelInterface": "Activated",
+     "deactivate1": "Break Contact (NC)"
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PF_SET/OrIn3",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PF_SET/OrIn4",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PF_SET/OrIn5",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PF_SET/OrIn6",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PF_SET/OrIn7",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PF_SET/OrIn8",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PF_SET/OrOut",
+     "channelInterface": null,
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/STATE_PF/Reset",
+     "channelInterface": "Activated",
+     "deactivate1": "Break Contact (NC)"
+    },
+    {
+     "path": "//RndPhysicalCompact/STATE_PF/Set",
+     "channelInterface": "Activated",
+     "deactivate1": "Break Contact (NC)"
+    },
+    {
+     "path": "//RndPhysicalCompact/STATE_PF/RsOut",
+     "channelInterface": null,
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_SPOIL_PF/AndIn1",
+     "channelInterface": "Activated",
+     "deactivate1": "Break Contact (NC)"
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_SPOIL_PF/AndIn2",
+     "channelInterface": "Activated",
+     "deactivate1": "Break Contact (NC)"
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_SPOIL_PF/AndIn3",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_SPOIL_PF/AndIn4",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_SPOIL_PF/AndIn5",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_SPOIL_PF/AndIn6",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_SPOIL_PF/AndIn7",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_SPOIL_PF/AndIn8",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_SPOIL_PF/AndOut",
+     "channelInterface": null,
+     "deactivate1": null
+    }
+   ],
+   "counts": {
+    "base": {
+     "networks": 14,
+     "fb": 226,
+     "ports": 1917,
+     "params": 19,
+     "salVars": 79,
+     "sgvlSymbols": 63,
+     "globalRefs": 182,
+     "wires": 289,
+     "salPortUsages": 320,
+     "sgvlUsages": 182
+    },
+    "candidate": {
+     "networks": 14,
+     "fb": 229,
+     "ports": 1938,
+     "params": 19,
+     "salVars": 79,
+     "sgvlSymbols": 63,
+     "globalRefs": 183,
+     "wires": 294,
+     "salPortUsages": 320,
+     "sgvlUsages": 183
+    }
+   },
+   "checks": [
+    {
+     "group": "inputs",
+     "name": "base SAL is the plan-declared E2d-v7.5 (2276d773)",
+     "status": "PASS",
+     "detail": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b"
+    },
+    {
+     "group": "inputs",
+     "name": "plan declares no SGVL SHA for E2d-v7.5",
+     "status": "NV",
+     "detail": "140806334cf751348a301c82ed91b0e8f131bf05609727461ff2f16fdd295371"
+    },
+    {
+     "group": "inputs",
+     "name": "plan declares no diagram SHA for E2d-v7.5",
+     "status": "NV",
+     "detail": "94e9b231cef30cf50ee6e61d0770d696f1e77a28ed1d286051ea653729e4cbfb"
+    },
+    {
+     "group": "inputs",
+     "name": "candidate SAL is the plan-declared E2d-v7.6 (e4cf767e)",
+     "status": "PASS",
+     "detail": "e4cf767e912e946b86e4039d1fbe23c34d73689c6fee4baa45cbfb80f1bc86bc"
+    },
+    {
+     "group": "inputs",
+     "name": "candidate SGVL is the plan-declared E2d-v7.6 (da69870c)",
+     "status": "PASS",
+     "detail": "da69870c6721e7f27431b8fdc2007cbd747f4d0eae7b7eb8f7aea7394c315120"
+    },
+    {
+     "group": "inputs",
+     "name": "candidate diagram is the plan-declared E2d-v7.6 (72fea99c)",
+     "status": "PASS",
+     "detail": "72fea99c6763c3e854860df3f5b3b25030075831a2fe496d34c22a625376ef60"
+    },
+    {
+     "group": "inputs",
+     "name": "declared base text names 2276d773",
+     "status": "PASS",
+     "detail": "E2d-v7.5 2276d773 (226 FB / 1917 ports / 289 wires / 79 SAL vars / 63 SGVL / 182 globalRefs)"
+    },
+    {
+     "group": "plan",
+     "name": "every declared item is interpreted (24 atoms, 2 new-port states)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "delta",
+     "name": "every declared atom is observed (24)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "delta",
+     "name": "no undeclared native change (24 observed atoms)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "delta",
+     "name": "declared states of new-block ports hold in the candidate",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "counts",
+     "name": "base counts equal the plan text (fb 226, ports 1917, wires 289, salVars 79, sgvlSymbols 63, globalRefs 182)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "counts",
+     "name": "after counts equal the plan text (fb 229, ports 1938, wires 294, salVars 79, sgvlSymbols 63, globalRefs 183)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "counts",
+     "name": "SGVL FbPortUsages equal SAL globalRefs in the candidate",
+     "status": "PASS",
+     "detail": {
+      "sgvlUsages": 183,
+      "globalRefs": 183
+     }
+    },
+    {
+     "group": "order",
+     "name": "candidate orderOfExecution is a permutation 1..229",
+     "status": "PASS"
+    },
+    {
+     "group": "order",
+     "name": "relative execution order of the 226 retained blocks is preserved",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "order",
+     "name": "slices[E2d].order: RndPhysicalCompact/GATE_PF_SET after RndPhysicalCompact/GATE_SPOIL_S",
+     "status": "PASS",
+     "detail": {
+      "RndPhysicalCompact/GATE_PF_SET": 147,
+      "RndPhysicalCompact/GATE_SPOIL_S": 146
+     }
+    },
+    {
+     "group": "order",
+     "name": "slices[E2d].order: RndPhysicalCompact/STATE_PF after RndPhysicalCompact/GATE_PF_SET",
+     "status": "PASS",
+     "detail": {
+      "RndPhysicalCompact/STATE_PF": 148,
+      "RndPhysicalCompact/GATE_PF_SET": 147
+     }
+    },
+    {
+     "group": "order",
+     "name": "slices[E2d].order: RndPhysicalCompact/GATE_SPOIL_PF after RndPhysicalCompact/STATE_PF",
+     "status": "PASS",
+     "detail": {
+      "RndPhysicalCompact/GATE_SPOIL_PF": 149,
+      "RndPhysicalCompact/STATE_PF": 148
+     }
+    },
+    {
+     "group": "order",
+     "name": "slices[E2d].order: RndPhysicalCompact/GATE_SPOIL_PF before RndPhysicalCompact/GATE_029",
+     "status": "PASS",
+     "detail": {
+      "RndPhysicalCompact/GATE_SPOIL_PF": 149,
+      "RndPhysicalCompact/GATE_029": 150
+     }
+    },
+    {
+     "group": "order",
+     "name": "slices[E2d].orderNotes[0]: GATE_SPOIL_R, GATE_SPOIL_S, GATE_PF_SET, STATE_PF, GATE_SPOIL_PF, GATE_029 contiguous in this order",
+     "status": "PASS",
+     "detail": {
+      "note": "v7.6: GATE_SPOIL_R, GATE_SPOIL_S, GATE_PF_SET, STATE_PF, GATE_SPOIL_PF form one block immediately before GATE_029 (no other block between); STATE_PF after RELEASE (already: RELEASE precedes GATE_SPOIL_*)",
+      "orders": [
+       [
+        "GATE_SPOIL_R",
+        145
+       ],
+       [
+        "GATE_SPOIL_S",
+        146
+       ],
+       [
+        "GATE_PF_SET",
+        147
+       ],
+       [
+        "STATE_PF",
+        148
+       ],
+       [
+        "GATE_SPOIL_PF",
+        149
+       ],
+       [
+        "GATE_029",
+        150
+       ]
+      ]
+     }
+    },
+    {
+     "group": "diagram",
+     "name": "every candidate block/port has exactly one shape (2186)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "diagram",
+     "name": "no shape references a block/port absent from the candidate",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "diagram",
+     "name": "one connector per wire (294) and connector nodes reference existing shapes",
+     "status": "PASS",
+     "detail": {
+      "connectors": 294,
+      "wires": 294
+     }
+    }
+   ],
+   "failed": [],
+   "nv": [
+    "inputs: plan declares no SGVL SHA for E2d-v7.5",
+    "inputs: plan declares no diagram SHA for E2d-v7.5"
+   ],
+   "status": "PASS"
+  },
+  {
+   "key": "vsFrozenE2dV76",
+   "from": "E2d-v7.6",
+   "to": "E2d-v7.7",
+   "declared": {
+    "base": "E2d-v7.6 e4cf767e (229 FB / 1938 ports / 294 wires / 79 SAL vars / 63 SGVL / 183 globalRefs)",
+    "blocksAdded": [
+     "RndPhysicalCompact/GATE_PHASE (safeOr)"
+    ],
+    "ports": "+9",
+    "wiresAdded": [
+     "RndPhysicalCompact/GATE_PHASE.OrOut -> RndPhysicalCompact/GATE_PF_SET.OrIn3"
+    ],
+    "wiresRemoved": [],
+    "portStates": [
+     "RndPhysicalCompact/GATE_PF_SET.OrIn3 Deactivated -> Activated NC",
+     "RndPhysicalCompact/GATE_PHASE.OrIn1/OrIn2 Activated NC (new)"
+    ],
+    "usages": "+2 SGVL target usages: b_Step12 -> GATE_PHASE.OrIn1, b_Step3 -> GATE_PHASE.OrIn2 (globalRefs +2; SGVL FbPortUsages change)",
+    "after": "230 FB / 1947 ports / 295 wires / 79 SAL vars / 63 SGVL / 185 globalRefs"
+   },
+   "base": {
+    "dir": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\E2d-v7.6\\native",
+    "sha256": {
+     "TwinSafeGroup1.sal": "e4cf767e912e946b86e4039d1fbe23c34d73689c6fee4baa45cbfb80f1bc86bc",
+     "GVL1.sgvl": "da69870c6721e7f27431b8fdc2007cbd747f4d0eae7b7eb8f7aea7394c315120",
+     "TwinSafeGroup1.sal.diagram": "72fea99c6763c3e854860df3f5b3b25030075831a2fe496d34c22a625376ef60"
+    }
+   },
+   "candidate": {
+    "dir": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\E2d\\native",
+    "sha256": {
+     "TwinSafeGroup1.sal": "c2f9ccd7a901e40f1ad5a3db780898c32b19180d6993528ce34afaffdb903689",
+     "GVL1.sgvl": "d845bd26331cfb166e13094c2a4c9cf9918252bb2cb34b6644acccc4c4564433",
+     "TwinSafeGroup1.sal.diagram": "8797b832fee722dc068dce8e7f37ce4390acc8303abea1237f670bd394d71469"
+    }
+   },
+   "expectedAtoms": [
+    {
+     "t": "block-added",
+     "path": "//RndPhysicalCompact/GATE_PHASE",
+     "fn": "safeOr"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_PHASE/OrOut",
+     "to": "//RndPhysicalCompact/GATE_PF_SET/OrIn3"
+    },
+    {
+     "t": "port-attr",
+     "path": "//RndPhysicalCompact/GATE_PF_SET/OrIn3",
+     "attr": "channelInterface",
+     "a": "Deactivated",
+     "b": "Activated"
+    },
+    {
+     "t": "port-attr",
+     "path": "//RndPhysicalCompact/GATE_PF_SET/OrIn3",
+     "attr": "deactivate1",
+     "a": null,
+     "b": "Break Contact (NC)"
+    },
+    {
+     "t": "gref-added",
+     "port": "//RndPhysicalCompact/GATE_PHASE/OrIn1",
+     "symbol": "b_Step12"
+    },
+    {
+     "t": "sgvl-usage-added",
+     "name": "b_Step12",
+     "side": "target",
+     "port": "//RndPhysicalCompact/GATE_PHASE/OrIn1"
+    },
+    {
+     "t": "gref-added",
+     "port": "//RndPhysicalCompact/GATE_PHASE/OrIn2",
+     "symbol": "b_Step3"
+    },
+    {
+     "t": "sgvl-usage-added",
+     "name": "b_Step3",
+     "side": "target",
+     "port": "//RndPhysicalCompact/GATE_PHASE/OrIn2"
+    }
+   ],
+   "observedAtoms": [
+    {
+     "t": "block-added",
+     "path": "//RndPhysicalCompact/GATE_PHASE",
+     "fn": "safeOr",
+     "ports": 9
+    },
+    {
+     "t": "gref-added",
+     "port": "//RndPhysicalCompact/GATE_PHASE/OrIn1",
+     "symbol": "b_Step12"
+    },
+    {
+     "t": "gref-added",
+     "port": "//RndPhysicalCompact/GATE_PHASE/OrIn2",
+     "symbol": "b_Step3"
+    },
+    {
+     "t": "port-attr",
+     "path": "//RndPhysicalCompact/GATE_PF_SET/OrIn3",
+     "attr": "channelInterface",
+     "a": "Deactivated",
+     "b": "Activated"
+    },
+    {
+     "t": "port-attr",
+     "path": "//RndPhysicalCompact/GATE_PF_SET/OrIn3",
+     "attr": "deactivate1",
+     "a": null,
+     "b": "Break Contact (NC)"
+    },
+    {
+     "t": "sgvl-usage-added",
+     "name": "b_Step12",
+     "side": "target",
+     "port": "//RndPhysicalCompact/GATE_PHASE/OrIn1"
+    },
+    {
+     "t": "sgvl-usage-added",
+     "name": "b_Step3",
+     "side": "target",
+     "port": "//RndPhysicalCompact/GATE_PHASE/OrIn2"
+    },
+    {
+     "t": "wire-added",
+     "from": "//RndPhysicalCompact/GATE_PHASE/OrOut",
+     "to": "//RndPhysicalCompact/GATE_PF_SET/OrIn3"
+    }
+   ],
+   "addedBlockPorts": [
+    {
+     "path": "//RndPhysicalCompact/GATE_PHASE/OrIn1",
+     "channelInterface": "Activated",
+     "deactivate1": "Break Contact (NC)"
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PHASE/OrIn2",
+     "channelInterface": "Activated",
+     "deactivate1": "Break Contact (NC)"
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PHASE/OrIn3",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PHASE/OrIn4",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PHASE/OrIn5",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PHASE/OrIn6",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PHASE/OrIn7",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PHASE/OrIn8",
+     "channelInterface": "Deactivated",
+     "deactivate1": null
+    },
+    {
+     "path": "//RndPhysicalCompact/GATE_PHASE/OrOut",
+     "channelInterface": null,
+     "deactivate1": null
+    }
+   ],
+   "counts": {
+    "base": {
+     "networks": 14,
+     "fb": 229,
+     "ports": 1938,
+     "params": 19,
+     "salVars": 79,
+     "sgvlSymbols": 63,
+     "globalRefs": 183,
+     "wires": 294,
+     "salPortUsages": 320,
+     "sgvlUsages": 183
+    },
+    "candidate": {
+     "networks": 14,
+     "fb": 230,
+     "ports": 1947,
+     "params": 19,
+     "salVars": 79,
+     "sgvlSymbols": 63,
+     "globalRefs": 185,
+     "wires": 295,
+     "salPortUsages": 320,
+     "sgvlUsages": 185
+    }
+   },
+   "checks": [
+    {
+     "group": "inputs",
+     "name": "base SAL is the plan-declared E2d-v7.6 (e4cf767e)",
+     "status": "PASS",
+     "detail": "e4cf767e912e946b86e4039d1fbe23c34d73689c6fee4baa45cbfb80f1bc86bc"
+    },
+    {
+     "group": "inputs",
+     "name": "base SGVL is the plan-declared E2d-v7.6 (da69870c)",
+     "status": "PASS",
+     "detail": "da69870c6721e7f27431b8fdc2007cbd747f4d0eae7b7eb8f7aea7394c315120"
+    },
+    {
+     "group": "inputs",
+     "name": "base diagram is the plan-declared E2d-v7.6 (72fea99c)",
+     "status": "PASS",
+     "detail": "72fea99c6763c3e854860df3f5b3b25030075831a2fe496d34c22a625376ef60"
+    },
+    {
+     "group": "inputs",
+     "name": "candidate SAL is the plan-declared E2d-v7.7 (c2f9ccd7)",
+     "status": "PASS",
+     "detail": "c2f9ccd7a901e40f1ad5a3db780898c32b19180d6993528ce34afaffdb903689"
+    },
+    {
+     "group": "inputs",
+     "name": "candidate SGVL is the plan-declared E2d-v7.7 (d845bd26)",
+     "status": "PASS",
+     "detail": "d845bd26331cfb166e13094c2a4c9cf9918252bb2cb34b6644acccc4c4564433"
+    },
+    {
+     "group": "inputs",
+     "name": "candidate diagram is the plan-declared E2d-v7.7 (8797b832)",
+     "status": "PASS",
+     "detail": "8797b832fee722dc068dce8e7f37ce4390acc8303abea1237f670bd394d71469"
+    },
+    {
+     "group": "inputs",
+     "name": "declared base text names e4cf767e",
+     "status": "PASS",
+     "detail": "E2d-v7.6 e4cf767e (229 FB / 1938 ports / 294 wires / 79 SAL vars / 63 SGVL / 183 globalRefs)"
+    },
+    {
+     "group": "plan",
+     "name": "every declared item is interpreted (8 atoms, 2 new-port states)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "delta",
+     "name": "every declared atom is observed (8)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "delta",
+     "name": "no undeclared native change (8 observed atoms)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "delta",
+     "name": "declared states of new-block ports hold in the candidate",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "counts",
+     "name": "base counts equal the plan text (fb 229, ports 1938, wires 294, salVars 79, sgvlSymbols 63, globalRefs 183)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "counts",
+     "name": "after counts equal the plan text (fb 230, ports 1947, wires 295, salVars 79, sgvlSymbols 63, globalRefs 185)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "counts",
+     "name": "SGVL FbPortUsages equal SAL globalRefs in the candidate",
+     "status": "PASS",
+     "detail": {
+      "sgvlUsages": 185,
+      "globalRefs": 185
+     }
+    },
+    {
+     "group": "order",
+     "name": "candidate orderOfExecution is a permutation 1..230",
+     "status": "PASS"
+    },
+    {
+     "group": "order",
+     "name": "relative execution order of the 229 retained blocks is preserved",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "order",
+     "name": "slices[E2d].order: RndPhysicalCompact/GATE_PHASE after RndPhysicalCompact/GATE_SPOIL_S",
+     "status": "PASS",
+     "detail": {
+      "RndPhysicalCompact/GATE_PHASE": 147,
+      "RndPhysicalCompact/GATE_SPOIL_S": 146
+     }
+    },
+    {
+     "group": "order",
+     "name": "slices[E2d].order: RndPhysicalCompact/GATE_PHASE before RndPhysicalCompact/GATE_PF_SET",
+     "status": "PASS",
+     "detail": {
+      "RndPhysicalCompact/GATE_PHASE": 147,
+      "RndPhysicalCompact/GATE_PF_SET": 148
+     }
+    },
+    {
+     "group": "order",
+     "name": "slices[E2d].orderNotes[2]: GATE_SPOIL_R, GATE_SPOIL_S, GATE_PHASE, GATE_PF_SET, STATE_PF, GATE_SPOIL_PF, GATE_029 contiguous in this order",
+     "status": "PASS",
+     "detail": {
+      "note": "v7.7: GATE_PHASE joins the contiguous block: SPOIL_R, SPOIL_S, GATE_PHASE, GATE_PF_SET, STATE_PF, GATE_SPOIL_PF, then GATE_029",
+      "orders": [
+       [
+        "GATE_SPOIL_R",
+        145
+       ],
+       [
+        "GATE_SPOIL_S",
+        146
+       ],
+       [
+        "GATE_PHASE",
+        147
+       ],
+       [
+        "GATE_PF_SET",
+        148
+       ],
+       [
+        "STATE_PF",
+        149
+       ],
+       [
+        "GATE_SPOIL_PF",
+        150
+       ],
+       [
+        "GATE_029",
+        151
+       ]
+      ]
+     }
+    },
+    {
+     "group": "diagram",
+     "name": "every candidate block/port has exactly one shape (2196)",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "diagram",
+     "name": "no shape references a block/port absent from the candidate",
+     "status": "PASS",
+     "detail": []
+    },
+    {
+     "group": "diagram",
+     "name": "one connector per wire (295) and connector nodes reference existing shapes",
+     "status": "PASS",
+     "detail": {
+      "connectors": 295,
+      "wires": 295
+     }
+    }
+   ],
+   "failed": [],
+   "nv": [],
+   "status": "PASS"
+  }
+ ],
+ "status": "PASS"
+}

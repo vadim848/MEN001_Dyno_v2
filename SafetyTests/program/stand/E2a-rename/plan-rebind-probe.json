@@ -1,0 +1,74 @@
+{
+ "version": "sal-mutation-plan-v1",
+ "structuralSoftwareCheckCases": [
+  "^BOOT:"
+ ],
+ "planVersion": 6,
+ "testFiles": [
+  "current-e2a-run-conf.test.js"
+ ],
+ "behaviouralTests": [
+  "^E2[a-d] "
+ ],
+ "sourceSha256": "5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b",
+ "status": "Architect guard-mutation plan v6 for E2a-core (PLAN.md v6). sourceSha256 = editor candidate. operatorAvailable:false only for operators the stand does not implement (rebind-global, composite). modelKill = architect prototype (not native, not a test).",
+ "mutations": [
+  {
+   "id": "T-REBIND-E2a",
+   "guard": "stand-probe",
+   "op": "rebind-global",
+   "block": "//Network1/FBOr5",
+   "port": "OrIn2",
+   "value": {
+    "global": "b_Step4_Set"
+   },
+   "rationale": "stand wiring probe of rebind-global (SGVL write/restore), not a plan mutation"
+  }
+ ],
+ "equivalentBySearch": [
+  {
+   "block": "//Network3/FBOr1",
+   "port": "OrIn4",
+   "ref": "M-E2b-30: no g5/g7 coincidence in v3 (25), w1 (630), w12 (72) runs; structural argument: 1-scan PLC/connector pulse that drops EOk(k) resets GATE_001 at k-1 so g5(k)=FALSE (DERIVED); input kept, re-evaluate in E3/E4",
+   "formerly": "M-E2b-30"
+  },
+  {
+   "block": "//Network12/FBAnd2",
+   "port": "AndIn3",
+   "id": "UL-05",
+   "ref": "review v4 w15: Safe and R&D, blue at 0, green at g in {0,1,100,499,500,501,700}: no output/stage difference; recRndC_BA excludes green, FBAndUnlockHold masks output (DERIVED)"
+  }
+ ],
+ "equivalentByRequirement": [
+  {
+   "block": "//Network3/FBAnd1",
+   "port": "AndIn2",
+   "id": "M-E2a-27 (ES-06)",
+   "ref": "analyst E2-plan-v4-questions CRITERIA section 2 + PROBE_ES06: stage memory before Restart not normative; outputs/status identical; with Bypass gate (A) Safe gives no energy"
+  }
+ ],
+ "equivalentByProof": [
+  {
+   "block": "//Network6/RUN_DOWN_RESET",
+   "port": "OrIn2",
+   "ref": "MU11 - PLAN v2 section 9, accepted by reviewer for E2a..E2d; C3 of E1 review fulfilled by equivalence proof; re-evaluate in E3."
+  },
+  {
+   "block": "//Network7/FBAnd8",
+   "port": "AndIn5",
+   "ref": "S4 gate against stale TON; accepted by review."
+  },
+  {
+   "block": "//Network6/FBAnd18",
+   "port": "AndIn4",
+   "ref": "S3 gate; stale Ton1 re-sets SR idempotently; accepted by review."
+  }
+ ],
+ "removedGuards": [
+  {
+   "guard": "ES-07 Network5/FBAnd1.AndIn3",
+   "by": "R1"
+  }
+ ],
+ "withSoftwareCheck": false
+}

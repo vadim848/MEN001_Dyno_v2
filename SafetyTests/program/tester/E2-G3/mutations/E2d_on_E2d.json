@@ -1,0 +1,558 @@
+{
+ "generatedAt": "2026-10-22T14:09:31.763Z",
+ "tool": "scratchpad/tools/mutkill.mjs (v2-tester E2-G3)",
+ "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2d_on_E2d.json",
+ "planSha256": "aad9389d011546fd331a10fa0fba2d797761315d666a81b74dd32675dbebc4fb",
+ "sourceSha256": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b",
+ "killBase": {
+  "eligible": 714,
+  "excluded": [
+   "E2a DIS-HOLD-HV issue by STP-A Run->R&D; refused legacy PLC lift (1,1) 300 ms with the cover open (NC1 FALSE); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+   "E2a DIS-HOLD-HV issue by STP-A Run->R&D; Emergency in R&D (in_ES_NC_1 FALSE) while legacy PLC (1,1) held 3000 ms, Restart -> Safe, Safe->R&D; then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+   "E2a DIS-HOLD-HV Emergency from steady Run while legacy PLC (1,1) is held (in_ES_NC_1 FALSE) -> the chain issues the HV discharge request before C2 OFF and keeps it TRUE (Q-V7-01 \"Г\": Discharge -> hold -> C2 OFF; C2 OFF without Discharge = FAIL)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)",
+   "E2d FBK-10 (R) steady R&D, C2_FBK TRUE without command, legacy PLC (1,1) 1000 ms at f+500 while FBK ON -> no C2 command, STO not released, no Run, no Emergency",
+   "E2d FBK10-PLC-B R&D(HV) (HV discharge request TRUE), C2_FBK ON without command from f, legacy PLC (1,1) at f+1 held 1500 ms -> stage R&D, no SR/Run, out_HV_C2 and b_Set_HV_C2_1 FALSE, STO set, HV discharge request TRUE in every scan [t, t+1500], no Emergency",
+   "E2d FBK10-PLC-B R&D(HV) (HV discharge request TRUE), C2_FBK ON without command from f, legacy PLC (1,1) at f+100 held 1500 ms -> stage R&D, no SR/Run, out_HV_C2 and b_Set_HV_C2_1 FALSE, STO set, HV discharge request TRUE in every scan [t, t+1500], no Emergency",
+   "E2d FBK10-PLC-B R&D(HV) (HV discharge request TRUE), C2_FBK ON without command from f, legacy PLC (1,1) at f+3000 held 1500 ms -> stage R&D, no SR/Run, out_HV_C2 and b_Set_HV_C2_1 FALSE, STO set, HV discharge request TRUE in every scan [t, t+1500], no Emergency",
+   "E2d FBK10-PLC boundary R&D(HV), C2_FBK ON f..g-1 (g=f+3000), legacy PLC (1,1) pulse 50 ms ending in g-1 -> no lift in any scan until t+3000 (no held level after FBK OFF)",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+10, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+10, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+300, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+300, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+499, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+499, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")"
+  ],
+  "excludeRegex": [
+   "/REL01-e2-LATE R&D/",
+   "/FBK-05/",
+   "/STP-I\\b/",
+   "/existing-PLC-levels/",
+   "/FBK10-PLC-B/",
+   "/FBK10-PLC-REG steady R&D, legacy PLC \\(1,1\\)/",
+   "/^(DIAG \\S+ )?KF-/",
+   "/\\(1,1\\)/"
+  ]
+ },
+ "behaviouralTests": [
+  "^E2[a-d] "
+ ],
+ "summary": {
+  "KILLED": 16,
+  "SURVIVED": 1,
+  "STRUCTURAL-ONLY": 0,
+  "INVALID": 0,
+  "NOT-RUN": 1
+ },
+ "results": [
+  {
+   "id": "M-E2d-04",
+   "op": "invert-contact",
+   "block": "//Network2/FBAnd8",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//Network2/FBAnd8/AndIn1",
+    "attribute": "deactivate1",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "919290e193347fe59fd020f0cd532b4569e6e14eeaae2cafd7bdaeefd112005d",
+   "killedBy": [
+    {
+     "name": "E2d UNL-05 Safe, Door FALSE >= 2 s, cover a_NC1: blue held 1000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-05 boundary Safe, cover NC1 open, Door FALSE >= 2 s then TRUE from s-1: blue held 1000 ms -> UNL-04 (Unlock FALSE at s+499, TRUE from s+501 while held)",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-05 Safe, Door FALSE >= 2 s, cover a_NC1: blue held 3000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-05 Safe, Door FALSE >= 2 s, cover b_NC2: blue held 1000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-05",
+   "op": "deactivate-input",
+   "block": "//Network1/FBOr3",
+   "port": "OrIn1",
+   "verification": {
+    "parsedDelta": "//Network1/FBOr3/OrIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "3aff4409c5f79b521b5af3cbbb1dd9fb884adf57d6fd7ee268cedb8dd38f40d7",
+   "killedBy": [
+    {
+     "name": "E2d UNL-05 Safe, Door FALSE >= 2 s, cover a_NC1: blue held 1000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-05 Safe, Door FALSE >= 2 s, cover a_NC1: blue held 3000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-05 Safe, Door FALSE >= 2 s, cover b_NC2: blue held 1000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-05 Safe, Door FALSE >= 2 s, cover b_NC2: blue held 3000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-06",
+   "op": "deactivate-input",
+   "block": "//Network12/FBAnd2",
+   "port": "AndIn4",
+   "verification": {
+    "parsedDelta": "//Network12/FBAnd2/AndIn4",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "57800d7f57e6c14b2519a0472c9f00f31bf61b904847357b65b59bec105585ec",
+   "killedBy": [
+    {
+     "name": "E2d UNL-05 R&D, Door FALSE >= 2 s, cover a_NC1: blue held 1000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-05 R&D, Door FALSE >= 2 s, cover a_NC1: blue held 3000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-05 R&D, Door FALSE >= 2 s, cover b_NC2: blue held 1000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-05 R&D, Door FALSE >= 2 s, cover b_NC2: blue held 3000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-07",
+   "op": "deactivate-input",
+   "block": "//Network12/FBAnd11",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//Network12/FBAnd11/AndIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "8de7d909e943b16ff64dcfc3927b91cd5c78832f4eab744e85060c19322388d4",
+   "killedBy": [
+    {
+     "name": "E2d UNL-05 R&D, Door FALSE >= 2 s, cover a_NC1: blue held 1000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-05 R&D, Door FALSE >= 2 s, cover a_NC1: blue held 3000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-05 R&D, Door FALSE >= 2 s, cover b_NC2: blue held 1000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-05 R&D, Door FALSE >= 2 s, cover b_NC2: blue held 3000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+     "file": "current-e2d-unlock-door.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-08",
+   "op": "deactivate-input",
+   "block": "//Network2/FBAnd8",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//Network2/FBAnd8/AndIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "451cc0729a426bf71960236ae2f0d57ac085c91ebf0c27d198d5a885af462525",
+   "killedBy": [
+    {
+     "name": "E2d UNL-04 Safe, cover NC1 open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+     "file": "current-e2d-unlock-cover.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-04 Safe, cover NC2 open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+     "file": "current-e2d-unlock-cover.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-04 Safe, cover both open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+     "file": "current-e2d-unlock-cover.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-04 Safe, cover closed (control), Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+     "file": "current-e2d-unlock-cover.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-09",
+   "op": "deactivate-input",
+   "block": "//Network2/FBAnd2",
+   "port": "AndIn2",
+   "verification": {
+    "parsedDelta": "//Network2/FBAnd2/AndIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "df945db4bfb69e2669ceabbcb2ad7dbe0b5bcd5d5ee4fd9736bbea7295ff5b16",
+   "killedBy": [
+    {
+     "name": "E2d FBK-10 (S1) BOTH qualified at Q, steady Safe, C1_FBK TRUE from f = Q (FBK ON in the qualification scan) without a command -> no lift in f+1 or later (v7 §4.5 boundary; lift in f itself observation)",
+     "file": "current-e2d-fbk-k3ack.test.js",
+     "message": "1 violated checks (p=4214, Q=5214, f=5214)"
+    },
+    {
+     "name": "E2d FBK-10 (S1) BOTH qualified at Q, steady Safe, C1_FBK TRUE from f = Q-1 without a command -> no lift in f+1 or later (v7 §4.5 boundary; lift in f itself observation)",
+     "file": "current-e2d-fbk-k3ack.test.js",
+     "message": "1 violated checks (p=4214, Q=5214, f=5213)"
+    },
+    {
+     "name": "E2d FBK-10 (S1) steady Safe, C1_FBK TRUE without command f..f+2999, BOTH 1 s at f+500 -> lift not executed, state/energy unchanged, no Emergency (Q-V4-02 \"В\")",
+     "file": "current-e2d-fbk-unsolicited.test.js",
+     "message": "3 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-10",
+   "op": "deactivate-input",
+   "block": "//Network2/FBAnd2",
+   "port": "AndIn3",
+   "verification": {
+    "parsedDelta": "//Network2/FBAnd2/AndIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "64e58c7f289e947f196a560f5b9d2649d3c36281d6fa47a838eec4a2b2929cb0",
+   "killedBy": [
+    {
+     "name": "E2d FBK-10 (S2) BOTH qualified at Q, steady Safe, C2_FBK TRUE from f = Q (FBK ON in the qualification scan) without a command -> no lift in f+1 or later (v7 §4.5 boundary; lift in f itself observation)",
+     "file": "current-e2d-fbk-k3ack.test.js",
+     "message": "1 violated checks (p=4214, Q=5214, f=5214)"
+    },
+    {
+     "name": "E2d FBK-10 (S2) BOTH qualified at Q, steady Safe, C2_FBK TRUE from f = Q-1 without a command -> no lift in f+1 or later (v7 §4.5 boundary; lift in f itself observation)",
+     "file": "current-e2d-fbk-k3ack.test.js",
+     "message": "1 violated checks (p=4214, Q=5214, f=5213)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-11",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_020",
+   "port": "AndIn8",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_020/AndIn8",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "7e131e83a0d53474e14fd60e8b9965ac1adc43af5ac656554fb30466215275dc",
+   "killedBy": [
+    {
+     "name": "E2d FBK-10 (R) BOTH qualified at Q, steady R&D, C2_FBK TRUE from f = Q (FBK ON in the qualification scan) without a command -> no lift in f+1 or later (v7 §4.5 boundary; lift in f itself observation)",
+     "file": "current-e2d-fbk-k3ack.test.js",
+     "message": "1 violated checks (p=8017, Q=9017, f=9017)"
+    },
+    {
+     "name": "E2d FBK-10 (R) BOTH qualified at Q, steady R&D, C2_FBK TRUE from f = Q-1 without a command -> no lift in f+1 or later (v7 §4.5 boundary; lift in f itself observation)",
+     "file": "current-e2d-fbk-k3ack.test.js",
+     "message": "1 violated checks (p=8017, Q=9017, f=9016)"
+    },
+    {
+     "name": "E2d FBK-10 (R) steady R&D, C2_FBK TRUE without command f..f+2999, BOTH 1 s at f+500 -> lift not executed, state/energy unchanged, no Emergency (Q-V4-02 \"В\")",
+     "file": "current-e2d-fbk-unsolicited.test.js",
+     "message": "3 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-12",
+   "op": "deactivate-input",
+   "block": "//Network2/FBAnd91",
+   "port": "AndIn5",
+   "verification": {
+    "parsedDelta": "//Network2/FBAnd91/AndIn5",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "0ef28fce1c3ac006f72ea285b408437cd005a06715379423af88ffce6e41f197",
+   "killedBy": [
+    {
+     "name": "E2d FBK-10 (S1) steady Safe, C1_FBK TRUE without command, legacy PLC (1,0) 1000 ms at f+500 while FBK ON -> no lift (C1 not switched on), state unchanged, no Emergency",
+     "file": "current-e2d-fbk-unsolicited.test.js",
+     "message": "4 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-13",
+   "op": "deactivate-input",
+   "block": "//Network2/FBAnd91",
+   "port": "AndIn6",
+   "verification": {
+    "parsedDelta": "//Network2/FBAnd91/AndIn6",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "93214fe234316e0f7316bee55260287a1ec7258c14fb5d59caf25316ed1ec894",
+   "killedBy": [
+    {
+     "name": "E2d FBK-10 (S2) steady Safe, C2_FBK TRUE without command, legacy PLC (1,0) 1000 ms at f+500 while FBK ON -> no lift (C1 not switched on), state unchanged, no Emergency",
+     "file": "current-e2d-fbk-unsolicited.test.js",
+     "message": "4 violated checks"
+    },
+    {
+     "name": "E2d FBK10-PLC-A R-T5 (Safe after R&D->Safe), C2_FBK ON without command from f, legacy PLC (1,0) front at f+1 held 1000 ms -> no S12, C1 OFF, LV discharge request kept, STO set in every scan [t, t+1500], no Emergency",
+     "file": "current-e2d-fbk-unsolicited.test.js",
+     "message": "3 violated checks (f=8619, t=8620)"
+    },
+    {
+     "name": "E2d FBK10-PLC-A R-T5 (Safe after R&D->Safe), C2_FBK ON without command from f, legacy PLC (1,0) front at f+100 held 1000 ms -> no S12, C1 OFF, LV discharge request kept, STO set in every scan [t, t+1500], no Emergency",
+     "file": "current-e2d-fbk-unsolicited.test.js",
+     "message": "3 violated checks (f=8619, t=8719)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-17",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAndHvSetPermit",
+   "port": "AndIn5",
+   "verification": {
+    "parsedDelta": "//Network1/FBAndHvSetPermit/AndIn5",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "18965c69e979c3016aa83e0588ad423c7c1a38c4f1f6a5e0d738a85faf6a1d7f",
+   "killedBy": [
+    {
+     "name": "E2d FFS R&D->Run buttons BOTH: NC1 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+     "file": "current-e2d-first-fault-scan.test.js",
+     "message": "1 violated checks (e=7229)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-18",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAndHvSetPermit",
+   "port": "AndIn6",
+   "verification": {
+    "parsedDelta": "//Network1/FBAndHvSetPermit/AndIn6",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "03cd9afc3528d6fc0b95131503c45b257f07e5200871b2d7009d57585311caf7",
+   "killedBy": [
+    {
+     "name": "E2d FFS R&D->Run buttons BOTH: NC2 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+     "file": "current-e2d-first-fault-scan.test.js",
+     "message": "1 violated checks (e=7229)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-19",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAndSto1SetPermit",
+   "port": "AndIn5",
+   "verification": {
+    "parsedDelta": "//Network1/FBAndSto1SetPermit/AndIn5",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "d294dbd8d6763df4e7e4ee50efe133ea1ad7ede999e7ddf42f2e7ebbe19c98c4",
+   "killedBy": [
+    {
+     "name": "E2d FFS R&D->Run buttons BOTH: NC1 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+     "file": "current-e2d-first-fault-scan.test.js",
+     "message": "1 violated checks (e=7229)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-20",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAndSto1SetPermit",
+   "port": "AndIn6",
+   "verification": {
+    "parsedDelta": "//Network1/FBAndSto1SetPermit/AndIn6",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "ce945fe0aeb78deb3844f1074a854f16a840edda7042ba60adbda034ef4d528d",
+   "killedBy": [
+    {
+     "name": "E2d FFS R&D->Run buttons BOTH: NC2 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+     "file": "current-e2d-first-fault-scan.test.js",
+     "message": "1 violated checks (e=7229)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-21",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAndSto2SetPermit",
+   "port": "AndIn5",
+   "verification": {
+    "parsedDelta": "//Network1/FBAndSto2SetPermit/AndIn5",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "ae99949e99b53cdc3425a0ddd096fca4d71373bcdb4e8afab15ef0157a01bfbb",
+   "killedBy": [
+    {
+     "name": "E2d FFS R&D->Run buttons BOTH: NC1 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+     "file": "current-e2d-first-fault-scan.test.js",
+     "message": "1 violated checks (e=7229)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-22",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAndSto2SetPermit",
+   "port": "AndIn6",
+   "verification": {
+    "parsedDelta": "//Network1/FBAndSto2SetPermit/AndIn6",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "bdfb590ba67804e0604e222d5949900182de7351251ce17e4ce8cec921fb3b91",
+   "killedBy": [
+    {
+     "name": "E2d FFS R&D->Run buttons BOTH: NC2 in the first lift scan e=u of the no-event trace -> no new out_HV_C2 / STO_DR1 / STO_DR2 in scan e and later (V14-Q5, IL-02/IL-05a, E2b-dev §2.3)",
+     "file": "current-e2d-first-fault-scan.test.js",
+     "message": "1 violated checks (e=7229)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 4,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2d-23",
+   "op": "restore-legacy-11-path",
+   "verdict": "NOT-RUN",
+   "reason": "operator restore-legacy-11-path not implemented by the stand"
+  },
+  {
+   "id": "M-E2d-03",
+   "op": "deactivate-input",
+   "block": "//SafeResumption/MODE",
+   "port": "OrIn4",
+   "verification": {
+    "parsedDelta": "//SafeResumption/MODE/OrIn4",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "6996507e85ccbd6cb4f2b6e003c99952ef6ab0ac8a7933b3ea3a99e9aed7ca31",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 714,
+   "eligible": 714
+  }
+ ]
+}

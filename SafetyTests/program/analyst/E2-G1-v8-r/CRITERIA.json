@@ -1,0 +1,179 @@
+{
+  "slice": "E2-G1-v8-r",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "basis": [
+    "program/reviewer/E2-G1-v8/G1_REVIEW.md N19, m-21, m-22, m-25"
+  ],
+  "sources": {
+    "reviewer/E2-G1-v8/G1_REVIEW.md": "92534e9fc3c4b1526986610ef1e2521881f7efc3f325b00914404e6e25024235",
+    "architect/E2-status/PLAN.md": "d8b52bddce73a9f2baca3c96a1e78e4fda891d5491b74b2d20aa3127f50c3492",
+    "SAFETY_STATE_MACHINE_SPEC.md": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472",
+    "REQ-CONSOLIDATION/CRITERIA.md": "f2f11d77eba0d3b4441b42ff55666fbfc741bdd2867ebb763829328ad909eaa3",
+    "E2-G1-v7-q/CRITERIA.md.beforeMark": "4f6d29161089691661db5dfa4a61c620d206500915fbce5580bfef9c09266e65",
+    "E2-G1-v8-q/CRITERIA.md": "6b784f96cde3c35fe95dd06f70abedfdedf90106951836886beae2ccb16ac6e7",
+    "SCENARIO_DECISIONS.md.before": "c28b0e5ec38ca3b4d6f05b54cdaefb50db45e0e24f2d84e7854f0ed88be39272",
+    "SCENARIO_DECISIONS.md.after": "0a7cea4a88d7345604967006ec49aad936902368313c980357bd1461052a7c73",
+    "canonical.sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "candidate.E2d-v7.4.1.sal": "a5acf29175b041d243aac19e5ffee4c260f0c6cab3b538679c36ed1e59286c1b",
+    "candidate.E2d-v7.5.sal": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b"
+  },
+  "criteria": [
+    {
+      "id": "N19-SR",
+      "decision": "TD-14",
+      "status": {
+        "S1": "main R&D in [A, R_end], READY (SPEC 2/14, MOD-002, MOD-006)",
+        "S2": "main Safe in Safe->R&D, READY (SPEC 14, MOD-001)",
+        "S3": "phase marker separate, READY-D",
+        "S4": "READY by question 78 A (Vadim 2026-10-22); see S4-OUTPLC"
+      },
+      "phase": "SR(n) = recRndC_SU && main R&D && !Run; start A (TD-08); no Symbol -> ERROR",
+      "behaviour": {
+        "05.holding": "STO released && out_HV_C2 && !SS1 && !out_HV_Discharge_Request && !Run",
+        "06.holding": "out_LV_C1 && !out_LV_Discharge_Request && !R&D",
+        "rollbackSign": "output change only; main status R&D/Safe is not a rollback sign"
+      },
+      "abortEnd": "R_end = first scan >= a with !out_HV_C2 && !in_HV_C2_FBK && STO active; pos() removes Faulty at R_end+1; R_end absent by t_d+T_DIS+3000 -> FAIL; resumption after -> FAIL STP-006",
+      "affectedTests": [
+        "current-e2d-fbk-window-abort (FBK-05 -W/-NEG/-POS, FBK-06 'not Safe')",
+        "current-e2c-stp-i (tr := R_end)",
+        "any test using 'not R&D' as StartingRun"
+      ],
+      "replaces": "E2-G1-v7-q 3.3 status wording",
+      "ids": [
+        "MOD-001",
+        "MOD-002",
+        "MOD-006",
+        "STP-006",
+        "WDG-003"
+      ]
+    },
+    {
+      "id": "m-21",
+      "decision": "TD-13 clarification",
+      "status": "READY-D",
+      "rule": "A = s, l = never: (i) refusal allowed iff no raise to end incl. after recovery, no Emergency/fault, main R&D, new gesture after >=2001 ms clearing accepted; (ii) Emergency without raise >= s allowed; SU marker diagnostic",
+      "ids": [
+        "EMG-003",
+        "EMG-004",
+        "EMG-005",
+        "CVR-004",
+        "BTN-006",
+        "MOD-002"
+      ]
+    },
+    {
+      "id": "m-22",
+      "decision": "TD-15",
+      "status": "READY-D",
+      "rule": "c = A: (i) refusal or (ii) Emergency; in both no new raise (C2 ON, STO release, C1 ON) in scan >= c; raise output in c -> FAIL",
+      "sources": [
+        "E2b-dev 2.3",
+        "CRITERIA_DELTA_v4 0.1 L Imm",
+        "IL-02",
+        "TD-08"
+      ],
+      "ids": [
+        "EMG-002",
+        "EMG-003",
+        "CVR-004",
+        "CVR-006",
+        "MOD-001",
+        "MOD-002"
+      ]
+    },
+    {
+      "id": "m-25",
+      "decision": "normative WDG-02 (question 66(b))",
+      "status": "READY",
+      "verdict": "K-2 refusal of Safe->R&D with LV Faulty TRUE before gesture = FAIL WDG-02/MOD-001 on E2d v7.4.1 and v7.5; FBK-06-NEG/POS base normatively reachable, its failure is content RED (K-2), not coverage",
+      "boundaries": [
+        "Faulty TRUE from p-200",
+        "from p+900",
+        "at A",
+        "at A+1"
+      ],
+      "expected": "C1 ON as no-event trace; wait to t_f+30 s; FALSE by t_f+29999 -> R&D; held -> rollback + SafetyFault at t_f+30001 (t_f+30000 observation)",
+      "facts": {
+        "F1": "starts (S12 +1002, C1 +1004)",
+        "E2d-v7.4.1": "no S12, no C1",
+        "E2d-v7.5": "no S12, no C1"
+      },
+      "ids": [
+        "MOD-001",
+        "WDG-004"
+      ]
+    },
+    {
+      "id": "UNL-LVF (K-2b, V76-B)",
+      "decision": "normative: reference 4495a1f Network2 (Unlock = FBRs1, Set b_Step1 && blue, Reset !DoorMonitor && b_Step1; LV Healthy not in chain) + Q-ARCH-04 A",
+      "status": "READY",
+      "initial": "stable Safe, buttons released >= 2000 ms, no Emergency/SafetyFault, cover any",
+      "control": "X0 = same inputs with in_LV_Faulty_FBK FALSE",
+      "stimulus": "single blue from P, hold 600 ms (variant 2000), release",
+      "faultyOnset": [
+        "<= P-200",
+        "P+250",
+        "P+499",
+        "P+500",
+        "P+501",
+        "P+700",
+        "100 ms pulse in [P-100, P+600]"
+      ],
+      "expected": "out_Door_Unlock_Solonoeid per scan = X0 (FALSE [P, P+499], TRUE by P+501, P+500 observation, FALSE after release); Safe; no Emergency/SafetyFault/fault; no C1/C2/STO release",
+      "forbidden": [
+        "Unlock FALSE where X0 TRUE",
+        "Unlock earlier than X0",
+        "Emergency/SafetyFault/transition from LV Faulty in Safe"
+      ],
+      "facts": {
+        "E2a-RC/E2b/plan v7.6": "PASS (P+501, per lead)",
+        "E2c/E2d v7.5": "FAIL (no Unlock, per lead)"
+      },
+      "notCovered": "Unlock in R&D with LV Faulty (chained R&D->Safe, E2-Q2(a))",
+      "ids": [
+        "CVR-001",
+        "CVR-002",
+        "BTN-004"
+      ]
+    },
+    {
+      "id": "S4-OUTPLC",
+      "status": "READY",
+      "decision": "question 78 A (Q-V8R-01)",
+      "measure": "outPLC_RnD = PLC copy of main state R&D; moments from RND-CONF-T / RUN-CONF-T; transfer tolerance 1 scan",
+      "safeToRnD": {
+        "[A1, K1+99]": "FALSE",
+        "K1+100": "observation",
+        "<= tau_R+1 and steady R&D": "TRUE",
+        ">= K1+102 without TRUE": "FAIL",
+        "rollback Safe->R&D": "FALSE to Safe"
+      },
+      "startingRunAbort": {
+        "[A-1, R_end] and after in steady R&D": "TRUE every scan, no FALSE glitch",
+        "pulse FALSE in [A-1, R_end+3000]": "FAIL"
+      },
+      "startingRunToRun": {
+        "<= K+99": "TRUE",
+        "K+100, K+101": "observation",
+        "<= tau_Run+1 and steady Run": "FALSE"
+      },
+      "notCovered": [
+        "R&D->Safe",
+        "normal Run->R&D",
+        "WDG-03 rollback",
+        "Emergency"
+      ],
+      "ids": [
+        "MOD-006",
+        "MOD-001",
+        "MOD-002"
+      ]
+    }
+  ],
+  "questionsToVadim": [
+    "Q-V8R-01 answered: question 78 A"
+  ],
+  "blocked": []
+}

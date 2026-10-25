@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="PRG_Motion" Id="{3bb31b86-8e30-40e5-8f9d-25e9a7578583}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_Motion
+VAR
+    //--- Position/velocity control (one per motor) ---
+    fbMotor1        : FB_MotorControl;
+    fbMotor2        : FB_MotorControl;
+
+    //--- Torque control (one per motor) ---
+    fbTorque1       : FB_TorqueControl;
+    fbTorque2       : FB_TorqueControl;
+
+    //--- I/O handler ---
+    fbIO            : FB_IOHandler;
+
+    //--- Encoder handler ---
+    fbEncoder1      : FB_EncoderHandler;
+    fbEncoder2      : FB_EncoderHandler;
+
+    //--- Analog input handler ---
+    fbAnalogIn1     : FB_AnalogInHandler;
+    fbAnalogIn2     : FB_AnalogInHandler;
+
+    //--- Mentee Motor Slave handler (V3.2, slot-1 simple PDO 0x1600/0x1A00) ---
+    fbMenteeMotor   : FB_MenteeMotorHandler;
+
+    //--- Mentee Motor V3.2 slot-2: GENERIC DEBUG-PDO PIPE (new pipeline; replaces the
+    //    legacy fixed oversample handler — same GVL contract, new transport). FSM/mode
+    //    commands ride CoE SDO 0x2000 via fbMenteeSdo (GVL_Slot2 request channel). ---
+    fbSlot2Pipe         : FB_Slot2PipeHandler;
+    fbMenteeSdo         : FB_MenteeSdoCmd;
+    //--- Mentee config-over-FoE flash (config.bin -> slave, then CoE save-to-flash) ---
+    fbMenteeFoe         : FB_MenteeFoeFlash;
+
+    //--- Mentee Motor V3.2 trajectory generator (1 kHz trapezoid) ---
+    fbMenteeTraj        : FB_TrajectoryGen;
+
+    //--- Load-motor (Beckhoff) profile generators, synchronized with the Mentee
+    //    profile via GVL_Profiles.bStartSync (torque waveform or ext-setpoint pos/vel) ---
+    fbLoadProfile1      : FB_LoadMotorProfile;
+    fbLoadProfile2      : FB_LoadMotorProfile;
+
+    //--- Generic CSV-trajectory player (uploaded buffer; both motors synchronized) ---
+    fbCsvPlayer         : FB_CsvPlayer;
+
+    //--- High-rate recorder (buffers every frame into GVL_Recording.aChunks) ---
+    fbRecorder          : FB_HighRateRecorder;
+
+    //--- Mentee UART Bridge handler (V3.1) ---
+    fbUartBridge    : FB_UartBridgeHandler;
+
+    //--- NC Axis references — link to NC axes in XAE ---
+    Axis1           : AXIS_REF;
+    Axis2           : AXIS_REF;
+
+    //--- Safety ---
+    bEStopActive    : BOOL;
+
+    //--- Task cycle period [s], read live from the running task config so the
+    //    trajectory generator timestep auto-tracks any PlcTask CycleTime change
+    //    (1 ms <-> 250 us) with no code edit here. ---
+    fTaskCycleS     : REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//----------------------------------------------------------------------
+// 1. SAFETY — runs before everything else
+//----------------------------------------------------------------------
+bEStopActive := GVL_IO.stIO.bDI_EmergencyStop;
+
+IF bEStopActive THEN
+    GVL_Commands.stMotor1_Cmd.bEnable := FALSE;
+    GVL_Commands.stMotor2_Cmd.bEnable := FALSE;
+    GVL_Commands.stMotor1_Cmd.bStop   := TRUE;
+    GVL_Commands.stMotor2_Cmd.bStop   := TRUE;
+END_IF
+
+//----------------------------------------------------------------------
+// 2. I/O HANDLER — fresh sensor data before motion FBs
+//----------------------------------------------------------------------
+fbIO(
+    nRawDigitalIn    := GVL_IO.stIO.nDigitalInputs,
+    nRawAnalogIn_Ch1 := GVL_IO.stIO.nAnalogIn_Raw_Ch1,
+    nRawAnalogIn_Ch2 := GVL_IO.stIO.nAnalogIn_Raw_Ch2,
+    stIO             := GVL_IO.stIO
+);
+
+//----------------------------------------------------------------------
+// 3. ENCODER HANDLER
+//----------------------------------------------------------------------
+fbEncoder1(stEncoder := GVL_Encoder.stEncoder1, fCountsPerUnit := GVL_Encoder.fCountsPerUnit1);
+fbEncoder2(stEncoder := GVL_Encoder.stEncoder2, fCountsPerUnit := GVL_Encoder.fCountsPerUnit2);
+
+//----------------------------------------------------------------------
+// 4. ANALOG INPUT HANDLER
+//----------------------------------------------------------------------
+fbAnalogIn1(stAnalogIn := GVL_AnalogIn.stAnalogIn1);
+fbAnalogIn2(stAnalogIn := GVL_AnalogIn.stAnalogIn2);
+
+//----------------------------------------------------------------------
+// 5. MENTEE MOTOR SLAVE — V3.2, slot-1 (simple PDO 0x1600/0x1A00)
+//----------------------------------------------------------------------
+fbMenteeMotor(
+    stCmd    := GVL_MenteeMotor.stCmd,
+    stStatus := GVL_MenteeMotor.stStatus
+);
+
+//----------------------------------------------------------------------
+// 5a. MENTEE V3.2 motion-profile generator (1 kHz: sine/trapezoid/step/
+//     s-curve/ramp). While a profile runs it overrides the selected setpoint
+//     field (by nField) BEFORE the handler below forwards stCmd to the RxPDO.
+//     Measured position = latest OS sub-sample (anchor for position profiles).
+//----------------------------------------------------------------------
+// Live task cycle [s] from the running task config (100 ns units -> s), so the
+// profile timestep auto-tracks PlcTask CycleTime (1 ms <-> 250 us) — no edit here.
+fTaskCycleS := LREAL_TO_REAL(UDINT_TO_LREAL(_TaskInfo[GETCURTASKINDEXEX()].CycleTime) * 1.0E-7);
+IF fTaskCycleS <= 0.0 THEN
+    fTaskCycleS := 0.001;    // safety fallback if the system var reads 0
+END_IF
+
+fbMenteeTraj(
+    stTraj       := GVL_MenteeMotorV32_OS.stTraj,
+    fMeasuredPos := GVL_MenteeMotorV32_OS.stStatus.fLatestPos,  // decoded theta (REAL)
+    fDt          := fTaskCycleS,   // auto-tracks the PlcTask cycle (1 ms / 250 us)
+    bStartSync   := GVL_Profiles.bStartSync AND GVL_Profiles.bMenteeEnable,
+    bStopSync    := GVL_Profiles.bStopSync
+);
+IF fbMenteeTraj.bRunning THEN
+    // route by the FB's LATCHED field (nFieldOut) — the live stTraj.nField can
+    // already hold the NEXT run's field while the app rewrites the config over
+    // ADS, and routing by it would inject this run's value into the wrong lane
+    CASE fbMenteeTraj.nFieldOut OF
+        1:  GVL_MenteeMotorV32_OS.stCmd.impedance_p_des   := fbMenteeTraj.fSetpoint;
+        2:  GVL_MenteeMotorV32_OS.stCmd.setpoint_velocity := fbMenteeTraj.fSetpoint;
+        3:  GVL_MenteeMotorV32_OS.stCmd.setpoint_current  := fbMenteeTraj.fSetpoint;
+    ELSE
+        GVL_MenteeMotorV32_OS.stCmd.setpoint_position := fbMenteeTraj.fSetpoint;
+    END_CASE
+END_IF
+
+//----------------------------------------------------------------------
+// 5a2. CSV TRAJECTORY PLAYER (generic uploaded buffer, both motors synchronized).
+//      Called here so its Mentee output reaches the RxPDO forward (5b) THIS cycle
+//      and its Beckhoff torque override precedes torque control (9). For a Beckhoff
+//      POS/VEL run the FB feeds the NC axis via external setpoint — the motor must
+//      already be ENABLED/READY (its MC_Power is maintained from prior cycles by
+//      fbMotor1/2 in 7/8). Mutually exclusive with the closed-form profiles.
+//----------------------------------------------------------------------
+fbCsvPlayer(
+    stCsv     := GVL_CsvProfile.stCsv,
+    AxisLoad1 := Axis1,
+    AxisLoad2 := Axis2,
+    fLoad1Pos := Axis1.NcToPlc.ActPos,
+    fLoad2Pos := Axis2.NcToPlc.ActPos,
+    fDt       := fTaskCycleS
+);
+// The CSV player and the closed-form generators are mutually exclusive by design;
+// the guards below enforce it (the CSV player YIELDS) so that if a closed-form
+// profile is somehow still running it keeps ownership of the shared command field
+// instead of both writing it (last-write-wins glitch).
+IF fbCsvPlayer.bRunning AND GVL_CsvProfile.stCsv.bMenteeEnable AND NOT fbMenteeTraj.bRunning THEN
+    CASE GVL_CsvProfile.stCsv.nMenteeField OF
+        1:  GVL_MenteeMotorV32_OS.stCmd.impedance_p_des   := fbCsvPlayer.fMenteeOut;
+        2:  GVL_MenteeMotorV32_OS.stCmd.setpoint_velocity := fbCsvPlayer.fMenteeOut;
+        3:  GVL_MenteeMotorV32_OS.stCmd.setpoint_current  := fbCsvPlayer.fMenteeOut;
+    ELSE
+        GVL_MenteeMotorV32_OS.stCmd.setpoint_position := fbCsvPlayer.fMenteeOut;
+    END_CASE
+END_IF
+IF fbCsvPlayer.bRunning AND GVL_CsvProfile.stCsv.bLoadEnable
+   AND (GVL_CsvProfile.stCsv.nLoadDomain = 0) THEN   // TORQUE domain -> override fTargetTorque
+    IF (GVL_CsvProfile.stCsv.nLoadMotor = 1) AND NOT fbLoadProfile1.bRunning THEN
+        GVL_Commands.stMotor1_Cmd.fTargetTorque := fbCsvPlayer.fLoadOut;
+    ELSIF (GVL_CsvProfile.stCsv.nLoadMotor = 2) AND NOT fbLoadProfile2.bRunning THEN
+        GVL_Commands.stMotor2_Cmd.fTargetTorque := fbCsvPlayer.fLoadOut;
+    END_IF
+END_IF
+
+//----------------------------------------------------------------------
+// 5b. MENTEE MOTOR V3.2 — slot-2 GENERIC DEBUG PIPE (new pipeline).
+//     Same GVL contract as the legacy handler: stCmd setpoints stream via the
+//     bound inject slots; stStatus (incl. synthesized status word + oversample
+//     view) is rebuilt from the debug TxPDO. FSM/main/mode commands go via
+//     fbMenteeSdo (CoE SDO 0x2000; GVL_Slot2 channel) — stCmd.nControlWord is
+//     no longer consumed. Bindings: app writes GVL_Slot2.stCfg + bConfigure.
+//----------------------------------------------------------------------
+fbSlot2Pipe(
+    stCmd    := GVL_MenteeMotorV32_OS.stCmd,
+    stStatus := GVL_MenteeMotorV32_OS.stStatus
+);
+fbMenteeSdo();
+fbMenteeFoe();   // FoE config.bin download + auto-save on success (GVL_MenteeFoe channel)
+
+//----------------------------------------------------------------------
+// 6. MENTEE UART BRIDGE — V3.1
+//----------------------------------------------------------------------
+fbUartBridge(
+    stCmd    := GVL_UartBridge.stCmd,
+    stStatus := GVL_UartBridge.stStatus
+);
+
+//----------------------------------------------------------------------
+// 6. LIMIT SWITCH INTERLOCKS
+//----------------------------------------------------------------------
+IF GVL_IO.stIO.bDI_LimitPos_M1 AND GVL_Commands.stMotor1_Cmd.fTargetVelocity > 0 THEN
+    GVL_Commands.stMotor1_Cmd.bStop := TRUE;
+END_IF
+IF GVL_IO.stIO.bDI_LimitNeg_M1 AND GVL_Commands.stMotor1_Cmd.fTargetVelocity < 0 THEN
+    GVL_Commands.stMotor1_Cmd.bStop := TRUE;
+END_IF
+IF GVL_IO.stIO.bDI_LimitPos_M2 AND GVL_Commands.stMotor2_Cmd.fTargetVelocity > 0 THEN
+    GVL_Commands.stMotor2_Cmd.bStop := TRUE;
+END_IF
+IF GVL_IO.stIO.bDI_LimitNeg_M2 AND GVL_Commands.stMotor2_Cmd.fTargetVelocity < 0 THEN
+    GVL_Commands.stMotor2_Cmd.bStop := TRUE;
+END_IF
+
+//----------------------------------------------------------------------
+// 7. MOTOR 1
+//----------------------------------------------------------------------
+fbMotor1(
+    Axis     := Axis1,
+    stCmd    := GVL_Commands.stMotor1_Cmd,
+    stStatus => GVL_Status.stMotor1_Status
+);
+
+GVL_IO.stIO.bDO_BrakeRelease_M1 :=
+    (GVL_Status.stMotor1_Status.eState = E_MotorState.READY)  OR
+    (GVL_Status.stMotor1_Status.eState = E_MotorState.MOVING) OR
+    (GVL_Status.stMotor1_Status.eState = E_MotorState.HOMING);
+
+//----------------------------------------------------------------------
+// 8. MOTOR 2
+//----------------------------------------------------------------------
+fbMotor2(
+    Axis     := Axis2,
+    stCmd    := GVL_Commands.stMotor2_Cmd,
+    stStatus => GVL_Status.stMotor2_Status
+);
+
+GVL_IO.stIO.bDO_BrakeRelease_M2 :=
+    (GVL_Status.stMotor2_Status.eState = E_MotorState.READY)  OR
+    (GVL_Status.stMotor2_Status.eState = E_MotorState.MOVING) OR
+    (GVL_Status.stMotor2_Status.eState = E_MotorState.HOMING);
+	
+//----------------------------------------------------------------------
+// 8b. CURRENT / TORQUE LIMIT  ->  AX5000 SoE S-0-0092 (mapped MDT PDO)
+//     % setpoint -> raw IDN units. 0.1 % per LSB => 1000 = 100.0 %.
+//     VERIFY the S-0-0092 weighting in Drive Manager; if it is 0.01 %, use 100.0.
+//     NOTE: 0 % = no torque -> the axis cannot hold or move.
+//----------------------------------------------------------------------
+GVL_Commands.nMotor1_CurrentLimit_Raw :=
+    LREAL_TO_UINT(LIMIT(0.0, GVL_Commands.stMotor1_Cmd.fCurrentLimit_pct, 100.0) * 10.0);
+GVL_Commands.nMotor2_CurrentLimit_Raw :=
+    LREAL_TO_UINT(LIMIT(0.0, GVL_Commands.stMotor2_Cmd.fCurrentLimit_pct, 100.0) * 10.0);
+
+//----------------------------------------------------------------------
+// 8c. LOAD-MOTOR PROFILES (Beckhoff) — synchronized with the Mentee profile via
+//     GVL_Profiles.bStartSync. Placed AFTER MC_Power (so the external-setpoint
+//     feed acts on an already-powered axis) and BEFORE torque control (so a
+//     TORQUE-domain profile overrides fTargetTorque before FB_TorqueControl
+//     streams it). fMeasuredPos = axis actual position [deg] for anchoring.
+//       nDomain 0 TORQUE  : override stMotorN_Cmd.fTargetTorque while running.
+//                           The app must already be in torque mode
+//                           (eControlMode=TORQUE, bTorqueExecute=TRUE).
+//       nDomain 1/2 POS/VEL: the FB feeds the NC axis via external setpoint; the
+//                           motor must be ENABLED/READY and NOT executing a move.
+//----------------------------------------------------------------------
+fbLoadProfile1(
+    stProfile    := GVL_Profiles.stLoadProfile1,
+    Axis         := Axis1,
+    fMeasuredPos := Axis1.NcToPlc.ActPos,
+    fDt          := fTaskCycleS,
+    bStartSync   := GVL_Profiles.bStartSync,
+    bStopSync    := GVL_Profiles.bStopSync
+);
+IF fbLoadProfile1.bRunning AND (GVL_Profiles.stLoadProfile1.nDomain = 0) THEN
+    GVL_Commands.stMotor1_Cmd.fTargetTorque := fbLoadProfile1.fSetpoint;
+END_IF
+
+fbLoadProfile2(
+    stProfile    := GVL_Profiles.stLoadProfile2,
+    Axis         := Axis2,
+    fMeasuredPos := Axis2.NcToPlc.ActPos,
+    fDt          := fTaskCycleS,
+    bStartSync   := GVL_Profiles.bStartSync,
+    bStopSync    := GVL_Profiles.bStopSync
+);
+IF fbLoadProfile2.bRunning AND (GVL_Profiles.stLoadProfile2.nDomain = 0) THEN
+    GVL_Commands.stMotor2_Cmd.fTargetTorque := fbLoadProfile2.fSetpoint;
+END_IF
+
+//----------------------------------------------------------------------
+// 9. TORQUE CONTROL
+//----------------------------------------------------------------------
+fbTorque1(Axis := Axis1, stCmd := GVL_Commands.stMotor1_Cmd,
+          bAxisReady := (GVL_Status.stMotor1_Status.eState = E_MotorState.READY));
+GVL_Status.stMotor1_Status.bTorqueActive   := fbTorque1.stStatus.bTorqueActive;
+GVL_Status.stMotor1_Status.bTorqueInTorque := fbTorque1.stStatus.bTorqueInTorque;
+IF fbTorque1.stStatus.bError THEN
+    GVL_Status.stMotor1_Status.bError   := TRUE;
+    GVL_Status.stMotor1_Status.nErrorID := fbTorque1.stStatus.nErrorID;
+END_IF
+
+fbTorque2(Axis := Axis2, stCmd := GVL_Commands.stMotor2_Cmd,
+          bAxisReady := (GVL_Status.stMotor2_Status.eState = E_MotorState.READY));
+GVL_Status.stMotor2_Status.bTorqueActive   := fbTorque2.stStatus.bTorqueActive;
+GVL_Status.stMotor2_Status.bTorqueInTorque := fbTorque2.stStatus.bTorqueInTorque;
+IF fbTorque2.stStatus.bError THEN
+    GVL_Status.stMotor2_Status.bError   := TRUE;
+    GVL_Status.stMotor2_Status.nErrorID := fbTorque2.stStatus.nErrorID;
+END_IF
+
+//----------------------------------------------------------------------
+// 10. STATUS LEDs
+//----------------------------------------------------------------------
+GVL_IO.stIO.bDO_StatusLED_Green :=
+    NOT GVL_Status.stMotor1_Status.bError AND
+    NOT GVL_Status.stMotor2_Status.bError AND
+    NOT bEStopActive;
+
+GVL_IO.stIO.bDO_StatusLED_Red :=
+    GVL_Status.stMotor1_Status.bError OR
+    GVL_Status.stMotor2_Status.bError OR
+    bEStopActive;
+
+//----------------------------------------------------------------------
+// 11. SYNCHRONIZED SNAPSHOT — all data from this DC cycle
+//     Python reads GVL_Sync.stSnapshot in a single ADS call.
+//     nCycleCount lets Python detect missed or duplicate reads.
+//----------------------------------------------------------------------
+GVL_Sync.stSnapshot.nCycleCount     := GVL_Sync.stSnapshot.nCycleCount + 1;
+GVL_Sync.stSnapshot.nDcTimestamp    := F_GetCurDcTaskTime64();
+
+// UART Bridge (V3.1)
+GVL_Sync.stSnapshot.stBridge        := GVL_UartBridge.stStatus;
+
+// Mentee Motor (V3.2, slot-1)
+GVL_Sync.stSnapshot.stMotor         := GVL_MenteeMotor.stStatus;
+
+// Mentee Motor (V3.2, slot-2 oversample)
+GVL_Sync.stSnapshot.stMotorV32_OS   := GVL_MenteeMotorV32_OS.stStatus;
+// EtherCAT AL state (Motor Slave InfoData.State, linked to nSlaveState) — the
+// master's authoritative online view: (nAlState AND 16#000F) = 8 means OP.
+GVL_Sync.stSnapshot.stMotorV32_OS.nAlState := GVL_MenteeMotorV32_OS.nSlaveState;
+// V3.2 trajectory generator running flag (so the app can reflect it).
+GVL_Sync.stSnapshot.bTrajRunning := fbMenteeTraj.bRunning;
+
+// Encoders
+GVL_Sync.stSnapshot.stEncoder1      := GVL_Encoder.stEncoder1;
+GVL_Sync.stSnapshot.stEncoder2      := GVL_Encoder.stEncoder2;
+
+// Analog inputs
+GVL_Sync.stSnapshot.stAnalogIn1     := GVL_AnalogIn.stAnalogIn1;
+GVL_Sync.stSnapshot.stAnalogIn2     := GVL_AnalogIn.stAnalogIn2;
+
+// Motor control status
+GVL_Sync.stSnapshot.stMotor1Status  := GVL_Status.stMotor1_Status;
+GVL_Sync.stSnapshot.stMotor2Status  := GVL_Status.stMotor2_Status;
+
+// Safety
+GVL_Sync.stSnapshot.bEStopActive    := bEStopActive;
+
+//----------------------------------------------------------------------
+// 12. HIGH-RATE RECORDER — append this frame to the recording ring while
+//     GVL_Recording.bEnable. Runs last, on the freshly-assembled snapshot.
+//----------------------------------------------------------------------
+fbRecorder(stSnap := GVL_Sync.stSnapshot);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

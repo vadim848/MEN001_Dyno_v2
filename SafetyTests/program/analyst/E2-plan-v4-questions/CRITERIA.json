@@ -1,0 +1,107 @@
+{
+  "slice": "E2-plan-v4-questions",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "conventions": "REQ-CONSOLIDATION/CRITERIA.md §0 (R0, q-1/q/q+1, EMGREF)",
+  "sources": {
+    "SCENARIO_DECISIONS.md": "ddee45529a13dbb224bfc82637dcaa5a14e92eb243e55030601775a774829c07",
+    "SAFETY_STATE_MACHINE_SPEC.md": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472",
+    "SOFTWARE_ACCEPTANCE_SCOPE.md": "03facdcebc8b54763d5bbfa0fc634dba85a5ed6bb5070e1b82ca33e76f9e9537",
+    "reviewer/E2-plan-v4/PLAN_REVIEW.md": "9d45c96e91471cd1350c233d008b0c36cfdec614c6b4fc543ac2537098eb6ed4",
+    "architect/E2-status/PLAN.md (v4)": "b90eff7c4045a638a6822bbff022459565f552b2e2b39ea295c6693bc640b4fd",
+    "canonical SAL": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "canonical SGVL": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "canonical diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+    "CRITERIA_DELTA_v4": "2b405938d002343a65afc73db8d2b83f172106462368121792c2539d70a60c04",
+    "CRITERIA_DELTA_v6": "3d2d8fba7c162b601da39c6094fb35fff115264243a05c35526140f8b3030f02",
+    "HEAD": "a8f6de7"
+  },
+  "probes": {
+    "probe-es06.mjs": "73864fd4e459936788ddcc0a6edde4658522de810795dd00943adc0b10c1748e",
+    "PROBE_ES06.txt": "ae9ccfadc43952fe4a2b31813b0848f763b4223bc88928522480e40bb3444e41",
+    "probe-boot-fbk.mjs": "55930f69caaf40471a61f29ae6a380147db1bda9b4d871bd79ef3740cf13030a",
+    "PROBE_BOOT_FBK.txt": "042ce661137bd498fead332727589dd5b8927f495003850da6d52640e04afe65",
+    "probe-dump.mjs": "1275298e66cc968e6d0ccb6095ab0fcf0b59e9a68845df4e64052916c98eb48c",
+    "nature": "model of architect proto.mjs over sal-runtime; diagnostic only, not oracle, not native, not hardware"
+  },
+  "criteria": [
+    {
+      "id": "B43-01",
+      "status": "READY-D",
+      "reviewItem": "B4-3",
+      "ids": ["EMG-011", "CFG-001", "EMG-006"],
+      "initial": "steady Run (R0); ES_NC_1 FALSE 100 ms at e; early Restart (green e+120..e+220) -> status EMG, EOk TRUE (S6); wait 12000 ms: chain complete, C1/C2 OFF, FBKs OFF, STO active",
+      "events": [
+        "(a) Bypass TRUE at b held 300 ms and 5000 ms",
+        "(b) Bypass 1-scan pulse",
+        "(c) Bypass TRUE from before e",
+        "(d) as (a) with ES_NC_1 held FALSE",
+        "(e) (a)-(c) after Emergency from R&D and Safe->R&D",
+        "(f) (a)-(c) at boot before first Restart"
+      ],
+      "expected": "every scan >= b until Restart: status Emergency; out_LV_C1=out_HV_C2=FALSE; C3/BMS FALSE; STO active; Unlock FALSE; no Config/Safe/R&D/Run; no fault",
+      "forbidden": ["C1 or C2 TRUE in any scan with status Emergency", "deferred execution of Bypass after Restart"],
+      "boundaries": "b = C2 OFF-1, C2 OFF, C2 OFF+1 relative to chain completion; all normative (event boundary)",
+      "sources": ["EMG-011", "EMGREF(2)", "V14-Q16", "Q-RC-05(a)(b)", "CFG-001"]
+    },
+    {
+      "id": "B43-02",
+      "status": "READY-D",
+      "reviewItem": "B4-3",
+      "ids": ["EMG-006", "EMG-012", "MOD-006", "CFG-001"],
+      "initial": "as B43-01 after chain complete: S6, EOk TRUE, all OFF",
+      "events": "green pressed 100 ms, released at g_r; Bypass rises at g_r+delta, delta in {-100,-1,0,+1,+2}, held 300 ms; separately Bypass TRUE before green and held through exit",
+      "expected": "exactly one EMG->SAFE transition; from first SAFE scan until an accepted UP: out_LV_C1=out_HV_C2=FALSE, FBKs FALSE, STO active; no Config; Bypass held through exit never executed",
+      "forbidden": ["SAFE scan with C1 or C2 TRUE (w9)", "EMG scan with C1 or C2 TRUE", "SAFE->EMG->SAFE flicker", "exit to R&D/Run/Config"],
+      "outOfScope": "Bypass edge >= 2000 ms after exit in steady Safe: Config / legacy Bypass in Safe = E4 (CFG-001/CFG-02), observation in E2",
+      "sources": ["EMG-006", "SPEC §12 p.3-4", "SPEC §2 table (Safe = energy off)", "E2 decision", "EMG6-01", "Q-RC-05"],
+      "conclusion": "Requirements unambiguously forbid energy under Emergency status; gate Bypass/G10 in E2b (forced by the E2 status mechanism; E4 freeze exception 'forced by other stages'). No question to Vadim."
+    },
+    {
+      "id": "ES06-01",
+      "status": "READY-D",
+      "reviewItem": "ES-06 / A4-7",
+      "ids": ["EMG-006", "EMG-012", "MOD-006", "BOOT-001"],
+      "initial": "group start R0 (ES_NC_1/2 TRUE); variant ES_NC_1 FALSE from first scan",
+      "events": "no Restart 300 ms; then separately blue 700 ms, Bypass 300 ms, CMD_*/inPLC_RnD_Mode 300 ms; then Restart",
+      "expected": "until EMG6-01: status Emergency, C1/C2/C3/BMS FALSE, STO active, Unlock FALSE, no transitions/Config; after Restart: Safe; Bypass/CMD held from boot not executed",
+      "forbidden": ["Safe/R&D/Run/Config status before Restart", "energy", "Unlock"],
+      "notNormative": ["internal stage memories (b_Step1 etc.) before Restart", "exact scan of Safe status after green release with energy off"],
+      "mutationClassification": "N3/FBAnd1.AndIn2: category (v) equivalent w.r.t. requirements; boot reaches the reachable legal state S1 AND NOT EOk (= Emergency raised in Safe), exit via EMG6-01; only observable delta is Safe status 1 scan earlier (not normative). Killer 'b_Step1 FALSE before Restart' is an internal-signal oracle, not a requirement.",
+      "sources": ["Q-RC-10", "E2-04", "BOOT-C", "EMG6-01", "EMGREF(2)", "Q-ARCH-10", "PLAN v4 §2.3"]
+    },
+    {
+      "id": "RC-UB",
+      "status": "READY-D",
+      "reviewItem": "RC-6 / A4-2 (M-E2a-21)",
+      "ids": ["MOD-002"],
+      "rule": "upper bound of Run (and R&D) confirmation is normative per §0: q-1 no Run, q+1 Run present, q observation; for cascaded thresholds (500 ms window then 100 ms) one scan tolerance per threshold (q_total+2 when the window limits); exact formula owned by v7 (analyst/E2-G1-v4)",
+      "killerM-E2a-21": "scenario where only the 100 ms threshold limits, e.g. RC-5 (iv): C2_FBK ON from c+1, HV Faulty TRUE until c+2999, FALSE from c+3000; Run required at k+101, mutant k+102",
+      "dependency": "align notation with v7 RUN-CONF formula; v7 wording prevails on notation",
+      "sources": ["Q-RC-RUNCONF-01 V", "question 68 B", "Q-V4-01 B", "CRITERIA v2 §0", "CRITERIA_DELTA v6 §1"]
+    },
+    {
+      "id": "REL01-e2",
+      "status": "READY-D",
+      "reviewItem": "REL-01(e) [500,999)",
+      "ids": ["BTN-001", "BTN-002", "EMG-003", "CVR-004"],
+      "initial": "steady Safe R0, buttons released > 2000 ms, no SafetyFault; variant steady R&D with NC1/NC2 TRUE",
+      "events": "first button f, second p (p-f<=250), both held 1100 ms; Q=p+1000; permit episode [s,r): Safe LV/HV/both connectors FALSE; R&D NC1/NC2/both FALSE",
+      "table": [
+        {"episode": "[p+500,p+999), [p+1,p+2), [p+500,p+501), [f,p+300), [f-300,f+10)", "expected": "rejected: no transition, no C1/C2, STO kept, no fault, no Emergency"},
+        {"episode": "s<=Q-1 and r>Q", "expected": "rejected (REL-01(e) original)"},
+        {"episode": "r<=f-1", "expected": "accepted with other permits (REL-01 a/b/c)"},
+        {"episode": "r=f", "expected": "observation"},
+        {"episode": "s>=Q+2", "expected": "Safe: accepted then Emergency (EMG-004/Q-RC-14); R&D cover: StartingRun then Emergency (Q-RC-03a)"},
+        {"episode": "s in {Q,Q+1}", "expected": "observation; only 'rejected without energy' or 'accepted + Emergency'"}
+      ],
+      "afterRejection": "held buttons give nothing; new attempt only after release >= 2001 ms (1999 rejected, 2000 observation)",
+      "control": "Safe, NC1/NC2 FALSE [p+500,p+999) -> Safe->R&D accepted (V14-Q7 B1)",
+      "forbidden": ["executing the held gesture at any scan >= r without a new attempt", "fault/SafetyFault/Emergency from the episode in Safe/R&D", "restart of the 2 s release count from permit restoration"],
+      "sources": ["EMG-003 / SPEC §5.1 (new gesture required after restoration)", "IL-02", "CVR-004", "BTN-001/002", "SPEC §3.1 p.10", "Q-REL-AFTER-PERMIT A", "V14-Q7", "EMG-004/Q-RC-14", "Q-RC-03(a)"]
+    }
+  ],
+  "blocked": [],
+  "questionsToVadim": [],
+  "sideObservation": "PROBE_BOOT_FBK: boot with C1_FBK or C2_FBK held TRUE, Restart -> S1/SAFE on F1 and on the E2 v4 model; vs EMG6-01 'Restart with FBK ON -> Emergency' and Q-V4-02 V (SafetyFault in steady Safe); E5/E6 scope, check v7 FBK coverage"
+}

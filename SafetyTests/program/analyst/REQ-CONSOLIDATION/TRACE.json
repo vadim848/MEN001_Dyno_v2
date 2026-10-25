@@ -1,0 +1,228 @@
+{
+ "schema": "men001-v2-analyst-trace/1",
+ "slice": "REQ-CONSOLIDATION",
+ "version": 2,
+ "date": "2026-10-21",
+ "previous": "TRACE.v1.json (V14-Q*, E2*, E6* traces remain valid)",
+ "source": {
+  "head": "7d7aecd9f333f6f256dac6d2366ab91519b949d0",
+  "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+  "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+  "scenarioDecisions": "c1e7fe6cf7aa1adbf7fcc33452c393bddd6f2cc4dfc02140ab55e621c0fd7bdf (working copy, uncommitted)",
+  "scope": "e3508d24d23fa821ae7ddc374cc5684408d8b2b8167d2e18e1853ffe934207b4",
+  "spec": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472",
+  "traceMatrix": "540d6edce9e2cdfac0ff0cbd0752734a47a0f0fd127414bf01fceefa5a28e9c3",
+  "reference": "MEN001_Dyno 4495a1f6049f6a58ebfd436761faa84d17c8d643",
+  "planReview": "program/reviewer/E2-plan/PLAN_REVIEW.md"
+ },
+ "codeFact": "connector consumers: reference N2/FBAnd1, N6/FBAnd9 (Run hold -> Step4), N10 status; FBEstop1 does not read connectors; canonical adds N1/FBAndLvCurrentPermit and SafeResumption/CONNECTORS",
+ "trace": [
+  {
+   "decision": "Q-RC-01",
+   "ids": [
+    "EMG-002",
+    "CVR-006"
+   ],
+   "status": "REPLACES",
+   "replaces": "V14-Q21(b) and v1 IL-03a/IL-03b",
+   "note": "Run NC loss -> Emergency (IL-03)"
+  },
+  {
+   "decision": "Q-RC-02",
+   "ids": [
+    "STP-001",
+    "EMG-008",
+    "EMG-009",
+    "STP-007"
+   ],
+   "status": "NEW",
+   "replaces": "canonical Step4 for Healthy loss in Run",
+   "note": "STP-G; G4 -> Q-RC-16, G5 -> Q-ARCH-05"
+  },
+  {
+   "decision": "Q-RC-03(a)",
+   "ids": [
+    "EMG-002"
+   ],
+   "status": "NEW",
+   "replaces": null,
+   "note": "StartingRun NC -> Emergency as Run (IL-05a); answers Q-ARCH-01 for SU"
+  },
+  {
+   "decision": "Q-RC-03(b1)",
+   "ids": [
+    "EMG-002",
+    "CVR-006",
+    "STP-005"
+   ],
+   "status": "REPLACES",
+   "replaces": "SPEC §5.1 InterLock->Emergency for Run->R&D, Safe->R&D, R&D->Safe",
+   "note": "IL-05b, IL-02b"
+  },
+  {
+   "decision": "Q-RC-03(b2)",
+   "ids": [
+    "EMG-002",
+    "CFG-005"
+   ],
+   "status": "NEW",
+   "replaces": null,
+   "note": "IL-05c"
+  },
+  {
+   "decision": "Q-RC-04",
+   "ids": [
+    "MOD-007",
+    "PLC-002"
+   ],
+   "status": "REFINES",
+   "replaces": "V14-Q8 window",
+   "note": "PLC-05 level-based"
+  },
+  {
+   "decision": "Q-RC-05",
+   "ids": [
+    "CFG-001",
+    "MOD-003",
+    "BOOT-001",
+    "EMG-006"
+   ],
+   "status": "REFINES",
+   "replaces": "V14-Q16 entry",
+   "note": "CFG-03, EMG6-01, BOOT-C"
+  },
+  {
+   "decision": "Q-RC-06",
+   "ids": [
+    "CFG-006",
+    "WDG-001"
+   ],
+   "status": "NEW",
+   "replaces": null,
+   "note": "CFG-08"
+  },
+  {
+   "decision": "Q-RC-07",
+   "ids": [
+    "WDG-004",
+    "MOD-005"
+   ],
+   "status": "REFINES",
+   "replaces": "E6-Q2 (explicit exception for green in R&D)",
+   "note": "WDG-06(a'), WDG-07; PLC descent keeps SafetyFault derived from E6-Q2"
+  },
+  {
+   "decision": "Q-RC-08",
+   "ids": [
+    "MOD-004"
+   ],
+   "status": "CONFIRMS",
+   "replaces": "V14-Q11 for phases",
+   "note": "PLC-10"
+  },
+  {
+   "decision": "Q-RC-09",
+   "ids": [
+    "EMG-008",
+    "STP-002",
+    "STP-004"
+   ],
+   "status": "NEW",
+   "replaces": null,
+   "note": "STP-F"
+  },
+  {
+   "decision": "Q-RC-10",
+   "ids": [
+    "EMG-012",
+    "MOD-006",
+    "BOOT-001"
+   ],
+   "status": "REPLACES",
+   "replaces": "TransitionFault alternative (Q-FAULT-DESTINATION)",
+   "note": "E2-04, BOOT-C"
+  },
+  {
+   "decision": "Q-MU06-01/02",
+   "ids": [
+    "EMG-001",
+    "EMG-005"
+   ],
+   "status": "CONFIRMS",
+   "replaces": null,
+   "note": "already in v1 (MU06-S, R0)"
+  },
+  {
+   "decision": "D-ARCH-POL",
+   "ids": [
+    "MOD-008",
+    "MOD-001",
+    "EMG-008"
+   ],
+   "status": "NEW",
+   "replaces": "v1 'polarity per architect'",
+   "note": "raw FALSE = healthy; N11/FBAnd4.AndIn3 to fix in E2; POL-01"
+  },
+  {
+   "decision": "D-ARCH-POL-RENAME",
+   "ids": [
+    "MOD-008"
+   ],
+   "status": "NEW",
+   "replaces": null,
+   "note": "in_LV/HV_Faulty_FBK; program names only"
+  },
+  {
+   "decision": "Q-ARCH-06",
+   "ids": [
+    "BOOT-001"
+   ],
+   "status": "REPLACES",
+   "replaces": "preservation of reference Network5 power-on sequence",
+   "note": "R1 allowed under R1-01; R2 and HL/SafetyFault merge not allowed"
+  }
+ ],
+ "emg004": {
+  "unambiguous": [
+   "Config and Config exit -> Emergency (V14-Q19)",
+   "after Safe: no energy increase, Unlock FALSE, restore does not cancel (SPEC §5.1)"
+  ],
+  "ambiguous": "latched Emergency vs protective descent in R&D/Run/transitions; V14-Q19 'as in any state' is a question premise contradicting code (same pattern as V14-Q21(b)/Q-RC-01)",
+  "question": "Q-RC-14"
+ },
+ "contradictions": [
+  {
+   "pair": "E6-Q2 vs Q-RC-07(a)",
+   "result": "explicit exception by Vadim; derived details READY-D; v1 WDG-06(a) for green in R&D replaced"
+  },
+  {
+   "pair": "Q-RC-07 PLC descent SafetyFault vs E6-Q2",
+   "result": "derived: stays until button (READY-D)"
+  },
+  {
+   "pair": "Q-RC-04 vs STP-B/V14-Q12/Q13",
+   "result": "held UP blocks PLC DOWN in stable Run; abort executes, error on arrival; consequence to report"
+  },
+  {
+   "pair": "Q-RC-02 vs SPEC §9 / Q-RC-09",
+   "result": "LV during SS1 uncovered -> Q-RC-15"
+  },
+  {
+   "pair": "Q-RC-02 chain vs E2-Q2(a)",
+   "result": "LV restored before R&D ambiguous -> Q-RC-16"
+  },
+  {
+   "pair": "Q-RC-03 vs other descents",
+   "result": "-> Q-RC-17"
+  },
+  {
+   "pair": "Q-RC-04/Q-RC-05 vs Bypass; Q-RC-05(b) vs buttons",
+   "result": "-> Q-RC-18"
+  },
+  {
+   "pair": "V14-Q21(a)/Q-RC-03(b1) vs canonical GATE_001",
+   "result": "code divergence; IL-02b, HLT-01b expected RED"
+  }
+ ]
+}

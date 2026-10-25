@@ -1,0 +1,32 @@
+t16   RUN base fbk30                           {"E2a-core":"Run@cmd+100","E2a-RC":"Run@cmd+600"}
+t16   RUN base fbk700                          {"E2a-core":"Run@cmd+702","E2a-RC":"Run@cmd+802"}
+t16   RUN base HV glitch @560                  {"E2a-core":"Run@cmd+100","E2a-RC":"Run@cmd+663"}
+t16   RUN base FBK dip @560                    {"E2a-core":"Run@cmd+100","E2a-RC":"Run@cmd+663"}
+t16   RUN base HV faulty                       {"E2a-core":"Run@cmd+-1","E2a-RC":"Run@cmd+-1"}
+t16   RUN base fbk9999 (no FBK)                {"E2a-core":"Run@cmd+-1","E2a-RC":"Run@cmd+-1"}
+t16   RUN M window bypass FBAnd6.AndIn1        {"E2a-RC":"Run@cmd+132"}
+t16   RUN M FBAnd6.AndIn2 (FBK) fbk9999        {"E2a-RC":"Run@cmd+600"}
+t16   RUN M FBAnd6.AndIn3 (HV) hvBad           {"E2a-RC":"Run@cmd+600"}
+t16   RND base fbk30                           {"E2a-core":"R&D@cmd+100","E2a-RC":"R&D@cmd+600"}
+t16   RND base fbk700                          {"E2a-core":"R&D@cmd+702","E2a-RC":"R&D@cmd+802"}
+t16   RND base LV faulty                       {"E2a-core":"R&D@cmd+-1","E2a-RC":"R&D@cmd+-1"}
+t16   RND base fbk9999 (no FBK)                {"E2a-core":"R&D@cmd+-1","E2a-RC":"R&D@cmd+-1"}
+t16   RND M window bypass N11/FBAnd4.AndIn1    {"E2a-RC":"R&D@cmd+132"}
+t16   RND M N11/FBAnd4.AndIn2 (FBK) fbk9999    {"E2a-RC":"R&D@cmd+600"}
+t18   HV base                                  {"E2a-core":"pre=1 SU@17019 reqOFF@-1 (-) end req=0 S3","E2a-RC":"pre=1 SU@17019 reqOFF@17021 (reqOFF-a=2) end req=0 SR"}
+t18   HV base rejected (cover open)            {"E2a-core":"pre=1 SU@-1 reqOFF@-1 (-) end req=1 SR","E2a-RC":"pre=1 SU@-1 reqOFF@-1 (-) end req=1 SR"}
+t18   HV M FBOr5.OrIn2                         {"E2a-RC":"pre=1 SU@17019 reqOFF@-1 (-) end req=1 SR"}
+t18   LV base                                  {"E2a-core":"pre=1 g2@13517 reqOFF@-1 (-)","E2a-RC":"pre=1 g2@13517 reqOFF@13518 (reqOFF-a=1)"}
+t18   LV M FBOr1.OrIn2                         {"E2a-RC":"pre=1 g2@13517 reqOFF@-1 (-)"}
+t20   base B_rejectedPLC_coverOpen             {"E2a-core":"pre=1 min=1","E2a-RC":"pre=1 min=1"}
+t20   base C_RnD_EStop_PLC11                   {"E2a-core":"min=1 SR","E2a-RC":"min=0 firstFALSE@+4 SR"}
+t20   base D_Safe_EStop_PLC10_LV               {"E2a-core":"pre=1 min=1 S12","E2a-RC":"pre=1 min=1 S1"}
+t20   base E_button_RnD_to_Run                 {"E2a-core":"a=0 u=+2 reqOFF=never","E2a-RC":"a=0 u=+2 reqOFF=+2"}
+t20   base R64_Safe_to_RnD_BOTH_HVreq          {"E2a-core":"S1 pre=1 during BOTH min=1 -> SR req=1","E2a-RC":"S1 pre=1 during BOTH min=1 -> SR req=1"}
+t20   C delta -1 (PLC at ES-1)                 {"E2a-core":"min=1 SR C1=1 C2=0 STO=0","E2a-RC":"min=0 firstFALSE@+3 SR C1=1 C2=0 STO=0"}
+t20   C delta 0 (PLC at ES+0)                  {"E2a-core":"min=1 SR C1=1 C2=0 STO=0","E2a-RC":"min=0 firstFALSE@+4 SR C1=1 C2=0 STO=0"}
+t20   C delta 1 (PLC at ES+1)                  {"E2a-core":"min=1 SR C1=1 C2=0 STO=0","E2a-RC":"min=0 firstFALSE@+4 SR C1=1 C2=0 STO=0"}
+t20   C delta 2 (PLC at ES+2)                  {"E2a-core":"min=1 SR C1=1 C2=0 STO=0","E2a-RC":"min=0 firstFALSE@+4 SR C1=1 C2=0 STO=0"}
+t20   M FBAnd4.AndIn2 (cover) B                {"E2a-RC":"pre=1 min=0 firstFALSE@+4"}
+t20   M FBAnd91.AndIn4 (EOk) D                 {"E2a-RC":"pre=1 min=0 firstFALSE@+3 S12"}
+t20   M FBOr5.OrIn2 E                          {"E2a-RC":"a=0 u=+2 reqOFF=never"}

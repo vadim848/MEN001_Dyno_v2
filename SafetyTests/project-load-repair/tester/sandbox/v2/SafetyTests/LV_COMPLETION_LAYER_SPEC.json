@@ -1,0 +1,178 @@
+{
+  "status": "PROPOSAL: independent review required before expectation migration",
+  "authority": {
+    "planVersion": "lv-completion-v1-254",
+    "planSha256": "a68dac8cf4c275f83d1ed335bae00157163490a0bb7aef1ecc2d655fa2cc069e",
+    "decision": "D-LV-OFF-COMPLETE plus independently reviewed lv-completion-v1-254"
+  },
+  "source": {
+    "salSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+    "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56",
+    "audit": "PASS"
+  },
+  "candidate": {
+    "salSha256": "b7096fa3cf7349ea0be08f347180deb071a0f6b75612c4e5c8a7f45cf0557161",
+    "sgvlSha256": "4eb263924e8ca5d77a4017c7f82b0a13396d981d881158be8c8f2a169d393ee5"
+  },
+  "retire": [
+    {
+      "path": "//SafeResumption/RND_DOWN_STEP2_OWNER",
+      "id": "8e0c7ae7-10dd-48f6-9ead-cff78d3f1886",
+      "proof": "Only output consumer N5And1 input4 removed; down completion no longer sets Step2; ordinary legacy Step2 power-on restored unchanged"
+    }
+  ],
+  "portBindings": [
+    {
+      "target": "//Network12/FBAnd15/AndIn3",
+      "targetId": "5f1bbd09-45df-4407-aff5-8c61350bef16",
+      "source": "//Network1/FBRs1/RsOut",
+      "inverted": true,
+      "channelInterface": "Activated",
+      "deactivate1": "Make Contact (NO)"
+    },
+    {
+      "target": "//Network12/FBAnd15/AndIn4",
+      "targetId": "ce1b08eb-7edf-4c81-9a58-e8d9f33b933f",
+      "source": "//Network1/FBRs2/RsOut",
+      "inverted": true,
+      "channelInterface": "Activated",
+      "deactivate1": "Make Contact (NO)"
+    },
+    {
+      "target": "//Network12/FBAnd15/AndIn5",
+      "targetId": "79dea675-0ecb-4e5d-a474-cc93b41c1e09",
+      "source": "in_HV_C2_FBK",
+      "inverted": true,
+      "channelInterface": "Activated",
+      "deactivate1": "Make Contact (NO)"
+    },
+    {
+      "target": "//Network12/FBAnd15/AndIn6",
+      "targetId": "ab6cc50d-24e6-4162-bb01-5d7242fa32a2",
+      "source": "//Network1/FBAndLvCurrentPermit/AndOut",
+      "inverted": false,
+      "channelInterface": "Activated",
+      "deactivate1": "Break Contact (NC)"
+    },
+    {
+      "target": "//Network12/FBAnd15/AndIn7",
+      "targetId": "85ad4424-8fcb-4fce-812a-6dbf28f81405",
+      "source": "in_Mentee_EStop",
+      "inverted": true,
+      "channelInterface": "Activated",
+      "deactivate1": "Make Contact (NO)"
+    },
+    {
+      "target": "//Network12/FBAnd15/AndIn8",
+      "targetId": "0f69bd30-9c6e-46b1-8e06-6f756f573407",
+      "source": "in_False_SI2_CH8",
+      "inverted": true,
+      "channelInterface": "Activated",
+      "deactivate1": "Make Contact (NO)"
+    },
+    {
+      "target": "//Network3/FBOr2/OrIn5",
+      "targetId": "75c6ccb5-ecc6-46eb-a760-fbf96349d3b9",
+      "source": "b_Step2_Set_2",
+      "inverted": false,
+      "channelInterface": "Activated",
+      "deactivate1": "Break Contact (NC)"
+    },
+    {
+      "target": "//RndPhysicalCompact/STATE_SG/Reset",
+      "targetId": "c61c1445-52cc-5665-3e48-232c7788d0cf",
+      "source": "//SafeResumption/RND_SCOPE/AndOut",
+      "inverted": true,
+      "channelInterface": "Activated",
+      "deactivate1": "Make Contact (NO)"
+    }
+  ],
+  "deactivate": [
+    {
+      "target": "//Network3/FBOr4/OrIn2",
+      "targetId": "39b00bb4-0abf-4e51-be4d-525c588fb21b",
+      "channelInterface": "Deactivated",
+      "removeAllProgramProducers": true
+    },
+    {
+      "target": "//Network5/FBAnd1/AndIn4",
+      "targetId": "817df687-990b-4eff-93e5-02ff937d178d",
+      "channelInterface": "Deactivated",
+      "removeAllProgramProducers": true
+    }
+  ],
+  "edges": [
+    [
+      "REMOVE",
+      "//Network12/FBDecouple1/DecOut3",
+      "//SafeResumption/RND_DOWN_STEP2_OWNER/Set"
+    ],
+    [
+      "REMOVE",
+      "//RndPhysicalCompact/GATE_001/AndOut",
+      "//RndPhysicalCompact/STATE_SG/Reset"
+    ],
+    [
+      "REMOVE",
+      "//SafeResumption/RND_DOWN_STEP2_OWNER/RsOut",
+      "//Network5/FBAnd1/AndIn4"
+    ],
+    [
+      "ADD",
+      "//Network1/FBRs1/RsOut",
+      "//Network12/FBAnd15/AndIn3"
+    ],
+    [
+      "ADD",
+      "//Network1/FBRs2/RsOut",
+      "//Network12/FBAnd15/AndIn4"
+    ],
+    [
+      "ADD",
+      "//Network1/FBAndLvCurrentPermit/AndOut",
+      "//Network12/FBAnd15/AndIn6"
+    ],
+    [
+      "ADD",
+      "//SafeResumption/RND_SCOPE/AndOut",
+      "//RndPhysicalCompact/STATE_SG/Reset"
+    ]
+  ],
+  "aliases": [
+    [
+      "in_Mentee_EStop",
+      "ADD",
+      "//Network12/FBAnd15/AndIn7"
+    ],
+    [
+      "in_HV_C2_FBK",
+      "ADD",
+      "//Network12/FBAnd15/AndIn5"
+    ],
+    [
+      "in_False_SI2_CH8",
+      "ADD",
+      "//Network12/FBAnd15/AndIn8"
+    ]
+  ],
+  "sgvl": [
+    [
+      "b_Step2",
+      "REMOVE",
+      "//SafeResumption/RND_DOWN_STEP2_OWNER/Reset",
+      "bad967c7-3245-45a0-a682-4a8088005ec4"
+    ],
+    [
+      "b_Step2_Set_2",
+      "REMOVE",
+      "//Network3/FBOr4/OrIn2",
+      "39b00bb4-0abf-4e51-be4d-525c588fb21b"
+    ],
+    [
+      "b_Step2_Set_2",
+      "ADD",
+      "//Network3/FBOr2/OrIn5",
+      "75c6ccb5-ecc6-46eb-a760-fbf96349d3b9"
+    ]
+  ]
+}

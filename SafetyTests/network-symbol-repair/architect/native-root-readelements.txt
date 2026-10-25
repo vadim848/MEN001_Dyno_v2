@@ -1,0 +1,26 @@
+SafetyApplicationSerializerBase::ReadElements RVA 295208
+0000 ldarg.0 
+0001 ldarg.1 
+0002 ldarg.2 
+0003 ldarg.3 
+0004 call ReadElements
+0009 ldarg.2 
+000A isinst TypeDefinition
+000F stloc.0 
+0010 ldarg.1 
+0011 callvirt get_Result
+0016 callvirt get_Failed
+001B brtrue.s 25
+001D ldarg.3 
+001E callvirt get_EOF
+0023 brtrue.s 17
+0025 ldarg.3 
+0026 callvirt get_NodeType
+002B ldc.i4.1 
+002C bne.un.s 8
+002E ldarg.1 
+002F ldloc.0 
+0030 ldarg.3 
+0031 call ReadChildElements
+0036 ret 
+

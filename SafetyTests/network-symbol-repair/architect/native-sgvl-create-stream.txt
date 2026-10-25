@@ -1,0 +1,43 @@
+GlobalVariableList::CreateFromMemoryStream RVA 15472
+0000 ldnull 
+0001 stloc.0 
+0002 ldarg.0 
+0003 callvirt Stream::get_Position
+0008 stloc.1 
+0009 ldarg.0 
+000A ldc.i4.0 
+000B conv.i8 
+000C callvirt Stream::set_Position
+0011 ldarg.0 
+0012 newobj .ctor
+0017 stloc.2 
+0018 ldloc.2 
+0019 callvirt TypeSpecification::get_CrcSettings
+001E ldc.i4.0 
+001F callvirt TypeSpecification::set_ThrowExceptionOnCrcMismatch
+0024 ldtoken 33554437
+0029 call Type::GetTypeFromHandle
+002E newobj XmlSerializer::.ctor
+0033 ldloc.2 
+0034 callvirt XmlSerializer::Deserialize
+0039 isinst GlobalVariableList
+003E stloc.0 
+003F ldloc.0 
+0040 ldloc.2 
+0041 callvirt TypeSpecification::get_IsCrcVerified
+0046 ldc.i4.0 
+0047 ceq 
+0049 callvirt set_FileCrcMismatch
+004E leave.s 18
+0050 ldloc.2 
+0051 brfalse.s 6
+0053 ldloc.2 
+0054 callvirt IDisposable::Dispose
+0059 endfinally 
+005A ldarg.0 
+005B ldloc.1 
+005C callvirt Stream::set_Position
+0061 endfinally 
+0062 ldloc.0 
+0063 ret 
+

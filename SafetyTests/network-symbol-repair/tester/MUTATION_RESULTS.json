@@ -1,0 +1,123 @@
+{
+  "status": "PASS",
+  "candidateSalSha256": "3e27fa82b90d3dbbdc3ba191fd65364a3e08cac1ed0c17455006fdce1413371d",
+  "candidateSgvlSha256": "9a8471fe049c063e0e2fe639b097b14fb3bd35ab1bcfb34b851273e9f3011a54",
+  "results": [
+    {
+      "name": "lost-fanout-target",
+      "rejected": true,
+      "failedChecks": [
+        {
+          "name": "planned ordinary symbols and exact single source/multi-target allocation",
+          "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    '//Network12/FBAnd15/AndIn6',\n-   '//SafeResumption/SAFE_UP_SCOPE/AndIn3'\n  ]\n"
+        },
+        {
+          "name": "exact normalized direct and global-symbol endpoint graph equivalence",
+          "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    '//Network1/FBAnd1/AndOut->//Network1/FBAndHvSetPermit/AndIn4',\n    '//Network1/FBAnd1/AndOut->//Network1/FBAndLvSetPermit/AndIn4',\n    '//Network1/FBAnd1/AndOut->//Network1/FBAndSto1SetPermit/AndIn4',\n    '//Network1/FBAnd1/AndOut->//Network1/FBAndSto2SetPermit/AndIn4',\n...\n    '//Network1/FBAndLvCurrentPermit/AndOut->//Network12/FBAnd15/AndIn6',\n-   '//Network1/FBAndLvCurrentPermit/AndOut->//SafeResumption/SAFE_UP_SCOPE/AndIn3',\n    '//Network1/FBAndLvSetPermit/AndOut->//Network1/FBRs1/Set',\n    '//Network1/FBAndSto1SetPermit/AndOut->//Network1/FBRs3/Set',\n    '//Network1/FBAndSto2SetPermit/AndOut->//Network1/FBRs4/Set',\n    '//Network1/FBEstop1/EStopOut->//Network1/FBAndLvCurrentPermit/AndIn1',\n    '//Network1/FBEstop1/EStopOut->//Network1/FBAndUnlockHold/AndIn4',\n"
+        },
+        {
+          "name": "new references limited to exact baseline cross-wire endpoints and source producer",
+          "error": "unbridged //Network1/FBAndLvCurrentPermit/AndOut->//SafeResumption/SAFE_UP_SCOPE/AndIn3"
+        }
+      ]
+    },
+    {
+      "name": "malformed-SAL-relationship-wrapper",
+      "rejected": true,
+      "failedChecks": [
+        {
+          "name": "full source binding namespace wrappers symbol indices and single writer",
+          "error": "Alias usage wrapper linkLvCurrentPermit///Network1/FBAndLvCurrentPermit/AndOut\nAlias usage wrapper linkLvCurrentPermit///SafeResumption/SAFE_UP_SCOPE/AndIn3\nAlias usage wrapper linkLvCurrentPermit///Network12/FBAnd15/AndIn6\n\n'ERROR' !== 'PASS'\n"
+        }
+      ]
+    },
+    {
+      "name": "wrong-source-full-path",
+      "rejected": true,
+      "failedChecks": [
+        {
+          "name": "planned ordinary symbols and exact single source/multi-target allocation",
+          "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n+   '//Network1/FBRs1/RsOut'\n-   '//Network1/FBAndLvCurrentPermit/AndOut'\n  ]\n"
+        },
+        {
+          "name": "exact normalized direct and global-symbol endpoint graph equivalence",
+          "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    '//Network1/FBAnd1/AndOut->//Network1/FBAndHvSetPermit/AndIn4',\n    '//Network1/FBAnd1/AndOut->//Network1/FBAndLvSetPermit/AndIn4',\n    '//Network1/FBAnd1/AndOut->//Network1/FBAndSto1SetPermit/AndIn4',\n    '//Network1/FBAnd1/AndOut->//Network1/FBAndSto2SetPermit/AndIn4',\n...\n    '//Network1/FBAndLvCurrentPermit/AndOut->//Network1/FBAndSto2SetPermit/AndIn2',\n-   '//Network1/FBAndLvCurrentPermit/AndOut->//Network12/FBAnd15/AndIn6',\n-   '//Network1/FBAndLvCurrentPermit/AndOut->//SafeResumption/SAFE_UP_SCOPE/AndIn3',\n    '//Network1/FBAndLvSetPermit/AndOut->//Network1/FBRs1/Set',\n    '//Network1/FBAndSto1SetPermit/AndOut->//Network1/FBRs3/Set',\n    '//Network1/FBAndSto2SetPermit/AndOut->//Network1/FBRs4/Set',\n    '//Network1/FBEstop1/EStopOut->//Network1/FBAndLvCurrentPermit/AndIn1',\n    '//Network1/FBEstop1/EStopOut->//Network1/FBAndUnlockHold/AndIn4',\n...\n    '//Network1/FBRs1/RsOut->//Network12/FBAnd15/AndIn3',\n+   '//Network1/FBRs1/RsOut->//Network12/FBAnd15/AndIn6',\n+   '//Network1/FBRs1/RsOut->//SafeResumption/SAFE_UP_SCOPE/AndIn3',\n    '//Network1/FBRs2/RsOut->//Network1/FBAnd6/AndIn2',\n    '//Network1/FBRs2/RsOut->//Network1/FBAnd8/AndIn2',\n    '//Network1/FBRs2/RsOut->//Network12/FBAnd15/AndIn4',\n    '//Network1/FBRs3/RsOut->//Network10/FBDecouple2/DecIn3',\n    '//Network1/FBRs4/RsOut->//Network10/FBDecouple2/DecIn4',\n"
+        },
+        {
+          "name": "new references limited to exact baseline cross-wire endpoints and source producer",
+          "error": "unbridged //Network1/FBAndLvCurrentPermit/AndOut->//SafeResumption/SAFE_UP_SCOPE/AndIn3"
+        }
+      ]
+    },
+    {
+      "name": "missing-SGVL-usage",
+      "rejected": true,
+      "failedChecks": [
+        {
+          "name": "full source binding namespace wrappers symbol indices and single writer",
+          "error": "Missing SGVL SourceUsages GVL1.b_Set_LV_C1 port 655866f7-aeeb-4d98-8f6c-5d495c4b616a\n\n'ERROR' !== 'PASS'\n"
+        }
+      ]
+    },
+    {
+      "name": "active-polarity",
+      "rejected": true,
+      "failedChecks": [
+        {
+          "name": "preserve every original SAL node attribute ordering and local wire; only remove cross wires add global refs",
+          "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  {\n    attr: {},\n    children: [\n      {\n        attr: {\n...\n                                              channelInterface: 'Activated',\n+                                             deactivate1: 'Make Contact (NO)',\n-                                             deactivate1: 'Break Contact (NC)',\n                                              filter: '2',\n                                              maxDeviation: '0',\n                                              name: 'Reset',\n                                              objectIndex: '8',\n                                              portDataType: '1',\n"
+        }
+      ]
+    },
+    {
+      "name": "timer-value",
+      "rejected": true,
+      "failedChecks": [
+        {
+          "name": "preserve every original SAL node attribute ordering and local wire; only remove cross wires add global refs",
+          "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  {\n    attr: {},\n    children: [\n      {\n        attr: {\n...\n                                              portNum: '8',\n+                                             timing: '987',\n-                                             timing: '100',\n                                              useInUserFb: 'false',\n                                              userFbPortName: 'Delay Time (ms)',\n                                              varId: '0'\n                                            },\n                                            children: [],\n"
+        }
+      ]
+    },
+    {
+      "name": "execution-order",
+      "rejected": true,
+      "failedChecks": [
+        {
+          "name": "preserve every original SAL node attribute ordering and local wire; only remove cross wires add global refs",
+          "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  {\n    attr: {},\n    children: [\n      {\n        attr: {\n...\n                                  name: 'FBRs1',\n+                                 orderOfExecution: '5'\n-                                 orderOfExecution: '4'\n                                },\n                                children: [\n                                  {\n                                    attr: {},\n                                    children: [\n"
+        }
+      ]
+    },
+    {
+      "name": "duplicate-writer",
+      "rejected": true,
+      "failedChecks": [
+        {
+          "name": "full source binding namespace wrappers symbol indices and single writer",
+          "error": "multiple alias writers 88809099-7058-4340-96b0-44383782f5e1"
+        }
+      ]
+    },
+    {
+      "name": "extra-symbol",
+      "rejected": true,
+      "failedChecks": [
+        {
+          "name": "full source binding namespace wrappers symbol indices and single writer",
+          "error": "Conflicting producers //SafeResumption/SAFE_UP_SCOPE/AndIn3: alias:88809099-7058-4340-96b0-44383782f5e1,alias:a1ceefcc-4207-4871-a9b9-8e22ba0b0a04\nConflicting producers //Network12/FBAnd15/AndIn6: alias:88809099-7058-4340-96b0-44383782f5e1,alias:a1ceefcc-4207-4871-a9b9-8e22ba0b0a04\n\n'ERROR' !== 'PASS'\n"
+        }
+      ]
+    },
+    {
+      "name": "cross-wire-reintroduced",
+      "rejected": true,
+      "failedChecks": [
+        {
+          "name": "full source binding namespace wrappers symbol indices and single writer",
+          "error": "Conflicting producers //Network12/FBAnd15/AndIn3: port://Network1/FBRs1/RsOut,alias:af138469-87b7-4db9-b52a-6c7a34a72ec3\n\n'ERROR' !== 'PASS'\n"
+        }
+      ]
+    }
+  ]
+}

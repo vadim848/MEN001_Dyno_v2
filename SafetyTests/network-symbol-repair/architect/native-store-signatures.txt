@@ -1,0 +1,153 @@
+TYPE Public, BeforeFieldInit Microsoft.VisualStudio.Modeling.SerializationResult
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+Public, HideBySig, SpecialName Boolean get_Failed() 
+Public, HideBySig, SpecialName Void set_Failed(Boolean) 1:value 
+Public, HideBySig, SpecialName System.Text.Encoding get_Encoding() 
+Public, HideBySig, SpecialName Void set_Encoding(System.Text.Encoding) 1:value 
+Public, Virtual, HideBySig, VtableLayoutMask Void AddMessage(Microsoft.VisualStudio.Modeling.SerializationMessage) 1:message 
+Public, HideBySig Void Append(Microsoft.VisualStudio.Modeling.SerializationResult) 1:newResult 
+Public, Final, Virtual, HideBySig, VtableLayoutMask System.Collections.Generic.IEnumerator`1<Microsoft.VisualStudio.Modeling.SerializationMessage> GetEnumerator() 
+Private, Final, Virtual, HideBySig, VtableLayoutMask System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() 
+TYPE Public, Sealed, BeforeFieldInit Microsoft.VisualStudio.Modeling.Partition
+Private, HideBySig Void InitializeImmutabilitySupport() 
+Assembly, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Immutability.Locks get_Locks() 
+Assembly, HideBySig, SpecialName Void set_Locks(Microsoft.VisualStudio.Modeling.Immutability.Locks) 1:value 
+Assembly, HideBySig Void FailIfAddLocked(Microsoft.VisualStudio.Modeling.ModelElement) 1:element 
+Public, HideBySig, SpecialName Void add_PartitionDisposing(System.EventHandler) 1:value 
+Public, HideBySig, SpecialName Void remove_PartitionDisposing(System.EventHandler) 1:value 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(Microsoft.VisualStudio.Modeling.Store) 1:store 
+Family, Virtual, HideBySig Void Finalize() 
+Public, Final, Virtual, HideBySig, VtableLayoutMask Void Dispose() 
+Private, HideBySig Void Dispose(Boolean) 1:disposing 
+Assembly, HideBySig Void OnPartitionDisposing() 
+Public, HideBySig, SpecialName System.Guid get_Id() 
+Public, HideBySig, SpecialName Void set_Id(System.Guid) 1:value 
+Public, HideBySig, SpecialName System.Guid get_StateId() 
+Assembly, HideBySig, SpecialName Void set_StateId(System.Guid) 1:value 
+Public, HideBySig, SpecialName Object get_AlternateId() 
+Public, HideBySig, SpecialName Void set_AlternateId(Object) 1:value 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.DomainDataDirectory get_DomainDataDirectory() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.ElementFactory get_ElementFactory() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.IElementDirectory get_ElementDirectory() 
+Public, HideBySig, SpecialName System.Collections.Generic.Dictionary`2<System.Guid,Microsoft.VisualStudio.Modeling.Context> get_Contexts() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Store get_Store() 
+Public, HideBySig, SpecialName Boolean get_IsReadOnly() 
+Public, HideBySig, SpecialName Void set_IsReadOnly(Boolean) 1:value 
+Public, HideBySig, SpecialName Boolean get_IsDirty() 
+Public, HideBySig, SpecialName Int64 get_DirtyCount() 
+Public, HideBySig, SpecialName Void set_DirtyCount(Int64) 1:value 
+Public, HideBySig Void RemoveContext(Microsoft.VisualStudio.Modeling.Context) 1:context 
+Public, HideBySig Void AddContext(Microsoft.VisualStudio.Modeling.Context) 1:context 
+Public, HideBySig System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.ModelElement> GetClosureList(System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>,Microsoft.VisualStudio.Modeling.ClosureType) 1:rootElements 2:type 
+Public, HideBySig System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.ModelElement> GetClosureList(System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>,Microsoft.VisualStudio.Modeling.ClosureType,Boolean) 1:rootElements 2:type 3:bypassDemandLoading 
+Public, HideBySig System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.ModelElement> GetClosureList(System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>,Microsoft.VisualStudio.Modeling.ClosureType,System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.DomainRoleInfo>) 1:rootElements 2:type 3:domainRolesToNotPropagate 
+Public, HideBySig System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.ModelElement> GetClosureList(System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>,Microsoft.VisualStudio.Modeling.ClosureType,System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.DomainRoleInfo>,System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.DomainRoleInfo>) 1:rootElements 2:type 3:domainRolesToNotPropagate 4:rootDomainRolesToNotVisit 
+Public, HideBySig System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.ModelElement> GetClosureList(System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>,Microsoft.VisualStudio.Modeling.ClosureType,Boolean,System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.DomainRoleInfo>) 1:rootElements 2:type 3:bypassDemandLoading 4:domainRolesToNotPropagate 
+Public, HideBySig System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.ModelElement> GetClosureList(System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>,Microsoft.VisualStudio.Modeling.ClosureType,Boolean,System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.DomainRoleInfo>,System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.DomainRoleInfo>) 1:rootElements 2:type 3:bypassDemandLoading 4:domainRolesToNotPropagate 5:rootDomainRolesToNotVisit 
+Assembly, HideBySig System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.ModelElement> GetClosureList(System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>,Microsoft.VisualStudio.Modeling.ClosureType,Boolean,System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.DomainRoleInfo>,System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.DomainRoleInfo>,System.Collections.Generic.IList`1<Microsoft.VisualStudio.Modeling.ModelElement>) 1:rootElements 2:type 3:bypassDemandLoading 4:domainRolesToNotPropagate 5:rootDomainRolesToNotVisit 6:elementsToNotVisit 
+Public, HideBySig Microsoft.VisualStudio.Modeling.ElementGroupPrototype GetClosurePrototypeGroup(System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>,Microsoft.VisualStudio.Modeling.ClosureType) 1:rootElements 2:type 
+Public, HideBySig Microsoft.VisualStudio.Modeling.ElementGroupPrototype GetClosurePrototypeGroup(System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>,Microsoft.VisualStudio.Modeling.ClosureType,Boolean) 1:rootElements 2:type 3:bypassDemandLoading 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.ElementGroup GetClosureElementGroup(System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>,Microsoft.VisualStudio.Modeling.ClosureType,Boolean) 1:startElements 2:type 3:bypassDemandLoading 
+Assembly, Static, HideBySig Void MarkRootElements(Microsoft.VisualStudio.Modeling.ElementGroup) 1:elementGroup 
+Private, Static, HideBySig System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement> CalculateRootElements(Microsoft.VisualStudio.Modeling.ElementGroup) 1:elementGroup 
+Assembly, HideBySig Void AddElement(Microsoft.VisualStudio.Modeling.ModelElement) 1:element 
+Assembly, HideBySig Void MoveElement(Microsoft.VisualStudio.Modeling.ModelElement,Microsoft.VisualStudio.Modeling.Partition) 1:element 2:targetPartition 
+Assembly, HideBySig Void DeleteElement(Microsoft.VisualStudio.Modeling.ModelElement) 1:element 
+Assembly, HideBySig Void ResurrectElement(Microsoft.VisualStudio.Modeling.ModelElement) 1:element 
+Assembly, HideBySig Boolean FindAndDisposeDeletedElement(System.Guid) 1:elementId 
+Public, Static, HideBySig Microsoft.VisualStudio.Modeling.Partition FindByAlternateId(Microsoft.VisualStudio.Modeling.Store,Object) 1:store 2:alternateId 
+Public, HideBySig Void DeleteElements(System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.ModelElement>,System.Guid[]) 1:rootElements 2:domainRolesToNotPropagate 
+Assembly, Static, HideBySig System.Collections.Generic.List`1<Microsoft.VisualStudio.Modeling.ModelElement> SortByDependency(System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.ModelElement>) 1:elementCollection 
+Private, Static, HideBySig System.Collections.Generic.List`1<Microsoft.VisualStudio.Modeling.ElementLink> SortLinkOfLinksByDependency(System.Collections.Generic.List`1<Microsoft.VisualStudio.Modeling.ElementLink>) 1:linkCollection 
+Private, HideBySig Microsoft.VisualStudio.Modeling.DomainRoleInfo <DeleteElements>b__70_0(System.Guid) 1:domainRoleId 
+TYPE Public, BeforeFieldInit Microsoft.VisualStudio.Modeling.Store
+Private, HideBySig Void InitializeImmutabilitySupport() 
+Private, HideBySig Microsoft.VisualStudio.Modeling.Immutability.ILockingPolicy GetLockingPolicy() 
+Assembly, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Immutability.ILockingPolicy get_LockingPolicy() 
+Assembly, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Immutability.Locks get_Locks() 
+Assembly, HideBySig, SpecialName Void set_Locks(Microsoft.VisualStudio.Modeling.Immutability.Locks) 1:value 
+Assembly, HideBySig, SpecialName Boolean get_IgnoreLocks() 
+Public, HideBySig, SpecialName Void add_StoreDisposing(System.EventHandler) 1:value 
+Public, HideBySig, SpecialName Void remove_StoreDisposing(System.EventHandler) 1:value 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(System.Type[]) 1:domainModelTypes 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(System.IServiceProvider,System.Type[]) 1:serviceProvider 2:domainModelTypes 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(System.IServiceProvider,System.Collections.Generic.Dictionary`2<Object,Object>,System.Type[]) 1:serviceProvider 2:properties 3:domainModelTypes 
+Public, Final, Virtual, HideBySig, VtableLayoutMask Void Dispose() 
+Private, HideBySig Void Dispose(Boolean) 1:disposing 
+Public, Final, Virtual, HideBySig, VtableLayoutMask Object GetService(System.Type) 1:serviceType 
+Assembly, HideBySig, SpecialName System.Collections.Generic.Dictionary`2<Microsoft.VisualStudio.Modeling.MonikerKey,Microsoft.VisualStudio.Modeling.MonikerRoot> get_MonikerRootDirectory() 
+Assembly, HideBySig, SpecialName Void set_MonikerRootDirectory(System.Collections.Generic.Dictionary`2<Microsoft.VisualStudio.Modeling.MonikerKey,Microsoft.VisualStudio.Modeling.MonikerRoot>) 1:value 
+Assembly, HideBySig, SpecialName System.Collections.Generic.Dictionary`2<String,Microsoft.VisualStudio.Modeling.IMonikerResolver> get_MonikerResolverDirectory() 
+Assembly, HideBySig, SpecialName Void set_MonikerResolverDirectory(System.Collections.Generic.Dictionary`2<String,Microsoft.VisualStudio.Modeling.IMonikerResolver>) 1:value 
+Assembly, HideBySig, SpecialName System.Collections.Generic.Dictionary`2<System.Guid,Microsoft.VisualStudio.Modeling.Context> get_Contexts() 
+Assembly, HideBySig, SpecialName Void set_Contexts(System.Collections.Generic.Dictionary`2<System.Guid,Microsoft.VisualStudio.Modeling.Context>) 1:value 
+Assembly, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.IElementPartitionMapper get_PartitionMapper() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.PartitionDictionary get_Partitions() 
+Public, HideBySig, SpecialName System.Collections.Generic.Dictionary`2<Object,Microsoft.VisualStudio.Modeling.Partition> get_PartitionsAlternate() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Partition get_DefaultPartition() 
+Assembly, HideBySig, SpecialName Void set_DefaultPartition(Microsoft.VisualStudio.Modeling.Partition) 1:value 
+Public, HideBySig, SpecialName Boolean get_ShuttingDown() 
+Public, HideBySig, SpecialName Void set_ShuttingDown(Boolean) 1:value 
+Public, HideBySig, SpecialName System.Version get_Version() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.ElementFactory get_ElementFactory() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.IElementDirectory get_ElementDirectory() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.DomainDataDirectory get_DomainDataDirectory() 
+Public, HideBySig, SpecialName System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.DomainModel> get_DomainModels() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.TransactionManager get_TransactionManager() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.EventManagerDirectory get_EventManagerDirectory() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.RuleManager get_RuleManager() 
+Public, HideBySig, SpecialName System.Guid get_Id() 
+Public, HideBySig, SpecialName System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.TransactionLog> get_TransactionLogs() 
+Public, HideBySig, SpecialName System.Collections.Generic.Dictionary`2<Object,Object> get_PropertyBag() 
+Public, HideBySig, SpecialName Boolean get_InUndo() 
+Public, HideBySig, SpecialName Boolean get_InRedo() 
+Public, HideBySig, SpecialName Boolean get_InUndoRedoOrRollback() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.UndoManager get_UndoManager() 
+Public, HideBySig, SpecialName Boolean get_DemandLoading() 
+Public, HideBySig, SpecialName Boolean get_TransactionActive() 
+Assembly, HideBySig, SpecialName Void set_TransactionActive(Boolean) 1:value 
+Public, HideBySig, SpecialName Boolean get_InSerializationTransaction() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.ChangeSource get_ChangeSource() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.DomainXmlSerializerDirectory get_SerializerDirectory() 
+Public, HideBySig Microsoft.VisualStudio.Modeling.DomainModel FindDomainModel(System.Guid) 1:domainModelId 
+Public, HideBySig Microsoft.VisualStudio.Modeling.DomainModel GetDomainModel(System.Guid) 1:domainModelId 
+Public, HideBySig M0 GetDomainModel() 
+Assembly, HideBySig Void AddDomainModel(Microsoft.VisualStudio.Modeling.DomainModel) 1:domainModel 
+Public, HideBySig Void LoadDomainModels(System.Type[]) 1:domainModelTypes 
+Assembly, HideBySig Void RemoveLinkFromAvoidDuplicates(Microsoft.VisualStudio.Modeling.ElementLink) 1:link 
+Assembly, HideBySig Void AddLinkToAvoidDuplicates(Microsoft.VisualStudio.Modeling.ElementLink) 1:link 
+Assembly, HideBySig Boolean TryAddLinkToAvoidDuplicates(Microsoft.VisualStudio.Modeling.ElementLink) 1:link 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Context get_CurrentContext() 
+Public, HideBySig Void PushContext(Microsoft.VisualStudio.Modeling.Context) 1:context 
+Public, HideBySig Microsoft.VisualStudio.Modeling.Context PopContext() 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.Context InternalPopContext() 
+Private, HideBySig Void OnStoreDisposing() 
+Assembly, HideBySig Boolean CheckDisposed() 
+Assembly, HideBySig, SpecialName Boolean get_NeedsToBeDisposed() 
+Public, HideBySig, SpecialName Boolean get_Disposed() 
+Public, HideBySig Microsoft.VisualStudio.Modeling.ElementGroupPrototype GetClosurePrototypeGroup(System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>,Microsoft.VisualStudio.Modeling.ClosureType) 1:rootElements 2:type 
+Public, HideBySig Microsoft.VisualStudio.Modeling.ElementGroupPrototype GetClosurePrototypeGroup(System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>,Microsoft.VisualStudio.Modeling.ClosureType,Boolean) 1:rootElements 2:type 3:bypassDemandLoading 
+Assembly, HideBySig Void NotifyTransactionLogs(Microsoft.VisualStudio.Modeling.GenericEventArgs) 1:args 
+Assembly, HideBySig Void UnNotifyTransactionLogs(System.Collections.Generic.List`1<Microsoft.VisualStudio.Modeling.ModelingEventArgs>) 1:argsCollection 
+Public, HideBySig Void RegisterTransactionLog(Microsoft.VisualStudio.Modeling.TransactionLog) 1:log 
+Public, HideBySig Void UnregisterTransactionLog(Microsoft.VisualStudio.Modeling.TransactionLog) 1:log 
+Assembly, HideBySig Boolean IsCurrentlyDemandLoading(Microsoft.VisualStudio.Modeling.ModelElement,Microsoft.VisualStudio.Modeling.DomainRoleInfo) 1:sourceElement 2:domainRoleInfo 
+Assembly, HideBySig Void EnterDemandLoading(Microsoft.VisualStudio.Modeling.ModelElement,Microsoft.VisualStudio.Modeling.DomainRoleInfo) 1:sourceElement 2:domainRoleInfo 
+Assembly, HideBySig Void ExitDemandLoading(Microsoft.VisualStudio.Modeling.ModelElement,Microsoft.VisualStudio.Modeling.DomainRoleInfo) 1:sourceElement 2:domainRoleInfo 
+Public, HideBySig Microsoft.VisualStudio.Modeling.IMonikerResolver FindMonikerResolver(System.Guid) 1:domainModelId 
+Public, HideBySig Void AddMonikerResolver(System.Guid,Microsoft.VisualStudio.Modeling.IMonikerResolver) 1:domainModelId 2:monikerResolver 
+Assembly, HideBySig, SpecialName Boolean get_InMonikerResolver() 
+Assembly, HideBySig Void EnterMonikerResolver() 
+Assembly, HideBySig Void ExitMonikerResolver() 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.ChangeSource SetChangeSource(Microsoft.VisualStudio.Modeling.ChangeSource) 1:newChangeSource 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.ModelElement FindAnyElement(System.Guid) 1:elementId 
+Public, HideBySig Microsoft.VisualStudio.Modeling.Partition DefaultPartitionForClass(System.Guid) 1:domainClassId 
+ASSEMBLY REFERENCES
+mscorlib 4.0.0.0
+System 4.0.0.0
+System.Core 4.0.0.0
+System.Xml 4.0.0.0
+System.ComponentModel.Composition 4.0.0.0
+System.Windows.Forms 4.0.0.0
+System.Drawing 4.0.0.0
+

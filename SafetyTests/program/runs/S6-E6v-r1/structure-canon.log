@@ -1,0 +1,13 @@
+
+> check:structure
+> node scripts/structure-check.js
+
+structure target: C:\Users\user\source\repos\MEN001_Dyno_v2\MEN001_Dyno\Safety_Dyno\TwinSafeGroup1
+structure SAL SHA256: 4c4be64b7e52862e14d1d8037ca496486cb69299596cb63c6d0b0f0ee9ce7cde
+structure counts: networks=14 blocks=337 ports=2725 symbols(variables)=105 wires=441 | native: networks=14 blocks=337 symbols=105 ports=2725
+structure PASS: native preflight (singleton usages/wrappers, no inter-network wiredLink)
+structure PASS: typed binding audit
+structure FAIL: native input rule (safe-only in-ports, AND >=2 active inputs) -> ["min-2-active-inputs: Network1/HB_LO","safe-input-only: Network1/HB_T_HI.TonIn <- in_PLC_Heartbeat","safe-input-only: Network1/PC_O2.OrIn1 <- CMD_SAFE_TO_RND","safe-input-only: Network1/PC_O2.OrIn2 <- CMD_RND_TO_RUN","safe-input-only: Network1/PC_A2.AndIn2 <- CMD_RND_TO_RUN","safe-input-only: Network1/PC_O3.OrIn2 <- CMD_RUN_TO_RND","safe-input-only: Network1/PC_O4.OrIn2 <- CMD_RND_TO_SAFE","safe-input-only: Network1/PE_ALLF.AndIn2 <- CMD_RND_TO_RUN","safe-input-only: Network1/PE_ALLF.AndIn3 <- CMD_RUN_TO_RND","safe-input-only: Network1/PE_ALLF.AndIn4 <- CMD_RND_TO_SAFE","safe-input-only: Network1/PE_ALLF.AndIn5 <- inPLC_BypassC1C2","safe-input-only: Network1/CFG_EX_SET.AndIn2 <- inPLC_BypassC1C2","safe-input-only: Network1/PK_PREV.DecIn1 <- CMD_SAFE_TO_RND","safe-input-only: Network1/PK_PREV.DecIn2 <- CMD_RND_TO_RUN","safe-input-only: Network1/PK_PREV.DecIn3 <- CMD_RUN_TO_RND","safe-input-only: Network1/PK_PREV.DecIn4 <- CMD_RND_TO_SAFE","safe-input-only: Network1/PK_PREV.DecIn5 <- inPLC_BypassC1C2","min-2-active-inputs: Network6/HEALTHY_OK"]
+structure PASS: FB count <= 512
+structure PASS: native CRC + native validation
+structure: FAIL

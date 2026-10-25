@@ -1,0 +1,82 @@
+SafetyApplicationHasVariablesSerializer::Read RVA 498384
+0000 ldarg.1 
+0001 brtrue.s 11
+0003 ldstr serializationContext
+0008 newobj .ctor
+000D throw 
+000E ldarg.2 
+000F brtrue.s 11
+0011 ldstr element
+0016 newobj .ctor
+001B throw 
+001C ldarg.3 
+001D brtrue.s 11
+001F ldstr reader
+0024 newobj .ctor
+0029 throw 
+002A ldarg.0 
+002B ldarg.1 
+002C ldarg.2 
+002D ldarg.3 
+002E callvirt ReadPropertiesFromAttributes
+0033 ldarg.1 
+0034 callvirt get_Result
+0039 callvirt get_Failed
+003E brtrue 134
+0043 ldarg.3 
+0044 callvirt get_IsEmptyElement
+0049 brtrue.s 114
+004B ldarg.3 
+004C call SkipToFirstChild
+0051 call get_Instance
+0056 ldarg.1 
+0057 ldarg.2 
+0058 ldarg.3 
+0059 callvirt ReadExtensions
+005E ldarg.0 
+005F ldarg.1 
+0060 ldarg.2 
+0061 ldarg.3 
+0062 callvirt ReadTargetRolePlayer
+0067 br.s 52
+0069 ldarg.0 
+006A ldarg.1 
+006B ldarg.2 
+006C ldarg.3 
+006D callvirt ReadElements
+0072 ldarg.1 
+0073 callvirt get_Result
+0078 callvirt get_Failed
+007D brtrue.s 30
+007F ldarg.3 
+0080 callvirt get_EOF
+0085 brtrue.s 22
+0087 ldarg.3 
+0088 callvirt get_NodeType
+008D ldc.i4.1 
+008E bne.un.s 13
+0090 ldarg.1 
+0091 ldarg.3 
+0092 call UnexpectedXmlElement
+0097 ldarg.3 
+0098 call Skip
+009D ldarg.1 
+009E callvirt get_Result
+00A3 callvirt get_Failed
+00A8 brtrue.s 31
+00AA ldarg.3 
+00AB callvirt get_EOF
+00B0 brtrue.s 23
+00B2 ldarg.3 
+00B3 callvirt get_NodeType
+00B8 ldc.i4.1 
+00B9 beq.s 174
+00BB br.s 12
+00BD ldarg.1 
+00BE ldarg.3 
+00BF ldstr SafetyApplicationHasVariables
+00C4 call DanglingRelationship
+00C9 ldarg.3 
+00CA call Skip
+00CF ret 
+

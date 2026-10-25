@@ -1,0 +1,3 @@
+import {mk} from './fix.mjs';import {toRun} from 'file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/program/architect/E2-status/repro/cand.mjs';
+const r=mk('E2b',{});toRun(r);const P=r.t+1;r.step(1,{in_Reset_PB:true});const names=["out_SS1_DR1","out_SS1_DR2","STO_DR1","STO_DR2","out_HV_Discharge_Request","out_LV_Discharge_Request","out_HV_C2","out_LV_C1","b_Step3","b_Step4","b_Step5","b_Step_RnD","b_EStop_Ok","out_Door_Unlock_Solonoeid"];let prev=Object.fromEntries(names.map(n=>[n,r.get(n)]));
+for(let i=0;i<2600;i++){r.step(1);if(i===600)r.setInputs({in_Reset_PB:false});for(const n of names){const v=r.get(n);if(v!==prev[n]){if(r.t-P<2600)console.log('P+'+(r.t-P),n,v);prev[n]=v;}}}

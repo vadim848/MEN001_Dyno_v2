@@ -1,0 +1,48 @@
+{
+  "slice": "E1-f1-adopt",
+  "role": "v2-reviewer",
+  "date": "2026-10-21",
+  "head": "ea6b52d (uncommitted working tree)",
+  "source": {
+    "salSha256": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "sgvlSha256": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "salParser": "fbf239e4960243e383619834a658bee23df543fdba9fc9f0e5bfd9e0e0aa195c",
+    "salRuntime": "14d50f182e42c7aea814eb0c221fbeadbc9becf20f7ac575d263b8cb4f14698e",
+    "newTest": "be894d0f1a26ddfa8ece4cf66a63d9882546a590f3da19fb47762a8a0f2d97f8",
+    "helper": "038d17eda6ccd7b1fc1ed96936498b82caed189506c73a28fbc7aee1e414950a",
+    "scenarioDecisions": "3c00f2f9524486c57682b949fe13ecbfaaae898f9447dde57abfd83f081c6ff1",
+    "scenarioDecisionsNote": "changed after tester handoff (f76f0c1d...); diff vs HEAD only adds Q-RC-01..05; Q-MU06-01/02 and items 9/11 unchanged"
+  },
+  "overall": "ACCEPT bounded",
+  "items": {
+    "1_btn_release_after_permit": {
+      "verdict": "ACCEPT",
+      "oracle": "SCENARIO_DECISIONS items 9/11; q-1 rejected, q+1 accepted (positive control); q=2000 not asserted",
+      "reviewerRerun": {"F1": "16/16 PASS", "MU24": "8 FAIL / 8 PASS, exit 1, preload applied 16; failing = all 1999 ms cases (1,3,5,7,9,11,13,15)"},
+      "reviewerControl": "without IL episode F1 also rejects 1999/accepts 2001 (8/8); MU24 diverges only with IL episode -> oracle independent of IL artefact; kill is a real item-9 violation",
+      "notes": ["1a prefix name may be confused with open Q-REL-AFTER-PERMIT (not encoded by this test)", "1b only Safe, IL1/IL2; distinguisher depends on IL in Safe permit (V14-Q7)", "1c rejection asserted within attempt window only"]
+    },
+    "2_plc_pulse_and_door06": {
+      "verdict": "ACCEPT",
+      "lostOnly": ["producer FALSE with only in_False=TRUE", "in_False=TRUE prevents accepted Restart", "in_False as DOOR06 emergency guard (TRUE)"],
+      "guardsNotWeakened": "DOOR06 list identical minus in_False; PLC pulse/held/latched scenarios untouched; in_Mentee_EStop absent before and after in both tests",
+      "probes": {"plcNonNeutral": "4/4 FAIL", "doorNonNeutral": "1/1 FAIL (positive control)"},
+      "rerun": "84/84 PASS",
+      "notes": ["handoff claim 'positive control did not exist before' is imprecise: parametric DOOR06 actual HV chain .../Doortrue/NC1true/NC2true already asserts hv=TRUE", "component TRUE rows retained; optionally label as structural, out of scope Q-MU06-01"]
+    },
+    "3_sal_safe_exit_baseline_patch": {
+      "verdict": "ACCEPT WITH CONDITIONS",
+      "applyCheck": "git apply --check OK",
+      "conditions": ["3a lead assigns owner (not v2-tester path)", "3b historical baseline reproduction: patch optional; alternative keep TRUE rows relabelled historical-structural", "3c after applying run check:software: historical 75/75, only EXIT01/02 renamed, SAL summary unchanged"]
+    },
+    "4_tester_run": {
+      "verdict": "ACCEPT (sampled)",
+      "verified": ["SOFTWARE_CHECK_RESULTS.json 207 cases, 0 status diffs vs HEAD", "summary PASS 199 FAIL 1 NV 7 ERROR 0", "current-after.tap 461 entries, 0 not ok", "names diff: +16, 5 renamed, none lost", "BOOT_PREFLIGHT/SAL_NATIVE_STRUCTURE identical to HEAD except generatedAt"],
+      "notRerun": "full npm run check:software (would overwrite reports outside reviewer/); harness 209/209 and historical 75/75 taken from working-tree report"
+    }
+  },
+  "openNonPass": {"FAIL": ["STATE:conflicting-set-requests"], "NOT VERIFIED": ["ACC-B01", "ACC-C02-F", "ACC-C01-E", "LATE:NO-FAULT", "LATE:NO-ROLLBACK", "BOOT:UNSUPPORTED_UNBOUND_PROGRAM_INPUT", "BOOT:UNSUPPORTED_GROUP_LIFECYCLE"]},
+  "limits": "offline stand model; sliced fixtures with declared boundaries; A1 injected Safe; not IDE Verify/Build/CRC, Target or hardware safety",
+  "matrixStatusChanges": "none by reviewer",
+  "evidence": ["reviewer-mu24-rerun.tap", "reviewer-il-control.mjs"]
+}

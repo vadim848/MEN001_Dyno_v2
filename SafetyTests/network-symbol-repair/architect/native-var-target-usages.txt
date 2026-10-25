@@ -1,0 +1,85 @@
+VariableSerializer::ReadVariableHasTargetUsagesInstance RVA 414796
+0000 ldarg.1 
+0001 ldsfld VariableHasTargetUsages::VariableDomainRoleId
+0006 call MethodSpecification
+000B callvirt get_Count
+0010 ldc.i4.0 
+0011 ble 187
+0016 ldarg.2 
+0017 call Skip
+001C ret 
+001D ldarg.0 
+001E callvirt get_Directory
+0023 ldsfld VariableHasTargetUsages::DomainClassId
+0028 callvirt GetSerializer
+002D ldarg.0 
+002E ldarg.2 
+002F ldarg.1 
+0030 callvirt get_Partition
+0035 callvirt TryCreateInstance
+003A isinst TypeDefinition
+003F stloc.0 
+0040 ldloc.0 
+0041 brfalse.s 43
+0043 ldloc.0 
+0044 ldsfld VariableHasTargetUsages::VariableDomainRoleId
+0049 ldarg.1 
+004A call SetRolePlayer
+004F ldarg.0 
+0050 callvirt get_Directory
+0055 ldloc.0 
+0056 callvirt GetDomainClass
+005B callvirt get_Id
+0060 callvirt GetSerializer
+0065 ldarg.0 
+0066 ldloc.0 
+0067 ldarg.2 
+0068 callvirt Read
+006D ret 
+006E ldarg.0 
+006F callvirt get_Directory
+0074 ldsfld VariableUsages::DomainClassId
+0079 callvirt GetSerializer
+007E ldarg.0 
+007F ldarg.2 
+0080 ldarg.1 
+0081 callvirt get_Partition
+0086 callvirt TryCreateInstance
+008B isinst TypeDefinition
+0090 stloc.1 
+0091 ldloc.1 
+0092 brfalse.s 55
+0094 ldarg.0 
+0095 ldarg.2 
+0096 ldtoken 33554820
+009B call GetTypeFromHandle
+00A0 call ExpectingFullFormRelationship
+00A5 ldarg.1 
+00A6 ldloc.1 
+00A7 callvirt set_TargetUsages
+00AC ldarg.0 
+00AD callvirt get_Directory
+00B2 ldloc.1 
+00B3 callvirt GetDomainClass
+00B8 callvirt get_Id
+00BD callvirt GetSerializer
+00C2 ldarg.0 
+00C3 ldloc.1 
+00C4 ldarg.2 
+00C5 callvirt Read
+00CA ret 
+00CB ldarg.2 
+00CC call Skip
+00D1 ldarg.0 
+00D2 callvirt get_Result
+00D7 callvirt get_Failed
+00DC brtrue.s 20
+00DE ldarg.2 
+00DF callvirt get_EOF
+00E4 brtrue.s 12
+00E6 ldarg.2 
+00E7 callvirt get_NodeType
+00EC ldc.i4.1 
+00ED beq -213
+00F2 ret 
+

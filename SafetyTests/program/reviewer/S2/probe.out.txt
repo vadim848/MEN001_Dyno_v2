@@ -1,0 +1,26 @@
+drop D04 item4 (FBOrS12Reset.OrIn3) D-04 FAIL: invariant "exactly one main state" (rule 5) violated in 3527 scans, first: t=5952 stages=Step1+Step12 status=SAFE; t=5953 stages=Step1+Step12 status=SAFE; t=5954 stages=Step1+Step12 status=SAFE
+drop D04 item4 (FBOrS12Reset.OrIn3) E-08 pass
+drop D04 item4 (FBOrS12Reset.OrIn3) D-06 pass
+drop D04 item4 (FBOrS12Reset.OrIn3) K-01 pass
+drop D04 item3 (SG_S12 term) D-04 FAIL: C1 OFF at press+none, expected 500+-50 [V14-Q13] | Safe with C1_FBK OFF [V14-Q13, D-LV-OFF-COMPLETE]; status=SAFE
+drop FBK fix (EStopIn5 deactivated) E-04 FAIL: ERROR: Error: //Network1/FBEstop1: unsupported native channel mode Deactivated; Two-Channel discrepancy lifecycle is not modeled /     at effectiveEstopInputs (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/src/estop-native-pairs.js:15:22) /    
+drop FBK fix (EStopIn5 deactivated) E-05 FAIL: ERROR: Error: //Network1/FBEstop1: unsupported native channel mode Deactivated; Two-Channel discrepancy lifecycle is not modeled /     at effectiveEstopInputs (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/src/estop-native-pairs.js:15:22) /    
+drop FBK fix (EStopIn5 deactivated) E-06 FAIL: ERROR: Error: //Network1/FBEstop1: unsupported native channel mode Deactivated; Two-Channel discrepancy lifecycle is not modeled /     at effectiveEstopInputs (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/src/estop-native-pairs.js:15:22) /    
+drop HLT memory (HLT_LV_SRC.OrIn2) D-08 pass
+drop HLT memory (HLT_LV_SRC.OrIn2) H-05 pass
+drop L3 (FBOrS5.OrIn2) E-01 pass
+drop S4a (WIN_C1_IN.AndIn2) U-01 pass
+drop S4a (WIN_C1_IN.AndIn2) K-01 pass
+P1 FBK ON while green held, release with FBK ON: left Emergency? false
+P1b FBK OFF after, no new press: left Emergency (deferred exit)? false
+P1c new press after FBK OFF -> status SAFE viol 0
+P2 C2_FBK ON/OFF while held, release with FBK OFF -> status SAFE
+P3 R&D, spurious C2_FBK 300ms -> status RND
+P4 after descent with LV pulse in SS1/STO phase -> status SAFE
+P4b clean BOTH from Safe -> status RND viol 0
+P5 Emergency during descent with memory, restart -> SAFE
+P5b BOTH -> RND viol 0
+P6 S12 green 450 C1 OFF at none status SAFE
+P6b after LV normal -> SAFE viol 0
+P6 S12 green 550 C1 OFF at 503 status SAFE
+P6b after LV normal -> SAFE viol 0

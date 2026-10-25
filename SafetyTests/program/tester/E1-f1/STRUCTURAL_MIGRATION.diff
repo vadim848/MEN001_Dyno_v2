@@ -1,0 +1,132 @@
+diff --git a/SafetyTests/test/boot-preflight.test.js b/SafetyTests/test/boot-preflight.test.js
+index e0a21e8..db63b6b 100644
+--- a/SafetyTests/test/boot-preflight.test.js
++++ b/SafetyTests/test/boot-preflight.test.js
+@@ -14,7 +14,7 @@ function pair(run,s=sal,g=sgvl){const dir=fs.mkdtempSync(path.join(os.tmpdir(),'
+  }finally{fs.rmSync(dir,{recursive:true,force:true});}}
+ test('BOOT preflight owns fresh full-source parsing, all native inventory and exact two unsupported categories',()=>{
+  const r=preflightWorkingProgram();assert.equal(r.status,'NOT VERIFIED');assert.equal(r.bindingAudit.status,'PASS');assert.equal(r.sourceCoverage.status,'MATCH');
+- assert.equal(r.source.sal.rawSha256,sha(sal));assert.equal(r.source.sgvl.rawSha256,sha(sgvl));assert.equal(r.inventory.blocks.length,241);
++ assert.equal(r.source.sal.rawSha256,sha(sal));assert.equal(r.source.sgvl.rawSha256,sha(sgvl));assert.equal(r.inventory.blocks.length,242);
+  assert.ok(r.inventory.networks.some(n=>n.name==='Network3'));assert.ok(r.inventory.networks.some(n=>n.name==='Network4'));
+  assert.equal(r.inventory.globalWriters.length,85);assert.equal(r.inventory.outwardOutputs.length,37);assert.equal(r.inventory.blocks.filter(b=>b.stateful).length,49);
+  assert.ok(r.inventory.blocks.every(b=>b.attributes.Id&&b.inputs.every(p=>p.attributes.Id)&&b.outputs.every(p=>p.attributes.Id)));
+@@ -68,7 +68,7 @@ const mutations=[
+  ['mask Network4 name',s=>s.replace('name="Network4"','name="HiddenNetwork4"')],
+  ['remove one actual state writer',removeActualSuWriter],
+  ['foreign namespace relationship',s=>s.replace('<fbPortGlobalVariableReferences>','<fbPortGlobalVariableReferences xmlns="urn:foreign">')],
+- ['alter full-source metadata revision',s=>replaceOnce(s,'Crc="1997263000"','Crc="1997263001"')],
++ ['alter full-source metadata revision',s=>replaceOnce(s,'Crc="3702999762"','Crc="3702999763"')],
+  ['change native attribute while preserving count',s=>s.replace('name="FBAndSto1SetPermit" instanceName="FBAndSto1SetPermit"','name="FBAndSto1SetPermit" instanceName="masked-native-instance"')]
+ ];
+ for(const [name,mutate]of mutations)test('BOOT file mutation rejected: '+name,()=>{
+diff --git a/SafetyTests/test/current-door-interlock.test.js b/SafetyTests/test/current-door-interlock.test.js
+index 1fdde52..3534bf0 100644
+--- a/SafetyTests/test/current-door-interlock.test.js
++++ b/SafetyTests/test/current-door-interlock.test.js
+@@ -20,7 +20,7 @@ test("DOOR06 exact alias targets separate solenoid consumers from energy InterLo
+   assert.ok(targets("in_False_SI2_CH8").includes("//Network12/FBAnd16/AndIn2"));
+   assert.deepEqual(and16.inputs.slice(0,3).map(p=>[p.channelInterface,p.deactivate1]),[
+     ["Activated","Break Contact (NC)"],["Activated","Make Contact (NO)"],["Activated","Break Contact (NC)"]]);
+-  assert.equal(all.length,241);
++  assert.equal(all.length,242);
+ });
+ 
+ for(const door of [false,true])for(const nc1 of [false,true])for(const nc2 of [false,true])for(const inhibit of [false,true])
+diff --git a/SafetyTests/test/current-mentee-set-permit.test.js b/SafetyTests/test/current-mentee-set-permit.test.js
+index 5ab2a17..48f5e22 100644
+--- a/SafetyTests/test/current-mentee-set-permit.test.js
++++ b/SafetyTests/test/current-mentee-set-permit.test.js
+@@ -64,7 +64,7 @@ test("MENTEE05 original Safe/Run protections, diagnostic alias and inactive main
+       r.scan();assert.equal(r.get(block.outputs[0].path),!mentee);
+     }
+   }
+-  assert.equal(model.bindingAudit.status,"PASS");assert.equal(all.length,241);
++  assert.equal(model.bindingAudit.status,"PASS");assert.equal(all.length,242);
+   const nativeCrc=JSON.parse(fs.readFileSync(new URL('../NETWORK_SYMBOL_REPAIR_LAYER.json',import.meta.url))).nativeRoundtrip;
+-  assert.equal(nativeCrc.beforeSalCrc,'872783435');assert.equal(nativeCrc.afterSalCrc,'83968247');const slot=JSON.parse(fs.readFileSync(new URL('../SAFE_INPUT_SLOT_REPAIR_LAYER.json',import.meta.url)));assert.equal(slot.predecessorNativeSalCrc,nativeCrc.afterSalCrc,'current native CRC chain starts at immutable prior layer');assert.equal(slot.nativeSalCrc,'3035115343');assert.equal(model.crc,'1997263000','exact independently native-verified P0 revision after unchanged slot-repair CRC chain');
++  assert.equal(nativeCrc.beforeSalCrc,'872783435');assert.equal(nativeCrc.afterSalCrc,'83968247');const slot=JSON.parse(fs.readFileSync(new URL('../SAFE_INPUT_SLOT_REPAIR_LAYER.json',import.meta.url)));assert.equal(slot.predecessorNativeSalCrc,nativeCrc.afterSalCrc,'current native CRC chain starts at immutable prior layer');assert.equal(slot.nativeSalCrc,'3035115343');assert.equal(model.crc,'3702999762','exact independently native-verified F1 revision (tester E1-f1 NATIVE_F1.json)');
+ });
+diff --git a/SafetyTests/test/current-native-structure.test.js b/SafetyTests/test/current-native-structure.test.js
+index fac7368..e755ceb 100644
+--- a/SafetyTests/test/current-native-structure.test.js
++++ b/SafetyTests/test/current-native-structure.test.js
+@@ -1,10 +1,10 @@
+-const p0RetiredUsageIds=new Set(["75c1aadc-f40e-4733-9665-f84f651b8818","dbfc275a-be07-4cef-a780-9858f2b5c332","9fd7707a-7faf-4ac6-a47a-974e69b1a441","d8937929-52e1-4627-95af-7ebca1f4692a","4a326aa6-0f35-4479-a964-fd2c9f6875b1","197c75c7-440c-4511-8ba6-6a58853be6da"]); // Only two retired complementary Prev Reset records and their wrappers, approved P0c.
++const p0RetiredUsageIds=new Set(["75c1aadc-f40e-4733-9665-f84f651b8818","dbfc275a-be07-4cef-a780-9858f2b5c332","9fd7707a-7faf-4ac6-a47a-974e69b1a441","d8937929-52e1-4627-95af-7ebca1f4692a","4a326aa6-0f35-4479-a964-fd2c9f6875b1","197c75c7-440c-4511-8ba6-6a58853be6da","fe3c924f-9aa8-4c35-bc31-60e2a60b6bb2","c74e2d07-d6d0-4b6b-b53e-65320d31bd2a","0587c93c-ef45-4cdc-bf3a-79f6c1f20da3","58d3ae1a-ecaa-4e13-b362-ed8ea4aca15a"]); // Only two retired complementary Prev Reset records and their wrappers, approved P0c.
+ import crypto from 'node:crypto';import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import{inspectNativeSalStructure,assertNativeSalStructure}from'../src/sal-native-structure.js';import{readBindingXml,validateSalBindings}from'../src/sal-binding-validator.js';
+ const gvl=fs.readFileSync(new URL('../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl',import.meta.url),'utf8');
+ const source=fs.readFileSync(new URL('../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',import.meta.url),'utf8'),layer=JSON.parse(fs.readFileSync(new URL('../NETWORK_SYMBOL_REPAIR_LAYER.json',import.meta.url))).nativeSingletonConsolidation,walk=n=>[n,...n.children.flatMap(walk)];
+ const escape=s=>s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+ function serialize(n){if(n.tag==='#document')return n.children.map(serialize).join('');return '<'+n.tag+Object.entries(n.attr).map(([k,v])=>' '+k+'="'+escape(v)+'"').join('')+'>'+n.text+n.children.map(serialize).join('')+'</'+n.tag+'>';}
+-test('NATIVE source whole singleton grammar and zero cross-network graphical wires',()=>{const result=assertNativeSalStructure(source);assert.deepEqual(result.counts,{networks:14,blocks:241,ports:2066,variables:75,wires:306,crossNetworkWires:0});});
++test('NATIVE source whole singleton grammar and zero cross-network graphical wires',()=>{const result=assertNativeSalStructure(source);assert.deepEqual(result.counts,{networks:14,blocks:242,ports:2076,variables:75,wires:307,crossNetworkWires:0});});
+ test('NATIVE exact10singleton repairs retire only54container IDs preserving usage identities',()=>{const nodes=walk(readBindingXml(source)),ids=new Set(nodes.filter(n=>n.attr?.Id).map(n=>n.attr.Id));assert.equal(layer.version,'native-singleton-10-v1');assert.equal(layer.ledger.length,10);assert.equal(layer.ledger.flatMap(r=>r.retiredContainerIds).length,54);for(const r of layer.ledger){assert.ok(ids.has(r.variableId));assert.ok(ids.has(r.retainedRelationshipId));assert.ok(ids.has(r.retainedCollectionId));for(const id of r.retiredContainerIds)assert.equal(ids.has(id),false,'retired redundant container '+id);for(const id of r.preservedUsageIds)assert.equal(ids.has(id),!p0RetiredUsageIds.has(id),'preserved or exactly retired P0 usage '+id);}});
+ test('NATIVE all10symbols and source/collection/usages reject unique empty duplicate containers',()=>{
+  const baseAudit=validateSalBindings(source,gvl);assert.equal(baseAudit.status,'PASS');const node=(tag,children=[])=>({tag,attr:['variableHasSourceUsages','variableHasTargetUsages','variableUsages'].includes(tag)?{Id:crypto.randomUUID()}:{},children,text:''});
+@@ -19,4 +19,4 @@ test('NATIVE all10symbols and source/collection/usages reject unique empty dupli
+   verify(doc,expected);
+  }
+ });
+-test('NATIVE full-network scan rejects a reintroduced cross-network wire',()=>{const doc=readBindingXml(source),nodes=walk(doc),sourcePort=nodes.find(n=>n.tag==='outPort'),container=sourcePort.children.find(n=>n.tag==='targetFunctionBlockPorts')??{tag:'targetFunctionBlockPorts',attr:{},children:[],text:''};if(!sourcePort.children.includes(container))sourcePort.children.push(container);container.children.push({tag:'wiredLink',attr:{Id:'60dc9abb-cab1-4a81-b1ad-492c24b960ec'},text:'',children:[{tag:'inPortMoniker',attr:{name:'//Network12/FBAnd15/AndIn3'},text:'',children:[]}]});const result=inspectNativeSalStructure(serialize(doc));assert.equal(result.status,'ERROR');assert.ok(result.counts.crossNetworkWires>0);assert.throws(()=>assertNativeSalStructure(serialize(doc)),/Graphical wire crosses networks/);});
++test('NATIVE full-network scan rejects a reintroduced cross-network wire',()=>{const doc=readBindingXml(source),nodes=walk(doc),sourcePort=nodes.find(n=>n.tag==='outPort'),container=sourcePort.children.find(n=>n.tag==='targetFunctionBlockPorts')??{tag:'targetFunctionBlockPorts',attr:{},children:[],text:''};if(!sourcePort.children.includes(container))sourcePort.children.push(container);container.children.push({tag:'wiredLink',attr:{Id:'60dc9abb-cab1-4a81-b1ad-492c24b960ec'},text:'',children:[{tag:'inPortMoniker',attr:{name:'//Network12/FBAnd15/AndIn3'},text:'',children:[]}]});const result=inspectNativeSalStructure(serialize(doc));assert.equal(result.status,'ERROR');assert.ok(result.counts.crossNetworkWires>0);assert.throws(()=>assertNativeSalStructure(serialize(doc)),/Graphical wire crosses networks/);});
+diff --git a/SafetyTests/test/current-unlock-estop-permit.test.js b/SafetyTests/test/current-unlock-estop-permit.test.js
+index 39f91f4..95c68e5 100644
+--- a/SafetyTests/test/current-unlock-estop-permit.test.js
++++ b/SafetyTests/test/current-unlock-estop-permit.test.js
+@@ -55,7 +55,7 @@ test("UNLOCK07 existing Door solenoid consumers and EStop configuration are pres
+   assert.deepEqual([...model.variables.find(v=>v.name==="in_Door_Monitor").targetPorts].sort(),[
+     "//Network2/FBAnd8/AndIn1","//Network12/FBAnd11/AndIn1","//Network12/FBAnd17/AndIn1"].sort());
+   for(const name of ["EStopIn2","EStopIn4"])assert.equal(get("//Network1/FBEstop1").inputs.find(p=>p.name===name).channelInterface,"Both Deactivated");
+-  assert.equal(all.length,241);assert.equal(model.bindingAudit.status,"PASS");
++  assert.equal(all.length,242);assert.equal(model.bindingAudit.status,"PASS");
+ });
+ test("UNLOCK07 global permission is a resolved SGVL reference with usage index",()=>{
+   assert.deepEqual(gate.inputs.map(p=>p.channelInterface),[...Array(5).fill("Activated"),...Array(3).fill("Deactivated")]);
+diff --git a/SafetyTests/test/helpers/safe-run-source.js b/SafetyTests/test/helpers/safe-run-source.js
+index d590972..6ac23ff 100644
+--- a/SafetyTests/test/helpers/safe-run-source.js
++++ b/SafetyTests/test/helpers/safe-run-source.js
+@@ -18,7 +18,7 @@ const rootSignals={safeBlue:'b_Set_Door_Unlock',rndBlue:'b_Set_Door_Unlock_1',sa
+  lv:'out_LV_C1',hv:'out_HV_C2',sto1:'STO_DR1',sto2:'STO_DR2',unlock:'out_Door_Unlock_Solonoeid',
+  lvDischarge:'out_LV_Discharge_Request',hvDischarge:'out_HV_Discharge_Request',plcSto1:'outPLC_STO_1',plcSto2:'outPLC_STO_2',
+  safeBoth:'//RndPhysicalCompact/BOTH/TonOut',safeTonQ:'//RndPhysicalCompact/BOTH/TonOut',safeReady:'//Network2/FBAnd3/AndOut',safeGate:'//Network2/FBAnd4/AndOut',
+- safePlc:'//Network2/FBAnd91/AndOut',runPlc:'//Network6/FBAnd17/AndOut',runTonQ:'//Network6/FBTon2/TonOut',runQualifier:'//Network6/FBAnd24/AndOut',
++ safePlc:'//Network2/FBAnd91/AndOut',runPlc:'//Network6/FBAnd17/AndOut',runTonQ:'//RndPhysicalCompact/GREEN/TonOut',runQualifier:'//Network6/FBAnd24/AndOut',
+  grant:'//Network1/FBRs6/RsOut',grantSet:'//Network1/FBOr4/OrOut',grantReset:'//Network1/FBOr3/OrOut',runAggregate:'//Network6/FBOr5/OrOut'};
+ const hash=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
+ const walk=n=>[n,...n.children.flatMap(walk)];
+@@ -63,7 +63,7 @@ export function createSafeRunFixture(mode,{scanMs=1,rawOverrides={}}={}){
+  r.setInputs({...raw,...Object.fromEntries(phases.map(p=>[p,false]))});
+  const clock=new ObservedSamples(r,scanMs),frames=[],setup=[],transitions=[],rises=Object.fromEntries(Object.keys(signals).map(k=>[k,0]));
+  let previous=Object.fromEntries(Object.keys(signals).map(k=>[k,false])),preparing=true,consumed={};
+- const evaluate=r.evaluate.bind(r);r.evaluate=(b,dt)=>{for(const [key,path]of Object.entries({safeTonInput:'//RndPhysicalCompact/BOTH/TonIn',runTonInput:'//Network6/FBTon2/TonIn',runConsumedQualifier:'//Network6/FBAnd23/AndIn1'})){const p=ports.get(path);if(p&&b.inputs.some(i=>i.path===path))consumed[key]=r.readRaw(p);}return evaluate(b,dt);};
++ const evaluate=r.evaluate.bind(r);r.evaluate=(b,dt)=>{for(const [key,path]of Object.entries({safeTonInput:'//RndPhysicalCompact/BOTH/TonIn',runTonInput:'//RndPhysicalCompact/GREEN/TonIn',runConsumedQualifier:'//Network6/FBAnd23/AndIn1'})){const p=ports.get(path);if(p&&b.inputs.some(i=>i.path===path))consumed[key]=r.readRaw(p);}return evaluate(b,dt);};
+  const scan=r.scan.bind(r);r.scan=dt=>{consumed={};scan(dt);const current=Object.fromEntries(Object.entries(signals).map(([k,v])=>[k,r.get(v)]));
+   const frame={timeMs:clock.timeMs+dt,signals:current,consumed:{...consumed},raw:Object.fromEntries(Object.keys(raw).map(k=>[k,r.get(k)])),phases:Object.fromEntries(phases.map(k=>[k,r.get(k)]))};
+   if(preparing)setup.push(frame);else{frames.push(frame);for(const k of Object.keys(signals))if(current[k]&&!previous[k])rises[k]++;if(Object.keys(signals).some(k=>current[k]!==previous[k]))transitions.push(frame);}previous=current;return r;};
+diff --git a/SafetyTests/test/helpers/v2-structural.js b/SafetyTests/test/helpers/v2-structural.js
+index 79d77b2..2cb7527 100644
+--- a/SafetyTests/test/helpers/v2-structural.js
++++ b/SafetyTests/test/helpers/v2-structural.js
+@@ -3,14 +3,16 @@
+ import * as baseline from './p0-accepted-baseline-controls.js';
+ import fs from 'node:fs';import assert from 'node:assert/strict';import crypto from 'node:crypto';import {spawnSync} from 'node:child_process';import {fileURLToPath} from 'node:url';
+ import {parseSalFile} from '../../src/sal-parser.js';
+-const sal=new URL('../../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',import.meta.url),gvl=new URL('../../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl',import.meta.url),f=new URL('../../fixtures/p0-repaired-baseline/',import.meta.url);
++const sal=new URL('../../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',import.meta.url),gvl=new URL('../../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl',import.meta.url),f=new URL('../../fixtures/p0-repaired-baseline/',import.meta.url),p0=new URL('../../fixtures/resumed-p0-canonical/',import.meta.url);
+ const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+-assert.equal(sha(sal),'34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b');assert.equal(sha(gvl),'517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635');
+-const proof=spawnSync(process.execPath,[fileURLToPath(new URL('../../resumed-development-2026-10-21/tester/p0/check-source-pair.mjs', import.meta.url)),...['TwinSafeGroup1.sal','GVL1.sgvl'].map(x=>fileURLToPath(new URL(x,f))),fileURLToPath(sal),fileURLToPath(gvl),fileURLToPath(new URL('TwinSafeGroup1.sal.diagram',f)),fileURLToPath(new URL('../../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal.diagram',import.meta.url))],{encoding:'utf8'});
++assert.equal(sha(new URL('TwinSafeGroup1.sal',p0)),'34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b');assert.equal(sha(new URL('GVL1.sgvl',p0)),'517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635');assert.equal(sha(new URL('TwinSafeGroup1.sal.diagram',p0)),'7b5eb79439011cdf9a3206aa815dec4349a35cf8155bfac7492b7ffd75e578ce');assert.equal(sha(sal),'04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3');assert.equal(sha(gvl),'dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104');
++const proof=spawnSync(process.execPath,[fileURLToPath(new URL('../../resumed-development-2026-10-21/tester/p0/check-source-pair.mjs', import.meta.url)),...['TwinSafeGroup1.sal','GVL1.sgvl'].map(x=>fileURLToPath(new URL(x,f))),fileURLToPath(new URL('TwinSafeGroup1.sal',p0)),fileURLToPath(new URL('GVL1.sgvl',p0)),fileURLToPath(new URL('TwinSafeGroup1.sal.diagram',f)),fileURLToPath(new URL('TwinSafeGroup1.sal.diagram',p0))],{encoding:'utf8'});
+ assert.equal(proof.status,0,'Exact candidate P0 native delta proof: '+proof.stdout+proof.stderr);
++const f1proof=spawnSync(process.execPath,[fileURLToPath(new URL('../../program/tester/E1-f1/delta-check.mjs',import.meta.url)),fileURLToPath(p0),fileURLToPath(new URL('../../../MEN001_Dyno/Safety_Dyno/./',import.meta.url)),fileURLToPath(new URL('../../resumed-development-2026-10-21/architect/F1_RUN_RECOGNIZER_PLAN.json',import.meta.url)),fileURLToPath(new URL('../../program/tester/E1-f1/DELTA_CHECK.scratch.json',import.meta.url))],{encoding:'utf8'});
++assert.equal(f1proof.status,0,'Exact P0->F1 native delta proof: '+f1proof.stdout+f1proof.stderr);
+ export const now=parseSalFile(sal,{bindingMode:'current',sgvlPath:gvl});
+ const digest=()=>crypto.createHash('sha256').update(JSON.stringify(now)).digest('hex'),verifiedParsedDigest=digest();
+-function actualCandidate(){assert.equal(sha(sal),'34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b');assert.equal(sha(gvl),'517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635');assert.equal(digest(),verifiedParsedDigest,'Actual candidate model mutation must be rejected');}
++function actualCandidate(){assert.equal(sha(sal),'04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3');assert.equal(sha(gvl),'dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104');assert.equal(digest(),verifiedParsedDigest,'Actual candidate model mutation must be rejected');}
+ export const baselineXml=baseline.baselineXml,baselineGvl=baseline.baselineGvl;
+ export function orders(...args){actualCandidate();return baseline.orders(...args);}
+ export function wires(...args){actualCandidate();return baseline.wires(...args);}

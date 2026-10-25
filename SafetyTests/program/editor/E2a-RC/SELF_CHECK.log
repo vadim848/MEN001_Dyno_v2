@@ -1,0 +1,36 @@
+PASS source-is-E2a-core-candidate {"TwinSafeGroup1.sal":"5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b","GVL1.sgvl":"e60698840e556dbd6d838958eadb8545735a81aaff8efbfceabc3613a4e08010","TwinSafeGroup1.sal.diagram":"27d7f20d890d48fc175fbd25af21a5b0c874ce4cf248b37ac73df26fe0624785"}
+PASS native-equals-staged-semantics blocks/ports/attrs/order/wires/global refs/SAL usages/SGVL usages identical; only CRC/formatting differ
+PASS native-structure-preflight {"status":"PASS","errors":[],"counts":{"networks":14,"blocks":217,"ports":1836,"variables":75,"wires":277,"crossNetworkWires":0}}
+PASS binding-audit {"status":"PASS","errors":[]}
+PASS counts-217-1836-63-75-14 {"source":{"networks":14,"fb":215,"ports":1832,"symbols":65,"salVariables":75,"wires":275,"globalRefs":168,"sgvlUsages":168,"salFbUsages":223,"aliasUsages":76,"safeTon":15},"native":{"networks":14,"fb":217,"ports":1836,"symbols":63,"salVariables":75,"wires":277,"globalRefs":167,"sgvlUsages":167,"salFbUsages":223,"aliasUsages":76,"safeTon":17}}
+PASS wire-delta-minus9-plus11 {"source":275,"native":277}
+PASS global-refs-equal-sgvl-usages {"native":167,"sgvl":167,"source":168,"expected":"source -2 source refs (deleted symbols) -2 old target refs (N1/FBOr5, N1/FBOr1) +3 target refs"}
+PASS sal-usage-counts-unchanged {"source":[223,76],"native":[223,76]}
+PASS no-dangling-references []
+PASS global-ref-sgvl-usage-pairing-1to1 []
+PASS every-symbol-has-source-and-consumer []
+PASS every-symbol-single-source []
+PASS symbol-set-equals-source-minus-2-same-ids ["b_Reset_LV_Discharge_Req2","b_Reset_HV_Discharg_Req2"]
+PASS symbol-usages-planned {"b_Set_HV_C2_1":{"Id":"d7cd36a4-f95a-4cdd-9e27-77023e5ea19c","source":["Network12/FBAnd4/AndOut"],"target":["Network1/FBOr18/OrIn3","Network1/FBOr5/OrIn2"]},"b_Step12_Set":{"Id":"5d99a568-c279-4845-89ef-64fae02b4d63","source":["Network2/FBOr1/OrOut"],"target":["Network3/FBOr1/OrIn3","Network3/FBRs8/Set","Network1/FBOr1/OrIn2"]},"b_EStop_Ok":{"Id":"98ab783a-9ee4-42cd-8375-54abc169e250","source":["
+PASS single-source-per-input-and-unique-wire-pairs {"dupPairs":0,"multi":[]}
+PASS activated-inputs-have-source []
+PASS deactivated-inputs-have-no-source []
+PASS no-deleted-blocks []
+PASS new-blocks-equal-plan ["Network11/WIN_C1","Network12/WIN_C2"]
+PASS plan-input-sources-and-contacts []
+PASS planned-output-fanout-exact [{"k":"Network12/WIN_C2/TonOut","wires":["Network12/FBAnd6/AndIn1"],"globals":[]},{"k":"Network12/FBAnd4/AndOut","wires":["Network12/WIN_C2/TonIn"],"globals":["b_Set_HV_C2_1"]},{"k":"Network12/FBAnd6/AndOut","wires":["Network12/FBTon3/TonIn"],"globals":[]},{"k":"Network12/FBTon3/TonOut","wires":["Network12/FBDecouple2/DecIn1","Network12/FBDecouple2/DecIn2","Network12/FBDecouple2/DecIn3","Network12
+PASS new-blocks-native-safeTon-signature-timing-0.5 [{"nb":"Network12/WIN_C2","ok":true},{"nb":"Network11/WIN_C1","ok":true}]
+PASS instance-names-unique 217
+PASS surviving-port-deltas-only-planned []
+PASS wire-delta-exact {"wRemoved":["Network11/FBAnd1/AndOut>Network11/FBTon1/TonIn","Network11/FBAnd4/AndOut>Network11/FBAnd5/AndIn1","Network11/FBTon1/TonOut>Network11/FBAnd4/AndIn1","Network12/FBAnd4/AndOut>Network12/FBTon3/TonIn","Network12/FBAnd6/AndOut>Network12/FBDecouple2/DecIn1","Network12/FBAnd6/AndOut>Network12/FBDecouple2/DecIn2","Network12/FBAnd6/AndOut>Network12/FBDecouple2/DecIn3","Network12/FBAnd6/AndOut
+PASS sal-variables-unchanged 
+PASS order-of-execution-per-plan {"contiguous":true,"N12_FBAnd4_WIN_C2_FBAnd6_FBTon3_FBDecouple2":true,"N11_FBAnd1_WIN_C1_FBAnd4_FBTon1_FBAnd5":true,"relativeOrderOfOtherBlocksPreserved":true}
+PASS existing-timer-and-parameter-ports-unchanged 
+PASS safeTon-count-15-plus-2 {"source":15,"native":17}
+PASS networks-unchanged-attrs ["Network1:49","Network2:21","Network3:18","Network4:0","Network5:0","Network6:38","Network7:11","Network8:7","Network9:0","Network10:2","Network11:6","Network12:19","RndPhysicalCompact:39","SafeResumption:7"]
+PASS staged-kept-source-crc-native-new-crc {"source":{"sal":"522332563","sgvl":"99786432"},"staged":{"sal":"522332563","sgvl":"99786432"},"native":{"sal":"1618144730","sgvl":"1140635775"}}
+PASS diagram-shapes-match-model {"source":{"fBAndShape":102,"fBOrShape":47,"fBRsShape":27,"fBTonShape":15,"fBDecoupleShape":22,"fBEstopShape":2,"inPortShape":1459,"outPortShape":373,"paramPortShape":17,"wiredLinkConnector":275,"networkSwimLane":14},"native":{"fBAndShape":102,"fBOrShape":47,"fBRsShape":27,"fBTonShape":17,"fBDecoupleShape":22,"fBEstopShape":2,"inPortShape":1461,"outPortShape":375,"paramPortShape":19,"wiredLinkConn
+PASS diagram-connectors-resolve-one-per-wire {"badConn":[],"connectors":277,"wires":277}
+PASS diagram-lane-membership [{"b":"Network11/WIN_C1","lane":"Network11"},{"b":"Network12/WIN_C2","lane":"Network12"}]
+
+34/34 self-checks PASS

@@ -1,0 +1,6719 @@
+{
+ "version": "undefined-inputs-registry-v2",
+ "generatedAt": "2026-10-21T10:06:44.345Z",
+ "method": "Isolated sandbox without .git/sibling repo, patches P2+P1+P3. failingWithP1: tests PASS today that become ERROR (SalUndefinedInputError) with P1 default error mode; firstUndefined is only the first missing key. undefinedReads: every distinct key read without a value per test-file process, measured with a record-mode variant returning the legacy value (FALSE; unconnected TRUE).",
+ "source": {
+  "sal": "34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b",
+  "sgvl": "517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635",
+  "diagram": "7b5eb79439011cdf9a3206aa815dec4349a35cf8155bfac7492b7ffd75e578ce"
+ },
+ "kinds": {
+  "global": "global-variable reference whose variable no executed block writes",
+  "alias": "alias-device/link variable not set (physical/PLC input or producer outside the executed cut)",
+  "wire": "direct wire from a block outside the executed cut, not seeded",
+  "unconnected": "unbound port; legacy default unconnectedInput=TRUE"
+ },
+ "totals": {
+  "workingTree": {
+   "tests": 740,
+   "pass": 738,
+   "fail": 2,
+   "loadFail": 0,
+   "skip": 0
+  },
+  "isolatedAllPatches": {
+   "tests": 744,
+   "pass": 651,
+   "fail": 93,
+   "loadFail": 0,
+   "skip": 0
+  },
+  "passToFail": 91
+ },
+ "howToResolve": "Per test: establish the value in the scenario (setInputs / values.set on the cut wire) when the requirement defines it; otherwise declare it via new SalRuntime(model,{assumedInputs:{name:false}}) (visible as runtime.declaredAssumptions) or, for capability scans only, undefinedInputs:\"record\" and assert/publish runtime.undefinedInputReads. Unbound ports require an explicit unconnectedInput Boolean.",
+ "files": {
+  "<software-check src modules: now explicit record mode in P1, registry published in SOFTWARE_CHECK_RESULTS>": {
+   "failingWithP1": [],
+   "undefinedReads": [
+    {
+     "kind": "alias",
+     "key": "in_C3_Manual_Reset",
+     "firstPort": "//Network6/FBAnd7/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_C3_Manual_Set",
+     "firstPort": "//Network6/FBAnd8/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Door_Monitor",
+     "firstPort": "//Network2/FBAnd8/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_ES_NC_1",
+     "firstPort": "//Network1/FBAndLvCurrentPermit/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_ES_NC_2",
+     "firstPort": "//Network1/FBAndLvCurrentPermit/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Estop_PLC",
+     "firstPort": "//Network1/FBAndLvCurrentPermit/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_False_SI2_CH8",
+     "firstPort": "//Network12/FBAnd15/AndIn8",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_HV_C2_FBK",
+     "firstPort": "//Network5/FBAnd2/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_HV_Connector_Interlock",
+     "firstPort": "//SafeResumption/CONNECTORS/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_HV_Healthy_FBK",
+     "firstPort": "//Network5/FBAnd3/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_InterLock_NC_1",
+     "firstPort": "//Network2/FBAnd1/AndIn5",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_InterLock_NC_2",
+     "firstPort": "//Network2/FBAnd1/AndIn6",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_LV_C1_FBK",
+     "firstPort": "//Network5/FBAnd2/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_LV_Connector_Interlock",
+     "firstPort": "//SafeResumption/CONNECTORS/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_LV_Healthy_FBK",
+     "firstPort": "//Network5/FBAnd3/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Mentee_EStop",
+     "firstPort": "//Network1/FBAndHvSetPermit/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_RBM_Manual_Reset",
+     "firstPort": "//Network6/FBAnd5/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_RBM_Manual_Set",
+     "firstPort": "//Network6/FBAnd6/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Relase_Door_PB",
+     "firstPort": "//RndPhysicalCompact/GATE_002/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Reset_PB",
+     "firstPort": "//Network1/FBEstop1/Restart",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Safety_Run",
+     "firstPort": "//Network3/FBAnd1/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_STO_DR1_FBK",
+     "firstPort": "//Network5/FBAnd5/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_STO_DR2_FBK",
+     "firstPort": "//Network5/FBAnd5/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "inPLC_BypassC1C2",
+     "firstPort": "//Network1/FBAnd4/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "inPLC_RnD_Mode",
+     "firstPort": "//Network12/FBAnd8/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "inPLC_RnD_Mode_2",
+     "firstPort": "//Network12/FBAnd9/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "linkLvCurrentPermit",
+     "firstPort": "//SafeResumption/SAFE_UP_SCOPE/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "linkSafeAcceptedUpSet",
+     "firstPort": "//SafeResumption/SAFE_ACCEPTED_UP/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "out_LV_C1",
+     "firstPort": "//Network12/FBAnd15/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "out_TransitionStep",
+     "firstPort": "//Network5/FBAnd10/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_C3_BetReset",
+     "firstPort": "//Network6/FBOr3/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_C3_BetReset_2",
+     "firstPort": "//Network6/FBOr3/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_EStop_Ok",
+     "firstPort": "//Network3/FBAnd1/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_RBN_Bat_Reset",
+     "firstPort": "//Network6/FBOr2/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_RBN_Bat_Reset_2",
+     "firstPort": "//Network6/FBOr2/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_Door_Unlock",
+     "firstPort": "//Network1/FBOr3/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_Door_Unlock_1",
+     "firstPort": "//Network1/FBOr3/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_HV_C2",
+     "firstPort": "//Network1/FBOr16/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_HV_C2_2",
+     "firstPort": "//Network1/FBOr16/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_HV_C2_4",
+     "firstPort": "//Network1/FBOr16/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_HV_Discharg_Req",
+     "firstPort": "//Network1/FBOr5/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_HV_Discharg_Req2",
+     "firstPort": "//Network1/FBOr5/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_LV_C1",
+     "firstPort": "//Network1/FBOr11/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_LV_C1_2",
+     "firstPort": "//Network1/FBOr11/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_LV_C1_3",
+     "firstPort": "//Network1/FBOr11/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_LV_Discharge_Req2",
+     "firstPort": "//Network1/FBOr1/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR1",
+     "firstPort": "//Network1/FBOr7/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR1_2",
+     "firstPort": "//Network1/FBOr7/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR1_4",
+     "firstPort": "//Network1/FBOr7/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR2",
+     "firstPort": "//Network1/FBOr9/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR2_2",
+     "firstPort": "//Network1/FBOr9/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR2_4",
+     "firstPort": "//Network1/FBOr9/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_Transition_2",
+     "firstPort": "//Network1/FBOr14/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_Transition_3",
+     "firstPort": "//Network1/FBOr14/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_ResetPB_Lock",
+     "firstPort": "//Network6/FBAnd24/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_Door_Unlock",
+     "firstPort": "//Network1/FBOr4/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_Door_Unlock_1",
+     "firstPort": "//Network1/FBOr4/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_HV_C2",
+     "firstPort": "//Network1/FBOr18/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_HV_C2_1",
+     "firstPort": "//Network1/FBOr18/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_HV_Discharge_Request",
+     "firstPort": "//Network1/FBOr6/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_HV_Discharge_Request_3",
+     "firstPort": "//Network1/FBOr6/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_LV_C1",
+     "firstPort": "//Network1/FBOr17/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_LV_C1_1",
+     "firstPort": "//Network1/FBOr17/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_LV_Discharge_Request",
+     "firstPort": "//Network1/FBOr2/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_STO_DR1",
+     "firstPort": "//Network1/FBOr8/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_STO_DR1_2",
+     "firstPort": "//Network1/FBOr8/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_STO_DR2",
+     "firstPort": "//Network1/FBOr10/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_STO_DR2_2",
+     "firstPort": "//Network1/FBOr10/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_Transition_1",
+     "firstPort": "//Network1/FBOr15/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_Transition_4",
+     "firstPort": "//Network1/FBOr15/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_SetLock_ResetPB_1",
+     "firstPort": "//Network1/FBOr19/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_SetLock_ResetPB_3",
+     "firstPort": "//Network1/FBOr19/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step_RnD",
+     "firstPort": "//Network6/FBAnd11/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step_RnD_Set",
+     "firstPort": "//Network3/FBRs7/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1",
+     "firstPort": "//SafeResumption/MODE/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Reset",
+     "firstPort": "//Network3/FBOr1/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set",
+     "firstPort": "//Network3/FBOr2/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set_2",
+     "firstPort": "//Network3/FBOr2/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set_3",
+     "firstPort": "//Network3/FBOr2/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12",
+     "firstPort": "//Network3/FBOr1/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12_Set",
+     "firstPort": "//Network3/FBOr16/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12_Set_2",
+     "firstPort": "//Network3/FBOr5/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Reset",
+     "firstPort": "//Network3/FBOr3/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set",
+     "firstPort": "//Network3/FBOr4/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set_2",
+     "firstPort": "//Network3/FBOr2/OrIn5",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Reset",
+     "firstPort": "//Network3/FBOr5/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Set_2",
+     "firstPort": "//Network3/FBOr6/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Set_3",
+     "firstPort": "//Network3/FBOr6/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Reset",
+     "firstPort": "//Network3/FBOr7/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Set",
+     "firstPort": "//Network3/FBRs4/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Reset",
+     "firstPort": "//Network3/FBOr9/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Set",
+     "firstPort": "//Network3/FBRs5/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Reset",
+     "firstPort": "//Network3/FBOr11/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Set",
+     "firstPort": "//Network3/FBRs6/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "recRndC_BA",
+     "firstPort": "//RndPhysicalCompact/SNAP_0/DecIn8",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "recRndC_PrevB",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "recRndC_PrevG",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "second",
+     "firstPort": "//Clock/Capture/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn3",
+     "firstPort": "//Network1/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn4",
+     "firstPort": "//Network1/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn5",
+     "firstPort": "//Network1/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn6",
+     "firstPort": "//Network1/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn7",
+     "firstPort": "//Network1/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn8",
+     "firstPort": "//Network1/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn2",
+     "firstPort": "//Network1/FBDecouple2/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn3",
+     "firstPort": "//Network1/FBDecouple2/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn4",
+     "firstPort": "//Network1/FBDecouple2/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn5",
+     "firstPort": "//Network1/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn6",
+     "firstPort": "//Network1/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn7",
+     "firstPort": "//Network1/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn8",
+     "firstPort": "//Network1/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple1/DecIn8",
+     "firstPort": "//Network10/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple2/DecIn5",
+     "firstPort": "//Network10/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple2/DecIn6",
+     "firstPort": "//Network10/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple2/DecIn7",
+     "firstPort": "//Network10/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple2/DecIn8",
+     "firstPort": "//Network10/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn2",
+     "firstPort": "//Network11/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn3",
+     "firstPort": "//Network11/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn4",
+     "firstPort": "//Network11/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn5",
+     "firstPort": "//Network11/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn6",
+     "firstPort": "//Network11/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn7",
+     "firstPort": "//Network11/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn8",
+     "firstPort": "//Network11/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn6",
+     "firstPort": "//Network12/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn7",
+     "firstPort": "//Network12/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn8",
+     "firstPort": "//Network12/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn5",
+     "firstPort": "//Network12/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn6",
+     "firstPort": "//Network12/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn7",
+     "firstPort": "//Network12/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn8",
+     "firstPort": "//Network12/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn3",
+     "firstPort": "//Network12/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn4",
+     "firstPort": "//Network12/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn5",
+     "firstPort": "//Network12/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn6",
+     "firstPort": "//Network12/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn7",
+     "firstPort": "//Network12/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn8",
+     "firstPort": "//Network12/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn3",
+     "firstPort": "//Network2/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn4",
+     "firstPort": "//Network2/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn5",
+     "firstPort": "//Network2/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn6",
+     "firstPort": "//Network2/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn7",
+     "firstPort": "//Network2/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn8",
+     "firstPort": "//Network2/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn2",
+     "firstPort": "//Network2/FBDecouple2/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn3",
+     "firstPort": "//Network2/FBDecouple2/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn4",
+     "firstPort": "//Network2/FBDecouple2/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn5",
+     "firstPort": "//Network2/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn6",
+     "firstPort": "//Network2/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn7",
+     "firstPort": "//Network2/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn8",
+     "firstPort": "//Network2/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn2",
+     "firstPort": "//Network2/FBDecouple3/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn3",
+     "firstPort": "//Network2/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn4",
+     "firstPort": "//Network2/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn5",
+     "firstPort": "//Network2/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn6",
+     "firstPort": "//Network2/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn7",
+     "firstPort": "//Network2/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn8",
+     "firstPort": "//Network2/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn3",
+     "firstPort": "//Network2/FBDecouple5/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn4",
+     "firstPort": "//Network2/FBDecouple5/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn5",
+     "firstPort": "//Network2/FBDecouple5/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn6",
+     "firstPort": "//Network2/FBDecouple5/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn7",
+     "firstPort": "//Network2/FBDecouple5/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn8",
+     "firstPort": "//Network2/FBDecouple5/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn2",
+     "firstPort": "//Network3/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn3",
+     "firstPort": "//Network3/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn4",
+     "firstPort": "//Network3/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn5",
+     "firstPort": "//Network3/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn6",
+     "firstPort": "//Network3/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn7",
+     "firstPort": "//Network3/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn8",
+     "firstPort": "//Network3/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn1",
+     "firstPort": "//Network4/FBDecouple1/DecIn1",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn2",
+     "firstPort": "//Network4/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn3",
+     "firstPort": "//Network4/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn4",
+     "firstPort": "//Network4/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn5",
+     "firstPort": "//Network4/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn6",
+     "firstPort": "//Network4/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn7",
+     "firstPort": "//Network4/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn8",
+     "firstPort": "//Network4/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn3",
+     "firstPort": "//Network5/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn4",
+     "firstPort": "//Network5/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn5",
+     "firstPort": "//Network5/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn6",
+     "firstPort": "//Network5/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn7",
+     "firstPort": "//Network5/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn8",
+     "firstPort": "//Network5/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn2",
+     "firstPort": "//Network5/FBDecouple2/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn4",
+     "firstPort": "//Network5/FBDecouple2/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn5",
+     "firstPort": "//Network5/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn6",
+     "firstPort": "//Network5/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn7",
+     "firstPort": "//Network5/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn8",
+     "firstPort": "//Network5/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn3",
+     "firstPort": "//Network5/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn4",
+     "firstPort": "//Network5/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn5",
+     "firstPort": "//Network5/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn6",
+     "firstPort": "//Network5/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn7",
+     "firstPort": "//Network5/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn8",
+     "firstPort": "//Network5/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn2",
+     "firstPort": "//Network5/FBDecouple4/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn3",
+     "firstPort": "//Network5/FBDecouple4/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn4",
+     "firstPort": "//Network5/FBDecouple4/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn5",
+     "firstPort": "//Network5/FBDecouple4/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn6",
+     "firstPort": "//Network5/FBDecouple4/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn7",
+     "firstPort": "//Network5/FBDecouple4/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn8",
+     "firstPort": "//Network5/FBDecouple4/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn2",
+     "firstPort": "//Network6/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn3",
+     "firstPort": "//Network6/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn4",
+     "firstPort": "//Network6/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn5",
+     "firstPort": "//Network6/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn6",
+     "firstPort": "//Network6/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn7",
+     "firstPort": "//Network6/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn8",
+     "firstPort": "//Network6/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn5",
+     "firstPort": "//Network6/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn6",
+     "firstPort": "//Network6/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn7",
+     "firstPort": "//Network6/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn8",
+     "firstPort": "//Network6/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn2",
+     "firstPort": "//Network6/FBDecouple3/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn3",
+     "firstPort": "//Network6/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn4",
+     "firstPort": "//Network6/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn5",
+     "firstPort": "//Network6/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn6",
+     "firstPort": "//Network6/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn7",
+     "firstPort": "//Network6/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn8",
+     "firstPort": "//Network6/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple1/DecIn7",
+     "firstPort": "//Network7/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple1/DecIn8",
+     "firstPort": "//Network7/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple2/DecIn3",
+     "firstPort": "//Network7/FBDecouple2/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple2/DecIn4",
+     "firstPort": "//Network7/FBDecouple2/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple2/DecIn5",
+     "firstPort": "//Network7/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple2/DecIn6",
+     "firstPort": "//Network7/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple2/DecIn7",
+     "firstPort": "//Network7/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple2/DecIn8",
+     "firstPort": "//Network7/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn1",
+     "firstPort": "//Network7/FBDecouple3/DecIn1",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn2",
+     "firstPort": "//Network7/FBDecouple3/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn5",
+     "firstPort": "//Network7/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn6",
+     "firstPort": "//Network7/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn7",
+     "firstPort": "//Network7/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn8",
+     "firstPort": "//Network7/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn1",
+     "firstPort": "//Network8/FBDecouple1/DecIn1",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn2",
+     "firstPort": "//Network8/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn4",
+     "firstPort": "//Network8/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn5",
+     "firstPort": "//Network8/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn6",
+     "firstPort": "//Network8/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn7",
+     "firstPort": "//Network8/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn8",
+     "firstPort": "//Network8/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//RndPhysicalCompact/SNAP_1/DecIn4",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//RndPhysicalCompact/SNAP_1/DecIn5",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//RndPhysicalCompact/SNAP_1/DecIn6",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//RndPhysicalCompact/SNAP_1/DecIn7",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//RndPhysicalCompact/SNAP_1/DecIn8",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd10/AndOut",
+     "firstPort": "//Network1/FBAnd2/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd11/AndOut",
+     "firstPort": "//Network1/FBAnd3/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd12/AndOut",
+     "firstPort": "//Network1/FBAnd2/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd2/AndOut",
+     "firstPort": "//Network1/FBOr13/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd3/AndOut",
+     "firstPort": "//Network1/FBOr12/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd5/AndOut",
+     "firstPort": "//Network1/FBOr17/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd6/AndOut",
+     "firstPort": "//Network1/FBOr18/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd7/AndOut",
+     "firstPort": "//Network1/FBOr11/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd8/AndOut",
+     "firstPort": "//Network1/FBOr16/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd9/AndOut",
+     "firstPort": "//Network1/FBAnd3/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBEstop1/EStopOut",
+     "firstPort": "//Network1/FBDecouple2/DecIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr10/OrOut",
+     "firstPort": "//Network1/FBRs4/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr11/OrOut",
+     "firstPort": "//Network1/FBRs1/Reset",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr16/OrOut",
+     "firstPort": "//Network1/FBRs2/Reset",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr17/OrOut",
+     "firstPort": "//Network1/FBRs1/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr18/OrOut",
+     "firstPort": "//Network1/FBRs2/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr7/OrOut",
+     "firstPort": "//Network1/FBRs3/Reset",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr8/OrOut",
+     "firstPort": "//Network1/FBRs3/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr9/OrOut",
+     "firstPort": "//Network1/FBRs4/Reset",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBAnd1/AndOut",
+     "firstPort": "//Network3/FBOr2/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBAnd2/AndOut",
+     "firstPort": "//Network3/FBAnd1/AndIn8",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBOr4/OrOut",
+     "firstPort": "//Network3/FBOr1/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBRs3/RsOut",
+     "firstPort": "//Network3/FBOr3/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBRs4/RsOut",
+     "firstPort": "//Network3/FBAnd1/AndIn6",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBRs5/RsOut",
+     "firstPort": "//Network3/FBAnd1/AndIn7",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBRs6/RsOut",
+     "firstPort": "//Network3/FBOr9/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBRs7/RsOut",
+     "firstPort": "//Network3/FBDecouple2/DecIn7",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBRs8/RsOut",
+     "firstPort": "//Network3/FBDecouple2/DecIn8",
+     "legacyValue": false
+    }
+   ]
+  },
+  "candidate-acceptance-runner.test.js": {
+   "failingWithP1": [],
+   "undefinedReads": [
+    {
+     "kind": "alias",
+     "key": "in_LV_C1_FBK",
+     "firstPort": "//Network12/FBAnd15/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_Door_Unlock",
+     "firstPort": "//Network1/FBOr3/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_Door_Unlock_1",
+     "firstPort": "//Network1/FBOr3/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_Door_Unlock",
+     "firstPort": "//Network1/FBOr4/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_Door_Unlock_1",
+     "firstPort": "//Network1/FBOr4/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Reset",
+     "firstPort": "//Network3/FBOr1/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set",
+     "firstPort": "//Network3/FBOr2/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set",
+     "firstPort": "//Network3/FBOr4/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Reset",
+     "firstPort": "//Network3/FBOr5/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Reset",
+     "firstPort": "//Network3/FBOr7/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Reset",
+     "firstPort": "//Network3/FBOr9/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Reset",
+     "firstPort": "//Network3/FBOr11/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn3",
+     "firstPort": "//Network1/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn4",
+     "firstPort": "//Network1/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn5",
+     "firstPort": "//Network1/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn6",
+     "firstPort": "//Network1/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn7",
+     "firstPort": "//Network1/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn8",
+     "firstPort": "//Network1/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn2",
+     "firstPort": "//Network1/FBDecouple2/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn3",
+     "firstPort": "//Network1/FBDecouple2/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn4",
+     "firstPort": "//Network1/FBDecouple2/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn5",
+     "firstPort": "//Network1/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn6",
+     "firstPort": "//Network1/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn7",
+     "firstPort": "//Network1/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn8",
+     "firstPort": "//Network1/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple1/DecIn8",
+     "firstPort": "//Network10/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple2/DecIn5",
+     "firstPort": "//Network10/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple2/DecIn6",
+     "firstPort": "//Network10/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple2/DecIn7",
+     "firstPort": "//Network10/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple2/DecIn8",
+     "firstPort": "//Network10/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn2",
+     "firstPort": "//Network11/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn3",
+     "firstPort": "//Network11/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn4",
+     "firstPort": "//Network11/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn5",
+     "firstPort": "//Network11/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn6",
+     "firstPort": "//Network11/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn7",
+     "firstPort": "//Network11/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn8",
+     "firstPort": "//Network11/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn6",
+     "firstPort": "//Network12/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn7",
+     "firstPort": "//Network12/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn8",
+     "firstPort": "//Network12/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn5",
+     "firstPort": "//Network12/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn6",
+     "firstPort": "//Network12/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn7",
+     "firstPort": "//Network12/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn8",
+     "firstPort": "//Network12/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn3",
+     "firstPort": "//Network12/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn4",
+     "firstPort": "//Network12/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn5",
+     "firstPort": "//Network12/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn6",
+     "firstPort": "//Network12/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn7",
+     "firstPort": "//Network12/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn8",
+     "firstPort": "//Network12/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn3",
+     "firstPort": "//Network2/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn4",
+     "firstPort": "//Network2/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn5",
+     "firstPort": "//Network2/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn6",
+     "firstPort": "//Network2/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn7",
+     "firstPort": "//Network2/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn8",
+     "firstPort": "//Network2/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn2",
+     "firstPort": "//Network2/FBDecouple2/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn3",
+     "firstPort": "//Network2/FBDecouple2/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn4",
+     "firstPort": "//Network2/FBDecouple2/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn5",
+     "firstPort": "//Network2/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn6",
+     "firstPort": "//Network2/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn7",
+     "firstPort": "//Network2/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn8",
+     "firstPort": "//Network2/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn2",
+     "firstPort": "//Network2/FBDecouple3/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn3",
+     "firstPort": "//Network2/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn4",
+     "firstPort": "//Network2/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn5",
+     "firstPort": "//Network2/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn6",
+     "firstPort": "//Network2/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn7",
+     "firstPort": "//Network2/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn8",
+     "firstPort": "//Network2/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn3",
+     "firstPort": "//Network2/FBDecouple5/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn4",
+     "firstPort": "//Network2/FBDecouple5/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn5",
+     "firstPort": "//Network2/FBDecouple5/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn6",
+     "firstPort": "//Network2/FBDecouple5/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn7",
+     "firstPort": "//Network2/FBDecouple5/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn8",
+     "firstPort": "//Network2/FBDecouple5/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn2",
+     "firstPort": "//Network3/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn3",
+     "firstPort": "//Network3/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn4",
+     "firstPort": "//Network3/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn5",
+     "firstPort": "//Network3/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn6",
+     "firstPort": "//Network3/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn7",
+     "firstPort": "//Network3/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn8",
+     "firstPort": "//Network3/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn3",
+     "firstPort": "//Network5/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn4",
+     "firstPort": "//Network5/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn5",
+     "firstPort": "//Network5/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn6",
+     "firstPort": "//Network5/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn7",
+     "firstPort": "//Network5/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn8",
+     "firstPort": "//Network5/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn2",
+     "firstPort": "//Network5/FBDecouple2/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn4",
+     "firstPort": "//Network5/FBDecouple2/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn5",
+     "firstPort": "//Network5/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn6",
+     "firstPort": "//Network5/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn7",
+     "firstPort": "//Network5/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn8",
+     "firstPort": "//Network5/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn3",
+     "firstPort": "//Network5/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn4",
+     "firstPort": "//Network5/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn5",
+     "firstPort": "//Network5/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn6",
+     "firstPort": "//Network5/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn7",
+     "firstPort": "//Network5/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn8",
+     "firstPort": "//Network5/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn2",
+     "firstPort": "//Network5/FBDecouple4/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn3",
+     "firstPort": "//Network5/FBDecouple4/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn4",
+     "firstPort": "//Network5/FBDecouple4/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn5",
+     "firstPort": "//Network5/FBDecouple4/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn6",
+     "firstPort": "//Network5/FBDecouple4/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn7",
+     "firstPort": "//Network5/FBDecouple4/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn8",
+     "firstPort": "//Network5/FBDecouple4/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn2",
+     "firstPort": "//Network6/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn3",
+     "firstPort": "//Network6/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn4",
+     "firstPort": "//Network6/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn5",
+     "firstPort": "//Network6/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn6",
+     "firstPort": "//Network6/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn7",
+     "firstPort": "//Network6/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn8",
+     "firstPort": "//Network6/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn5",
+     "firstPort": "//Network6/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn6",
+     "firstPort": "//Network6/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn7",
+     "firstPort": "//Network6/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn8",
+     "firstPort": "//Network6/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn2",
+     "firstPort": "//Network6/FBDecouple3/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn3",
+     "firstPort": "//Network6/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn4",
+     "firstPort": "//Network6/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn5",
+     "firstPort": "//Network6/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn6",
+     "firstPort": "//Network6/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn7",
+     "firstPort": "//Network6/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn8",
+     "firstPort": "//Network6/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple1/DecIn7",
+     "firstPort": "//Network7/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple1/DecIn8",
+     "firstPort": "//Network7/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple2/DecIn3",
+     "firstPort": "//Network7/FBDecouple2/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple2/DecIn4",
+     "firstPort": "//Network7/FBDecouple2/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple2/DecIn5",
+     "firstPort": "//Network7/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple2/DecIn6",
+     "firstPort": "//Network7/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple2/DecIn7",
+     "firstPort": "//Network7/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple2/DecIn8",
+     "firstPort": "//Network7/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn1",
+     "firstPort": "//Network7/FBDecouple3/DecIn1",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn2",
+     "firstPort": "//Network7/FBDecouple3/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn5",
+     "firstPort": "//Network7/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn6",
+     "firstPort": "//Network7/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn7",
+     "firstPort": "//Network7/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn8",
+     "firstPort": "//Network7/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn1",
+     "firstPort": "//Network8/FBDecouple1/DecIn1",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn2",
+     "firstPort": "//Network8/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn4",
+     "firstPort": "//Network8/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn5",
+     "firstPort": "//Network8/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn6",
+     "firstPort": "//Network8/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn7",
+     "firstPort": "//Network8/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn8",
+     "firstPort": "//Network8/FBDecouple1/DecIn8",
+     "legacyValue": true
+    }
+   ]
+  },
+  "current-code-checks.test.js": {
+   "failingWithP1": [],
+   "undefinedReads": [
+    {
+     "kind": "global",
+     "key": "b_Step_RnD_Set",
+     "firstPort": "//Network3/FBRs7/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Reset",
+     "firstPort": "//Network3/FBOr1/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set",
+     "firstPort": "//Network3/FBOr2/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set_2",
+     "firstPort": "//Network3/FBOr2/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set_3",
+     "firstPort": "//Network3/FBOr2/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12_Set",
+     "firstPort": "//Network3/FBOr16/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12_Set_2",
+     "firstPort": "//Network3/FBOr5/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Reset",
+     "firstPort": "//Network3/FBOr3/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set",
+     "firstPort": "//Network3/FBOr4/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set_2",
+     "firstPort": "//Network3/FBOr2/OrIn5",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Reset",
+     "firstPort": "//Network3/FBOr5/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Set_2",
+     "firstPort": "//Network3/FBOr6/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Set_3",
+     "firstPort": "//Network3/FBOr6/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Reset",
+     "firstPort": "//Network3/FBOr7/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Set",
+     "firstPort": "//Network3/FBRs4/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Reset",
+     "firstPort": "//Network3/FBOr9/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Set",
+     "firstPort": "//Network3/FBRs5/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Reset",
+     "firstPort": "//Network3/FBOr11/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Set",
+     "firstPort": "//Network3/FBRs6/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn2",
+     "firstPort": "//Network3/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn3",
+     "firstPort": "//Network3/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn4",
+     "firstPort": "//Network3/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn5",
+     "firstPort": "//Network3/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn6",
+     "firstPort": "//Network3/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn7",
+     "firstPort": "//Network3/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn8",
+     "firstPort": "//Network3/FBDecouple1/DecIn8",
+     "legacyValue": true
+    }
+   ]
+  },
+  "current-door-interlock.test.js": {
+   "failingWithP1": [
+    {
+     "test": "DOOR06 actual HV chain physical/Doorfalse/NC1false/NC2false",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain physical/Doorfalse/NC1false/NC2true",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain physical/Doorfalse/NC1true/NC2false",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain physical/Doorfalse/NC1true/NC2true",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain physical/Doortrue/NC1false/NC2false",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain physical/Doortrue/NC1false/NC2true",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain physical/Doortrue/NC1true/NC2false",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain physical/Doortrue/NC1true/NC2true",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain existing-PLC-levels/Doorfalse/NC1false/NC2false",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain existing-PLC-levels/Doorfalse/NC1false/NC2true",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain existing-PLC-levels/Doorfalse/NC1true/NC2false",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain existing-PLC-levels/Doorfalse/NC1true/NC2true",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain existing-PLC-levels/Doortrue/NC1false/NC2false",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain existing-PLC-levels/Doortrue/NC1false/NC2true",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain existing-PLC-levels/Doortrue/NC1true/NC2false",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 actual HV chain existing-PLC-levels/Doortrue/NC1true/NC2true",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "DOOR06 existing emergency/connector/False guards still prevent new HV",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "alias",
+     "key": "in_HV_C2_FBK",
+     "firstPort": "//Network12/FBAnd15/AndIn5",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_HV_Healthy_FBK",
+     "firstPort": "//Network12/FBAnd6/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_LV_C1_FBK",
+     "firstPort": "//Network12/FBAnd15/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Mentee_EStop",
+     "firstPort": "//Network1/FBAndHvSetPermit/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "linkSafeAcceptedUpSet",
+     "firstPort": "//SafeResumption/SAFE_ACCEPTED_UP/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "out_LV_C1",
+     "firstPort": "//Network12/FBAnd15/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_HV_C2",
+     "firstPort": "//Network1/FBOr18/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1",
+     "firstPort": "//SafeResumption/MODE/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "recRndC_PrevB",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "recRndC_PrevG",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd6/AndOut",
+     "firstPort": "//Network1/FBOr18/OrIn2",
+     "legacyValue": false
+    }
+   ]
+  },
+  "current-hv-set-permit.test.js": {
+   "failingWithP1": [
+    {
+     "test": "HV current SAL: permission truth table and already-latched HV without Reset",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    },
+    {
+     "test": "HV current SAL: real legacy/R&D/third-route stale aggregate paired first-fault scans",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndHvSetPermit/AndIn3)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "alias",
+     "key": "in_HV_C2_FBK",
+     "firstPort": "//Network5/FBAnd2/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_HV_Healthy_FBK",
+     "firstPort": "//Network5/FBAnd3/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_LV_C1_FBK",
+     "firstPort": "//Network5/FBAnd2/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_LV_Healthy_FBK",
+     "firstPort": "//Network5/FBAnd3/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Mentee_EStop",
+     "firstPort": "//Network1/FBAndHvSetPermit/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_STO_DR1_FBK",
+     "firstPort": "//Network5/FBAnd5/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_STO_DR2_FBK",
+     "firstPort": "//Network5/FBAnd5/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "linkSafeAcceptedUpSet",
+     "firstPort": "//SafeResumption/SAFE_ACCEPTED_UP/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "out_LV_C1",
+     "firstPort": "//Network12/FBAnd15/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "out_TransitionStep",
+     "firstPort": "//Network5/FBAnd10/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_HV_C2",
+     "firstPort": "//Network1/FBOr18/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_HV_C2_1",
+     "firstPort": "//Network1/FBOr18/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1",
+     "firstPort": "//SafeResumption/MODE/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12_Set",
+     "firstPort": "//Network5/FBOr2/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "recRndC_PrevB",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "recRndC_PrevG",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd6/AndOut",
+     "firstPort": "//Network1/FBOr18/OrIn2",
+     "legacyValue": false
+    }
+   ]
+  },
+  "current-mentee-set-permit.test.js": {
+   "failingWithP1": [
+    {
+     "test": "MENTEE05 paired LV/legacy-Network5/Menteefalse: first scan after stale request",
+     "firstUndefined": "var:in_LV_C1_FBK (alias at //Network5/FBAnd2/AndIn2)"
+    },
+    {
+     "test": "MENTEE05 paired LV/legacy-Network5/Menteetrue: first scan after stale request",
+     "firstUndefined": "var:in_LV_C1_FBK (alias at //Network5/FBAnd2/AndIn2)"
+    },
+    {
+     "test": "MENTEE05 paired LV/Step12/Menteefalse: first scan after stale request",
+     "firstUndefined": "var:b_Set_LV_C1 (global at //Network1/FBOr17/OrIn1)"
+    },
+    {
+     "test": "MENTEE05 paired LV/Step12/Menteetrue: first scan after stale request",
+     "firstUndefined": "var:b_Set_LV_C1 (global at //Network1/FBOr17/OrIn1)"
+    },
+    {
+     "test": "MENTEE05 paired HV/legacy-Network5/Menteefalse: first scan after stale request",
+     "firstUndefined": "var:in_LV_C1_FBK (alias at //Network5/FBAnd2/AndIn2)"
+    },
+    {
+     "test": "MENTEE05 paired HV/legacy-Network5/Menteetrue: first scan after stale request",
+     "firstUndefined": "var:in_LV_C1_FBK (alias at //Network5/FBAnd2/AndIn2)"
+    },
+    {
+     "test": "MENTEE05 paired HV/RnD-Network12/Menteefalse: first scan after stale request",
+     "firstUndefined": "var:in_LV_C1_FBK (alias at //Network12/FBAnd15/AndIn2)"
+    },
+    {
+     "test": "MENTEE05 paired HV/RnD-Network12/Menteetrue: first scan after stale request",
+     "firstUndefined": "var:in_LV_C1_FBK (alias at //Network12/FBAnd15/AndIn2)"
+    },
+    {
+     "test": "MENTEE05 LV: already latched output is preserved without Reset",
+     "firstUndefined": "var:b_Set_LV_C1 (global at //Network1/FBOr17/OrIn1)"
+    },
+    {
+     "test": "MENTEE05 LV: all previous eight permission controls remain effective",
+     "firstUndefined": "var:b_Set_LV_C1 (global at //Network1/FBOr17/OrIn1)"
+    },
+    {
+     "test": "MENTEE05 HV: already latched output is preserved without Reset",
+     "firstUndefined": "var:b_Set_HV_C2 (global at //Network1/FBOr18/OrIn1)"
+    },
+    {
+     "test": "MENTEE05 HV: all previous eight permission controls remain effective",
+     "firstUndefined": "var:b_Set_HV_C2 (global at //Network1/FBOr18/OrIn1)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "alias",
+     "key": "in_HV_C2_FBK",
+     "firstPort": "//Network5/FBAnd2/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_HV_Healthy_FBK",
+     "firstPort": "//Network5/FBAnd3/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_LV_C1_FBK",
+     "firstPort": "//Network5/FBAnd2/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_LV_Healthy_FBK",
+     "firstPort": "//Network5/FBAnd3/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_STO_DR1_FBK",
+     "firstPort": "//Network5/FBAnd5/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_STO_DR2_FBK",
+     "firstPort": "//Network5/FBAnd5/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "linkSafeAcceptedUpSet",
+     "firstPort": "//SafeResumption/SAFE_ACCEPTED_UP/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "out_LV_C1",
+     "firstPort": "//Network12/FBAnd15/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "out_TransitionStep",
+     "firstPort": "//Network5/FBAnd10/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_HV_C2",
+     "firstPort": "//Network1/FBOr18/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_HV_C2_1",
+     "firstPort": "//Network1/FBOr18/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_LV_C1",
+     "firstPort": "//Network1/FBOr17/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_LV_C1_1",
+     "firstPort": "//Network1/FBOr17/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1",
+     "firstPort": "//SafeResumption/MODE/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12_Set",
+     "firstPort": "//Network5/FBOr2/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "recRndC_PrevB",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "recRndC_PrevG",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd5/AndOut",
+     "firstPort": "//Network1/FBOr17/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd6/AndOut",
+     "firstPort": "//Network1/FBOr18/OrIn2",
+     "legacyValue": false
+    }
+   ]
+  },
+  "current-rnd-down-no-reenergy.test.js": {
+   "failingWithP1": [
+    {
+     "test": "current SAL: healthy LV completion later-off reaches Safe and real fresh RnD without reenergization",
+     "firstUndefined": "var:recRndC_BA (global at //RndPhysicalCompact/SNAP_0/DecIn8)"
+    },
+    {
+     "test": "current SAL: healthy LV completion already-off reaches Safe and real fresh RnD without reenergization",
+     "firstUndefined": "var:recRndC_BA (global at //RndPhysicalCompact/SNAP_0/DecIn8)"
+    },
+    {
+     "test": "current SAL: ordinary Step2 startup preserved, generic discharge=false",
+     "firstUndefined": "var:recRndC_BA (global at //RndPhysicalCompact/SNAP_0/DecIn8)"
+    },
+    {
+     "test": "current SAL: ordinary Step2 startup preserved, generic discharge=true",
+     "firstUndefined": "var:recRndC_BA (global at //RndPhysicalCompact/SNAP_0/DecIn8)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "global",
+     "key": "recRndC_BA",
+     "firstPort": "//RndPhysicalCompact/SNAP_0/DecIn8",
+     "legacyValue": false
+    }
+   ]
+  },
+  "current-step12-lv-permit.test.js": {
+   "failingWithP1": [
+    {
+     "test": "LV current SAL: permission truth table and preserved already-latched LV",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndLvSetPermit/AndIn3)"
+    },
+    {
+     "test": "LV current SAL: paired real producer prehistory denies stale Set on first fault scan",
+     "firstUndefined": "var:in_Mentee_EStop (alias at //Network1/FBAndLvSetPermit/AndIn3)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "alias",
+     "key": "in_HV_C2_FBK",
+     "firstPort": "//Network5/FBAnd2/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_HV_Healthy_FBK",
+     "firstPort": "//Network5/FBAnd3/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_LV_C1_FBK",
+     "firstPort": "//Network5/FBAnd2/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_LV_Healthy_FBK",
+     "firstPort": "//Network5/FBAnd3/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Mentee_EStop",
+     "firstPort": "//Network1/FBAndLvSetPermit/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_STO_DR1_FBK",
+     "firstPort": "//Network5/FBAnd5/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_STO_DR2_FBK",
+     "firstPort": "//Network5/FBAnd5/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "out_TransitionStep",
+     "firstPort": "//Network5/FBAnd10/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_LV_C1",
+     "firstPort": "//Network1/FBOr17/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_LV_C1_1",
+     "firstPort": "//Network1/FBOr17/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12_Set",
+     "firstPort": "//Network5/FBOr2/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd5/AndOut",
+     "firstPort": "//Network1/FBOr17/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr11/OrOut",
+     "firstPort": "//Network1/FBRs1/Reset",
+     "legacyValue": false
+    }
+   ]
+  },
+  "current-unlock-hold.test.js": {
+   "failingWithP1": [
+    {
+     "test": "CVR current SAL: reset dominates a concurrent Set and clears stale permission",
+     "firstUndefined": "var:b_Reset_Door_Unlock (global at //Network1/FBOr3/OrIn1)"
+    },
+    {
+     "test": "CVR current SAL: full selected chain cannot bypass final held-blue/green gate",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "global",
+     "key": "b_Reset_Door_Unlock",
+     "firstPort": "//Network1/FBOr3/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_Door_Unlock_1",
+     "firstPort": "//Network1/FBOr3/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_Door_Unlock_1",
+     "firstPort": "//Network1/FBOr4/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Reset",
+     "firstPort": "//Network3/FBOr1/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set",
+     "firstPort": "//Network3/FBOr2/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set",
+     "firstPort": "//Network3/FBOr4/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Reset",
+     "firstPort": "//Network3/FBOr5/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Reset",
+     "firstPort": "//Network3/FBOr7/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Reset",
+     "firstPort": "//Network3/FBOr9/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Reset",
+     "firstPort": "//Network3/FBOr11/OrIn1",
+     "legacyValue": false
+    }
+   ]
+  },
+  "sal-button-baseline.test.js": {
+   "failingWithP1": [
+    {
+     "test": "V2-BTN02 blue alone sets door-unlock request after 0.5 s",
+     "firstUndefined": "//Network12/FBDecouple2/DecIn5 (unconnected at //Network12/FBDecouple2/DecIn5)"
+    },
+    {
+     "test": "V2-BTN03 both buttons produce the upward transition request after 1 s",
+     "firstUndefined": "//Network12/FBDecouple2/DecIn5 (unconnected at //Network12/FBDecouple2/DecIn5)"
+    },
+    {
+     "test": "V2-BTN05 failed two-button attempt degrades to blue unlock in current v2",
+     "firstUndefined": "//Network12/FBDecouple2/DecIn5 (unconnected at //Network12/FBDecouple2/DecIn5)"
+    },
+    {
+     "test": "V2-BTN06 failed two-button attempt degrades to green/down transition in current v2",
+     "firstUndefined": "//Network12/FBDecouple2/DecIn5 (unconnected at //Network12/FBDecouple2/DecIn5)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "alias",
+     "key": "in_LV_C1_FBK",
+     "firstPort": "//Network12/FBAnd15/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn6",
+     "firstPort": "//Network12/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn7",
+     "firstPort": "//Network12/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn8",
+     "firstPort": "//Network12/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn5",
+     "firstPort": "//Network12/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn6",
+     "firstPort": "//Network12/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn7",
+     "firstPort": "//Network12/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn8",
+     "firstPort": "//Network12/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn3",
+     "firstPort": "//Network12/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn4",
+     "firstPort": "//Network12/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn5",
+     "firstPort": "//Network12/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn6",
+     "firstPort": "//Network12/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn7",
+     "firstPort": "//Network12/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn8",
+     "firstPort": "//Network12/FBDecouple3/DecIn8",
+     "legacyValue": true
+    }
+   ]
+  },
+  "sal-cover-baseline.test.js": {
+   "failingWithP1": [
+    {
+     "test": "V2-COVER02 Safe unlock remains latched after blue release while door monitor stays locked",
+     "firstUndefined": "//Network2/FBDecouple3/DecIn2 (unconnected at //Network2/FBDecouple3/DecIn2)"
+    },
+    {
+     "test": "V2-COVER03 Safe unlock resets when locked feedback drops",
+     "firstUndefined": "//Network2/FBDecouple3/DecIn2 (unconnected at //Network2/FBDecouple3/DecIn2)"
+    },
+    {
+     "test": "V2-COVER04 R&D blue release resets unlock while locked feedback remains present",
+     "firstUndefined": "var:b_Reset_Door_Unlock (global at //Network1/FBOr3/OrIn1)"
+    },
+    {
+     "test": "V2-COVER05 current v2 can retain unlock while accepting an upward gesture",
+     "firstUndefined": "var:b_Reset_Door_Unlock (global at //Network1/FBOr3/OrIn1)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "alias",
+     "key": "in_LV_C1_FBK",
+     "firstPort": "//Network12/FBAnd15/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_Door_Unlock",
+     "firstPort": "//Network1/FBOr3/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_Door_Unlock_1",
+     "firstPort": "//Network1/FBOr3/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_Door_Unlock",
+     "firstPort": "//Network1/FBOr4/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_Door_Unlock_1",
+     "firstPort": "//Network1/FBOr4/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn6",
+     "firstPort": "//Network12/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn7",
+     "firstPort": "//Network12/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn8",
+     "firstPort": "//Network12/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn5",
+     "firstPort": "//Network12/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn6",
+     "firstPort": "//Network12/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn7",
+     "firstPort": "//Network12/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn8",
+     "firstPort": "//Network12/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn3",
+     "firstPort": "//Network12/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn4",
+     "firstPort": "//Network12/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn5",
+     "firstPort": "//Network12/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn6",
+     "firstPort": "//Network12/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn7",
+     "firstPort": "//Network12/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn8",
+     "firstPort": "//Network12/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn2",
+     "firstPort": "//Network2/FBDecouple3/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn3",
+     "firstPort": "//Network2/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn4",
+     "firstPort": "//Network2/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn5",
+     "firstPort": "//Network2/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn6",
+     "firstPort": "//Network2/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn7",
+     "firstPort": "//Network2/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn8",
+     "firstPort": "//Network2/FBDecouple3/DecIn8",
+     "legacyValue": true
+    }
+   ]
+  },
+  "sal-emergency-chain.test.js": {
+   "failingWithP1": [
+    {
+     "test": "V2-CHAIN01 NC1 loss removes EStop OK and enters Step4 under both constant assumptions",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-CHAIN02 physical restoration does not restore Run or EStop OK",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-CHAIN03 PLC emergency traverses the E-Stop block and starts removal",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-CHAIN04 emergency sequence reaches discharge and Step6 only after feedback",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-CHAIN05 in_ES_NC_2 starts Step4; NC2/Mentee also drop effective main EStop",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-CHAIN06 in_Mentee_EStop starts Step4; NC2/Mentee also drop effective main EStop",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-CHAIN07 in_LV_Connector_Interlock starts Step4; NC2/Mentee also drop effective main EStop",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-CHAIN08 in_HV_Connector_Interlock starts Step4; NC2/Mentee also drop effective main EStop",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-CHAIN09 in_InterLock_NC_1 starts Step4; NC2/Mentee also drop effective main EStop",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-CHAIN10 in_InterLock_NC_2 starts Step4; NC2/Mentee also drop effective main EStop",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-CHAIN11 raw HV Healthy TRUE selects STO removal only after common 2 s gate",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-CHAIN12 raw Healthy recovery before gate expiry changes the selected delay branch",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "global",
+     "key": "b_Step1_Reset",
+     "firstPort": "//Network3/FBOr1/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set",
+     "firstPort": "//Network3/FBOr2/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set",
+     "firstPort": "//Network3/FBOr4/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Reset",
+     "firstPort": "//Network3/FBOr5/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Reset",
+     "firstPort": "//Network3/FBOr7/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Reset",
+     "firstPort": "//Network3/FBOr9/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Reset",
+     "firstPort": "//Network3/FBOr11/OrIn1",
+     "legacyValue": false
+    }
+   ]
+  },
+  "sal-emergency-phases.test.js": {
+   "failingWithP1": [],
+   "undefinedReads": [
+    {
+     "kind": "global",
+     "key": "b_Step1_Reset",
+     "firstPort": "//Network3/FBOr1/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set",
+     "firstPort": "//Network3/FBOr2/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set",
+     "firstPort": "//Network3/FBOr4/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Reset",
+     "firstPort": "//Network3/FBOr5/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Reset",
+     "firstPort": "//Network3/FBOr7/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Reset",
+     "firstPort": "//Network3/FBOr9/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Reset",
+     "firstPort": "//Network3/FBOr11/OrIn1",
+     "legacyValue": false
+    }
+   ]
+  },
+  "sal-rnd-safe-outputs.test.js": {
+   "failingWithP1": [
+    {
+     "test": "V2-RNDSAFE01 green removes LV and requests discharge before LV OFF feedback",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-RNDSAFE02 legacy network order loses the short state handoff",
+     "firstUndefined": "var:b_Reset_LV_Discharge_Req2 (global at //Network1/FBOr1/OrIn2)"
+    },
+    {
+     "test": "V2-RNDSAFE05 global block order accepts Step2 then raises LV/HV outputs",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-RNDSAFE03 releasing green before LV OFF feedback leaves R&D status active",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "global",
+     "key": "b_Reset_Door_Unlock",
+     "firstPort": "//Network1/FBOr3/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_HV_C2",
+     "firstPort": "//Network1/FBOr16/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_HV_C2_2",
+     "firstPort": "//Network1/FBOr16/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_HV_C2_4",
+     "firstPort": "//Network1/FBOr16/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_LV_C1",
+     "firstPort": "//Network1/FBOr11/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_LV_C1_2",
+     "firstPort": "//Network1/FBOr11/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_LV_Discharge_Req2",
+     "firstPort": "//Network1/FBOr1/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR1",
+     "firstPort": "//Network1/FBOr7/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR1_2",
+     "firstPort": "//Network1/FBOr7/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR1_4",
+     "firstPort": "//Network1/FBOr7/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR2",
+     "firstPort": "//Network1/FBOr9/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR2_2",
+     "firstPort": "//Network1/FBOr9/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR2_4",
+     "firstPort": "//Network1/FBOr9/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_Transition_2",
+     "firstPort": "//Network1/FBOr14/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_Transition_3",
+     "firstPort": "//Network1/FBOr14/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_Door_Unlock",
+     "firstPort": "//Network1/FBOr4/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_HV_Discharge_Request",
+     "firstPort": "//Network1/FBOr6/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_HV_Discharge_Request_3",
+     "firstPort": "//Network1/FBOr6/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_LV_C1_1",
+     "firstPort": "//Network1/FBOr17/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_LV_Discharge_Request",
+     "firstPort": "//Network1/FBOr2/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_Transition_1",
+     "firstPort": "//Network1/FBOr15/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_Transition_4",
+     "firstPort": "//Network1/FBOr15/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_SetLock_ResetPB_1",
+     "firstPort": "//Network1/FBOr19/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_SetLock_ResetPB_3",
+     "firstPort": "//Network1/FBOr19/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step_RnD_Set",
+     "firstPort": "//Network3/FBOr14/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Reset",
+     "firstPort": "//Network3/FBOr1/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set",
+     "firstPort": "//Network3/FBOr2/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set_2",
+     "firstPort": "//Network3/FBOr2/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12_Set",
+     "firstPort": "//Network3/FBOr16/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12_Set_2",
+     "firstPort": "//Network3/FBOr5/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set",
+     "firstPort": "//Network3/FBOr4/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Reset",
+     "firstPort": "//Network3/FBOr5/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Reset",
+     "firstPort": "//Network3/FBOr7/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Set",
+     "firstPort": "//Network3/FBOr8/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Reset",
+     "firstPort": "//Network3/FBOr9/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Set",
+     "firstPort": "//Network3/FBOr10/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Reset",
+     "firstPort": "//Network3/FBOr11/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Set",
+     "firstPort": "//Network3/FBOr12/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn3",
+     "firstPort": "//Network1/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn4",
+     "firstPort": "//Network1/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn5",
+     "firstPort": "//Network1/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn6",
+     "firstPort": "//Network1/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn7",
+     "firstPort": "//Network1/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn8",
+     "firstPort": "//Network1/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn2",
+     "firstPort": "//Network1/FBDecouple2/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn3",
+     "firstPort": "//Network1/FBDecouple2/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn4",
+     "firstPort": "//Network1/FBDecouple2/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn5",
+     "firstPort": "//Network1/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn6",
+     "firstPort": "//Network1/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn7",
+     "firstPort": "//Network1/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn8",
+     "firstPort": "//Network1/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn6",
+     "firstPort": "//Network12/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn7",
+     "firstPort": "//Network12/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn8",
+     "firstPort": "//Network12/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn5",
+     "firstPort": "//Network12/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn6",
+     "firstPort": "//Network12/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn7",
+     "firstPort": "//Network12/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn8",
+     "firstPort": "//Network12/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn3",
+     "firstPort": "//Network12/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn4",
+     "firstPort": "//Network12/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn5",
+     "firstPort": "//Network12/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn6",
+     "firstPort": "//Network12/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn7",
+     "firstPort": "//Network12/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn8",
+     "firstPort": "//Network12/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn2",
+     "firstPort": "//Network3/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn3",
+     "firstPort": "//Network3/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn4",
+     "firstPort": "//Network3/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn5",
+     "firstPort": "//Network3/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn6",
+     "firstPort": "//Network3/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn7",
+     "firstPort": "//Network3/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn8",
+     "firstPort": "//Network3/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn3",
+     "firstPort": "//Network5/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn4",
+     "firstPort": "//Network5/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn5",
+     "firstPort": "//Network5/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn6",
+     "firstPort": "//Network5/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn7",
+     "firstPort": "//Network5/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn8",
+     "firstPort": "//Network5/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn2",
+     "firstPort": "//Network5/FBDecouple2/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn4",
+     "firstPort": "//Network5/FBDecouple2/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn5",
+     "firstPort": "//Network5/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn6",
+     "firstPort": "//Network5/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn7",
+     "firstPort": "//Network5/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn8",
+     "firstPort": "//Network5/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn3",
+     "firstPort": "//Network5/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn4",
+     "firstPort": "//Network5/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn5",
+     "firstPort": "//Network5/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn6",
+     "firstPort": "//Network5/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn7",
+     "firstPort": "//Network5/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn8",
+     "firstPort": "//Network5/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn2",
+     "firstPort": "//Network5/FBDecouple4/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn3",
+     "firstPort": "//Network5/FBDecouple4/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn4",
+     "firstPort": "//Network5/FBDecouple4/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn5",
+     "firstPort": "//Network5/FBDecouple4/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn6",
+     "firstPort": "//Network5/FBDecouple4/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn7",
+     "firstPort": "//Network5/FBDecouple4/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn8",
+     "firstPort": "//Network5/FBDecouple4/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBEstop1/EStopOut",
+     "firstPort": "//Network1/FBDecouple2/DecIn1",
+     "legacyValue": false
+    }
+   ]
+  },
+  "sal-rundown-baseline.test.js": {
+   "failingWithP1": [
+    {
+     "test": "V2-DOWN01 green stop requests STO reset, discharge and C2 reset together",
+     "firstUndefined": "//Network6/FBDecouple1/DecIn2 (unconnected at //Network6/FBDecouple1/DecIn2)"
+    },
+    {
+     "test": "V2-DOWN02 PLC mode 01 bypasses the physical green qualification",
+     "firstUndefined": "//Network6/FBDecouple1/DecIn2 (unconnected at //Network6/FBDecouple1/DecIn2)"
+    },
+    {
+     "test": "V2-DOWN03 Step12 request waits for C2 OFF but no separate discharge feedback",
+     "firstUndefined": "//Network6/FBDecouple1/DecIn2 (unconnected at //Network6/FBDecouple1/DecIn2)"
+    },
+    {
+     "test": "V2-DOWN04 releasing green removes the nonlatched removal requests",
+     "firstUndefined": "//Network6/FBDecouple1/DecIn2 (unconnected at //Network6/FBDecouple1/DecIn2)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn2",
+     "firstPort": "//Network6/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn3",
+     "firstPort": "//Network6/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn4",
+     "firstPort": "//Network6/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn5",
+     "firstPort": "//Network6/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn6",
+     "firstPort": "//Network6/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn7",
+     "firstPort": "//Network6/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn8",
+     "firstPort": "//Network6/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn5",
+     "firstPort": "//Network6/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn6",
+     "firstPort": "//Network6/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn7",
+     "firstPort": "//Network6/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn8",
+     "firstPort": "//Network6/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn2",
+     "firstPort": "//Network6/FBDecouple3/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn3",
+     "firstPort": "//Network6/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn4",
+     "firstPort": "//Network6/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn5",
+     "firstPort": "//Network6/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn6",
+     "firstPort": "//Network6/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn7",
+     "firstPort": "//Network6/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn8",
+     "firstPort": "//Network6/FBDecouple3/DecIn8",
+     "legacyValue": true
+    }
+   ]
+  },
+  "sal-rundown-outputs.test.js": {
+   "failingWithP1": [
+    {
+     "test": "V2-OUT01 green removal drops C2/STO while SS1 output remains at armed level",
+     "firstUndefined": "var:b_RBN_Bat_Reset (global at //Network6/FBOr2/OrIn2)"
+    },
+    {
+     "test": "V2-OUT04 PLC mode 01 changes SS1 and removes energy without physical green",
+     "firstUndefined": "var:b_RBN_Bat_Reset (global at //Network6/FBOr2/OrIn2)"
+    },
+    {
+     "test": "V2-OUT02 green release retains output removal but can strand Step3",
+     "firstUndefined": "var:b_RBN_Bat_Reset (global at //Network6/FBOr2/OrIn2)"
+    },
+    {
+     "test": "V2-OUT03 held green and C2 OFF reach Step12 then R&D on LV qualification",
+     "firstUndefined": "var:b_RBN_Bat_Reset (global at //Network6/FBOr2/OrIn2)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "alias",
+     "key": "out_TransitionStep",
+     "firstPort": "//Network6/FBAnd19/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_C3_BetReset",
+     "firstPort": "//Network6/FBOr3/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_C3_BetReset_2",
+     "firstPort": "//Network6/FBOr3/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_EStop_Ok",
+     "firstPort": "//Network3/FBAnd1/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_RBN_Bat_Reset",
+     "firstPort": "//Network6/FBOr2/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_RBN_Bat_Reset_2",
+     "firstPort": "//Network6/FBOr2/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_HV_C2",
+     "firstPort": "//Network1/FBOr16/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_HV_C2_2",
+     "firstPort": "//Network1/FBOr16/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_HV_Discharg_Req",
+     "firstPort": "//Network1/FBOr5/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_HV_Discharg_Req2",
+     "firstPort": "//Network1/FBOr5/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_LV_C1",
+     "firstPort": "//Network1/FBOr11/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_LV_C1_2",
+     "firstPort": "//Network1/FBOr11/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_LV_C1_3",
+     "firstPort": "//Network1/FBOr11/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR1",
+     "firstPort": "//Network1/FBOr7/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR1_2",
+     "firstPort": "//Network1/FBOr7/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR2",
+     "firstPort": "//Network1/FBOr9/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Reset_STO_DR2_2",
+     "firstPort": "//Network1/FBOr9/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_ResetPB_Lock",
+     "firstPort": "//Network6/FBAnd24/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_HV_C2",
+     "firstPort": "//Network1/FBOr18/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_HV_C2_1",
+     "firstPort": "//Network1/FBOr18/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_HV_Discharge_Request",
+     "firstPort": "//Network1/FBOr6/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_LV_C1",
+     "firstPort": "//Network1/FBOr17/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_STO_DR1",
+     "firstPort": "//Network1/FBOr8/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_STO_DR1_2",
+     "firstPort": "//Network1/FBOr8/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_STO_DR2",
+     "firstPort": "//Network1/FBOr10/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Set_STO_DR2_2",
+     "firstPort": "//Network1/FBOr10/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step_RnD",
+     "firstPort": "//Network6/FBAnd11/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Reset",
+     "firstPort": "//Network3/FBOr1/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set",
+     "firstPort": "//Network3/FBOr2/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set_2",
+     "firstPort": "//Network3/FBOr2/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set_3",
+     "firstPort": "//Network3/FBOr2/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12",
+     "firstPort": "//Network3/FBOr1/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12_Set",
+     "firstPort": "//Network3/FBOr16/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Reset",
+     "firstPort": "//Network3/FBOr3/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set",
+     "firstPort": "//Network3/FBOr4/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set_2",
+     "firstPort": "//Network3/FBOr4/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Reset",
+     "firstPort": "//Network3/FBOr5/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Set_2",
+     "firstPort": "//Network3/FBOr6/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Set_3",
+     "firstPort": "//Network3/FBOr6/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Reset",
+     "firstPort": "//Network3/FBOr7/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Reset",
+     "firstPort": "//Network3/FBOr9/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Set",
+     "firstPort": "//Network3/FBOr10/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Reset",
+     "firstPort": "//Network3/FBOr11/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Set",
+     "firstPort": "//Network3/FBOr12/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn2",
+     "firstPort": "//Network11/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn3",
+     "firstPort": "//Network11/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn4",
+     "firstPort": "//Network11/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn5",
+     "firstPort": "//Network11/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn6",
+     "firstPort": "//Network11/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn7",
+     "firstPort": "//Network11/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn8",
+     "firstPort": "//Network11/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn2",
+     "firstPort": "//Network3/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn3",
+     "firstPort": "//Network3/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn4",
+     "firstPort": "//Network3/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn5",
+     "firstPort": "//Network3/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn6",
+     "firstPort": "//Network3/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn7",
+     "firstPort": "//Network3/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn8",
+     "firstPort": "//Network3/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn2",
+     "firstPort": "//Network6/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn3",
+     "firstPort": "//Network6/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn4",
+     "firstPort": "//Network6/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn5",
+     "firstPort": "//Network6/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn6",
+     "firstPort": "//Network6/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn7",
+     "firstPort": "//Network6/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn8",
+     "firstPort": "//Network6/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn5",
+     "firstPort": "//Network6/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn6",
+     "firstPort": "//Network6/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn7",
+     "firstPort": "//Network6/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn8",
+     "firstPort": "//Network6/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn2",
+     "firstPort": "//Network6/FBDecouple3/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn3",
+     "firstPort": "//Network6/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn4",
+     "firstPort": "//Network6/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn5",
+     "firstPort": "//Network6/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn6",
+     "firstPort": "//Network6/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn7",
+     "firstPort": "//Network6/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn8",
+     "firstPort": "//Network6/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd10/AndOut",
+     "firstPort": "//Network1/FBAnd2/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd11/AndOut",
+     "firstPort": "//Network1/FBAnd3/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd12/AndOut",
+     "firstPort": "//Network1/FBAnd2/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd2/AndOut",
+     "firstPort": "//Network1/FBOr13/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd3/AndOut",
+     "firstPort": "//Network1/FBOr12/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd5/AndOut",
+     "firstPort": "//Network1/FBOr17/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd6/AndOut",
+     "firstPort": "//Network1/FBOr18/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd7/AndOut",
+     "firstPort": "//Network1/FBOr11/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd8/AndOut",
+     "firstPort": "//Network1/FBOr16/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBAnd9/AndOut",
+     "firstPort": "//Network1/FBAnd3/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr10/OrOut",
+     "firstPort": "//Network1/FBRs4/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr11/OrOut",
+     "firstPort": "//Network1/FBRs1/Reset",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr16/OrOut",
+     "firstPort": "//Network1/FBRs2/Reset",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr17/OrOut",
+     "firstPort": "//Network1/FBRs1/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr18/OrOut",
+     "firstPort": "//Network1/FBRs2/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr7/OrOut",
+     "firstPort": "//Network1/FBRs3/Reset",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr8/OrOut",
+     "firstPort": "//Network1/FBRs3/Set",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network1/FBOr9/OrOut",
+     "firstPort": "//Network1/FBRs4/Reset",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBAnd1/AndOut",
+     "firstPort": "//Network3/FBOr2/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBAnd2/AndOut",
+     "firstPort": "//Network3/FBAnd1/AndIn8",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBOr4/OrOut",
+     "firstPort": "//Network3/FBOr1/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBRs3/RsOut",
+     "firstPort": "//Network3/FBOr3/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBRs4/RsOut",
+     "firstPort": "//Network3/FBAnd1/AndIn6",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBRs5/RsOut",
+     "firstPort": "//Network3/FBAnd1/AndIn7",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBRs6/RsOut",
+     "firstPort": "//Network3/FBOr9/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBRs7/RsOut",
+     "firstPort": "//Network3/FBDecouple2/DecIn7",
+     "legacyValue": false
+    },
+    {
+     "kind": "wire",
+     "key": "//Network3/FBRs8/RsOut",
+     "firstPort": "//Network3/FBDecouple2/DecIn8",
+     "legacyValue": false
+    }
+   ]
+  },
+  "sal-runtime.test.js": {
+   "failingWithP1": [],
+   "undefinedReads": [
+    {
+     "kind": "alias",
+     "key": "in_C3_Manual_Reset",
+     "firstPort": "//Network6/FBAnd7/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_C3_Manual_Set",
+     "firstPort": "//Network6/FBAnd8/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Door_Monitor",
+     "firstPort": "//Network2/FBAnd8/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_ES_NC_1",
+     "firstPort": "//Network1/FBAndLvCurrentPermit/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_ES_NC_2",
+     "firstPort": "//Network1/FBAndLvCurrentPermit/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Estop_PLC",
+     "firstPort": "//Network1/FBAndLvCurrentPermit/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_False_SI2_CH8",
+     "firstPort": "//Network12/FBAnd15/AndIn8",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_HV_C2_FBK",
+     "firstPort": "//Network2/FBAnd2/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_HV_Connector_Interlock",
+     "firstPort": "//Network2/FBAnd1/AndIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_HV_Healthy_FBK",
+     "firstPort": "//Network5/FBAnd3/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_InterLock_NC_1",
+     "firstPort": "//Network2/FBAnd1/AndIn5",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_InterLock_NC_2",
+     "firstPort": "//Network2/FBAnd1/AndIn6",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_LV_C1_FBK",
+     "firstPort": "//Network2/FBAnd2/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_LV_Connector_Interlock",
+     "firstPort": "//Network2/FBAnd1/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_LV_Healthy_FBK",
+     "firstPort": "//Network5/FBAnd3/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Mentee_EStop",
+     "firstPort": "//Network1/FBAndLvSetPermit/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_RBM_Manual_Reset",
+     "firstPort": "//Network6/FBAnd5/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_RBM_Manual_Set",
+     "firstPort": "//Network6/FBAnd6/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Relase_Door_PB",
+     "firstPort": "//RndPhysicalCompact/GATE_002/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Reset_PB",
+     "firstPort": "//Network1/FBEstop1/Restart",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_Safety_Run",
+     "firstPort": "//Network3/FBAnd1/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_STO_DR1_FBK",
+     "firstPort": "//Network2/FBAnd3/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "in_STO_DR2_FBK",
+     "firstPort": "//Network2/FBAnd3/AndIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "inPLC_BypassC1C2",
+     "firstPort": "//Network1/FBAnd4/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "inPLC_RnD_Mode",
+     "firstPort": "//Network12/FBAnd8/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "alias",
+     "key": "inPLC_RnD_Mode_2",
+     "firstPort": "//Network12/FBAnd9/AndIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn3",
+     "firstPort": "//Network1/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn4",
+     "firstPort": "//Network1/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn5",
+     "firstPort": "//Network1/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn6",
+     "firstPort": "//Network1/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn7",
+     "firstPort": "//Network1/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple1/DecIn8",
+     "firstPort": "//Network1/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn2",
+     "firstPort": "//Network1/FBDecouple2/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn3",
+     "firstPort": "//Network1/FBDecouple2/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn4",
+     "firstPort": "//Network1/FBDecouple2/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn5",
+     "firstPort": "//Network1/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn6",
+     "firstPort": "//Network1/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn7",
+     "firstPort": "//Network1/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network1/FBDecouple2/DecIn8",
+     "firstPort": "//Network1/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple1/DecIn8",
+     "firstPort": "//Network10/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple2/DecIn5",
+     "firstPort": "//Network10/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple2/DecIn6",
+     "firstPort": "//Network10/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple2/DecIn7",
+     "firstPort": "//Network10/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network10/FBDecouple2/DecIn8",
+     "firstPort": "//Network10/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn2",
+     "firstPort": "//Network11/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn3",
+     "firstPort": "//Network11/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn4",
+     "firstPort": "//Network11/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn5",
+     "firstPort": "//Network11/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn6",
+     "firstPort": "//Network11/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn7",
+     "firstPort": "//Network11/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network11/FBDecouple1/DecIn8",
+     "firstPort": "//Network11/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn6",
+     "firstPort": "//Network12/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn7",
+     "firstPort": "//Network12/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple1/DecIn8",
+     "firstPort": "//Network12/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn5",
+     "firstPort": "//Network12/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn6",
+     "firstPort": "//Network12/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn7",
+     "firstPort": "//Network12/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple2/DecIn8",
+     "firstPort": "//Network12/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn3",
+     "firstPort": "//Network12/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn4",
+     "firstPort": "//Network12/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn5",
+     "firstPort": "//Network12/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn6",
+     "firstPort": "//Network12/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn7",
+     "firstPort": "//Network12/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network12/FBDecouple3/DecIn8",
+     "firstPort": "//Network12/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn3",
+     "firstPort": "//Network2/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn4",
+     "firstPort": "//Network2/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn5",
+     "firstPort": "//Network2/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn6",
+     "firstPort": "//Network2/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn7",
+     "firstPort": "//Network2/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple1/DecIn8",
+     "firstPort": "//Network2/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn2",
+     "firstPort": "//Network2/FBDecouple2/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn3",
+     "firstPort": "//Network2/FBDecouple2/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn4",
+     "firstPort": "//Network2/FBDecouple2/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn5",
+     "firstPort": "//Network2/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn6",
+     "firstPort": "//Network2/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn7",
+     "firstPort": "//Network2/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple2/DecIn8",
+     "firstPort": "//Network2/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn2",
+     "firstPort": "//Network2/FBDecouple3/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn3",
+     "firstPort": "//Network2/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn4",
+     "firstPort": "//Network2/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn5",
+     "firstPort": "//Network2/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn6",
+     "firstPort": "//Network2/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn7",
+     "firstPort": "//Network2/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple3/DecIn8",
+     "firstPort": "//Network2/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn3",
+     "firstPort": "//Network2/FBDecouple5/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn4",
+     "firstPort": "//Network2/FBDecouple5/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn5",
+     "firstPort": "//Network2/FBDecouple5/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn6",
+     "firstPort": "//Network2/FBDecouple5/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn7",
+     "firstPort": "//Network2/FBDecouple5/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network2/FBDecouple5/DecIn8",
+     "firstPort": "//Network2/FBDecouple5/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn2",
+     "firstPort": "//Network3/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn3",
+     "firstPort": "//Network3/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn4",
+     "firstPort": "//Network3/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn5",
+     "firstPort": "//Network3/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn6",
+     "firstPort": "//Network3/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn7",
+     "firstPort": "//Network3/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn8",
+     "firstPort": "//Network3/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn1",
+     "firstPort": "//Network4/FBDecouple1/DecIn1",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn2",
+     "firstPort": "//Network4/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn3",
+     "firstPort": "//Network4/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn4",
+     "firstPort": "//Network4/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn5",
+     "firstPort": "//Network4/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn6",
+     "firstPort": "//Network4/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn7",
+     "firstPort": "//Network4/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network4/FBDecouple1/DecIn8",
+     "firstPort": "//Network4/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn3",
+     "firstPort": "//Network5/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn4",
+     "firstPort": "//Network5/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn5",
+     "firstPort": "//Network5/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn6",
+     "firstPort": "//Network5/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn7",
+     "firstPort": "//Network5/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn8",
+     "firstPort": "//Network5/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn2",
+     "firstPort": "//Network5/FBDecouple2/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn4",
+     "firstPort": "//Network5/FBDecouple2/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn5",
+     "firstPort": "//Network5/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn6",
+     "firstPort": "//Network5/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn7",
+     "firstPort": "//Network5/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn8",
+     "firstPort": "//Network5/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn3",
+     "firstPort": "//Network5/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn4",
+     "firstPort": "//Network5/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn5",
+     "firstPort": "//Network5/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn6",
+     "firstPort": "//Network5/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn7",
+     "firstPort": "//Network5/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn8",
+     "firstPort": "//Network5/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn2",
+     "firstPort": "//Network5/FBDecouple4/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn3",
+     "firstPort": "//Network5/FBDecouple4/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn4",
+     "firstPort": "//Network5/FBDecouple4/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn5",
+     "firstPort": "//Network5/FBDecouple4/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn6",
+     "firstPort": "//Network5/FBDecouple4/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn7",
+     "firstPort": "//Network5/FBDecouple4/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn8",
+     "firstPort": "//Network5/FBDecouple4/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn2",
+     "firstPort": "//Network6/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn3",
+     "firstPort": "//Network6/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn4",
+     "firstPort": "//Network6/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn5",
+     "firstPort": "//Network6/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn6",
+     "firstPort": "//Network6/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn7",
+     "firstPort": "//Network6/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple1/DecIn8",
+     "firstPort": "//Network6/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn5",
+     "firstPort": "//Network6/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple2/DecIn8",
+     "firstPort": "//Network6/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn2",
+     "firstPort": "//Network6/FBDecouple3/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn3",
+     "firstPort": "//Network6/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn4",
+     "firstPort": "//Network6/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn5",
+     "firstPort": "//Network6/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn6",
+     "firstPort": "//Network6/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn7",
+     "firstPort": "//Network6/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network6/FBDecouple3/DecIn8",
+     "firstPort": "//Network6/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple1/DecIn7",
+     "firstPort": "//Network7/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple1/DecIn8",
+     "firstPort": "//Network7/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn1",
+     "firstPort": "//Network7/FBDecouple3/DecIn1",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn2",
+     "firstPort": "//Network7/FBDecouple3/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn5",
+     "firstPort": "//Network7/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn6",
+     "firstPort": "//Network7/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn7",
+     "firstPort": "//Network7/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network7/FBDecouple3/DecIn8",
+     "firstPort": "//Network7/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn1",
+     "firstPort": "//Network8/FBDecouple1/DecIn1",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn2",
+     "firstPort": "//Network8/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn4",
+     "firstPort": "//Network8/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn5",
+     "firstPort": "//Network8/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn6",
+     "firstPort": "//Network8/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn7",
+     "firstPort": "//Network8/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network8/FBDecouple1/DecIn8",
+     "firstPort": "//Network8/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//RndPhysicalCompact/SNAP_1/DecIn4",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//RndPhysicalCompact/SNAP_1/DecIn5",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//RndPhysicalCompact/SNAP_1/DecIn6",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//RndPhysicalCompact/SNAP_1/DecIn7",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//RndPhysicalCompact/SNAP_1/DecIn8",
+     "firstPort": "//RndPhysicalCompact/SNAP_1/DecIn8",
+     "legacyValue": true
+    }
+   ]
+  },
+  "sal-safe-exit-baseline.test.js": {
+   "failingWithP1": [
+    {
+     "test": "V2-EXIT01 Step2 Safe request requires raw constant input TRUE and EStop OK FALSE",
+     "firstUndefined": "//Network5/FBDecouple1/DecIn3 (unconnected at //Network5/FBDecouple1/DecIn3)"
+    },
+    {
+     "test": "V2-EXIT02 Step6 stays latched with raw constant FALSE and exits when TRUE",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-EXIT03 R&D exit request enters Step2 and raises LV/HV set requests with EStop OK",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-EXIT04 Step2 remains latched on EStop OK loss with raw constant FALSE",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "alias",
+     "key": "out_TransitionStep",
+     "firstPort": "//Network5/FBAnd10/AndIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step_RnD_Set",
+     "firstPort": "//Network3/FBOr14/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Reset",
+     "firstPort": "//Network3/FBOr1/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set",
+     "firstPort": "//Network3/FBOr2/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set_2",
+     "firstPort": "//Network3/FBOr2/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set_3",
+     "firstPort": "//Network3/FBOr2/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12_Set",
+     "firstPort": "//Network5/FBOr2/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12_Set_2",
+     "firstPort": "//Network3/FBOr5/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Reset",
+     "firstPort": "//Network3/FBOr3/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set",
+     "firstPort": "//Network3/FBOr4/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set_2",
+     "firstPort": "//Network3/FBOr4/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Reset",
+     "firstPort": "//Network3/FBOr5/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Set_2",
+     "firstPort": "//Network3/FBOr6/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Set_3",
+     "firstPort": "//Network3/FBOr6/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Reset",
+     "firstPort": "//Network3/FBOr7/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Set",
+     "firstPort": "//Network3/FBOr8/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Reset",
+     "firstPort": "//Network3/FBOr9/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Set",
+     "firstPort": "//Network3/FBOr10/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Reset",
+     "firstPort": "//Network3/FBOr11/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Set",
+     "firstPort": "//Network3/FBOr12/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn2",
+     "firstPort": "//Network3/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn3",
+     "firstPort": "//Network3/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn4",
+     "firstPort": "//Network3/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn5",
+     "firstPort": "//Network3/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn6",
+     "firstPort": "//Network3/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn7",
+     "firstPort": "//Network3/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn8",
+     "firstPort": "//Network3/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn3",
+     "firstPort": "//Network5/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn4",
+     "firstPort": "//Network5/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn5",
+     "firstPort": "//Network5/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn6",
+     "firstPort": "//Network5/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn7",
+     "firstPort": "//Network5/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple1/DecIn8",
+     "firstPort": "//Network5/FBDecouple1/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn2",
+     "firstPort": "//Network5/FBDecouple2/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn4",
+     "firstPort": "//Network5/FBDecouple2/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn5",
+     "firstPort": "//Network5/FBDecouple2/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn6",
+     "firstPort": "//Network5/FBDecouple2/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn7",
+     "firstPort": "//Network5/FBDecouple2/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple2/DecIn8",
+     "firstPort": "//Network5/FBDecouple2/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn3",
+     "firstPort": "//Network5/FBDecouple3/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn4",
+     "firstPort": "//Network5/FBDecouple3/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn5",
+     "firstPort": "//Network5/FBDecouple3/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn6",
+     "firstPort": "//Network5/FBDecouple3/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn7",
+     "firstPort": "//Network5/FBDecouple3/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple3/DecIn8",
+     "firstPort": "//Network5/FBDecouple3/DecIn8",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn2",
+     "firstPort": "//Network5/FBDecouple4/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn3",
+     "firstPort": "//Network5/FBDecouple4/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn4",
+     "firstPort": "//Network5/FBDecouple4/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn5",
+     "firstPort": "//Network5/FBDecouple4/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn6",
+     "firstPort": "//Network5/FBDecouple4/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn7",
+     "firstPort": "//Network5/FBDecouple4/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network5/FBDecouple4/DecIn8",
+     "firstPort": "//Network5/FBDecouple4/DecIn8",
+     "legacyValue": true
+    }
+   ]
+  },
+  "sal-state-baseline.test.js": {
+   "failingWithP1": [
+    {
+     "test": "V2-STATE01 Network3 Safe -> Step12 -> R&D -> armed ownership",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-STATE02 Network3 armed -> Step12 -> R&D uses the same Step12 latch",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-STATE03 Network3 R&D -> Step2 -> Safe ownership",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    },
+    {
+     "test": "V2-STATE04 Network3 armed -> Step4 -> Step5 -> Step6 -> Safe ownership",
+     "firstUndefined": "var:b_Step1_Reset (global at //Network3/FBOr1/OrIn1)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "global",
+     "key": "b_Step_RnD_Set",
+     "firstPort": "//Network3/FBOr14/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Reset",
+     "firstPort": "//Network3/FBOr1/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set",
+     "firstPort": "//Network3/FBOr2/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set_2",
+     "firstPort": "//Network3/FBOr2/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step1_Set_3",
+     "firstPort": "//Network3/FBOr2/OrIn4",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12_Set",
+     "firstPort": "//Network3/FBOr16/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step12_Set_2",
+     "firstPort": "//Network3/FBOr5/OrIn3",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Reset",
+     "firstPort": "//Network3/FBOr3/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set",
+     "firstPort": "//Network3/FBOr4/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step2_Set_2",
+     "firstPort": "//Network3/FBOr4/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Reset",
+     "firstPort": "//Network3/FBOr5/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Set_2",
+     "firstPort": "//Network3/FBOr6/OrIn2",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step3_Set_3",
+     "firstPort": "//Network3/FBOr6/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Reset",
+     "firstPort": "//Network3/FBOr7/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step4_Set",
+     "firstPort": "//Network3/FBOr8/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Reset",
+     "firstPort": "//Network3/FBOr9/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step5_Set",
+     "firstPort": "//Network3/FBOr10/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Reset",
+     "firstPort": "//Network3/FBOr11/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "global",
+     "key": "b_Step6_Set",
+     "firstPort": "//Network3/FBOr12/OrIn1",
+     "legacyValue": false
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn2",
+     "firstPort": "//Network3/FBDecouple1/DecIn2",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn3",
+     "firstPort": "//Network3/FBDecouple1/DecIn3",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn4",
+     "firstPort": "//Network3/FBDecouple1/DecIn4",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn5",
+     "firstPort": "//Network3/FBDecouple1/DecIn5",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn6",
+     "firstPort": "//Network3/FBDecouple1/DecIn6",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn7",
+     "firstPort": "//Network3/FBDecouple1/DecIn7",
+     "legacyValue": true
+    },
+    {
+     "kind": "unconnected",
+     "key": "//Network3/FBDecouple1/DecIn8",
+     "firstPort": "//Network3/FBDecouple1/DecIn8",
+     "legacyValue": true
+    }
+   ]
+  },
+  "timer-observed-clock.test.js": {
+   "failingWithP1": [
+    {
+     "test": "OBS-CAUSAL helper250 fixed1 secondDelta249: before-helper capture",
+     "firstUndefined": "var:second (global at //Clock/Capture/AndIn2)"
+    },
+    {
+     "test": "OBS-CAUSAL helper250 fixed1 secondDelta250: before-helper capture",
+     "firstUndefined": "var:second (global at //Clock/Capture/AndIn2)"
+    },
+    {
+     "test": "OBS-CAUSAL helper250 fixed1 secondDelta251: before-helper capture",
+     "firstUndefined": "var:second (global at //Clock/Capture/AndIn2)"
+    },
+    {
+     "test": "OBS-CAUSAL helper250 fixed2 secondDelta248: before-helper capture",
+     "firstUndefined": "var:second (global at //Clock/Capture/AndIn2)"
+    },
+    {
+     "test": "OBS-CAUSAL helper250 fixed2 secondDelta250: before-helper capture",
+     "firstUndefined": "var:second (global at //Clock/Capture/AndIn2)"
+    },
+    {
+     "test": "OBS-CAUSAL helper250 fixed2 secondDelta252: before-helper capture",
+     "firstUndefined": "var:second (global at //Clock/Capture/AndIn2)"
+    },
+    {
+     "test": "OBS-CAUSAL helper250 fixed5 secondDelta245: before-helper capture",
+     "firstUndefined": "var:second (global at //Clock/Capture/AndIn2)"
+    },
+    {
+     "test": "OBS-CAUSAL helper250 fixed5 secondDelta250: before-helper capture",
+     "firstUndefined": "var:second (global at //Clock/Capture/AndIn2)"
+    },
+    {
+     "test": "OBS-CAUSAL helper250 fixed5 secondDelta255: before-helper capture",
+     "firstUndefined": "var:second (global at //Clock/Capture/AndIn2)"
+    },
+    {
+     "test": "OBS-CAUSAL helper250 fixed10 secondDelta240: before-helper capture",
+     "firstUndefined": "var:second (global at //Clock/Capture/AndIn2)"
+    },
+    {
+     "test": "OBS-CAUSAL helper250 fixed10 secondDelta250: before-helper capture",
+     "firstUndefined": "var:second (global at //Clock/Capture/AndIn2)"
+    },
+    {
+     "test": "OBS-CAUSAL helper250 fixed10 secondDelta260: before-helper capture",
+     "firstUndefined": "var:second (global at //Clock/Capture/AndIn2)"
+    }
+   ],
+   "undefinedReads": [
+    {
+     "kind": "global",
+     "key": "second",
+     "firstPort": "//Clock/Capture/AndIn2",
+     "legacyValue": false
+    }
+   ]
+  }
+ }
+}

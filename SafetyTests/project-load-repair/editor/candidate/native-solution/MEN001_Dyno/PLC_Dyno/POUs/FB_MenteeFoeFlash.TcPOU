@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_MenteeFoeFlash" Id="{a7d24e18-6c93-4b50-9e71-2f8b5c0d3a61}" SpecialFunc="None">
+    <Declaration><![CDATA[// Flash a config.bin to the Mentee Motor Slave V3.2 over FoE, then persist it.
+//
+// Sequence (driven via GVL_MenteeFoe): on bExecute rising edge, with nLen>0 —
+//   OPEN  -> FB_EcFoeOpen  (file "config.bin", write mode)
+//   WRITE -> FB_EcFoeAccess (send aData[0..nLen-1] in one go)
+//   CLOSE -> FB_EcFoeClose
+//   SAVE  -> FB_EcCoESdoWrite 0x1010:01 = 0x65766173 ("save")  [auto, ONLY on a
+//            validated download] -> firmware writes flash sector 7 + self-resets.
+//
+// The slave validates the 32-byte header + CRC32 during the FoE data phase; a bad
+// file makes it return a FoE program-error, so a clean transfer (no bError AND
+// cbDone == nLen) means received + validated + applied to RAM. The save is gated
+// on that, so a failed download never commits to flash (bDownloadOk stays FALSE).
+//
+// >>> LINK IN XAE: <Motor Slave box> > InfoData > AdsAddr -> stAdsAddr. <<<
+// Same AMS address as FB_MenteeSdoCmd (EtherCAT master NetId + slave fixed addr);
+// FoE and CoE both use it. Enable "Include ADS Address" on the slave if hidden.
+// Caller must ensure the motor is IDLE before pulsing bExecute (app enforces it).
+FUNCTION_BLOCK FB_MenteeFoeFlash
+VAR
+    stAdsAddr AT %I* : AMSADDR;         // Motor Slave InfoData.AdsAddr (NetId + port)
+
+    fbOpen       : FB_EcFoeOpen;
+    fbAccess     : FB_EcFoeAccess;
+    fbClose      : FB_EcFoeClose;
+    fbSave       : FB_EcCoESdoWrite;
+    rExec        : R_TRIG;
+    sNetId       : T_AmsNetId;          // dotted string built from stAdsAddr.netId
+    i            : INT;
+    nSaveSig     : UDINT := 16#65766173;   // "save" (CoE Store Parameters signature)
+    bPendErr     : BOOL;                // WRITE failed -> still CLOSE the port, then ERROR
+    eState       : INT;
+END_VAR
+VAR CONSTANT
+    ST_IDLE      : INT := 0;
+    ST_OPEN      : INT := 1;
+    ST_WRITE     : INT := 2;
+    ST_CLOSE     : INT := 3;
+    ST_SAVE      : INT := 4;
+    ST_DONE      : INT := 5;
+    ST_ERR       : INT := 6;
+    CFG_FILE     : T_MaxString := 'config.bin';
+    STORE_INDEX  : WORD := 16#1010;
+    STORE_SUB    : BYTE := 1;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Build the master NetId string from the linked AMS address (manual concat -> no
+// extra library dependency), same as FB_MenteeSdoCmd.
+sNetId := '';
+FOR i := 0 TO 5 DO
+    sNetId := CONCAT(sNetId, BYTE_TO_STRING(stAdsAddr.netId[i]));
+    IF i < 5 THEN
+        sNetId := CONCAT(sNetId, '.');
+    END_IF
+END_FOR
+
+// Start on a rising edge, only when idle and there is data. Clear prior status.
+rExec(CLK := GVL_MenteeFoe.bExecute);
+IF rExec.Q AND (eState = ST_IDLE) AND (GVL_MenteeFoe.nLen > 0) THEN
+    GVL_MenteeFoe.bDownloadOk := FALSE;
+    GVL_MenteeFoe.bDone       := FALSE;
+    GVL_MenteeFoe.bError      := FALSE;
+    GVL_MenteeFoe.nErrId      := 0;
+    GVL_MenteeFoe.nStage      := 0;
+    bPendErr                  := FALSE;
+    eState                    := ST_OPEN;
+END_IF
+
+// Call every sub-FB each cycle; bExecute is gated by the current state. Each
+// Tc2_EtherCAT FB raises bBusy on the same call that sees the rising edge, so
+// "state active AND NOT bBusy" reliably means that stage finished.
+fbOpen(sNetId := sNetId, nPort := stAdsAddr.port, sPathName := CFG_FILE,
+       dwPass := 0, eMode := eFoeMode_Write,
+       bExecute := (eState = ST_OPEN), tTimeout := T#10S);
+
+fbAccess(hFoe := fbOpen.hFoe, pBuffer := ADR(GVL_MenteeFoe.aData),
+         cbBuffer := GVL_MenteeFoe.nLen,
+         bExecute := (eState = ST_WRITE), tTimeout := T#20S);
+
+fbClose(hFoe := fbOpen.hFoe, bExecute := (eState = ST_CLOSE), tTimeout := T#10S);
+
+fbSave(sNetId := sNetId, nSlaveAddr := stAdsAddr.port,
+       nIndex := STORE_INDEX, nSubIndex := STORE_SUB,
+       pSrcBuf := ADR(nSaveSig), cbBufLen := 4,
+       bExecute := (eState = ST_SAVE), tTimeout := T#5S);
+
+CASE eState OF
+
+ST_OPEN:
+    IF NOT fbOpen.bBusy THEN
+        IF fbOpen.bError THEN
+            GVL_MenteeFoe.nStage := 1; GVL_MenteeFoe.nErrId := fbOpen.nErrId;
+            eState := ST_ERR;                 // nothing opened -> no close needed
+        ELSE
+            eState := ST_WRITE;
+        END_IF
+    END_IF
+
+ST_WRITE:
+    IF NOT fbAccess.bBusy THEN
+        IF fbAccess.bError OR (fbAccess.cbDone <> GVL_MenteeFoe.nLen) THEN
+            bPendErr := TRUE;                 // still close the port, then report error
+            GVL_MenteeFoe.nStage := 2;
+            GVL_MenteeFoe.nErrId := fbAccess.nErrId;
+        ELSE
+            GVL_MenteeFoe.bDownloadOk := TRUE;   // received + validated by the slave
+        END_IF
+        eState := ST_CLOSE;
+    END_IF
+
+ST_CLOSE:
+    IF NOT fbClose.bBusy THEN
+        IF bPendErr THEN
+            eState := ST_ERR;                 // the WRITE failed (nStage/nErrId set)
+        ELSE
+            // Download validated: the slave ACKed every byte (cbDone = nLen),
+            // CRC-checked the payload and applied it to RAM. FoE has no protocol
+            // file-end — the slave finalizes on the config.bin header size and ends
+            // the session itself, so FB_EcFoeClose often returns a benign device
+            // error (e.g. 0x700: no session to close). Close is best-effort cleanup;
+            // proceed to save regardless of its result.
+            eState := ST_SAVE;                // download OK -> auto-save
+        END_IF
+    END_IF
+
+ST_SAVE:
+    IF NOT fbSave.bBusy THEN
+        IF fbSave.bError THEN
+            GVL_MenteeFoe.nStage := 4; GVL_MenteeFoe.nErrId := fbSave.nErrId;
+            eState := ST_ERR;
+        ELSE
+            GVL_MenteeFoe.bDone := TRUE;      // saved -> motor self-resets with the new config
+            eState := ST_DONE;
+        END_IF
+    END_IF
+
+ST_DONE:
+    GVL_MenteeFoe.bError := FALSE;
+    IF NOT GVL_MenteeFoe.bExecute THEN eState := ST_IDLE; END_IF   // re-arm on falling edge
+
+ST_ERR:
+    GVL_MenteeFoe.bError := TRUE;
+    IF NOT GVL_MenteeFoe.bExecute THEN eState := ST_IDLE; END_IF
+
+END_CASE
+
+GVL_MenteeFoe.nState := eState;
+GVL_MenteeFoe.bBusy  := (eState = ST_OPEN) OR (eState = ST_WRITE)
+                        OR (eState = ST_CLOSE) OR (eState = ST_SAVE);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

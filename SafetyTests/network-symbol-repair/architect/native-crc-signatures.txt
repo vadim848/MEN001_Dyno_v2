@@ -1,0 +1,25 @@
+TYPE Public, ClassSemanticsMask, Abstract, BeforeFieldInit Beckhoff.TwinCAT.XAE.Vsx.TwinSafe.Utilities.Crc.ICrcAccumulator
+Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName Beckhoff.TwinCAT.XAE.Vsx.TwinSafe.Utilities.Crc.ICrcCalculator get_CrcCalculator() 
+Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName Byte[] get_CrcBytes() 
+Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName Boolean get_IsResetted() 
+Public, Virtual, HideBySig, VtableLayoutMask, Abstract Void Reset() 
+Public, Virtual, HideBySig, VtableLayoutMask, Abstract Void AddData(Byte[]) 1:data 
+Public, Virtual, HideBySig, VtableLayoutMask, Abstract Void AddCrc(Byte[],Int32,Byte[],Byte[]) 1:dataCrc 2:dataLength 3:generatorPolynomial 4:initialValue 
+TYPE Public, ClassSemanticsMask, Abstract, BeforeFieldInit Beckhoff.TwinCAT.XAE.Vsx.TwinSafe.Utilities.Crc.ICrcAccumulator`1
+Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName T0 get_Crc() 
+Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName Beckhoff.TwinCAT.XAE.Vsx.TwinSafe.Utilities.Crc.ICrcCalculator`1<T0> get_CrcCalculator() 
+Public, Virtual, HideBySig, VtableLayoutMask, Abstract Void AddCrc(T0,Int32,T0,T0) 1:dataCrc 2:dataLength 3:generatorPolynomial 4:initialValue 
+ASSEMBLY REFERENCES
+mscorlib 4.0.0.0
+System 4.0.0.0
+Microsoft.VisualStudio.Shell.Interop 7.1.40304.0
+System.Xml 4.0.0.0
+WindowsBase 4.0.0.0
+PresentationFramework 4.0.0.0
+PresentationCore 4.0.0.0
+System.Xaml 4.0.0.0
+System.Drawing 4.0.0.0
+System.Windows.Forms 4.0.0.0
+System.Core 4.0.0.0
+TwinCAT.Ads 4.3.55.0
+

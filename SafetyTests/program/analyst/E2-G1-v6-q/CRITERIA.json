@@ -1,0 +1,84 @@
+{
+  "slice": "E2-G1-v6-q",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "sources": {
+    "testerHandoffV6": "437e032e9de29725250ec0b703e0b7d82c80aa796ecfacfd8ce6d1973c6c1f15",
+    "scenarioDecisionsBefore": "052956fe6c7897c87b469815666ca61f252b1e26f14bdfb54ecd39c6dfefc44d",
+    "scenarioDecisionsAfter": "c26025c3946f43a9769555f509f11ff47114a3a0848beb5c0e617e604917260a",
+    "scope": "03facdcebc8b54763d5bbfa0fc634dba85a5ed6bb5070e1b82ca33e76f9e9537",
+    "traceMatrix": "512b76359a2cb74eb00def76eccafa3502f4fe885fc7a6d4e5ac7706a74a9ed2",
+    "k3CriteriaBefore": "502113e83eb29b9afc2f533bad3963005c44905446d78abd3da0362bfc647d34",
+    "k3CriteriaAfter": "2c13e002b36786e386981c75851a98cc62eb73f1790c70f3bb9128bdb452f54c",
+    "k3CriteriaJsonAfter": "d89bd46cc802fceb014a3257a53edea569991d3bca0b05eb0f5afe5f12b4947f",
+    "v7TdCriteriaMdAfter": "7ea3793ef5b158ca5e36cd1e81b073101283a29275905582d10507495cd567b9",
+    "v7TdCriteriaJsonAfter": "d6e3b4f0686efe16d681a10aed51b101f8e93a580cca5f5145661b41a5c3153b",
+    "reviewPlanV7": "ea28e9ccbbc3fd8fa0f40e69764cc5066b9c752761ed1124788a78b73fb30e25",
+    "planV72": "6557525a20782eaf9650edb9c5078e3ab4237654464b51a9d4e10a3b330e9405",
+    "head": "dbca5dd",
+    "referenceNote": "reference 4495a1f has no SafetyFault acknowledgement, FBK-10 or legacy PLC path; gives no oracle here"
+  },
+  "teamDefaults": ["TD-06"],
+  "dTeamP4Check": {
+    "TD-06": {"addsEnergy": false, "removesProtection": false, "changesInterface": false, "contradictsVadim": false},
+    "questionsToVadim": []
+  },
+  "criteria": [
+    {
+      "id": "LIFT-MOMENT-BOTH",
+      "status": "TEAM-DEFAULT TD-06",
+      "matrixIds": ["MOD-008", "WDG-004", "BTN-006", "MOD-001", "MOD-002"],
+      "replaces": "K3-ACK window [Q2, Q2+1] (E2-G1-v5-k3 §2) - had no source",
+      "definition": "Q = scan T_BOTH expires (second press + 1000; p+delta+1000)",
+      "accepted": {
+        "noLiftScans": "[p, Q-1] normative (BTN-006 q-1): (S) out_LV_C1 FALSE; (R) out_HV_C2 FALSE and STO set",
+        "firstLift": "in [Q, Q+400] normative (TD-06 acceptance measure)",
+        "exactScan": "observation (diagnostic)"
+      },
+      "rejected": "no lift output in any scan up to end of observation, not earlier than Q+1500",
+      "sources": ["BTN-006 (03B internal qualification q-1/q+1)", "REL-PERMIT / REL-01(b)(c)(d) acceptance = BOTH 1100 + 300 ms (Q+400)", "DIS-HOLD [a,u] observation", "D-TEAM p.2"],
+      "notApplicable": ["rule L (emergency reaction moments only)", "D-Q500 (single-command priority, not output latency)"],
+      "testerActions": [
+        "current-e2d-fbk-k3ack liftIn: replace l in [Q2,Q2+1] by no lift in [p2,Q2-1] and first lift <= Q2+400; exact moment to diagnostic; all callers",
+        "source label TEAM-DEFAULT TD-06",
+        "REL01-e2 accepted: recommend same <= Q+400; keep rejection horizon >= Q+1500",
+        "F1 BOTH-2 lift at Q2+3 is not a defect under TD-06"
+      ]
+    },
+    {
+      "id": "FBK10-K4-HELD-G-1",
+      "status": "READY-D",
+      "verdict": "tester's test confirmed: BOTH-2 acknowledgement only, lift from BOTH-3",
+      "matrixIds": ["MOD-008", "WDG-004"],
+      "sources": ["Q-V7-04 B", "E6-Q2 A", "item 13 RESOLVED (ack at press scan; continued hold is not a command)", "TD-04 (p=g-1 not counted)", "Q-V4-02 B"],
+      "initial": "CRITERIA_DELTA_v7 §4.5 S1/S2/R; FBK TRUE [f, g-1], FALSE from g=f+3000; buttons released since <= f-2000; other permits present, R0",
+      "sequence": "BOTH-1 pressed at p=g-1 (delta 0), held to p+1100; r first both-released; BOTH-2 at p2=r+2001 held 1100, released r2; BOTH-3 at p3=r2+2001 held 1100",
+      "expected": [
+        "no lift every scan [p, p3-1] incl. Q1, Q1+1, Q2",
+        "SafetyFault TRUE [f+1, p2-1] incl. [g, p+1100] and pause [r, p2-1] (NV until symbol A8)",
+        "SafetyFault FALSE from [p2, p2+1] (NV until A8)",
+        "BOTH-3 executes: no lift [p3, Q3-1], first lift <= Q3+400 (TD-06)",
+        "no Emergency; energy and stage unchanged [f, p3-1]"
+      ],
+      "forbidden": ["lift in BOTH-1 after g incl. at Q1", "lift in BOTH-2", "SafetyFault FALSE in [g, p2-1]", "Emergency from FBK-10"],
+      "boundaries": {"p=g-1": "this criterion", "p=g": "TD-04", "p=g+1": "K3-ACK"},
+      "testerActions": ["add SafetyFault TRUE [g, p2-1] / FALSE from [p2, p2+1] check (NV until A8)", "liftIn for BOTH-3 per TD-06"]
+    },
+    {
+      "id": "KF-5",
+      "status": "known FAIL until E3/E4",
+      "location": "program/analyst/E2-plan-v7-TD/CRITERIA.md §3 (table row + criterion KF-5)",
+      "matrixIds": ["MOD-002", "STP-004", "STP-006", "MOD-005", "MOD-006"],
+      "vadimQuestionPending": "early disable of legacy R&D->Run (variant (b)) - already with Vadim via lead"
+    },
+    {
+      "id": "KF-3-DESC",
+      "status": "known FAIL until E4 (example of KF-3)",
+      "location": "program/analyst/E2-plan-v7-TD/CRITERIA.md §3",
+      "matrixIds": ["MOD-003", "PLC-001"],
+      "sideNote": "model: stage R&D at +106 with C2 still ON during Run->R&D - verify vs STP-004 on G3 with candidate facts; not declared a defect"
+    }
+  ],
+  "blocked": [],
+  "limits": ["criteria only; no model/test runs", "F1 Q+3 and prototype facts from HANDOFF_v6 / review, reference only", "not native, IDE, target or hardware"]
+}

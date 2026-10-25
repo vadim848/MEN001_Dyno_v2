@@ -1,0 +1,9 @@
+== EMG6-FBK: Safe, C1_FBK ON (unsolicited), in_Estop_PLC 100 ms, Restart cases
+v7.7 held through FBK OFF (press g, FBK OFF g+500, release g+1000) EOk first at g+1000 (FBK OFF at g+500) -> S1 EOk=1
+v7.7 released before FBK OFF (press 300, FBK OFF +1000) S1 EOk=1
+v7.7 no FBK (control): FBK OFF before Restart      EOk first at g+300 -> S1 EOk=1
+v7.8 all held through FBK OFF (press g, FBK OFF g+500, release g+1000) EOk first at g+1000 (FBK OFF at g+500) -> S1 EOk=1
+v7.8 all released before FBK OFF (press 300, FBK OFF +1000) S1 EOk=0
+v7.8 all no FBK (control): FBK OFF before Restart  EOk first at g+300 -> S1 EOk=1
+v7.7 R&D chain, Restart at +12.1 s                 EOk first at g+300, S1
+v7.8 all R&D chain, Restart at +12.1 s             EOk first at g+300, S1

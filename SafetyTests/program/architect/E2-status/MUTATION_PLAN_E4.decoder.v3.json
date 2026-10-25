@@ -1,0 +1,112 @@
+{
+  "version": "sal-mutation-plan-v1",
+  "planVersion": 3,
+  "status": "Decoder mutations - apply in E4 (D2-A); testFiles to be replaced by E4 test files at E4 G1.",
+  "sourceSha256": "FILL_AT_G2",
+  "testFiles": [
+    "current-e2a-status.test.js",
+    "current-e2a-emg-safe.test.js",
+    "current-e2a-emg-rnd.test.js",
+    "current-e2a-emg-run.test.js",
+    "current-e2a-emg-rundown.test.js",
+    "current-e2a-sweep-estop.test.js",
+    "current-e2b-sweep-connector.test.js",
+    "current-e2a-race.test.js",
+    "current-e2a-rnd-cover-healthy.test.js",
+    "current-e2a-run-conf.test.js",
+    "current-e2b-interlock-run.test.js",
+    "current-e2b-cover-transitions.test.js",
+    "current-e2b-connector-safe.test.js",
+    "current-e2c-stp-i.test.js",
+    "current-e2c-hlt03.test.js",
+    "current-e2d-release-permit.test.js"
+  ],
+  "behaviouralTests": [
+    "^E2[a-d] "
+  ],
+  "structuralSoftwareCheckCases": [
+    "^BOOT:"
+  ],
+  "mutations": [
+    {
+      "id": "M-DEC-01",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_RND",
+      "port": "AndIn2",
+      "rationale": "R&D status not masked by Emergency",
+      "killingScenario": "Steady R&D + in_ES_NC_1 FALSE: STS_RND and STS_EMG both TRUE",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-DEC-02",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_RUN",
+      "port": "AndIn2",
+      "rationale": "Run status not masked",
+      "killingScenario": "Steady Run + in_ES_NC_1 FALSE: in scans before S3 reset STS_RUN TRUE and STS_EMG FALSE (exactly-one holds; status wrong)",
+      "oracle": "Emergency priority from the scan b_EStop_Ok falls (E2-01, SPEC 13)"
+    },
+    {
+      "id": "M-DEC-03",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_SAFE",
+      "port": "AndIn2",
+      "rationale": "Safe status not masked",
+      "killingScenario": "Safe + in_ES_NC_1 FALSE: STS_SAFE and STS_EMG",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-DEC-04",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_EMG",
+      "port": "AndIn1",
+      "rationale": "complement ignores Safe",
+      "killingScenario": "Safe: STS_SAFE and STS_EMG",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-DEC-05",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_EMG",
+      "port": "AndIn2",
+      "rationale": "complement ignores R&D",
+      "killingScenario": "R&D: STS_RND and STS_EMG",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-DEC-06",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_EMG",
+      "port": "AndIn3",
+      "rationale": "complement ignores Run",
+      "killingScenario": "Run: STS_RUN and STS_EMG",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-DEC-07",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_SAFE_OR",
+      "port": "OrIn1",
+      "rationale": "S1 not Safe",
+      "killingScenario": "steady Safe: STS_EMG instead of STS_SAFE",
+      "oracle": "E2-01, Q-RC-10"
+    },
+    {
+      "id": "M-DEC-08",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_SAFE_OR",
+      "port": "OrIn2",
+      "rationale": "S12 not Safe",
+      "killingScenario": "Safe->R&D in progress: STS_EMG instead of STS_SAFE",
+      "oracle": "READY-D SPEC 6 + E2-01"
+    }
+  ]
+}

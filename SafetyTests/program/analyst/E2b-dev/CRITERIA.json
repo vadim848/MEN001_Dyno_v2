@@ -1,0 +1,67 @@
+{
+  "slice": "E2b-dev",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "basis": ["program/editor/E2b/HANDOFF.md D-E2b-2", "program/editor/E2d/HANDOFF.md D-E2d-1"],
+  "sources": {
+    "SCENARIO_DECISIONS.md(before TD-08)": "8ab0b135b48061000111c756ea4b2968e56ee56e2a94d0b251908e18a2ef3284",
+    "REQ-CONSOLIDATION/CRITERIA.md": "f2f11d77eba0d3b4441b42ff55666fbfc741bdd2867ebb763829328ad909eaa3",
+    "E2-G1-questions/CRITERIA_DELTA.md": "a017cbde326bde62c1d1bda8381e5687d98fa35eb6c95e0e26d593985e6ea15f",
+    "E2-G1-v2-questions/CRITERIA_DELTA_v4.md": "2b405938d002343a65afc73db8d2b83f172106462368121792c2539d70a60c04",
+    "E2-G1-v3-CA1/CRITERIA_DELTA_v6.md": "3d2d8fba7c162b601da39c6094fb35fff115264243a05c35526140f8b3030f02",
+    "E2-RC-D2/CRITERIA.md": "dc8b9853296933382b79a5020c08eb90823d713fd21795bbab60260e37beafb1",
+    "architect/E2-status/PLAN.md": "722aae404f0203842634d2c5919d9938e53dd9380ed28ebd95162d93f718b002",
+    "candidate E2b SAL": "386e208becc94f966c79629653b50c15ab96bd95bf95bf823aa1e7510ea2cfec",
+    "candidate E2d SAL": "365f2c2ef0791e6d3b93812cb4920c4f1c93c067d2246f8132f9b08e7df6bd8a",
+    "candidate E2d SGVL": "d2b08a8d12ddf85f33f024f6593d9a3d64501962f7be4ba64b2a5b3935b3a969"
+  },
+  "definitions": {
+    "A_RnD_to_Run": "first scan >= p (no-event fork) with recRndC_SU TRUE or out_HV_C2 TRUE or STO_DR1/STO_DR2 released; Symbol missing -> stand ERROR; legacy PLC path without SU -> A=u",
+    "A_Safe_to_RnD": "first scan >= p (no-event fork) with stage b_Step12 or out_LV_C1 TRUE (LV-A1)",
+    "candidateFact": "E2b=E2d: R&D->Run A=u-2 (SU p+1000, C2/STO p+1002); Safe->R&D g2=p+1000, A=u1-1=p+1001, u1=p+1002"
+  },
+  "criteria": [
+    {"id": "IL-02-A", "ids": ["EMG-002", "EMG-003", "CVR-004", "CVR-006"], "status": "READY-D", "source": "TD-08 (TEAM-DEFAULT); IL-02; DIS-HOLD-HV a (Q73 A)",
+     "initial": "steady R&D, cover closed, C3 on, buttons released", "inputs": "BOTH p..p+1099, OFF p+1100; NC1|NC2|both FALSE from c (Door TRUE; both also Door FALSE)",
+     "rows": [
+       {"c": "<= A-1", "expect": "no C2 ON / STO release in any scan >= c; only b_Step_RnD and C1 ON every scan; no Emergency/fault; held UP not executed after cover closes", "normative": true, "E2b": "PASS", "E2d": "PASS"},
+       {"c": "A", "expect": "observation: (i) as row above, or (ii) Emergency per IL-05a/L1 with C2/STO only as acceptance outputs not later than no-event u then v6 §4 bounds; forbidden: Run, release without Emergency latch", "normative": false, "E2b": "(i)", "E2d": "(i)"}
+     ]},
+    {"id": "IL-05a-A", "ids": ["EMG-002", "CVR-006", "MOD-002"], "status": "READY-D", "source": "TD-08; Q-RC-03(a) B; rule L (CRITERIA_DELTA_v4 §0.1)",
+     "rows": [
+       {"c": "A+1 .. u-1", "expect": "Emergency by L1 vs in_Estop_PLC at c, L4, latch; no C2 ON/STO release/C1/C3/BMS ON/Unlock in any scan >= c; never Run; Restart -> only Safe", "normative": true, "E2b": "PASS", "E2d": "PASS"},
+       {"c": "u (when A<u)", "expect": "same as A+1..u-1, including no new C2 ON/STO release in scan c itself; replaces N=u disjunction", "normative": true, "E2b": "PASS", "E2d": "FAIL: C2 ON and STO released at u with NC1 FALSE at u; Emg u+1; C2 until u+8009, STO until u+7005"},
+       {"c": "u+1, u+50, r-1", "expect": "IL-05a unchanged", "normative": true},
+       {"c": "r+1", "expect": "IL-03 unchanged", "normative": true}
+     ],
+     "forbidden": ["Run in any scan >= c", "C2 ON or STO release in any scan >= c when c >= A+1", "rejection without Emergency when c >= A+1", "Emergency when c <= A-1"]},
+    {"id": "EMG4-03-A", "ids": ["EMG-003", "EMG-004", "EMG-005", "MOD-001"], "status": "READY-D", "source": "TD-08; Q-RC-14 A; LV-A1; Q-E2Q-01; rule L1",
+     "initial": "steady Safe, connectors TRUE, cover closed", "inputs": "BOTH p..p+1099, OFF p+1100; LV or HV connector FALSE from e",
+     "rows": [
+       {"e": "<= A-1 (g2 scan)", "expect": "EMG-003: only b_Step1, C1 OFF every scan >= e, no b_Step12, no Emergency/fault", "normative": true, "E2b": "PASS", "E2d": "PASS"},
+       {"e": "A", "expect": "observation: (i) Safe, C1 OFF, no Emergency (b_Step12 only in A) or (ii) EMGREF-LV by L1, C1 ON only as acceptance output not later than no-event u1 then C1 OFF by chain; forbidden: R&D, C1 ON without Emergency", "normative": false, "E2b": "(ii) no C1", "E2d": "(ii) no C1"},
+       {"e": "A+1", "expect": "EMGREF-LV by L1/L4, latch; C1 ON in no scan >= e; never R&D; Restart -> only Safe", "normative": true, "E2b": "PASS", "E2d": "PASS"},
+       {"e": "u1+1", "expect": "EMGREF-LV unchanged", "normative": true, "E2b": "PASS", "E2d": "PASS"}
+     ]},
+    {"id": "D-E2d-1", "ids": ["MOD-001", "CVR-004", "EMG-002", "CVR-006"], "status": "READY", "source": "V14-Q7 B1; V14-Q5; Q-RC-03(b1); Q-RC-01; Q-RC-03(a); Q-RC-17; Q-ARCH-06",
+     "classification": [
+       {"old": "LV truth table rows in_InterLock_NC_1/2 (current-step12-lv-permit; MENTEE05 LV eight)", "verdict": "REPLACED by V14-Q7", "new": "NC1/NC2 FALSE does not block LV Set: out_LV_C1 = aggregate; other 6 rows unchanged; latched-LV loop unchanged"},
+       {"old": "LV paired producer (N11/FBAnd1, Step12) first-fault rows NC1/NC2", "verdict": "REPLACED by V14-Q7", "new": "Set executes as without event; other rows unchanged"},
+       {"old": "LV deny on legacy Network5 (b_Step2) route", "verdict": "NOT REPLACED", "new": "b_Step2 unreachable in v2 (R1 evidence); if reachable NC1/NC2 must deny LV Set there; test per route, not on aggregate FBOr17"},
+       {"old": "HV truth table NC rows, HV stale-aggregate first-fault NC rows (RnD-Network12, legacy, AND6), MENTEE05 HV eight NC rows", "verdict": "NOT REPLACED", "new": "behavioural: in any scan n with NC1 or NC2 FALSE in n no new out_HV_C2 ON and no new STO release, every HV raise route; gate location is architect's"},
+       {"old": "PRIORITY:Step12:ExternalNC1/NC2 (both fallbacks) 'no new LV command during fault'", "verdict": "REPLACED", "new": "lvRiseDuringFault equals control trace (Safe->R&D continues); 'no new HV command' and 'no unlock' unchanged"},
+       {"old": "PRIORITY Step12 connector/ES/PLC/Mentee; ExternalNC in other phases", "verdict": "NOT REPLACED", "new": "unchanged"}
+     ],
+     "keptWithoutWeakening": ["IL-03 Run Emergency (Q-RC-01)", "IL-05a StartingRun Emergency (Q-RC-03(a))", "IL-05d other descents Emergency (Q-RC-17)", "IL-02 R&D->Run only with closed cover incl. first scan", "CFG-02 Config entry forbidden with open cover (E4)"]}
+  ],
+  "findings": [
+    {"id": "E2d-COV-1", "to": "architect via lead", "severity": "normative FAIL on E2d, PASS on E2b",
+     "text": "R&D->Run accepted (SU at u-2), NC1 FALSE from u: E2d raises C2 and releases STO in u (energy increase with open cover); in_Estop_PLC/ES_NC_1 at u prevent it. Probable cause: NC1/NC2 removed from shared N1/FBAndLvCurrentPermit (also HV Set gate). Not attributed. Overlaps D-E2b-3."},
+    {"id": "STAND-MENTEE-PATH", "to": "stand-engineer/tester", "text": "current-mentee-set-permit.test.js reads canonical SAL by fixed path, ignores E2_SOURCE_ROOT; candidate results from it unreliable."},
+    {"id": "STAND-PIN-PRECOND", "to": "stand-engineer/tester", "text": "hv-set-permit 'stale aggregate' and step12-lv-permit 'paired producer' fail on E2d at precondition 'real aggregate must assert' (subgraph pins, D-E2b-4)."}
+  ],
+  "teamDecisions": ["TD-08"],
+  "questionsToVadim": [],
+  "blocked": [],
+  "repro": ["repro/accept-boundary.mjs", "repro/permit-table.mjs", "repro/startingrun-release.mjs", "repro/rnd-open-up.mjs"]
+}

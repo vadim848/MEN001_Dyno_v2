@@ -1,0 +1,42 @@
+SafetyApplicationLanguageSerializationHelperBase::CreateDiagramHelper RVA 290632
+0000 ldarg.1 
+0001 call MethodSpecification
+0006 newobj .ctor
+000B stloc.0 
+000C ldarg.2 
+000D call GetAllElementLinks
+0012 callvirt get_Count
+0017 brtrue.s 69
+0019 ldarg.2 
+001A callvirt get_Partition
+001F stloc.1 
+0020 ldloc.1 
+0021 newobj .ctor
+0026 stloc.2 
+0027 ldarg.0 
+0028 ldloc.1 
+0029 callvirt CreateSwimLaneRootForNetworkSwimLane
+002E stloc.3 
+002F ldloc.2 
+0030 ldloc.3 
+0031 callvirt Add
+0036 ldloc.2 
+0037 ldloc.3 
+0038 callvirt MarkAsRoot
+003D ldloc.0 
+003E callvirt get_ElementOperations
+0043 ldarg.2 
+0044 ldloc.2 
+0045 callvirt CreatePrototype
+004A callvirt CanMergeElementGroupPrototype
+004F brfalse.s 13
+0051 ldloc.0 
+0052 callvirt get_ElementOperations
+0057 ldarg.2 
+0058 ldloc.2 
+0059 callvirt MergeElementGroup
+005E ldloc.0 
+005F callvirt InitializeSwimlanes
+0064 ldloc.0 
+0065 ret 
+

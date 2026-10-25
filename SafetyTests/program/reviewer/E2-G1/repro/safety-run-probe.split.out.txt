@@ -1,0 +1,6 @@
+safetyRun false mode split Run stages [ 'b_Step3' ] 
+  2113:b_Step1 3114:b_Step1+b_Step12 3115:b_Step12 3215:b_Step_RnD 6518:none 6519:b_Step3
+ after EStop+Restart stages [ 'b_Step6' ] ok true outs {"out_LV_C1":false,"out_HV_C2":false,"STO_DR1":false,"STO_DR2":false,"out_SS1_DR1":false,"out_SS1_DR2":false,"out_LV_Discharge_Request":true,"out_HV_Discharge_Request":true,"out_Door_Unlock_Solonoeid":false,"out_C3_BatRelay":false,"out_RBM_Bat":false,"outPLC_STO_1":false,"outPLC_STO_2":false,"out_EStop_Status":true,"b_EStop_Ok":true}
+safetyRun true mode split Run stages [ 'b_Step1', 'b_Step3' ] 
+  2113:b_Step1 3114:b_Step1+b_Step12 3115:b_Step12 3215:b_Step_RnD 6518:none 6519:b_Step3 6520:b_Step1+b_Step3
+ after EStop+Restart stages [ 'b_Step1', 'b_Step5' ] ok true outs {"out_LV_C1":false,"out_HV_C2":false,"STO_DR1":false,"STO_DR2":false,"out_SS1_DR1":false,"out_SS1_DR2":false,"out_LV_Discharge_Request":true,"out_HV_Discharge_Request":true,"out_Door_Unlock_Solonoeid":false,"out_C3_BatRelay":false,"out_RBM_Bat":false,"outPLC_STO_1":false,"outPLC_STO_2":false,"out_EStop_Status":true,"b_EStop_Ok":true}

@@ -1,0 +1,18 @@
+== (A) Emergency entered in Safe, C1_FBK stuck ON, Restart
+E2d v7.7 FBK ON: in_LV_C1_FBK                    before Restart: S1 EOk=0 | Restart+200: S1 EOk=1 | FBK OFF +3 s: S1 EOk=1 | 2nd Restart: S1 EOk=1
+E2d v7.7 FBK ON: in_HV_C2_FBK                    before Restart: S1 EOk=0 | Restart+200: S1 EOk=1 | FBK OFF +3 s: S1 EOk=1 | 2nd Restart: S1 EOk=1
+E2d v7.7 FBK ON: none                            before Restart: S1 EOk=0 | Restart+200: S1 EOk=1 | FBK OFF +3 s: S1 EOk=1 | 2nd Restart: S1 EOk=1
+E2d v7.7 + RESTART_OK FBK ON: in_LV_C1_FBK       before Restart: S1 EOk=0 | Restart+200: S1 EOk=0 | FBK OFF +3 s: S1 EOk=0 | 2nd Restart: S1 EOk=1
+E2d v7.7 + RESTART_OK FBK ON: in_HV_C2_FBK       before Restart: S1 EOk=0 | Restart+200: S1 EOk=0 | FBK OFF +3 s: S1 EOk=0 | 2nd Restart: S1 EOk=1
+E2d v7.7 + RESTART_OK FBK ON: none               before Restart: S1 EOk=0 | Restart+200: S1 EOk=1 | FBK OFF +3 s: S1 EOk=1 | 2nd Restart: S1 EOk=1
+E2d v7.7 R&D chain, Restart at +12.1 s           before: none EOk=0 | after: S1 EOk=1
+E2d v7.7 + RESTART_OK R&D chain, Restart at +12.1 s before: none EOk=0 | after: S1 EOk=1
+== (B) HLT-01b: steady R&D, cover open (NC1 FALSE), LV Faulty
+E2c        S_RnD EOk=1 C1=0 SG=1 LvCurrentPermit=0
+E2d        S1 EOk=1 C1=0 SG=0 LvCurrentPermit=1
+== (C) M-E2b-48 (GATE_SPOIL_S.AndIn1 deactivated) on E2b: Safe, LV connector FALSE, blue single 700 ms
+E2b connector LOST             Unlock at +501 ; S1 EOk=1
+E2b connector ok               Unlock at +501 ; S1 EOk=1
+E2b mut48 connector LOST       Unlock at +- ; S1 EOk=1
+E2b mut48 connector ok         Unlock at +501 ; S1 EOk=1
+exit 0

@@ -1,0 +1,29 @@
+# Independent review: official LV lifecycle test proposal
+
+2026-10-20. **CHANGES REQUIRED before official test composition.** The source-closure and replacement coverage design is sound, but two result/invariant boundaries need correction. Only this report was written; proposal, source, runtime and frozen evidence were not changed. Behavioral execution was not performed in this review.
+
+Reviewed proposal PLAN, four test cases and helper against the latest LV decision, approved LV254 architecture/test-plan review and previous bounded RED review. The canonical source remains72f/de0f; candidate b7096/4eb26 must be composed in isolation before these canonical-relative imports can execute against that candidate. The reviewed helper has no source ENV override: fresh canonical SAL and matching SGVL are parsed and whole-audited before dependency closure. Only output evidence uses ENV. Initial phase and seven inactive N4 boundaries are explicit; only given raw inputs may change during protocol. Removed owner is neither observed nor supplied FALSE.
+
+## Required corrections
+
+1. **Do not downgrade a proved native response violation to eventual NOT VERIFIED.** Both missing-Safe and missing-reentry branches currently unconditionally call `t.todo` after a finite budget. The budget alone correctly cannot prove eventual failure. However, the helper already passively records actual Safe RS consumed Set/Reset and completion chronology. If real Safe RS consumes Set TRUE and Reset FALSE yet fails to produce Safe, that is a concrete causal failure, not eventual exhaustion. Likewise distinguish a demonstrably failed accepted startup/native consumer response from missing readiness or unresolved eventual progress on reentry. Add explicit causal assertions for proven writer/consumer obligations before selecting TODO; report last eligibility and actual consumed Set/Reset when only NOT VERIFIED is justified. Do not assert And15 TRUE alone must publish Safe in that same scan: actual Rnd can still drive reset dominance, as the reviewed design explains.
+
+2. **Cover the accepted-down boundary edge.** `invariant()` filters frames at/after acceptance, then checks OFF→ON only from frame index1. An OFF→ON occurring exactly on the first accepted-down frame is therefore omitted. Compare that first frame against the immediately preceding continuously observed sample, or explicitly assert the required prior-state/boundary relationship. Keep LV's legitimate preexisting ON before its shutdown distinct from prohibited HV/reenergization. Assert the native LV/HV RS consumed Set values where used to prove absence of energy Set replay; passive logging is useful evidence but is not itself an enforced invariant.
+
+These are test-result classification and coverage findings, not claims that the frozen LV candidate exhibits either defect. The independent16-case package and previous accepted candidate evidence remain unchanged.
+
+## Retained strengths and limits
+
+The proposed two healthy histories exercise actual Safe→Rnd→fresh accepted SG→LV commandOFF→healthy Safe→neutral→fresh BOTH→actual Rnd, with feedbackON rejection and commandOFF chronology. Two generic-discharge FALSE/TRUE initial Step2 controls preserve original startup. The no-Step2/proposal/permittedSet/no-reenergy replacement is materially stronger than checking a retired owner and keeps the frozen historical baseline intact. The interval is checked through999ms of the next gesture, before a fresh accepted startup can legitimately energize; new-command energy must remain distinguishable from stale replay.
+
+The separate16-case independent package supplies first-eligible/gap-fault/cleanup controls; these four official cases alone do not replace that coverage or close the emergency matrix. Structural exact254/unchanged timer and wrapper/usage migration gates remain separate composition requirements. Preparation failure stays ERROR; finite observation without a proven causal contradiction stays NOT VERIFIED. No hardware, native Verify/Build/CRC, Run/StartingRun or full HV shutdown acceptance follows.
+
+After the two corrections, return the changed exact hashes for a short independent gate review, then run isolated candidate composition and full regression without overwriting baseline evidence.
+
+## Revision2 follow-up gate
+
+2026-10-20. **READY for isolated exact-candidate composition, honest four-case execution and appropriate full regression.** This supersedes the construction hold above for the revised proposal only; it does not claim behavioral PASS or working-source promotion. Independently re-read the revised test/helper and REVISION.md and confirmed MANIFEST.json SHA256 `200438038c712821ddf78d6b1defad5ed674f7aa79e160408b93fe40738fcffb`.
+
+Both findings are addressed. Accepted time now comes from the first continuously observed SG sample; invariant comparison includes its preceding sample and asserts each actual native LV/HV consumed Set is FALSE through the protected interval. Real consumer snapshots now record post-evaluation outputs alongside consumed Set/Reset. Before any eventual TODO, causal assertions check actual reset dominance and SetTRUE/ResetFALSE→outputTRUE for observed energy, Safe/startup/Rnd RS writers, and emit the last consumer/completion evidence. Safe publication is not incorrectly equated with And15 TRUE during an active Rnd reset.
+
+Missing readiness/eventual progress without a proved contradiction remains NOT VERIFIED; actual causal failures remain assertions. The canonical-relative helper still requires separate isolated candidate composition, with immutable RED archives and no source ENV substitution. Record source identities and any TODO/ERROR honestly. Structural migration, other mandatory suites and independent candidate implementation review remain separate gates. No behavioral execution or source/test modification was performed by this reviewer.

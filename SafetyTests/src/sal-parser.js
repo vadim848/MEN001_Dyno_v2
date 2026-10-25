@@ -8,9 +8,13 @@ function attrs(text) {
   return Object.fromEntries([...text.matchAll(/([\w:.-]+)="([^"]*)"/g)].map(m => [m[1], m[2]]));
 }
 
-function elements(xml, tagPattern) {
-  const rx = new RegExp(`<(${tagPattern})\\b([^>]*)>([\\s\\S]*?)<\\/\\1>`, "g");
-  return [...xml.matchAll(rx)].map(m => ({ tag: m[1], attr: attrs(m[2]), body: m[3] }));
+// An element is either `<tag ...>body</tag>` or self-closing `<tag .../>`.
+// The native TwinSAFE writer serializes an empty Network as `<Network .../>`
+// (E2-R1, S1); without the self-closing branch such an open tag would swallow
+// the following sibling(s) up to the next `</Network>`.
+export function elements(xml, tagPattern) {
+  const rx = new RegExp(`<(${tagPattern})\\b([^>]*?)(?:\\/>|>([\\s\\S]*?)<\\/\\1>)`, "g");
+  return [...xml.matchAll(rx)].map(m => ({ tag: m[1], attr: attrs(m[2]), body: m[3] ?? "", selfClosing: m[3] === undefined }));
 }
 
 function ports(body, tag) {
@@ -55,6 +59,8 @@ export function parseSalFile(file, { bindingMode = "auto", sgvlPath } = {}) {
       });
     }
     networks.push({ ...network.attr, blocks });
+    // Guard against any other open/close mismatch: a Network body must not contain another Network.
+    if (/<Network\b/.test(network.body)) throw new Error(`Malformed SAL: Network ${network.attr.name} contains a nested <Network>`);
   }
 
   const variables = elements(xml, "variable").map(variable => {

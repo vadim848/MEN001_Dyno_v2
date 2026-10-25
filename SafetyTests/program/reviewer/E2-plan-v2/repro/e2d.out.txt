@@ -1,0 +1,23 @@
+a Safe open                                          S1       SAFE EOk=1 C1=0 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=1 viol 0
+a Safe open + BOTH -> expect R&D (IL-01)             S_RnD    RND  EOk=1 C1=1 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=0 viol 0
+b R&D open + green -> expect Safe (IL-02b a)         S1       SAFE EOk=1 C1=0 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=1 viol 0
+c R&D->Safe started, open -> expect Safe             S1       SAFE EOk=1 C1=0 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=1 viol 0
+d R&D open + LV faulty -> expect Safe (HLT-01b)      S1       SAFE EOk=1 C1=0 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=1 viol 0
+d2 R&D closed + LV faulty -> expect Safe (HLT-01)    S1       SAFE EOk=1 C1=0 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=1 viol 0
+d3 R&D HV faulty -> expect R&D (HLT-02)              S_RnD    RND  EOk=1 C1=1 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=0 viol 0
+e Run                                                S3       RUN  EOk=1 C1=1 C2=1 STO=11 Unl=0 SU=0 SG=0 Rdy=0 viol 0
+e Run + open +3                                      S4       EMG  EOk=0 C1=1 C2=1 STO=11 Unl=0 SU=0 SG=0 Rdy=0 viol 0
+e +12s expect EMG energy off                         S6       EMG  EOk=0 C1=0 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=0 viol 0
+e restart green -> ?                                 S6       EMG  EOk=1 C1=0 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=0 viol 0
+f Run down accepted + open                           S3       RUN  EOk=1 C1=1 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=0 viol 0
+f +12s expect R&D no EMG                             S_RnD    RND  EOk=1 C1=1 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=0 viol 0
+g Safe->R&D accepted, open -> expect R&D             S_RnD    RND  EOk=1 C1=1 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=0 viol 0
+h R&D open BOTH held, close -> expect R&D            S_RnD    RND  EOk=1 C1=1 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=0 viol 0
+h new gesture -> Run                                 S3       RUN  EOk=1 C1=1 C2=1 STO=11 Unl=0 SU=0 SG=0 Rdy=0 viol 0
+i Safe open blue (F1 forbid, Q-ARCH-04)              S1       SAFE EOk=1 C1=0 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=1 viol 0
+j Safe open bypass -> no C1/C2                       S1       SAFE EOk=1 C1=0 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=1 viol 0
+j2 Safe closed bypass legacy                         S1       SAFE EOk=1 C1=0 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=1 viol 0
+k R&D open blue                                      S_RnD    RND  EOk=1 C1=1 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=0 viol 0
+l Run conn lost (Q-RC-14 dep)                        S6       EMG  EOk=0 C1=0 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=0 viol 0
+m R&D conn lost (Q-RC-14 dep)                        S_RnD    EMG  EOk=0 C1=1 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=0 viol 0
+n Safe conn lost                                     S1       SAFE EOk=1 C1=0 C2=0 STO=00 Unl=0 SU=0 SG=0 Rdy=0 viol 0

@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_IOHandler" Id="{30106440-993a-492d-a097-aab8e340a1ad}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_IOHandler
+VAR_INPUT
+    // Raw digital input byte — link this to your EL1008 terminal in XAE
+    nRawDigitalIn   : BYTE;
+
+    // Raw analog input values — link to EL3002 channels in XAE
+    nRawAnalogIn_Ch1 : INT;
+    nRawAnalogIn_Ch2 : INT;
+
+    // Analog scaling — set once from MAIN or leave as defaults
+    fAnalogIn_Scale_Ch1  : LREAL := 10.0;   // full-scale [V or mA]
+    fAnalogIn_Scale_Ch2  : LREAL := 10.0;
+    fAnalogOut_Scale_Ch1 : LREAL := 10.0;
+    fAnalogOut_Scale_Ch2 : LREAL := 10.0;
+END_VAR
+
+VAR_OUTPUT
+    // Packed digital output byte — link this to your EL2008 terminal in XAE
+    nRawDigitalOut  : BYTE;
+
+    // Raw analog output values — link to EL4002 channels in XAE
+    nRawAnalogOut_Ch1 : INT;
+    nRawAnalogOut_Ch2 : INT;
+END_VAR
+
+VAR_IN_OUT
+    // Shared IO struct — same instance passed in from MAIN and GVL_IO
+    stIO : ST_IOData;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//======================================================================
+// DIGITAL INPUTS — unpack raw byte into named booleans
+//======================================================================
+stIO.bDI_EmergencyStop  := nRawDigitalIn.0;
+stIO.bDI_HomeSensor_M1  := nRawDigitalIn.1;
+stIO.bDI_HomeSensor_M2  := nRawDigitalIn.2;
+stIO.bDI_LimitPos_M1    := nRawDigitalIn.3;
+stIO.bDI_LimitNeg_M1    := nRawDigitalIn.4;
+stIO.bDI_LimitPos_M2    := nRawDigitalIn.5;
+stIO.bDI_LimitNeg_M2    := nRawDigitalIn.6;
+stIO.bDI_UserInput1     := nRawDigitalIn.7;
+
+// Mirror raw byte for Python diagnostics
+stIO.nDigitalInputs     := nRawDigitalIn;
+
+//======================================================================
+// ANALOG INPUTS — scale INT [-32768..32767] → engineering units
+// Formula: value = (raw / 32767.0) * full_scale
+//======================================================================
+stIO.fAnalogIn_Ch1      := (INT_TO_LREAL(nRawAnalogIn_Ch1) / 32767.0)
+                            * fAnalogIn_Scale_Ch1;
+stIO.fAnalogIn_Ch2      := (INT_TO_LREAL(nRawAnalogIn_Ch2) / 32767.0)
+                            * fAnalogIn_Scale_Ch2;
+stIO.nAnalogIn_Raw_Ch1  := nRawAnalogIn_Ch1;
+stIO.nAnalogIn_Raw_Ch2  := nRawAnalogIn_Ch2;
+
+//======================================================================
+// DIGITAL OUTPUTS — pack named booleans into raw byte for EL2008
+//======================================================================
+nRawDigitalOut.0 := stIO.bDO_BrakeRelease_M1;
+nRawDigitalOut.1 := stIO.bDO_BrakeRelease_M2;
+nRawDigitalOut.2 := stIO.bDO_StatusLED_Green;
+nRawDigitalOut.3 := stIO.bDO_StatusLED_Red;
+nRawDigitalOut.4 := stIO.bDO_UserOutput1;
+nRawDigitalOut.5 := stIO.bDO_UserOutput2;
+
+// Mirror packed byte back into struct for Python readback
+stIO.nDigitalOutputs    := nRawDigitalOut;
+
+//======================================================================
+// ANALOG OUTPUTS — scale engineering units → INT [-32767..32767]
+// Formula: raw = CLAMP(value / full_scale, -1.0, 1.0) * 32767
+// Python writes fAnalogOut_Ch1/2 into GVL_IO.stIO, FB reads them here
+//======================================================================
+stIO.nAnalogOut_Raw_Ch1 := LREAL_TO_INT(
+    LIMIT(-32767.0,
+          (stIO.fAnalogOut_Ch1 / fAnalogOut_Scale_Ch1) * 32767.0,
+          32767.0));
+
+stIO.nAnalogOut_Raw_Ch2 := LREAL_TO_INT(
+    LIMIT(-32767.0,
+          (stIO.fAnalogOut_Ch2 / fAnalogOut_Scale_Ch2) * 32767.0,
+          32767.0));
+
+nRawAnalogOut_Ch1 := stIO.nAnalogOut_Raw_Ch1;
+nRawAnalogOut_Ch2 := stIO.nAnalogOut_Raw_Ch2;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -40,11 +40,27 @@ test("SAL-SEM02 real RS holds, sets and resets with Reset dominant", () => {
   apply(false, false, false);
 });
 
+// E2-R1-stand-2 (S13): the subject is the semantics of unconnected Decouple inputs,
+// not Network4 (removed from Network4 by the R1 plan). The block is a clone of a real
+// safeDecouple of the source (real port encoding), detached from the source wiring, so
+// the test is independent of which networks a source keeps (F1 and R1 alike).
 test("SAL-SEM03 unconnected Decouple inputs are reported and sensitive to the chosen assumption", () => {
-  const n = model.networks.find(n => n.name === "Network4");
+  const proto = model.networks.flatMap(n => n.blocks).find(b => b.functionName === "safeDecouple");
+  assert.ok(proto, "source contains no safeDecouple to clone");
+  const b = structuredClone(proto);
+  b.path = "//Sem03/Decouple"; b.orderOfExecution = 1;
+  for (const p of [...b.inputs, ...b.outputs]) { p.path = `${b.path}/${p.name}`; p.sources = []; p.targets = []; p.globals = []; }
+  const port = name => [...b.inputs, ...b.outputs].find(p => p.name === name);
+  assert.ok(port("DecIn1") && port("DecIn7") && port("DecOut1") && port("DecOut7"), "cloned safeDecouple lacks DecIn/DecOut 1 and 7");
+  port("DecIn1").globals = [{ lastKnownPath: "Sem03.driven" }];
+  port("DecOut1").globals = [{ lastKnownPath: "Sem03.out1" }];
+  port("DecOut7").globals = [{ lastKnownPath: "Sem03.out7" }];
   for (const assumed of [false, true]) {
-    const r = new SalRuntime({ ...model, networks: [n] }, { unconnectedInput: assumed }).scan();
-    assert.equal(r.get("b_Step2_Set"), assumed);
-    assert.equal(r.assumedUnconnectedPorts.has("//Network4/FBDecouple1/DecIn7"), true);
+    const r = new SalRuntime({ networks: [{ blocks: [b] }], variables: [], bindingMode: "explicit-test-injection" }, { unconnectedInput: assumed })
+      .setInputs({ driven: !assumed }).scan();
+    assert.equal(r.get("out7"), assumed, "unconnected input takes the explicit assumption");
+    assert.equal(r.assumedUnconnectedPorts.has(`${b.path}/DecIn7`), true, "the assumption is reported");
+    assert.equal(r.get("out1"), !assumed, "a driven input is not affected by the assumption");
+    assert.equal(r.assumedUnconnectedPorts.has(`${b.path}/DecIn1`), false, "a driven input is not reported as assumed");
   }
 });

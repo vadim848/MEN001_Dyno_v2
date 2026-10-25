@@ -1,0 +1,46 @@
+--- a/SafetyTests/test/sal-safe-exit-baseline.test.js
++++ b/SafetyTests/test/sal-safe-exit-baseline.test.js
+@@ -23,28 +23,30 @@
+   return r.runFor(100);
+ }
+ 
+-test("V2-EXIT01 Step2 Safe request requires raw constant input TRUE and EStop OK FALSE", () => {
+-  for (const constant of [false, true]) {
+-    for (const estopOk of [false, true]) {
+-      const r = runtime(["Network5"], { b_Step2: true, in_False_SI2_CH8: constant, b_EStop_Ok: estopOk });
+-      assert.equal(r.get("b_Step1_Set_3"), constant && !estopOk);
+-      assert.equal(r.get("b_Set_LV_C1"), !constant && estopOk);
+-      assert.equal(r.get("b_Set_HV_C2"), !constant && estopOk);
+-    }
++// SCENARIO_DECISIONS Q-MU06-01 B / Q-MU06-02 A: in_False_SI2_CH8 is a technical constant FALSE; the
++// non-inverted branches N5/FBAnd7 (Step2 -> Safe) and N9/FBAnd1 (Step6 exit) are intentionally disabled.
++// Their firing at TRUE is not tested; the admissible check is that at constant FALSE they give no output.
++test("V2-EXIT01 Step2 Safe-request branch gives no output at constant FALSE (Q-MU06-02), Set requests follow EStop OK", () => {
++  for (const estopOk of [false, true]) {
++    const r = runtime(["Network5"], { b_Step2: true, in_False_SI2_CH8: false, b_EStop_Ok: estopOk });
++    assert.equal(r.get("b_Step1_Set_3"), false, "disabled N5/FBAnd7 branch has no influence at constant FALSE");
++    assert.equal(r.get("b_Set_LV_C1"), estopOk);
++    assert.equal(r.get("b_Set_HV_C2"), estopOk);
+   }
+ });
+ 
+-test("V2-EXIT02 Step6 stays latched with raw constant FALSE and exits when TRUE", () => {
++test("V2-EXIT02 Step6 stays latched at constant FALSE; disabled exit branch gives no output (Q-MU06-02)", () => {
+   const r = runtime(["Network3", "Network9"]);
+   r.runFor(50, { b_Step6_Set: true });
+   r.runFor(1000, { b_Step6_Set: false });
+   assert.equal(r.get("b_Step6"), true);
+   assert.equal(r.get("b_Step1_Set_2"), false);
+   assert.equal(r.get("out_Step1"), false);
+-  r.runFor(100, { in_False_SI2_CH8: true });
+-  assert.equal(r.get("b_Step1_Set_2"), false, "request clears after Step6 exits");
+-  assert.equal(r.get("b_Step6"), false);
+-  assert.equal(r.get("out_Step1"), true);
++  r.runFor(1000);
++  assert.equal(r.get("in_False_SI2_CH8"), false, "constant FALSE never driven");
++  assert.equal(r.get("b_Step1_Set_2"), false, "disabled N9/FBAnd1 branch has no influence at constant FALSE");
++  assert.equal(r.get("b_Step6"), true);
++  assert.equal(r.get("out_Step1"), false);
+ });
+ 
+ test("V2-EXIT03 R&D exit request enters Step2 and raises LV/HV set requests with EStop OK", () => {

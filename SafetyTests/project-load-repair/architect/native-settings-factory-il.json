@@ -1,0 +1,555 @@
+[
+  {
+    "Type": "FunctionBlock",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": []
+  },
+  {
+    "Type": "FBAnd",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj SingleChannelInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBConnShutdown",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj TwoChannelInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBDecouple",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBEdm",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj DualChannelOneWayInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBEstop",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 callvirt FunctionBlockPort::get_PortName",
+      "IL_0006 stloc.0 ",
+      "IL_0007 ldloc.0 ",
+      "IL_0008 ldstr STRING=Restart",
+      "IL_000D call MEMBER=op_Equality",
+      "IL_0012 brtrue.s IL_0030",
+      "IL_0014 ldloc.0 ",
+      "IL_0015 ldstr STRING=EDM1",
+      "IL_001A call MEMBER=op_Equality",
+      "IL_001F brtrue.s IL_0038",
+      "IL_0021 ldloc.0 ",
+      "IL_0022 ldstr STRING=EDM2",
+      "IL_0027 call MEMBER=op_Equality",
+      "IL_002C brtrue.s IL_0038",
+      "IL_002E br.s IL_0040",
+      "IL_0030 ldarg.1 ",
+      "IL_0031 ldc.i4.0 ",
+      "IL_0032 newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_0037 ret ",
+      "IL_0038 ldarg.1 ",
+      "IL_0039 ldc.i4.1 ",
+      "IL_003A newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_003F ret ",
+      "IL_0040 ldarg.1 ",
+      "IL_0041 newobj TwoChannelInPortSettings::.ctor",
+      "IL_0046 ret "
+    ]
+  },
+  {
+    "Type": "FBMon",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 callvirt FunctionBlockPort::get_PortName",
+      "IL_0006 stloc.0 ",
+      "IL_0007 ldloc.0 ",
+      "IL_0008 ldstr STRING=Restart",
+      "IL_000D call MEMBER=op_Equality",
+      "IL_0012 brtrue.s IL_0030",
+      "IL_0014 ldloc.0 ",
+      "IL_0015 ldstr STRING=EDM1",
+      "IL_001A call MEMBER=op_Equality",
+      "IL_001F brtrue.s IL_0038",
+      "IL_0021 ldloc.0 ",
+      "IL_0022 ldstr STRING=EDM2",
+      "IL_0027 call MEMBER=op_Equality",
+      "IL_002C brtrue.s IL_0038",
+      "IL_002E br.s IL_0040",
+      "IL_0030 ldarg.1 ",
+      "IL_0031 ldc.i4.0 ",
+      "IL_0032 newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_0037 ret ",
+      "IL_0038 ldarg.1 ",
+      "IL_0039 ldc.i4.1 ",
+      "IL_003A newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_003F ret ",
+      "IL_0040 ldarg.1 ",
+      "IL_0041 newobj TwoChannelInPortSettings::.ctor",
+      "IL_0046 ret "
+    ]
+  },
+  {
+    "Type": "FBMuting",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 callvirt FunctionBlockPort::get_PortName",
+      "IL_0006 stloc.0 ",
+      "IL_0007 ldloc.0 ",
+      "IL_0008 ldstr STRING=Enable",
+      "IL_000D call MEMBER=op_Equality",
+      "IL_0012 brtrue.s IL_0030",
+      "IL_0014 ldloc.0 ",
+      "IL_0015 ldstr STRING=EDM1",
+      "IL_001A call MEMBER=op_Equality",
+      "IL_001F brtrue.s IL_0038",
+      "IL_0021 ldloc.0 ",
+      "IL_0022 ldstr STRING=EDM2",
+      "IL_0027 call MEMBER=op_Equality",
+      "IL_002C brtrue.s IL_0038",
+      "IL_002E br.s IL_0040",
+      "IL_0030 ldarg.1 ",
+      "IL_0031 ldc.i4.0 ",
+      "IL_0032 newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_0037 ret ",
+      "IL_0038 ldarg.1 ",
+      "IL_0039 ldc.i4.1 ",
+      "IL_003A newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_003F ret ",
+      "IL_0040 ldarg.1 ",
+      "IL_0041 newobj TwoChannelInPortSettings::.ctor",
+      "IL_0046 ret "
+    ]
+  },
+  {
+    "Type": "FBOpmode",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBOr",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj SingleChannelInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBRs",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj SingleChannelOneWayInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBSr",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj SingleChannelOneWayInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBTof",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj SingleChannelOneWayInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBTon",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj SingleChannelOneWayInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBTon2",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 callvirt FunctionBlockPort::get_PortName",
+      "IL_0006 ldstr STRING=Enable",
+      "IL_000B call MEMBER=op_Equality",
+      "IL_0010 brfalse.s IL_001A",
+      "IL_0012 ldarg.1 ",
+      "IL_0013 ldc.i4.0 ",
+      "IL_0014 newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_0019 ret ",
+      "IL_001A ldarg.1 ",
+      "IL_001B newobj SingleChannelOneWayInPortSettings::.ctor",
+      "IL_0020 ret "
+    ]
+  },
+  {
+    "Type": "FBTwohand",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj TwoChannelInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBXor",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj DualChannelActiveDeactiveInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBAdvPosMon",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 callvirt FunctionBlockPort::get_PortName",
+      "IL_0006 ldstr STRING=Restart",
+      "IL_000B call MEMBER=op_Equality",
+      "IL_0010 brfalse.s IL_001A",
+      "IL_0012 ldarg.1 ",
+      "IL_0013 ldc.i4.0 ",
+      "IL_0014 newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_0019 ret ",
+      "IL_001A ldarg.1 ",
+      "IL_001B newobj BreakContactOnlySingleChannelOneWayInPortSettings::.ctor",
+      "IL_0020 ret "
+    ]
+  },
+  {
+    "Type": "FBAdd",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj BreakContactOnlySingleChannelOneWayInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBCamMonitor",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBCompare",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj UnchangeableSingleChannelInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBCounter",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 callvirt FunctionBlockPort::get_PortName",
+      "IL_0006 ldstr STRING=Reset",
+      "IL_000B call MEMBER=op_Equality",
+      "IL_0010 brfalse.s IL_0019",
+      "IL_0012 ldarg.1 ",
+      "IL_0013 newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_0018 ret ",
+      "IL_0019 ldarg.1 ",
+      "IL_001A newobj BreakContactOnlySingleChannelInPortSettings::.ctor",
+      "IL_001F ret "
+    ]
+  },
+  {
+    "Type": "FBDiv",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj BreakContactOnlySingleChannelOneWayInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBEnvelope",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj BreakContactOnlySingleChannelOneWayInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBLimit",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 callvirt FunctionBlockPort::get_PortName",
+      "IL_0006 ldstr STRING=AnalogIn",
+      "IL_000B call MEMBER=op_Equality",
+      "IL_0010 brfalse.s IL_0019",
+      "IL_0012 ldarg.1 ",
+      "IL_0013 newobj BreakContactOnlySingleChannelOneWayInPortSettings::.ctor",
+      "IL_0018 ret ",
+      "IL_0019 ldarg.1 ",
+      "IL_001A newobj BreakContactOnlySingleChannelInPortSettings::.ctor",
+      "IL_001F ret "
+    ]
+  },
+  {
+    "Type": "FBLoadSensing",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBMul",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj BreakContactOnlySingleChannelOneWayInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBScaling",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj SingleChannelOneWayInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBSLI",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj BreakContactOnlySingleChannelOneWayInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBSLI2",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj BreakContactOnlySingleChannelOneWayInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBSpeed",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj BreakContactOnlySingleChannelOneWayInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBSub",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 newobj BreakContactOnlySingleChannelOneWayInPortSettings::.ctor",
+      "IL_0006 ret "
+    ]
+  },
+  {
+    "Type": "FBViolationCNT",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 callvirt FunctionBlockPort::get_PortName",
+      "IL_0006 ldstr STRING=Input",
+      "IL_000B call MEMBER=op_Equality",
+      "IL_0010 brfalse.s IL_0019",
+      "IL_0012 ldarg.1 ",
+      "IL_0013 newobj SingleChannelOneWayInPortSettings::.ctor",
+      "IL_0018 ret ",
+      "IL_0019 ldarg.1 ",
+      "IL_001A newobj BreakContactOnlySingleChannelOneWayInPortSettings::.ctor",
+      "IL_001F ret "
+    ]
+  },
+  {
+    "Type": "FBSLP",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 callvirt FunctionBlockPort::get_PortNum",
+      "IL_0006 ldc.i4.6 ",
+      "IL_0007 bge.s IL_0020",
+      "IL_0009 ldarg.1 ",
+      "IL_000A callvirt FunctionBlockPort::get_PortNum",
+      "IL_000F ldc.i4.4 ",
+      "IL_0010 bne.un.s IL_0019",
+      "IL_0012 ldarg.1 ",
+      "IL_0013 newobj BreakContactOnlySingleChannelInPortSettings::.ctor",
+      "IL_0018 ret ",
+      "IL_0019 ldarg.1 ",
+      "IL_001A newobj BreakContactOnlySingleChannelOneWayInPortSettings::.ctor",
+      "IL_001F ret ",
+      "IL_0020 ldarg.1 ",
+      "IL_0021 newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_0026 ret "
+    ]
+  },
+  {
+    "Type": "FBSBT",
+    "Method": "CreateIInPortSettingsInstance",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 callvirt FunctionBlockPort::get_PortNum",
+      "IL_0006 ldc.i4.6 ",
+      "IL_0007 bge.s IL_0010",
+      "IL_0009 ldarg.1 ",
+      "IL_000A newobj BreakContactOnlySingleChannelOneWayInPortSettings::.ctor",
+      "IL_000F ret ",
+      "IL_0010 ldarg.1 ",
+      "IL_0011 newobj ImplicitSingleChannelInPortSettings::.ctor",
+      "IL_0016 ret "
+    ]
+  },
+  {
+    "Type": "Deactivate1PropertyHandler",
+    "Method": "IsChangePossible",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 callvirt InPort::get_ChannelInterface",
+      "IL_0006 ldstr STRING=Activated",
+      "IL_000B call MEMBER=op_Equality",
+      "IL_0010 brtrue.s IL_0048",
+      "IL_0012 ldarg.1 ",
+      "IL_0013 callvirt InPort::get_ChannelInterface",
+      "IL_0018 ldstr STRING=Single-Channel 1 Activated",
+      "IL_001D call MEMBER=op_Equality",
+      "IL_0022 brtrue.s IL_0048",
+      "IL_0024 ldarg.1 ",
+      "IL_0025 callvirt InPort::get_ChannelInterface",
+      "IL_002A ldstr STRING=Single-Channel Both Activated",
+      "IL_002F call MEMBER=op_Equality",
+      "IL_0034 brtrue.s IL_0048",
+      "IL_0036 ldarg.1 ",
+      "IL_0037 callvirt InPort::get_ChannelInterface",
+      "IL_003C ldstr STRING=Two-Channel",
+      "IL_0041 call MEMBER=op_Equality",
+      "IL_0046 br.s IL_0049",
+      "IL_0048 ldc.i4.1 ",
+      "IL_0049 stloc.0 ",
+      "IL_004A ldarg.3 ",
+      "IL_004B ldstr STRING=Make Contact (NO)",
+      "IL_0050 call MEMBER=op_Equality",
+      "IL_0055 brtrue.s IL_0071",
+      "IL_0057 ldarg.3 ",
+      "IL_0058 ldstr STRING=Break Contact (NC)",
+      "IL_005D call MEMBER=op_Equality",
+      "IL_0062 brtrue.s IL_0071",
+      "IL_0064 ldarg.3 ",
+      "IL_0065 brfalse.s IL_007F",
+      "IL_0067 ldarg.3 ",
+      "IL_0068 call MEMBER=get_Length",
+      "IL_006D brfalse.s IL_0078",
+      "IL_006F br.s IL_007F",
+      "IL_0071 ldloc.0 ",
+      "IL_0072 brfalse.s IL_0076",
+      "IL_0074 ldc.i4.1 ",
+      "IL_0075 ret ",
+      "IL_0076 ldc.i4.0 ",
+      "IL_0077 ret ",
+      "IL_0078 ldloc.0 ",
+      "IL_0079 brfalse.s IL_007D",
+      "IL_007B ldc.i4.0 ",
+      "IL_007C ret ",
+      "IL_007D ldc.i4.1 ",
+      "IL_007E ret ",
+      "IL_007F ldc.i4.0 ",
+      "IL_0080 ret "
+    ]
+  },
+  {
+    "Type": "Deactivate2PropertyHandler",
+    "Method": "IsChangePossible",
+    "IL": [
+      "IL_0000 ldarg.1 ",
+      "IL_0001 callvirt InPort::get_ChannelInterface",
+      "IL_0006 ldstr STRING=Single-Channel 2 Activated",
+      "IL_000B call MEMBER=op_Equality",
+      "IL_0010 brtrue.s IL_0036",
+      "IL_0012 ldarg.1 ",
+      "IL_0013 callvirt InPort::get_ChannelInterface",
+      "IL_0018 ldstr STRING=Single-Channel Both Activated",
+      "IL_001D call MEMBER=op_Equality",
+      "IL_0022 brtrue.s IL_0036",
+      "IL_0024 ldarg.1 ",
+      "IL_0025 callvirt InPort::get_ChannelInterface",
+      "IL_002A ldstr STRING=Two-Channel",
+      "IL_002F call MEMBER=op_Equality",
+      "IL_0034 br.s IL_0037",
+      "IL_0036 ldc.i4.1 ",
+      "IL_0037 stloc.0 ",
+      "IL_0038 ldarg.3 ",
+      "IL_0039 ldstr STRING=Make Contact (NO)",
+      "IL_003E call MEMBER=op_Equality",
+      "IL_0043 brtrue.s IL_005F",
+      "IL_0045 ldarg.3 ",
+      "IL_0046 ldstr STRING=Break Contact (NC)",
+      "IL_004B call MEMBER=op_Equality",
+      "IL_0050 brtrue.s IL_005F",
+      "IL_0052 ldarg.3 ",
+      "IL_0053 brfalse.s IL_006D",
+      "IL_0055 ldarg.3 ",
+      "IL_0056 call MEMBER=get_Length",
+      "IL_005B brfalse.s IL_0066",
+      "IL_005D br.s IL_006D",
+      "IL_005F ldloc.0 ",
+      "IL_0060 brfalse.s IL_0064",
+      "IL_0062 ldc.i4.1 ",
+      "IL_0063 ret ",
+      "IL_0064 ldc.i4.0 ",
+      "IL_0065 ret ",
+      "IL_0066 ldloc.0 ",
+      "IL_0067 brfalse.s IL_006B",
+      "IL_0069 ldc.i4.0 ",
+      "IL_006A ret ",
+      "IL_006B ldc.i4.1 ",
+      "IL_006C ret ",
+      "IL_006D ldc.i4.0 ",
+      "IL_006E ret "
+    ]
+  }
+]

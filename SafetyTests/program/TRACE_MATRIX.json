@@ -1,0 +1,1858 @@
+{
+  "schema": "men001-v2-trace-matrix/1",
+  "generatedAt": "2026-10-22T21:25:53.469Z",
+  "source": "SafetyTests/SOFTWARE_ACCEPTANCE_SCOPE.md (incl. consolidation 2026-10-21)",
+  "statusValues": [
+    "OPEN",
+    "IN_PROGRESS",
+    "BLOCKED",
+    "CLOSED"
+  ],
+  "closedMeans": "positive+negative scenarios PASS on canonical SAL, guard mutations killed, independent review ACCEPT",
+  "baseline": {
+    "canonical": {
+      "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+      "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+      "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+      "name": "F1 (acceptedP0 + shared Run recognizer + accepted-down owner)",
+      "checkpoint": "0391fae"
+    },
+    "previous": {
+      "name": "acceptedP0",
+      "sal": "34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b",
+      "sgvl": "517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635",
+      "diagram": "7b5eb79439011cdf9a3206aa815dec4349a35cf8155bfac7492b7ffd75e578ce",
+      "fixture": "SafetyTests/fixtures/resumed-p0-canonical"
+    },
+    "run": "2026-10-21 after F1 transfer + MIG-1..8: harness 209/209, historical 75/75, current 445/445; scenarios 199 PASS / 1 FAIL / 7 NV / 0 ERROR (program/stand/E1-f1-mig8/HANDOFF.md)",
+    "knownFail": [
+      "STATE:conflicting-set-requests (injection-only; unchanged from P0)"
+    ],
+    "resolvedByF1": [
+      "SR-RG-INVALID-green-remain-green",
+      "SR-RG-INVALID-blue-remain-green"
+    ]
+  },
+  "frozen": {
+    "E4": "Decisions V14-Q2/Q8-Q21 provide E4 material; E4 implementation after E2 mechanism per Vadim plan (parent session 2026-10-21); path-guard extension for V14-Q2 files requires user action"
+  },
+  "ids": [
+    {
+      "id": "EMG-001",
+      "status": "OPEN",
+      "plannedStage": "E2/E3/E5",
+      "coverageAtStart": "Частично ACC-C01-E и PRIORITY по seeded фазам",
+      "closureCriteria": "Каждая допустимая фаза, вход EStop во время перехода, начало аварии, отсутствие нового повышения",
+      "criteria": [
+        "program/analyst/E1-f1-MU06/CRITERIA.md C03 only (C01/C02 out of scope per Q-MU06-01)",
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G1-v3-CA1/CRITERIA_DELTA_v6.md",
+        "program/analyst/E2-G1-v8-q/CRITERIA.md",
+        "program/analyst/E2-G3-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": []
+    },
+    {
+      "id": "EMG-002",
+      "status": "OPEN",
+      "plannedStage": "E2/E3/E5",
+      "coverageAtStart": "Частично PRIORITY ExternalNC1/2",
+      "closureCriteria": "Оба канала отдельно, в режимах и переходах, фиксация аварии",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G1-v3-CA1/CRITERIA_DELTA_v6.md",
+        "program/analyst/E2-G1-v8-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q21",
+        "Q-RC-01 (Vadim 2026-10-21): InterLock NC1/NC2 loss in stable Run -> Emergency (IL-03b READY, EMGREF)",
+        "Q-RC-01, Q-RC-03, V14-Q21(a)(c)"
+      ],
+      "evidence": [
+        "E1-f1: owner reset by priority (NC1, NC2, ES_NC_1, PLC, HV connector) PASS at component level; partial only"
+      ],
+      "closureCriteriaRevised2026_10_21": "Потеря in_InterLock_NC_1/2: Safe/R&D — только запрет R&D→Run без fault; Run — защитный спуск (последовательность — после Q-RC-01); Config — Emergency; переходы — после Q-RC-03. EStop in_ES_NC_1/2 — Emergency везде (EMG-001)",
+      "closureCriteriaRevisedV2": "«Потеря in_InterLock_NC_1/2: Safe, R&D, Safe→R&D, R&D→Safe, нормальный Run→R&D — не авария (только запрет R&D→Run, начатый переход продолжается); Run, StartingRun, Config, выход Config — Emergency (защёлка, снятие энергии, выход по EMG-006). Прочие спуски — после Q-RC-17. EStop — EMG-001»"
+    },
+    {
+      "id": "EMG-003",
+      "status": "OPEN",
+      "plannedStage": "E2/E3/E5",
+      "coverageAtStart": "Нет полной positive/negative цепи",
+      "closureCriteria": "Safe: каждый connector отсутствует, up отклонён без fault; восстановление без нового жеста не запускает",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v8-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": []
+    },
+    {
+      "id": "EMG-004",
+      "status": "OPEN",
+      "plannedStage": "E2/E3/E5",
+      "coverageAtStart": "Частично PRIORITY connectors",
+      "closureCriteria": "Потеря после Safe в каждой фазе, аварийное владение и запрет новых повышений",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-questions/CRITERIA_DELTA.md",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G1-v3-CA1/CRITERIA_DELTA_v6.md",
+        "program/analyst/E2-G1-v8-q/CRITERIA.md",
+        "program/analyst/E2-G3-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q19, SPEC §5.1, Q-RC-14"
+      ],
+      "evidence": [],
+      "closureCriteriaRevisedV2": "«После выхода из Safe потеря connector: Config и выход Config — Emergency; везде — без новых повышений, Unlock FALSE, восстановление не отменяет реакцию; вид реакции в R&D/Run/переходах — после Q-RC-14»"
+    },
+    {
+      "id": "EMG-005",
+      "status": "OPEN",
+      "plannedStage": "E2/E3/E5",
+      "coverageAtStart": "Частично ESTOP/ACC-C01-E",
+      "closureCriteria": "Возврат каждого защитного входа не отменяет начатую аварийную последовательность",
+      "criteria": [
+        "program/analyst/E1-f1-MU06/CRITERIA.md C03 only (C01/C02 out of scope per Q-MU06-01)",
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v8-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": [
+        "E1-f1: owner reset by priority (NC1, NC2, ES_NC_1, PLC, HV connector) PASS at component level; partial only"
+      ]
+    },
+    {
+      "id": "EMG-006",
+      "status": "OPEN",
+      "plannedStage": "E2/E3/E5",
+      "coverageAtStart": "Частично EStop component/reference",
+      "closureCriteria": "Полная ручная процедура после снятия энергии, только Safe, PLC не снимает аварийную память",
+      "criteria": [
+        "program/analyst/E4-v14/CRITERIA.md (E4-v14 central)",
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-questions/CRITERIA_DELTA.md",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G1-v3-CA1/CRITERIA_DELTA_v6.md",
+        "program/analyst/E2-G3-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q6, V14-Q4",
+        "Q-RC-05, Q-RC-10"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "+ «для всех источников (EStop, PLC, Mentee, heartbeat, Config, watchdog OFF) снятие — зелёная (FBEstop1.Restart) при выполненных SPEC §12; гриб нажимать не требуется; после Safe PLC-UP по новому фронту разрешён»",
+      "closureCriteriaRevisedV2": "+ «Bypass, удерживаемый через Restart, Config не даёт (нужен новый фронт); группа стартует в Emergency»"
+    },
+    {
+      "id": "EMG-007",
+      "status": "OPEN",
+      "plannedStage": "E2/E3/E5",
+      "coverageAtStart": "07r2 actual final gate: Safe/R&D NC1/PLC firstscan и latched no-reopen; ACC-C01-E два FAIL закрыты",
+      "closureCriteria": "Остальные NC2/Mentee/источники, все переходные фазы и завершение снятия опасной энергии; не считать 07 полным закрытием",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": [
+        "E1-f1: owner reset by priority (NC1, NC2, ES_NC_1, PLC, HV connector) PASS at component level; partial only"
+      ]
+    },
+    {
+      "id": "EMG-008",
+      "status": "OPEN",
+      "plannedStage": "E2/E3/E5",
+      "coverageAtStart": "Исторические трассы не закрывают candidate",
+      "closureCriteria": "Healthy loss во время SS1: непосредственный выбор STO без предварительного общего ожидания",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-questions/CRITERIA_DELTA.md",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "Q-RC-02, Q-RC-09"
+      ],
+      "evidence": [],
+      "closureCriteriaRevisedV2": "+ «HV Healthy в SS1 — немедленный STO (§9); потеря Healthy в устойчивом Run — тот же немедленный STO и спуск в R&D (не Step4); после STO — остановка без изменений»"
+    },
+    {
+      "id": "EMG-009",
+      "status": "OPEN",
+      "plannedStage": "E2/E3/E5",
+      "coverageAtStart": "Нет полной candidate проверки",
+      "closureCriteria": "Возврат Healthy после аварийного выбора не возвращает SS1 и не сокращает заданный coast wait",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "Q-RC-02, Q-RC-09"
+      ],
+      "evidence": [],
+      "closureCriteriaRevisedV2": "+ «HV Healthy в SS1 — немедленный STO (§9); потеря Healthy в устойчивом Run — тот же немедленный STO и спуск в R&D (не Step4); после STO — остановка без изменений»"
+    },
+    {
+      "id": "EMG-010",
+      "status": "OPEN",
+      "plannedStage": "E2/E3/E5",
+      "coverageAtStart": "Исторические Run-down трассы",
+      "closureCriteria": "Разряд до C2 OFF, completion/отказная процедура и feedback до R&D; недостающий oracle через аналитика",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "E2-Q1 уточнение, D-HV-TIMED-COMPLETE, E6-Q1"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "«Discharge — отдельная команда после STO+5 с (abort: сразу после STO); C2 OFF после существующей выдержки разряда; R&D после C2_FBK OFF; C2_FBK ON > 500 мс после OFF → Emergency»"
+    },
+    {
+      "id": "EMG-011",
+      "status": "OPEN",
+      "plannedStage": "E2/E3/E5",
+      "coverageAtStart": "Приняты02/04/05/PLC pulse LV/HV guards; earlySTO два all-producer per-drive4input guards, actual fault/restore controls",
+      "closureCriteria": "Полная emergency ownership/recovery, все фазовые/entry paths и остальные raises не закрыты; component guard не full41 proof",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G1-v3-CA1/CRITERIA_DELTA_v6.md",
+        "program/analyst/E2-Q76/CRITERIA.md",
+        "program/analyst/E2-G1-v8-q/CRITERIA.md",
+        "program/analyst/E2-G3-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": []
+    },
+    {
+      "id": "EMG-012",
+      "status": "OPEN",
+      "plannedStage": "E2/E3/E5",
+      "coverageAtStart": "Частично STATE conflicting-set",
+      "closureCriteria": "Все недопустимые комбинации; запрет неоднозначного владения. Точный destination Q-FAULT-DESTINATION",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-questions/CRITERIA_DELTA.md",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G3-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "E2",
+        "E2, Q-RC-10"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "«Двойное владение исключено по построению; обнаруженный конфликт → Emergency» (+ «ни одного» — после Q-RC-10)",
+      "closureCriteriaRevisedV2": "«Двойное владение и отсутствие основного состояния вне перехода исключены по построению; обнаружение → Emergency; старт группы — Emergency»"
+    },
+    {
+      "id": "BTN-001",
+      "status": "IN_PROGRESS",
+      "plannedStage": "E1",
+      "coverageAtStart": "Принята03B actual R&D release/rearm",
+      "closureCriteria": "Другие режимы/full lifecycle/owner handoffs",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G1-v8-q/CRITERIA.md",
+        "program/analyst/E2-G1-v9-q/CRITERIA.md"
+      ],
+      "tests": [
+        "program/tester/E1-f1/runners/f1-gaps.mjs",
+        "test/current-safe-run-gestures.test.js"
+      ],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": [
+        "E1-f1: Run recognizer PASS on F1 (single 499/500, BOTH 249/250/251/300 both orders, late 300/499/500/600, BOTH 999/1000, neutral 1999/2000, one command per attempt); Run 250/251 and 999/1000 boundaries unobservable in Run; mostly fixed-Step3 fixture, 9 real-lifecycle cases. Not CLOSED."
+      ]
+    },
+    {
+      "id": "BTN-002",
+      "status": "IN_PROGRESS",
+      "plannedStage": "E1",
+      "coverageAtStart": "Принята03B R&D held-at-start/prematurepress",
+      "closureCriteria": "Полный group startup и другие режимы, cut не reachability",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G1-v8-q/CRITERIA.md",
+        "program/analyst/E2-G1-v9-q/CRITERIA.md"
+      ],
+      "tests": [
+        "program/tester/E1-f1/runners/f1-gaps.mjs",
+        "test/current-safe-run-gestures.test.js"
+      ],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": [
+        "E1-f1: Run recognizer PASS on F1 (single 499/500, BOTH 249/250/251/300 both orders, late 300/499/500/600, BOTH 999/1000, neutral 1999/2000, one command per attempt); Run 250/251 and 999/1000 boundaries unobservable in Run; mostly fixed-Step3 fixture, 9 real-lifecycle cases. Not CLOSED."
+      ]
+    },
+    {
+      "id": "BTN-003",
+      "status": "IN_PROGRESS",
+      "plannedStage": "E1",
+      "coverageAtStart": "Принята03B R&D SINGLE500/однократность",
+      "closureCriteria": "Safe/Run и полный owner lifecycle",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [
+        "program/tester/E1-f1/runners/f1-gaps.mjs",
+        "test/current-safe-run-gestures.test.js"
+      ],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": [
+        "E1-f1: Run recognizer PASS on F1 (single 499/500, BOTH 249/250/251/300 both orders, late 300/499/500/600, BOTH 999/1000, neutral 1999/2000, one command per attempt); Run 250/251 and 999/1000 boundaries unobservable in Run; mostly fixed-Step3 fixture, 9 real-lifecycle cases. Not CLOSED."
+      ]
+    },
+    {
+      "id": "BTN-004",
+      "status": "IN_PROGRESS",
+      "plannedStage": "E1",
+      "coverageAtStart": "Принята03B R&D blue500/held gate",
+      "closureCriteria": "Safe qualification и полный lifecycle/доступ",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v8-r/CRITERIA.md"
+      ],
+      "tests": [
+        "program/tester/E1-f1/runners/f1-gaps.mjs",
+        "test/current-safe-run-gestures.test.js"
+      ],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": [
+        "E1-f1: Run recognizer PASS on F1 (single 499/500, BOTH 249/250/251/300 both orders, late 300/499/500/600, BOTH 999/1000, neutral 1999/2000, one command per attempt); Run 250/251 and 999/1000 boundaries unobservable in Run; mostly fixed-Step3 fixture, 9 real-lifecycle cases. Not CLOSED."
+      ]
+    },
+    {
+      "id": "BTN-005",
+      "status": "IN_PROGRESS",
+      "plannedStage": "E1",
+      "coverageAtStart": "Приняты03B/R3 R&D WINDOW250 inclusive, обе очередности, effective pair inputs",
+      "closureCriteria": "Другие режимы/entry/реальные owner paths",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [
+        "program/tester/E1-f1/runners/f1-gaps.mjs",
+        "test/current-safe-run-gestures.test.js"
+      ],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": [
+        "E1-f1: Run recognizer PASS on F1 (single 499/500, BOTH 249/250/251/300 both orders, late 300/499/500/600, BOTH 999/1000, neutral 1999/2000, one command per attempt); Run 250/251 and 999/1000 boundaries unobservable in Run; mostly fixed-Step3 fixture, 9 real-lifecycle cases. Not CLOSED."
+      ]
+    },
+    {
+      "id": "BTN-006",
+      "status": "IN_PROGRESS",
+      "plannedStage": "E1",
+      "coverageAtStart": "Принята03B R&D BOTH1000 от второй, continuity/reset",
+      "closureCriteria": "Другие режимы и cross-mode traces",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-Q76/CRITERIA.md",
+        "program/analyst/E2-G1-v8-q/CRITERIA.md",
+        "program/analyst/E2-G1-v9-q/CRITERIA.md"
+      ],
+      "tests": [
+        "program/tester/E1-f1/runners/f1-gaps.mjs",
+        "test/current-safe-run-gestures.test.js"
+      ],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": [
+        "E1-f1: Run recognizer PASS on F1 (single 499/500, BOTH 249/250/251/300 both orders, late 300/499/500/600, BOTH 999/1000, neutral 1999/2000, one command per attempt); Run 250/251 and 999/1000 boundaries unobservable in Run; mostly fixed-Step3 fixture, 9 real-lifecycle cases. Not CLOSED."
+      ]
+    },
+    {
+      "id": "BTN-007",
+      "status": "IN_PROGRESS",
+      "plannedStage": "E1",
+      "coverageAtStart": "Принята03B R&D failedchord/piano/swap",
+      "closureCriteria": "Другие режимы и полный lifecycle",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v9-q/CRITERIA.md"
+      ],
+      "tests": [
+        "program/tester/E1-f1/runners/f1-gaps.mjs",
+        "test/current-safe-run-gestures.test.js"
+      ],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": [
+        "E1-f1: Run recognizer PASS on F1 (single 499/500, BOTH 249/250/251/300 both orders, late 300/499/500/600, BOTH 999/1000, neutral 1999/2000, one command per attempt); Run 250/251 and 999/1000 boundaries unobservable in Run; mostly fixed-Step3 fixture, 9 real-lifecycle cases. Not CLOSED."
+      ]
+    },
+    {
+      "id": "BTN-008",
+      "status": "IN_PROGRESS",
+      "plannedStage": "E1",
+      "coverageAtStart": "Принята03B R&D late300/500/600/repeat/rearm в branch",
+      "closureCriteria": "Полный accepted-transition rollback/другие режимы; branch не весь ID",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [
+        "program/tester/E1-f1/runners/f1-gaps.mjs",
+        "test/current-safe-run-gestures.test.js"
+      ],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": [
+        "E1-f1: Run recognizer PASS on F1 (single 499/500, BOTH 249/250/251/300 both orders, late 300/499/500/600, BOTH 999/1000, neutral 1999/2000, one command per attempt); Run 250/251 and 999/1000 boundaries unobservable in Run; mostly fixed-Step3 fixture, 9 real-lifecycle cases. Not CLOSED."
+      ]
+    },
+    {
+      "id": "CVR-001",
+      "status": "OPEN",
+      "plannedStage": "E1/E2",
+      "coverageAtStart": "01/07 и03B R&D qualification, actual writer/hold/green",
+      "closureCriteria": "Safe qualification и все emergency/transition/lifecycle контексты",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G1-v8-r/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": []
+    },
+    {
+      "id": "CVR-002",
+      "status": "OPEN",
+      "plannedStage": "E1/E2",
+      "coverageAtStart": "01 Safe/R&D hold/release;07 сохраняет legitimate positive grants и latched no-reopen",
+      "closureCriteria": "Все входы/entry/recovery режима и полная квалификация; mode сам не должен включать соленоид",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v8-r/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": []
+    },
+    {
+      "id": "CVR-003",
+      "status": "OPEN",
+      "plannedStage": "E1/E2",
+      "coverageAtStart": "Нет полной candidate проверки",
+      "closureCriteria": "Открыта неограниченно в Safe/R&D без fault/таймера закрытия; команды не запускают закрытие",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": []
+    },
+    {
+      "id": "CVR-004",
+      "status": "OPEN",
+      "plannedStage": "E1/E2",
+      "coverageAtStart": "Принята06: actual R&D producer Door independence и обаNC, real path/structural checks; старый startup negative остаётся recognizer gap",
+      "closureCriteria": "Полный внешний gesture/PLC acceptance и оба up маршрута; DoorFALSE+обаNCtrue positive при прочих разрешениях, каждыйNCfalse negative независимоDoor",
+      "criteria": [
+        "program/analyst/E4-v14/CRITERIA.md (E4-v14 central)",
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-Q76/CRITERIA.md",
+        "program/analyst/E2-G1-v8-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q7, V14-Q5, V14-Q16"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "«R&D→Run и вход в Config требуют NC1∧NC2; Safe→R&D допускается при открытой крышке; Door не guard» (кнопки и PLC)"
+    },
+    {
+      "id": "CVR-005",
+      "status": "OPEN",
+      "plannedStage": "E1/E2",
+      "coverageAtStart": "ACC-C02-X, iteration01 gate",
+      "closureCriteria": "Unlock и фактическое повышение не сосуществуют; внутренний request не считать энергией",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": []
+    },
+    {
+      "id": "CVR-006",
+      "status": "OPEN",
+      "plannedStage": "E1/E2",
+      "coverageAtStart": "06 сохранила три Door solenoid consumers,04/05 сохраняют обаNC в energy Set guards",
+      "closureCriteria": "Полная реакция на InterLock loss EMG-002/все фазы ещё не закрыта; Door только unlock, отдельный locked-loss не вводить",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G1-v3-CA1/CRITERIA_DELTA_v6.md",
+        "program/analyst/E2-G1-v8-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q21"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "Ссылка на новую трактовку EMG-002 / IL-*"
+    },
+    {
+      "id": "MOD-001",
+      "status": "OPEN",
+      "plannedStage": "E2/E3",
+      "coverageAtStart": "STATE Safe-RnD-Run ownership only",
+      "closureCriteria": "Сохранённая исходная LV последовательность, каждый feedback/прерывание, R&D лишь после подтверждений",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v8-q/CRITERIA.md",
+        "program/analyst/E2-G1-v9-q/CRITERIA.md",
+        "program/analyst/E2-G3-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q15, E6, V14-Q13"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "«…только C1/PS1 автоматически (C3/BMS — ручные команды PLC); R&D после C1_FBK ON ≤500 мс и LV Healthy ≤30 с; abort по V14-Q13»"
+    },
+    {
+      "id": "MOD-002",
+      "status": "OPEN",
+      "plannedStage": "E2/E3",
+      "coverageAtStart": "Принят earlySTO: physical SU→actualSTO N+2 без C2/HVHealthy wait, старый Runconfirmation/Reset сохранены;88 checks",
+      "closureCriteria": "Полная достижимость acceptedlaunch/owner, feedback/failure во всех фазах и PLC-only policy не закрыты; N+2 не физическое нулевое время",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-questions/CRITERIA_DELTA.md",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G1-v3-CA1/CRITERIA_DELTA_v6.md",
+        "program/analyst/E2-Q76/CRITERIA.md",
+        "program/analyst/E2-G1-v8-q/CRITERIA.md",
+        "program/analyst/E2-G1-v9-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "E6-Q1"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "+ «отказ C2_FBK 500 мс / HV Healthy 30 с → откат в R&D + SafetyFault»"
+    },
+    {
+      "id": "MOD-003",
+      "status": "OPEN",
+      "plannedStage": "E2/E3",
+      "coverageAtStart": "Частично held commands; Q-PLC-REQUEST",
+      "closureCriteria": "Новый жест/handshake для каждого шага, удерживаемый PLC уровень не повторяет; самостоятельный новый PLC запрос без физического жеста требует решения",
+      "criteria": [
+        "program/analyst/E4-v14/CRITERIA.md (E4-v14 central)",
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-Q76/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q11",
+        "Q-RC-05"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "«Команда PLC засчитывается только по фронту в исходном устойчивом состоянии; удерживаемая/выставленная раньше игнорируется без ошибки; не повторяется»",
+      "closureCriteriaRevisedV2": "+ «то же для Bypass→Config (фронт в устойчивом Safe при закрытой крышке)»"
+    },
+    {
+      "id": "MOD-004",
+      "status": "OPEN",
+      "plannedStage": "E2/E3",
+      "coverageAtStart": "Нет полного candidate покрытия",
+      "closureCriteria": "Новые up в переходах отклонены; down поведение Q-TRANSITION-DOWN",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-Q76/CRITERIA.md",
+        "program/analyst/E2-G1-v9-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q12/Q13",
+        "Q-RC-08"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "+ «DOWN-исключения: StartingRun (зелёная/CMD_RUN_TO_R&D → abort), Safe→R&D (зелёная/CMD_R&D_TO_SAFE → Safe); прочие — после Q-RC-08»",
+      "closureCriteriaRevisedV2": "«прочие команды (кнопки и PLC) в переходах игнорируются без ошибки и без отложенного исполнения»"
+    },
+    {
+      "id": "MOD-005",
+      "status": "OPEN",
+      "plannedStage": "E2/E3",
+      "coverageAtStart": "Исторические RnD-Safe traces",
+      "closureCriteria": "Сопоставить исходную LV/battery/BMS последовательность и вставку R&D, завершение перед Safe",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-Q76/CRITERIA.md",
+        "program/analyst/E2-G3-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q11, E2-Q2",
+        "V14-Q21(a), Q-RC-03(b1), Q-RC-07"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "без изменения смысла; + «по команде CMD_R&D_TO_SAFE и при потере LV Healthy в R&D»",
+      "closureCriteriaRevisedV2": "+ «спуск разрешён при открытой крышке и при активной SafetyFault (зелёная квитирует и спускает; PLC-спуск SafetyFault не снимает)»"
+    },
+    {
+      "id": "MOD-006",
+      "status": "OPEN",
+      "plannedStage": "E2/E3",
+      "coverageAtStart": "Частично STATE ownership",
+      "closureCriteria": "Основные режимы однозначны; промежуточные фазы не маскируются; reset/конфликты",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-questions/CRITERIA_DELTA.md",
+        "program/analyst/E2-G1-v3-CA1/CRITERIA_DELTA_v6.md",
+        "program/analyst/E2-Q76/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q16, E2"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "«Emergency XOR Safe XOR R&D XOR Run XOR Config; по построению»"
+    },
+    {
+      "id": "MOD-007",
+      "status": "OPEN",
+      "plannedStage": "E2/E3",
+      "coverageAtStart": "Частично инъекция requests",
+      "closureCriteria": "Проверка внешних PLC requests через реальные permissions; одиночный бит не включает энергию напрямую",
+      "criteria": [
+        "program/analyst/E4-v14/CRITERIA.md (E4-v14 central)",
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-Q76/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q2, V14-Q8–Q11, V14-Q16"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "«Отдельные команды v1.4 §8; TwinSAFE проверяет; Bypass — запрос Config, проверяемый TwinSAFE; прежний 2-битный путь не создаёт переходов»"
+    },
+    {
+      "id": "MOD-008",
+      "status": "OPEN",
+      "plannedStage": "E2/E3",
+      "coverageAtStart": "Частично Network12",
+      "closureCriteria": "Каждый противоречивый/неподтверждённый feedback запрещает up, positive controls",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-questions/CRITERIA_DELTA.md",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-Q76/CRITERIA.md",
+        "program/analyst/E2-G3-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "E2-Q2(b)",
+        "D-ARCH-POL(-RENAME)"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "+ «HV Healthy в R&D игнорируется (ни разрешение, ни запрет до запуска)»",
+      "closureCriteriaRevisedV2": "+ «полярность: сырое FALSE = исправен (in_LV/HV_Faulty_FBK)»"
+    },
+    {
+      "id": "STP-001",
+      "status": "OPEN",
+      "plannedStage": "E3",
+      "coverageAtStart": "Историческая остановка, не candidate acceptance",
+      "closureCriteria": "Реальный Run-down сохраняет исходную последовательность SS1/STO, источник/C2 при SS1",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-questions/CRITERIA_DELTA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "E2-Q1, V14-Q3",
+        "Q-RC-02"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "«SS1 2 с → STO → 5 с → Discharge (команда) → выдержка → C2 OFF → C2_FBK OFF → R&D; одинаково для зелёной и CMD_RUN_TO_R&D; это и есть zero speed/current v1.4»",
+      "closureCriteriaRevisedV2": "без изменений; добавить ссылку на защитный спуск STP-007 (см. §2)"
+    },
+    {
+      "id": "STP-002",
+      "status": "OPEN",
+      "plannedStage": "E3",
+      "coverageAtStart": "Исторические selected chains",
+      "closureCriteria": "После заданного SS1/coast разряд до C2 OFF; альтернативные пути не обходят",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": []
+    },
+    {
+      "id": "STP-003",
+      "status": "OPEN",
+      "plannedStage": "E3",
+      "coverageAtStart": "Пробел точной отказной политики",
+      "closureCriteria": "Заданный timeout: fault, нет автоматического продолжения; C2/discharge политика Q-COMPLETION",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "D-HV-TIMED-COMPLETE, E6-Q1"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "**Утратил смысл в части «discharge completion timeout»**: входа DischargeComplete нет, завершение — выдержка (D-HV-TIMED-COMPLETE). Предлагается: «C2_FBK ON > 500 мс после команды OFF → Emergency; R&D не объявляется; без авто-продолжения» (пересекается с WDG-003 — можно ссылкой)"
+    },
+    {
+      "id": "STP-004",
+      "status": "OPEN",
+      "plannedStage": "E3",
+      "coverageAtStart": "Частично state mapping",
+      "closureCriteria": "До завершения разряда и C2 OFF R&D не объявляется; новый launch не обходит",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-questions/CRITERIA_DELTA.md",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-Q76/CRITERIA.md",
+        "program/analyst/E2-G3-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": []
+    },
+    {
+      "id": "STP-005",
+      "status": "OPEN",
+      "plannedStage": "E3",
+      "coverageAtStart": "Частично state mapping",
+      "closureCriteria": "Safe не объявляется до feedback снятия LV по сохранённой последовательности",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": []
+    },
+    {
+      "id": "BOOT-001",
+      "status": "OPEN",
+      "plannedStage": "E7",
+      "coverageAtStart": "EStop component, full lifecycle gap",
+      "closureCriteria": "Старт/рестарт из контекстов Run/transition не восстанавливает Run автоматически",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-questions/CRITERIA_DELTA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q16, V14-Q20",
+        "Q-RC-05, Q-RC-10"
+      ],
+      "evidence": [],
+      "closureCriteriaRevised2026_10_21": "+ «Config не восстанавливается (после Q-RC-05); heartbeat при старте — проект E4 (HB-04)»",
+      "closureCriteriaRevisedV2": "«Config не восстанавливается: после рестарта нужен новый фронт Bypass; группа стартует в Emergency»"
+    },
+    {
+      "id": "BOOT-002",
+      "status": "OPEN",
+      "plannedStage": "E7",
+      "coverageAtStart": "BUTTON held-at-start, branch only",
+      "closureCriteria": "Полный программный startup/entry с held buttons: новая попытка только после отпускания и фильтра",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-questions/CRITERIA_DELTA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [],
+      "evidence": []
+    },
+    {
+      "id": "CFG-001",
+      "status": "OPEN",
+      "plannedStage": "E4 (слот статуса — E2)",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "Вход в Config только из устойчивого Safe при NC1∧NC2 (прочие условия — Q-RC-05); иначе Bypass игнорируется без fault",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G1-v8-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q16",
+        "Q-RC-05, Q-RC-07(b)"
+      ],
+      "evidence": [],
+      "closureCriteriaRevisedV2": "«Вход только по новому фронту Bypass в устойчивом Safe при NC1∧NC2, connectors в норме, нет SafetyFault, нет ошибки PLC, кнопки отпущены; иначе фронт игнорируется без fault и не исполняется позже»"
+    },
+    {
+      "id": "CFG-002",
+      "status": "OPEN",
+      "plannedStage": "E4",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "В Config C1/C2 ON, STO активен, Unlock FALSE; все команды кнопок/PLC, кроме аварийных, игнорируются",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q16, V14-Q15",
+        "Q-RC-04"
+      ],
+      "evidence": [],
+      "closureCriteriaRevisedV2": "+ «две TRUE-команды в Config ошибку PLC не ставят»"
+    },
+    {
+      "id": "CFG-003",
+      "status": "OPEN",
+      "plannedStage": "E4",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "Config держится, пока Bypass TRUE; автоотключение 10 с удалено",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q16, V14-Q17"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "CFG-004",
+      "status": "OPEN",
+      "plannedStage": "E4",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "Выход: Discharge → выдержка → C2/C1 OFF (последовательно или вместе) → оба FBK OFF → Safe; без SS1",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q18"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "CFG-005",
+      "status": "OPEN",
+      "plannedStage": "E4",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "В Config EStop/PLC/Mentee/connectors/NC → Emergency; LV/HV Healthy игнорируются",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q19, V14-Q21(c)",
+        "Q-RC-03(b2), V14-Q19"
+      ],
+      "evidence": [],
+      "closureCriteriaRevisedV2": "+ «в выходе Config — то же для NC и connectors»"
+    },
+    {
+      "id": "PLC-001",
+      "status": "OPEN",
+      "plannedStage": "E4",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "Отдельные команды перехода по фронту в исходном устойчивом состоянии; удерживаемая/ранняя игнорируется без ошибки, не повторяется",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-Q76/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q11"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "PLC-002",
+      "status": "OPEN",
+      "plannedStage": "E4",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "Одновременные команды перехода → ни одна не исполняется, статус ошибки; снятие после 1 с непрерывно всех FALSE",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q8, V14-Q10",
+        "Q-RC-04, V14-Q8/Q10"
+      ],
+      "evidence": [],
+      "closureCriteriaRevisedV2": "«Ошибка, если в устойчивом Safe/R&D/Run две и более команды перехода TRUE одновременно (по уровню, независимо от моментов фронтов); ни одна не исполняется; в Config/переходах/Emergency не ставится; снятие после 1 с всех FALSE»"
+    },
+    {
+      "id": "PLC-003",
+      "status": "OPEN",
+      "plannedStage": "E4 (+E2 приоритет)",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "CMD_TRIGGER_EMERGENCY всегда, выше всего",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q9"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "PLC-004",
+      "status": "OPEN",
+      "plannedStage": "E4",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "При нажатой любой кнопке фронт PLC-команды перехода игнорируется навсегда",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-Q76/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q14"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "PLC-005",
+      "status": "OPEN",
+      "plannedStage": "E4",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "STS_COVER_LOCKED = NC1∧NC2",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q5"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "PLC-006",
+      "status": "OPEN",
+      "plannedStage": "E3 (StartingRun), E4 (PLC)",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "DOWN-исключения в переходах (StartingRun abort, Safe→R&D abort)",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-Q76/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q12, V14-Q13",
+        "Q-RC-08"
+      ],
+      "evidence": [],
+      "closureCriteriaRevisedV2": "+ «прочие команды в переходах — игнор (MOD-004)»"
+    },
+    {
+      "id": "HB-001",
+      "status": "OPEN",
+      "plannedStage": "E4",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "Heartbeat 0,5 с; нет смены 3 с → Emergency во всех состояниях; защёлка, снятие по EMG-006",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "V14-Q20"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "WDG-001",
+      "status": "OPEN",
+      "plannedStage": "E6",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "C1/C2 FBK ON ≤ 500 мс от команды ON; иначе откат в исходное состояние + SafetyFault",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "E6, E6-Q1"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "WDG-002",
+      "status": "OPEN",
+      "plannedStage": "E6",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "Healthy ≤ 30 с от FBK ON; иначе откат + SafetyFault",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G3-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "E6, E6-Q1"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "WDG-003",
+      "status": "OPEN",
+      "plannedStage": "E6 (используется в E3)",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "FBK OFF ≤ 500 мс от команды OFF; иначе Emergency",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G1-v3-CA1/CRITERIA_DELTA_v6.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "E6-Q1"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "WDG-004",
+      "status": "OPEN",
+      "plannedStage": "E5",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "SafetyFault: любая кнопка квитирует и потребляет попытку; 2 с отпускания; PLC не квитирует; UP заблокирован",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-Q76/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "E6-Q2, п.13",
+        "Q-RC-07"
+      ],
+      "evidence": [],
+      "closureCriteriaRevisedV2": "+ «исключение: в R&D квалифицированная зелёная квитирует и выполняет R&D→Safe; PLC-спуск выполняется, SafetyFault не снимает; при SafetyFault запрещены UP и вход в Config»"
+    },
+    {
+      "id": "HLT-001",
+      "status": "OPEN",
+      "plannedStage": "E2",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "R&D: потеря LV Healthy → R&D→Safe (не Emergency); HV Healthy игнорируется",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-questions/CRITERIA_DELTA.md",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md",
+        "program/analyst/E2-G3-q/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "E2-Q2",
+        "Q-RC-02, Q-RC-09"
+      ],
+      "evidence": [],
+      "closureCriteriaRevisedV2": "+ «цепной случай после Run→R&D (нормальная остановка, защитный спуск) — та же реакция по приходу в R&D»"
+    },
+    {
+      "id": "STP-006",
+      "status": "OPEN",
+      "plannedStage": "E3",
+      "coverageAtStart": "Нет (новый ID 2026-10-21)",
+      "closureCriteria": "Abort StartingRun: STO → сразу Discharge → выдержка → C2 OFF → FBK OFF → R&D; без SS1/выбега; не возобновляется",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-Q76/CRITERIA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "D-STARTINGRUN-NO-COAST, V14-Q12",
+        "—"
+      ],
+      "evidence": [],
+      "closureCriteriaRevisedV2": "без изменений"
+    },
+    {
+      "id": "CFG-006",
+      "status": "OPEN",
+      "plannedStage": "E4/E6",
+      "coverageAtStart": "Нет (новый ID v2 2026-10-21)",
+      "closureCriteria": "«Нет C1_FBK/C2_FBK ON 500 мс при входе в Config → откат Discharge → выдержка → C1/C2 OFF → оба FBK OFF → Safe + SafetyFault; не Emergency; 30 с не применяется»",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "Q-RC-06"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "STP-007",
+      "status": "OPEN",
+      "plannedStage": "E3",
+      "coverageAtStart": "Нет (новый ID v2 2026-10-21)",
+      "closureCriteria": "«Потеря LV/HV Healthy в устойчивом Run: немедленный STO → 5 с → Discharge → выдержка → C2 OFF → C2_FBK OFF → R&D (не Emergency, не Step4); LV — затем R&D→Safe без команды»",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-v2-questions/CRITERIA_DELTA_v4.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "Q-RC-02"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "POL-001",
+      "status": "OPEN",
+      "plannedStage": "E2",
+      "coverageAtStart": "Нет (новый ID v2 2026-10-21)",
+      "closureCriteria": "«Сырое FALSE in_LV/HV_Faulty_FBK = исправен во всех guard-потребителях; имена переименованы без изменения каналов/alias; число Symbols сохранено»",
+      "criteria": [
+        "program/analyst/REQ-CONSOLIDATION/CRITERIA.md v2 §K",
+        "program/analyst/E2-G1-questions/CRITERIA_DELTA.md"
+      ],
+      "tests": [],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": []
+      },
+      "decisions": [
+        "D-ARCH-POL, D-ARCH-POL-RENAME"
+      ],
+      "evidence": []
+    }
+  ],
+  "gates": {
+    "E1-f1": {
+      "G3": "met with documented exceptions (MU06/MU10 equivalent-by-proof, MU11 OPEN until E2/E3)",
+      "G4": "ACCEPT bounded, conditions C1-C7 (program/reviewer/E1-f1/F1_G4_REVIEW.md)",
+      "transfer": "0391fae; MIG-8 BOOT manifest regenerated",
+      "mutations": {
+        "total": 26,
+        "killedByRequirement": 23,
+        "killedByRequirementNote": "MU24: reachable requirement-based kill in regression test/current-btn-release-after-permit.test.js (16 tests; MU24 -> 8 FAIL, reviewer re-run program/reviewer/E1-f1-adopt); re-evaluate when V14-Q7 changes the Safe permit",
+        "equivalentByProof": [
+          "MU06 (in_False_SI2_CH8 constant FALSE per Q-MU06-01 B: NOT in_False is AND-neutral)",
+          "MU10 (re-evaluate after E2)"
+        ],
+        "open": [
+          "MU11 KILLABLE only by E2 oracle; scenario relies on Run-down branch defective per E3 -> re-evaluate after E3"
+        ],
+        "audit": "program/reviewer/E1-kill-audit/AUDIT.md: 0 false kills, 23/26 confirmed (2026-10-21)",
+        "annotations": [
+          "MU22 killed only via loss of liveness (positive path), not a forbidden transition",
+          "MU25/MU26 killed only by shared current-* files; killers field empty in MUTATION_RESULTS",
+          "MU05/MU07 adopted: test/current-f1-lock-and-q500.test.js (9 tests; reviewer ACCEPT program/reviewer/E1-f1-adopt2; MU07 killed at 500 and 501)",
+          "MU07 mutant SHA not reproducible (random UUID); behaviour reproducible",
+          "battery.fails/errors both count cases (verified 26/26, program/tester/E1-f1-adopt2); MUTATION_RESULTS.v2.json annotated",
+          "Open: MU22 protective role of NOT T (GATE_005.AndIn2) not shown by a forbidden-transition test"
+        ]
+      },
+      "findings": [
+        "Step4+Step12 race reachable by real inputs (loss of Healthy during accepted Run-down, C2_FBK OFF 1-3 scans later): P0 held green 4 d-values; F1 held 3, released green 3 (P0 none because it drops the stop). Window narrower, reachability wider. E2 item; native NV.",
+        "Polarity divergence vs reference: N5/FBAnd7.AndIn2, N9/FBAnd1.AndIn2 direct in_False (commit 77546cb).",
+        "E2-Q1 (Vadim, SCENARIO_DECISIONS): race outcome must be single = R&D; normal stop completes in R&D, Healthy loss then handled by R&D rules; R&D reaction to LV Healthy loss pending (E2-Q2).",
+        "E3 defect (parent session check on canonical F1): Network6/RUN_DOWN_OWNER -> FBOr5 -> FBDecouple2 issues Set HV Discharge (_3), Reset C2 (_4) and STO reset simultaneously, bypassing Network7 (2/5/5 s) and Network8 (1/1 s). Oracle (Vadim): SS1 2 s -> STO -> 5 s -> Discharge cmd -> discharge delay -> C2 OFF cmd -> C2_FBK OFF -> R&D. MU11/race scenarios rely on this branch; re-evaluate after E3.",
+        "Q-MU06 test alignment: current-plc-pulse-set-permit and current-door-interlock aligned (reviewer ACCEPT program/reviewer/E1-f1-adopt); sal-safe-exit-baseline V2-EXIT01/02 kept as historical structural observation (patch optional, not applied)"
+      ],
+      "regression": "after adoption: harness 209/209, historical 75/75, current 461/461, scenarios 199/1/7/0"
+    },
+    "E2": {
+      "plan": "v7.2 (PLAN.md 6557525a…): reviewer READY FOR EDITOR for E2a-RC, E2b, E2c, E2d (program/reviewer/E2-plan-v7/PLAN_REVIEW.md incl. v7.2). Resources: E2a-RC 217, E2b 225, E2c 227, E2d 228 FB of 512. Known FAIL KF-1..KF-5 (legacy PLC) until E3/E4; KF-5 decision (keep vs disable legacy R&D->Run at N12/FBOr1.OrIn2) pending Vadim.",
+      "G1": "v5 delivered (program/tester/E2-G1/HANDOFF_v5.md): 484 E2 tests, canonical 41 PASS/410 FAIL/12 NV; non-E2 479/479; check:software exit 4 due to 6 renamed RUN-CONF tests (expected-deltas pending reviewer + lead approval); G1 v5 review in progress",
+      "R1": "reviewer CONFIRMED (C-R1-1..5); Vadim Q-64 A: continue R1 at limit 512; candidate candidates/E2-R1/native SAL ca841a01…; full regression pending S2 identity split + migration",
+      "candidates": {
+        "E2aCore": "5648e31c…",
+        "E2aRC": "5733552a…",
+        "E2b": "4f933433… (v7.4.1)",
+        "E2c": "ee8439ae… (v7.4.1)",
+        "E2d": "a5acf291… (v7.4.1, pre-v7.5; rebuild for Q76)"
+      },
+      "deltaProof": "check:e2-delta F1->E2d on PLAN v7.4.1: no FAIL (NV only undeclared SHAs)"
+    },
+    "E2-G1-v8": {
+      "verdict": "PASS WITH CONDITIONS",
+      "review": "program/reviewer/E2-G1-v8/G1_REVIEW.md",
+      "conditions": [
+        "N18 REL01-e2-LATE a:=A (tester)",
+        "N19 StartingRun observation for FBK-05 (analyst)"
+      ],
+      "minor": "m-19..m-25",
+      "candidateObs": "K-1 (architect)",
+      "expectedDeltas": "8 renames approved by lead, 33 entries",
+      "date": "2026-10-22"
+    },
+    "E2-G1-v9": {
+      "verdict": "NEEDS CHANGES (bounded)",
+      "review": "program/reviewer/E2-G1-v9/G1_REVIEW.md",
+      "blocking": [
+        "N20 K-2 p-200 stimulus never applied (false RED; M-E2d-32 killer)",
+        "N21 DOOR06 guards positive still needs PLC (1,1) HV"
+      ],
+      "minor": "m-26..m-30",
+      "conditions": [
+        "C-S4",
+        "C-25"
+      ],
+      "accepted": "N18,N19,m-19..m-24,UNL-LVF,LEG11-OFF (31/31 kill M-E2d-23)",
+      "next": "v9.1 (XPH-01, S4, N20, N21, minors) -> re-review limited",
+      "date": "2026-10-22"
+    },
+    "E2-G1-v9.1": {
+      "status": "handed off, limited re-review",
+      "handoff": "program/tester/E2-G1/HANDOFF_v9_1.md",
+      "summary": "XPH-01 17 FAIL v7.6 / 0 FAIL v7.7; S4 3 FAIL v7.6/v7.7 (to architect); K-2 p-200 fixed (N20); DOOR06 (N21) PASS on candidates; 50 non-E2 FAIL D-E2b-4 identical on all candidates",
+      "date": "2026-10-23"
+    },
+    "E2-G3-pre": {
+      "status": "report delivered (v8 snapshot)",
+      "report": "program/tester/E2-G3/G3_REPORT.md",
+      "delta": "PASS chain to E2d v7.5",
+      "mutations": "16 survivors (11 killable by requirement scenarios -> tester v9.2; M-E2b-48/49 -> architect; M-E2a-28/29 killed on E2b); 4 NOT-RUN (M-E2a-26/32/33/34 -> architect)",
+      "knownRegressions": "K-1 from E2b, K-2/K-2b from E2c (fixed v7.6)",
+      "stand": "STATE/ESTOP:restart/PRIORITY Step12 cases, BOOT preflight pinned to F1 -> stand",
+      "questions": "EMGREF L2/L3, E2-02 -> analyst",
+      "date": "2026-10-23"
+    }
+  },
+  "answeredQuestions": [
+    {
+      "id": "Q-RC-01",
+      "answer": "В — Emergency",
+      "source": "SCENARIO_DECISIONS V14-Q21 «Q-RC-01 — ПЕРЕСМОТР (b)»",
+      "unblocks": [
+        "IL-03b",
+        "EMG-002 (Run)"
+      ]
+    },
+    {
+      "id": "Q-T3-1",
+      "answer": "А — normal stop steps no later than their normal moments; emergency may only accelerate",
+      "source": "SCENARIO_DECISIONS 89d561c7…",
+      "unblocks": [
+        "EMG-RD-L branch A"
+      ]
+    },
+    {
+      "id": "Q-64",
+      "answer": "А — continue R1 at FB limit 512 (basis: program cleanliness); full regression before/after and G3/G4 before transfer",
+      "source": "SCENARIO_DECISIONS Q-64"
+    },
+    {
+      "id": "Q-ARCH-11 (63)",
+      "answer": "Б — LV/HV_Healthy->LV/HV_Faulty (linked, TRUE=fault); *_Healthy_Invert->LV/HV_Healthy (computed, TRUE=healthy)",
+      "source": "SCENARIO_DECISIONS"
+    },
+    {
+      "id": "Q-CA1-01",
+      "answer": "Б — 30 s from t_f bound the whole wait for Run confirmation; expiry -> WDG-03 rollback (R&D + SafetyFault)",
+      "source": "SCENARIO_DECISIONS"
+    },
+    {
+      "id": "Q-66",
+      "answer": "(a) А — single memory: SafetyFault with HealthyLost as cause, cleared per E6-Q2; HealthyLostDuringSS1 and D-HEALTHY-FAULT-RESET-EDGE cancelled for this case (merge explicitly allowed). (b) yes — LV Safe->R&D: 30 s from C1_FBK ON bound whole wait, then rollback to Safe + SafetyFault",
+      "source": "SCENARIO_DECISIONS"
+    },
+    {
+      "id": "Q-V4-03",
+      "answer": "covered by Q-ARCH-10 А (Unlock in R&D with open cover allowed; Door role kept per UNL-05)"
+    },
+    {
+      "id": "Q-61",
+      "answer": "А — offline IDE Verify allowed on isolated copy"
+    },
+    {
+      "id": "Q-V4-01",
+      "answer": "Б — FBK confirmed only after 500 ms window from ON command; drops inside window not emergency; not ON at window end -> E6 rollback; after window any drop -> Emergency"
+    },
+    {
+      "id": "Q68",
+      "answer": "Б — Run/R&D not confirmed before window end: Run >= cmd+500+100 ms continuous C2_FBK & HV ok after window; FBK drop in those 100 ms -> Emergency; HV-only drop -> restart"
+    },
+    {
+      "id": "Q-V4-02",
+      "answer": "В — FBK ON without ON command in steady Safe/R&D -> SafetyFault + raise inhibited while FBK ON; ack per E6-Q2 does not lift inhibit; not Emergency"
+    },
+    {
+      "id": "Q-V7-01",
+      "answer": "Г — HV discharge request held as level until next accepted HV raise (R&D->Run or Config entry); no repeat on emergency"
+    },
+    {
+      "id": "Q-V7-03",
+      "answer": "А — window expiry without FBK during ongoing abort sets SafetyFault; abort sequence unchanged"
+    },
+    {
+      "id": "Q-V7-04",
+      "answer": "Б — press while cause (FBK ON without command) active is not acknowledgement; new ack after FBK OFF"
+    },
+    {
+      "id": "K3-ACK",
+      "answer": "analyst by sources: first BOTH after FBK OFF without ack only acknowledges; raise needs new gesture after 2 s release"
+    },
+    {
+      "id": "Q73 (R5-1)",
+      "answer": "А — HV Discharge request cleared at acceptance of R&D->Run (grant u: C2 ON cmd, STO release), not at Run confirmation; abort/rollback re-issues per its sequence; Config entry same at acceptance"
+    },
+    {
+      "id": "Q74 (TD-01)",
+      "answer": "А — LV Discharge request cleared at acceptance of Safe->R&D, as HV; TD-01 confirmed by Vadim"
+    },
+    {
+      "id": "Q76 (KF-5)",
+      "answer": "Б — disable legacy R&D->Run via inPLC_RnD_Mode (1,1) already in E2; until E4 R&D->Run only physical BOTH; Safe->R&D (1,0) and descents unaffected"
+    },
+    {
+      "id": "Q77",
+      "answer": "А",
+      "date": "2026-10-22"
+    },
+    {
+      "id": "Q-V8R-01 (вопрос 78)",
+      "answer": "А",
+      "date": "2026-10-22",
+      "text": "outPLC_RnD TRUE в StartingRun и его abort; FALSE в Safe->R&D до достижения R&D; новых сигналов нет"
+    },
+    {
+      "id": "Q-XPHASE-01",
+      "answer": "норма READY (analyst E2-G1-v9-q): жест из другой фазы не исполняется (MOD-004, Q-RC-08)",
+      "date": "2026-10-22"
+    }
+  ],
+  "decisionsLog": [
+    "2026-10-21 lead: C3 (E1 G4, MU11) re-scoped — E2-02 oracle (single outcome R&D) is normative; MU11 may be discharged by reviewer-accepted equivalence proof in E2 plan instead of a kill test; final decision at E2 G4.",
+    "2026-10-22 lead: B4-3 variant (А) — legacy Bypass gated to Safe in E2b (N1/FBAnd4.AndIn5 := b_Step1) per analyst derivation (EMG-011, V14-Q16, Q-RC-05, SPEC §12); parent may override",
+    "2026-10-22 lead: E2a split into E2a-core (editor started) and E2a-RC / E2a-PLC (plan v5)",
+    {
+      "date": "2026-10-22",
+      "id": "TD-11..TD-13",
+      "source": "analyst E2-G1-v8-q, D-TEAM-DEFAULTS",
+      "status": "ждёт просмотра Вадима (в пакет TD перед переносом)",
+      "note": "TD-11/TD-12 — явные ослабления oracle (только более раннее снятие энергии, StartingRun); TD-13 — ужесточение"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "PLAN-v7.5-review",
+      "source": "reviewer E2-plan-v7 §v7.5",
+      "status": "logic READY FOR EDITOR; delta NEEDS CHANGES V75-A (6 usages, 4 wires→289)",
+      "note": "V75-B: M-E2d-23 via frozen E2d-v7.4.1"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "V75-A/B",
+      "source": "architect",
+      "status": "fixed, awaiting reviewer closure"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "V75-A/B",
+      "source": "reviewer PLAN_REVIEW.md V75 closure",
+      "status": "closed; V75-C analyst part done (E2-Q76 r2), tester part in G1 v9"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "E4-prep-Q77",
+      "source": "analyst E4-v14/QUESTIONS.md de8e1676; architect PLAN.md §13a d8b52bdd",
+      "status": "recorded only"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "TD-14,TD-15",
+      "source": "analyst E2-G1-v8-r",
+      "status": "ждёт просмотра"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "K-1",
+      "source": "architect PLAN v7.6 13a3bfbc",
+      "status": "plan fix; review pending"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "K-2",
+      "source": "analyst E2-G1-v8-r §4",
+      "status": "candidate FAIL WDG-02, sent to architect"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "PLAN-v7.6",
+      "source": "reviewer PLAN_REVIEW.md v7.6 + V76 closure",
+      "status": "logic READY; V76-A/C closed; V76-B norm pending analyst; V76-D accepted by lead (E2c not a delivery/ID-closure point; K-1/K-2 known FAIL fixed in E2d v7.6)",
+      "note": "minor text: vsChainBaseE2c.after globalRefs breakdown +1 not +2"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "UNL-LVF (V76-B)",
+      "source": "analyst E2-G1-v8-r §4b; reference Network2; Q-ARCH-04",
+      "status": "norm READY; E2c/E2d-v7.5 FAIL (K-2b) fixed in v7.6"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "D2-pin",
+      "source": "lead",
+      "status": "test/stand-expected-deltas.test.js pin 25->33 + verbatim check of HANDOFF_v8 fragment; D2 4/4 pass"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "Q78",
+      "source": "Vadim via parent",
+      "status": "S4 unblocked (READY)"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "XPH-01",
+      "source": "analyst E2-G1-v9-q",
+      "status": "candidate FAIL MOD-004 on E2d v7.5 -> architect v7.7"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "S4",
+      "source": "analyst E2-G1-v8-r §1.4b",
+      "status": "READY (Q78 А); tester v9.1"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "D-TEAM-DEFAULTS+REC",
+      "source": "Vadim via parent; SCENARIO_DECISIONS, WORKFLOW",
+      "status": "active",
+      "note": "рекомендация аналитика/архитектора = ответ Вадима (включая п.4); источник REC-ACCEPTED (<агент>, <ID>), в пакет просмотра; вопрос Вадиму только если рекомендации нет / расходятся / противоречит прямому ответу Вадима"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "XPH-01 fix v7.7",
+      "source": "architect",
+      "status": "plan review + editor rebuild in parallel"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "REC-XPH-fR",
+      "source": "REC-ACCEPTED (архитектор, v7.7 f=R)",
+      "status": "ждёт просмотра Вадима; ревьюер согласен (V77)",
+      "note": "f=R исполняется — строка наблюдения"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "REC-XPH-SU-E6",
+      "source": "REC-ACCEPTED (архитектор, v7.7 StartingRun)",
+      "status": "ждёт просмотра Вадима; ревьюер согласен (V77)",
+      "note": "recRndC_SU в GATE_PHASE переносится в E6 (carryOver)"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "PLAN-v7.7",
+      "source": "reviewer PLAN_REVIEW v7.7",
+      "status": "READY FOR EDITOR; V77-A/B -> architect, V77-C -> G3"
+    },
+    {
+      "date": "2026-10-23",
+      "id": "V77-A/B",
+      "source": "architect",
+      "status": "done (text, carryOver to first SU->R&D path, M-E2d-38)"
+    },
+    {
+      "date": "2026-10-23",
+      "id": "G3Q-1",
+      "source": "REC-ACCEPTED (аналитик, G3Q-1)",
+      "status": "ждёт просмотра",
+      "note": "явное ослабление: L2 Del окно [d_Run-1,d_Run+1] в общей цепи"
+    },
+    {
+      "date": "2026-10-23",
+      "id": "G3Q-2",
+      "source": "REC-ACCEPTED (аналитик, G3Q-2)",
+      "status": "ждёт просмотра",
+      "note": "L3 +2 недопустимо — дефект кандидатов"
+    },
+    {
+      "date": "2026-10-23",
+      "id": "G3Q-3",
+      "source": "REC-ACCEPTED (аналитик, G3Q-3)",
+      "status": "ждёт просмотра",
+      "note": "Faulty 1 скан = потеря (Q-RC-16)"
+    },
+    {
+      "date": "2026-10-23",
+      "id": "v7.8-scope",
+      "source": "lead",
+      "status": "architect: L3 +2, E2-02, Emergency exit with FBK ON, R&D u1+599/S4(a), S4(b), mutation-plan fixes"
+    }
+  ],
+  "openQuestions": [],
+  "resourceLimits": {
+    "source": "program/stand/FB-limit/FB_LIMIT.md (SDK 1.4.16 IL + ESI EL19xx RevisionNo x00100000 + DOC EL6910)",
+    "target": "HSafetyPLC/EL1918",
+    "fb": 512,
+    "groups": 128,
+    "safeConnections": 128,
+    "networksPerGroup": 255,
+    "safeLogicPages": "12 x 2048 B (threshold NV - likely real limit)",
+    "confidence": "SDK-CODE+ESI+DOC; not OFFLINE-VALIDATED (IDE Verify not run)",
+    "note": "255 in 03B_NETLIST_PLAN.md is class EL6900, not our target"
+  },
+  "temporaryGrants": [
+    "path-guard TEMPORARY_GRANTS v2-editor: MEN001_Dyno.tsproj, PLC_Dyno/DUTs/ST_TwinSAFE_IN.TcDUT, POUs/MAIN.TcPOU, VISUs/Visualization.TcVIS (added by parent session after Vadim confirmation 2026-10-21); remove after E2a transfer to canonical — notify parent"
+  ],
+  "standPilot": {
+    "source": "program/stand/E0-pilot-F1/HANDOFF.md",
+    "f1": "KILLED 16 / STRUCTURAL-ONLY 9 / SURVIVED 0 / INVALID 0 (same verdicts as P0)",
+    "killRule": "KILLED only by ERR_ASSERTION of a baseline-ok allowlisted test without file-level error, or non-BOOT software-check PASS->FAIL (src/sal-mutation-kill.js)",
+    "p0FalseKills": "none (load/SHA cannot produce kill; verified)",
+    "structuralOnly": "After S2 identity split (program/tester/S2-identity-split): IL-01, IL-02 KILLED behaviourally; IL-04 (N2/FBAnd1.AndIn5), IL-05 (N2/FBAnd1.AndIn6), IL-06 (N6/FBAnd9.AndIn2), IL-07 (GATE_001.AndIn5), ES-06 (N3/FBAnd1.AndIn2), ES-07 (N5/FBAnd1.AndIn3), UL-05 (N12/FBAnd2.AndIn3) SURVIVE behaviourally on F1 — coverage gap, to be killed by E2 G3 tests or removed/changed by R1/E2 plan"
+  },
+  "findings": [
+    "Boot with C1_FBK/C2_FBK TRUE: Restart gives Safe on F1 and E2 model (N3/FBAnd1 start path bypasses G10_EXIT FBK checks) — conflicts EMG6-01; under plan v5 review"
+  ],
+  "standTools": [
+    "2026-10-22 runner: NOT-RUN category, exit 4 = executed all KILLED but NOT-RUN present (not PASS); --validate-only trial-applies mutations (CANNOT-APPLY -> exit 2); operators swap-order, deactivate-input-pair, rewire implemented (program/stand/E2-runner-ops)",
+    "grant probes G-1..G-4 (npm run probe:grants): on E2a candidate deviations from S12/S5/S6 (second stage kept) and G-4 three stages from S4/S5/S6 — architect to define normative source stages; not a defect claim"
+  ],
+  "e4Backlog": [
+    "FBK-05/06-CMD (Q-V7-03 via CMD_* edge; button abort cannot reach window) — program/analyst/E2-G1-v7-q/CRITERIA.md",
+    {
+      "date": "2026-10-22",
+      "id": "Q77",
+      "answer": "А (Вадим)",
+      "text": "В E4 inPLC_RnD_Mode/_2 удаляются целиком, без параллельного режима; заменяют биты v1.4 §8: CMD_SAFE_TO_R&D, CMD_R&D_TO_RUN, CMD_RUN_TO_R&D, CMD_R&D_TO_SAFE, CMD_TRIGGER_EMERGENCY, Bypass→Config, heartbeat; статусы STS_COVER_LOCKED, общий Fault, outPLC_*_Faulty. На E2 не влияет.",
+      "source": "SCENARIO_DECISIONS «Вопрос 77»"
+    },
+    {
+      "date": "2026-10-22",
+      "id": "E6-carry-XPH-SU",
+      "text": "добавить recRndC_SU в GATE_PHASE при первом появлении пути SU->R&D (E3 abort, E4 CMD, E6 откат окна); фазы новых команд E4 проверять по MOD-004"
+    }
+  ],
+  "candidates": {
+    "E2d": {
+      "sal": "c2f9ccd7a901e40f1ad5a3db780898c32b19180d6993528ce34afaffdb903689",
+      "sgvl": "d845bd26331cfb166e13094c2a4c9cf9918252bb2cb34b6644acccc4c4564433",
+      "diagram": "8797b832fee722dc068dce8e7f37ce4390acc8303abea1237f670bd394d71469",
+      "plan": "v7.7 PLAN.json c71f9a54 / PLAN.md fc9c7688 / MUTATION_PLAN_E2d 601b62f5 (M-E2d-24..38)",
+      "frozenMutants": {
+        "E2d-v7.4.1": "a5acf291",
+        "E2d-v7.5": "2276d773",
+        "E2d-v7.6": "e4cf767e"
+      },
+      "status": "built v7.7; editor self-checks PASS; regression vs v7.6: 17 FAIL->PASS (xphase), 0 PASS->FAIL; G3 pending G1 v9.1; SHA declared in plan; e2-delta chain F1->E2d all PASS, 0 NV (architect)"
+    }
+  }
+}

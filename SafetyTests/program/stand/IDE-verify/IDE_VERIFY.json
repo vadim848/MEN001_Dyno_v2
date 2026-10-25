@@ -1,0 +1,43 @@
+{
+  "evidenceType": "IDE-VERIFY-OFFLINE",
+  "date": "2026-10-22",
+  "role": "v2-stand-engineer",
+  "authorization": "SCENARIO_DECISIONS.md Q-61 answer A (offline Verify in TcXaeShell on isolated copy, no target/download/canonical change)",
+  "status": "NOT RUN (BLOCKED)",
+  "verifyMessages": [],
+  "reason": "Permission classifier blocked (1) redirecting the copy's TargetNetId from the real device 192.168.1.50.1.1 to local, and (2) inspecting ADS route files. Absence of a route to the real device could not be established; TcXaeShell was therefore not launched. No Activate/Login/Download/ADS/route performed.",
+  "environment": {
+    "tcxaeshell": {"path": "C:/Program Files/Beckhoff/TcXaeShell/Common7/IDE/TcXaeShell.exe", "fileVersion": "17.0.0.0", "dteProgId": "TcXaeShell.DTE.17.0 (registered, not invoked)"},
+    "twincat": "3.1.4026.27",
+    "safetySdk": {"version": "1.4.16", "SALDesigner.dll": "1.4.16.13", "SALDesignerControl.dll": "1.4.16.13"}
+  },
+  "isolatedCopies": {
+    "root": "C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad",
+    "common": "MEN001_Dyno.sln (tsproj only) + full MEN001_Dyno/ from v2 HEAD b580920, no .git, tsproj byte-identical to canonical (TargetNetId 192.168.1.50.1.1 unchanged); TargetSystemConfig.xml sha256 b455dc24c085d376d53d792347a1dab7e0790435cd0e0ad8852e4dc40aef36c4 (EL1918)",
+    "items": [
+      {"dir": "ide-verify-F1", "fb": 242, "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3", "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603", "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104", "verify": "NOT RUN"},
+      {"dir": "ide-verify-R1", "source": "SafetyTests/candidates/E2-R1/native", "fb": 215, "sal": "ca841a01fe44f776a5868968fde70cce728657aaf411d6b8bfa6689cfadc7bb3", "diagram": "b82aa41a6ee065267852d78ccaff961714eca1e8e8c006f087de715fb2a137b6", "sgvl": "4f205138337ea3de3660d5ef2d8978db438e3e8d19f2e9dd393ec7a5816cdb36", "verify": "NOT RUN"},
+      {"dir": "ide-verify-syn512", "fb": 512, "sal": "15cc73e543fb4604cc411415689a3f532c3a15989009e4d9eed6a6f3c78182a4", "diagram": "3ff17acd7cacd2d677d54e12c80a018c3df43fafb100e3be36a646324e16e4d0", "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104", "nativeReloadCrcValid": true, "ports": 4506, "verify": "NOT RUN"},
+      {"dir": "ide-verify-syn513", "fb": 513, "sal": "b1c913ceafa9e0c8563f3148f98258eb82329ee04cc16634a9421147a582199f", "diagram": "be590d59c4010518ce863e1e22683fcdb7aed45deaa43b83d4ed39160fc1c19b", "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104", "nativeReloadCrcValid": true, "ports": 4515, "verify": "NOT RUN"}
+    ]
+  },
+  "synthetic": {
+    "base": "F1 04b45456 (byte copy program/editor/E2-R1/source)",
+    "construction": "new Network15 'IdeVerifySynthetic' (intId 15, networkOrderId 14), N x safeAnd FBAndIdeSyn1..N, order 243..242+N; AndIn1 activated NO filter 2, AndIn2..8 deactivated; in_False_SI2_CH8 -> AND1.AndIn1 (new target usage); ANDk.AndOut -> AND(k+1).AndIn1; last output open; no Symbols, no outputs, no inter-network wires",
+    "N": {"512": 270, "513": 271},
+    "tools": {"tools/make-synthetic.mjs": "6c55508f1a4812213bba08645521d62d1aca1d7895bc11cddc48e0375858ea85", "tools/native-save-synth.ps1": "5d03c492c82e5350e626ae696cb8a3289c2e3d9e1f06471365d298372e07d61a"},
+    "limits": "native SAL/diagram CRC only (not IDE); splcproj/project CRC not recomputed (NV); shapes placed by FixUpDiagram in one swimlane"
+  },
+  "results": {
+    "fb512_513": "NV (IDE not run). SDK expectation only (FB_LIMIT.md): 512 ok, 513 -> 'Too many function blocks configured for chosen target system {0} (maximum number of {1} allowed).'",
+    "pagesBudget_12x2048": {"F1": "NV", "R1": "NV", "threshold": "NV"},
+    "candidate03B_290": "No ready files: 03B_NETLIST_PLAN.md/.json is an architect netlist plan (NOT READY to write SAL); no SAL with >=260 FB found in SafetyTests; not rebuilt per instruction",
+    "E2": "not built yet; F1 and R1 bases prepared"
+  },
+  "blockedActions": [
+    {"action": "sed -i TargetNetId 192.168.1.50.1.1 -> 192.168.1.13.1.1 in scratchpad copy ide-verify-F1 tsproj", "classifier": "Security Weaken", "followUp": "not retried; copy left identical to canonical"},
+    {"action": "read background find StaticRoutes.xml output + ls TwinCAT Target/Config dirs", "classifier": "Sensitive Remote Exec", "followUp": "not retried; route absence unproven"},
+    {"action": "read-only grep/head of canonical SAL/diagram to build synthetic (likely the user prompt '3 consecutive actions were blocked')", "classifier": "prompted user", "followUp": "executed read-only"}
+  ],
+  "userActionNeeded": "Either (A) run 'Verify Safety Project' (VerificationProjectCmdId, NOT 'Verify Complete Safety Project') manually in TcXaeShell on each scratchpad copy F1/R1/syn512/syn513, ideally with the PC disconnected from the machine network, and return Error List/Output verbatim; or (B) explicitly permit DTE automation of TcXaeShell on scratchpad copies (and redirecting TargetNetId of the copies to local)."
+}

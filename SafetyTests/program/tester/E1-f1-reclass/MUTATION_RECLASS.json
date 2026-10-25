@@ -1,0 +1,70 @@
+{
+ "slice": "E1-f1 (reclass after Q-MU06-01/Q-MU06-02)",
+ "role": "v2-tester",
+ "date": "2026-10-21",
+ "head": "ea6b52d",
+ "supersedes": "SafetyTests/program/tester/E1-f1-migration/MUTATION_RECLASS.json sha256 fee77758f7b41daf6f47c39733cdd8d22ef3e4047db02db9f655b57d56e4e237 (entries MU06, MU24 only; MU10/MU11 entries there remain in force unchanged)",
+ "basis": {
+  "decisions": "SafetyTests/SCENARIO_DECISIONS.md sha256 42aaf5dbd9c75aee42a99017162d816f8c9897f51d6e6b53fb87ca93ccf762e4: Q-MU06-01 (answer B: in_False_SI2_CH8 technical input, always FALSE; checks at TRUE out of scope; not to be treated as an emergency input), Q-MU06-02 (answer A: N5/FBAnd7, N9/FBAnd1, N12/FBAnd14 intentionally disabled; tests of their firing not needed); release-filter oracle: section with items 9 and 11 (2 s continuous release of both buttons before a new attempt; not counted while a button is held)",
+  "source": {"sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3", "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104", "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603", "path": "MEN001_Dyno/Safety_Dyno (canonical)"},
+  "stand": {"sal-parser.js": "fbf239e4960243e383619834a658bee23df543fdba9fc9f0e5bfd9e0e0aa195c", "sal-runtime.js": "14d50f182e42c7aea814eb0c221fbeadbc9becf20f7ac575d263b8cb4f14698e"},
+  "reviewerRepro": "SafetyTests/program/reviewer/E1-f1/repro/held-across-reach.mjs sha256 a6733ef0d70efb39d2db913ba474e565a38dcc30a1feef62964d2d2b5d7ad217 (Run context only)"
+ },
+ "inputDomain": "in_False_SI2_CH8 == FALSE in every scan (Q-MU06-01 B). All scenarios below never drive it; the scripts assert/print this.",
+ "mutants": [
+  {
+   "id": "MU06",
+   "label": "Network6/FBAnd24.AndIn2 (NOT in_False_SI2_CH8) deactivated",
+   "previous": "EQUIVALENT-by-proof, conditional on GRP-2 (DERIVED Symbol same-cycle visibility)",
+   "classification": "EQUIVALENT-by-proof (input-domain constant)",
+   "inDenominator": false,
+   "proof": [
+    "CONST (primary, new): Q-MU06-01 B fixes in_False_SI2_CH8 = FALSE. FBAnd24 active operands in F1: AndIn1 b_ResetPB_Lock, AndIn2 NOT in_False_SI2_CH8, AndIn3 linkRndGreenQualified (others Deactivated). With in_False=FALSE the operand NOT in_False is TRUE in every scan, the neutral element of AND; deactivating it yields the same Boolean function of the remaining operands in every scan, independent of execution order, Symbol timing or history. Executed check: repro/mu06-constant-check.mjs on the parsed canonical block, 4/4 rows with in_False=FALSE identical (F1 vs MU06), the only differing row has in_False=TRUE (out of scope per Q-MU06-01).",
+    "GRP-1/GRP-2 (previous argument) is no longer required for equivalence within the declared input domain; it is retained only as history."
+   ],
+   "conditions": [
+    "Input domain: in_False_SI2_CH8 constant FALSE (Q-MU06-01 B). If a later decision removes/replaces this technical input or allows TRUE, re-evaluate.",
+    "FBAnd24 is an AND block with the operand set listed above (canonical F1 SHA pinned)."
+   ],
+   "reevaluateWhen": ["any change of in_False_SI2_CH8 role or of Network6/FBAnd24 operands"]
+  },
+  {
+   "id": "MU24",
+   "label": "RndPhysicalCompact/GATE_016.AndIn4 (RELEASE TON 2 s) deactivated - rearm without 2 s",
+   "previous": "killed on component boundary; reachable kill conditional on Q-MU06-01",
+   "classification": "KILLED by requirement-based behavioural test on the full program, reachable, in_False constant FALSE",
+   "notEquivalent": true,
+   "inDenominator": true,
+   "countsAsKilled": true,
+   "killedByRequirementTest": true,
+   "answerToLead": "Not equivalent. The in_False pulse is no longer used (out of input domain). Another reachable distinguisher exists in Safe: a button held across a cover open/close (in_InterLock_NC_1 or _2 FALSE 300 ms, Safe kept, b_EStop_Ok kept), then released; a new attempt after 1999 ms of release is rejected by F1 and accepted by MU24 (BOTH -> out_LV_C1/b_Step12; BLUE -> out_Door_Unlock_Solonoeid). After 2001 ms both accept (positive control).",
+   "oracle": "SCENARIO_DECISIONS items 9 and 11: a new attempt requires 2 s of continuous release of both buttons; the pause is not counted while a button is still held. Release starts at button release (after the cover is already closed), so 1999 ms < 2 s -> attempt must not be accepted; 2001 ms -> accepted. The oracle does not depend on the cover event itself.",
+   "killer": {
+    "file": "SafetyTests/program/tester/E1-f1-reclass/repro/mu24-reachable-kill.test.mjs sha256 c733e0e0886b01f5f3a0a6d0ebd71b13437548a787305014533a72cc979de601",
+    "F1": "16/16 pass (mu24-reachable-kill.F1.tap sha256 6dd3076c0a3a9980f62e523422e890db6851175b289b605ace4a77ce31f6272c)",
+    "MU24": "8/16 fail - exactly the eight 1999 ms (q-1) cases: {green,blue} held x {in_InterLock_NC_1,in_InterLock_NC_2} x {BOTH,BLUE}; the eight 2001 ms (q+1) cases pass (mu24-reachable-kill.MU24.tap sha256 3a339d198647353caed6ee63fb39140500dfb9882ff87b4fb7c9d7cc9aa8d7bd)",
+    "notInRegressionYet": "The killer lives in the tester folder, not in SafetyTests/test/, and is not run by npm run check:software. Recommend adopting it as SafetyTests/test/current-<slice>-release-filter-*.test.js (owner per lead)."
+   },
+   "search": {
+    "script": "repro/safe-held-across.mjs sha256 77a595ccac2bcdf2916ac948ab68953912253a616688d83e37669d96de39bc74",
+    "Safe": "repro/safe-held-across.Safe.txt sha256 3915101a748022987696e9aa067376660a7d69d114673baf88dd63a688ed1d03: 162 cases, 28 DIFF. IL1/IL2 x held {green,blue} x neutral {998,1999} x {BOTH,BLUE}: DIFF (16). Estop_PLC/Mentee_EStop with green held (green release acts as FBEstop Restart, item 12): DIFF at 998/1999 for BOTH/BLUE (8). 'hold none' (buttons never held) IL1/IL2 at 998: DIFF (4) - NOT used as oracle, see question Q-REL-AFTER-PERMIT. LV/HV connector in Safe: no DIFF (not in GATE_001 permit in Safe). Re-press GREEN in Safe: no DIFF.",
+    "RnD": "repro/safe-held-across.RnD.txt sha256 8410482f9d1fba66ad34f987f3381025964302f483207b193cba94d288fab66d: 162 cases, 24 DIFF, all with re-press BLUE (out_Door_Unlock_Solonoeid): IL1/IL2/LV conn/HV conn with green/blue held at 998/1999 and 'hold none' at 998; Estop_PLC/Mentee with green held. BOTH/GREEN in R&D: no DIFF. Not adopted as primary oracle (R&D unlock and R&D reaction to cover/connector loss are under E2/V14 revision).",
+    "Run": "reviewer held-across-reach: IL1/IL2/LV conn/Estop_PLC -> Step4, no DIFF (unchanged)."
+   },
+   "assumptions": [
+    "A1 Declared initial Safe: b_Step1 written into the FBRs memory before the protocol (stand/reviewer convention); not reached from a modelled group boot.",
+    "A2 Single runtime b_EStop_Ok initialised by one Reset_PB pulse at t=10 ms (FBEstop Restart) before seeding.",
+    "A3 Stand runtime 1 ms scan; exact q=2000 ms not asserted (TON boundary resolution), only q-1=1999 and q+1=2001.",
+    "A4 in_False_SI2_CH8 never driven (asserted in the test helper)."
+   ],
+   "dependencies": [
+    "V14-Q7 (Safe->R&D allowed with open cover) will be implemented later; if IL1/IL2 are removed from the Safe permit (GATE_001) the Safe IL distinguisher disappears and MU24 must be re-evaluated (remaining candidates: Emergency with green release as Restart in Safe; R&D blue unlock)."
+   ]
+  }
+ ],
+ "unchanged": {
+  "MU10": "EQUIVALENT-by-proof, mandatory re-evaluation after E2 (E1-f1-migration entry in force)",
+  "MU11": "OPEN (KILLABLE, E2) (E1-f1-migration entry in force; matrix note about E3 kept)"
+ },
+ "g3Statement": "G3 for F1 with documented exceptions: 26 mutants; 23 killed by requirement-based behavioural tests (22 + MU24, MU24 killer not yet in the regression suite); MU06 and MU10 EQUIVALENT-by-proof (MU06 by input-domain constant, MU10 conditional on current Network3 topology / E2); MU11 OPEN (KILLABLE, E2/E3)."
+}

@@ -1,0 +1,893 @@
+{
+  "status": "PASS_EXHAUSTIVE_LOCAL_AND_PRESERVATION",
+  "baselineSalSha256": "49ae801d5f6ade77c310859f4efafba92946628a8a6fa7ed268c71b12dc162d5",
+  "candidateSalSha256": "59bf4ec1fe83d49f50b32ea89a230f42a1f18cb20122649cf5c4de435d552c33",
+  "sgvlUnchanged": false,
+  "checks": [
+    {
+      "name": "native structure counts, all FB IDs/types/order, all port attributes except permitted contact swaps remain",
+      "status": "PASS"
+    },
+    {
+      "name": "all other exact input source bindings remain unchanged",
+      "status": "PASS"
+    },
+    {
+      "name": "FBAndUnlockHold exact source/contact multiset and exhaustive simultaneous scan-read truth table",
+      "status": "PASS",
+      "detail": {
+        "rows": 32
+      }
+    },
+    {
+      "name": "FBAndLvCurrentPermit exact source/contact multiset and exhaustive simultaneous scan-read truth table",
+      "status": "PASS",
+      "detail": {
+        "rows": 256
+      }
+    },
+    {
+      "name": "GATE_001 exact source/contact multiset and exhaustive simultaneous scan-read truth table",
+      "status": "PASS",
+      "detail": {
+        "rows": 128
+      }
+    }
+  ],
+  "tables": [
+    {
+      "name": "FBAndUnlockHold",
+      "rows": 32,
+      "sources": [
+        "port://Network1/FBRs6/RsOut",
+        "alias:dc940b09-1679-4917-a199-c5a71141fc39",
+        "alias:a9271cc5-5599-48f1-b6ea-c7da3eb00e9d",
+        "global:98ab783a-9ee4-42cd-8375-54abc169e250",
+        "alias:6d615846-7050-4fe7-9d46-85e8b6460f93"
+      ],
+      "before": [
+        {
+          "path": "//Network1/FBAndUnlockHold/AndIn1",
+          "id": "b8d7aed0-ee4b-49e3-bdc8-c24952b317e9",
+          "source": "port://Network1/FBRs6/RsOut",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "b8d7aed0-ee4b-49e3-bdc8-c24952b317e9",
+            "name": "AndIn1",
+            "portName": "AndIn1",
+            "portNum": "2",
+            "objectIndex": "8",
+            "varId": "2",
+            "filter": "3",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndUnlockHold/AndIn2",
+          "id": "59cb36af-591c-4f49-9ac1-73f8c609a1f3",
+          "source": "alias:dc940b09-1679-4917-a199-c5a71141fc39",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "59cb36af-591c-4f49-9ac1-73f8c609a1f3",
+            "name": "AndIn2",
+            "portName": "AndIn2",
+            "portNum": "3",
+            "objectIndex": "9",
+            "varId": "3",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndUnlockHold/AndIn3",
+          "id": "10d1624b-3840-4133-bce1-11534436c303",
+          "source": "alias:a9271cc5-5599-48f1-b6ea-c7da3eb00e9d",
+          "contact": "Make Contact (NO)",
+          "attrs": {
+            "Id": "10d1624b-3840-4133-bce1-11534436c303",
+            "name": "AndIn3",
+            "portName": "AndIn3",
+            "portNum": "4",
+            "objectIndex": "10",
+            "varId": "4",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Make Contact (NO)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndUnlockHold/AndIn4",
+          "id": "55c0b75c-a041-46ff-b5a3-715fa2f8d676",
+          "source": "global:98ab783a-9ee4-42cd-8375-54abc169e250",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "55c0b75c-a041-46ff-b5a3-715fa2f8d676",
+            "name": "AndIn4",
+            "portName": "AndIn4",
+            "portNum": "5",
+            "objectIndex": "11",
+            "varId": "5",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndUnlockHold/AndIn5",
+          "id": "3f513b29-6b63-4f75-926e-811ca7650568",
+          "source": "alias:6d615846-7050-4fe7-9d46-85e8b6460f93",
+          "contact": "Make Contact (NO)",
+          "attrs": {
+            "Id": "3f513b29-6b63-4f75-926e-811ca7650568",
+            "name": "AndIn5",
+            "portName": "AndIn5",
+            "portNum": "6",
+            "objectIndex": "12",
+            "varId": "6",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Make Contact (NO)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        }
+      ],
+      "after": [
+        {
+          "path": "//Network1/FBAndUnlockHold/AndIn1",
+          "id": "b8d7aed0-ee4b-49e3-bdc8-c24952b317e9",
+          "source": "alias:6d615846-7050-4fe7-9d46-85e8b6460f93",
+          "contact": "Make Contact (NO)",
+          "attrs": {
+            "Id": "b8d7aed0-ee4b-49e3-bdc8-c24952b317e9",
+            "name": "AndIn1",
+            "portName": "AndIn1",
+            "portNum": "2",
+            "objectIndex": "8",
+            "varId": "2",
+            "filter": "3",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Make Contact (NO)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndUnlockHold/AndIn2",
+          "id": "59cb36af-591c-4f49-9ac1-73f8c609a1f3",
+          "source": "alias:dc940b09-1679-4917-a199-c5a71141fc39",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "59cb36af-591c-4f49-9ac1-73f8c609a1f3",
+            "name": "AndIn2",
+            "portName": "AndIn2",
+            "portNum": "3",
+            "objectIndex": "9",
+            "varId": "3",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndUnlockHold/AndIn3",
+          "id": "10d1624b-3840-4133-bce1-11534436c303",
+          "source": "alias:a9271cc5-5599-48f1-b6ea-c7da3eb00e9d",
+          "contact": "Make Contact (NO)",
+          "attrs": {
+            "Id": "10d1624b-3840-4133-bce1-11534436c303",
+            "name": "AndIn3",
+            "portName": "AndIn3",
+            "portNum": "4",
+            "objectIndex": "10",
+            "varId": "4",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Make Contact (NO)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndUnlockHold/AndIn4",
+          "id": "55c0b75c-a041-46ff-b5a3-715fa2f8d676",
+          "source": "global:98ab783a-9ee4-42cd-8375-54abc169e250",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "55c0b75c-a041-46ff-b5a3-715fa2f8d676",
+            "name": "AndIn4",
+            "portName": "AndIn4",
+            "portNum": "5",
+            "objectIndex": "11",
+            "varId": "5",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndUnlockHold/AndIn5",
+          "id": "3f513b29-6b63-4f75-926e-811ca7650568",
+          "source": "port://Network1/FBRs6/RsOut",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "3f513b29-6b63-4f75-926e-811ca7650568",
+            "name": "AndIn5",
+            "portName": "AndIn5",
+            "portNum": "6",
+            "objectIndex": "12",
+            "varId": "6",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "FBAndLvCurrentPermit",
+      "rows": 256,
+      "sources": [
+        "global:98ab783a-9ee4-42cd-8375-54abc169e250",
+        "alias:c8733807-26ea-45fd-a6dd-1b39b3fe0286",
+        "alias:6abcf415-f5bc-4413-9556-e13ee4e3ca62",
+        "alias:6ea0bd28-86ec-4253-af16-e7671d60bf50",
+        "alias:7609638c-62cd-4d5e-a440-a3e26594ec02",
+        "alias:95ac9918-daf1-4ae0-a803-9201a5008bcd",
+        "alias:fa6e370a-6ee5-4872-ab19-3ebd1bd1bc4c",
+        "alias:6d615846-7050-4fe7-9d46-85e8b6460f93"
+      ],
+      "before": [
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn1",
+          "id": "e38bf21e-15b3-448f-89c8-2795d5bf62db",
+          "source": "global:98ab783a-9ee4-42cd-8375-54abc169e250",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "e38bf21e-15b3-448f-89c8-2795d5bf62db",
+            "name": "AndIn1",
+            "portName": "AndIn1",
+            "portNum": "2",
+            "objectIndex": "8",
+            "varId": "2",
+            "filter": "3",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn2",
+          "id": "beba0dd3-bbda-451a-818e-4c95935d37c1",
+          "source": "alias:c8733807-26ea-45fd-a6dd-1b39b3fe0286",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "beba0dd3-bbda-451a-818e-4c95935d37c1",
+            "name": "AndIn2",
+            "portName": "AndIn2",
+            "portNum": "3",
+            "objectIndex": "9",
+            "varId": "3",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn3",
+          "id": "a5d6d636-545b-4a96-913c-16178c0a84d0",
+          "source": "alias:6abcf415-f5bc-4413-9556-e13ee4e3ca62",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "a5d6d636-545b-4a96-913c-16178c0a84d0",
+            "name": "AndIn3",
+            "portName": "AndIn3",
+            "portNum": "4",
+            "objectIndex": "10",
+            "varId": "4",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn4",
+          "id": "a895c77e-2cfa-4ae2-8c00-956b8fe95f08",
+          "source": "alias:6ea0bd28-86ec-4253-af16-e7671d60bf50",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "a895c77e-2cfa-4ae2-8c00-956b8fe95f08",
+            "name": "AndIn4",
+            "portName": "AndIn4",
+            "portNum": "5",
+            "objectIndex": "11",
+            "varId": "5",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn5",
+          "id": "90afa8dd-4551-43ce-8ede-570abe26ef42",
+          "source": "alias:7609638c-62cd-4d5e-a440-a3e26594ec02",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "90afa8dd-4551-43ce-8ede-570abe26ef42",
+            "name": "AndIn5",
+            "portName": "AndIn5",
+            "portNum": "6",
+            "objectIndex": "12",
+            "varId": "6",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn6",
+          "id": "8166944b-5c2f-45ff-ac08-3ff23c833528",
+          "source": "alias:95ac9918-daf1-4ae0-a803-9201a5008bcd",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "8166944b-5c2f-45ff-ac08-3ff23c833528",
+            "name": "AndIn6",
+            "portName": "AndIn6",
+            "portNum": "7",
+            "objectIndex": "13",
+            "varId": "7",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn7",
+          "id": "4db7329f-c880-4a0b-9c9c-5ad6305a3f1f",
+          "source": "alias:fa6e370a-6ee5-4872-ab19-3ebd1bd1bc4c",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "4db7329f-c880-4a0b-9c9c-5ad6305a3f1f",
+            "name": "AndIn7",
+            "portName": "AndIn7",
+            "portNum": "8",
+            "objectIndex": "14",
+            "varId": "8",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn8",
+          "id": "75f42369-fbd7-49b1-a11b-18df643208ea",
+          "source": "alias:6d615846-7050-4fe7-9d46-85e8b6460f93",
+          "contact": "Make Contact (NO)",
+          "attrs": {
+            "Id": "75f42369-fbd7-49b1-a11b-18df643208ea",
+            "name": "AndIn8",
+            "portName": "AndIn8",
+            "portNum": "9",
+            "objectIndex": "15",
+            "varId": "9",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Make Contact (NO)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        }
+      ],
+      "after": [
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn1",
+          "id": "e38bf21e-15b3-448f-89c8-2795d5bf62db",
+          "source": "alias:6d615846-7050-4fe7-9d46-85e8b6460f93",
+          "contact": "Make Contact (NO)",
+          "attrs": {
+            "Id": "e38bf21e-15b3-448f-89c8-2795d5bf62db",
+            "name": "AndIn1",
+            "portName": "AndIn1",
+            "portNum": "2",
+            "objectIndex": "8",
+            "varId": "2",
+            "filter": "3",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Make Contact (NO)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn2",
+          "id": "beba0dd3-bbda-451a-818e-4c95935d37c1",
+          "source": "alias:c8733807-26ea-45fd-a6dd-1b39b3fe0286",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "beba0dd3-bbda-451a-818e-4c95935d37c1",
+            "name": "AndIn2",
+            "portName": "AndIn2",
+            "portNum": "3",
+            "objectIndex": "9",
+            "varId": "3",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn3",
+          "id": "a5d6d636-545b-4a96-913c-16178c0a84d0",
+          "source": "alias:6abcf415-f5bc-4413-9556-e13ee4e3ca62",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "a5d6d636-545b-4a96-913c-16178c0a84d0",
+            "name": "AndIn3",
+            "portName": "AndIn3",
+            "portNum": "4",
+            "objectIndex": "10",
+            "varId": "4",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn4",
+          "id": "a895c77e-2cfa-4ae2-8c00-956b8fe95f08",
+          "source": "alias:6ea0bd28-86ec-4253-af16-e7671d60bf50",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "a895c77e-2cfa-4ae2-8c00-956b8fe95f08",
+            "name": "AndIn4",
+            "portName": "AndIn4",
+            "portNum": "5",
+            "objectIndex": "11",
+            "varId": "5",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn5",
+          "id": "90afa8dd-4551-43ce-8ede-570abe26ef42",
+          "source": "alias:7609638c-62cd-4d5e-a440-a3e26594ec02",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "90afa8dd-4551-43ce-8ede-570abe26ef42",
+            "name": "AndIn5",
+            "portName": "AndIn5",
+            "portNum": "6",
+            "objectIndex": "12",
+            "varId": "6",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn6",
+          "id": "8166944b-5c2f-45ff-ac08-3ff23c833528",
+          "source": "alias:95ac9918-daf1-4ae0-a803-9201a5008bcd",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "8166944b-5c2f-45ff-ac08-3ff23c833528",
+            "name": "AndIn6",
+            "portName": "AndIn6",
+            "portNum": "7",
+            "objectIndex": "13",
+            "varId": "7",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn7",
+          "id": "4db7329f-c880-4a0b-9c9c-5ad6305a3f1f",
+          "source": "alias:fa6e370a-6ee5-4872-ab19-3ebd1bd1bc4c",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "4db7329f-c880-4a0b-9c9c-5ad6305a3f1f",
+            "name": "AndIn7",
+            "portName": "AndIn7",
+            "portNum": "8",
+            "objectIndex": "14",
+            "varId": "8",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit/AndIn8",
+          "id": "75f42369-fbd7-49b1-a11b-18df643208ea",
+          "source": "global:98ab783a-9ee4-42cd-8375-54abc169e250",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "75f42369-fbd7-49b1-a11b-18df643208ea",
+            "name": "AndIn8",
+            "portName": "AndIn8",
+            "portNum": "9",
+            "objectIndex": "15",
+            "varId": "9",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "GATE_001",
+      "rows": 128,
+      "sources": [
+        "alias:1fcf5ae0-71f2-49fa-99bc-aec0ba975d67",
+        "alias:052a287d-f3c1-4a15-91cc-be4f4f08e06d",
+        "global:98ab783a-9ee4-42cd-8375-54abc169e250",
+        "alias:6d615846-7050-4fe7-9d46-85e8b6460f93",
+        "alias:6ea0bd28-86ec-4253-af16-e7671d60bf50",
+        "alias:7609638c-62cd-4d5e-a440-a3e26594ec02",
+        "alias:8231aba3-5c5f-4030-aaa1-bd71174478a0"
+      ],
+      "before": [
+        {
+          "path": "//RndPhysicalCompact/GATE_001/AndIn1",
+          "id": "d67690a6-7037-1fa6-4c0b-5dc60799e6b9",
+          "source": "alias:1fcf5ae0-71f2-49fa-99bc-aec0ba975d67",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "d67690a6-7037-1fa6-4c0b-5dc60799e6b9",
+            "name": "AndIn1",
+            "portName": "AndIn1",
+            "portNum": "2",
+            "objectIndex": "8",
+            "varId": "2",
+            "filter": "3",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_001/AndIn2",
+          "id": "fe0125f8-15da-ee44-18b3-edd909fccbf0",
+          "source": "alias:052a287d-f3c1-4a15-91cc-be4f4f08e06d",
+          "contact": "Make Contact (NO)",
+          "attrs": {
+            "Id": "fe0125f8-15da-ee44-18b3-edd909fccbf0",
+            "name": "AndIn2",
+            "portName": "AndIn2",
+            "portNum": "3",
+            "objectIndex": "9",
+            "varId": "3",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Make Contact (NO)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_001/AndIn3",
+          "id": "a0f614e5-eceb-0f4a-b30d-decfe7b8738c",
+          "source": "global:98ab783a-9ee4-42cd-8375-54abc169e250",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "a0f614e5-eceb-0f4a-b30d-decfe7b8738c",
+            "name": "AndIn3",
+            "portName": "AndIn3",
+            "portNum": "4",
+            "objectIndex": "10",
+            "varId": "4",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_001/AndIn4",
+          "id": "5ee6aed8-eb13-5af9-5850-d5064f5b2468",
+          "source": "alias:6d615846-7050-4fe7-9d46-85e8b6460f93",
+          "contact": "Make Contact (NO)",
+          "attrs": {
+            "Id": "5ee6aed8-eb13-5af9-5850-d5064f5b2468",
+            "name": "AndIn4",
+            "portName": "AndIn4",
+            "portNum": "5",
+            "objectIndex": "11",
+            "varId": "5",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Make Contact (NO)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_001/AndIn5",
+          "id": "480876bb-69a3-46fc-9bf6-f05403c798aa",
+          "source": "alias:6ea0bd28-86ec-4253-af16-e7671d60bf50",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "480876bb-69a3-46fc-9bf6-f05403c798aa",
+            "name": "AndIn5",
+            "portName": "AndIn5",
+            "portNum": "6",
+            "objectIndex": "12",
+            "varId": "6",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_001/AndIn6",
+          "id": "6df621da-4a81-3121-9127-d59cfd2cede4",
+          "source": "alias:7609638c-62cd-4d5e-a440-a3e26594ec02",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "6df621da-4a81-3121-9127-d59cfd2cede4",
+            "name": "AndIn6",
+            "portName": "AndIn6",
+            "portNum": "7",
+            "objectIndex": "13",
+            "varId": "7",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_001/AndIn7",
+          "id": "eb1357bf-3d6e-b77c-b80f-0cd368e6e5ef",
+          "source": "alias:8231aba3-5c5f-4030-aaa1-bd71174478a0",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "eb1357bf-3d6e-b77c-b80f-0cd368e6e5ef",
+            "name": "AndIn7",
+            "portName": "AndIn7",
+            "portNum": "8",
+            "objectIndex": "14",
+            "varId": "8",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        }
+      ],
+      "after": [
+        {
+          "path": "//RndPhysicalCompact/GATE_001/AndIn1",
+          "id": "d67690a6-7037-1fa6-4c0b-5dc60799e6b9",
+          "source": "alias:6d615846-7050-4fe7-9d46-85e8b6460f93",
+          "contact": "Make Contact (NO)",
+          "attrs": {
+            "Id": "d67690a6-7037-1fa6-4c0b-5dc60799e6b9",
+            "name": "AndIn1",
+            "portName": "AndIn1",
+            "portNum": "2",
+            "objectIndex": "8",
+            "varId": "2",
+            "filter": "3",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Make Contact (NO)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_001/AndIn2",
+          "id": "fe0125f8-15da-ee44-18b3-edd909fccbf0",
+          "source": "alias:052a287d-f3c1-4a15-91cc-be4f4f08e06d",
+          "contact": "Make Contact (NO)",
+          "attrs": {
+            "Id": "fe0125f8-15da-ee44-18b3-edd909fccbf0",
+            "name": "AndIn2",
+            "portName": "AndIn2",
+            "portNum": "3",
+            "objectIndex": "9",
+            "varId": "3",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Make Contact (NO)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_001/AndIn3",
+          "id": "a0f614e5-eceb-0f4a-b30d-decfe7b8738c",
+          "source": "global:98ab783a-9ee4-42cd-8375-54abc169e250",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "a0f614e5-eceb-0f4a-b30d-decfe7b8738c",
+            "name": "AndIn3",
+            "portName": "AndIn3",
+            "portNum": "4",
+            "objectIndex": "10",
+            "varId": "4",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_001/AndIn4",
+          "id": "5ee6aed8-eb13-5af9-5850-d5064f5b2468",
+          "source": "alias:1fcf5ae0-71f2-49fa-99bc-aec0ba975d67",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "5ee6aed8-eb13-5af9-5850-d5064f5b2468",
+            "name": "AndIn4",
+            "portName": "AndIn4",
+            "portNum": "5",
+            "objectIndex": "11",
+            "varId": "5",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_001/AndIn5",
+          "id": "480876bb-69a3-46fc-9bf6-f05403c798aa",
+          "source": "alias:6ea0bd28-86ec-4253-af16-e7671d60bf50",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "480876bb-69a3-46fc-9bf6-f05403c798aa",
+            "name": "AndIn5",
+            "portName": "AndIn5",
+            "portNum": "6",
+            "objectIndex": "12",
+            "varId": "6",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_001/AndIn6",
+          "id": "6df621da-4a81-3121-9127-d59cfd2cede4",
+          "source": "alias:7609638c-62cd-4d5e-a440-a3e26594ec02",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "6df621da-4a81-3121-9127-d59cfd2cede4",
+            "name": "AndIn6",
+            "portName": "AndIn6",
+            "portNum": "7",
+            "objectIndex": "13",
+            "varId": "7",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_001/AndIn7",
+          "id": "eb1357bf-3d6e-b77c-b80f-0cd368e6e5ef",
+          "source": "alias:8231aba3-5c5f-4030-aaa1-bd71174478a0",
+          "contact": "Break Contact (NC)",
+          "attrs": {
+            "Id": "eb1357bf-3d6e-b77c-b80f-0cd368e6e5ef",
+            "name": "AndIn7",
+            "portName": "AndIn7",
+            "portNum": "8",
+            "objectIndex": "14",
+            "varId": "8",
+            "filter": "2",
+            "portDataType": "1",
+            "channelInterface": "Activated",
+            "deactivate1": "Break Contact (NC)",
+            "maxDeviation": "0",
+            "resetTime": "0"
+          }
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Exhaustive Boolean tests quantify every same-scan source value including internally derived previous-scan values; preserve block order so source read timing is unchanged.",
+    "Compiler safe-source classification and native CRC are separate required gates. This local proof does not replace full software regression or hardware validation."
+  ]
+}

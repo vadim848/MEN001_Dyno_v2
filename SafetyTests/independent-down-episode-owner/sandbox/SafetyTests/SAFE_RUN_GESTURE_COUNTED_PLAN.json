@@ -1,0 +1,3657 @@
+{
+  "status": "HOLD B2/B3; COUNTED255; B1 corrected proposed gating requires independent causal review; NOT SAL READY",
+  "sourceSha256": "0fc39751781cf9525765b223e08c909f31353b976ad4c796881268b39f0fa909",
+  "nativeLimit": 255,
+  "existing": 255,
+  "retired": 9,
+  "added": 9,
+  "final": 255,
+  "newGuidPolicy": "Symbolic plan node IDs below are not native GUIDs. Assign unique GUIDs in reviewed implementation manifest; preserve actual alias and global IDs.",
+  "retire": [
+    {
+      "path": "//Network12/FBAnd5",
+      "id": "7e67f81c-ad73-4ddc-8541-97d0b9370257",
+      "proof": "pure terminal output no native/global/alias consumers"
+    },
+    {
+      "path": "//Network12/FBAnd7",
+      "id": "8a0162c0-f4a4-45d7-93f9-55a36d165586",
+      "proof": "pure terminal output no native/global/alias consumers"
+    },
+    {
+      "path": "//Network12/FBAnd18",
+      "id": "6052e4b6-edc7-4cae-b3eb-2dd48994ef78",
+      "proof": "only consumers retired And5/7"
+    },
+    {
+      "path": "//Network2/FBAnd10",
+      "id": "bb0dcd4b-fc2d-42eb-b3e6-452cd3114a69",
+      "proof": "obsolete raw BOTH producer after qualified Safe owner integration"
+    },
+    {
+      "path": "//Network2/FBTon3",
+      "id": "2adeda32-5d9f-46c9-ac21-2db052de0682",
+      "proof": "qualification1s reused from existing physical BOTH TON1s"
+    },
+    {
+      "path": "//Network6/FBTon2",
+      "id": "4be4aabf-e4dc-4a31-ae4a-4c119acc1038",
+      "proof": "qualification0.5s reused from existing physical GREEN TON0.5s"
+    },
+    {
+      "path": "//RndPhysicalCompact/GATE_017",
+      "id": "8594090d-b2f3-e5ca-e63c-5c151b0899e1",
+      "proof": "current GREEN.TonOut implies enabled SingleEnable AND green"
+    },
+    {
+      "path": "//RndPhysicalCompact/GATE_018",
+      "id": "ec60c4da-7708-9113-5509-8633e88c8718",
+      "proof": "current BLUE.TonOut implies enabled SingleEnable AND blue"
+    },
+    {
+      "path": "//RndPhysicalCompact/GATE_020",
+      "id": "6f5d8517-7710-9ca2-d89f-76a5ba9b4741",
+      "proof": "current BOTH.TonOut implies Eligible AND both; T invariant after full continuous1s"
+    }
+  ],
+  "newBlocks": [
+    {
+      "symbol": "MODE",
+      "type": "safeOr",
+      "template": "//Network1/FBOr17",
+      "inputs": [
+        "b_Step1",
+        "b_Step_RnD",
+        "b_Step3"
+      ],
+      "place": "after SNAP_1 before E"
+    },
+    {
+      "symbol": "CONNECTORS",
+      "type": "safeAnd",
+      "template": "//Network1/FBAndLvCurrentPermit",
+      "inputs": [
+        "in_LV_Connector_Interlock",
+        "in_HV_Connector_Interlock"
+      ],
+      "place": "before E"
+    },
+    {
+      "symbol": "CONNECTOR_SCOPE",
+      "type": "safeOr",
+      "template": "//Network1/FBOr17",
+      "inputs": [
+        "b_Step1",
+        "CONNECTORS"
+      ],
+      "place": "before E"
+    },
+    {
+      "symbol": "OWNER_EXIT",
+      "type": "safeAnd",
+      "template": "//Network1/FBAndLvCurrentPermit",
+      "inputs": [
+        "snapshotSU",
+        "!b_Step_RnD"
+      ],
+      "place": "after SNAP_0 before E"
+    },
+    {
+      "symbol": "RND_SCOPE",
+      "type": "safeAnd",
+      "template": "//Network1/FBAndLvCurrentPermit",
+      "inputs": [
+        "E",
+        "b_Step_RnD"
+      ],
+      "place": "after E before STATE_SU"
+    },
+    {
+      "symbol": "SAFE_UP_SCOPE",
+      "type": "safeAnd",
+      "template": "//Network1/FBAndLvCurrentPermit",
+      "inputs": [
+        "E",
+        "b_Step1",
+        "//Network1/FBAndLvCurrentPermit/AndOut"
+      ],
+      "place": "after E before SAFE_QUALIFIED_BOTH"
+    },
+    {
+      "symbol": "SG_OWNER_SET",
+      "type": "safeAnd",
+      "template": "//Network1/FBAndLvCurrentPermit",
+      "inputs": [
+        "//RndPhysicalCompact/GREEN/TonOut",
+        "!b_Step1"
+      ],
+      "place": "after GREEN before STATE_SG"
+    },
+    {
+      "symbol": "RND_SG",
+      "type": "safeAnd",
+      "template": "//Network1/FBAndLvCurrentPermit",
+      "inputs": [
+        "//RndPhysicalCompact/STATE_SG/RsOut",
+        "b_Step_RnD"
+      ],
+      "place": "after STATE_SG before Network12/FBOr2"
+    },
+    {
+      "symbol": "SAFE_ACCEPTED_UP",
+      "type": "safeRs",
+      "template": "//Network1/FBRs1",
+      "Reset": "!SAFE_UP_SCOPE",
+      "Set": "//Network2/FBAnd4/AndOut",
+      "place": "after relocated Network2/FBAnd4 before GATE_030 CSet",
+      "meaning": "request accepted only after original And3 readiness and current Safe energy permission; never queues pre-guard qualification"
+    }
+  ],
+  "existingEInputs": [
+    "MODE",
+    "!in_False_SI2_CH8",
+    "b_EStop_Ok",
+    "!in_Estop_PLC",
+    "in_InterLock_NC_1",
+    "in_InterLock_NC_2",
+    "CONNECTOR_SCOPE",
+    "!OWNER_EXIT"
+  ],
+  "rewireRules": [
+    "All qualified FinishG consumers use GREEN.TonOut except STATE_SG.Set=SG_OWNER_SET",
+    "All qualified FinishB consumers use BLUE.TonOut",
+    "All qualified FinishUp consumers use BOTH.TonOut; STATE_SU.Reset=!RND_SCOPE",
+    "EXCEPTION B1: GATE_030 CSet no longer consumes raw BOTH.TonOut. Up-related CSet inputs are previous STATE_SU.RsOut and current SAFE_ACCEPTED_UP.RsOut; other Green/Blue CSet inputs remain",
+    "Network12/FBOr2 physical input=RND_SG",
+    "Network2/FBAnd7 raw blue input=STATE_BA.RsOut; other existing conditions preserved",
+    "Network2/FBAnd4 physical input=BOTH.TonOut; retain And3 feedback input, add SAFE_UP_SCOPE direct guard; move after BOTH before SAFE_ACCEPTED_UP and GATE_030",
+    "Network2/FBOr1 physical input=SAFE_ACCEPTED_UP.RsOut instead of And4.AndOut; existing PLC input unchanged",
+    "Network6/FBAnd24 TON input=STATE_SG.RsOut; keep ResetPB_Lock and False conditions",
+    "Network6/FBAnd23 raw !blue qualification is obsolete after accepted SG and is deactivated to preserve accepted Down against late blue",
+    "Network12/FBOr1 and both early STO OR3 remain directly connected to STATE_SU; RND_SCOPE prevents Safe/Run SU existence"
+  ],
+  "unchanged": [
+    "Window250ms",
+    "Single500ms",
+    "Both1000ms",
+    "Release2000ms",
+    "main ESTOP/rawRestart",
+    "existing LV/HV/STO Set guards and Reset chains",
+    "original Network12 Run confirmation and discharge actions",
+    "Safe Door solenoid reset and final hold",
+    "ordinary PLC branches, no new policy"
+  ],
+  "unresolved": [
+    "B2: Run valid-BOTH endpoint NOT SELECTED; no whole-mode implementation handover until explicit choice. Lack of a selected output cannot be accepted as ignore policy",
+    "B1 correction: CSet sees RnD SU one scan after acceptance; prove T prevents all additional events during that interval and early STO N+2/request lifetime unchanged",
+    "New Green during StartingRun and independent PLC policy not selected",
+    "B3: Need causal replay of real phase handoffs, including temporary RnD+Run overlap; no full ownership PASS",
+    "Need native TON implication/fanout equivalence proof before retiring qualification ANDs",
+    "Need ordered255 implementation manifest with native wrappers/SGVL usages before editor handover"
+  ],
+  "safeOnlyCandidate": {
+    "status": "REVISED TECHNICAL REVIEW; NOT SAL READY; retain scoped FinishUp and same-scan RnD consume",
+    "date": "2026-10-20",
+    "scope": "Safe plus original RnD recognizer only; Run physical branch unchanged; full shared candidate remains HOLD B2/B3",
+    "existing": 255,
+    "retired": 7,
+    "added": 7,
+    "final": 255,
+    "spare": 0,
+    "retire": [
+      {
+        "path": "//Network12/FBAnd5",
+        "id": "7e67f81c-ad73-4ddc-8541-97d0b9370257",
+        "proof": "pure terminal output no native/global/alias consumers"
+      },
+      {
+        "path": "//Network12/FBAnd7",
+        "id": "8a0162c0-f4a4-45d7-93f9-55a36d165586",
+        "proof": "pure terminal output no native/global/alias consumers"
+      },
+      {
+        "path": "//Network12/FBAnd18",
+        "id": "6052e4b6-edc7-4cae-b3eb-2dd48994ef78",
+        "proof": "only consumers retired And5/7"
+      },
+      {
+        "path": "//Network2/FBAnd10",
+        "id": "bb0dcd4b-fc2d-42eb-b3e6-452cd3114a69",
+        "proof": "obsolete raw BOTH producer after qualified Safe owner integration"
+      },
+      {
+        "path": "//Network2/FBTon3",
+        "id": "2adeda32-5d9f-46c9-ac21-2db052de0682",
+        "proof": "qualification1s reused from existing physical BOTH TON1s"
+      },
+      {
+        "path": "//RndPhysicalCompact/GATE_017",
+        "id": "8594090d-b2f3-e5ca-e63c-5c151b0899e1",
+        "proof": "current GREEN.TonOut implies enabled SingleEnable AND green"
+      },
+      {
+        "path": "//RndPhysicalCompact/GATE_018",
+        "id": "ec60c4da-7708-9113-5509-8633e88c8718",
+        "proof": "current BLUE.TonOut implies enabled SingleEnable AND blue"
+      }
+    ],
+    "newBlocks": [
+      {
+        "symbol": "MODE",
+        "type": "safeOr",
+        "template": "//Network1/FBOr17",
+        "inputs": [
+          "b_Step1",
+          "b_Step_RnD"
+        ],
+        "place": "after SNAP_1 before E"
+      },
+      {
+        "symbol": "CONNECTORS",
+        "type": "safeAnd",
+        "template": "//Network1/FBAndLvCurrentPermit",
+        "inputs": [
+          "in_LV_Connector_Interlock",
+          "in_HV_Connector_Interlock"
+        ],
+        "place": "before E"
+      },
+      {
+        "symbol": "CONNECTOR_SCOPE",
+        "type": "safeOr",
+        "template": "//Network1/FBOr17",
+        "inputs": [
+          "b_Step1",
+          "CONNECTORS"
+        ],
+        "place": "before E"
+      },
+      {
+        "symbol": "RND_SCOPE",
+        "type": "safeAnd",
+        "template": "//Network1/FBAndLvCurrentPermit",
+        "inputs": [
+          "E",
+          "b_Step_RnD"
+        ],
+        "place": "after E before STATE_SU"
+      },
+      {
+        "symbol": "SAFE_UP_SCOPE",
+        "type": "safeAnd",
+        "template": "//Network1/FBAndLvCurrentPermit",
+        "inputs": [
+          "E",
+          "b_Step1",
+          "//Network1/FBAndLvCurrentPermit/AndOut"
+        ],
+        "place": "after E before relocated SafeAnd4"
+      },
+      {
+        "symbol": "SG_OWNER_SET",
+        "type": "safeAnd",
+        "template": "//Network1/FBAndLvCurrentPermit",
+        "inputs": [
+          "//RndPhysicalCompact/GREEN/TonOut",
+          "!b_Step1"
+        ],
+        "place": "after GREEN before STATE_SG"
+      },
+      {
+        "symbol": "SAFE_ACCEPTED_UP",
+        "type": "safeRs",
+        "template": "//Network1/FBRs1",
+        "Reset": "!SAFE_UP_SCOPE",
+        "Set": "//Network2/FBAnd4/AndOut",
+        "place": "after relocated Network2/FBAnd4 before GATE_030 CSet",
+        "meaning": "request accepted only after original And3 readiness and current Safe energy permission; never queues pre-guard qualification"
+      }
+    ],
+    "existingEInputs": [
+      "MODE",
+      "!in_False_SI2_CH8",
+      "b_EStop_Ok",
+      "!in_Estop_PLC",
+      "in_InterLock_NC_1",
+      "in_InterLock_NC_2",
+      "CONNECTOR_SCOPE"
+    ],
+    "rewireRules": [
+      "All qualified FinishG consumers use GREEN.TonOut except STATE_SG.Set=SG_OWNER_SET",
+      "All qualified FinishB consumers use BLUE.TonOut",
+      "Network2/FBAnd7 raw blue input=STATE_BA.RsOut; other existing conditions preserved",
+      "Network2/FBAnd4 physical input=BOTH.TonOut; retain And3 feedback input, add SAFE_UP_SCOPE direct guard; move after BOTH before SAFE_ACCEPTED_UP and GATE_030",
+      "Network2/FBOr1 physical input=SAFE_ACCEPTED_UP.RsOut instead of And4.AndOut; existing PLC input unchanged",
+      "Network12/FBOr1 and both early STO OR3 remain directly connected to STATE_SU; RND_SCOPE prevents Safe/Run SU existence",
+      "Retain GATE_020 FinishUp in its original relative order. Original four inputs unchanged; activate AndIn5=RND_SCOPE direct. STATE_SU.Set remains directly connected to current GATE_020.AndOut; STATE_SU.Reset=!RND_SCOPE.",
+      "GATE_030 CSet.OrIn3=current GATE_020.AndOut, not prior STATE_SU. OrIn4=current SAFE_ACCEPTED_UP.RsOut; Green/Blue inputs unchanged.",
+      "Safe And4 physical input remains current BOTH.TonOut, not mode-scoped FinishUp. This permits original readiness arriving while BOTH remains held."
+    ],
+    "unchangedRun": [
+      "//Network6/FBTon2",
+      "//Network6/FBAnd24",
+      "//Network6/FBAnd23",
+      "All original bindings and native relative orders in Run physical branch",
+      "Network12/FBOr2 direct STATE_SG input"
+    ],
+    "nativePortRule": "Break Contact (NC) means direct value; Make Contact (NO) means logical inversion in current source/runtime contract. Every inactive template input explicitly deactivated; ordinary program aliases/globals reuse exact current IDs, mappings unchanged.",
+    "ordering": {
+      "method": "remove listed8; move only SafeAnd4; insert listed7; renumber retained blocks in source relative order",
+      "manifest": [
+        {
+          "path": "//Network2/FBAnd1",
+          "sourceOrder": 1,
+          "kind": "retained",
+          "order": 1
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit",
+          "sourceOrder": 2,
+          "kind": "retained",
+          "order": 2
+        },
+        {
+          "path": "//Network1/FBAndLvSetPermit",
+          "sourceOrder": 3,
+          "kind": "retained",
+          "order": 3
+        },
+        {
+          "path": "//Network1/FBRs1",
+          "sourceOrder": 4,
+          "kind": "retained",
+          "order": 4
+        },
+        {
+          "path": "//Network1/FBAndHvSetPermit",
+          "sourceOrder": 5,
+          "kind": "retained",
+          "order": 5
+        },
+        {
+          "path": "//Network1/FBRs2",
+          "sourceOrder": 6,
+          "kind": "retained",
+          "order": 6
+        },
+        {
+          "path": "//Network2/FBTon1",
+          "sourceOrder": 7,
+          "kind": "retained",
+          "order": 7
+        },
+        {
+          "path": "//Network2/FBAnd2",
+          "sourceOrder": 8,
+          "kind": "retained",
+          "order": 8
+        },
+        {
+          "path": "//Network2/FBDecouple1",
+          "sourceOrder": 9,
+          "kind": "retained",
+          "order": 9
+        },
+        {
+          "path": "//Network1/FBAndSto1SetPermit",
+          "sourceOrder": 10,
+          "kind": "retained",
+          "order": 10
+        },
+        {
+          "path": "//Network1/FBRs3",
+          "sourceOrder": 11,
+          "kind": "retained",
+          "order": 11
+        },
+        {
+          "path": "//Network1/FBAndSto2SetPermit",
+          "sourceOrder": 12,
+          "kind": "retained",
+          "order": 12
+        },
+        {
+          "path": "//Network1/FBRs4",
+          "sourceOrder": 13,
+          "kind": "retained",
+          "order": 13
+        },
+        {
+          "path": "//Network2/FBDecouple2",
+          "sourceOrder": 14,
+          "kind": "retained",
+          "order": 14
+        },
+        {
+          "path": "//Network2/FBTon2",
+          "sourceOrder": 15,
+          "kind": "retained",
+          "order": 15
+        },
+        {
+          "path": "//Network2/FBAnd3",
+          "sourceOrder": 16,
+          "kind": "retained",
+          "order": 16
+        },
+        {
+          "path": "//Network3/FBOr1",
+          "sourceOrder": 17,
+          "kind": "retained",
+          "order": 17
+        },
+        {
+          "path": "//Network3/FBOr2",
+          "sourceOrder": 18,
+          "kind": "retained",
+          "order": 18
+        },
+        {
+          "path": "//Network3/FBRs1",
+          "sourceOrder": 19,
+          "kind": "retained",
+          "order": 19
+        },
+        {
+          "path": "//Network3/FBOr3",
+          "sourceOrder": 20,
+          "kind": "retained",
+          "order": 20
+        },
+        {
+          "path": "//Network3/FBOr4",
+          "sourceOrder": 21,
+          "kind": "retained",
+          "order": 21
+        },
+        {
+          "path": "//Network3/FBRs2",
+          "sourceOrder": 22,
+          "kind": "retained",
+          "order": 22
+        },
+        {
+          "path": "//Network1/FBEstop1",
+          "sourceOrder": 23,
+          "kind": "retained",
+          "order": 23
+        },
+        {
+          "path": "//Network3/FBAnd1",
+          "sourceOrder": 24,
+          "kind": "retained",
+          "order": 24
+        },
+        {
+          "path": "//Network4/FBDecouple1",
+          "sourceOrder": 25,
+          "kind": "retained",
+          "order": 25
+        },
+        {
+          "path": "//Network5/FBAnd1",
+          "sourceOrder": 28,
+          "kind": "retained",
+          "order": 26
+        },
+        {
+          "path": "//Network5/FBDecouple1",
+          "sourceOrder": 29,
+          "kind": "retained",
+          "order": 27
+        },
+        {
+          "path": "//Network5/FBTon1",
+          "sourceOrder": 30,
+          "kind": "retained",
+          "order": 28
+        },
+        {
+          "path": "//Network5/FBAnd2",
+          "sourceOrder": 31,
+          "kind": "retained",
+          "order": 29
+        },
+        {
+          "path": "//Network5/FBTon2",
+          "sourceOrder": 32,
+          "kind": "retained",
+          "order": 30
+        },
+        {
+          "path": "//Network5/FBAnd3",
+          "sourceOrder": 33,
+          "kind": "retained",
+          "order": 31
+        },
+        {
+          "path": "//Network1/FBOr1",
+          "sourceOrder": 34,
+          "kind": "retained",
+          "order": 32
+        },
+        {
+          "path": "//Network1/FBOr2",
+          "sourceOrder": 35,
+          "kind": "retained",
+          "order": 33
+        },
+        {
+          "path": "//Network1/FBRs5",
+          "sourceOrder": 36,
+          "kind": "retained",
+          "order": 34
+        },
+        {
+          "path": "//Network1/FBOr5",
+          "sourceOrder": 37,
+          "kind": "retained",
+          "order": 35
+        },
+        {
+          "path": "//Network1/FBOr6",
+          "sourceOrder": 38,
+          "kind": "retained",
+          "order": 36
+        },
+        {
+          "path": "//Network1/FBRs7",
+          "sourceOrder": 39,
+          "kind": "retained",
+          "order": 37
+        },
+        {
+          "path": "//Network5/FBDecouple2",
+          "sourceOrder": 40,
+          "kind": "retained",
+          "order": 38
+        },
+        {
+          "path": "//Network5/FBTon3",
+          "sourceOrder": 41,
+          "kind": "retained",
+          "order": 39
+        },
+        {
+          "path": "//Network1/FBOr7",
+          "sourceOrder": 42,
+          "kind": "retained",
+          "order": 40
+        },
+        {
+          "path": "//Network1/FBOr8",
+          "sourceOrder": 43,
+          "kind": "retained",
+          "order": 41
+        },
+        {
+          "path": "//Network1/FBOr9",
+          "sourceOrder": 44,
+          "kind": "retained",
+          "order": 42
+        },
+        {
+          "path": "//Network1/FBOr10",
+          "sourceOrder": 45,
+          "kind": "retained",
+          "order": 43
+        },
+        {
+          "path": "//Network5/FBDecouple3",
+          "sourceOrder": 46,
+          "kind": "retained",
+          "order": 44
+        },
+        {
+          "path": "//Network3/FBOr5",
+          "sourceOrder": 47,
+          "kind": "retained",
+          "order": 45
+        },
+        {
+          "path": "//Network3/FBOr6",
+          "sourceOrder": 48,
+          "kind": "retained",
+          "order": 46
+        },
+        {
+          "path": "//Network3/FBRs3",
+          "sourceOrder": 49,
+          "kind": "retained",
+          "order": 47
+        },
+        {
+          "path": "//Network5/FBAnd5",
+          "sourceOrder": 50,
+          "kind": "retained",
+          "order": 48
+        },
+        {
+          "path": "//Network5/FBTon4",
+          "sourceOrder": 51,
+          "kind": "retained",
+          "order": 49
+        },
+        {
+          "path": "//Network6/FBAnd1",
+          "sourceOrder": 52,
+          "kind": "retained",
+          "order": 50
+        },
+        {
+          "path": "//Network3/FBDecouple1",
+          "sourceOrder": 53,
+          "kind": "retained",
+          "order": 51
+        },
+        {
+          "path": "//Network6/FBAnd2",
+          "sourceOrder": 54,
+          "kind": "retained",
+          "order": 52
+        },
+        {
+          "path": "//Network6/FBAnd3",
+          "sourceOrder": 55,
+          "kind": "retained",
+          "order": 53
+        },
+        {
+          "path": "//Network6/FBAnd4",
+          "sourceOrder": 56,
+          "kind": "retained",
+          "order": 54
+        },
+        {
+          "path": "//Network6/FBRs1",
+          "sourceOrder": 57,
+          "kind": "retained",
+          "order": 55
+        },
+        {
+          "path": "//Network6/FBAnd5",
+          "sourceOrder": 58,
+          "kind": "retained",
+          "order": 56
+        },
+        {
+          "path": "//Network6/FBAnd6",
+          "sourceOrder": 59,
+          "kind": "retained",
+          "order": 57
+        },
+        {
+          "path": "//Network6/FBRs2",
+          "sourceOrder": 60,
+          "kind": "retained",
+          "order": 58
+        },
+        {
+          "path": "//Network6/FBOr2",
+          "sourceOrder": 61,
+          "kind": "retained",
+          "order": 59
+        },
+        {
+          "path": "//Network6/FBOr3",
+          "sourceOrder": 62,
+          "kind": "retained",
+          "order": 60
+        },
+        {
+          "path": "//Network6/FBDecouple1",
+          "sourceOrder": 63,
+          "kind": "retained",
+          "order": 61
+        },
+        {
+          "path": "//Network3/FBOr7",
+          "sourceOrder": 64,
+          "kind": "retained",
+          "order": 62
+        },
+        {
+          "path": "//Network3/FBOr8",
+          "sourceOrder": 65,
+          "kind": "retained",
+          "order": 63
+        },
+        {
+          "path": "//Network3/FBRs4",
+          "sourceOrder": 66,
+          "kind": "retained",
+          "order": 64
+        },
+        {
+          "path": "//Network7/FBAnd1",
+          "sourceOrder": 67,
+          "kind": "retained",
+          "order": 65
+        },
+        {
+          "path": "//Network7/FBDecouple1",
+          "sourceOrder": 68,
+          "kind": "retained",
+          "order": 66
+        },
+        {
+          "path": "//Network1/FBOr11",
+          "sourceOrder": 69,
+          "kind": "retained",
+          "order": 67
+        },
+        {
+          "path": "//Network7/FBAnd2",
+          "sourceOrder": 70,
+          "kind": "retained",
+          "order": 68
+        },
+        {
+          "path": "//Network7/FBAnd3",
+          "sourceOrder": 71,
+          "kind": "retained",
+          "order": 69
+        },
+        {
+          "path": "//Network7/FBDecouple2",
+          "sourceOrder": 72,
+          "kind": "retained",
+          "order": 70
+        },
+        {
+          "path": "//Network7/FBOr1",
+          "sourceOrder": 73,
+          "kind": "retained",
+          "order": 71
+        },
+        {
+          "path": "//Network7/FBOr2",
+          "sourceOrder": 74,
+          "kind": "retained",
+          "order": 72
+        },
+        {
+          "path": "//Network7/FBAnd6",
+          "sourceOrder": 75,
+          "kind": "retained",
+          "order": 73
+        },
+        {
+          "path": "//Network7/FBAnd7",
+          "sourceOrder": 76,
+          "kind": "retained",
+          "order": 74
+        },
+        {
+          "path": "//Network7/FBAnd8",
+          "sourceOrder": 77,
+          "kind": "retained",
+          "order": 75
+        },
+        {
+          "path": "//Network3/FBOr9",
+          "sourceOrder": 78,
+          "kind": "retained",
+          "order": 76
+        },
+        {
+          "path": "//Network3/FBOr10",
+          "sourceOrder": 79,
+          "kind": "retained",
+          "order": 77
+        },
+        {
+          "path": "//Network3/FBRs5",
+          "sourceOrder": 80,
+          "kind": "retained",
+          "order": 78
+        },
+        {
+          "path": "//Network8/FBAnd1",
+          "sourceOrder": 81,
+          "kind": "retained",
+          "order": 79
+        },
+        {
+          "path": "//Network8/FBDecouple1",
+          "sourceOrder": 82,
+          "kind": "retained",
+          "order": 80
+        },
+        {
+          "path": "//Network8/FBTon1",
+          "sourceOrder": 83,
+          "kind": "retained",
+          "order": 81
+        },
+        {
+          "path": "//Network8/FBAnd2",
+          "sourceOrder": 84,
+          "kind": "retained",
+          "order": 82
+        },
+        {
+          "path": "//Network8/FBOr1",
+          "sourceOrder": 85,
+          "kind": "retained",
+          "order": 83
+        },
+        {
+          "path": "//Network8/FBTon2",
+          "sourceOrder": 86,
+          "kind": "retained",
+          "order": 84
+        },
+        {
+          "path": "//Network1/FBOr16",
+          "sourceOrder": 87,
+          "kind": "retained",
+          "order": 85
+        },
+        {
+          "path": "//Network8/FBAnd3",
+          "sourceOrder": 88,
+          "kind": "retained",
+          "order": 86
+        },
+        {
+          "path": "//Network3/FBOr11",
+          "sourceOrder": 89,
+          "kind": "retained",
+          "order": 87
+        },
+        {
+          "path": "//Network3/FBOr12",
+          "sourceOrder": 90,
+          "kind": "retained",
+          "order": 88
+        },
+        {
+          "path": "//Network3/FBRs6",
+          "sourceOrder": 91,
+          "kind": "retained",
+          "order": 89
+        },
+        {
+          "path": "//Network9/FBAnd1",
+          "sourceOrder": 92,
+          "kind": "retained",
+          "order": 90
+        },
+        {
+          "path": "//Network6/FBAnd7",
+          "sourceOrder": 93,
+          "kind": "retained",
+          "order": 91
+        },
+        {
+          "path": "//Network6/FBAnd8",
+          "sourceOrder": 94,
+          "kind": "retained",
+          "order": 92
+        },
+        {
+          "path": "//Network6/FBAnd9",
+          "sourceOrder": 95,
+          "kind": "retained",
+          "order": 93
+        },
+        {
+          "path": "//Network6/FBAnd10",
+          "sourceOrder": 96,
+          "kind": "retained",
+          "order": 94
+        },
+        {
+          "path": "//Network1/FBAnd1",
+          "sourceOrder": 97,
+          "kind": "retained",
+          "order": 95
+        },
+        {
+          "path": "//Network2/FBAnd5",
+          "sourceOrder": 98,
+          "kind": "retained",
+          "order": 96
+        },
+        {
+          "path": "//Network2/FBAnd6",
+          "sourceOrder": 99,
+          "kind": "retained",
+          "order": 97
+        },
+        {
+          "path": "//Network2/FBDecouple3",
+          "sourceOrder": 100,
+          "kind": "retained",
+          "order": 98
+        },
+        {
+          "path": "//Network2/FBAnd7",
+          "sourceOrder": 101,
+          "kind": "retained",
+          "order": 99
+        },
+        {
+          "path": "//Network7/FBTon1",
+          "sourceOrder": 102,
+          "kind": "retained",
+          "order": 100
+        },
+        {
+          "path": "//Network3/FBDecouple2",
+          "sourceOrder": 103,
+          "kind": "retained",
+          "order": 101
+        },
+        {
+          "path": "//Network2/FBAnd8",
+          "sourceOrder": 104,
+          "kind": "retained",
+          "order": 102
+        },
+        {
+          "path": "//Network1/FBDecouple1",
+          "sourceOrder": 105,
+          "kind": "retained",
+          "order": 103
+        },
+        {
+          "path": "//Network7/FBTon2",
+          "sourceOrder": 106,
+          "kind": "retained",
+          "order": 104
+        },
+        {
+          "path": "//Network7/FBTon3",
+          "sourceOrder": 107,
+          "kind": "retained",
+          "order": 105
+        },
+        {
+          "path": "//Network7/FBDecouple3",
+          "sourceOrder": 108,
+          "kind": "retained",
+          "order": 106
+        },
+        {
+          "path": "//Network1/FBOr12",
+          "sourceOrder": 109,
+          "kind": "retained",
+          "order": 107
+        },
+        {
+          "path": "//Network1/FBOr13",
+          "sourceOrder": 110,
+          "kind": "retained",
+          "order": 108
+        },
+        {
+          "path": "//Network5/FBAnd7",
+          "sourceOrder": 111,
+          "kind": "retained",
+          "order": 109
+        },
+        {
+          "path": "//Network5/FBDecouple4",
+          "sourceOrder": 112,
+          "kind": "retained",
+          "order": 110
+        },
+        {
+          "path": "//Network1/FBDecouple2",
+          "sourceOrder": 113,
+          "kind": "retained",
+          "order": 111
+        },
+        {
+          "path": "//Network2/FBAnd9",
+          "sourceOrder": 114,
+          "kind": "retained",
+          "order": 112
+        },
+        {
+          "path": "//Network10/FBDecouple1",
+          "sourceOrder": 115,
+          "kind": "retained",
+          "order": 113
+        },
+        {
+          "path": "//Network10/FBDecouple2",
+          "sourceOrder": 116,
+          "kind": "retained",
+          "order": 114
+        },
+        {
+          "path": "//Network11/FBAnd1",
+          "sourceOrder": 117,
+          "kind": "retained",
+          "order": 115
+        },
+        {
+          "path": "//Network11/FBTon1",
+          "sourceOrder": 118,
+          "kind": "retained",
+          "order": 116
+        },
+        {
+          "path": "//Network11/FBAnd4",
+          "sourceOrder": 119,
+          "kind": "retained",
+          "order": 117
+        },
+        {
+          "path": "//Network11/FBAnd5",
+          "sourceOrder": 120,
+          "kind": "retained",
+          "order": 118
+        },
+        {
+          "path": "//RndPhysicalCompact/SNAP_0",
+          "sourceOrder": 121,
+          "kind": "retained",
+          "order": 119
+        },
+        {
+          "path": "//RndPhysicalCompact/SNAP_1",
+          "sourceOrder": 122,
+          "kind": "retained",
+          "order": 120
+        },
+        {
+          "path": "MODE",
+          "kind": "new",
+          "order": 121
+        },
+        {
+          "path": "CONNECTORS",
+          "kind": "new",
+          "order": 122
+        },
+        {
+          "path": "CONNECTOR_SCOPE",
+          "kind": "new",
+          "order": 123
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_001",
+          "sourceOrder": 123,
+          "kind": "retained",
+          "order": 124
+        },
+        {
+          "path": "RND_SCOPE",
+          "kind": "new",
+          "order": 125
+        },
+        {
+          "path": "SAFE_UP_SCOPE",
+          "kind": "new",
+          "order": 126
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_002",
+          "sourceOrder": 124,
+          "kind": "retained",
+          "order": 127
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_003",
+          "sourceOrder": 125,
+          "kind": "retained",
+          "order": 128
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_004",
+          "sourceOrder": 126,
+          "kind": "retained",
+          "order": 129
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_005",
+          "sourceOrder": 127,
+          "kind": "retained",
+          "order": 130
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_006",
+          "sourceOrder": 128,
+          "kind": "retained",
+          "order": 131
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_007",
+          "sourceOrder": 129,
+          "kind": "retained",
+          "order": 132
+        },
+        {
+          "path": "//RndPhysicalCompact/WINDOW",
+          "sourceOrder": 130,
+          "kind": "retained",
+          "order": 133
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_008",
+          "sourceOrder": 131,
+          "kind": "retained",
+          "order": 134
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_009",
+          "sourceOrder": 132,
+          "kind": "retained",
+          "order": 135
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_010",
+          "sourceOrder": 133,
+          "kind": "retained",
+          "order": 136
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_011",
+          "sourceOrder": 134,
+          "kind": "retained",
+          "order": 137
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_012",
+          "sourceOrder": 135,
+          "kind": "retained",
+          "order": 138
+        },
+        {
+          "path": "//RndPhysicalCompact/RELEASE",
+          "sourceOrder": 136,
+          "kind": "retained",
+          "order": 139
+        },
+        {
+          "path": "//RndPhysicalCompact/GREEN",
+          "sourceOrder": 137,
+          "kind": "retained",
+          "order": 140
+        },
+        {
+          "path": "//RndPhysicalCompact/BLUE",
+          "sourceOrder": 138,
+          "kind": "retained",
+          "order": 141
+        },
+        {
+          "path": "//RndPhysicalCompact/BOTH",
+          "sourceOrder": 139,
+          "kind": "retained",
+          "order": 142
+        },
+        {
+          "path": "//Network2/FBAnd4",
+          "kind": "moved",
+          "order": 143
+        },
+        {
+          "path": "SAFE_ACCEPTED_UP",
+          "kind": "new",
+          "order": 144
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_013",
+          "sourceOrder": 140,
+          "kind": "retained",
+          "order": 145
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_014",
+          "sourceOrder": 141,
+          "kind": "retained",
+          "order": 146
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_015",
+          "sourceOrder": 142,
+          "kind": "retained",
+          "order": 147
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_016",
+          "sourceOrder": 143,
+          "kind": "retained",
+          "order": 148
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_019",
+          "sourceOrder": 146,
+          "kind": "retained",
+          "order": 149
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_020",
+          "sourceOrder": 147,
+          "kind": "retained",
+          "order": 150
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_022",
+          "sourceOrder": 148,
+          "kind": "retained",
+          "order": 151
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_023",
+          "sourceOrder": 149,
+          "kind": "retained",
+          "order": 152
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_024",
+          "sourceOrder": 150,
+          "kind": "retained",
+          "order": 153
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_025",
+          "sourceOrder": 151,
+          "kind": "retained",
+          "order": 154
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_026",
+          "sourceOrder": 152,
+          "kind": "retained",
+          "order": 155
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_027",
+          "sourceOrder": 153,
+          "kind": "retained",
+          "order": 156
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_028",
+          "sourceOrder": 154,
+          "kind": "retained",
+          "order": 157
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_029",
+          "sourceOrder": 155,
+          "kind": "retained",
+          "order": 158
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_030",
+          "sourceOrder": 156,
+          "kind": "retained",
+          "order": 159
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_031",
+          "sourceOrder": 157,
+          "kind": "retained",
+          "order": 160
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_P",
+          "sourceOrder": 158,
+          "kind": "retained",
+          "order": 161
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_A",
+          "sourceOrder": 159,
+          "kind": "retained",
+          "order": 162
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_T",
+          "sourceOrder": 160,
+          "kind": "retained",
+          "order": 163
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_L",
+          "sourceOrder": 161,
+          "kind": "retained",
+          "order": 164
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_C",
+          "sourceOrder": 162,
+          "kind": "retained",
+          "order": 165
+        },
+        {
+          "path": "SG_OWNER_SET",
+          "kind": "new",
+          "order": 166
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_SG",
+          "sourceOrder": 163,
+          "kind": "retained",
+          "order": 167
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_SU",
+          "sourceOrder": 164,
+          "kind": "retained",
+          "order": 168
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_BA",
+          "sourceOrder": 165,
+          "kind": "retained",
+          "order": 169
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_PrevG",
+          "sourceOrder": 166,
+          "kind": "retained",
+          "order": 170
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_PrevB",
+          "sourceOrder": 167,
+          "kind": "retained",
+          "order": 171
+        },
+        {
+          "path": "//Network12/FBAnd1",
+          "sourceOrder": 168,
+          "kind": "retained",
+          "order": 172
+        },
+        {
+          "path": "//Network1/FBOr3",
+          "sourceOrder": 169,
+          "kind": "retained",
+          "order": 173
+        },
+        {
+          "path": "//Network1/FBOr4",
+          "sourceOrder": 170,
+          "kind": "retained",
+          "order": 174
+        },
+        {
+          "path": "//Network1/FBRs6",
+          "sourceOrder": 171,
+          "kind": "retained",
+          "order": 175
+        },
+        {
+          "path": "//Network12/FBAnd2",
+          "sourceOrder": 172,
+          "kind": "retained",
+          "order": 176
+        },
+        {
+          "path": "//Network12/FBAnd3",
+          "sourceOrder": 173,
+          "kind": "retained",
+          "order": 177
+        },
+        {
+          "path": "//Network12/FBAnd4",
+          "sourceOrder": 174,
+          "kind": "retained",
+          "order": 178
+        },
+        {
+          "path": "//Network12/FBTon3",
+          "sourceOrder": 176,
+          "kind": "retained",
+          "order": 179
+        },
+        {
+          "path": "//Network12/FBAnd6",
+          "sourceOrder": 177,
+          "kind": "retained",
+          "order": 180
+        },
+        {
+          "path": "//Network12/FBDecouple2",
+          "sourceOrder": 178,
+          "kind": "retained",
+          "order": 181
+        },
+        {
+          "path": "//Network3/FBOr13",
+          "sourceOrder": 180,
+          "kind": "retained",
+          "order": 182
+        },
+        {
+          "path": "//Network3/FBOr14",
+          "sourceOrder": 181,
+          "kind": "retained",
+          "order": 183
+        },
+        {
+          "path": "//Network3/FBRs7",
+          "sourceOrder": 182,
+          "kind": "retained",
+          "order": 184
+        },
+        {
+          "path": "//Network3/FBOr15",
+          "sourceOrder": 183,
+          "kind": "retained",
+          "order": 185
+        },
+        {
+          "path": "//Network3/FBOr16",
+          "sourceOrder": 184,
+          "kind": "retained",
+          "order": 186
+        },
+        {
+          "path": "//Network3/FBRs8",
+          "sourceOrder": 185,
+          "kind": "retained",
+          "order": 187
+        },
+        {
+          "path": "//Network6/FBOr1",
+          "sourceOrder": 186,
+          "kind": "retained",
+          "order": 188
+        },
+        {
+          "path": "//Network6/FBAnd11",
+          "sourceOrder": 187,
+          "kind": "retained",
+          "order": 189
+        },
+        {
+          "path": "//Network6/FBAnd12",
+          "sourceOrder": 188,
+          "kind": "retained",
+          "order": 190
+        },
+        {
+          "path": "//Network6/FBAnd13",
+          "sourceOrder": 189,
+          "kind": "retained",
+          "order": 191
+        },
+        {
+          "path": "//Network6/FBOr4",
+          "sourceOrder": 190,
+          "kind": "retained",
+          "order": 192
+        },
+        {
+          "path": "//Network6/FBAnd14",
+          "sourceOrder": 191,
+          "kind": "retained",
+          "order": 193
+        },
+        {
+          "path": "//Network12/FBOr1",
+          "sourceOrder": 192,
+          "kind": "retained",
+          "order": 194
+        },
+        {
+          "path": "//Network12/FBAnd8",
+          "sourceOrder": 193,
+          "kind": "retained",
+          "order": 195
+        },
+        {
+          "path": "//Network12/FBAnd9",
+          "sourceOrder": 194,
+          "kind": "retained",
+          "order": 196
+        },
+        {
+          "path": "//Network12/FBAnd10",
+          "sourceOrder": 195,
+          "kind": "retained",
+          "order": 197
+        },
+        {
+          "path": "//Network12/FBAnd12",
+          "sourceOrder": 196,
+          "kind": "retained",
+          "order": 198
+        },
+        {
+          "path": "//Network12/FBAnd13",
+          "sourceOrder": 197,
+          "kind": "retained",
+          "order": 199
+        },
+        {
+          "path": "//Network12/FBAnd14",
+          "sourceOrder": 198,
+          "kind": "retained",
+          "order": 200
+        },
+        {
+          "path": "//Network12/FBOr2",
+          "sourceOrder": 199,
+          "kind": "retained",
+          "order": 201
+        },
+        {
+          "path": "//Network12/FBDecouple1",
+          "sourceOrder": 200,
+          "kind": "retained",
+          "order": 202
+        },
+        {
+          "path": "//Network12/FBAnd15",
+          "sourceOrder": 201,
+          "kind": "retained",
+          "order": 203
+        },
+        {
+          "path": "//Network6/FBAnd15",
+          "sourceOrder": 202,
+          "kind": "retained",
+          "order": 204
+        },
+        {
+          "path": "//Network6/FBAnd16",
+          "sourceOrder": 203,
+          "kind": "retained",
+          "order": 205
+        },
+        {
+          "path": "//Network6/FBAnd17",
+          "sourceOrder": 204,
+          "kind": "retained",
+          "order": 206
+        },
+        {
+          "path": "//Network6/FBDecouple2",
+          "sourceOrder": 205,
+          "kind": "retained",
+          "order": 207
+        },
+        {
+          "path": "//Network6/FBAnd18",
+          "sourceOrder": 206,
+          "kind": "retained",
+          "order": 208
+        },
+        {
+          "path": "//Network6/FBTon1",
+          "sourceOrder": 207,
+          "kind": "retained",
+          "order": 209
+        },
+        {
+          "path": "//Network6/FBTon2",
+          "sourceOrder": 208,
+          "kind": "retained",
+          "order": 210
+        },
+        {
+          "path": "//Network1/FBAnd2",
+          "sourceOrder": 209,
+          "kind": "retained",
+          "order": 211
+        },
+        {
+          "path": "//Network1/FBAnd3",
+          "sourceOrder": 210,
+          "kind": "retained",
+          "order": 212
+        },
+        {
+          "path": "//Network5/FBOr2",
+          "sourceOrder": 211,
+          "kind": "retained",
+          "order": 213
+        },
+        {
+          "path": "//Network6/FBOr5",
+          "sourceOrder": 212,
+          "kind": "retained",
+          "order": 214
+        },
+        {
+          "path": "//Network1/FBOr14",
+          "sourceOrder": 213,
+          "kind": "retained",
+          "order": 215
+        },
+        {
+          "path": "//Network1/FBOr15",
+          "sourceOrder": 214,
+          "kind": "retained",
+          "order": 216
+        },
+        {
+          "path": "//Network1/FBRs8",
+          "sourceOrder": 215,
+          "kind": "retained",
+          "order": 217
+        },
+        {
+          "path": "//Network11/FBDecouple1",
+          "sourceOrder": 216,
+          "kind": "retained",
+          "order": 218
+        },
+        {
+          "path": "//Network12/FBDecouple3",
+          "sourceOrder": 217,
+          "kind": "retained",
+          "order": 219
+        },
+        {
+          "path": "//Network6/FBAnd19",
+          "sourceOrder": 218,
+          "kind": "retained",
+          "order": 220
+        },
+        {
+          "path": "//Network5/FBAnd10",
+          "sourceOrder": 219,
+          "kind": "retained",
+          "order": 221
+        },
+        {
+          "path": "//Network1/FBAnd4",
+          "sourceOrder": 220,
+          "kind": "retained",
+          "order": 222
+        },
+        {
+          "path": "//Network1/FBOr17",
+          "sourceOrder": 221,
+          "kind": "retained",
+          "order": 223
+        },
+        {
+          "path": "//Network1/FBOr18",
+          "sourceOrder": 222,
+          "kind": "retained",
+          "order": 224
+        },
+        {
+          "path": "//Network1/FBAnd5",
+          "sourceOrder": 223,
+          "kind": "retained",
+          "order": 225
+        },
+        {
+          "path": "//Network1/FBAnd6",
+          "sourceOrder": 224,
+          "kind": "retained",
+          "order": 226
+        },
+        {
+          "path": "//Network1/FBTon1",
+          "sourceOrder": 225,
+          "kind": "retained",
+          "order": 227
+        },
+        {
+          "path": "//Network1/FBAnd7",
+          "sourceOrder": 226,
+          "kind": "retained",
+          "order": 228
+        },
+        {
+          "path": "//Network1/FBAnd8",
+          "sourceOrder": 227,
+          "kind": "retained",
+          "order": 229
+        },
+        {
+          "path": "//Network12/FBAnd11",
+          "sourceOrder": 228,
+          "kind": "retained",
+          "order": 230
+        },
+        {
+          "path": "//Network1/FBAnd9",
+          "sourceOrder": 229,
+          "kind": "retained",
+          "order": 231
+        },
+        {
+          "path": "//Network1/FBAnd10",
+          "sourceOrder": 230,
+          "kind": "retained",
+          "order": 232
+        },
+        {
+          "path": "//Network6/FBAnd20",
+          "sourceOrder": 231,
+          "kind": "retained",
+          "order": 233
+        },
+        {
+          "path": "//Network1/FBAnd11",
+          "sourceOrder": 232,
+          "kind": "retained",
+          "order": 234
+        },
+        {
+          "path": "//Network1/FBAnd12",
+          "sourceOrder": 233,
+          "kind": "retained",
+          "order": 235
+        },
+        {
+          "path": "//Network12/FBAnd16",
+          "sourceOrder": 234,
+          "kind": "retained",
+          "order": 236
+        },
+        {
+          "path": "//Network12/FBAnd17",
+          "sourceOrder": 235,
+          "kind": "retained",
+          "order": 237
+        },
+        {
+          "path": "//Network6/FBAnd21",
+          "sourceOrder": 236,
+          "kind": "retained",
+          "order": 238
+        },
+        {
+          "path": "//Network6/FBAnd22",
+          "sourceOrder": 237,
+          "kind": "retained",
+          "order": 239
+        },
+        {
+          "path": "//Network2/FBOr1",
+          "sourceOrder": 239,
+          "kind": "retained",
+          "order": 240
+        },
+        {
+          "path": "//Network2/FBAnd61",
+          "sourceOrder": 240,
+          "kind": "retained",
+          "order": 241
+        },
+        {
+          "path": "//Network2/FBAnd81",
+          "sourceOrder": 241,
+          "kind": "retained",
+          "order": 242
+        },
+        {
+          "path": "//Network2/FBAnd91",
+          "sourceOrder": 242,
+          "kind": "retained",
+          "order": 243
+        },
+        {
+          "path": "//Network2/FBDecouple5",
+          "sourceOrder": 243,
+          "kind": "retained",
+          "order": 244
+        },
+        {
+          "path": "//Network2/FBAnd11",
+          "sourceOrder": 244,
+          "kind": "retained",
+          "order": 245
+        },
+        {
+          "path": "//Network6/FBAnd23",
+          "sourceOrder": 245,
+          "kind": "retained",
+          "order": 246
+        },
+        {
+          "path": "//Network2/FBAnd12",
+          "sourceOrder": 246,
+          "kind": "retained",
+          "order": 247
+        },
+        {
+          "path": "//Network1/FBRs9",
+          "sourceOrder": 247,
+          "kind": "retained",
+          "order": 248
+        },
+        {
+          "path": "//Network1/FBAnd13",
+          "sourceOrder": 248,
+          "kind": "retained",
+          "order": 249
+        },
+        {
+          "path": "//Network1/FBOr19",
+          "sourceOrder": 249,
+          "kind": "retained",
+          "order": 250
+        },
+        {
+          "path": "//Network1/FBAnd14",
+          "sourceOrder": 250,
+          "kind": "retained",
+          "order": 251
+        },
+        {
+          "path": "//Network6/FBAnd24",
+          "sourceOrder": 252,
+          "kind": "retained",
+          "order": 252
+        },
+        {
+          "path": "//Network6/FBDecouple3",
+          "sourceOrder": 253,
+          "kind": "retained",
+          "order": 253
+        },
+        {
+          "path": "//Network3/FBAnd2",
+          "sourceOrder": 254,
+          "kind": "retained",
+          "order": 254
+        },
+        {
+          "path": "//Network1/FBAndUnlockHold",
+          "sourceOrder": 255,
+          "kind": "retained",
+          "order": 255
+        }
+      ],
+      "proof": "All retained blocks except declared SafeAnd4 preserve source relative order. Enables precede TON; BOTH precedes moved SafeAnd4/SafeOwner; GATE020 retains original place before CSet; CSet consumes current scoped FinishUp and current SafeOwner. RnD SU and both earlySTO fanouts unchanged."
+    },
+    "requiredEvidence": [
+      "Full generated SAL/SGVL binding audit before dependency selection",
+      "Actual candidate RnD69 and earlySTO88 replay",
+      "Paired Safe And3-ready while-held versus after-release",
+      "Safe green/fullrelease/blue and connector absence access versus energy guard",
+      "Actual phase-writer handoffs Safe to RnD; RnD to Step2 then MODE0/SGclear; source-confirmed RnD exit then Run entry with SU retained until actual exit. Healthy Safe return remains separate required gap; do not demand a speculative overlapping RnD+Run interval.",
+      "Current EStop order23 before E; effective paired Mentee truth/order proof",
+      "Original native FinishUp path remains observed without remapping; short-neutral both orders must have one TRUE sample, not merely one accepted up/HV rise"
+    ],
+    "expectedRemainingFailures": "Two bounded Run invalid-short-chord failures remain; no full Run endpoint oracle selected",
+    "reviewNotes": "Source-bound ordered patch specification only. No SAL, native GUIDs, runtime or tests generated/edited. Implementation and proof still require independently reviewed editor work.",
+    "correction": {
+      "cause": "Previous CSet observed prior SU, delaying consumed by one scan. BOTH TON remained TRUE for two samples. The failing assertion counts TRUE samples, not rising edges. Retaining FinishUp alone would preserve this lag; same-scan current FinishUp into CSet is required.",
+      "fix": "Retain and scope FinishUp to RND_SCOPE, restore current FinishUp CSet, keep Safe readiness on raw current BOTH.",
+      "proofLimit": "Candidate replay pending; no PASS inferred from causal reasoning."
+    },
+    "lifecycleCorrection": {
+      "normalUp": "Network12/Decouple2 current b_Step3_Set_2 is read directly by RnD reset OR13 after confirmation in the same scan, whereas Run OR6/RS3 precede confirmation and set Run next scan. Normal up therefore does not produce the previously asserted RnD/Run overlap.",
+      "observed": "Candidate trace RnD clear6419, Run rise6420, SU clear6420. SU retained at recognizer until actual RnD exit. Fake overlap/phase seeding forbidden.",
+      "scope": "Other conflicting histories not shown reachable by this trace; full Step2-to-Safe endpoint and inherited down re-energization gap remain separate."
+    }
+  },
+  "downNoReenergyCandidate": {
+    "status": "REJECTED broad LV-discharge veto: legacy direct Step2 compatibility not proved; retained historical alternative only",
+    "base": "Revised Safe|RnD255 candidate; do not replace its outstanding acceptance status",
+    "nativeAdded": 0,
+    "nativeRetired": 0,
+    "final": 255,
+    "patches": [
+      {
+        "target": "//Network5/FBAnd1/AndIn4",
+        "targetId": "817df687-990b-4eff-93e5-02ff937d178d",
+        "source": "//Network1/FBRs5/RsOut",
+        "sourceId": "2e245545-8246-47eb-b59f-2f24295c4e47",
+        "channelInterface": "Activated",
+        "deactivate1": "Make Contact (NO)",
+        "meaning": "inhibit original Step2 power-on qualifier while actual LV-discharge latch is active"
+      },
+      {
+        "target": "//Network5/FBAnd1/AndIn5",
+        "targetId": "6b293f30-bd03-4326-99e8-6a6b9fdf31ee",
+        "source": "//Network12/FBDecouple1/DecOut3",
+        "channelInterface": "Activated",
+        "deactivate1": "Make Contact (NO)",
+        "meaning": "block first Step2 scan before later-order LV-discharge RS can set"
+      }
+    ],
+    "serialization": "One canonical wiredLink per new port pair, source-side serialization supported; exact native input IDs reused; no duplicated reverse edges, aliases, new global variables, timers, metadata/hardware changes.",
+    "ordering": "Keep all native execution orders. In baseline Step2 RS22 and N5And1 order28 precede discharge OR2 order35/RS5 order36; direct prior-scan N12 request is therefore required in addition to latch.",
+    "requiredProof": [
+      "Full generated SAL/SGVL audit",
+      "Same actual-N3 negative no-reenergization protocol on baseline, Safe255 and mitigation with every input-consumer/SetPermit/output scan observed",
+      "Existing RnD69/earlySTO88 plus Safe ready fresh-BOTH positives remain unchanged",
+      "No power-on when SG clears, requests drop, feedback restores or time passes without a new accepted up",
+      "Prove actual LVDischarge RS reset producers inactive in stable RnD and remain inactive with N5 power-on blocked",
+      "Preserve independent Safe fresh-BOTH/Step12/N11 SetLV path, and source-based conditional reset via LVFBK+LVHealthy after original TON0.1",
+      "Independently review legacy N4 direct Step2 startup while LVDischarge is active; do not silently claim its preservation"
+    ],
+    "proofLimits": [
+      "This is no-reenergization mitigation, not a Safe-completion route",
+      "No new LV discharge completion oracle chosen",
+      "A full down-to-Safe-to-fresh-start replay is not currently established and cannot be fabricated by phase writes",
+      "Legacy direct Step2 while discharge active is intentionally inhibited by this formula, compatibility unresolved pending source/policy review"
+    ]
+  },
+  "downEpisodeOwnerCandidate": {
+    "status": "PROPOSED revised255: retain original SG owner gate, free slot with exact DeMorgan fold; independent review/replay required",
+    "date": "2026-10-20",
+    "scope": "Separate RnD-down Step2-episode no-reenergy mitigation; final Safe/discharge completion unchanged and unproved",
+    "existing": 255,
+    "retired": 8,
+    "added": 8,
+    "final": 255,
+    "spare": 0,
+    "retire": [
+      {
+        "path": "//Network12/FBAnd5",
+        "id": "7e67f81c-ad73-4ddc-8541-97d0b9370257",
+        "proof": "pure terminal output no native/global/alias consumers"
+      },
+      {
+        "path": "//Network12/FBAnd7",
+        "id": "8a0162c0-f4a4-45d7-93f9-55a36d165586",
+        "proof": "pure terminal output no native/global/alias consumers"
+      },
+      {
+        "path": "//Network12/FBAnd18",
+        "id": "6052e4b6-edc7-4cae-b3eb-2dd48994ef78",
+        "proof": "only consumers retired And5/7"
+      },
+      {
+        "path": "//Network2/FBAnd10",
+        "id": "bb0dcd4b-fc2d-42eb-b3e6-452cd3114a69",
+        "proof": "obsolete raw BOTH producer after qualified Safe owner integration"
+      },
+      {
+        "path": "//Network2/FBTon3",
+        "id": "2adeda32-5d9f-46c9-ac21-2db052de0682",
+        "proof": "qualification1s reused from existing physical BOTH TON1s"
+      },
+      {
+        "path": "//RndPhysicalCompact/GATE_017",
+        "id": "8594090d-b2f3-e5ca-e63c-5c151b0899e1",
+        "proof": "current GREEN.TonOut implies enabled SingleEnable AND green"
+      },
+      {
+        "path": "//RndPhysicalCompact/GATE_018",
+        "id": "ec60c4da-7708-9113-5509-8633e88c8718",
+        "proof": "current BLUE.TonOut implies enabled SingleEnable AND blue"
+      },
+      {
+        "path": "//RndPhysicalCompact/GATE_019",
+        "id": "20ba4b86-c431-ece6-76e2-35e69a09b1a5",
+        "proof": "Pure OR, mapState/mapDiag FALSE; only native consumer GATE023/AndIn4 inverted; no global/alias output users. DeMorgan fold adds inverted Green and Blue directly to current GATE023."
+      }
+    ],
+    "newBlocks": [
+      {
+        "symbol": "MODE",
+        "type": "safeOr",
+        "template": "//Network1/FBOr17",
+        "inputs": [
+          "b_Step1",
+          "b_Step_RnD"
+        ],
+        "place": "after SNAP_1 before E"
+      },
+      {
+        "symbol": "CONNECTORS",
+        "type": "safeAnd",
+        "template": "//Network1/FBAndLvCurrentPermit",
+        "inputs": [
+          "in_LV_Connector_Interlock",
+          "in_HV_Connector_Interlock"
+        ],
+        "place": "before E"
+      },
+      {
+        "symbol": "CONNECTOR_SCOPE",
+        "type": "safeOr",
+        "template": "//Network1/FBOr17",
+        "inputs": [
+          "b_Step1",
+          "CONNECTORS"
+        ],
+        "place": "before E"
+      },
+      {
+        "symbol": "RND_SCOPE",
+        "type": "safeAnd",
+        "template": "//Network1/FBAndLvCurrentPermit",
+        "inputs": [
+          "E",
+          "b_Step_RnD"
+        ],
+        "place": "after E before STATE_SU"
+      },
+      {
+        "symbol": "SAFE_UP_SCOPE",
+        "type": "safeAnd",
+        "template": "//Network1/FBAndLvCurrentPermit",
+        "inputs": [
+          "E",
+          "b_Step1",
+          "//Network1/FBAndLvCurrentPermit/AndOut"
+        ],
+        "place": "after E before relocated SafeAnd4"
+      },
+      {
+        "symbol": "SG_OWNER_SET",
+        "type": "safeAnd",
+        "template": "//Network1/FBAndLvCurrentPermit",
+        "inputs": [
+          "//RndPhysicalCompact/GREEN/TonOut",
+          "!b_Step1"
+        ],
+        "place": "after GREEN before STATE_SG"
+      },
+      {
+        "symbol": "SAFE_ACCEPTED_UP",
+        "type": "safeRs",
+        "template": "//Network1/FBRs1",
+        "Reset": "!SAFE_UP_SCOPE",
+        "Set": "//Network2/FBAnd4/AndOut",
+        "place": "after relocated Network2/FBAnd4 before GATE_030 CSet",
+        "meaning": "request accepted only after original And3 readiness and current Safe energy permission; never queues pre-guard qualification"
+      },
+      {
+        "symbol": "RND_DOWN_STEP2_OWNER",
+        "type": "safeRs",
+        "template": "//Network1/FBRs1",
+        "Set": "//Network12/FBDecouple1/DecOut3",
+        "Reset": "!b_Step2",
+        "place": "after actual Step2 RS and before Network5/FBAnd1",
+        "meaning": "Only current Step2 episode entered via actual RnD-down request; reset on actual Step2 exit"
+      }
+    ],
+    "existingEInputs": [
+      "MODE",
+      "!in_False_SI2_CH8",
+      "b_EStop_Ok",
+      "!in_Estop_PLC",
+      "in_InterLock_NC_1",
+      "in_InterLock_NC_2",
+      "CONNECTOR_SCOPE"
+    ],
+    "rewireRules": [
+      "All qualified FinishG consumers use GREEN.TonOut except STATE_SG.Set=SG_OWNER_SET",
+      "All qualified FinishB consumers use BLUE.TonOut",
+      "Network2/FBAnd7 raw blue input=STATE_BA.RsOut; other existing conditions preserved",
+      "Network2/FBAnd4 physical input=BOTH.TonOut; retain And3 feedback input, add SAFE_UP_SCOPE direct guard; move after BOTH before SAFE_ACCEPTED_UP and GATE_030",
+      "Network2/FBOr1 physical input=SAFE_ACCEPTED_UP.RsOut instead of And4.AndOut; existing PLC input unchanged",
+      "Network12/FBOr1 and both early STO OR3 remain directly connected to STATE_SU; RND_SCOPE prevents Safe/Run SU existence",
+      "Retain GATE_020 FinishUp in its original relative order. Original four inputs unchanged; activate AndIn5=RND_SCOPE direct. STATE_SU.Set remains directly connected to current GATE_020.AndOut; STATE_SU.Reset=!RND_SCOPE.",
+      "GATE_030 CSet.OrIn3=current GATE_020.AndOut, not prior STATE_SU. OrIn4=current SAFE_ACCEPTED_UP.RsOut; Green/Blue inputs unchanged.",
+      "Safe And4 physical input remains current BOTH.TonOut, not mode-scoped FinishUp. This permits original readiness arriving while BOTH remains held.",
+      "Retain SG_OWNER_SET AND and original STATE_SG.Reset=!E exactly; do not use the earlier SG reset-scope optimization.",
+      "GATE023.AndIn4 ID0a0b232e-ab7b-cfbf-2a10-4ab903ba3688 inverted GREEN.TonOut; activate AndIn5 IDb4dcc910-dc3c-e114-3712-24b37eecfd07 inverted BLUE.TonOut. All other GATE023 inputs unchanged. Replaces !(GreenDone OR BlueDone) by !GreenDone AND !BlueDone.",
+      "Network5/FBAnd1.AndIn4 ID817df687-990b-4eff-93e5-02ff937d178d activated inverted RND_DOWN_STEP2_OWNER.RsOut; original Step2/False/EStop inputs and output fanout unchanged."
+    ],
+    "unchangedRun": [
+      "//Network6/FBTon2",
+      "//Network6/FBAnd24",
+      "//Network6/FBAnd23",
+      "All original bindings and native relative orders in Run physical branch",
+      "Network12/FBOr2 direct STATE_SG input"
+    ],
+    "nativePortRule": "Break Contact (NC) means direct value; Make Contact (NO) means logical inversion in current source/runtime contract. Every inactive template input explicitly deactivated; ordinary program aliases/globals reuse exact current IDs, mappings unchanged.",
+    "ordering": {
+      "method": "remove listed8; move only SafeAnd4; insert listed7; renumber retained blocks in source relative order",
+      "manifest": [
+        {
+          "path": "//Network2/FBAnd1",
+          "sourceOrder": 1,
+          "kind": "retained",
+          "order": 1
+        },
+        {
+          "path": "//Network1/FBAndLvCurrentPermit",
+          "sourceOrder": 2,
+          "kind": "retained",
+          "order": 2
+        },
+        {
+          "path": "//Network1/FBAndLvSetPermit",
+          "sourceOrder": 3,
+          "kind": "retained",
+          "order": 3
+        },
+        {
+          "path": "//Network1/FBRs1",
+          "sourceOrder": 4,
+          "kind": "retained",
+          "order": 4
+        },
+        {
+          "path": "//Network1/FBAndHvSetPermit",
+          "sourceOrder": 5,
+          "kind": "retained",
+          "order": 5
+        },
+        {
+          "path": "//Network1/FBRs2",
+          "sourceOrder": 6,
+          "kind": "retained",
+          "order": 6
+        },
+        {
+          "path": "//Network2/FBTon1",
+          "sourceOrder": 7,
+          "kind": "retained",
+          "order": 7
+        },
+        {
+          "path": "//Network2/FBAnd2",
+          "sourceOrder": 8,
+          "kind": "retained",
+          "order": 8
+        },
+        {
+          "path": "//Network2/FBDecouple1",
+          "sourceOrder": 9,
+          "kind": "retained",
+          "order": 9
+        },
+        {
+          "path": "//Network1/FBAndSto1SetPermit",
+          "sourceOrder": 10,
+          "kind": "retained",
+          "order": 10
+        },
+        {
+          "path": "//Network1/FBRs3",
+          "sourceOrder": 11,
+          "kind": "retained",
+          "order": 11
+        },
+        {
+          "path": "//Network1/FBAndSto2SetPermit",
+          "sourceOrder": 12,
+          "kind": "retained",
+          "order": 12
+        },
+        {
+          "path": "//Network1/FBRs4",
+          "sourceOrder": 13,
+          "kind": "retained",
+          "order": 13
+        },
+        {
+          "path": "//Network2/FBDecouple2",
+          "sourceOrder": 14,
+          "kind": "retained",
+          "order": 14
+        },
+        {
+          "path": "//Network2/FBTon2",
+          "sourceOrder": 15,
+          "kind": "retained",
+          "order": 15
+        },
+        {
+          "path": "//Network2/FBAnd3",
+          "sourceOrder": 16,
+          "kind": "retained",
+          "order": 16
+        },
+        {
+          "path": "//Network3/FBOr1",
+          "sourceOrder": 17,
+          "kind": "retained",
+          "order": 17
+        },
+        {
+          "path": "//Network3/FBOr2",
+          "sourceOrder": 18,
+          "kind": "retained",
+          "order": 18
+        },
+        {
+          "path": "//Network3/FBRs1",
+          "sourceOrder": 19,
+          "kind": "retained",
+          "order": 19
+        },
+        {
+          "path": "//Network3/FBOr3",
+          "sourceOrder": 20,
+          "kind": "retained",
+          "order": 20
+        },
+        {
+          "path": "//Network3/FBOr4",
+          "sourceOrder": 21,
+          "kind": "retained",
+          "order": 21
+        },
+        {
+          "path": "//Network3/FBRs2",
+          "sourceOrder": 22,
+          "kind": "retained",
+          "order": 22
+        },
+        {
+          "path": "//Network1/FBEstop1",
+          "sourceOrder": 23,
+          "kind": "retained",
+          "order": 23
+        },
+        {
+          "path": "//Network3/FBAnd1",
+          "sourceOrder": 24,
+          "kind": "retained",
+          "order": 24
+        },
+        {
+          "path": "//Network4/FBDecouple1",
+          "sourceOrder": 25,
+          "kind": "retained",
+          "order": 25
+        },
+        {
+          "path": "RND_DOWN_STEP2_OWNER",
+          "kind": "new",
+          "order": 26
+        },
+        {
+          "path": "//Network5/FBAnd1",
+          "sourceOrder": 28,
+          "kind": "retained",
+          "order": 27
+        },
+        {
+          "path": "//Network5/FBDecouple1",
+          "sourceOrder": 29,
+          "kind": "retained",
+          "order": 28
+        },
+        {
+          "path": "//Network5/FBTon1",
+          "sourceOrder": 30,
+          "kind": "retained",
+          "order": 29
+        },
+        {
+          "path": "//Network5/FBAnd2",
+          "sourceOrder": 31,
+          "kind": "retained",
+          "order": 30
+        },
+        {
+          "path": "//Network5/FBTon2",
+          "sourceOrder": 32,
+          "kind": "retained",
+          "order": 31
+        },
+        {
+          "path": "//Network5/FBAnd3",
+          "sourceOrder": 33,
+          "kind": "retained",
+          "order": 32
+        },
+        {
+          "path": "//Network1/FBOr1",
+          "sourceOrder": 34,
+          "kind": "retained",
+          "order": 33
+        },
+        {
+          "path": "//Network1/FBOr2",
+          "sourceOrder": 35,
+          "kind": "retained",
+          "order": 34
+        },
+        {
+          "path": "//Network1/FBRs5",
+          "sourceOrder": 36,
+          "kind": "retained",
+          "order": 35
+        },
+        {
+          "path": "//Network1/FBOr5",
+          "sourceOrder": 37,
+          "kind": "retained",
+          "order": 36
+        },
+        {
+          "path": "//Network1/FBOr6",
+          "sourceOrder": 38,
+          "kind": "retained",
+          "order": 37
+        },
+        {
+          "path": "//Network1/FBRs7",
+          "sourceOrder": 39,
+          "kind": "retained",
+          "order": 38
+        },
+        {
+          "path": "//Network5/FBDecouple2",
+          "sourceOrder": 40,
+          "kind": "retained",
+          "order": 39
+        },
+        {
+          "path": "//Network5/FBTon3",
+          "sourceOrder": 41,
+          "kind": "retained",
+          "order": 40
+        },
+        {
+          "path": "//Network1/FBOr7",
+          "sourceOrder": 42,
+          "kind": "retained",
+          "order": 41
+        },
+        {
+          "path": "//Network1/FBOr8",
+          "sourceOrder": 43,
+          "kind": "retained",
+          "order": 42
+        },
+        {
+          "path": "//Network1/FBOr9",
+          "sourceOrder": 44,
+          "kind": "retained",
+          "order": 43
+        },
+        {
+          "path": "//Network1/FBOr10",
+          "sourceOrder": 45,
+          "kind": "retained",
+          "order": 44
+        },
+        {
+          "path": "//Network5/FBDecouple3",
+          "sourceOrder": 46,
+          "kind": "retained",
+          "order": 45
+        },
+        {
+          "path": "//Network3/FBOr5",
+          "sourceOrder": 47,
+          "kind": "retained",
+          "order": 46
+        },
+        {
+          "path": "//Network3/FBOr6",
+          "sourceOrder": 48,
+          "kind": "retained",
+          "order": 47
+        },
+        {
+          "path": "//Network3/FBRs3",
+          "sourceOrder": 49,
+          "kind": "retained",
+          "order": 48
+        },
+        {
+          "path": "//Network5/FBAnd5",
+          "sourceOrder": 50,
+          "kind": "retained",
+          "order": 49
+        },
+        {
+          "path": "//Network5/FBTon4",
+          "sourceOrder": 51,
+          "kind": "retained",
+          "order": 50
+        },
+        {
+          "path": "//Network6/FBAnd1",
+          "sourceOrder": 52,
+          "kind": "retained",
+          "order": 51
+        },
+        {
+          "path": "//Network3/FBDecouple1",
+          "sourceOrder": 53,
+          "kind": "retained",
+          "order": 52
+        },
+        {
+          "path": "//Network6/FBAnd2",
+          "sourceOrder": 54,
+          "kind": "retained",
+          "order": 53
+        },
+        {
+          "path": "//Network6/FBAnd3",
+          "sourceOrder": 55,
+          "kind": "retained",
+          "order": 54
+        },
+        {
+          "path": "//Network6/FBAnd4",
+          "sourceOrder": 56,
+          "kind": "retained",
+          "order": 55
+        },
+        {
+          "path": "//Network6/FBRs1",
+          "sourceOrder": 57,
+          "kind": "retained",
+          "order": 56
+        },
+        {
+          "path": "//Network6/FBAnd5",
+          "sourceOrder": 58,
+          "kind": "retained",
+          "order": 57
+        },
+        {
+          "path": "//Network6/FBAnd6",
+          "sourceOrder": 59,
+          "kind": "retained",
+          "order": 58
+        },
+        {
+          "path": "//Network6/FBRs2",
+          "sourceOrder": 60,
+          "kind": "retained",
+          "order": 59
+        },
+        {
+          "path": "//Network6/FBOr2",
+          "sourceOrder": 61,
+          "kind": "retained",
+          "order": 60
+        },
+        {
+          "path": "//Network6/FBOr3",
+          "sourceOrder": 62,
+          "kind": "retained",
+          "order": 61
+        },
+        {
+          "path": "//Network6/FBDecouple1",
+          "sourceOrder": 63,
+          "kind": "retained",
+          "order": 62
+        },
+        {
+          "path": "//Network3/FBOr7",
+          "sourceOrder": 64,
+          "kind": "retained",
+          "order": 63
+        },
+        {
+          "path": "//Network3/FBOr8",
+          "sourceOrder": 65,
+          "kind": "retained",
+          "order": 64
+        },
+        {
+          "path": "//Network3/FBRs4",
+          "sourceOrder": 66,
+          "kind": "retained",
+          "order": 65
+        },
+        {
+          "path": "//Network7/FBAnd1",
+          "sourceOrder": 67,
+          "kind": "retained",
+          "order": 66
+        },
+        {
+          "path": "//Network7/FBDecouple1",
+          "sourceOrder": 68,
+          "kind": "retained",
+          "order": 67
+        },
+        {
+          "path": "//Network1/FBOr11",
+          "sourceOrder": 69,
+          "kind": "retained",
+          "order": 68
+        },
+        {
+          "path": "//Network7/FBAnd2",
+          "sourceOrder": 70,
+          "kind": "retained",
+          "order": 69
+        },
+        {
+          "path": "//Network7/FBAnd3",
+          "sourceOrder": 71,
+          "kind": "retained",
+          "order": 70
+        },
+        {
+          "path": "//Network7/FBDecouple2",
+          "sourceOrder": 72,
+          "kind": "retained",
+          "order": 71
+        },
+        {
+          "path": "//Network7/FBOr1",
+          "sourceOrder": 73,
+          "kind": "retained",
+          "order": 72
+        },
+        {
+          "path": "//Network7/FBOr2",
+          "sourceOrder": 74,
+          "kind": "retained",
+          "order": 73
+        },
+        {
+          "path": "//Network7/FBAnd6",
+          "sourceOrder": 75,
+          "kind": "retained",
+          "order": 74
+        },
+        {
+          "path": "//Network7/FBAnd7",
+          "sourceOrder": 76,
+          "kind": "retained",
+          "order": 75
+        },
+        {
+          "path": "//Network7/FBAnd8",
+          "sourceOrder": 77,
+          "kind": "retained",
+          "order": 76
+        },
+        {
+          "path": "//Network3/FBOr9",
+          "sourceOrder": 78,
+          "kind": "retained",
+          "order": 77
+        },
+        {
+          "path": "//Network3/FBOr10",
+          "sourceOrder": 79,
+          "kind": "retained",
+          "order": 78
+        },
+        {
+          "path": "//Network3/FBRs5",
+          "sourceOrder": 80,
+          "kind": "retained",
+          "order": 79
+        },
+        {
+          "path": "//Network8/FBAnd1",
+          "sourceOrder": 81,
+          "kind": "retained",
+          "order": 80
+        },
+        {
+          "path": "//Network8/FBDecouple1",
+          "sourceOrder": 82,
+          "kind": "retained",
+          "order": 81
+        },
+        {
+          "path": "//Network8/FBTon1",
+          "sourceOrder": 83,
+          "kind": "retained",
+          "order": 82
+        },
+        {
+          "path": "//Network8/FBAnd2",
+          "sourceOrder": 84,
+          "kind": "retained",
+          "order": 83
+        },
+        {
+          "path": "//Network8/FBOr1",
+          "sourceOrder": 85,
+          "kind": "retained",
+          "order": 84
+        },
+        {
+          "path": "//Network8/FBTon2",
+          "sourceOrder": 86,
+          "kind": "retained",
+          "order": 85
+        },
+        {
+          "path": "//Network1/FBOr16",
+          "sourceOrder": 87,
+          "kind": "retained",
+          "order": 86
+        },
+        {
+          "path": "//Network8/FBAnd3",
+          "sourceOrder": 88,
+          "kind": "retained",
+          "order": 87
+        },
+        {
+          "path": "//Network3/FBOr11",
+          "sourceOrder": 89,
+          "kind": "retained",
+          "order": 88
+        },
+        {
+          "path": "//Network3/FBOr12",
+          "sourceOrder": 90,
+          "kind": "retained",
+          "order": 89
+        },
+        {
+          "path": "//Network3/FBRs6",
+          "sourceOrder": 91,
+          "kind": "retained",
+          "order": 90
+        },
+        {
+          "path": "//Network9/FBAnd1",
+          "sourceOrder": 92,
+          "kind": "retained",
+          "order": 91
+        },
+        {
+          "path": "//Network6/FBAnd7",
+          "sourceOrder": 93,
+          "kind": "retained",
+          "order": 92
+        },
+        {
+          "path": "//Network6/FBAnd8",
+          "sourceOrder": 94,
+          "kind": "retained",
+          "order": 93
+        },
+        {
+          "path": "//Network6/FBAnd9",
+          "sourceOrder": 95,
+          "kind": "retained",
+          "order": 94
+        },
+        {
+          "path": "//Network6/FBAnd10",
+          "sourceOrder": 96,
+          "kind": "retained",
+          "order": 95
+        },
+        {
+          "path": "//Network1/FBAnd1",
+          "sourceOrder": 97,
+          "kind": "retained",
+          "order": 96
+        },
+        {
+          "path": "//Network2/FBAnd5",
+          "sourceOrder": 98,
+          "kind": "retained",
+          "order": 97
+        },
+        {
+          "path": "//Network2/FBAnd6",
+          "sourceOrder": 99,
+          "kind": "retained",
+          "order": 98
+        },
+        {
+          "path": "//Network2/FBDecouple3",
+          "sourceOrder": 100,
+          "kind": "retained",
+          "order": 99
+        },
+        {
+          "path": "//Network2/FBAnd7",
+          "sourceOrder": 101,
+          "kind": "retained",
+          "order": 100
+        },
+        {
+          "path": "//Network7/FBTon1",
+          "sourceOrder": 102,
+          "kind": "retained",
+          "order": 101
+        },
+        {
+          "path": "//Network3/FBDecouple2",
+          "sourceOrder": 103,
+          "kind": "retained",
+          "order": 102
+        },
+        {
+          "path": "//Network2/FBAnd8",
+          "sourceOrder": 104,
+          "kind": "retained",
+          "order": 103
+        },
+        {
+          "path": "//Network1/FBDecouple1",
+          "sourceOrder": 105,
+          "kind": "retained",
+          "order": 104
+        },
+        {
+          "path": "//Network7/FBTon2",
+          "sourceOrder": 106,
+          "kind": "retained",
+          "order": 105
+        },
+        {
+          "path": "//Network7/FBTon3",
+          "sourceOrder": 107,
+          "kind": "retained",
+          "order": 106
+        },
+        {
+          "path": "//Network7/FBDecouple3",
+          "sourceOrder": 108,
+          "kind": "retained",
+          "order": 107
+        },
+        {
+          "path": "//Network1/FBOr12",
+          "sourceOrder": 109,
+          "kind": "retained",
+          "order": 108
+        },
+        {
+          "path": "//Network1/FBOr13",
+          "sourceOrder": 110,
+          "kind": "retained",
+          "order": 109
+        },
+        {
+          "path": "//Network5/FBAnd7",
+          "sourceOrder": 111,
+          "kind": "retained",
+          "order": 110
+        },
+        {
+          "path": "//Network5/FBDecouple4",
+          "sourceOrder": 112,
+          "kind": "retained",
+          "order": 111
+        },
+        {
+          "path": "//Network1/FBDecouple2",
+          "sourceOrder": 113,
+          "kind": "retained",
+          "order": 112
+        },
+        {
+          "path": "//Network2/FBAnd9",
+          "sourceOrder": 114,
+          "kind": "retained",
+          "order": 113
+        },
+        {
+          "path": "//Network10/FBDecouple1",
+          "sourceOrder": 115,
+          "kind": "retained",
+          "order": 114
+        },
+        {
+          "path": "//Network10/FBDecouple2",
+          "sourceOrder": 116,
+          "kind": "retained",
+          "order": 115
+        },
+        {
+          "path": "//Network11/FBAnd1",
+          "sourceOrder": 117,
+          "kind": "retained",
+          "order": 116
+        },
+        {
+          "path": "//Network11/FBTon1",
+          "sourceOrder": 118,
+          "kind": "retained",
+          "order": 117
+        },
+        {
+          "path": "//Network11/FBAnd4",
+          "sourceOrder": 119,
+          "kind": "retained",
+          "order": 118
+        },
+        {
+          "path": "//Network11/FBAnd5",
+          "sourceOrder": 120,
+          "kind": "retained",
+          "order": 119
+        },
+        {
+          "path": "//RndPhysicalCompact/SNAP_0",
+          "sourceOrder": 121,
+          "kind": "retained",
+          "order": 120
+        },
+        {
+          "path": "//RndPhysicalCompact/SNAP_1",
+          "sourceOrder": 122,
+          "kind": "retained",
+          "order": 121
+        },
+        {
+          "path": "MODE",
+          "kind": "new",
+          "order": 122
+        },
+        {
+          "path": "CONNECTORS",
+          "kind": "new",
+          "order": 123
+        },
+        {
+          "path": "CONNECTOR_SCOPE",
+          "kind": "new",
+          "order": 124
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_001",
+          "sourceOrder": 123,
+          "kind": "retained",
+          "order": 125
+        },
+        {
+          "path": "RND_SCOPE",
+          "kind": "new",
+          "order": 126
+        },
+        {
+          "path": "SAFE_UP_SCOPE",
+          "kind": "new",
+          "order": 127
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_002",
+          "sourceOrder": 124,
+          "kind": "retained",
+          "order": 128
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_003",
+          "sourceOrder": 125,
+          "kind": "retained",
+          "order": 129
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_004",
+          "sourceOrder": 126,
+          "kind": "retained",
+          "order": 130
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_005",
+          "sourceOrder": 127,
+          "kind": "retained",
+          "order": 131
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_006",
+          "sourceOrder": 128,
+          "kind": "retained",
+          "order": 132
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_007",
+          "sourceOrder": 129,
+          "kind": "retained",
+          "order": 133
+        },
+        {
+          "path": "//RndPhysicalCompact/WINDOW",
+          "sourceOrder": 130,
+          "kind": "retained",
+          "order": 134
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_008",
+          "sourceOrder": 131,
+          "kind": "retained",
+          "order": 135
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_009",
+          "sourceOrder": 132,
+          "kind": "retained",
+          "order": 136
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_010",
+          "sourceOrder": 133,
+          "kind": "retained",
+          "order": 137
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_011",
+          "sourceOrder": 134,
+          "kind": "retained",
+          "order": 138
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_012",
+          "sourceOrder": 135,
+          "kind": "retained",
+          "order": 139
+        },
+        {
+          "path": "//RndPhysicalCompact/RELEASE",
+          "sourceOrder": 136,
+          "kind": "retained",
+          "order": 140
+        },
+        {
+          "path": "//RndPhysicalCompact/GREEN",
+          "sourceOrder": 137,
+          "kind": "retained",
+          "order": 141
+        },
+        {
+          "path": "//RndPhysicalCompact/BLUE",
+          "sourceOrder": 138,
+          "kind": "retained",
+          "order": 142
+        },
+        {
+          "path": "//RndPhysicalCompact/BOTH",
+          "sourceOrder": 139,
+          "kind": "retained",
+          "order": 143
+        },
+        {
+          "path": "//Network2/FBAnd4",
+          "kind": "moved",
+          "order": 144
+        },
+        {
+          "path": "SAFE_ACCEPTED_UP",
+          "kind": "new",
+          "order": 145
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_013",
+          "sourceOrder": 140,
+          "kind": "retained",
+          "order": 146
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_014",
+          "sourceOrder": 141,
+          "kind": "retained",
+          "order": 147
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_015",
+          "sourceOrder": 142,
+          "kind": "retained",
+          "order": 148
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_016",
+          "sourceOrder": 143,
+          "kind": "retained",
+          "order": 149
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_020",
+          "sourceOrder": 147,
+          "kind": "retained",
+          "order": 150
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_022",
+          "sourceOrder": 148,
+          "kind": "retained",
+          "order": 151
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_023",
+          "sourceOrder": 149,
+          "kind": "retained",
+          "order": 152
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_024",
+          "sourceOrder": 150,
+          "kind": "retained",
+          "order": 153
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_025",
+          "sourceOrder": 151,
+          "kind": "retained",
+          "order": 154
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_026",
+          "sourceOrder": 152,
+          "kind": "retained",
+          "order": 155
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_027",
+          "sourceOrder": 153,
+          "kind": "retained",
+          "order": 156
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_028",
+          "sourceOrder": 154,
+          "kind": "retained",
+          "order": 157
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_029",
+          "sourceOrder": 155,
+          "kind": "retained",
+          "order": 158
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_030",
+          "sourceOrder": 156,
+          "kind": "retained",
+          "order": 159
+        },
+        {
+          "path": "//RndPhysicalCompact/GATE_031",
+          "sourceOrder": 157,
+          "kind": "retained",
+          "order": 160
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_P",
+          "sourceOrder": 158,
+          "kind": "retained",
+          "order": 161
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_A",
+          "sourceOrder": 159,
+          "kind": "retained",
+          "order": 162
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_T",
+          "sourceOrder": 160,
+          "kind": "retained",
+          "order": 163
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_L",
+          "sourceOrder": 161,
+          "kind": "retained",
+          "order": 164
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_C",
+          "sourceOrder": 162,
+          "kind": "retained",
+          "order": 165
+        },
+        {
+          "path": "SG_OWNER_SET",
+          "kind": "new",
+          "order": 166
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_SG",
+          "sourceOrder": 163,
+          "kind": "retained",
+          "order": 167
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_SU",
+          "sourceOrder": 164,
+          "kind": "retained",
+          "order": 168
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_BA",
+          "sourceOrder": 165,
+          "kind": "retained",
+          "order": 169
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_PrevG",
+          "sourceOrder": 166,
+          "kind": "retained",
+          "order": 170
+        },
+        {
+          "path": "//RndPhysicalCompact/STATE_PrevB",
+          "sourceOrder": 167,
+          "kind": "retained",
+          "order": 171
+        },
+        {
+          "path": "//Network12/FBAnd1",
+          "sourceOrder": 168,
+          "kind": "retained",
+          "order": 172
+        },
+        {
+          "path": "//Network1/FBOr3",
+          "sourceOrder": 169,
+          "kind": "retained",
+          "order": 173
+        },
+        {
+          "path": "//Network1/FBOr4",
+          "sourceOrder": 170,
+          "kind": "retained",
+          "order": 174
+        },
+        {
+          "path": "//Network1/FBRs6",
+          "sourceOrder": 171,
+          "kind": "retained",
+          "order": 175
+        },
+        {
+          "path": "//Network12/FBAnd2",
+          "sourceOrder": 172,
+          "kind": "retained",
+          "order": 176
+        },
+        {
+          "path": "//Network12/FBAnd3",
+          "sourceOrder": 173,
+          "kind": "retained",
+          "order": 177
+        },
+        {
+          "path": "//Network12/FBAnd4",
+          "sourceOrder": 174,
+          "kind": "retained",
+          "order": 178
+        },
+        {
+          "path": "//Network12/FBTon3",
+          "sourceOrder": 176,
+          "kind": "retained",
+          "order": 179
+        },
+        {
+          "path": "//Network12/FBAnd6",
+          "sourceOrder": 177,
+          "kind": "retained",
+          "order": 180
+        },
+        {
+          "path": "//Network12/FBDecouple2",
+          "sourceOrder": 178,
+          "kind": "retained",
+          "order": 181
+        },
+        {
+          "path": "//Network3/FBOr13",
+          "sourceOrder": 180,
+          "kind": "retained",
+          "order": 182
+        },
+        {
+          "path": "//Network3/FBOr14",
+          "sourceOrder": 181,
+          "kind": "retained",
+          "order": 183
+        },
+        {
+          "path": "//Network3/FBRs7",
+          "sourceOrder": 182,
+          "kind": "retained",
+          "order": 184
+        },
+        {
+          "path": "//Network3/FBOr15",
+          "sourceOrder": 183,
+          "kind": "retained",
+          "order": 185
+        },
+        {
+          "path": "//Network3/FBOr16",
+          "sourceOrder": 184,
+          "kind": "retained",
+          "order": 186
+        },
+        {
+          "path": "//Network3/FBRs8",
+          "sourceOrder": 185,
+          "kind": "retained",
+          "order": 187
+        },
+        {
+          "path": "//Network6/FBOr1",
+          "sourceOrder": 186,
+          "kind": "retained",
+          "order": 188
+        },
+        {
+          "path": "//Network6/FBAnd11",
+          "sourceOrder": 187,
+          "kind": "retained",
+          "order": 189
+        },
+        {
+          "path": "//Network6/FBAnd12",
+          "sourceOrder": 188,
+          "kind": "retained",
+          "order": 190
+        },
+        {
+          "path": "//Network6/FBAnd13",
+          "sourceOrder": 189,
+          "kind": "retained",
+          "order": 191
+        },
+        {
+          "path": "//Network6/FBOr4",
+          "sourceOrder": 190,
+          "kind": "retained",
+          "order": 192
+        },
+        {
+          "path": "//Network6/FBAnd14",
+          "sourceOrder": 191,
+          "kind": "retained",
+          "order": 193
+        },
+        {
+          "path": "//Network12/FBOr1",
+          "sourceOrder": 192,
+          "kind": "retained",
+          "order": 194
+        },
+        {
+          "path": "//Network12/FBAnd8",
+          "sourceOrder": 193,
+          "kind": "retained",
+          "order": 195
+        },
+        {
+          "path": "//Network12/FBAnd9",
+          "sourceOrder": 194,
+          "kind": "retained",
+          "order": 196
+        },
+        {
+          "path": "//Network12/FBAnd10",
+          "sourceOrder": 195,
+          "kind": "retained",
+          "order": 197
+        },
+        {
+          "path": "//Network12/FBAnd12",
+          "sourceOrder": 196,
+          "kind": "retained",
+          "order": 198
+        },
+        {
+          "path": "//Network12/FBAnd13",
+          "sourceOrder": 197,
+          "kind": "retained",
+          "order": 199
+        },
+        {
+          "path": "//Network12/FBAnd14",
+          "sourceOrder": 198,
+          "kind": "retained",
+          "order": 200
+        },
+        {
+          "path": "//Network12/FBOr2",
+          "sourceOrder": 199,
+          "kind": "retained",
+          "order": 201
+        },
+        {
+          "path": "//Network12/FBDecouple1",
+          "sourceOrder": 200,
+          "kind": "retained",
+          "order": 202
+        },
+        {
+          "path": "//Network12/FBAnd15",
+          "sourceOrder": 201,
+          "kind": "retained",
+          "order": 203
+        },
+        {
+          "path": "//Network6/FBAnd15",
+          "sourceOrder": 202,
+          "kind": "retained",
+          "order": 204
+        },
+        {
+          "path": "//Network6/FBAnd16",
+          "sourceOrder": 203,
+          "kind": "retained",
+          "order": 205
+        },
+        {
+          "path": "//Network6/FBAnd17",
+          "sourceOrder": 204,
+          "kind": "retained",
+          "order": 206
+        },
+        {
+          "path": "//Network6/FBDecouple2",
+          "sourceOrder": 205,
+          "kind": "retained",
+          "order": 207
+        },
+        {
+          "path": "//Network6/FBAnd18",
+          "sourceOrder": 206,
+          "kind": "retained",
+          "order": 208
+        },
+        {
+          "path": "//Network6/FBTon1",
+          "sourceOrder": 207,
+          "kind": "retained",
+          "order": 209
+        },
+        {
+          "path": "//Network6/FBTon2",
+          "sourceOrder": 208,
+          "kind": "retained",
+          "order": 210
+        },
+        {
+          "path": "//Network1/FBAnd2",
+          "sourceOrder": 209,
+          "kind": "retained",
+          "order": 211
+        },
+        {
+          "path": "//Network1/FBAnd3",
+          "sourceOrder": 210,
+          "kind": "retained",
+          "order": 212
+        },
+        {
+          "path": "//Network5/FBOr2",
+          "sourceOrder": 211,
+          "kind": "retained",
+          "order": 213
+        },
+        {
+          "path": "//Network6/FBOr5",
+          "sourceOrder": 212,
+          "kind": "retained",
+          "order": 214
+        },
+        {
+          "path": "//Network1/FBOr14",
+          "sourceOrder": 213,
+          "kind": "retained",
+          "order": 215
+        },
+        {
+          "path": "//Network1/FBOr15",
+          "sourceOrder": 214,
+          "kind": "retained",
+          "order": 216
+        },
+        {
+          "path": "//Network1/FBRs8",
+          "sourceOrder": 215,
+          "kind": "retained",
+          "order": 217
+        },
+        {
+          "path": "//Network11/FBDecouple1",
+          "sourceOrder": 216,
+          "kind": "retained",
+          "order": 218
+        },
+        {
+          "path": "//Network12/FBDecouple3",
+          "sourceOrder": 217,
+          "kind": "retained",
+          "order": 219
+        },
+        {
+          "path": "//Network6/FBAnd19",
+          "sourceOrder": 218,
+          "kind": "retained",
+          "order": 220
+        },
+        {
+          "path": "//Network5/FBAnd10",
+          "sourceOrder": 219,
+          "kind": "retained",
+          "order": 221
+        },
+        {
+          "path": "//Network1/FBAnd4",
+          "sourceOrder": 220,
+          "kind": "retained",
+          "order": 222
+        },
+        {
+          "path": "//Network1/FBOr17",
+          "sourceOrder": 221,
+          "kind": "retained",
+          "order": 223
+        },
+        {
+          "path": "//Network1/FBOr18",
+          "sourceOrder": 222,
+          "kind": "retained",
+          "order": 224
+        },
+        {
+          "path": "//Network1/FBAnd5",
+          "sourceOrder": 223,
+          "kind": "retained",
+          "order": 225
+        },
+        {
+          "path": "//Network1/FBAnd6",
+          "sourceOrder": 224,
+          "kind": "retained",
+          "order": 226
+        },
+        {
+          "path": "//Network1/FBTon1",
+          "sourceOrder": 225,
+          "kind": "retained",
+          "order": 227
+        },
+        {
+          "path": "//Network1/FBAnd7",
+          "sourceOrder": 226,
+          "kind": "retained",
+          "order": 228
+        },
+        {
+          "path": "//Network1/FBAnd8",
+          "sourceOrder": 227,
+          "kind": "retained",
+          "order": 229
+        },
+        {
+          "path": "//Network12/FBAnd11",
+          "sourceOrder": 228,
+          "kind": "retained",
+          "order": 230
+        },
+        {
+          "path": "//Network1/FBAnd9",
+          "sourceOrder": 229,
+          "kind": "retained",
+          "order": 231
+        },
+        {
+          "path": "//Network1/FBAnd10",
+          "sourceOrder": 230,
+          "kind": "retained",
+          "order": 232
+        },
+        {
+          "path": "//Network6/FBAnd20",
+          "sourceOrder": 231,
+          "kind": "retained",
+          "order": 233
+        },
+        {
+          "path": "//Network1/FBAnd11",
+          "sourceOrder": 232,
+          "kind": "retained",
+          "order": 234
+        },
+        {
+          "path": "//Network1/FBAnd12",
+          "sourceOrder": 233,
+          "kind": "retained",
+          "order": 235
+        },
+        {
+          "path": "//Network12/FBAnd16",
+          "sourceOrder": 234,
+          "kind": "retained",
+          "order": 236
+        },
+        {
+          "path": "//Network12/FBAnd17",
+          "sourceOrder": 235,
+          "kind": "retained",
+          "order": 237
+        },
+        {
+          "path": "//Network6/FBAnd21",
+          "sourceOrder": 236,
+          "kind": "retained",
+          "order": 238
+        },
+        {
+          "path": "//Network6/FBAnd22",
+          "sourceOrder": 237,
+          "kind": "retained",
+          "order": 239
+        },
+        {
+          "path": "//Network2/FBOr1",
+          "sourceOrder": 239,
+          "kind": "retained",
+          "order": 240
+        },
+        {
+          "path": "//Network2/FBAnd61",
+          "sourceOrder": 240,
+          "kind": "retained",
+          "order": 241
+        },
+        {
+          "path": "//Network2/FBAnd81",
+          "sourceOrder": 241,
+          "kind": "retained",
+          "order": 242
+        },
+        {
+          "path": "//Network2/FBAnd91",
+          "sourceOrder": 242,
+          "kind": "retained",
+          "order": 243
+        },
+        {
+          "path": "//Network2/FBDecouple5",
+          "sourceOrder": 243,
+          "kind": "retained",
+          "order": 244
+        },
+        {
+          "path": "//Network2/FBAnd11",
+          "sourceOrder": 244,
+          "kind": "retained",
+          "order": 245
+        },
+        {
+          "path": "//Network6/FBAnd23",
+          "sourceOrder": 245,
+          "kind": "retained",
+          "order": 246
+        },
+        {
+          "path": "//Network2/FBAnd12",
+          "sourceOrder": 246,
+          "kind": "retained",
+          "order": 247
+        },
+        {
+          "path": "//Network1/FBRs9",
+          "sourceOrder": 247,
+          "kind": "retained",
+          "order": 248
+        },
+        {
+          "path": "//Network1/FBAnd13",
+          "sourceOrder": 248,
+          "kind": "retained",
+          "order": 249
+        },
+        {
+          "path": "//Network1/FBOr19",
+          "sourceOrder": 249,
+          "kind": "retained",
+          "order": 250
+        },
+        {
+          "path": "//Network1/FBAnd14",
+          "sourceOrder": 250,
+          "kind": "retained",
+          "order": 251
+        },
+        {
+          "path": "//Network6/FBAnd24",
+          "sourceOrder": 252,
+          "kind": "retained",
+          "order": 252
+        },
+        {
+          "path": "//Network6/FBDecouple3",
+          "sourceOrder": 253,
+          "kind": "retained",
+          "order": 253
+        },
+        {
+          "path": "//Network3/FBAnd2",
+          "sourceOrder": 254,
+          "kind": "retained",
+          "order": 254
+        },
+        {
+          "path": "//Network1/FBAndUnlockHold",
+          "sourceOrder": 255,
+          "kind": "retained",
+          "order": 255
+        }
+      ],
+      "proof": "Original SG gate/reset retained for arbitrary phase flags. Both Green and Blue TON execute before old GATE019 and GATE023; current TON outputs remain unchanged between those evaluations. DeMorgan fold is same-scan exact and not a onehot/owner assumption. New episode RS after current Step2 RS and before N5 power gate captures first actual Step2 entry from prior late RnD-down request. Retained relative order otherwise unchanged except reviewed SafeAnd4 move."
+    },
+    "requiredEvidence": [
+      "Full generated SAL/SGVL binding audit before dependency selection",
+      "Actual candidate RnD69 and earlySTO88 replay",
+      "Paired Safe And3-ready while-held versus after-release",
+      "Safe green/fullrelease/blue and connector absence access versus energy guard",
+      "Actual phase-writer handoffs Safe to RnD; RnD to Step2 then MODE0/SGclear; source-confirmed RnD exit then Run entry with SU retained until actual exit. Healthy Safe return remains separate required gap; do not demand a speculative overlapping RnD+Run interval.",
+      "Current EStop order23 before E; effective paired Mentee truth/order proof",
+      "Original native FinishUp path remains observed without remapping; short-neutral both orders must have one TRUE sample, not merely one accepted up/HV rise",
+      "DeMorgan exact Boolean+ordered proof and whole-source native GATE019 output usage audit; RnD69 late500 and short-neutral remain unchanged",
+      "No-reenergy continuous baseline/Safe255/mitigation negative with first-Step2 capture and all real Set/Reset/RS/output writers",
+      "Episode owner remains while Step2 TRUE; clears on actual Step2 exit. Conditional fault-branch component protocol is explicitly distinct from normal Safe completion.",
+      "Original reference-like Step2 episode with RnD-down request absent is unchanged regardless discharge latch; no broad discharge veto",
+      "SG gate/reset must remain identical for arbitrary conflicting phase inputs; no equivalence assumption from global onehot"
+    ],
+    "expectedRemainingFailures": "Two bounded Run invalid-short-chord failures remain; no full Run endpoint oracle selected",
+    "reviewNotes": "Source-bound ordered patch specification only. No SAL, native GUIDs, runtime or tests generated/edited. Implementation and proof still require independently reviewed editor work.",
+    "correction": {
+      "cause": "Previous CSet observed prior SU, delaying consumed by one scan. BOTH TON remained TRUE for two samples. The failing assertion counts TRUE samples, not rising edges. Retaining FinishUp alone would preserve this lag; same-scan current FinishUp into CSet is required.",
+      "fix": "Retain and scope FinishUp to RND_SCOPE, restore current FinishUp CSet, keep Safe readiness on raw current BOTH.",
+      "proofLimit": "Candidate replay pending; no PASS inferred from causal reasoning."
+    },
+    "lifecycleCorrection": {
+      "normalUp": "Network12/Decouple2 current b_Step3_Set_2 is read directly by RnD reset OR13 after confirmation in the same scan, whereas Run OR6/RS3 precede confirmation and set Run next scan. Normal up therefore does not produce the previously asserted RnD/Run overlap.",
+      "observed": "Candidate trace RnD clear6419, Run rise6420, SU clear6420. SU retained at recognizer until actual RnD exit. Fake overlap/phase seeding forbidden.",
+      "scope": "Other conflicting histories not shown reachable by this trace; full Step2-to-Safe endpoint and inherited down re-energization gap remain separate."
+    },
+    "ownerResetComponentProtocol": {
+      "scope": "Actual source fault-branch reset exercise only, not normative Emergency-to-Safe or normal discharge completion",
+      "from": "Actual accepted RnD down, real Step2 established and owner TRUE; energy feedback OFF retained",
+      "inputs": "Given in_False_SI2_CH8=TRUE and in_ES_NC_1=FALSE; no phase, owner or output injection",
+      "source": "Real main EStop becomes FALSE; N5And7=Step2&&False&&!EStop writes SafeSet3; real N3 SafeSet aggregate resets Step2; owner beforeN5 sees actualStep2FALSE and resets",
+      "assertions": "Observe actual writer chronology and owner reset only. Do not claim this source Safe arrival validates the required Emergency/normal completion policy.",
+      "reentry": "Optional actual manual Restart with FalseFALSE and NC restored, full neutral filter, fresh Safe BOTH through Step12/RnD, then fresh Green down into another Step2 episode. No fabricated phase return."
+    },
+    "compatibility": "OwnerSet absent in original reference histories, so original Step2 power-on remains unchanged even with LVDischarge latched. Current episode owner clears on actual Step2 exit, not by feedback or arbitrary PLC-start policy. Full normal Safe return remains a separate mandatory implementation gap."
+  }
+}

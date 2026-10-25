@@ -1,0 +1,309 @@
+blocks 297 -> 337; networks 14 -> 14
+PORT //Network1/FBAnd1/AndIn5
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Make Contact (NO)","src":[],"g":[],"v":["V:linkWdEmg"]}
+PORT //Network1/PA_CFG/AndIn8
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Make Contact (NO)","src":[],"g":[],"v":["V:linkUpBlock"]}
+PORT //Network1/PF_OR/OrIn2
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:linkSafetyFault"]}
+PORT //Network1/CFG_EX/Set
+   {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network1/CFG_EX_SET/AndOut"],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network1/CFG_EX_OR/OrOut"],"g":[],"v":[]}
+PORT //Network2/FBAnd4/AndIn4
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Make Contact (NO)","src":[],"g":[],"v":["V:linkUpBlock"]}
+OUTVAR //Network6/RD_PROT_SET/AndOut [] -> ["V:linkHltRunLost"]
+PORT //Network6/SU_ABORT_CAUSE/OrIn4
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:linkWdRollSu"]}
+PORT //RndPhysicalCompact/STATE_SU/Set
+   {"ci":"Activated","d1":"Break Contact (NC)","src":["//RndPhysicalCompact/SU_SET/OrOut"],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//RndPhysicalCompact/SU_SET_G/AndOut"],"g":[],"v":[]}
+PORT //RndPhysicalCompact/STATE_BA/Set
+   {"ci":"Activated","d1":"Break Contact (NC)","src":["//RndPhysicalCompact/BLUE/TonOut"],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//RndPhysicalCompact/BA_SET_G/AndOut"],"g":[],"v":[]}
+PORT //RndPhysicalCompact/GATE_SG_SET/OrIn4
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//RndPhysicalCompact/WD_ROLL_S12/OrOut"],"g":[],"v":[]}
+global exec order of old blocks preserved: true
+orders contiguous 1..N: true
+ADDED //Network1/CFG_EX_OR safeOr order=139 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//Network1/CFG_EX_SET/AndOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g= v=linkWdCfgFail
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WDC1_WIN safeTon order=172 params=[{"Id":"8549b807-904f-4179-a2d2-c4df30aba688","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"0.5","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}]
+   TonIn ci=Activated d1=Break Contact (NC) src= g= v=out_LV_C1
+ADDED //RndPhysicalCompact/WDC1_FAIL_SET safeAnd order=173 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC1_WIN/TonOut g= v=
+   AndIn2 ci=Activated d1=Make Contact (NO) src= g= v=in_LV_C1_FBK
+   AndIn3 ci=Activated d1=Make Contact (NO) src=//RndPhysicalCompact/WDC1_OK/RsOut g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WDC1_FAIL safeRs order=174 params=[]
+   Reset ci=Activated d1=Make Contact (NO) src= g= v=out_LV_C1
+   Set ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC1_FAIL_SET/AndOut g= v=
+ADDED //RndPhysicalCompact/WDC1_OK_SET safeAnd order=175 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC1_WIN/TonOut g= v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g= v=in_LV_C1_FBK
+   AndIn3 ci=Activated d1=Make Contact (NO) src=//RndPhysicalCompact/WDC1_FAIL/RsOut g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WDC1_OK safeRs order=176 params=[]
+   Reset ci=Activated d1=Make Contact (NO) src= g= v=out_LV_C1
+   Set ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC1_OK_SET/AndOut g= v=
+ADDED //RndPhysicalCompact/WDC1_LOSS safeAnd order=177 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC1_OK/RsOut g= v=
+   AndIn2 ci=Activated d1=Make Contact (NO) src= g= v=in_LV_C1_FBK
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WDC1_SEEN_SET safeAnd order=178 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=out_LV_C1
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g= v=in_LV_C1_FBK
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WDC1_SEEN safeRs order=179 params=[]
+   Reset ci=Activated d1=Make Contact (NO) src= g= v=in_LV_C1_FBK
+   Set ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC1_SEEN_SET/AndOut g= v=
+ADDED //RndPhysicalCompact/WDC1_OFF_IN safeAnd order=180 params=[]
+   AndIn1 ci=Activated d1=Make Contact (NO) src= g= v=out_LV_C1
+   AndIn2 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC1_SEEN/RsOut g= v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WDC1_OFF safeTon order=181 params=[{"Id":"fe1999b0-7cb1-459e-b338-f773e8ae562e","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"0.5","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}]
+   TonIn ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC1_OFF_IN/AndOut g= v=
+ADDED //RndPhysicalCompact/WDC2_WIN safeTon order=182 params=[{"Id":"63376ede-6881-46b6-be20-780ae89e265e","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"0.5","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}]
+   TonIn ci=Activated d1=Break Contact (NC) src= g= v=out_HV_C2
+ADDED //RndPhysicalCompact/WDC2_FAIL_SET safeAnd order=183 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC2_WIN/TonOut g= v=
+   AndIn2 ci=Activated d1=Make Contact (NO) src= g= v=in_HV_C2_FBK
+   AndIn3 ci=Activated d1=Make Contact (NO) src=//RndPhysicalCompact/WDC2_OK/RsOut g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WDC2_FAIL safeRs order=184 params=[]
+   Reset ci=Activated d1=Make Contact (NO) src= g= v=out_HV_C2
+   Set ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC2_FAIL_SET/AndOut g= v=
+ADDED //RndPhysicalCompact/WDC2_OK_SET safeAnd order=185 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC2_WIN/TonOut g= v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g= v=in_HV_C2_FBK
+   AndIn3 ci=Activated d1=Make Contact (NO) src=//RndPhysicalCompact/WDC2_FAIL/RsOut g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WDC2_OK safeRs order=186 params=[]
+   Reset ci=Activated d1=Make Contact (NO) src= g= v=out_HV_C2
+   Set ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC2_OK_SET/AndOut g= v=
+ADDED //RndPhysicalCompact/WDC2_LOSS safeAnd order=187 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC2_OK/RsOut g= v=
+   AndIn2 ci=Activated d1=Make Contact (NO) src= g= v=in_HV_C2_FBK
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WDC2_SEEN_SET safeAnd order=188 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g= v=out_HV_C2
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g= v=in_HV_C2_FBK
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WDC2_SEEN safeRs order=189 params=[]
+   Reset ci=Activated d1=Make Contact (NO) src= g= v=in_HV_C2_FBK
+   Set ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC2_SEEN_SET/AndOut g= v=
+ADDED //RndPhysicalCompact/WDC2_OFF_IN safeAnd order=190 params=[]
+   AndIn1 ci=Activated d1=Make Contact (NO) src= g= v=out_HV_C2
+   AndIn2 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC2_SEEN/RsOut g= v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WDC2_OFF safeTon order=191 params=[{"Id":"981024a3-d6d5-4cbd-a9b5-231d6bfe1ab7","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"0.5","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}]
+   TonIn ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC2_OFF_IN/AndOut g= v=
+ADDED //RndPhysicalCompact/WDC1_SPONT safeAnd order=192 params=[]
+   AndIn1 ci=Activated d1=Make Contact (NO) src= g= v=out_LV_C1
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g= v=in_LV_C1_FBK
+   AndIn3 ci=Activated d1=Make Contact (NO) src=//RndPhysicalCompact/WDC1_SEEN/RsOut g= v=
+   AndIn4 ci=Activated d1=Break Contact (NC) src= g=b_Step1 v=
+   AndIn5 ci=Activated d1=Break Contact (NC) src= g=b_EStop_Ok v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WDC2_SCOPE safeOr order=193 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src= g=b_Step1 v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src= g=b_Step_RnD v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WDC2_SPONT safeAnd order=194 params=[]
+   AndIn1 ci=Activated d1=Make Contact (NO) src= g= v=out_HV_C2
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g= v=in_HV_C2_FBK
+   AndIn3 ci=Activated d1=Make Contact (NO) src=//RndPhysicalCompact/WDC2_SEEN/RsOut g= v=
+   AndIn4 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC2_SCOPE/OrOut g= v=
+   AndIn5 ci=Activated d1=Break Contact (NC) src= g=b_EStop_Ok v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WDH1_LAT safeRs order=195 params=[]
+   Reset ci=Activated d1=Make Contact (NO) src= g=b_Step12 v=
+   Set ci=Activated d1=Break Contact (NC) src= g= v=in_LV_C1_FBK
+ADDED //RndPhysicalCompact/WDH1_T safeTon order=196 params=[{"Id":"01658940-4aff-457e-a787-ab4c52b2bd72","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"30","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}]
+   TonIn ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDH1_LAT/RsOut g= v=
+ADDED //RndPhysicalCompact/WDH2_LAT safeRs order=197 params=[]
+   Reset ci=Activated d1=Make Contact (NO) src= g=recRndC_SU v=
+   Set ci=Activated d1=Break Contact (NC) src= g= v=in_HV_C2_FBK
+ADDED //RndPhysicalCompact/WDH2_T safeTon order=198 params=[{"Id":"d35ff304-c8cd-404a-8aff-9617d8fc8db5","name":"Delay Time (s)","portName":"Delay Time (s)","portNum":"4","objectIndex":"0","varId":"0","filter":"0","portDataType":"0","timing":"30","userFbPortName":"Delay Time (s)","useInUserFb":"false","targets":[],"sources":[],"globals":[]}]
+   TonIn ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDH2_LAT/RsOut g= v=
+ADDED //RndPhysicalCompact/WD_ROLL_S12 safeOr order=199 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC1_FAIL/RsOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDH1_T/TonOut g= v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/WD_ROLL_SU safeOr order=200 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC2_FAIL/RsOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDH2_T/TonOut g= v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+   OUT //RndPhysicalCompact/WD_ROLL_SU/OrOut -> V:linkWdRollSu
+ADDED //RndPhysicalCompact/WD_FAIL_ANY safeOr order=201 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC1_FAIL/RsOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC2_FAIL/RsOut g= v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+   OUT //RndPhysicalCompact/WD_FAIL_ANY/OrOut -> V:linkWdCfgFail
+ADDED //RndPhysicalCompact/WD_EMG safeOr order=202 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC1_LOSS/AndOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC2_LOSS/AndOut g= v=
+   OrIn3 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC1_OFF/TonOut g= v=
+   OrIn4 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC2_OFF/TonOut g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+   OUT //RndPhysicalCompact/WD_EMG/OrOut -> V:linkWdEmg
+ADDED //RndPhysicalCompact/SF_HL_SU safeAnd order=203 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src= g=recRndC_SU v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src= g= v=in_LV_Faulty_FBK
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/SF_SET safeOr order=204 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WD_ROLL_S12/OrOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WD_ROLL_SU/OrOut g= v=
+   OrIn3 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC1_SPONT/AndOut g= v=
+   OrIn4 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/WDC2_SPONT/AndOut g= v=
+   OrIn5 ci=Activated d1=Break Contact (NC) src= g= v=linkHltRunLost
+   OrIn6 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/SF_HL_SU/AndOut g= v=
+   OrIn7 ci=Activated d1=Break Contact (NC) src= g= v=linkHltLvLost
+   OrIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/SF_ACK safeAnd order=205 params=[]
+   AndIn1 ci=Activated d1=Make Contact (NO) src=//RndPhysicalCompact/GATE_002/AndOut g= v=
+   AndIn2 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/RELEASE/TonOut g= v=
+   AndIn3 ci=Activated d1=Make Contact (NO) src=//RndPhysicalCompact/SF_SET/OrOut g= v=
+   AndIn4 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/SF/RsOut g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/SF safeRs order=206 params=[]
+   Reset ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/SF_ACK/AndOut g= v=
+   Set ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/SF_SET/OrOut g= v=
+   OUT //RndPhysicalCompact/SF/RsOut -> V:linkSafetyFault
+ADDED //RndPhysicalCompact/SF_ACKC safeRs order=208 params=[]
+   Reset ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/RELEASE/TonOut g= v=
+   Set ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/SF_ACK/AndOut g= v=
+ADDED //RndPhysicalCompact/SF_UPBLK safeOr order=209 params=[]
+   OrIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/SF/RsOut g= v=
+   OrIn2 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/SF_ACKC/RsOut g= v=
+   OrIn3 ci=Deactivated d1= src= g= v=
+   OrIn4 ci=Deactivated d1= src= g= v=
+   OrIn5 ci=Deactivated d1= src= g= v=
+   OrIn6 ci=Deactivated d1= src= g= v=
+   OrIn7 ci=Deactivated d1= src= g= v=
+   OrIn8 ci=Deactivated d1= src= g= v=
+   OUT //RndPhysicalCompact/SF_UPBLK/OrOut -> V:linkUpBlock
+ADDED //RndPhysicalCompact/BA_SET_G safeAnd order=212 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/BLUE/TonOut g= v=
+   AndIn2 ci=Activated d1=Make Contact (NO) src= g= v=linkUpBlock
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+ADDED //RndPhysicalCompact/SU_SET_G safeAnd order=262 params=[]
+   AndIn1 ci=Activated d1=Break Contact (NC) src=//RndPhysicalCompact/SU_SET/OrOut g= v=
+   AndIn2 ci=Activated d1=Make Contact (NO) src=//RndPhysicalCompact/SF_UPBLK/OrOut g= v=
+   AndIn3 ci=Deactivated d1= src= g= v=
+   AndIn4 ci=Deactivated d1= src= g= v=
+   AndIn5 ci=Deactivated d1= src= g= v=
+   AndIn6 ci=Deactivated d1= src= g= v=
+   AndIn7 ci=Deactivated d1= src= g= v=
+   AndIn8 ci=Deactivated d1= src= g= v=
+exec STATE_SU 262 first new 138 last new 261
+VAR USAGE in_LV_C1_FBK: src 0->0 tgt 8->15; +//RndPhysicalCompact/WDC1_FAIL_SET/AndIn2,//RndPhysicalCompact/WDC1_OK_SET/AndIn2,//RndPhysicalCompact/WDC1_LOSS/AndIn2,//RndPhysicalCompact/WDC1_SEEN_SET/AndIn2,//RndPhysicalCompact/WDC1_SEEN/Reset,//RndPhysicalCompact/WDC1_SPONT/AndIn2,//RndPhysicalCompact/WDH1_LAT/Set -
+VAR USAGE in_HV_C2_FBK: src 0->0 tgt 13->20; +//RndPhysicalCompact/WDC2_FAIL_SET/AndIn2,//RndPhysicalCompact/WDC2_OK_SET/AndIn2,//RndPhysicalCompact/WDC2_LOSS/AndIn2,//RndPhysicalCompact/WDC2_SEEN_SET/AndIn2,//RndPhysicalCompact/WDC2_SEEN/Reset,//RndPhysicalCompact/WDC2_SPONT/AndIn2,//RndPhysicalCompact/WDH2_LAT/Set -
+VAR USAGE out_LV_C1: src 1->1 tgt 6->12; +//RndPhysicalCompact/WDC1_WIN/TonIn,//RndPhysicalCompact/WDC1_FAIL/Reset,//RndPhysicalCompact/WDC1_OK/Reset,//RndPhysicalCompact/WDC1_SEEN_SET/AndIn1,//RndPhysicalCompact/WDC1_OFF_IN/AndIn1,//RndPhysicalCompact/WDC1_SPONT/AndIn1 -
+VAR USAGE out_HV_C2: src 1->1 tgt 6->12; +//RndPhysicalCompact/WDC2_WIN/TonIn,//RndPhysicalCompact/WDC2_FAIL/Reset,//RndPhysicalCompact/WDC2_OK/Reset,//RndPhysicalCompact/WDC2_SEEN_SET/AndIn1,//RndPhysicalCompact/WDC2_OFF_IN/AndIn1,//RndPhysicalCompact/WDC2_SPONT/AndIn1 -
+VAR USAGE in_LV_Faulty_FBK: src 0->0 tgt 6->7; +//RndPhysicalCompact/SF_HL_SU/AndIn2 -
+VAR USAGE linkHltLvLost: src 1->1 tgt 2->3; +//RndPhysicalCompact/SF_SET/OrIn7 -
+VAR ADDED linkWdRollSu alias=null src=//RndPhysicalCompact/WD_ROLL_SU/OrOut tgt=//Network6/SU_ABORT_CAUSE/OrIn4
+VAR ADDED linkWdCfgFail alias=null src=//RndPhysicalCompact/WD_FAIL_ANY/OrOut tgt=//Network1/CFG_EX_OR/OrIn2
+VAR ADDED linkWdEmg alias=null src=//RndPhysicalCompact/WD_EMG/OrOut tgt=//Network1/FBAnd1/AndIn5
+VAR ADDED linkHltRunLost alias=null src=//Network6/RD_PROT_SET/AndOut tgt=//RndPhysicalCompact/SF_SET/OrIn5
+VAR ADDED linkSafetyFault alias=null src=//RndPhysicalCompact/SF/RsOut tgt=//Network1/PF_OR/OrIn2
+VAR ADDED linkUpBlock alias=null src=//RndPhysicalCompact/SF_UPBLK/OrOut tgt=//Network1/PA_CFG/AndIn8,//Network2/FBAnd4/AndIn4,//RndPhysicalCompact/BA_SET_G/AndIn2
+inter-network wire sources: 0
+keys port: Id,name,portName,portNum,objectIndex,varId,filter,portDataType,channelInterface,deactivate1,maxDeviation,resetTime,targets,sources,globals,path

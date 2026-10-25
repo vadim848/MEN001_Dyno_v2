@@ -1,0 +1,21 @@
+
+> check:catalog
+> node scripts/catalog-check.js
+
+catalog target: C:\Users\user\source\repos\MEN001_Dyno_v2\MEN001_Dyno\Safety_Dyno\TwinSafeGroup1
+catalog SAL SHA256: 4ee8d3d96da1a1b91860131fc4c1b52a017aced44408f07532e960d565307a8f
+catalog stages: all
+catalog: FAIL {"tests":119,"pass":100,"fail":13,"skipped":0,"todo":6} (skipped = other stages / not run, not pass)
+  FAIL [E6] E-09 Run: C2_FBK lost after the 500 ms window with command ON -> Emergency
+  FAIL [E6] E-10 Run->R&D: C2_FBK ON > 500 ms after C2 OFF command -> Emergency
+  FAIL [E6] G-07 entering Config: C2_FBK not ON within 500 ms -> rollback to Safe; SafetyFault
+  FAIL [E6] W-01 Safe->R&D: C1_FBK not ON within 500 ms -> rollback to Safe; SafetyFault
+  FAIL [E6] W-02 StartingRun: C2_FBK not ON within 500 ms -> abort to R&D; SafetyFault
+  FAIL [E6] W-03 StartingRun: HV normal not confirmed for 30 s (blinking) -> rollback to R&D at 30 s; SafetyFault
+  FAIL [E6] W-04 Safe->R&D: LV normal not confirmed for 30 s -> rollback to Safe; SafetyFault
+  FAIL [E6] W-05 StartingRun: abort, then the 500 ms window expires without FBK -> SafetyFault anyway
+  FAIL [E5] W-06 Safe with SafetyFault: BOTH only acknowledges; new BOTH after 2 s -> step up
+  FAIL [E5] W-07 R&D with SafetyFault: green 0.5 s -> acknowledges and descends to Safe
+  FAIL [E5] W-08 R&D with SafetyFault: PLC command -> does not acknowledge
+  FAIL [E5] W-09 Safe: C1_FBK ON without command -> SafetyFault; step up forbidden until FBK OFF; press while FBK ON does not acknowledge
+  FAIL [E5] W-10 any error -> one PLC Fault bit = PLC command error OR SafetyFault

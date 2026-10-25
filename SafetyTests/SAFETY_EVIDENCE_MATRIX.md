@@ -9,6 +9,28 @@
 
 ## Current synchronization — 2026-10-20
 
+Latest finalLV_WORKING_TRANSFER_REVIEW ACCEPT exactworkingLV254 andbounded
+canonicalevidence supersedes reviewPENDING below. Notwhole41/BOOT/native or
+newRun/StartingRun fullimplementation acceptance. Completed295inputproof is
+run-specific; laterstatusdoc deltas are expected, not new functionalrun.
+D-STARTINGRUN-NO-COAST nowexplicit: abort STO→immediateprogramDischarge→
+existinghold→C2OFF→C2FBKOFF, noSS1/no5s coast; supersedes oldpending5abort
+statements. HealthyLossRunSS1 full5s remains mandatory and separatelytested.
+
+Latest actualworking LV254 supersedes older72f42… and LVpending snapshots below:
+SAL b7096fa3cf7349ea0be08f347180deb071a0f6b75612c4e5c8a7f45cf0557161,
+SGVL4eb263924e8ca5d77a4017c7f82b0a13396d981d881158be8c8f2a169d393ee5.
+lv-working-transfer/FINAL_WORKING_EVIDENCE.json records21file exacttransfer,
+wholeaudit+13structuralPASS and actualcanonical189/75/436of438,
+200casePASS/1STATEFAIL/7NV/0ERROR;295input before/after digest unchanged
+ccd7bd625a442c7cca585ca06fa486ec8c60ebc8747ac4a031d0086bd072de01.
+Working boundedLV completion includes normalSafe/fullfreshnewcycle; core
+LV16/Safe15/RnD69/earlySTO88/emergency40/SG3 evidence retained. No blanket
+wholeEMG/41/BOOT/nativeclaim. LV_WORKING_TRANSFER_REVIEW now records final
+**ACCEPT bounded working LV**, including actual canonical reports and input
+integrity independently checked after the run. Run/StartingRun
+fullstopv2 and isolated5s abort applicabilityclarification remain pending.
+
 A1/A2 extension: NEXT_EMERGENCY_EXECUTION_REVIEW.md independently ACCEPTS
 40PASS/0FAIL/0fixtureERROR on unchanged72f42d…/de0fa… . Evidence package:
 next-emergency-tests REPORT/RESULTS/VERIFIED_REPORT.json/PACKAGE_IDENTITY.

@@ -1,0 +1,93 @@
+{
+  "before": {
+    "sal": "59bf4ec1fe83d49f50b32ea89a230f42a1f18cb20122649cf5c4de435d552c33",
+    "sgvl": "c31e129072e2837234e376e51038ff988a92373cbfea97b383fbf23536c7946b",
+    "reference": "efddc60b1263144ae73b3d5184158100ec09c4de739dc8919309ef7b1b0dc334"
+  },
+  "after": {
+    "sal": "59bf4ec1fe83d49f50b32ea89a230f42a1f18cb20122649cf5c4de435d552c33",
+    "sgvl": "c31e129072e2837234e376e51038ff988a92373cbfea97b383fbf23536c7946b",
+    "reference": "efddc60b1263144ae73b3d5184158100ec09c4de739dc8919309ef7b1b0dc334"
+  },
+  "unchanged": true,
+  "preflight": {
+    "status": "PASS",
+    "errors": [],
+    "counts": {
+      "networks": 14,
+      "blocks": 254,
+      "ports": 2172,
+      "variables": 75,
+      "wires": 319,
+      "crossNetworkWires": 0
+    }
+  },
+  "binding": {
+    "status": "PASS",
+    "globalRefs": 206
+  },
+  "rawGreenConsumers": {
+    "current": [
+      "//Network1/FBEstop1/Restart",
+      "//Network1/FBDecouple1/DecIn1",
+      "//Network1/FBDecouple1/DecIn2",
+      "//Network12/FBAnd2/AndIn3",
+      "//Network6/FBTon2/TonIn",
+      "//Network2/FBAnd12/AndIn2",
+      "//Network1/FBAnd13/AndIn2",
+      "//Network1/FBAnd14/AndIn2",
+      "//Network1/FBOr3/OrIn4",
+      "//Network1/FBAndUnlockHold/AndIn3",
+      "//RndPhysicalCompact/GATE_002/AndIn1",
+      "//RndPhysicalCompact/GATE_003/AndIn1",
+      "//RndPhysicalCompact/GATE_009/AndIn2",
+      "//RndPhysicalCompact/GATE_025/AndIn2",
+      "//RndPhysicalCompact/GATE_031/OrIn3",
+      "//RndPhysicalCompact/STATE_PrevG/Reset",
+      "//RndPhysicalCompact/STATE_PrevG/Set"
+    ],
+    "reference": [
+      "//Network1/FBEstop1/Restart",
+      "//Network2/FBTon3/TonIn",
+      "//Network1/FBDecouple1/DecIn1",
+      "//Network1/FBDecouple1/DecIn2"
+    ]
+  },
+  "results": [
+    {
+      "case": "BOTH400-release-blue",
+      "start": 7417,
+      "release": 7818,
+      "down": 7918,
+      "hvReset": 7920,
+      "unbound": []
+    },
+    {
+      "case": "BOTH1100-release-blue",
+      "start": 7417,
+      "release": 8518,
+      "down": 8518,
+      "hvReset": 8520,
+      "unbound": []
+    },
+    {
+      "case": "BOTH-then-full-neutral-then-fresh-green",
+      "neutral": 8518,
+      "settledBeforeGreen": false,
+      "green": 10619,
+      "down": 11120,
+      "delta": 501,
+      "neutralEdgeTransient": 8518,
+      "unbound": [],
+      "limits": [
+        "Network3 phase owner boundary, not full BOOT/reachability",
+        "Network4/group semantics unexecuted",
+        "No standalone PLC endpoint policy",
+        "Run down fanout observed, QD endpoint not accepted",
+        "No single-event acceptance marker is invented"
+      ]
+    }
+  ],
+  "oracle": "Earlier Vadim-approved green500/BOTH1000/chord250/full clear/Run BOTH ignore; cancelled Niv proposals excluded",
+  "limits": "Actual SAL component execution with explicit Network3 phase boundary; not full boot/native/online/physical reachability"
+}

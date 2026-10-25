@@ -1,0 +1,16 @@
+param([string]$Assembly='SALDesigner.dll',[string]$Type='InPort',[string]$Method='GetMaster')
+# Read-only metadata/IL inspection; never loads models, publishes or controls equipment.
+Add-Type -TypeDefinition @'
+using System;using System.IO;using System.Linq;using System.Reflection;using System.Reflection.Emit;using System.Reflection.Metadata;using System.Reflection.Metadata.Ecma335;using System.Reflection.PortableExecutable;
+public static class ReadSdkIl {
+ static string Name(MetadataReader r,int token){try{var h=MetadataTokens.EntityHandle(token);if(h.Kind==HandleKind.TypeDefinition)return r.GetString(r.GetTypeDefinition((TypeDefinitionHandle)h).Name);if(h.Kind==HandleKind.MemberReference){var mr=r.GetMemberReference((MemberReferenceHandle)h);var pn=mr.Parent.Kind==HandleKind.TypeReference?r.GetString(r.GetTypeReference((TypeReferenceHandle)mr.Parent).Name):mr.Parent.Kind==HandleKind.TypeDefinition?r.GetString(r.GetTypeDefinition((TypeDefinitionHandle)mr.Parent).Name):mr.Parent.Kind.ToString();return pn+"::"+r.GetString(mr.Name);}if(h.Kind==HandleKind.MethodDefinition)return r.GetString(r.GetMethodDefinition((MethodDefinitionHandle)h).Name);if(h.Kind==HandleKind.FieldDefinition)return r.GetString(r.GetTypeDefinition(r.GetFieldDefinition((FieldDefinitionHandle)h).GetDeclaringType()).Name)+"::"+r.GetString(r.GetFieldDefinition((FieldDefinitionHandle)h).Name);if(h.Kind==HandleKind.TypeReference)return r.GetString(r.GetTypeReference((TypeReferenceHandle)h).Name);return h.Kind.ToString();}catch{return token.ToString("X8");}}
+ public static void Dump(string file,string type,string method){using var stream=File.OpenRead(file);using var pe=new PEReader(stream);var r=pe.GetMetadataReader();var ops=typeof(OpCodes).GetFields().Where(f=>f.FieldType==typeof(OpCode)).Select(f=>(OpCode)f.GetValue(null)).ToDictionary(x=>(ushort)x.Value);foreach(var th in r.TypeDefinitions){var t=r.GetTypeDefinition(th);if(type!="*"&&r.GetString(t.Name)!=type)continue;foreach(var mh in t.GetMethods()){var m=r.GetMethodDefinition(mh);if(r.GetString(m.Name)!=method)continue;Console.WriteLine(r.GetString(t.Name)+"::"+method+" RVA "+m.RelativeVirtualAddress);if(m.RelativeVirtualAddress==0)continue;var il=pe.GetMethodBody(m.RelativeVirtualAddress).GetILBytes();for(int p=0;p<il.Length;){int start=p;ushort code=il[p++];if(code==254)code=(ushort)(0xfe00|il[p++]);var op=ops[code];int n=op.OperandType switch{OperandType.InlineNone=>0,OperandType.ShortInlineBrTarget or OperandType.ShortInlineI or OperandType.ShortInlineVar=>1,OperandType.InlineVar=>2,OperandType.InlineI8 or OperandType.InlineR=>8,OperandType.InlineSwitch=>4+4*BitConverter.ToInt32(il,p),_=>4};string val="";if(n==4){int tok=BitConverter.ToInt32(il,p);val=op.OperandType==OperandType.InlineString?r.GetUserString(MetadataTokens.UserStringHandle(tok&0xffffff)):op.OperandType==OperandType.InlineMethod||op.OperandType==OperandType.InlineField||op.OperandType==OperandType.InlineType?Name(r,tok):tok.ToString();}if(n==1)val=il[p].ToString();Console.WriteLine(start.ToString("X4")+" "+op.Name+" "+val);p+=n;}}}}
+}
+'@
+$taskPreviousWriter=[Console]::Out
+$taskCaptureWriter=[System.IO.StringWriter]::new()
+try { [Console]::SetOut($taskCaptureWriter); [ReadSdkIl]::Dump("$Assembly",$Type,$Method) }
+finally { [Console]::SetOut($taskPreviousWriter) }
+$taskCaptureWriter.ToString() -split "`r?`n"
+
+

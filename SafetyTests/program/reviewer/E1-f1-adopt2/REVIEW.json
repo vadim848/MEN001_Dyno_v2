@@ -1,0 +1,32 @@
+{
+  "slice": "E1-f1-adopt2",
+  "role": "v2-reviewer",
+  "date": "2026-10-21",
+  "head": "b580920 (working tree)",
+  "source": {"sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3", "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104", "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603"},
+  "subjects": {
+    "test/current-f1-lock-and-q500.test.js": "1f6850c31ae596c164ad594d372378f2843a23adccd0157c752d94336fde381f",
+    "program/tester/E1-f1/MUTATION_RESULTS.v2.json": "d961c4c396bb6a895b31a0341146299b11ea3c8e541e2b0a9316a1bf3e698b7c",
+    "program/tester/E1-f1/MUTATION_RESULTS.json": "aeb9cb243145f56763371a23c4284336e0b2c0860e67ac02139e3689fabfee5b"
+  },
+  "verdict": "ACCEPT",
+  "bounds": "offline stand model, Network3 cut (A1-A5); not IDE/native CRC/Target/hardware safety; no SAL/SGVL change in this slice",
+  "checks": {
+    "transfer": {"result": "PASS", "fixtureDiff": "only 'export' removed + path lines (import.meta.url, no env override, same target dir) + compressFrames dropped", "casesVerbatim": ["lateblue500", "lateblue600", "lategreen500", "lategreen600", "real-lock"], "shaPins": "none"},
+    "neighbours": {"result": "PASS", "sources": ["D-Q500", "D-LATE-SECOND", "D-CHORD250", "D-RUN-BOTH-IGNORE", "D-STARTINGRUN-GREEN-DOWN", "Vadim reconfirmations 2026-10-20/21 items 1,5,10,11"], "positiveControl2110": "valid: release filter 2000 ms confirmed; liveness, not a boundary proof", "shortResetQuestion": "D-PHYSICAL-SHORT-RESET-DOWN is in the section cancelled by Vadim (Niv proposals, SCENARIO_DECISIONS l.869/1358); items 1/5 restore green 0.5 s down; not applicable to Run->R&D; oracle stands"},
+    "rerun": {
+      "F1": "9/9 PASS",
+      "MU05": {"sal": "5771ba46764a5cc82d84431caa3ef2bd4854d786d7b1341cb117760179b987a4", "fail": ["F1-real-lock-producer-rejects-green-and-doesnotqueue"]},
+      "MU07": {"sal": "a21049e2f18201786d7433e10106a43f9efcf09091732d7384464c46e753f548", "shaDeterministic": false, "fail": ["F1-green-qualified-lateblue500-cannot-cancel", "F1-green-qualified-lateblue501-cannot-cancel"]},
+      "MU19": {"fail": ["F1-green-lateblue499-before-single-no-command"]},
+      "standDrift": "src/sal-parser.js now 24b63216b2f7567f712dc0006f0ac9657753ac4d51776d552994070bd03a5876 (handoff fbf239e4... = HEAD); changed after tester run by another role; results identical"
+    },
+    "units": {"result": "tester correction CONFIRMED", "recomputed": "26/26 from TOTAL lines, 0 mismatch vs v1 and v2; every mutant PASS+FAIL+ERROR=58 cases", "v1VsV2": "verdicts/summary lists/battery unchanged; only annotations and killers added; killer counts match shared.tap (87/26/15)"}
+  },
+  "remarks": [
+    {"to": "tester/lead", "blocking": false, "text": "Drop 'open point D-PHYSICAL-SHORT-RESET-DOWN' from handoff: cancelled history; no analyst question needed"},
+    {"to": "tester", "blocking": false, "text": "Header says 'two source tests' (5 cases transferred); refresh stand hash sal-parser 24b63216..."},
+    {"to": "tester", "blocking": false, "text": "Blue-first 499 lacks new-attempt-after-bothOFF+2000 check; blue-first in Run weakly discriminating"},
+    {"to": "tester/architect", "blocking": false, "text": "E1-kill-audit remark 5 (MU22 GATE_005.AndIn2 forbidden-transition test) remains open"}
+  ]
+}

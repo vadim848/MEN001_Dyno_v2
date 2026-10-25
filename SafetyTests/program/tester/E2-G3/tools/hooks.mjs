@@ -1,0 +1,1 @@
+export async function resolve(spec, ctx, next) { if (spec === 'node:test' || spec === 'test') return { url: new URL('./stubtest.mjs', import.meta.url).href, shortCircuit: true }; return next(spec, ctx); }

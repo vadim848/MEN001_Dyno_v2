@@ -1,0 +1,73 @@
+SafetyApplicationHasVariablesSerializer::ReadTargetRolePlayer RVA 498604
+0000 ldarg.1 
+0001 brtrue.s 11
+0003 ldstr serializationContext
+0008 newobj .ctor
+000D throw 
+000E ldarg.2 
+000F brtrue.s 11
+0011 ldstr element
+0016 newobj .ctor
+001B throw 
+001C ldarg.3 
+001D brtrue.s 11
+001F ldstr reader
+0024 newobj .ctor
+0029 throw 
+002A ldnull 
+002B stloc.0 
+002C ldarg.1 
+002D callvirt get_Directory
+0032 ldsfld Variable::DomainClassId
+0037 callvirt GetSerializer
+003C stloc.1 
+003D br.s 80
+003F ldloc.1 
+0040 ldarg.1 
+0041 ldarg.3 
+0042 ldarg.2 
+0043 callvirt get_Partition
+0048 callvirt TryCreateInstance
+004D stloc.0 
+004E ldloc.0 
+004F brfalse.s 49
+0051 ldarg.2 
+0052 isinst ElementLink
+0057 ldsfld SafetyApplicationHasVariables::VariableDomainRoleId
+005C ldloc.0 
+005D call SetRolePlayer
+0062 ldarg.1 
+0063 callvirt get_Directory
+0068 ldloc.0 
+0069 callvirt GetDomainClass
+006E callvirt get_Id
+0073 callvirt GetSerializer
+0078 ldarg.1 
+0079 ldloc.0 
+007A ldarg.3 
+007B callvirt Read
+0080 br.s 43
+0082 ldarg.1 
+0083 ldarg.3 
+0084 call UnexpectedXmlElement
+0089 ldarg.3 
+008A call Skip
+008F ldarg.1 
+0090 callvirt get_Result
+0095 callvirt get_Failed
+009A brtrue.s 17
+009C ldarg.3 
+009D callvirt get_EOF
+00A2 brtrue.s 9
+00A4 ldarg.3 
+00A5 callvirt get_NodeType
+00AA ldc.i4.1 
+00AB beq.s 146
+00AD ldloc.0 
+00AE brtrue.s 12
+00B0 ldarg.1 
+00B1 ldarg.3 
+00B2 ldstr SafetyApplicationHasVariables
+00B7 call DanglingRelationship
+00BC ret 
+

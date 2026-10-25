@@ -1,0 +1,91 @@
+{
+  "slice": "E2-G1-v7-m",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "task": "review G1 v7 m-14 (REL01-e2 lift deferred through a permit episode) and m-17 (boot-Safe base of FBK10-PLC-A)",
+  "sources": {
+    "scenarioDecisionsBefore": "c26025c3946f43a9769555f509f11ff47114a3a0848beb5c0e617e604917260a",
+    "spec": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472",
+    "scope": "03facdcebc8b54763d5bbfa0fc634dba85a5ed6bb5070e1b82ca33e76f9e9537",
+    "traceMatrix": "543d0a36fc3aedd3c8bc35bb8e58d00873dfcc0a47846aa4a3e4697c0bc740fa",
+    "reviewG1v7": "1a9e89ba5a38d8d43064bf8f45ca8d9aa2ff4124737068360ddb759bdeb05138",
+    "planV4QuestionsCriteriaBefore": "5d6bcc1a13e3bc7e8ee78e4d7d2855c6374a0f1af5f7e4f23df98b34c3d7120b",
+    "planV7TdCriteria": "7ea3793ef5b158ca5e36cd1e81b073101283a29275905582d10507495cd567b9",
+    "g1v6qCriteria": "f86f8ed53e062e30405c1201a723d6e9c9ccbe509c782204191ba7adaf7723ee",
+    "testRel01e2StimulusOnly": "aacb3e4c9732f51d68549e8ee64318829ff4ebf0a5d6671ccad5afd0e2b7071b",
+    "testFbkUnsolicitedBaseOnly": "5dc215187d409808e17dcf706112b8fba42b2d75cf1eb8a10cbac2c00bcd40b7",
+    "helperE2Lifecycle": "36499eb49cb62132f3608283c3ca7f0651fcc1f4034f64b03ef72ca8e6e842d8",
+    "head": "dbca5dd",
+    "referenceNote": "reference 4495a1f has no connector episode during BOTH with a separate R&D stage and no legacy inPLC_RnD_Mode path; no oracle"
+  },
+  "notation": {
+    "f": "first press", "p": "second press, p-f<=250", "Q": "p+1000 (T_BOTH qualification)",
+    "s": "first scan of permit FALSE", "r": "first scan of restoration",
+    "l": "first lift output scan: Safe->R&D out_LV_C1 TRUE; R&D->Run out_HV_C2 TRUE or STO released (any drive)",
+    "a": "first scan outside the initial steady stage (Safe->R&D: S12 / any stage other than S1; R&D->Run: SR / any stage other than R&D)",
+    "l0": "first lift in control X0 (same stimulus, no episode); inputs before s identical, so a<=s-1 / l<=s-1 coincide in both traces",
+    "permit": "Safe->R&D: in_LV_Connector_Interlock / in_HV_Connector_Interlock / both; R&D->Run: in_InterLock_NC_1 / _2 / both"
+  },
+  "modelFact": "F1 (not oracle): control l0=Q+3; episode [Q+2,Q+102): first lift Q+102 = r, no Emergency -> held gesture executed after restoration",
+  "teamDefaults": ["TD-07"],
+  "questionsToVadim": [],
+  "blocked": [],
+  "criteria": [
+    {
+      "id": "REL01-e2-LATE",
+      "status": "READY-D (measure: TEAM-DEFAULT TD-06 + TD-07)",
+      "replaces": "E2-plan-v4-questions/CRITERIA.md section 4 row 's >= Q+2 -> accepted, then Emergency' (relied on the cancelled [Q,Q+1] window)",
+      "matrixIds": ["EMG-003", "EMG-004", "EMG-005", "EMG-011", "CVR-004", "BTN-001", "BTN-002", "BTN-006", "MOD-001", "MOD-002"],
+      "initial": {
+        "Safe": "steady Safe per R0, buttons released > 2000 ms, no SafetyFault",
+        "RnD": "steady R&D, NC1/NC2 TRUE"
+      },
+      "sequence": "f; p=f+delta (delta in {0,250}); BOTH held to p+1100; release; permit episode [s, s+100); observe to >= Q+6000",
+      "points": ["Q", "Q+1", "Q+2", "l0", "l0+1", "Q+401"],
+      "rules": [
+        {"if": "l >= s+1 (incl. l = r)", "expect": "FORBIDDEN", "sources": ["SPEC 5.1 / EMG-003 new gesture", "IL-02", "EMG-011 current interlocks", "EMG-004/EMG-005", "D-TEAM p.1 no deferred execution"]},
+        {"if": "a >= s+1", "expect": "FORBIDDEN", "sources": ["same"]},
+        {"if": "a <= s-1", "expect": "Emergency mandatory (by EMG-004/Q-RC-03(a) criteria bounds); no lift in scans >= s+1 except the one issued before s", "sources": ["Q-RC-14 A", "Q-RC-03(a) B", "EMG-005", "EMG-011"]},
+        {"if": "a never", "expect": "refusal: initial stage every scan; C1/C2 not ON, STO not released; no Emergency, no fault/SafetyFault; held buttons after r give nothing", "sources": ["EMG-003", "IL-02"]},
+        {"if": "a = s or l = s", "expect": "observation: only (i) refusal without energy or (ii) accepted + Emergency; 'accepted without Emergency' forbidden", "sources": ["convention q"]}
+      ],
+      "normativePoints": {
+        "s=Q+401": "any TD-06-conforming candidate has l0 <= Q+400 -> a <= s-1 -> Emergency mandatory; R&D/Run not yet confirmed (>= l+600, question 68 B, TD-02)",
+        "s=l0+1": "lift already issued -> Emergency mandatory (differential from X0)",
+        "s=Q+2 on F1": "FAIL expected: lift deferred to r (content RED)"
+      },
+      "forbidden": [
+        "execution of the held gesture in any scan >= r without a new attempt after release of both >= 2001 ms",
+        "first lift output in any scan [s+1, end]",
+        "accepted without Emergency with permit FALSE after the transition started",
+        "Emergency/fault in the initial steady Safe/R&D when the transition did not start",
+        "restart of the 2 s release count from permit restoration (Q-REL-AFTER-PERMIT A)"
+      ],
+      "afterRefusal": "new BOTH after release 1999 ms refused, 2000 observation, 2001 accepted (TD-06 + TD-07)",
+      "acceptedMeasure": "no episode in [f, Q+400]: first lift in [Q, Q+400] (TD-06). Episode with s in [f, Q+400]: 'accepted before the episode' only if l <= s-1 (l = s observation); lift in [s+1, Q+400] is FAIL, not 'accepted'",
+      "testerRecommendations": [
+        "rewrite 's = Q+2 ... accepted, then Emergency' as the REL01-e2-LATE disjunction plus the l >= s+1 ban",
+        "add normative s = Q+401 -> Emergency, lift <= Q+400 before s, no new lift after s",
+        "add the l >= s+1 ban to s in {Q, Q+1} (currently only !l || e)",
+        "s = l0+1 differential from X0 where feasible"
+      ]
+    },
+    {
+      "id": "FBK10-PLC-A boot-Safe base (m-17)",
+      "status": "READY-D (confirmed)",
+      "matrixIds": ["MOD-008", "MOD-001", "WDG-004"],
+      "initial": "steady Safe after start + main Restart: only b_Step1, C1/C2 commands and FBK OFF, buttons released >= 2100 ms, EStop acknowledged; no ON command since start",
+      "expect": "same as FBK10-PLC-A (E2-plan-v7-TD section 2) and boundary g-1: every scan [t, t+1500] no S12, C1 OFF, STO set, no Emergency; LV discharge request kept only if it was issued (else diagnostic)",
+      "rationale": [
+        "Q-V4-02 B: ban defined on 'steady Safe' state, entry path and lift source not qualified",
+        "MOD-008: every contradictory/unconfirmed feedback bans up, no qualifier",
+        "E6-Q1 exception (FBK ON within 500 ms after OFF command) not applicable: no ON command since start; Safe held >= 2100 ms",
+        "V14-Q4 A does not weaken the FBK-10 gate"
+      ],
+      "outOfScope": ["FBK ON during start/Emergency before steady Safe (E7, BOOT-001/002)", "FBK ON within 500 ms of an OFF command (E6-Q1/WDG-05)"],
+      "f1RedAssessment": "boot-base RED (9 + 3 boundary) are content RED, same root as R-T5",
+      "sources": ["Q-V4-02 B", "MOD-008", "Q-V7-04 B", "E2-plan-v7-TD section 2", "E6-Q1"]
+    }
+  ],
+  "dTeamP4Check": {"TD-07": {"addsEnergy": false, "removesProtection": false, "changesInterface": false, "contradictsVadim": false}}
+}

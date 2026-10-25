@@ -1,0 +1,52 @@
+# E4 config manifest (editor self-check; coordinator applies at transfer, never edit in place)
+
+Base = canonical E3 repo state. Each file is a FULL copy under candidates/E4/config/<repo path>; encoding/BOM/CRLF preserved. SHA256 of bytes.
+
+| repo target path | base SHA256 | new SHA256 | summary |
+|---|---|---|---|
+| MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_CMD_SAFE_TO_RND.sds<br>RENAME from `MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_BIT_RnD_Mode.sds` | 55bc3b67832b649a3f6a015961b3a93c3fe828bb9e5554134884214f2cde3058 | 55bc3b67832b649a3f6a015961b3a93c3fe828bb9e5554134884214f2cde3058 | rename only (SDSID 94, content and CRC unchanged) |
+| MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_CMD_RND_TO_RUN.sds<br>RENAME from `MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_BIT_RnD_Mode_2.sds` | 8d597d60709fa0827395c79302891394afc4253e1ea5d98071a2ce7b39c1a9ef | 8d597d60709fa0827395c79302891394afc4253e1ea5d98071a2ce7b39c1a9ef | rename only (SDSID 97, content and CRC unchanged) |
+| MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_CMD_RUN_TO_RND.sds<br>RENAME from `MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_Bypass1.sds` | 6bfa1d6747aef5b5606afde2d0373ce80528426f69db3553f3f79d43f6491156 | 6bfa1d6747aef5b5606afde2d0373ce80528426f69db3553f3f79d43f6491156 | rename only (SDSID 63, content and CRC unchanged) |
+| MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_CMD_RND_TO_SAFE.sds<br>RENAME from `MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_Bypass2.sds` | 4b3bb74e3a7444772225f5d187e3cd974ea61cbd6309d90edea3558342c17a68 | 4b3bb74e3a7444772225f5d187e3cd974ea61cbd6309d90edea3558342c17a68 | rename only (SDSID 64, content and CRC unchanged) |
+| MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_PLC_Heartbeat.sds<br>RENAME from `MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_BIT_InitSystem.sds` | a8e8ceb72342fe578d1b10943f15146bff1fa2a305e0a4e1b1a7704c840409bb | a8e8ceb72342fe578d1b10943f15146bff1fa2a305e0a4e1b1a7704c840409bb | rename only (SDSID 48, content and CRC unchanged) |
+| MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_STS_SAFE.sds<br>RENAME from `MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_BIT_MotoCoolingEnable.sds` | 34c9b855bfe1b548ed5199e34cb2f88d4c3ff7232162a5f9e5891d1969ecea22 | 34c9b855bfe1b548ed5199e34cb2f88d4c3ff7232162a5f9e5891d1969ecea22 | rename only (SDSID 14, content and CRC unchanged) |
+| MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_STS_RND.sds | (new) | 4e9752e6d22aaa7edee522a094f611504f093d29ba4e929ca414383b9c13a891 | NEW Out BIT standard alias device SDSID 100 (native AliasDevice.ToXml; CRC by native writer) |
+| MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_STS_RUN.sds | (new) | d455f962e0769e0ab1f905b2b9b1adaa713121a6d4b8798599633149519332d7 | NEW Out BIT standard alias device SDSID 101 (native AliasDevice.ToXml; CRC by native writer) |
+| MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_STS_EMG.sds | (new) | 95d0b47f56286ffcccee66d30c1d6a547c73c4de3ed77527eeae2e26b76e5e7f | NEW Out BIT standard alias device SDSID 102 (native AliasDevice.ToXml; CRC by native writer) |
+| MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_STS_CFG.sds | (new) | 2bcba3381a12d7c106a2ae898db1a44c5141e7eaa4376874bc2df737ffa1c00d | NEW Out BIT standard alias device SDSID 103 (native AliasDevice.ToXml; CRC by native writer) |
+| MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_STS_COVER_LOCKED.sds | (new) | de17498c4bb645bb660620701220ecb159c97674b0c668561f629348103cdf95 | NEW Out BIT standard alias device SDSID 104 (native AliasDevice.ToXml; CRC by native writer) |
+| MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_STS_FAULT.sds | (new) | 4c918bf618432f227b60adcf6e42e85cab0b852ca05b1add901f3ddc828e0cd6 | NEW Out BIT standard alias device SDSID 105 (native AliasDevice.ToXml; CRC by native writer) |
+| MEN001_Dyno/Safety_Dyno/Safety_Dyno.splcproj | 9f892f1da496ab3a1cfc747872ba9c41adea13b76336f1aee6e05b46cde79600 | 41bab479edeff95618669834b40d91e7c6aeb2a60482b2df614afc0e2f63ff4e | Include paths of 6 renamed alias files, +6 Include lines for new sds 100-105, NextSdsId 100->106; Project Crc attribute NOT recomputed (IDE refreshes on save) |
+| MEN001_Dyno/PLC_Dyno/DUTs/ST_TwinSAFE_OUT.TcDUT | 7f37dbae6e651ddeba9280999b6c8f3c1b76b8546dbbd61a0fa8e3889924977d | 822da1d36934b089f2e6efdf14924b88bbc3174f768022667706cc5868e6092f | Set_RnD_Mode/Set_RnD_Mode2 renamed CMD_SAFE_TO_RND/CMD_RND_TO_RUN (same offsets); +CMD_RUN_TO_RND, CMD_RND_TO_SAFE, Heartbeat |
+| MEN001_Dyno/PLC_Dyno/DUTs/ST_TwinSAFE_IN.TcDUT | 4658d790de376c708fcd9e2bcbd937802bc12ef078364c0c7e3651421166444a | 227175a992c3b40c56b207053a62291dbc28285d10a8d6c250a2a4418984d67d | +7 status fields STS_SAFE, STS_RND, STS_RUN, STS_EMG, STS_CFG, STS_COVER_LOCKED, STS_FAULT (after HV_Interlock) |
+| MEN001_Dyno/PLC_Dyno/POUs/MAIN.TcPOU | 873d34ff21d9594cd2a25547cba735808802906080b2c8280aabd9a9cd7dcd7e | 2caae527b27513f5137d5796dc54ac4773307093f6a69f0be9b4d3ac2f2a3f48 | heartbeat 0.5 s toggle (2 TON) -> stTwinSAFE_OUT.Heartbeat; act_LogicMap: legacy 2-bit writes replaced by one CMD_* TRUE per n_SafeSate case, all others FALSE every scan |
+| MEN001_Dyno/MEN001_Dyno.tsproj | 0748769ab6c012e4d90d8ebfbac32896815297d2396f297b8105d78e423e818a | 29e6d0efa17260d43b99635cb930d10c8840f0d695b23e3ec836190fbb6ab5e4 | DataType ST_TwinSAFE_OUT (rename 2 fields, +3, 120->144 bit) and ST_TwinSAFE_IN (+7, 200->256 bit); StandardInputs PDO +Standard Out Var 100-105, padding ARRAY[0..6]->[0..0]; task links: +7 STS_* (Out Var 14,100-105), Set_RnD_Mode/2 -> CMD_SAFE_TO_RND(94)/CMD_RND_TO_RUN(97), +CMD_RUN_TO_RND(63), CMD_RND_TO_SAFE(64), Heartbeat(48); TargetSystemConfig/hardware/safe I/O unchanged |
+
+## Renamed (old -> new; delete old path at transfer)
+- MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_BIT_RnD_Mode.sds -> MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_CMD_SAFE_TO_RND.sds
+- MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_BIT_RnD_Mode_2.sds -> MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_CMD_RND_TO_RUN.sds
+- MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_Bypass1.sds -> MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_CMD_RUN_TO_RND.sds
+- MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_Bypass2.sds -> MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_CMD_RND_TO_SAFE.sds
+- MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_BIT_InitSystem.sds -> MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/IN_PLC_Heartbeat.sds
+- MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_BIT_MotoCoolingEnable.sds -> MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_STS_SAFE.sds
+
+## New files
+- MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_STS_RND.sds
+- MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_STS_RUN.sds
+- MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_STS_EMG.sds
+- MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_STS_CFG.sds
+- MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_STS_COVER_LOCKED.sds
+- MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/OUT_STS_FAULT.sds
+
+## Deleted files
+- none (old names appear only as rename sources above)
+
+## Open items for the PLC side
+- REQUEST SOURCE TO BE CONNECTED BY PLC SIDE: nothing in the PLC writes n_SafeSate; MAIN.act_LogicMap keeps all four CMD_* FALSE (idle) unless b_PlcRequestActive is TRUE, then exactly one CMD_* per n_SafeSate case. No HMI/request mechanism added.
+
+## Not changed / caveats
+- SDSID 2 (Safety_Step.sds) is UINT 16 bit, not BIT: left unused; the 7 status bits use sds 14 + 6 new (100-105) instead of plan 2 + 14 + 5 new. NextSdsId 106.
+- Safety_Dyno.splcproj Project Crc attribute is not recomputed (no offline writer found); the IDE refreshes it on save. sds files: CRC by native AliasDevice.ToXml (renames keep content).
+- MEN001_Dyno.tsproj: hand text edit mirroring what the IDE regenerates (PDO entries, padding, DataTypes, links). Not verified by the IDE/XAE. Stale UnrestoredVarLinks (InitSysytem, Var 48) untouched. FSOE slot data / ADS / TargetSystemConfig.xml untouched.
+- P2b (Healthy -> Faulty rename in ST_TwinSAFE_IN/MAIN, Out Var 89/90 links) not done: not needed for the E4 logic; separate item.
+- Physical rewiring: none (PLC process data only).

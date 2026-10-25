@@ -1,0 +1,2 @@
+import fs from 'node:fs';
+const b=new URL('./',import.meta.url);for(const n of ['full-check.log','edits.json','identity.json'])fs.copyFileSync(new URL(n,b),new URL('initial-'+n,b));fs.copyFileSync(new URL('sandbox/SafetyTests/SOFTWARE_CHECK_RESULTS.json',b),new URL('initial-results.json',b));

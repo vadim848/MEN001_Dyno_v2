@@ -1,0 +1,65 @@
+{
+  "slice": "E2-G1-v8-q",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "basis": ["program/tester/E2-G1/HANDOFF_v8.md questions 1-3", "program/editor/E2d-v7.4.1/HANDOFF.md D-V74-1 (via lead)"],
+  "sources": {
+    "tester/E2-G1/HANDOFF_v8.md": "2d1ec302030678cf957f2caf99951c305581547c8297a56786e16402b6acdfba",
+    "editor/E2d-v7.4.1/HANDOFF.md": "0f5aa6e4779107473390231d17bc323bb3ca66ffdcba3dc12066e152e24dd558",
+    "E2-v73-q/CRITERIA.md": "2ee04ebbfd4e6abd4b988df44434ccd33c86e74b6be1ac4531e21205ce5f9bfe",
+    "E2b-dev/CRITERIA.md": "142b2b9dd820a6d2142d3594a2d095da75916b7fec9dd5c0edfe2363f3efee9a",
+    "E2-G1-v7-m/CRITERIA.md": "c61c334adb05655a34cb80f4a0ef9a14a6730035e7c332fbf7093d7d6f68f641",
+    "SCENARIO_DECISIONS.md.before": "de4996a67abc8869d4c388418ff56a3215b14ebc4a5c65c4b0e3aafbb311a456",
+    "SCENARIO_DECISIONS.md.after": "f6c3846983de919193b904e07ac85321727d943657ff8c69cc0b14a945be9a80",
+    "canonical.sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "candidate.E2b-v7.2.sal": "386e208becc94f966c79629653b50c15ab96bd95bf95bf823aa1e7510ea2cfec",
+    "candidate.E2d-v7.4.1.sal": "a5acf29175b041d243aac19e5ffee4c260f0c6cab3b538679c36ed1e59286c1b"
+  },
+  "criteria": [
+    {
+      "id": "L2-SU-HV0", "decision": "TD-11", "status": "READY-D", "oracleChange": "weakening: lower bound removed for out_HV_Discharge_Request under precondition",
+      "initial": "stable R&D (R0); BOTH at p, release p+1100; A per TD-08; u = first raise output of no-event trace",
+      "events": "in_Estop_PLC TRUE (held) or L1 cause at e in [A+1, u]",
+      "precondition": "event trace: out_HV_C2 FALSE and STO_DR1/2 active in every scan >= e; otherwise TD-10 applies",
+      "expected": ["out_HV_Discharge_Request: tau >= e, tau-e <= d_Run+1, held TRUE to end", "L1: tau_X <= tau_R (no lower bound)", "STO/C2 in target every scan >= e", "C1 OFF per TD-10/TD-12", "Imm, latch, Restart->Safe unchanged"],
+      "forbidden": ["C2 ON or STO release at scan >= e", "discharge dropped without accepted HV raise", "discharge later than e+d_Run+1 or never"],
+      "boundaries": {"e=A": "observation TD-08 (excluded)", "e=A+1,u-1,u": "normative", "e>=u+1 or partial raise": "TD-10 unchanged; lead >=2 scans -> analyst"},
+      "sources": ["Q-V7-01 G", "question 73 A", "Q-T3-1 A", "Q-ARCH-03 B", "D-TEAM p.1/p.2", "CRITERIA_DELTA_v4 0.1"],
+      "ids": ["EMG-001", "EMG-002", "EMG-011", "CVR-006", "MOD-002"]
+    },
+    {
+      "id": "L1-SU", "decision": "TD-12", "status": "READY-D", "oracleChange": "weakening by 1 scan: L1-cause Del lower bound d_Run-1 -> d_Run-2 in StartingRun",
+      "initial": "as L2-SU (TD-10)",
+      "events": "X in {NC1, NC2, both, ES_NC_1, ES_NC_2, Mentee, LV/HV connector} at e in {A+1, u, u+1, u+50, r-1}; R = in_Estop_PLC in SU at same e",
+      "expected": ["L1: tau_R-1 <= tau_X <= tau_R", "L2-SU for R: d_Run-1 <= tau_R-e <= d_Run+1", "tau_X-e >= d_Run-2", "out_LV_C1 OFF: tau_X-e >= 2000"],
+      "selfTest": {"-3": "FAIL", "-2": "PASS", "-1": "PASS", "0": "PASS", "C1 1999": "FAIL", "absent": "ERROR"},
+      "scope": "StartingRun only",
+      "sources": ["Q-ARCH-01 A", "Q-E2Q-01 A", "TD-10", "CRITERIA_DELTA_v4 0.1 L1 (T1 p.2-3)", "D-TEAM p.1/p.2"],
+      "ids": ["EMG-001", "EMG-002", "EMG-011", "CVR-006", "MOD-002"]
+    },
+    {
+      "id": "FFS-BYP", "decision": "existing norm E2b-dev 2.3 + V14-Q16/CFG-001", "status": "READY-D (replaces NV of AND6 route)",
+      "stimulus": "inPLC_BypassC1C2 TRUE held; in_False_SI2_CH8 FALSE (constant, Q-MU06-01)",
+      "rows": {
+        "a": "stable Safe, NC1/NC2/both FALSE from t0, Bypass TRUE from t0+200 for 3000 ms -> out_HV_C2 and out_LV_C1 FALSE, STO active every scan, no Emergency/SafetyFault, stage Safe",
+        "b": "stable R&D, Bypass TRUE from t0 held, BOTH at p>=t0+100; NC FALSE at c in {A-1, A, A+1, u} -> identical per scan to the same row without Bypass (TD-08/COV-1/FFS)",
+        "c": "any C2 ON on a candidate absent in the no-Bypass control -> FAIL V14-Q16/CFG-001"
+      },
+      "blocked": "Config positive behaviour (CFG-001..006) BLOCKED-E4",
+      "note": "existing-retry AND6 unit pin is F1-subgraph structural; relocation is lead/stand decision",
+      "ids": ["CVR-004", "CVR-006", "MOD-002", "CFG-001"]
+    },
+    {
+      "id": "REL01-e2-LATE-A", "decision": "TD-13 (TD-07 + TD-08)", "status": "READY-D", "oracleChange": "none (stricter for A<=s-1 with lift at s)",
+      "initial": "as REL01-e2-LATE (E2-G1-v7-m 1)",
+      "events": "BOTH f, p=f+delta, held to p+1100; episode [s, s+100), s in {Q, Q+1, Q+2, Q+401, l0, l0+1}; horizon >= Q+6000",
+      "measure": "a := A per TD-08 on no-episode fork (R&D->Run: recRndC_SU or C2 ON or STO released; Safe->R&D: b_Step12 or C1 ON)",
+      "expected": {"A<=s-1": "Emergency mandatory; no new raise at scan >= s (raise before s or none both allowed)", "A=s": "observation: refusal w/o Emergency or Emergency; no raise >= s", "A>=s+1": "forbidden", "A never": "refusal, no fault/Emergency"},
+      "forbidden": ["first raise l >= s with permit FALSE in s", "deferred lift after recovery", "accepted without Emergency", "Emergency when not started", "2 s pause restart from recovery"],
+      "antiVacuity": "without recRndC_SU Symbol, 'Emergency without raise' with output-based A >= s -> ERROR",
+      "ids": ["EMG-003", "EMG-004", "EMG-005", "EMG-011", "CVR-004", "BTN-001", "BTN-002", "BTN-006", "MOD-001", "MOD-002"]
+    }
+  ],
+  "questionsToVadim": [],
+  "blocked": ["CFG-001..006 positive Config behaviour (E4)"]
+}

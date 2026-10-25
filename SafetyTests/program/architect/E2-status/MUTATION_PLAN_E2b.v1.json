@@ -1,0 +1,107 @@
+{
+  "version": "sal-mutation-plan-v1",
+  "status": "Architect guard-mutation plan for slice E2b (program/architect/E2-status/PLAN.md). Block/port names are those specified by the plan; editor must keep them. Each mutation names its intended killing behavioural scenario (oracle = REQ-CONSOLIDATION criteria). Tester fills sourceSha256 with the G2 candidate SAL and authors killing tests in G1.",
+  "sourceSha256": "TBD: G2 candidate SAL of slice E2b",
+  "testFiles": [
+    "current-door-interlock.test.js",
+    "current-early-sto.test.js",
+    "current-estop-native-pairs.test.js",
+    "current-hv-set-permit.test.js",
+    "current-mentee-set-permit.test.js",
+    "current-plc-pulse-set-permit.test.js",
+    "current-rnd-down-no-reenergy.test.js",
+    "current-rnd-physical-integration.test.js",
+    "current-safe-run-gestures.test.js",
+    "current-step12-lv-permit.test.js",
+    "current-timer-one-ms.test.js",
+    "current-unlock-estop-permit.test.js",
+    "current-unlock-hold.test.js",
+    "current-code-checks.test.js",
+    "sal-runtime.test.js",
+    "sal-semantics.test.js",
+    "timer-observed-clock.test.js",
+    "current-e2b-*.test.js (to be authored by v2-tester in G1)"
+  ],
+  "behaviouralTests": [
+    "^DOOR06 (component|actual|existing emergency)",
+    "^EARLYSTO (drive[12]|physical)",
+    "^R3PAIR ",
+    "^MENTEE05 (paired|HV: (all|already)|LV: (all|already))",
+    "^PLCPULSE ",
+    "^RNDPHYS ",
+    "^SR-",
+    "^current SAL",
+    "^UNLOCK07 (component|final component|[^ ]+: healthy|[^ ]+/[^ ]+: fault)",
+    "^CVR (current SAL|approved)",
+    "^(HV|LV) current SAL",
+    "^SAL-RUN0[23]",
+    "^SAL-SEM02",
+    "^Current SAL TON adapter",
+    "^E2b "
+  ],
+  "structuralSoftwareCheckCases": [
+    "^BOOT:"
+  ],
+  "mutations": [
+    {
+      "id": "M-E2b-01",
+      "guard": "InterLockRun",
+      "op": "deactivate-input",
+      "block": "//Network1/FBOrIlRunOk",
+      "port": "OrIn2",
+      "rationale": "cover term lost: OR = not S3",
+      "killingScenario": "Any entry into Run latches Emergency immediately",
+      "oracle": "MOD-002 positive Run, IL-03b"
+    },
+    {
+      "id": "M-E2b-02",
+      "guard": "InterLockRun",
+      "op": "deactivate-input",
+      "block": "//Network1/FBOrIlRunOk",
+      "port": "OrIn1",
+      "rationale": "stage term lost: OR = cover",
+      "killingScenario": "Safe or R&D with NC1 FALSE: Emergency latched",
+      "oracle": "IL-01, IL-02 (no Emergency)"
+    },
+    {
+      "id": "M-E2b-03",
+      "guard": "InterLockRun",
+      "op": "invert-contact",
+      "block": "//Network1/FBOrIlRunOk",
+      "port": "OrIn1",
+      "rationale": "stage polarity inverted",
+      "killingScenario": "Safe with NC1 FALSE: Emergency; Run with NC1 FALSE: no latch",
+      "oracle": "IL-01, IL-03b"
+    },
+    {
+      "id": "M-E2b-04",
+      "guard": "InterLockRun",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAnd1",
+      "port": "AndIn3",
+      "rationale": "cover-in-Run cause not fed to FBEstop1",
+      "killingScenario": "Steady Run, NC1 FALSE: b_EStop_Ok stays TRUE, Restart not required; differs from in_Estop_PLC reference run (EMGREF)",
+      "oracle": "IL-03b, EMG-002"
+    },
+    {
+      "id": "M-E2b-05",
+      "guard": "InterLockRun",
+      "op": "deactivate-input",
+      "block": "//Network12/FBAnd16",
+      "port": "AndIn3",
+      "rationale": "NC2 dropped from linkCoverClosed",
+      "killingScenario": "Steady Run, only NC2 FALSE: no Emergency latch",
+      "oracle": "IL-03b (NC2 variant)"
+    },
+    {
+      "id": "M-E2b-06",
+      "guard": "InterLockRun",
+      "op": "deactivate-input",
+      "block": "//Network12/FBAnd16",
+      "port": "AndIn1",
+      "rationale": "NC1 dropped from linkCoverClosed",
+      "killingScenario": "Steady Run, only NC1 FALSE: no Emergency latch",
+      "oracle": "IL-03b (NC1 variant)"
+    }
+  ]
+}

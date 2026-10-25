@@ -1,0 +1,145 @@
+{
+ "slice": "E1-kill-audit",
+ "role": "independent reviewer",
+ "date": "2026-10-21",
+ "head": "b580920",
+ "sources": {
+  "canonicalSal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "canonicalSgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+  "canonicalDiagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+  "f1CandidateEqualsCanonical": true,
+  "mutationResults": "aeb9cb243145f56763371a23c4284336e0b2c0860e67ac02139e3689fabfee5b",
+  "makeMutants": "a3fa0fa52c9c7124180b3712081a1f9c0625c79b886c159c9857f5ce537710dc",
+  "runBattery": "f0e82a03688bdb1daaa0c4258fcdbaa1f4adfdd0388037a6a11b3101f8d1a1b7",
+  "salParser": "fbf239e4960243e383619834a658bee23df543fdba9fc9f0e5bfd9e0e0aa195c",
+  "salRuntime": "14d50f182e42c7aea814eb0c221fbeadbc9becf20f7ac575d263b8cb4f14698e",
+  "salNativeStructure": "f5c15bd23f6cdff7ce965e0b9e0ba5f160058a26d2f608a51783a290d6cf77fc"
+ },
+ "method": [
+  "Regenerated all 26 mutants with make-mutants.mjs from candidates/resumed-f1/native into reviewer scratchpad; 25/26 SAL sha256 identical to MUTATION_RESULTS; MU07 differs because addSymbolReader uses crypto.randomUUID (non-deterministic wrapper Ids), behaviour identical",
+  "Structural preflight on all 26 mutants + F1: inspectNativeSalStructure PASS and parseSalFile bindingAudit PASS for every mutant -> no runner ERROR/FAIL can originate from load/parse/native-structure/binding-audit rejection",
+  "Re-ran run-battery.sh (qualification16, Run20, lifecycle2, phase-exit3) + f1-gaps.mjs (17) on F1, MU05, MU07, MU08, MU15, MU18, MU22 with JSON outputs; F1 58/58 PASS; mutant counts identical to archived logs",
+  "Re-ran the 8 shared files on a minimal repo copy (E1-time test versions from the tester scratch copy) for F1 and MU05/07/08/15/18/22/25/26; F1 339/339; MU18/22/25/26 failure counts identical to archived shared.tap; repeated with current working-tree versions of the 8 files for F1/MU05/MU07/MU18/MU22/MU25/MU26: identical counts",
+  "Classified every not-ok by assertion code, message and violated label; compared full frame traces F1 vs mutant for the single-test kills to confirm divergence on real typed outputs, not only internal nodes"
+ ],
+ "sharedFilesCheck": {
+  "files": [
+   "test/current-early-sto.test.js",
+   "test/current-estop-native-pairs.test.js",
+   "test/current-plc-pulse-set-permit.test.js",
+   "test/current-rnd-physical-integration.test.js",
+   "test/current-safe-run-gestures.test.js",
+   "test/current-unlock-estop-permit.test.js",
+   "test/current-rnd-down-no-reenergy.test.js",
+   "test/current-timer-one-ms.test.js"
+  ],
+  "importsV2Structural": false,
+  "hex64LiteralPins": 0,
+  "helpersChecked": ["test/helpers/safe-run-source.js", "test/helpers/rnd-down-source.js", "test/helpers/physical-rnd-source.js (re-export)", "src/physical-rnd-source.js", "src/scan-observer.js"],
+  "helperShaUse": "sha256 computed only as recorded diagnostics (scope.sourceSha256), never compared",
+  "note": "test/current-early-sto-bindings.test.js imports helpers/v2-structural.js and pins manifest sha256; it is NOT one of the 8 (its 'EARLYSTO composed LV254' tests are absent from results/f1/shared.tap)",
+  "structuralPinInsideSharedFiles": "current-estop-native-pairs 'R3PAIR actual WINDOW master is exact first-only' asserts configured delay == 250 (parameter pin); fails only on MU26, 1 of 15 failures, discounted"
+ },
+ "batteryRunnerShaPins": "none: run-source.js/lifecycle-source.js/candidate-run20.mjs hash files for reporting only; the only gates are assertNativeSalStructure + bindingAudit PASS, which pass on all mutants",
+ "mutants": [
+  {
+   "id": "MU05",
+   "verdict": "GENUINE-KILL",
+   "killers": ["qualification F1-real-lock-producer-rejects-green-and-doesnotqueue (FAIL, PASS on F1)"],
+   "violated": ["qualifiedgreen while actuallockTRUE cannot own physicaldown a=true e=false", "clearinglock never queues oldgreen authorization a=true e=false"],
+   "realOutputDivergence": "b_Reset_STO_DR1_4/_DR2_4, b_Set_HV_Discharge_Request_3, b_Reset_HV_C2_4, b_Step12_Set_2, b_SetLock_ResetPB_3 TRUE for ~2.6 s while ResetPB_Lock TRUE (F1: none)",
+   "oracleBasis": "preserved reference ResetPB_Lock gating of green (reference sequence = requirement source per AGENTS.md); kill is behavioural",
+   "loadErrors": 0,
+   "limit": "single test; 8 shared files 339/339 PASS on MU05; not killed by any file in SafetyTests/test that could be run here -> regression protection lives only in program/tester/E1-f1/runners"
+  },
+  {
+   "id": "MU07",
+   "verdict": "GENUINE-KILL",
+   "killers": ["qualification F1-green-qualified-lateblue500-cannot-cancel (FAIL, PASS on F1)"],
+   "violated": ["acceptedgreen survives lateblue by first+503 a=false e=true", "only one physical down rise a=0 e=1"],
+   "realOutputDivergence": "F1 issues Run normal-down typed requests and drops STO_DR1/2, out_HV_C2, outPLC_STO_1/2 from first+505; MU07 keeps them (accepted green cancelled by coincident blue)",
+   "oracleBasis": "Q-500 / D-Q500 (exact 500 ms: qualified single has priority; late second cannot cancel)",
+   "loadErrors": 0,
+   "limit": "single boundary test at exact delta=500 (delta 600 PASSes on MU07); depends on 1 ms scan alignment of the stand; shared suites 339/339 PASS; same regression-location limit as MU05"
+  },
+  {
+   "id": "MU08",
+   "verdict": "GENUINE-KILL",
+   "killers": ["gaps GAP-LIFECYCLE-RnD-green-does-not-raise-Run-down (FAIL)", "reviewer re-run: current-rnd-down-no-reenergy 2 assertion failures ('No LV/HV proposal or permitted Set replay' true!==false)"],
+   "violated": ["no Run owner / Run normal-down request while in R&D a=true e=false", "still no Run normal-down request while green held a=true e=false"],
+   "realOutputDivergence": "in R&D after green500: Run-down typed requests 305 ms, out_HV_Discharge_Request 727 ms, b_Step12 202 ms, LV proposal/permitted Set (re-energization path) vs F1 none",
+   "oracleBasis": "Vadim #5 one step per gesture (R&D green -> Safe only); no re-energization on R&D->Safe",
+   "loadErrors": 0,
+   "limit": "MUTATION_RESULTS records shared suites as 'not run'; reviewer run adds an independent requirement kill"
+  },
+  {
+   "id": "MU15",
+   "verdict": "GENUINE-KILL",
+   "killers": ["gaps GAP-LIFECYCLE-RnD-green-does-not-raise-Run-down (FAIL)", "reviewer re-run of 8 shared files: 70 failed (65 ERR_ASSERTION, 5 ERR_TEST_FAILURE)"],
+   "batteryErrors57": "all behavioural precondition failures, none load/parse/SHA: 52x 'Actual ordinary Step2 outputs preparation failed' (Run fixture cannot establish STO/HV in ordinary Step2 because swapped owner holds Run-down fanout TRUE) and 5x 'Fixture missing sto1=true' (lifecycle). Fixture labels them non-normative; MUTATION_RESULTS correctly does not count them as killers",
+   "violated": ["no Run owner / Run normal-down request while in R&D a=true e=false (owner TRUE already before green)"],
+   "realOutputDivergence": "Run-down typed requests (STO reset x2, HV discharge, C2 reset) continuously TRUE in R&D; shared: 'drive1/drive2 permits torque at N+2' false (x16), 'actual HV rise count', 'ordinary Set establishes output' false",
+   "oracleBasis": "Vadim #5; StartingRun STO release decision; preserved ordinary Step2 startup",
+   "loadErrors": 0,
+   "limit": "MUTATION_RESULTS shows only 1 FAIL; the reviewer shared run is the stronger evidence and is not in the tester record"
+  },
+  {
+   "id": "MU18",
+   "verdict": "GENUINE-KILL",
+   "killers": ["gaps 8 FAIL with requirement label 'fresh green500: physical owner and OR5 normal-down aggregate available'", "shared current-safe-run-gestures 5 ERR_ASSERTION 'positive/recovery actual four downstream requests available' a=false e=true"],
+   "realOutputDivergence": "single green 500 ms in Run produces no Run normal-down typed requests (b_Reset_STO_DR*_4, b_Set_HV_Discharge_Request_3, b_Reset_HV_C2_4) nor out_HV_Discharge_Request",
+   "oracleBasis": "BTN single green 0.5 s in Run -> normal stop (liveness)",
+   "loadErrors": 0,
+   "note": "qualification kill 'OR5 reads actualowner on q+2' is internal-label only (correctly recorded as internal); the shared 5 are on real typed requests; 2 battery ERRORs = 'Fixture missing runStop=true' (behavioural liveness loss)"
+  },
+  {
+   "id": "MU22",
+   "verdict": "GENUINE-KILL",
+   "killers": ["shared 85 ERR_ASSERTION (current-early-sto 52, current-rnd-physical-integration 28, current-safe-run-gestures 5)"],
+   "batteryErrors9": "all 'Fixture missing lv=true' / 'Preparation unavailable lv=true': Safe BOTH 1 s no longer produces Safe->R&D LV; behavioural liveness loss, not load/SHA; battery is Run-scoped and has 0 FAIL",
+   "sharedFixtureErrors2": "current-rnd-down-no-reenergy 'Fixture ERROR: preparation unavailable lv=true' (same liveness cause), not counted",
+   "violated": ["existing up request at full BOTH threshold a=false e=true (x16)", "up request rise count a=0 e=1 (x16)", "real physical recognizer must accept SU (early-sto precondition assert, x52)", "ready valid chord actual Step12 producer positive", "first actual up/HV positive"],
+   "oracleBasis": "BOTH 1 s (window 250 ms) in Safe/R&D -> StepUp; R&D->Run launch (positive requirements)",
+   "loadErrors": 0,
+   "limit": "kill is by loss of the positive path (deactivating GATE_005.AndIn2 stalls the recognizer), NOT by a negative test of the intended guard (attempt-owner T). The safety role of NOT T is not demonstrated by any test; MUTATION_RESULTS.killers is empty (traceability gap)"
+  },
+  {
+   "id": "MU25",
+   "verdict": "GENUINE-KILL",
+   "killers": ["shared 26 ERR_ASSERTION (current-rnd-physical-integration 22, current-safe-run-gestures 2, current-rnd-down-no-reenergy 2)"],
+   "violated": ["no command before complete BOTH interval a=true e=false (x16)", "no command throughout fresh chord prethreshold a=true e=false (x4)", "no up before full restarted1000", "no Safe StepUp before full1000 BOTH anywhere"],
+   "oracleBasis": "Vadim 2026-10-18/20: BOTH continuous 1 s",
+   "loadErrors": 0,
+   "limit": "battery (Run-scoped, Run ignores BOTH) cannot see this mutant; kill depends entirely on shared files; MUTATION_RESULTS.killers empty"
+  },
+  {
+   "id": "MU26",
+   "verdict": "GENUINE-KILL",
+   "killers": ["shared 14 behavioural ERR_ASSERTION (current-rnd-physical-integration 12, current-safe-run-gestures 2)"],
+   "discounted": ["current-estop-native-pairs R3PAIR 'actual configured delay remains250' a='300' e='250' (structural parameter pin)"],
+   "violated": ["existing up request at full BOTH threshold a=true e=false at delta 251/252/255/260 (x8)", "late300 before single acceptance creates no StepUp despite prolonged BOTH a=true e=false", "late second cannot create retrospective up a=true e=false"],
+   "oracleBasis": "T_CHORD_WINDOW 250 ms inclusive; late second >250 ms invalidates attempt (Vadim #3/#6/#11, D-LATE-SECOND)",
+   "loadErrors": 0,
+   "limit": "battery cannot see it; MUTATION_RESULTS.killers empty"
+  }
+ ],
+ "summary": {
+  "falseKills": [],
+  "undetermined": [],
+  "genuineKillsAudited": ["MU05", "MU07", "MU08", "MU15", "MU18", "MU22", "MU25", "MU26"],
+  "notReaudited": "MU01-04, MU09, MU12-14, MU16, MU17, MU19-21, MU23 (many-test kills; covered only by the all-mutant structural preflight PASS, which excludes load/parse kills), MU24 (prior reviewer re-run program/reviewer/E1-f1-adopt/reviewer-mu24-rerun.tap 8/16 FAIL, assertions)",
+  "traceMatrixImpact": "killedByRequirement 23/26 stands; auditPending may be replaced by a reference to this audit. No count change. Recommended annotations: MU22 killed by liveness only; MU25/MU26 killed only by shared files (killers field empty in MUTATION_RESULTS); MU05/MU07 single-test kills held only in program/tester/E1-f1/runners; MU07 SAL sha not reproducible (random UUID)"
+ },
+ "findings": [
+  {"severity": "minor", "to": "tester", "text": "MUTATION_RESULTS.killers is empty for MU22/MU25/MU26 although killedByRequirementTest=true; record the actual shared killers (test names, files, labels)."},
+  {"severity": "minor", "to": "tester", "text": "MUTATION_RESULTS 'battery.fails' counts violated checks while 'errors' counts cases; mixed units (e.g. MU01 fails 43 > 16 tests). Document units."},
+  {"severity": "minor", "to": "tester", "text": "MU07 mutantSalSha256 is not reproducible (crypto.randomUUID in addSymbolReader); use deterministic Ids or record that only behaviour is reproducible."},
+  {"severity": "moderate", "to": "lead/tester", "text": "MU05 and MU07 are killed only by one runner test each in program/tester/E1-f1/runners; neither the 8 shared files nor the runnable part of SafetyTests/test detect them. If these runners are not part of npm run check:software, the regression suite does not protect the lock gating or the exact-500 priority after the next change. Consider adopting the two tests into SafetyTests/test (as was done for MU24)."},
+  {"severity": "moderate", "to": "tester/architect", "text": "MU22 is killed only through liveness loss; no test shows that removing the NOT T guard would permit a forbidden transition. The guard's safety function remains undemonstrated; do not cite MU22 as evidence for the attempt-owner property."}
+ ],
+ "limits": [
+  "Offline stand model only; not IDE Verify/Build, not native CRC, not Target, not hardware.",
+  "Full current SafetyTests/test suite could not be executed in the minimal copy (several files need resources outside the copied subset); MU05/MU07 regression-protection statement is limited to the runnable subset (401 tests passing identically on F1/MU05/MU07).",
+  "Reviewer scratch artefacts (taps, scripts) are in the session scratchpad kill-audit/, not in the repository."
+ ]
+}

@@ -1,0 +1,63 @@
+{
+ "slice": "E1-f1 (migration follow-up)",
+ "role": "v2-tester",
+ "date": "2026-10-21",
+ "basis": {
+  "review": "SafetyTests/program/reviewer/E1-f1/F1_G4_REVIEW.md sha256 7f337b0d9d27c5ba909aa409d816e82ecc9df456adf053c8058992b1e8e13847 (conditions C3, C4; section (e) item 3)",
+  "reviewJson": "SafetyTests/program/reviewer/E1-f1/F1_G4_REVIEW.json sha256 b8549fb3ca2a85a157e4bfb8f400056b1b5940d60885fb2c47484a4bd8953c70",
+  "originalResults": "SafetyTests/program/tester/E1-f1/MUTATION_RESULTS.json sha256 aeb9cb243145f56763371a23c4284336e0b2c0860e67ac02139e3689fabfee5b (not modified; this file supersedes its classification of the four mutants below)",
+  "source": {"sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3", "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104", "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603"}
+ },
+ "g3Statement": "G3 for F1 holds with documented exceptions only: MU06/MU10 excluded from the denominator as EQUIVALENT-by-proof (conditional), MU11 OPEN (KILLABLE, E2), MU24 killed on component boundary only (reachable kill conditional on Q-MU06-01). No other mutant classification is changed.",
+ "mutants": [
+  {
+   "id": "MU06",
+   "label": "And24.AndIn2 NOT in_False deactivated",
+   "previous": "survived (battery 0 fails, shared suites 0 failed)",
+   "classification": "EQUIVALENT-by-proof",
+   "inDenominator": false,
+   "conditions": [
+    "GRP-1 (DOC): execution order GATE_001(119)->GATE_004(124)->GATE_005(125)->GATE_009(130)->GREEN.TonIn(135)->Symbol->And24(237), all pure AND in the same cycle; TON-2 (DOC 4.12.2): input 0 -> output 0 immediately, so GREEN(k)=1 implies in_False(k)=0.",
+    "GRP-2 (DERIVED, not DOC): a Symbol write is visible to a later-ordered reader in the same cycle and inputs are constant within a cycle. If the Symbol had inter-cycle delay, MU06 would be distinguishable (stale GREEN(k-1) with an in_False pulse). GRP-2 confirmation is assigned to the stand.",
+    "Topology of F1 as pinned above; any change of the GREEN chain or And24 voids the proof."
+   ],
+   "reevaluateWhen": ["GRP-2 confirmed or refuted by stand", "Q-MU06-01 answered (role of in_False) if it changes And24/GREEN chain"]
+  },
+  {
+   "id": "MU10",
+   "label": "RESET.OrIn1 b_Step_RnD_Set deactivated",
+   "previous": "survived (battery 0 fails, shared suites 0 failed)",
+   "classification": "EQUIVALENT-by-proof",
+   "inDenominator": false,
+   "conditions": [
+    "Current Network3 topology: SafeResumption/MODE = Step1 OR RnD OR Step3 (exactly three active inputs); FBRs8(Step12).Reset = b_Step_RnD_Set; FBRs1/FBRs2 Reset contain b_Step12 (reset-dominant); FBRs3 Set only b_Step3_Set_3/b_Step3_Set_2; FBRs7(RnD) Set only b_Step_RnD_Set.",
+    "Network4/FBDecouple1 writes only Resets and b_Step1_Set/b_Step2_Set, both suppressed by reset-dominant b_Step12, so the proof does not depend on unknown Network4 values.",
+    "b_Step_RnD_Set(m) requires Step12 for the whole N11 TON delay => MODE(m)=0 => RESET.OrIn3 already resets the owner on the first Step12 scan; also MODE=0 in the reachable Step4 AND Step12 conflict."
+   ],
+   "reevaluateWhen": ["E2 status-assignment revision (review condition C4): MANDATORY re-evaluation, the proof relies on the current status assignment that E2 revises"]
+  },
+  {
+   "id": "MU11",
+   "label": "RESET.OrIn2 b_Step4_Set deactivated",
+   "previous": "killed only by PLAN-ORACLE gaps/PLAN-STEP4-protective-request-resets-owner (killedByRequirementTest=false)",
+   "classification": "OPEN (KILLABLE, E2)",
+   "inDenominator": true,
+   "countsAsKilled": false,
+   "reason": "Only observable effect: owner held 1 scan longer => DecOut1..4 fanout (STO reset, HV discharge, C2 reset; safe-direction outputs) 1 scan longer and the Step4 AND Step12 race window 1 scan wider. The distinguishing oracle (no Step4 AND Step12; loss of Healthy during accepted Run-down) is an E2 requirement not yet decided by the analyst; no honest F1 requirement test exists.",
+   "obligation": "E2 test set must contain a requirement-based behavioral test that kills MU11 (review C3)."
+  },
+  {
+   "id": "MU24",
+   "label": "GATE_016.AndIn4 RELEASE gating removed (rearm without 2 s)",
+   "previous": "killedByRequirementTest=true via GAP-HELD-ACROSS-in_InterLock_NC_1/in_Estop_PLC-restore-then-repress-1000ms-rejected",
+   "classification": "killed on component boundary; reachable kill conditional on Q-MU06-01",
+   "killedByRequirementTest": false,
+   "inDenominator": true,
+   "countsAsKilled": "conditional (not counted as a reachable requirement kill)",
+   "reason": "The killing GAP-HELD-ACROSS cases run on a fixture with b_Step3 held fixed. On the full program with real lifecycle (reviewer repro held-across-reach.mjs sha256 a6733ef0d70efb39d2db913ba474e565a38dcc30a1feef62964d2d2b5d7ad217, output held-across-reach.txt sha256 cf82a746c4220858b2cb0d781cedc1cd059cb2cc55f0fe4feb6593884dfe129f) loss of in_InterLock_NC_1/NC_2/in_LV_Connector_Interlock/in_Estop_PLC in Run immediately yields Step4, so the tester scenario is unreachable and F1 vs MU24 are indistinguishable there (RunDownAfterRepress false for both). The only reachable distinguisher found: in_False_SI2_CH8=TRUE pulse in Run (Run kept; F1: no down after re-press at 999 ms; MU24: down). Its expected reaction depends on open Q-MU06-01, so it is NOT adopted as a normative oracle.",
+   "assumptions": ["b_Step3 fixed by the fixture (test-injected internal state) in the original killers"],
+   "evidenceNote": "Reviewer repro output read by the tester, not re-executed in this migration step.",
+   "next": "After Q-MU06-01 answer: reachable kill via in_False in Run, or via Safe/RnD context; GATE_016 not changed by F1, not a blocker per review."
+  }
+ ]
+}

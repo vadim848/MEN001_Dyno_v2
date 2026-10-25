@@ -2,12 +2,13 @@ import { SalRuntime } from "./sal-runtime.js";
 import { currentGestureBoundaryChecks } from "./current-gesture-boundaries.js";
 import { physicalRndSource } from "./physical-rnd-source.js";
 import { ObservedSamples } from "./observed-samples.js";
+import { withActualNames } from "./signal-names.js";
 
 const ready = { b_Step_RnD: true, b_ResetPB_Lock: false, in_False_SI2_CH8: false,
   b_EStop_Ok:true,in_Estop_PLC:false,
   in_InterLock_NC_1:true,in_InterLock_NC_2:true,
   in_Door_Monitor: true, inPLC_RnD_Mode: false, inPLC_RnD_Mode_2: false,
-  in_HV_C2_FBK: false, in_HV_Healthy_FBK: true, in_Reset_PB: false, in_Relase_Door_PB: false };
+  in_HV_C2_FBK: false, in_HV_Faulty_FBK: false /* R0 nominal (lead 2026-10-22, D-ARCH-POL): raw Faulty FALSE = PS healthy; on F1/R1 mapped to in_HV_Healthy_FBK with the same raw FALSE */, in_Reset_PB: false, in_Relase_Door_PB: false };
 
 export function candidateButtonCoverChecks(model) {
   const results = [];
@@ -31,7 +32,7 @@ export function candidateButtonCoverChecks(model) {
       ({ ...n, blocks: selection[n.name].length ? n.blocks.filter(b => selection[n.name].includes(b.name)) : n.blocks })) };
     const actualBranch = integrated&&selection.Network12&&!selection.Network3 ? physicalRndSource(model,10) : null;
     if(integrated&&(selection.Network2||selection.Network3))for(const name of ["RndPhysicalCompact","SafeResumption"])if(!selected.networks.some(n=>n.name===name))selected.networks.push(model.networks.find(n=>n.name===name));
-    const r = actualBranch?.r ?? new SalRuntime(selected).setInputs(ready);
+    const r = actualBranch?.r ?? new SalRuntime(selected).setInputs(withActualNames(model, ready));
     const observations = [];
     const expect = (signal, expected, checkpoint, actual = r.get(signal)) => observations.push({ signal, expected, actual, checkpoint });
     scenario(r, expect);

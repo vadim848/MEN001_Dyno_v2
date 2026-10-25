@@ -1,0 +1,194 @@
+{
+ "generatedAt": "2026-10-21T22:12:49.816Z",
+ "plan": "../../../../AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/ren/plan-rebind-probe.json",
+ "planSha256": "a7a6a14bc93c733df657edda4bc5657ba41bdb83c375a4248c9a39cff297982f",
+ "source": {
+  "salSha256": "5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b",
+  "sgvlSha256": "e60698840e556dbd6d838958eadb8545735a81aaff8efbfceabc3613a4e08010",
+  "diagramSha256": "27d7f20d890d48fc175fbd25af21a5b0c874ce4cf248b37ac73df26fe0624785",
+  "sourceRoot": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\E2a\\native"
+ },
+ "patches": [],
+ "detectors": {
+  "testFiles": [
+   "current-e2a-run-conf.test.js"
+  ],
+  "resolvedTestFiles": [
+   "current-e2a-run-conf.test.js"
+  ],
+  "behaviouralTests": [
+   "^E2[a-d] "
+  ],
+  "behaviouralPatternMatches": {
+   "^E2[a-d] ": 21
+  },
+  "behaviouralPatternPassingMatches": {
+   "^E2[a-d] ": 0
+  },
+  "softwareCheck": false
+ },
+ "baseline": {
+  "tests": 23,
+  "notPassing": [
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-5 (i) natural: C2_FBK ON one scan after the command, HV healthy: no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-5 (ii) C2_FBK delayed 30 ms (ON from u+30): no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-5 (iii) C2_FBK delayed 400 ms (ON from u+400): no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-5 (v) C2_FBK ON from u+499 (just before the end of the window): no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-5 (vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency: no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF HV Faulty TRUE for 3000 ms after C2_FBK ON: no Run meanwhile; HV healthy -> Run at k+101, not at k+99",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-4 drives STO FBK pinned to \"STO active\" (in_STO_DRx_FBK TRUE): Run at K+101 = u+601 (STO FBK not required, no 5 s hold)",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+550 (K+50, after the window): no Run <= u+650, Run at u+652, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 \"В\", question 68 \"Б\")",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 20 ms u+550..u+569 (after the window): no Run <= u+669, Run at u+671, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 \"В\", question 68 \"Б\")",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+599 (K+99, boundary before Run): no Run <= u+699, Run at u+701, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 \"В\", question 68 \"Б\")",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+51 (inside the window): no Run <= u+599, Run at u+601, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 \"В\", question 68 \"Б\")",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 20 ms u+51..u+70 (inside the window): no Run <= u+599, Run at u+601, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 \"В\", question 68 \"Б\")",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-7 (v7) C2_FBK FALSE 1 scan at t_f+1 inside the 500 ms window, command kept: not an emergency, no rollback, Run at u+601 (Q-V4-01 \"Б\")",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-7 (v7) C2_FBK FALSE 1 scan at t_f+50 inside the 500 ms window, command kept: not an emergency, no rollback, Run at u+601 (Q-V4-01 \"Б\")",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-7 (v7, FBK-03) C2_FBK FALSE 1 scan at u+502 after the window (FBK confirmed), before Run: Emergency (rule L1 vs in_Estop_PLC), no Run, Restart -> only Safe (Q-V4-01 \"Б\", Q-RC-19)",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-7 (v7, FBK-03) C2_FBK FALSE 1 scan at u+550 after the window (FBK confirmed), before Run: Emergency (rule L1 vs in_Estop_PLC), no Run, Restart -> only Safe (Q-V4-01 \"Б\", Q-RC-19)",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-7 (v7, FBK-03) C2_FBK FALSE 1 scan at u+599 after the window (FBK confirmed), before Run: Emergency (rule L1 vs in_Estop_PLC), no Run, Restart -> only Safe (Q-V4-01 \"Б\", Q-RC-19)",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a MOD1-01 (v7 §4.2) Safe->R&D natural: no R&D <= u1+599, R&D at u1+601 and later (question 68 \"Б\": C1 window 500 ms + 100 ms continuous C1_FBK and LV healthy), no Emergency",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a MOD1-01 / FBK-01 (v7 §4.2) Safe->R&D, C1_FBK FALSE 1 scan at u1+51 inside the window: not an emergency, R&D at u1+601",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a FBK-01 (v7 §4.2/§4.3) Safe->R&D, C1_FBK FALSE 1 scan at u1+550 after the window, before R&D: Emergency (EMGREF-LV, rule L1 vs in_Estop_PLC), R&D never, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "key": "current-e2a-run-conf.test.js :: E2a RND-CONF-T Safe->R&D, LV Faulty TRUE 1 scan at u1+550 after the window: count restarts - no R&D <= u1+650, R&D at u1+652, no Emergency (question 68 \"Б\"; upper bound TEAM-DEFAULT TD-02)",
+    "status": "fail"
+   }
+  ],
+  "softwareCheckNotPass": null
+ },
+ "durationMs": 1390,
+ "summary": {
+  "KILLED": 0,
+  "STRUCTURAL-ONLY": 0,
+  "SURVIVED": 1,
+  "INVALID": 0,
+  "NOT-RUN": 0
+ },
+ "results": [
+  {
+   "id": "T-REBIND-E2a",
+   "guard": "stand-probe",
+   "op": "rebind-global",
+   "block": "//Network1/FBOr5",
+   "port": "OrIn2",
+   "value": {
+    "global": "b_Step4_Set"
+   },
+   "rationale": "stand wiring probe of rebind-global (SGVL write/restore), not a plan mutation",
+   "change": {
+    "kind": "global",
+    "block": "//Network1/FBOr5",
+    "port": "OrIn2",
+    "target": "//Network1/FBOr5/OrIn2",
+    "portId": "2d48e51e-1142-483c-9894-af53dfb55d7a",
+    "attr": "globals",
+    "usageId": "e869e06e-99dc-4120-910f-9984943e8a95",
+    "before": "GVL1.b_Reset_HV_Discharg_Req2",
+    "after": "GVL1.b_Step4_Set",
+    "beforeVariableId": "df721d60-da77-4622-9d30-b4438d8a2fcb",
+    "afterVariableId": "6e2d55db-cbcb-43f0-8861-d5e807bdc9af",
+    "oldSymbolOrphaned": true,
+    "offset": 25864
+   },
+   "verification": {
+    "parsedDelta": [
+     "//Network1/FBOr5/OrIn2"
+    ],
+    "attribute": "globals",
+    "sgvlDelta": {
+     "usageId": "e869e06e-99dc-4120-910f-9984943e8a95",
+     "from": "GVL1.b_Reset_HV_Discharg_Req2",
+     "to": "GVL1.b_Step4_Set",
+     "oldSymbolOrphaned": true
+    },
+    "bindingValidation": "PASS"
+   },
+   "mutantSgvlSha256": "839e88e9b911df3d69e25f9722a4edb1fcabd78bc38543804843ee11fc89b278",
+   "mutantSha256": "04ea3a1e6867ba8aa8302eea5946233b08764fe32b4de56dda3b4369c36dfcb2",
+   "newlyFailing": [],
+   "killedBy": [],
+   "categories": {
+    "behavioural-assertion": 0,
+    "swcheck-behavioural-fail": 0,
+    "non-behavioural-assertion": 0,
+    "exception": 0,
+    "hook-cancel": 0,
+    "file-level": 0,
+    "absent": 0,
+    "swcheck-structural": 0,
+    "swcheck-error": 0
+   },
+   "verdict": "SURVIVED"
+  }
+ ],
+ "notRun": [],
+ "staleOperatorFlags": [],
+ "killRule": "KILLED only by (a) a concrete test ok on baseline and not ok on the mutant with an assertion failure (ERR_ASSERTION in the test or a failing nested subtest), in a file without file-level failure in that run, name in behaviouralTests; or (b) a non-BOOT software-check case PASS -> FAIL. Load/SHA pin/file-level ERR_TEST_FAILURE/timeout, non-assertion exceptions, hook/cancel, absent tests never kill (src/sal-mutation-kill.js).",
+ "limits": [
+  "Kills are judged only by the plan's behavioural allowlist and assertion failures; STRUCTURAL-ONLY is not a kill for G3",
+  "Mutations are SAL faults (guard term removed, polarity, channel mode, timing, execution order, input pair, intra-network rewire); they are a fault model, not native-saved edits (no CRC, diagram not updated)",
+  "NOT-RUN mutations (operator unavailable) are neither KILLED nor SURVIVED: their guard has no mutation evidence from this run",
+  "Simulator semantics limits apply (program/stand/FB_SEMANTICS.md); an equivalent mutant can survive legitimately and must be argued, not assumed"
+ ]
+}

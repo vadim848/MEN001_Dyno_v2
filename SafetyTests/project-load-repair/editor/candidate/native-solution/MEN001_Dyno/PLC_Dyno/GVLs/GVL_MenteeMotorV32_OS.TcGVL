@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <GVL Name="GVL_MenteeMotorV32_OS" Id="{83fa3bf2-3fdb-40bc-a0cc-a47243bd7f00}">
+    <Declaration><![CDATA[{attribute 'TcGvlVarFlags' := 'OPC'}
+VAR_GLOBAL
+    // ADS symbol: GVL_MenteeMotorV32_OS.stCmd
+    stCmd    : ST_MenteeMotorV32OsCmd;
+    // ADS symbol: GVL_MenteeMotorV32_OS.stStatus
+    stStatus : ST_MenteeMotorV32OsStatus;
+
+    // EtherCAT AL state of the Motor Slave V3.2 ("Box 1 (Motor Slave)").
+    // >>> LINK IN XAE: <Motor Slave> > InfoData > State  ->  this variable. <<<
+    // The EtherCAT master updates it every cycle (no ADS/FB needed). Decode:
+    // low nibble = AL state (1=INIT, 2=PREOP, 4=SAFEOP, 8=OP), bit 4 = error.
+    nSlaveState AT %I* : UINT;
+
+    // V3.2 motion-profile command/status (FB_TrajectoryGen). The app writes the
+    // params + pulses bStart; the FB streams the profile at 1 kHz into stCmd.
+    // ADS symbol: GVL_MenteeMotorV32_OS.stTraj
+    stTraj   : ST_MenteeTrajCmd;
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

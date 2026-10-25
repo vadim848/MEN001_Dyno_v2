@@ -1,0 +1,2209 @@
+{
+ "generatedAt": "2026-10-21T22:12:15.201Z",
+ "plan": "program/architect/E2-status/MUTATION_PLAN_E2a.json",
+ "planSha256": "9d43a8f8d6c757b552c05e8fc36c772567073937079b605a6dcc1ebc7f2defa1",
+ "source": {
+  "salSha256": "5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b"
+ },
+ "patches": [],
+ "status": "VALID",
+ "testFiles": {
+  "current-e2a-status.test.js": 14,
+  "current-e2a-emg-safe.test.js": 24,
+  "current-e2a-emg-rnd.test.js": 38,
+  "current-e2a-emg-run.test.js": 38,
+  "current-e2a-emg-rundown.test.js": 16,
+  "current-e2a-sweep-estop.test.js": 56,
+  "current-e2b-sweep-connector.test.js": 28,
+  "current-e2a-race.test.js": 42,
+  "current-e2a-rnd-cover-healthy.test.js": 33,
+  "current-e2a-run-conf.test.js": 23,
+  "current-e2b-interlock-run.test.js": 12,
+  "current-e2b-cover-transitions.test.js": 22,
+  "current-e2b-connector-safe.test.js": 6,
+  "current-e2c-stp-i.test.js": 8,
+  "current-e2c-hlt03.test.js": 5,
+  "current-e2d-release-permit.test.js": 26,
+  "current-e2d-unlock-cover.test.js": 13,
+  "current-e2a-emg-anchor.test.js": 11,
+  "current-e2a-emg-rd-sweep.test.js": 24,
+  "current-e2d-unlock-door.test.js": 26,
+  "current-e2d-fbk-unsolicited.test.js": 19
+ },
+ "baselineTests": 484,
+ "baselineNotPassing": [
+  {
+   "key": "current-e2a-status.test.js :: E2a E2-01 stages<=1: lifecycle Safe->R&D->Run->green held->R&D->Run->R&D->Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-status.test.js :: E2a E2-01 exactly one status: lifecycle Safe->R&D->Run->green held->R&D->Run->R&D->Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-status.test.js :: E2a E2-01 endpoints: lifecycle Safe->R&D->Run->green held->R&D->Run->R&D->Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-status.test.js :: E2a E2-01 stages<=1: lifecycle with green released 550 ms after press",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-status.test.js :: E2a E2-01 exactly one status: lifecycle with green released 550 ms after press",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-status.test.js :: E2a E2-01 endpoints: lifecycle with green released 550 ms after press",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-status.test.js :: E2a E2-01 stages<=1: lifecycle with green released 800 ms after press",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-status.test.js :: E2a E2-01 exactly one status: lifecycle with green released 800 ms after press",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-status.test.js :: E2a E2-01 endpoints: lifecycle with green released 800 ms after press",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-status.test.js :: E2a E2-04 group start before Restart: status Emergency only, no energy, 3000 ms [in_Safety_Run true]",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-status.test.js :: DIAG [injected-Safe, in_Safety_Run FALSE] E2a E2-04 group start before Restart [in_Safety_Run false] (not reachable on target; outside ID coverage)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-status.test.js :: E2a E2-01 StartingRun (HV Healthy not yet present) + fresh green 600 ms: no R&D->Safe actions, LV C1 kept",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-status.test.js :: E2a E2-01 R&D->Safe in progress (C1_FBK held ON) + BOTH 1100 ms after 2100 ms release: no StartingRun",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-status.test.js :: E2a E2-01/MOD-006 status publication: either all of STS_SAFE/STS_RND/STS_RUN/STS_EMG (D2-B) or none (D2-A derived) - partial publication FAIL",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Safe, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a EMG6-01 EMGREF: in_Estop_PLC TRUE in Safe -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in Safe, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a EMG6-01 EMGREF: in_ES_NC_1 FALSE in Safe -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in Safe, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a EMG6-01 EMGREF: in_ES_NC_2 FALSE in Safe -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in Safe, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a EMG6-01 EMGREF: in_Mentee_EStop TRUE in Safe -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Safe->R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in Safe->R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a EMG6-01 EMGREF-LV: in_ES_NC_1 FALSE in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in Safe->R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a EMG6-01 EMGREF-LV: in_ES_NC_2 FALSE in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in Safe->R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2a EMG6-01 EMGREF-LV: in_Mentee_EStop TRUE in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in Safe->R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE steady in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE steady in Safe->R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2b EMG4-03 EMGREF-LV: in_HV_Connector_Interlock FALSE steady in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE 1 scan in Safe->R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE 1 scan in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE 1 scan in Safe->R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-safe.test.js :: E2b EMG4-03 EMGREF-LV: in_HV_Connector_Interlock FALSE 1 scan in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a E2-01 one stage / one status: in_Estop_PLC TRUE in R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a EMG6-01 EMGREF-LV: in_ES_NC_1 FALSE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a EMG6-01 EMGREF-LV: in_ES_NC_2 FALSE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a EMG6-01 EMGREF-LV: in_Mentee_EStop TRUE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE steady in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE steady in R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b EMG4-03 EMGREF-LV: in_HV_Connector_Interlock FALSE steady in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE 1 scan in R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE 1 scan in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE 1 scan in R&D, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b EMG4-03 EMGREF-LV: in_HV_Connector_Interlock FALSE 1 scan in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a E2-01 one stage / one status: in_Estop_PLC TRUE in R&D->Safe, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in R&D->Safe, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a EMG6-01 EMGREF-LV: in_ES_NC_1 FALSE in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in R&D->Safe, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a EMG6-01 EMGREF-LV: in_ES_NC_2 FALSE in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in R&D->Safe, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a EMG6-01 EMGREF-LV: in_Mentee_EStop TRUE in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in R&D->Safe, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE steady in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE steady in R&D->Safe, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b EMG4-03 EMGREF-LV: in_HV_Connector_Interlock FALSE steady in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE 1 scan in R&D->Safe, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE 1 scan in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE 1 scan in R&D->Safe, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b EMG4-03 EMGREF-LV: in_HV_Connector_Interlock FALSE 1 scan in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a EMG6-01 refused Restart: in_Estop_PLC TRUE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a EMG6-01 refused Restart: in_ES_NC_1 FALSE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a EMG6-01 refused Restart: in_ES_NC_2 FALSE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2a EMG6-01 refused Restart: in_Mentee_EStop TRUE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b EMG6-01 refused Restart: in_LV_Connector_Interlock FALSE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rnd.test.js :: E2b EMG6-01 refused Restart: in_HV_Connector_Interlock FALSE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a E2-01 one stage / one status: in_Estop_PLC TRUE in StartingRun, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a EMG6-01 EMGREF-RUN: in_Estop_PLC TRUE in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in StartingRun, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a EMG6-01 EMGREF-RUN: in_ES_NC_1 FALSE in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in StartingRun, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a EMG6-01 EMGREF-RUN: in_ES_NC_2 FALSE in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in StartingRun, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a EMG6-01 EMGREF-RUN: in_Mentee_EStop TRUE in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in StartingRun, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b EMG4-03 EMGREF-RUN: in_LV_Connector_Interlock FALSE steady in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE steady in StartingRun, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b EMG4-03 EMGREF-RUN: in_HV_Connector_Interlock FALSE steady in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE 1 scan in StartingRun, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b EMG4-03 EMGREF-RUN: in_LV_Connector_Interlock FALSE 1 scan in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE 1 scan in StartingRun, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b EMG4-03 EMGREF-RUN: in_HV_Connector_Interlock FALSE 1 scan in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Run, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a EMG6-01 EMGREF-RUN: in_Estop_PLC TRUE in Run -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in Run, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a EMG6-01 EMGREF-RUN: in_ES_NC_1 FALSE in Run -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in Run, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a EMG6-01 EMGREF-RUN: in_ES_NC_2 FALSE in Run -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in Run, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a EMG6-01 EMGREF-RUN: in_Mentee_EStop TRUE in Run -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in Run, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b EMG4-03 EMGREF-RUN: in_LV_Connector_Interlock FALSE steady in Run -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE steady in Run, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b EMG4-03 EMGREF-RUN: in_HV_Connector_Interlock FALSE steady in Run -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE 1 scan in Run, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b EMG4-03 EMGREF-RUN: in_LV_Connector_Interlock FALSE 1 scan in Run -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE 1 scan in Run, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b EMG4-03 EMGREF-RUN: in_HV_Connector_Interlock FALSE 1 scan in Run -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a EMG6-01 refused Restart: in_Estop_PLC TRUE in Run, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a EMG6-01 refused Restart: in_ES_NC_1 FALSE in Run, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a EMG6-01 refused Restart: in_ES_NC_2 FALSE in Run, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2a EMG6-01 refused Restart: in_Mentee_EStop TRUE in Run, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b EMG6-01 refused Restart: in_LV_Connector_Interlock FALSE in Run, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-run.test.js :: E2b EMG6-01 refused Restart: in_HV_Connector_Interlock FALSE in Run, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Run-down, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2a EMG6-01 EMGREF-RUN: in_Estop_PLC TRUE in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in Run-down, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2a EMG6-01 EMGREF-RUN: in_ES_NC_1 FALSE in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in Run-down, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2a EMG6-01 EMGREF-RUN: in_ES_NC_2 FALSE in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in Run-down, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2a EMG6-01 EMGREF-RUN: in_Mentee_EStop TRUE in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in Run-down, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2b EMG4-03 EMGREF-RUN: in_LV_Connector_Interlock FALSE steady in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE steady in Run-down, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2b EMG4-03 EMGREF-RUN: in_HV_Connector_Interlock FALSE steady in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE 1 scan in Run-down, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2b EMG4-03 EMGREF-RUN: in_LV_Connector_Interlock FALSE 1 scan in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE 1 scan in Run-down, Restart",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rundown.test.js :: E2b EMG4-03 EMGREF-RUN: in_HV_Connector_Interlock FALSE 1 scan in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE -3 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE -3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE -2 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE -2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE -1 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE -1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +0 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +0 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +1 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +2 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +3 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE -3 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE -3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE -2 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE -2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE -1 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE -1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +0 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +0 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +1 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +2 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +3 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE -3 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE -3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE -2 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE -2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE -1 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE -1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +0 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +0 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +1 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +2 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +3 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE -3 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE -3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE -2 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE -2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE -1 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE -1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +0 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +0 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +1 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +2 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +3 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-sweep-estop.test.js :: E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady -3 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady -3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady -2 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady -2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady -1 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady -1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +0 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +0 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +1 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +2 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +3 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady -3 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady -3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady -2 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady -2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady -1 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady -1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +0 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +0 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +1 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +2 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +3 scans vs C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-sweep-connector.test.js :: E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+1; green held; h=C2 OFF cmd+50",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+2; green held; h=C2 OFF cmd+50",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+3; green held; h=C2 OFF cmd+50",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+4; green held; h=C2 OFF cmd+50",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+5; green held; h=C2 OFF cmd+50",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+1; green held; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+2; green held; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+3; green held; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+4; green held; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+5; green held; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+1; green released 550 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+2; green released 550 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+3; green released 550 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+4; green released 550 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+5; green released 550 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+1; green released 800 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+2; green released 800 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+3; green released 800 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+4; green released 800 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+5; green released 800 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+1; green held; h=C2 OFF cmd+50",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+2; green held; h=C2 OFF cmd+50",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+3; green held; h=C2 OFF cmd+50",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+4; green held; h=C2 OFF cmd+50",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+5; green held; h=C2 OFF cmd+50",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+1; green held; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+2; green held; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+3; green held; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+4; green held; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+5; green held; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+1; green released 550 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+2; green released 550 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+3; green released 550 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+4; green released 550 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+5; green released 550 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+1; green released 800 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+2; green released 800 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+3; green released 800 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+4; green released 800 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+5; green released 800 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h and restored at h+3 (Q-RC-16), C2_FBK OFF at h+3; green held; h=C2 OFF cmd+50",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-race.test.js :: E2a E2-02 LV Healthy lost at h and restored at h+1 (Q-RC-16), C2_FBK OFF at h+1; green released 800 ms; h=C2 OFF cmd+300",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-01 Safe, NC1 FALSE, Door true: no Emergency; BOTH Safe->R&D accepted with the cover open",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02 R&D, NC1 FALSE, Door true: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02b(a) R&D, NC1 FALSE, Door true: green 600 ms -> R&D->Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2c HLT-01b R&D, NC1 FALSE, Door true: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-01 Safe, NC1 FALSE, Door false: no Emergency; BOTH Safe->R&D accepted with the cover open",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02 R&D, NC1 FALSE, Door false: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02b(a) R&D, NC1 FALSE, Door false: green 600 ms -> R&D->Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2c HLT-01b R&D, NC1 FALSE, Door false: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-01 Safe, NC2 FALSE, Door true: no Emergency; BOTH Safe->R&D accepted with the cover open",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02 R&D, NC2 FALSE, Door true: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02b(a) R&D, NC2 FALSE, Door true: green 600 ms -> R&D->Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2c HLT-01b R&D, NC2 FALSE, Door true: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-01 Safe, NC2 FALSE, Door false: no Emergency; BOTH Safe->R&D accepted with the cover open",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02 R&D, NC2 FALSE, Door false: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02b(a) R&D, NC2 FALSE, Door false: green 600 ms -> R&D->Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2c HLT-01b R&D, NC2 FALSE, Door false: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-01 Safe, both FALSE, Door true: no Emergency; BOTH Safe->R&D accepted with the cover open",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02 R&D, both FALSE, Door true: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02b(a) R&D, both FALSE, Door true: green 600 ms -> R&D->Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2c HLT-01b R&D, both FALSE, Door true: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-01 Safe, both FALSE, Door false: no Emergency; BOTH Safe->R&D accepted with the cover open",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02 R&D, both FALSE, Door false: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02b(a) R&D, both FALSE, Door false: green 600 ms -> R&D->Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2c HLT-01b R&D, both FALSE, Door false: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02b(c) R&D->Safe accepted, then NC1 FALSE before C1_FBK OFF: continues to Safe, C1 not re-energised",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02b(c) R&D->Safe accepted, then NC2 FALSE before C1_FBK OFF: continues to Safe, C1 not re-energised",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2d IL-02b(c) R&D->Safe accepted, then both FALSE before C1_FBK OFF: continues to Safe, C1 not re-energised",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2c HLT-01 steady R&D with C3/BMS ON, LV lost for 100 ms then restored: R&D->Safe, C1/C3/BMS OFF, no return to R&D, SafetyFault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2c HLT-01 steady R&D with C3/BMS ON, LV lost for 3000 ms then restored: R&D->Safe, C1/C3/BMS OFF, no return to R&D, SafetyFault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2c HLT-02 steady R&D, HV Healthy constantly lost: ignored (R&D, LV kept, no Emergency, no SafetyFault); R&D->Run accepted with HV lost at start",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2c HLT-02 steady R&D, HV Healthy toggling every 100 ms: ignored (R&D, LV kept, no Emergency, no SafetyFault); R&D->Run accepted with HV lost at start",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-rnd-cover-healthy.test.js :: E2a POL-01(c) Network10 relays the raw Faulty value: in_LV/HV_Faulty_FBK TRUE -> outPLC_LV/HV_Faulty TRUE, FALSE -> FALSE (in Safe)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-5 (i) natural: C2_FBK ON one scan after the command, HV healthy: no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-5 (ii) C2_FBK delayed 30 ms (ON from u+30): no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-5 (iii) C2_FBK delayed 400 ms (ON from u+400): no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-5 (v) C2_FBK ON from u+499 (just before the end of the window): no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-5 (vi) C2_FBK bounce OFF u+100..u+110 inside the window, ON from u+111: not an emergency: no Run <= u+599, Run at u+601 (Q-V4-01 \"Б\", question 68 \"Б\"), no Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF HV Faulty TRUE for 3000 ms after C2_FBK ON: no Run meanwhile; HV healthy -> Run at k+101, not at k+99",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-4 drives STO FBK pinned to \"STO active\" (in_STO_DRx_FBK TRUE): Run at K+101 = u+601 (STO FBK not required, no 5 s hold)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+550 (K+50, after the window): no Run <= u+650, Run at u+652, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 \"В\", question 68 \"Б\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 20 ms u+550..u+569 (after the window): no Run <= u+669, Run at u+671, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 \"В\", question 68 \"Б\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+599 (K+99, boundary before Run): no Run <= u+699, Run at u+701, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 \"В\", question 68 \"Б\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+51 (inside the window): no Run <= u+599, Run at u+601, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 \"В\", question 68 \"Б\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 20 ms u+51..u+70 (inside the window): no Run <= u+599, Run at u+601, start kept (m-7), no Emergency (Q-RC-RUNCONF-01 \"В\", question 68 \"Б\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-7 (v7) C2_FBK FALSE 1 scan at t_f+1 inside the 500 ms window, command kept: not an emergency, no rollback, Run at u+601 (Q-V4-01 \"Б\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-7 (v7) C2_FBK FALSE 1 scan at t_f+50 inside the 500 ms window, command kept: not an emergency, no rollback, Run at u+601 (Q-V4-01 \"Б\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-7 (v7, FBK-03) C2_FBK FALSE 1 scan at u+502 after the window (FBK confirmed), before Run: Emergency (rule L1 vs in_Estop_PLC), no Run, Restart -> only Safe (Q-V4-01 \"Б\", Q-RC-19)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-7 (v7, FBK-03) C2_FBK FALSE 1 scan at u+550 after the window (FBK confirmed), before Run: Emergency (rule L1 vs in_Estop_PLC), no Run, Restart -> only Safe (Q-V4-01 \"Б\", Q-RC-19)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RUN-CONF RC-7 (v7, FBK-03) C2_FBK FALSE 1 scan at u+599 after the window (FBK confirmed), before Run: Emergency (rule L1 vs in_Estop_PLC), no Run, Restart -> only Safe (Q-V4-01 \"Б\", Q-RC-19)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a MOD1-01 (v7 §4.2) Safe->R&D natural: no R&D <= u1+599, R&D at u1+601 and later (question 68 \"Б\": C1 window 500 ms + 100 ms continuous C1_FBK and LV healthy), no Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a MOD1-01 / FBK-01 (v7 §4.2) Safe->R&D, C1_FBK FALSE 1 scan at u1+51 inside the window: not an emergency, R&D at u1+601",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a FBK-01 (v7 §4.2/§4.3) Safe->R&D, C1_FBK FALSE 1 scan at u1+550 after the window, before R&D: Emergency (EMGREF-LV, rule L1 vs in_Estop_PLC), R&D never, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-run-conf.test.js :: E2a RND-CONF-T Safe->R&D, LV Faulty TRUE 1 scan at u1+550 after the window: count restarts - no R&D <= u1+650, R&D at u1+652, no Emergency (question 68 \"Б\"; upper bound TEAM-DEFAULT TD-02)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-interlock-run.test.js :: E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-interlock-run.test.js :: E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-interlock-run.test.js :: E2b IL-03 steady Run, NC1 FALSE (Door false), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-interlock-run.test.js :: E2b IL-03 steady Run, NC1 FALSE (Door false), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-interlock-run.test.js :: E2b IL-03 steady Run, NC2 FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-interlock-run.test.js :: E2b IL-03 steady Run, NC2 FALSE (Door true), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-interlock-run.test.js :: E2b IL-03 steady Run, NC2 FALSE (Door false), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-interlock-run.test.js :: E2b IL-03 steady Run, NC2 FALSE (Door false), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-interlock-run.test.js :: E2b IL-03 steady Run, both FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-interlock-run.test.js :: E2b IL-03 steady Run, both FALSE (Door true), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-interlock-run.test.js :: E2b IL-03 steady Run, both FALSE (Door false), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-interlock-run.test.js :: E2b IL-03 steady Run, both FALSE (Door false), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05a StartingRun, NC1 FALSE (Door true) at c=u+1: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05a StartingRun, NC1 FALSE (Door true) at c=u+50: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05a StartingRun, NC2 FALSE (Door true) at c=u+50: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05a StartingRun, both FALSE (Door true) at c=u+50: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05a StartingRun, both FALSE (Door false) at c=u+50: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05a StartingRun, NC1 FALSE (Door true) at c=r-1: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05a boundary c=r+1 (Run just confirmed), NC1 FALSE -> IL-03: Emergency, rule L vs in_Estop_PLC at c, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2d IL-02 boundary NC1 FALSE in N=u-1 (UP qualifies in N+1): UP rejected - no C2 ON / STO release, R&D and LV kept, no Emergency; not executed after the cover closes",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2d IL-02/IL-05a boundary N=c=u (NC1 FALSE in the UP acceptance scan): normative disjunction - (i) UP rejected, R&D, no Emergency, or (ii) Emergency by rule L with EMGREF-RUN; never Run",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2d IL-02/IL-05a boundary N=c=u (NC2 FALSE in the UP acceptance scan): normative disjunction - (i) UP rejected, R&D, no Emergency, or (ii) Emergency by rule L with EMGREF-RUN; never Run",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2d IL-02/IL-05a boundary N=c=u (both FALSE in the UP acceptance scan): normative disjunction - (i) UP rejected, R&D, no Emergency, or (ii) Emergency by rule L with EMGREF-RUN; never Run",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05b(1) normal Run->R&D by green, NC1 FALSE at t_a+1: stop continues with unchanged moments, R&D, then R&D kept with the cover open; no Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05b(1) normal Run->R&D by green, both FALSE at t_a+1: stop continues with unchanged moments, R&D, then R&D kept with the cover open; no Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05b(1) normal Run->R&D by green, NC2 FALSE at t_a+1000: stop continues with unchanged moments, R&D, then R&D kept with the cover open; no Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05b(1) normal Run->R&D by green, both FALSE at C2 OFF command+1 (C2_FBK pinned ON 200 ms): stop continues with unchanged moments, R&D, then R&D kept with the cover open; no Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05b boundary: NC1 FALSE in t_a-1 (before the down is accepted) -> IL-03 Emergency (rule L vs in_Estop_PLC), no normal R&D, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05b(2) Safe->R&D accepted, NC1 FALSE one scan after acceptance: continues to R&D, outputs as without the event, no Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05b(2) Safe->R&D accepted, both FALSE one scan after acceptance: continues to R&D, outputs as without the event, no Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05d(1) StartingRun aborted by LV loss (c=u+50), NC1 FALSE at c+100 during the abort -> Emergency (rule L vs in_Estop_PLC in the same phase), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05d(1) StartingRun (HV Faulty TRUE holds it) aborted by green 600 ms, NC1 FALSE 100 ms after the abort -> Emergency (rule L vs in_Estop_PLC in the same phase), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05d(3) steady Run, LV Healthy lost (protective descent, Q-RC-02), NC1 FALSE 100 ms later -> Emergency (rule L vs in_Estop_PLC in the same phase), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-cover-transitions.test.js :: E2b IL-05d(3) steady Run, HV Healthy lost (protective descent, Q-RC-02), NC1 FALSE 100 ms later -> Emergency (rule L vs in_Estop_PLC in the same phase), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-connector-safe.test.js :: E2b EMG4-03 Safe, LV connector FALSE: no Emergency/fault, BOTH rejected; restoration does not start; new BOTH accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-connector-safe.test.js :: E2b EMG4-03 Safe, HV connector FALSE: no Emergency/fault, BOTH rejected; restoration does not start; new BOTH accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-connector-safe.test.js :: E2b EMG4-03 boundary: LV connector FALSE in u-1 (one scan before Safe->R&D acceptance) -> EMG-003: UP rejected, no Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-connector-safe.test.js :: E2b EMG4-03 boundary: LV connector FALSE in u+1 (Safe->R&D accepted) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), R&D never confirmed, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-connector-safe.test.js :: E2b EMG4-03 boundary: HV connector FALSE in u-1 (one scan before Safe->R&D acceptance) -> EMG-003: UP rejected, no Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2b-connector-safe.test.js :: E2b EMG4-03 boundary: HV connector FALSE in u+1 (Safe->R&D accepted) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), R&D never confirmed, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2c-stp-i.test.js :: E2c STP-I LV Healthy lost in StartingRun at c=u+1: abort (STO, Discharge, T_DIS, C2 OFF) -> R&D -> R&D->Safe, not Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2c-stp-i.test.js :: E2c STP-I LV Healthy lost in StartingRun at c=u+50: abort (STO, Discharge, T_DIS, C2 OFF) -> R&D -> R&D->Safe, not Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2c-stp-i.test.js :: E2c STP-I LV Healthy lost in StartingRun at c=r-1: abort (STO, Discharge, T_DIS, C2 OFF) -> R&D -> R&D->Safe, not Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2c-stp-i.test.js :: E2c STP-I LV and HV Healthy lost together in StartingRun (c=u+50): LV decides, same abort sequence, not Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2c-stp-i.test.js :: E2c STP-I green 600 ms pressed during the abort (c=u+50, press c+10): not executed - C1 not dropped before C2_FBK OFF",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2c-stp-i.test.js :: E2c STP-I BOTH 1100 ms pressed during the abort (c=u+50, press c+10): not executed now or later (launch not resumed)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2c-stp-i.test.js :: E2c STP-I(4) LV lost at c=u+50 and restored at c+100 (before R&D): still abort -> R&D -> chained R&D->Safe (Q-RC-16 \"А\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2c-stp-i.test.js :: E2c STP-I boundary c=u-1 (LV lost one scan before acceptance) -> HLT-01: UP not executed (no C2 ON / STO release), R&D->Safe, not Emergency",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2c-hlt03.test.js :: E2c HLT-03 Safe with SafetyFault after HLT-01, first press green 1 scan: acknowledges, no transition/Unlock; new BOTH after release 1999 ms rejected, 2000 ms accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2c-hlt03.test.js :: E2c HLT-03 Safe with SafetyFault after HLT-01, first press green 600 ms: acknowledges, no transition/Unlock; new BOTH after release 1999 ms rejected, 2000 ms accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2c-hlt03.test.js :: E2c HLT-03 Safe with SafetyFault after HLT-01, first press blue 1 scan: acknowledges, no transition/Unlock; new BOTH after release 1999 ms rejected, 2000 ms accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2c-hlt03.test.js :: E2c HLT-03 Safe with SafetyFault after HLT-01, first press blue 600 ms: acknowledges, no transition/Unlock; new BOTH after release 1999 ms rejected, 2000 ms accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2c-hlt03.test.js :: E2c HLT-03 Safe with SafetyFault after HLT-01, first press BOTH 1100 ms (UP gesture before acknowledgement): acknowledges, no transition/Unlock; new BOTH after release 1999 ms rejected, 2000 ms accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-PERMIT Safe, buttons released > 2 s, NC1 open 300 ms then closed, BOTH 1 s 1700 ms after closing -> accepted (Q-REL-AFTER-PERMIT \"А\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-PERMIT Safe, buttons released > 2 s, NC2 open 300 ms then closed, BOTH 1 s 1700 ms after closing -> accepted (Q-REL-AFTER-PERMIT \"А\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-PERMIT Safe, buttons released > 2 s, both open 300 ms then closed, BOTH 1 s 1700 ms after closing -> accepted (Q-REL-AFTER-PERMIT \"А\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-PERMIT Safe, blue tap 100 ms, release 100 ms, NC1 open 300 ms, closed 1700 ms: buttons released 2100 ms at the BOTH press -> accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-PERMIT boundary by buttons: blue tap, release 100 + NC1 open 300 + closed 1599 = 1999 ms at the BOTH press -> rejected (item 9/11)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-PERMIT control without cover episode: blue tap, release 2100 ms -> accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(b) Safe, buttons released > 2 s, LV connector FALSE 300 ms then restored, BOTH 1 s 1700 ms later -> accepted, no fault (Q-REL-AFTER-PERMIT \"А\", EMG-003)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(b) Safe, buttons released > 2 s, HV connector FALSE 300 ms then restored, BOTH 1 s 1700 ms later -> accepted, no fault (Q-REL-AFTER-PERMIT \"А\", EMG-003)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(b) Safe, buttons released > 2 s, both connector FALSE 300 ms then restored, BOTH 1 s 1700 ms later -> accepted, no fault (Q-REL-AFTER-PERMIT \"А\", EMG-003)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(d) boundary by buttons with a LV connector episode: blue tap, release 100 + connector 300 + 1599 = 1999 ms at the BOTH press -> rejected without fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(d) boundary by buttons with a HV connector episode: blue tap, release 100 + connector 300 + 1599 = 1999 ms at the BOTH press -> rejected without fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(d) boundary by buttons with a LV connector episode: blue tap, release 100 + connector 300 + 1601 = 2001 ms at the BOTH press -> accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(d) boundary by buttons with a HV connector episode: blue tap, release 100 + connector 300 + 1601 = 2001 ms at the BOTH press -> accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: DIAG observation E2d REL-01(d): boundary 2000 ms by buttons with an LV connector episode (q, TON semantics)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(e) Safe, LV connector FALSE during the BOTH qualification (press+800..press+1300 of a 2000 ms press): rejected, not executed after restoration; new attempt after 2.1 s release -> accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(e) Safe, HV connector FALSE during the BOTH qualification (press+800..press+1300 of a 2000 ms press): rejected, not executed after restoration; new attempt after 2.1 s release -> accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(e) Safe, LV connector FALSE during the BOTH qualification (press+800..press+1300 of a 3000 ms press): rejected, not executed after restoration; new attempt after 2.1 s release -> accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(e) Safe, HV connector FALSE during the BOTH qualification (press+800..press+1300 of a 3000 ms press): rejected, not executed after restoration; new attempt after 2.1 s release -> accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(e) Safe, both connector FALSE during the BOTH qualification (press+800..press+1300 of a 3000 ms press): rejected, not executed after restoration; new attempt after 2.1 s release -> accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(e) Safe, both connector FALSE during the BOTH qualification (press+800..press+1300 of a 2000 ms press): rejected, not executed after restoration; new attempt after 2.1 s release -> accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(e) Safe, LV connector FALSE during the BOTH qualification (press+800..press+2500 of a 3600 ms press): rejected, not executed after restoration; new attempt after 2.1 s release -> accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(c) R&D, buttons released > 2 s, NC1 open 300 ms then closed, BOTH 1 s 1700 ms later -> R&D->Run accepted (Q-REL-AFTER-PERMIT \"А\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(c) R&D, buttons released > 2 s, NC2 open 300 ms then closed, BOTH 1 s 1700 ms later -> R&D->Run accepted (Q-REL-AFTER-PERMIT \"А\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(c) R&D, buttons released > 2 s, both open 300 ms then closed, BOTH 1 s 1700 ms later -> R&D->Run accepted (Q-REL-AFTER-PERMIT \"А\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(c)(d) R&D boundary by buttons with a cover episode: blue tap, release 100 + NC1 300 + 1601 = 2001 ms -> R&D->Run accepted",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-release-permit.test.js :: E2d REL-01(c)(d) R&D boundary by buttons with a cover episode: blue tap, release 100 + NC1 300 + 1599 = 1999 ms -> R&D->Run rejected",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-cover.test.js :: E2d UNL-04 R&D (Q-ARCH-10 \"А\"), cover NC1 open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-cover.test.js :: E2d UNL-04 R&D (Q-ARCH-10 \"А\"), cover NC2 open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-cover.test.js :: E2d UNL-04 R&D (Q-ARCH-10 \"А\"), cover both open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-cover.test.js :: E2d UNL-04 R&D (Q-ARCH-10 \"А\"), cover closed (control), Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-cover.test.js :: E2d UNL-04 control: steady Run, cover closed, blue held 3000 ms -> Unlock FALSE in every scan (Q-ARCH-10: forbidden in Run)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-cover.test.js :: E2d UNL-04 Safe, cover NC1 open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-cover.test.js :: E2d UNL-04 Safe, cover NC2 open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-cover.test.js :: E2d UNL-04 Safe, cover both open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-cover.test.js :: E2d UNL-04 Safe, cover closed (control), Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-cover.test.js :: E2d UNL-04 Safe, cover NC1 open: blue held, green pressed 1000 ms later for 300 ms -> Unlock FALSE in every scan with green pressed",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-cover.test.js :: E2d UNL-04 Safe, cover closed (control): blue held, green pressed 1000 ms later for 300 ms -> Unlock FALSE in every scan with green pressed",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-cover.test.js :: E2d UNL-04 R&D, cover NC1 open: blue held, green pressed 1000 ms later for 300 ms -> Unlock FALSE in every scan with green pressed",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-cover.test.js :: E2d UNL-04 R&D, cover closed (control): blue held, green pressed 1000 ms later for 300 ms -> Unlock FALSE in every scan with green pressed",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 L3/L1 boundary: Run-down (green 600 ms), in_Estop_PLC TRUE at e=t_a-1 -> Emergency latch, rule L as in steady Run, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L: Run-down (green 600 ms), in_Estop_PLC TRUE at e=t_a+1 -> Emergency latch, descent steps not later than normal (Q-T3-1 \"А\"), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L: Run-down (green 600 ms), in_Estop_PLC TRUE at e=t_a+1999 -> Emergency latch, descent steps not later than normal (Q-T3-1 \"А\"), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L: Run-down (green 600 ms), in_Estop_PLC TRUE at e=t_a+2001 -> Emergency latch, descent steps not later than normal (Q-T3-1 \"А\"), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L: Run-down (green 600 ms), in_Estop_PLC TRUE at e=t_s+4999 -> Emergency latch, descent steps not later than normal (Q-T3-1 \"А\"), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L: Run-down (green 600 ms), in_Estop_PLC TRUE at e=t_d+T_DIS-1 -> Emergency latch, descent steps not later than normal (Q-T3-1 \"А\"), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L: Run-down (green 600 ms), in_Estop_PLC TRUE at e=C2_FBK wait (C2 OFF command +100, C2_FBK pinned ON 200 ms) -> Emergency latch, descent steps not later than normal (Q-T3-1 \"А\"), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 L3/L1 boundary: Run-down (green 600 ms), in_ES_NC_1 FALSE at e=t_a-1 -> Emergency latch, rule L as in steady Run, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L: Run-down (green 600 ms), in_ES_NC_1 FALSE at e=t_a+1 -> Emergency latch, descent steps not later than normal (Q-T3-1 \"А\"), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L: Run-down (green 600 ms), in_ES_NC_1 FALSE at e=t_a+1999 -> Emergency latch, descent steps not later than normal (Q-T3-1 \"А\"), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L: Run-down (green 600 ms), in_ES_NC_1 FALSE at e=t_a+2001 -> Emergency latch, descent steps not later than normal (Q-T3-1 \"А\"), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L: Run-down (green 600 ms), in_ES_NC_1 FALSE at e=t_s+4999 -> Emergency latch, descent steps not later than normal (Q-T3-1 \"А\"), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L: Run-down (green 600 ms), in_ES_NC_1 FALSE at e=t_d+T_DIS-1 -> Emergency latch, descent steps not later than normal (Q-T3-1 \"А\"), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L: Run-down (green 600 ms), in_ES_NC_1 FALSE at e=C2_FBK wait (C2 OFF command +100, C2_FBK pinned ON 200 ms) -> Emergency latch, descent steps not later than normal (Q-T3-1 \"А\"), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L: Run-down, in_Estop_PLC and HV Healthy loss (STP-D) in the same scan e=t_a+1000 -> Emergency has priority, moments by EMG-RD-L, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L STP-D combo (v7 §1): Run-down, in_Estop_PLC and HV Healthy loss in the same scan h=e=t_a+1 -> STO in [h, h+1], Discharge/C2 from the actual t_s/t_d, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L STP-D combo (v7 §1): Run-down, in_Estop_PLC and HV Healthy loss in the same scan h=e=t_a+1999 -> STO in [h, h+1], Discharge/C2 from the actual t_s/t_d, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L STP-H combo (v7 §1, Q-RC-15 \"Б\"): Run-down, in_Estop_PLC and LV Healthy loss in the same scan h=e=t_a+1000 -> STO in [h, h+1], Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L STP-D combo (v7 §1, h < e): Run-down, HV Healthy lost at t_a+500, in_Estop_PLC at e=t_a+1000 -> STO already active stays (p.4), Discharge/C2 from the actual t_s/t_d, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2a-emg-rd-sweep.test.js :: E2a EMG6-01 EMG-RD-L STP-D combo (v7 §1, TEAM-DEFAULT TD-03 «Решено командой», h > e): Run-down, in_Estop_PLC at e=t_a+1, HV Healthy lost at h=t_a+1000 -> STO in [h, h+1] (not later than without the emergency), Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 Safe, Door FALSE >= 2 s, cover a_NC1: blue held 1000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 Safe, Door FALSE >= 2 s, cover a_NC1: blue held 3000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 Safe, Door FALSE >= 2 s, cover b_NC2: blue held 1000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 Safe, Door FALSE >= 2 s, cover b_NC2: blue held 3000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 Safe, Door FALSE >= 2 s, cover c_both: blue held 1000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 Safe, Door FALSE >= 2 s, cover c_both: blue held 3000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 Safe, Door FALSE >= 2 s, cover d_closed: blue held 1000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 Safe, Door FALSE >= 2 s, cover d_closed: blue held 3000 ms -> Unlock FALSE in every scan, Safe kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 R&D, Door FALSE >= 2 s, cover a_NC1: blue held 1000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 R&D, Door FALSE >= 2 s, cover a_NC1: blue held 3000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 R&D, Door FALSE >= 2 s, cover b_NC2: blue held 1000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 R&D, Door FALSE >= 2 s, cover b_NC2: blue held 3000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 R&D, Door FALSE >= 2 s, cover c_both: blue held 1000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 R&D, Door FALSE >= 2 s, cover c_both: blue held 3000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 R&D, Door FALSE >= 2 s, cover d_closed: blue held 1000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 R&D, Door FALSE >= 2 s, cover d_closed: blue held 3000 ms -> Unlock FALSE in every scan, R&D kept, no Emergency/fault",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 boundary Safe, cover NC1 open, Door FALSE >= 2 s then TRUE from s-1: blue held 1000 ms -> UNL-04 (Unlock FALSE at s+499, TRUE from s+501 while held)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 boundary R&D, cover NC1 open, Door FALSE >= 2 s then TRUE from s-1: blue held 1000 ms -> UNL-04 (Unlock FALSE at s+499, TRUE from s+501 while held)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: DIAG observation E2d UNL-05: Safe, Door FALSE only in scan s (TRUE otherwise), blue held 1000 ms",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 Safe, cover d_closed, Door TRUE, blue held, Unlock TRUE; Door FALSE at d=s+600 with the blue held -> Unlock TRUE at d-1, FALSE from d+1 (d observation), stays FALSE, Safe kept",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 Safe, cover d_closed, Door TRUE, blue held, Unlock TRUE; Door FALSE at d=s+1000 with the blue held -> Unlock TRUE at d-1, FALSE from d+1 (d observation), stays FALSE, Safe kept",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 Safe, cover a_NC1, Door TRUE, blue held, Unlock TRUE; Door FALSE at d=s+600 with the blue held -> Unlock TRUE at d-1, FALSE from d+1 (d observation), stays FALSE, Safe kept",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 Safe, cover a_NC1, Door TRUE, blue held, Unlock TRUE; Door FALSE at d=s+1000 with the blue held -> Unlock TRUE at d-1, FALSE from d+1 (d observation), stays FALSE, Safe kept",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 Safe, Unlock granted (Door TRUE, blue held); Door FALSE and in_Estop_PLC TRUE in the same scan d -> Emergency latched (status <= d+2, L3-Safe), Unlock FALSE from d+1 and in every Emergency scan, no energy increase, Restart -> only Safe",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 Safe, Door FALSE >= 2 s, cover NC1 open: blue held, green pressed 700 ms later for 300 ms -> Unlock FALSE in every scan, no energy increase",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-unlock-door.test.js :: E2d UNL-05 R&D, Door FALSE >= 2 s, cover NC1 open: blue held, green pressed 700 ms later for 300 ms -> Unlock FALSE in every scan, no energy increase",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (S1) steady Safe, C1_FBK TRUE without command f..f+2999, BOTH 1 s at f+500 -> lift not executed, state/energy unchanged, no Emergency (Q-V4-02 \"В\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (S1) k3: steady Safe, C1_FBK TRUE f..f+2999 then FALSE, no acknowledgement, BOTH 1 s after 2.1 s -> lift not executed (ban until FBK OFF + acknowledgement)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (S1) k2: steady Safe, C1_FBK TRUE f..f+2999 then FALSE, acknowledgement (blue 100 ms, release 2.1 s), BOTH 1 s -> lift executed (positive control)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (S1) k1: steady Safe, C1_FBK TRUE, acknowledgement while FBK ON, then BOTH 1 s while FBK still ON -> lift not executed",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (S1) steady Safe, C1_FBK TRUE for 1 scan only (f), no acknowledgement, BOTH 1 s after 2.1 s -> lift not executed, no Emergency (READY-D: no filter)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (S1) + in_Estop_PLC at f+500 while FBK ON -> Emergency by the EStop cause, latched",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (S2) steady Safe, C2_FBK TRUE without command f..f+2999, BOTH 1 s at f+500 -> lift not executed, state/energy unchanged, no Emergency (Q-V4-02 \"В\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (S2) k3: steady Safe, C2_FBK TRUE f..f+2999 then FALSE, no acknowledgement, BOTH 1 s after 2.1 s -> lift not executed (ban until FBK OFF + acknowledgement)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (S2) k2: steady Safe, C2_FBK TRUE f..f+2999 then FALSE, acknowledgement (blue 100 ms, release 2.1 s), BOTH 1 s -> lift executed (positive control)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (S2) k1: steady Safe, C2_FBK TRUE, acknowledgement while FBK ON, then BOTH 1 s while FBK still ON -> lift not executed",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (S2) steady Safe, C2_FBK TRUE for 1 scan only (f), no acknowledgement, BOTH 1 s after 2.1 s -> lift not executed, no Emergency (READY-D: no filter)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (S2) + in_Estop_PLC at f+500 while FBK ON -> Emergency by the EStop cause, latched",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (R) steady R&D, C2_FBK TRUE without command f..f+2999, BOTH 1 s at f+500 -> lift not executed, state/energy unchanged, no Emergency (Q-V4-02 \"В\")",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (R) k3: steady R&D, C2_FBK TRUE f..f+2999 then FALSE, no acknowledgement, BOTH 1 s after 2.1 s -> lift not executed (ban until FBK OFF + acknowledgement)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (R) k2: steady R&D, C2_FBK TRUE f..f+2999 then FALSE, acknowledgement (blue 100 ms, release 2.1 s), BOTH 1 s -> lift executed (positive control)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (R) k1: steady R&D, C2_FBK TRUE, acknowledgement while FBK ON, then BOTH 1 s while FBK still ON -> lift not executed",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (R) steady R&D, C2_FBK TRUE for 1 scan only (f), no acknowledgement, BOTH 1 s after 2.1 s -> lift not executed, no Emergency (READY-D: no filter)",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (R) + in_Estop_PLC at f+500 while FBK ON -> Emergency by the EStop cause, latched",
+   "status": "fail"
+  },
+  {
+   "key": "current-e2d-fbk-unsolicited.test.js :: E2d FBK-10 (R) steady R&D, C2_FBK TRUE without command, green 600 ms at f+500 -> R&D->Safe executed (descent not blocked, Q-RC-07)",
+   "status": "fail"
+  }
+ ],
+ "behaviouralPatternMatches": {
+  "^E2[a-d] ": 464
+ },
+ "behaviouralPatternPassingMatches": {
+  "^E2[a-d] ": 1
+ },
+ "mutations": 19,
+ "notRun": [],
+ "staleOperatorFlags": [],
+ "applyCheck": [
+  {
+   "id": "M-E2a-01",
+   "op": "deactivate-input",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr1/OrIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-02",
+   "op": "deactivate-input",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr13/OrIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-03",
+   "op": "deactivate-input",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr13/OrIn4",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-04",
+   "op": "deactivate-input",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr13/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-05",
+   "op": "deactivate-input",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr5/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-06",
+   "op": "deactivate-input",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr5/OrIn3",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-07",
+   "op": "deactivate-input",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr16/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-08",
+   "op": "deactivate-input",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr16/OrIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-09",
+   "op": "deactivate-input",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network6/RUN_DOWN_RESET/OrIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-10",
+   "op": "deactivate-input",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr7/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-11",
+   "op": "deactivate-input",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr9/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-12",
+   "op": "invert-contact",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network3/FBRs8/Reset",
+    "attribute": "deactivate1",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-13",
+   "op": "deactivate-input",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network6/HEALTH_GUARD/OrIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-14",
+   "op": "invert-contact",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network6/HEALTHY_OK/AndIn1",
+    "attribute": "deactivate1",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-15",
+   "op": "invert-contact",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network6/HEALTHY_OK/AndIn2",
+    "attribute": "deactivate1",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-16",
+   "op": "invert-contact",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": "//Network11/FBAnd4/AndIn3",
+    "attribute": "deactivate1",
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-17",
+   "op": "swap-order",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": [
+     "//Network1/FBAnd1#block",
+     "//Network1/FBAndHvSetPermit#block",
+     "//Network1/FBAndLvCurrentPermit#block",
+     "//Network1/FBAndLvSetPermit#block",
+     "//Network1/FBAndSto1SetPermit#block",
+     "//Network1/FBAndSto2SetPermit#block",
+     "//Network1/FBDecouple1#block",
+     "//Network1/FBDecouple2#block",
+     "//Network1/FBEstop1#block",
+     "//Network1/FBOr1#block",
+     "//Network1/FBOr10#block",
+     "//Network1/FBOr11#block",
+     "//Network1/FBOr12#block",
+     "//Network1/FBOr13#block",
+     "//Network1/FBOr16#block",
+     "//Network1/FBOr2#block",
+     "//Network1/FBOr5#block",
+     "//Network1/FBOr6#block",
+     "//Network1/FBOr7#block",
+     "//Network1/FBOr8#block",
+     "//Network1/FBOr9#block",
+     "//Network1/FBRs1#block",
+     "//Network1/FBRs2#block",
+     "//Network1/FBRs3#block",
+     "//Network1/FBRs4#block",
+     "//Network1/FBRs5#block",
+     "//Network1/FBRs7#block",
+     "//Network10/FBDecouple1#block",
+     "//Network10/FBDecouple2#block",
+     "//Network11/FBAnd1#block",
+     "//Network11/FBAnd4#block",
+     "//Network11/FBAnd5#block",
+     "//Network11/FBTon1#block",
+     "//Network12/FBAnd16#block",
+     "//Network2/FBAnd1#block",
+     "//Network2/FBAnd2#block",
+     "//Network2/FBAnd3#block",
+     "//Network2/FBAnd5#block",
+     "//Network2/FBAnd6#block",
+     "//Network2/FBAnd7#block",
+     "//Network2/FBAnd8#block",
+     "//Network2/FBAnd9#block",
+     "//Network2/FBDecouple1#block",
+     "//Network2/FBDecouple2#block",
+     "//Network2/FBDecouple3#block",
+     "//Network2/FBTon1#block",
+     "//Network2/FBTon2#block",
+     "//Network3/FBAnd1#block",
+     "//Network3/FBAnd2#block",
+     "//Network3/FBDecouple1#block",
+     "//Network3/FBDecouple2#block",
+     "//Network3/FBRs3#block",
+     "//Network3/FBRs4#block",
+     "//Network3/FBRs5#block",
+     "//Network3/FBRs6#block",
+     "//Network3/FBRs7#block",
+     "//Network6/FBAnd1#block",
+     "//Network6/FBAnd2#block",
+     "//Network6/FBAnd3#block",
+     "//Network6/FBAnd4#block",
+     "//Network6/FBAnd5#block",
+     "//Network6/FBAnd6#block",
+     "//Network6/FBAnd7#block",
+     "//Network6/FBAnd8#block",
+     "//Network6/FBAnd9#block",
+     "//Network6/FBDecouple1#block",
+     "//Network6/FBOr2#block",
+     "//Network6/FBOr3#block",
+     "//Network6/FBRs1#block",
+     "//Network6/FBRs2#block",
+     "//Network6/HEALTHY_OK#block",
+     "//Network6/HEALTH_GUARD#block",
+     "//Network7/FBAnd1#block",
+     "//Network7/FBAnd2#block",
+     "//Network7/FBAnd3#block",
+     "//Network7/FBAnd8#block",
+     "//Network7/FBDecouple1#block",
+     "//Network7/FBDecouple3#block",
+     "//Network7/FBOr1#block",
+     "//Network7/FBOr2#block",
+     "//Network7/FBTon1#block",
+     "//Network7/FBTon2#block",
+     "//Network7/FBTon3#block",
+     "//Network8/FBAnd1#block",
+     "//Network8/FBAnd2#block",
+     "//Network8/FBAnd3#block",
+     "//Network8/FBDecouple1#block",
+     "//Network8/FBOr1#block",
+     "//Network8/FBTon1#block",
+     "//Network8/FBTon2#block",
+     "//RndPhysicalCompact/GATE_001#block",
+     "//RndPhysicalCompact/SNAP_0#block",
+     "//RndPhysicalCompact/SNAP_1#block",
+     "//SafeResumption/CONNECTORS#block",
+     "//SafeResumption/CONNECTOR_SCOPE#block",
+     "//SafeResumption/MODE#block"
+    ],
+    "attribute": "orderOfExecution",
+    "movedBlocks": 96,
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-28",
+   "op": "swap-order",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": [
+     "//Network1/FBAnd1#block",
+     "//Network12/FBAnd16#block",
+     "//SafeResumption/CONNECTORS#block",
+     "//SafeResumption/CONNECTOR_SCOPE#block"
+    ],
+    "attribute": "orderOfExecution",
+    "movedBlocks": 4,
+    "bindingValidation": "PASS"
+   }
+  },
+  {
+   "id": "M-E2a-29",
+   "op": "swap-order",
+   "status": "APPLIES",
+   "verification": {
+    "parsedDelta": [
+     "//Network1/FBAnd1#block",
+     "//SafeResumption/CONNECTOR_SCOPE#block"
+    ],
+    "attribute": "orderOfExecution",
+    "movedBlocks": 2,
+    "bindingValidation": "PASS"
+   }
+  }
+ ]
+}

@@ -1,0 +1,176 @@
+TAP version 13
+# Subtest: B1 guard-ready while held
+ok 1 - B1 guard-ready while held
+  ---
+  duration_ms: 341.6919
+  type: 'test'
+  ...
+# Subtest: B1 guard-ready after release
+ok 2 - B1 guard-ready after release
+  ---
+  duration_ms: 286.9196
+  type: 'test'
+  ...
+# Subtest: SR-OBSERVER interior one-sample pulse cannot be hidden by endpoint FALSE
+ok 3 - SR-OBSERVER interior one-sample pulse cannot be hidden by endpoint FALSE
+  ---
+  duration_ms: 1.0461
+  type: 'test'
+  ...
+# Subtest: SR-SB-QUAL fresh Safe blue minimum500 and actual grant
+ok 4 - SR-SB-QUAL fresh Safe blue minimum500 and actual grant
+  ---
+  duration_ms: 1127.3367
+  type: 'test'
+  ...
+# Subtest: SR-SB-ACCESS connector absence preserves Safe access control
+ok 5 - SR-SB-ACCESS connector absence preserves Safe access control
+  ---
+  duration_ms: 1228.3229
+  type: 'test'
+  ...
+# Subtest: SR-SB-DOOR original Safe Door reset control
+ok 6 - SR-SB-DOOR original Safe Door reset control
+  ---
+  duration_ms: 2149.8954
+  type: 'test'
+  ...
+# Subtest: SR-SB-GREEN qualified blue final green suppression control
+ok 7 - SR-SB-GREEN qualified blue final green suppression control
+  ---
+  duration_ms: 1023.5127
+  type: 'test'
+  ...
+# Subtest: SR-SC-VALID-green both250 availability and minimum1000
+ok 8 - SR-SC-VALID-green both250 availability and minimum1000
+  ---
+  duration_ms: 1289.3171
+  type: 'test'
+  ...
+# Subtest: SR-SC-VALID-blue both250 availability and minimum1000
+ok 9 - SR-SC-VALID-blue both250 availability and minimum1000
+  ---
+  duration_ms: 1265.5269
+  type: 'test'
+  ...
+# Subtest: SR-SC-LATE-green second300 never legalizes and recovery positive
+ok 10 - SR-SC-LATE-green second300 never legalizes and recovery positive
+  ---
+  duration_ms: 2371.1682
+  type: 'test'
+  ...
+# Subtest: SR-SC-LATE-blue second300 never legalizes and recovery positive
+ok 11 - SR-SC-LATE-blue second300 never legalizes and recovery positive
+  ---
+  duration_ms: 2378.7303
+  type: 'test'
+  ...
+# Subtest: SR-SC-GUARD-PRESERVE qualify not-ready then release cannot queue launch
+ok 12 - SR-SC-GUARD-PRESERVE qualify not-ready then release cannot queue launch
+  ---
+  duration_ms: 2235.7258
+  type: 'test'
+  ...
+# Subtest: SR-RG-QUAL actual Run green500 branch and fanout availability
+ok 13 - SR-RG-QUAL actual Run green500 branch and fanout availability
+  ---
+  duration_ms: 2711.1352
+  type: 'test'
+  ...
+# Subtest: SR-RG-INVALID-green-remain-green failed chord cannot degrade
+not ok 14 - SR-RG-INVALID-green-remain-green failed chord cannot degrade
+  ---
+  duration_ms: 4000.7342
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\safe-resumption\\sandbox\\SafetyTests\\test\\current-safe-run-gestures.test.js:11:44'
+  failureType: 'testCodeFailure'
+  error: |-
+    [{"label":"short failed chord produces no physical/down request anywhere","actual":true,"expected":false}]
+    + actual - expected
+    
+    + [
+    +   {
+    +     actual: true,
+    +     expected: false,
+    +     label: 'short failed chord produces no physical/down request anywhere'
+    +   }
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0:
+      label: 'short failed chord produces no physical/down request anywhere'
+      actual: true
+      expected: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/candidates/safe-resumption/sandbox/SafetyTests/test/current-safe-run-gestures.test.js:18:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: SR-RG-INVALID-green-remain-blue failed chord cannot degrade
+ok 15 - SR-RG-INVALID-green-remain-blue failed chord cannot degrade
+  ---
+  duration_ms: 3975.8637
+  type: 'test'
+  ...
+# Subtest: SR-RG-INVALID-blue-remain-green failed chord cannot degrade
+not ok 16 - SR-RG-INVALID-blue-remain-green failed chord cannot degrade
+  ---
+  duration_ms: 3978.9477
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\safe-resumption\\sandbox\\SafetyTests\\test\\current-safe-run-gestures.test.js:11:44'
+  failureType: 'testCodeFailure'
+  error: |-
+    [{"label":"short failed chord produces no physical/down request anywhere","actual":true,"expected":false}]
+    + actual - expected
+    
+    + [
+    +   {
+    +     actual: true,
+    +     expected: false,
+    +     label: 'short failed chord produces no physical/down request anywhere'
+    +   }
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0:
+      label: 'short failed chord produces no physical/down request anywhere'
+      actual: true
+      expected: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/candidates/safe-resumption/sandbox/SafetyTests/test/current-safe-run-gestures.test.js:18:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: SR-RG-INVALID-blue-remain-blue failed chord cannot degrade
+ok 17 - SR-RG-INVALID-blue-remain-blue failed chord cannot degrade
+  ---
+  duration_ms: 5330.8048
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 15
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 35220.2603

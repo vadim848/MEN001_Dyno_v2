@@ -1,0 +1,75 @@
+VariableSerializer::WritePropertiesAsAttributes RVA 416696
+0000 ldarg.0 
+0001 ldarg.1 
+0002 ldarg.2 
+0003 ldarg.3 
+0004 call WritePropertiesAsAttributes
+0009 ldarg.2 
+000A isinst TypeDefinition
+000F stloc.0 
+0010 ldarg.1 
+0011 callvirt get_Result
+0016 callvirt get_Failed
+001B brtrue.s 47
+001D ldloc.0 
+001E callvirt get_Name
+0023 stloc.1 
+0024 ldarg.1 
+0025 callvirt get_Result
+002A callvirt get_Failed
+002F brtrue.s 27
+0031 ldloc.1 
+0032 call IsNullOrEmpty
+0037 brtrue.s 19
+0039 call get_Instance
+003E ldarg.1 
+003F ldarg.2 
+0040 ldarg.3 
+0041 ldstr name
+0046 ldloc.1 
+0047 callvirt WriteAttributeString
+004C ldarg.1 
+004D callvirt get_Result
+0052 callvirt get_Failed
+0057 brtrue.s 47
+0059 ldloc.0 
+005A callvirt get_Comment
+005F stloc.2 
+0060 ldarg.1 
+0061 callvirt get_Result
+0066 callvirt get_Failed
+006B brtrue.s 27
+006D ldloc.2 
+006E call IsNullOrEmpty
+0073 brtrue.s 19
+0075 call get_Instance
+007A ldarg.1 
+007B ldarg.2 
+007C ldarg.3 
+007D ldstr comment
+0082 ldloc.2 
+0083 callvirt WriteAttributeString
+0088 ldarg.1 
+0089 callvirt get_Result
+008E callvirt get_Failed
+0093 brtrue.s 49
+0095 ldloc.0 
+0096 callvirt get_IsLocal
+009B stloc.3 
+009C ldarg.1 
+009D ldloc.3 
+009E call MethodSpecification
+00A3 stloc.s 4
+00A5 ldarg.1 
+00A6 callvirt get_Result
+00AB callvirt get_Failed
+00B0 brtrue.s 20
+00B2 call get_Instance
+00B7 ldarg.1 
+00B8 ldarg.2 
+00B9 ldarg.3 
+00BA ldstr isLocal
+00BF ldloc.s 4
+00C1 callvirt WriteAttributeString
+00C6 ret 
+

@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.19">
+  <POU Name="MAIN" Id="{0726ba31-cfa3-4f4b-8cfa-b894f8445811}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	i: INT;
+	ton_TwinSAFE_ACK_reset: TON;
+	BlinkLED: ton;
+
+	Pulse_On_TON: TON;
+	Pulse_Off_TON: TON;
+	bPulse	:	BOOL	;
+	
+	t_BlinkTime : TIME	;
+	
+	n_SafeSate	:	INT	;
+
+	//TwinSAFE heartbeat (interface v1.4): level toggles every 0.5 s
+	HB_On_TON: TON;
+	HB_Off_TON: TON;
+	bHeartbeat	:	BOOL	;
+
+	//Request source to be connected by PLC side: all CMD_* stay FALSE (idle) while b_PlcRequestActive is FALSE
+	b_PlcRequestActive	:	BOOL	;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[i:=i+1;
+
+
+ton_TwinSAFE_ACK_reset(IN:=GVL_Safety.stTwinSAFE_OUT.ErrACK, PT:=T#10S);
+IF ton_TwinSAFE_ACK_reset.Q THEN;
+	GVL_Safety.stTwinSAFE_OUT.ErrACK:=FALSE;
+END_IF
+GVL_Safety.stTwinSAFE_OUT.DoorMonitor:=GVL_Safety.DoorMonitorFromPLC;
+
+//Battery Relay CMD
+IF GVL_Safety.stTwinSAFE_OUT.BatRelay_CMD THEN
+	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_Off:=FALSE;
+	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_On:=TRUE;
+ELSE
+	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_Off:=TRUE;
+	GVL_Safety.stTwinSAFE_OUT.BatRelay_Manual_On:=FALSE;
+END_IF
+
+//Battery BMS Relay CMD
+IF GVL_Safety.stTwinSAFE_OUT.BatBMS_Cmd THEN
+	GVL_Safety.stTwinSAFE_OUT.RB_BatBMS_Manual_Off:=FALSE;
+	GVL_Safety.stTwinSAFE_OUT.RB_BatBMS_Manual_On:=TRUE;
+ELSE
+	GVL_Safety.stTwinSAFE_OUT.RB_BatBMS_Manual_Off:=TRUE;
+	GVL_Safety.stTwinSAFE_OUT.RB_BatBMS_Manual_On:=FALSE;
+
+END_IF
+
+act_LED_Control();
+act_LogicMap();
+
+//TwinSAFE heartbeat: toggle every 0.5 s (no level change for 3 s -> TwinSAFE Emergency)
+HB_On_TON(IN:=NOT bHeartbeat, PT:=T#500MS);
+HB_Off_TON(IN:=bHeartbeat, PT:=T#500MS);
+IF HB_On_TON.Q AND NOT bHeartbeat THEN bHeartbeat:=TRUE; END_IF;
+IF HB_Off_TON.Q AND bHeartbeat THEN bHeartbeat:=FALSE; END_IF;
+GVL_Safety.stTwinSAFE_OUT.Heartbeat:=bHeartbeat;
+
+
+
+
+
+
+
+
+
+]]></ST>
+    </Implementation>
+    <Action Name="act_LED_Control" Id="{3c867c17-f4c4-4546-bd10-836abda837f5}">
+      <Implementation>
+        <ST><![CDATA[//Red 
+IF GVL_Safety.stTwinSAFE_IN.EStop_Ok AND GVL_Safety.stTwinSAFE_IN.EStop_Status THEN
+	//Red Off
+	GVL_IO.RedLED:= FALSE;
+ELSIF GVL_Safety.stTwinSAFE_IN.EStop_Ok=FALSE AND GVL_Safety.stTwinSAFE_IN.EStop_Status  THEN
+	//Red Blink 
+	GVL_IO.RedLED:=bPulse;
+ELSIF GVL_Safety.stTwinSAFE_IN.EStop_Ok=FALSE AND GVL_Safety.stTwinSAFE_IN.EStop_Status=FALSE THEN
+	//Red On
+	GVL_IO.RedLED:= TRUE;
+END_IF
+
+//Blue
+IF (GVL_Safety.stTwinSAFE_OUT.DoorMonitor AND GVL_Safety.stTwinSAFE_IN.Speps.step1) 
+OR (GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE AND GVL_Safety.stTwinSAFE_IN.Speps.stepRnD) THEN
+	//Blue Blink
+	GVL_IO.BlueLED:=bPulse;
+ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor AND GVL_Safety.stTwinSAFE_OUT.SolenoedMonitor=FALSE AND NOT GVL_Safety.stTwinSAFE_IN.Speps.stepRnD THEN
+	//Blue Off
+	GVL_IO.BlueLED:=FALSE;
+ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE OR (GVL_Safety.stTwinSAFE_IN.Speps.stepRnD AND GVL_Safety.stTwinSAFE_OUT.DoorMonitor) THEN
+	//Blue On
+	GVL_IO.BlueLED:=TRUE;
+END_IF
+
+//Green
+IF (GVL_Safety.stTwinSAFE_IN.Speps.step1 AND GVL_Safety.stTwinSAFE_IN.EStop_Ok AND GVL_Safety.stTwinSAFE_OUT.DoorMonitor=TRUE) OR GVL_Safety.stTwinSAFE_IN.TransitionStep THEN
+	//Green Blink
+	GVL_IO.GreenLED:=bPulse;
+ELSIF GVL_Safety.stTwinSAFE_IN.Safety_Armed OR (GVL_Safety.stTwinSAFE_IN.Speps.stepRnD) OR GVL_Safety.stTwinSAFE_IN.Speps.step2 THEN
+	//Green On
+	GVL_IO.GreenLED:=TRUE;
+ELSIF GVL_Safety.stTwinSAFE_IN.Speps.step4 OR GVL_Safety.stTwinSAFE_IN.Speps.step5 
+OR GVL_Safety.stTwinSAFE_IN.Speps.step6 OR GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE THEN
+	//Green Off
+	GVL_IO.GreenLED:=FALSE;
+END_IF
+
+IF GVL_Safety.stTwinSAFE_IN.Speps.step2 OR GVL_Safety.stTwinSAFE_IN.TransitionStep THEN
+	t_BlinkTime:=T#0.5S;
+ELSE
+	t_BlinkTime:=T#1.5S;
+END_IF
+
+Pulse_On_TON(IN:=NOT bPulse , PT:=t_BlinkTime , Q=> , ET=> );
+Pulse_Off_TON(IN:=bPulse , PT:=t_BlinkTime , Q=> , ET=> );
+IF Pulse_On_TON.Q AND NOT bPulse THEN bPulse:=TRUE; END_IF;
+IF Pulse_Off_TON.Q AND bPulse THEN bPulse:=FALSE; END_IF;
+
+
+GVL_Safety.stTwinSAFE_IN.HV_Healthy_Invert:=NOT GVL_Safety.stTwinSAFE_IN.HV_Healthy;
+GVL_Safety.stTwinSAFE_IN.LV_Healthy_Invert:=NOT GVL_Safety.stTwinSAFE_IN.LV_Healthy;
+]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="act_LogicMap" Id="{0f0c44db-ccbd-41ab-9cfc-1e821c520f71}">
+      <Implementation>
+        <ST><![CDATA[(*
+Interface v1.4: all CMD_* are FALSE (idle) by default. Only while b_PlcRequestActive is TRUE exactly one CMD_* is TRUE (per n_SafeSate case). TwinSAFE detects the rising edge.
+Request source to be connected by PLC side (nothing writes b_PlcRequestActive / n_SafeSate yet).
+Function				|	Command (GVL_Safety.stTwinSAFE_OUT....)
+From Safe to RnD		|	CMD_SAFE_TO_RND
+From RnD to Armed (Run)	|	CMD_RND_TO_RUN
+From Armed (Run) to RnD	|	CMD_RUN_TO_RND
+From RnD to Safe		|	CMD_RND_TO_SAFE
+*)
+;
+
+GVL_Safety.stTwinSAFE_OUT.CMD_SAFE_TO_RND:=FALSE;
+GVL_Safety.stTwinSAFE_OUT.CMD_RND_TO_RUN:=FALSE;
+GVL_Safety.stTwinSAFE_OUT.CMD_RUN_TO_RND:=FALSE;
+GVL_Safety.stTwinSAFE_OUT.CMD_RND_TO_SAFE:=FALSE;
+
+IF b_PlcRequestActive THEN
+CASE n_SafeSate OF
+	E_SafetyState.enum_RnD_2_Safe://From RnD to Safe
+		GVL_Safety.stTwinSAFE_OUT.CMD_RND_TO_SAFE:=TRUE;
+	E_SafetyState.enum_Safe_2_RnD://From Safe to RnD
+		GVL_Safety.stTwinSAFE_OUT.CMD_SAFE_TO_RND:=TRUE;
+	
+	E_SafetyState.enum_RnD_2_Armed://From RnD to Armed
+		GVL_Safety.stTwinSAFE_OUT.CMD_RND_TO_RUN:=TRUE;
+	
+	E_SafetyState.enum_Armed_2_RnD://From Armed to RnD
+		GVL_Safety.stTwinSAFE_OUT.CMD_RUN_TO_RND:=TRUE;
+END_CASE
+END_IF
+
+
+(*IF GVL_Safety.stTwinSAFE_OUT.Bypass_C1C2 THEN
+	
+END_IF*)]]></ST>
+      </Implementation>
+    </Action>
+  </POU>
+</TcPlcObject>

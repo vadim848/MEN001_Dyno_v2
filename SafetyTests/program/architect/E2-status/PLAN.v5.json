@@ -1,0 +1,752 @@
+{
+  "schema": "men001-v2-architect-plan/1",
+  "planVersion": 5,
+  "previous": [
+    "*.v1.*",
+    "*.v2.*",
+    "*.v3.*",
+    "*.v4.*",
+    "repro/v1..v4/"
+  ],
+  "review": [
+    "program/reviewer/E2-plan-v4/PLAN_REVIEW.md",
+    "program/reviewer/E2-G1-v4/G1_REVIEW.md section 3 (C5)",
+    "program/analyst/E2-G1-v4/CRITERIA_DELTA_v7.md (378a9f93...8459) section 4"
+  ],
+  "slice": "E2-status v5: R1 + E2a-core (at editor, unchanged) + E2a-RC + E2a-PLC + E2b..E2d; E3..E6 sketch",
+  "role": "v2-architect",
+  "date": "2026-10-22",
+  "source": {
+    "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+    "scenarioDecisions": "2633920b1d8981e3b63b53cb580b2c5cbfed287df00bacb086a5336d821cd86e",
+    "reference": "4495a1f (git show only)",
+    "r1Candidate": "candidates/E2-R1/native SAL ca841a01fe44f776a5868968fde70cce728657aaf411d6b8bfa6689cfadc7bb3"
+  },
+  "decisionsUsed": [
+    "E2",
+    "E2-Q1",
+    "E2-Q2",
+    "Q-RC-01=V",
+    "Q-RC-02=A",
+    "Q-RC-03 (a) Emergency, (b1) continue, (b2) Emergency",
+    "Q-RC-04..09",
+    "Q-RC-10=A",
+    "D-ARCH-POL",
+    "D-ARCH-POL-RENAME",
+    "Q-ARCH-06=A (R1 allowed under conditions; R2 and HL/SF merge not allowed)",
+    "V14-Q7",
+    "V14-Q16..Q21",
+    "Q-MU06-01/02",
+    "Q-ARCH-01=A",
+    "Q-E2Q-01=A",
+    "Q-RC-14=A",
+    "Q-ARCH-03=B",
+    "Q-ARCH-04=A",
+    "Q-ARCH-05/Q-RC-11=A",
+    "Q-ARCH-08=B",
+    "Q-ARCH-09=V",
+    "Q-RC-12",
+    "Q-RC-13=B",
+    "Q-RC-15=B",
+    "Q-RC-16=A",
+    "Q-RC-17=B",
+    "Q-RC-18",
+    "Q-RC-19=V",
+    "Q-E2Q-02=A",
+    "Q-REL-AFTER-PERMIT=A",
+    "D-ARCH-POL-RENAME incl. outPLC",
+    "Q-ARCH-10=A",
+    "Q-RC-RUNCONF-01=V",
+    "Q-V4-01=B",
+    "question 68=B (Run and R&D; Q-V7-02 closed by lead)",
+    "question 63 (Q-ARCH-11=B)",
+    "Q-64=A (continue R1)",
+    "question 66 (a one memory, b LV 30 s)",
+    "Q-CA1-01=B",
+    "Q-T3-1=A",
+    "Q-61=A",
+    "Q-V4-02=V (FBK-10)"
+  ],
+  "baselineResources": {
+    "base": "R1",
+    "fb": 215,
+    "ports": 1832,
+    "sgvlSymbols": 65,
+    "salVariables": 75,
+    "limitFb": 512,
+    "limitSource": "program/stand/FB-limit/FB_LIMIT.md"
+  },
+  "mechanism": {
+    "stages": {
+      "S1": "Network3/FBRs1",
+      "S12": "Network3/FBRs8",
+      "SR": "Network3/FBRs7",
+      "S3": "Network3/FBRs3",
+      "S4": "Network3/FBRs4",
+      "S5": "Network3/FBRs5",
+      "S6": "Network3/FBRs6"
+    },
+    "statusFormula": {
+      "STS_SAFE": "(b_Step1 or b_Step12) and b_EStop_Ok",
+      "STS_RND": "b_Step_RnD and b_EStop_Ok",
+      "STS_RUN": "b_Step3 and b_EStop_Ok",
+      "STS_EMG": "not(any other) (Q-RC-10=A)"
+    },
+    "decoder": {
+      "primary": "D2-A: not built in SAL in E2; tester evaluates formula over Symbols; built in E4 with alias publication (consumer exists)",
+      "alternative": "D2-B: 5 FB + 4 Symbols STS_* in E2a; Symbols without consumer = NV for G2 (no precedent in canonical/reference); on native rejection fall back to D2-A"
+    },
+    "grants": {
+      "g1": "N3/FBAnd1 none->S1",
+      "g2": "b_Step12_Set S1->S12",
+      "g3": "b_Step_RnD_Set S12->SR",
+      "g4": "b_Step3_Set_2 SR->S3",
+      "g5": "b_Step2_Set_2 SR->S1",
+      "g6": "b_Step12_Set_2 S3->SR",
+      "g7": "b_Step4_Set = N6/FBOrStep4: N6/FBAnd2 (S3 and not FBAnd9) or N6/FBAndLvEmg ((S12 or SR) and not b_EStop_Ok) - stage-based, independent of SU (B-1)",
+      "g8": "b_Step5_Set S4->S5",
+      "g9": "b_Step6_Set S5->S6",
+      "g10": "Network3/G10_EXIT S6->S1: S6, b_EStop_Ok, not in_Reset_PB, recRndC_PrevG, not C1_FBK, not C2_FBK, not out_LV_C1, not out_HV_C2"
+    },
+    "resets": {
+      "FBRs1": "Set FBOr2=g1,g5,g10; Reset FBOr1=g2,g7 (OrIn4, B3-4)",
+      "FBRs8": "Set g2; Reset N3/FBOrS12Reset=g3,g7",
+      "FBRs7": "Set FBOr16=g3,g6; Reset FBOr13=g5,g4,g7",
+      "FBRs3": "Set g4; Reset FBOr5=g6,g7",
+      "FBRs4": "Set g7; Reset FBOr7=g8",
+      "FBRs5": "Set g8; Reset FBOr9=g9",
+      "FBRs6": "Set g9; Reset wire FBOr2"
+    },
+    "arbitration": [
+      "g7 is in the Reset of every target reachable by a competing grant from the same sources: S1 (g5), SR (g6), S3 (g4) - reset dominance gives Emergency priority",
+      "g4 vs g5 by C2_FBK level",
+      "SU vs SG by C-1 order and GATE_020.AndIn7"
+    ],
+    "order": {
+      "moves": [
+        "E2a: Network12/FBAnd15 after Network12/FBDecouple1",
+        "E2a: Network3/FBAnd2 before Network3/FBAnd1",
+        "E2a: Network2/FBAnd11 before Network2/FBAnd91",
+        "E2a: Network12/FBAnd6 before Network12/FBTon3 (E2a-RC)",
+        "E2b: Network12/FBAnd16 before Network1/FBAnd1 (B3-2)",
+        "E2b: SafeResumption/CONNECTORS and SafeResumption/CONNECTOR_SCOPE before Network1/FBAnd1 (B3-1, L1)",
+        "E2b: FBAndNotRunSu, FBOrIlRunOk before Network1/FBAnd1",
+        "E2b: STAGE_LVON, FBAndLvEmg, FBOrStep4 between Network6/FBAnd2 and Network6/FBDecouple1",
+        "E2b: G10_EXIT right after Network1/FBEstop1 (before Network6/FBDecouple2)",
+        "E2c: SG_OWNER_SET after STATE_SU, then HLT_LV, GATE_SG_SET, STATE_SG"
+      ],
+      "head15": [
+        "Network3/FBOr2",
+        "Network3/FBOr1",
+        "Network3/FBOrS12Reset",
+        "Network3/FBOr16",
+        "Network3/FBOr13",
+        "Network3/FBOr5",
+        "Network3/FBOr7",
+        "Network3/FBOr9",
+        "Network3/FBRs1",
+        "Network3/FBRs8",
+        "Network3/FBRs7",
+        "Network3/FBRs3",
+        "Network3/FBRs4",
+        "Network3/FBRs5",
+        "Network3/FBRs6"
+      ]
+    },
+    "limits": "GRP-2, input constancy, RS-4/GRP-4 DERIVED; EST-4 DOC; proof about stage memories and status, not hardware energy",
+    "ruleL1": "every emergency cause except ES/Mentee is read raw before Network1/FBAnd1 in the same scan: in_Estop_PLC, cover and connector reach FBEstop1 at e+1 (model t15)"
+  },
+  "slices": [
+    {
+      "id": "R1",
+      "approved": "Q-ARCH-06=A with conditions: reviewer confirms unused-proof; full regression before/after",
+      "fbAfter": 215,
+      "portsAfter": 1832,
+      "sgvlAfter": 65,
+      "salVarsAfter": 75,
+      "delete": [
+        "Network5/* (15)",
+        "Network3/FBRs2",
+        "Network3/FBOr3",
+        "Network3/FBOr4",
+        "Network4/FBDecouple1",
+        "Network9/FBAnd1",
+        "Network12/FBAnd12",
+        "Network12/FBAnd13",
+        "Network12/FBAnd14",
+        "Network1/FBAnd3",
+        "Network1/FBAnd9",
+        "Network1/FBAnd11",
+        "Network6/FBAnd10"
+      ],
+      "rewire": [
+        "Network3/FBDecouple2.DecIn2 := in_False_SI2_CH8",
+        "Network1/FBAnd2.AndOut -> Network1/FBOr12.OrIn2",
+        "Network6/FBAnd9.AndIn1 := out_EStop_Status"
+      ],
+      "deactivate": [
+        "Network3/FBOr1.OrIn1",
+        "Network3/FBOr1.OrIn2",
+        "Network3/FBOr2.OrIn1",
+        "Network3/FBOr2.OrIn3",
+        "Network3/FBOr2.OrIn4",
+        "Network3/FBOr5.OrIn1",
+        "Network3/FBOr6.OrIn1",
+        "Network3/FBOr7.OrIn1",
+        "Network3/FBOr9.OrIn1",
+        "Network3/FBOr11.OrIn1",
+        "Network3/FBAnd1.AndIn3",
+        "Network1/FBOr1.OrIn1",
+        "Network1/FBOr5.OrIn1",
+        "Network1/FBOr8.OrIn1",
+        "Network1/FBOr10.OrIn1",
+        "Network1/FBOr14.OrIn1",
+        "Network1/FBOr17.OrIn1",
+        "Network1/FBOr18.OrIn1",
+        "Network12/FBOr2.OrIn2"
+      ],
+      "deleteSymbols": [
+        "b_Step1_Reset",
+        "b_Step1_Set",
+        "b_Step1_Set_2",
+        "b_Step1_Set_3",
+        "b_Step2_Set",
+        "b_Step2_Reset",
+        "b_Step2",
+        "b_Step3_Reset",
+        "b_Step3_Set_3",
+        "b_Step4_Reset",
+        "b_Step5_Reset",
+        "b_Step6_Reset",
+        "b_Set_LV_C1",
+        "b_Set_HV_C2",
+        "b_Reset_HV_Discharg_Req",
+        "b_Reset_LV_Discharge_Req",
+        "b_Set_STO_DR1",
+        "b_Set_STO_DR2",
+        "b_Reset_Transition_1",
+        "b_Step6 (binding only)"
+      ],
+      "referenceTrace": "PLAN.md section 3 R1 table: nothing executed by v2 is removed; gaps (5 s settle, STO FBK before Run) pre-exist in F1 -> Q-ARCH-09",
+      "unusedProof": "PLAN.md section 3 R1 points 1-7 (Network4ToBeDeleted, identical DecIn config, reference-working argument DERIVED)",
+      "extra": "C-R1-2 (a): drop Symbol binding b_Step6 from Network3/FBRs6.RsOut (wires kept)"
+    },
+    {
+      "id": "E2a-core",
+      "ids": [
+        "EMG-012",
+        "MOD-006",
+        "STP-004",
+        "MOD-001 (polarity)"
+      ],
+      "criteria": [
+        "E2-01",
+        "E2-02",
+        "E2-03 structural",
+        "E2-04 (Q-RC-10)"
+      ],
+      "fbAfter": 215,
+      "newBlocks": [
+        "Network6/HEALTHY_OK safeAnd (in_LV_Faulty_FBK NO, in_HV_Faulty_FBK NO)",
+        "Network6/HEALTH_GUARD safeOr (wire RUN_DOWN_OWNER, wire HEALTHY_OK)"
+      ],
+      "deleteBlocks": [
+        "Network3/FBOr6",
+        "Network3/FBOr11"
+      ],
+      "changes": [
+        "Network3/FBOr1.OrIn3 := b_Step12_Set; OrIn4 deactivate",
+        "Network3/FBOr5.OrIn2 := b_Step4_Set (remove wire FBRs4->FBOr5)",
+        "Network3/FBOr7.OrIn2 := b_Step5_Set",
+        "Network3/FBOr9.OrIn2 := b_Step6_Set",
+        "Network3/FBRs6.Reset := wire Network3/FBOr2",
+        "Network3/FBRs8.Set := b_Step12_Set",
+        "Network3/FBOr16.OrIn1 := b_Step_RnD_Set; Network3/FBRs7.Set := wire FBOr16",
+        "Network3/FBRs3.Set := b_Step3_Set_2",
+        "Network3/FBOr13.OrIn2 := b_Step4_Set",
+        "Network6/FBAnd18.AndIn4 := wire Network6/FBAnd1",
+        "Network6/RUN_DOWN_RESET.OrIn1 := b_Step12_Set_2",
+        "Network7/FBAnd8.AndIn5 := b_Step4",
+        "Network6/FBAnd9.AndIn6 := wire HEALTH_GUARD; AndIn7 deactivate",
+        "Network11/FBAnd4.AndIn3 contact NC -> NO (D-ARCH-POL)",
+        "SAL variable rename (4 name attributes): in_LV_Healthy_FBK->in_LV_Faulty_FBK, in_HV_Healthy_FBK->in_HV_Faulty_FBK, outPLC_LV_Healthy->outPLC_LV_Faulty, outPLC_HV_Healthy->outPLC_HV_Faulty"
+      ],
+      "renameImpact": {
+        "sal": "4 variable name attributes (in_LV/HV_*_FBK, outPLC_LV/HV_*); binding by sdsId/channelId",
+        "sgvl": 0,
+        "diagram": 0,
+        "plcPart": "E2a-PLC BLOCKED (Q-ARCH-11, path-guard)",
+        "testsAndStand": [
+          "src/candidate-button-cover.js",
+          "src/current-code-checks.js",
+          "src/current-gesture-boundaries.js",
+          "src/physical-rnd-source.js",
+          "test/current-e2a-race.test.js",
+          "test/current-e2a-status.test.js",
+          "test/current-early-sto.test.js",
+          "test/sal-button-baseline.test.js",
+          "test/sal-cover-baseline.test.js",
+          "test/sal-emergency-chain.test.js",
+          "test/sal-rnd-safe-outputs.test.js",
+          "test/sal-rundown-baseline.test.js",
+          "test/sal-rundown-outputs.test.js",
+          "test/helpers/e2-lifecycle.js",
+          "test/helpers/full-program-source.js",
+          "test/helpers/rnd-down-source.js",
+          "test/helpers/safe-run-source.js",
+          "program/stand/E0-stand/undefined-inputs-registry.json (if listed)"
+        ],
+        "testsNote": "A-1: tests that read both reference/pinned SAL (old names) and canonical (new names) need an explicit mapping table",
+        "history": "old JSON/MD reports and old-SHA fixtures keep old names"
+      },
+      "mutationPlan": "MUTATION_PLAN_E2a.json",
+      "plcStep": {
+        "id": "E2a-PLC",
+        "requires": "lead path-guard extension (V14-Q2)",
+        "files": [
+          "Alias Devices/PLC_IO/StatusToPLC/outPLC_LV_Healthy.sds, outPLC_HV_Healthy.sds (file rename)",
+          "Safety_Dyno.splcproj lines 63,65",
+          "MEN001_Dyno.tsproj Name LV_Healthy/HV_Healthy(+_Invert) lines 1728-1746, Link lines 13171,13173",
+          "PLC_Dyno/DUTs/ST_TwinSAFE_IN.TcDUT lines 21-25",
+          "PLC_Dyno/POUs/MAIN.TcPOU (2)",
+          "PLC_Dyno/VISUs/Visualization.TcVIS (4)"
+        ],
+        "question": "Q-ARCH-11 (_Invert fields)"
+      },
+      "knownFail": [
+        "Emergency energy outside Run (E2b)",
+        "Healthy loss in steady Run -> Step4 (E3)",
+        "SafetyFault (E5)",
+        "REL-01(e) RED until E2b",
+        "legacy Bypass in S6 (B4-3) until answer/E4",
+        "E2a-RC timing until E2a-RC"
+      ],
+      "status": "at editor - unchanged in v5",
+      "addendum": {
+        "A4_1": "SHA and decisionsUsed updated",
+        "A4_3": "STATE cases replaced by E2-01/E2-02/E2-03 (structural); grant-level injections only as robustness probes (PLAN section 6)",
+        "A4_4": "known FAIL list extended",
+        "A4_5": "baselineResources R1/512",
+        "A4_7": "section 10a classification in mutation plans"
+      }
+    },
+    {
+      "id": "E2a-RC",
+      "decisions": [
+        "Q-V4-01=B",
+        "question 68=B",
+        "Q-RC-RUNCONF-01=V"
+      ],
+      "fbDelta": 2,
+      "fbAfter": 217,
+      "portsAfter": 1836,
+      "newBlocks": [
+        "Network12/WIN_C2 safeTon 0.5 s (TonIn wire Network12/FBAnd4)",
+        "Network11/WIN_C1 safeTon 0.5 s (TonIn wire Network11/FBAnd1)"
+      ],
+      "changes": [
+        "Network12/FBAnd6: AndIn1 := wire WIN_C2, AndIn2 in_HV_C2_FBK, AndIn3 in_HV_Faulty_FBK NO",
+        "Network12/FBTon3.TonIn := wire FBAnd6; FBTon3.TonOut -> wire Network12/FBDecouple2.DecIn1..4",
+        "Symbol b_Reset_HV_Discharg_Req2 moved FBAnd6.AndOut -> FBTon3.TonOut",
+        "Network11/FBAnd4.AndIn1 := wire WIN_C1 (AndIn2 in_LV_C1_FBK, AndIn3 in_LV_Faulty_FBK NO)",
+        "Network11/FBTon1.TonIn := wire FBAnd4; Network11/FBAnd5.AndIn1 := wire FBTon1",
+        "Symbol b_Reset_LV_Discharge_Req2 moved FBAnd4.AndOut -> FBTon1.TonOut"
+      ],
+      "order": [
+        "WIN_C2 -> FBAnd6 -> FBTon3",
+        "WIN_C1 -> N11/FBAnd4 -> N11/FBTon1 -> N11/FBAnd5"
+      ],
+      "timing": "Run/R&D at K+100..K+101, K=max(k,w), w=u+500; model u+600 (t16)",
+      "knownFail": [
+        "FBK loss after window should be Emergency (Q-RC-19) - restarts count until E6",
+        "window end without FBK -> rollback + SafetyFault - E6",
+        "30 s Healthy limit (Q-CA1-01, 66b) - E6"
+      ],
+      "mutationPlan": "MUTATION_PLAN_E2a.json (subslice E2a-RC)"
+    },
+    {
+      "id": "E2a-PLC",
+      "status": "ready to execute after path-guard extension",
+      "decision": "question 63 (Q-ARCH-11 B)",
+      "mapping": [
+        {
+          "from": "LV_Healthy",
+          "to": "LV_Faulty",
+          "where": [
+            "ST_TwinSAFE_IN.TcDUT line 21",
+            "tsproj SubItem Name line 1728",
+            "tsproj Link VarA line 13173 -> ...^LV_Faulty",
+            "MAIN.TcPOU line 114 right side"
+          ]
+        },
+        {
+          "from": "HV_Healthy",
+          "to": "HV_Faulty",
+          "where": [
+            "DUT line 22",
+            "tsproj Name 1734",
+            "tsproj Link VarA 13171 -> ...^HV_Faulty",
+            "MAIN line 113 right side"
+          ]
+        },
+        {
+          "from": "LV_Healthy_Invert",
+          "to": "LV_Healthy",
+          "where": [
+            "DUT line 24",
+            "tsproj Name 1740",
+            "MAIN line 114 left side",
+            "Visualization.TcVIS line 5447"
+          ]
+        },
+        {
+          "from": "HV_Healthy_Invert",
+          "to": "HV_Healthy",
+          "where": [
+            "DUT line 25",
+            "tsproj Name 1746",
+            "MAIN line 113 left side",
+            "Visualization.TcVIS line 5203"
+          ]
+        }
+      ],
+      "result": [
+        "MAIN: X_Healthy := NOT X_Faulty (2 lines)",
+        "VIS: 2 variable references; captions unchanged"
+      ],
+      "atomicOrder": [
+        "whole-identifier replace X_Healthy -> X_Faulty everywhere first (excluding _Invert)",
+        "then X_Healthy_Invert -> X_Healthy",
+        "single change, no intermediate IDE save"
+      ],
+      "g2Checks": [
+        "Link VarA 13171/13173 end with ^HV_Faulty/^LV_Faulty bound to Standard Out Var 90/89",
+        "exactly 2 lines X_Healthy := NOT X_Faulty in MAIN",
+        "2 VIS refs to LV_Healthy/HV_Healthy",
+        "no _Invert left",
+        "each consumer polarity unchanged"
+      ],
+      "files": [
+        "MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/Alias Devices/PLC_IO/StatusToPLC/outPLC_LV_Healthy.sds (rename file)",
+        ".../outPLC_HV_Healthy.sds (rename file)",
+        "MEN001_Dyno/Safety_Dyno/Safety_Dyno.splcproj lines 63,65",
+        "MEN001_Dyno/MEN001_Dyno.tsproj",
+        "MEN001_Dyno/PLC_Dyno/DUTs/ST_TwinSAFE_IN.TcDUT",
+        "MEN001_Dyno/PLC_Dyno/POUs/MAIN.TcPOU",
+        "MEN001_Dyno/PLC_Dyno/VISUs/Visualization.TcVIS"
+      ],
+      "notTouched": [
+        "MEN001_Dyno/MEN001_Dyno.tsproj.bak"
+      ],
+      "access": "lead opened 4 PLC files; 3 more (2 .sds, splcproj) need access",
+      "nv": "native/CRC after .sds and tsproj rename NV; no download"
+    },
+    {
+      "id": "E2b",
+      "ids": [
+        "EMG-001",
+        "EMG-002",
+        "EMG-004",
+        "EMG-006",
+        "CVR-006"
+      ],
+      "criteria": [
+        "IL-03",
+        "IL-05a",
+        "IL-05b(1)(2)(3)",
+        "EMG4-02",
+        "EMG4-03",
+        "EMG6-01",
+        "EMGREF-LV (1)(2)",
+        "EMGREF-RUN (StartingRun)",
+        "E2-01",
+        "REL-01(e)",
+        "Q-T3-1 (EMG-RD-L, rd-sweep)"
+      ],
+      "fbDelta": 7,
+      "fbAfter": 224,
+      "portsAfter": 1899,
+      "salVarsAfter": 77,
+      "newBlocks": [
+        "Network1/FBAndNotRunSu safeAnd (b_Step3 NO, recRndC_SU NO)",
+        "Network1/FBOrIlRunOk safeOr (wire FBAndNotRunSu, linkCoverClosed, linkRunDownOwner)",
+        "Network6/STAGE_LVON safeOr (b_Step12, b_Step_RnD)",
+        "Network6/FBAndLvEmg safeAnd (wire STAGE_LVON, b_EStop_Ok NO, in_False NO)",
+        "Network6/FBOrStep4 safeOr (wire FBAnd2, wire FBAndLvEmg)",
+        "Network3/FBOrS12Reset safeOr (b_Step_RnD_Set, b_Step4_Set)",
+        "Network3/G10_EXIT safeAnd (8 inputs, see mechanism.grants.g10)"
+      ],
+      "changes": [
+        "Network12/FBAnd16.AndOut += linkCoverClosed",
+        "Network6/RUN_DOWN_OWNER.RsOut += linkRunDownOwner",
+        "Network1/FBAnd1.AndIn3 := wire FBOrIlRunOk",
+        "Network1/FBAnd1.AndIn4 := linkSafeConnectorScope",
+        "Network6/HEALTHY_OK.AndIn3 := linkCoverClosed",
+        "Network6/FBAnd9.AndIn2, AndIn3 deactivate",
+        "Network6/FBDecouple1.DecIn1 := wire FBOrStep4",
+        "Network3/FBRs8.Reset := wire FBOrS12Reset",
+        "RndPhysicalCompact/GATE_001.AndIn5, AndIn6 deactivate",
+        "RndPhysicalCompact/GATE_020.AndIn6 := linkCoverClosed",
+        "RndPhysicalCompact/GATE_030.OrIn5 := wire BOTH.TonOut",
+        "Network3/FBOr2.OrIn3 := wire G10_EXIT",
+        "Network3/FBOr1.OrIn4 := b_Step4_Set (B3-4)"
+      ],
+      "mutationPlan": "MUTATION_PLAN_E2b.json",
+      "knownFailOnStack_R1_E2a_E2b": [
+        "no HLT until E2c: R&D with LV Faulty stays R&D; R&D->Run with LV Faulty reaches Run then Step4; HLT-01/01b, C-1, C-2 FAIL",
+        "Safe side V14-Q7 (LV with open cover) FAIL until E2d",
+        "Q-REL in Safe->R&D FAIL until E2d",
+        "note: Unlock in R&D with open cover TRUE is required by Q-ARCH-10 A (not a FAIL)",
+        "legacy Bypass in S6 after early Restart raises C1/C2; 1 scan SAFE with energy if green released in the same scan (B4-3)"
+      ],
+      "isolation": {
+        "B4_3": "Network1/FBAnd4.AndIn5: (A) := b_Step1 (Bypass only in Safe, 0 FB; M-E2b-34 becomes equivalent) or (B) leave to E4 (known FAIL E2b..E2d)"
+      }
+    },
+    {
+      "id": "E2c",
+      "ids": [
+        "HLT-001",
+        "MOD-005",
+        "MOD-008"
+      ],
+      "criteria": [
+        "HLT-01",
+        "HLT-02"
+      ],
+      "fbDelta": 2,
+      "fbAfter": 226,
+      "portsAfter": 1917,
+      "salVarsAfter": 78,
+      "newBlocks": [
+        "SafeResumption/HLT_LV safeAnd (in_LV_Faulty_FBK NC, recRndC_SU NO, in_False NO) -> linkHltLvLost",
+        "RndPhysicalCompact/GATE_SG_SET safeOr (linkSafeSgOwnerSet, linkHltLvLost) -> STATE_SG.Set"
+      ],
+      "mutationPlan": "MUTATION_PLAN_E2c.json",
+      "changes": [
+        "RndPhysicalCompact/STATE_SG.Set := wire GATE_SG_SET",
+        "RndPhysicalCompact/GATE_020.AndIn7 := recRndC_SG NO (C-1)",
+        "RndPhysicalCompact/GATE_030.OrIn6 := linkHltLvLost (C-2)",
+        "order: STATE_SU, SG_OWNER_SET, HLT_LV, GATE_SG_SET, STATE_SG"
+      ],
+      "knownFail": [
+        "STP-I until E3 (ABT by LV)",
+        "HLT-03 SafetyFault until E5"
+      ]
+    },
+    {
+      "id": "E2d",
+      "ids": [
+        "EMG-002 (Safe)",
+        "CVR-004",
+        "CVR-001/002",
+        "Q-REL-AFTER-PERMIT"
+      ],
+      "criteria": [
+        "IL-01",
+        "IL-02b",
+        "UNL-04 (Safe, R&D)",
+        "Q-REL-AFTER-PERMIT",
+        "FBK-10 (up block; SafetyFault part E5)",
+        "UNL-05 Door guards (mutations)"
+      ],
+      "fbDelta": 0,
+      "fbAfter": 226,
+      "portsAfter": 1917,
+      "salVarsAfter": 78,
+      "changes": [
+        "Network1/FBAndLvCurrentPermit.AndIn4, AndIn5 deactivate",
+        "Network2/FBAnd1.AndIn5, AndIn6 deactivate",
+        "NEW Network1/FBAnd4.AndIn3 := in_InterLock_NC_1, AndIn4 := in_InterLock_NC_2",
+        "SafeResumption/MODE.OrIn4 := b_Step12",
+        "Unlock: no blocks (Q-ARCH-10 A); Run/transitions forbidden by existing N2/FBAnd7 (S1) and N12/FBAnd2 (SR)",
+        "FBK-10: NEW RndPhysicalCompact/GATE_020.AndIn8 := in_HV_C2_FBK NO; Safe side already blocked by Network2/FBAnd2 (!C1_FBK, !C2_FBK) -> ReadyForStep2"
+      ],
+      "knownFail": [
+        "CFG-02 legacy Bypass in R&D with cover closed (E4)"
+      ],
+      "mutationPlan": "MUTATION_PLAN_E2d.json"
+    },
+    {
+      "id": "E3",
+      "sketch": true,
+      "fbDeltaEstimate": 21,
+      "parts": {
+        "core": 4,
+        "HEALTH_DESC": 1,
+        "NORMAL_DOWN": 1,
+        "HL_MEM": 4,
+        "ABT": 7,
+        "OFF_WDG": 4
+      },
+      "notes": [
+        "Q-RC-17 fix: FBOrIlRunOk.OrIn3 := wire NORMAL_DOWN = owner and not HEALTH_DESC",
+        "FBAndNotRunSu.AndIn3 := not ABT",
+        "STAGE_LVON.OrIn3 := b_Step3",
+        "question 66(a): one SafetyFault memory, HL_FAULT removed"
+      ]
+    },
+    {
+      "id": "E4",
+      "sketch": true,
+      "frozen": true,
+      "fbDeltaEstimate": 19,
+      "parts": {
+        "deleted": -18,
+        "prevDecouple": 1,
+        "edges": 4,
+        "simultaneity2of5": 8,
+        "stableGate": 1,
+        "errLatchTon": 3,
+        "config": 8,
+        "heartbeat": 3,
+        "suSetOr": 1,
+        "decoder": 6,
+        "publishDecouple": 1,
+        "faultOr": 1
+      }
+    },
+    {
+      "id": "E5",
+      "sketch": true,
+      "fbDeltaEstimate": 5,
+      "symbol": "b_SafetyFault"
+    },
+    {
+      "id": "E6",
+      "sketch": true,
+      "fbDeltaEstimate": "12..14",
+      "parts": {
+        "onWdgAnd": 2,
+        "healthy30sLVandHV": 4,
+        "s12Abort": 3,
+        "route": 1,
+        "qrc19": "2..4"
+      },
+      "notes": [
+        "WIN_C1/WIN_C2 from E2a-RC reused as watchdog window",
+        "LV-watchdog 30 s (question 66b, Q-CA1-01)"
+      ]
+    }
+  ],
+  "budget": {
+    "limitFB": 512,
+    "exact": {
+      "R1": 215,
+      "E2a-core": 215,
+      "E2a-RC": 217,
+      "E2b": 224,
+      "E2c": 226,
+      "E2d": 226
+    },
+    "estimate": {
+      "E3": 247,
+      "E4": 266,
+      "E5": 271,
+      "E6": 285,
+      "tolerance": "+-5"
+    },
+    "nv": "12 pages x 2048 B - NV; offline Verify allowed by Q-61, separate category"
+  },
+  "mu11": "EQUIVALENT in E2a..E2d by construction; C3 of E1 review fulfilled by equivalence proof (PLAN.md section 9); re-evaluate in E3",
+  "prototype": {
+    "files": [
+      "repro/proto.mjs",
+      "repro/run.mjs",
+      "repro/h.mjs",
+      "repro/t10.mjs",
+      "repro/t16.mjs",
+      "repro/t17.mjs"
+    ],
+    "outputs": [
+      "repro/t10.out.txt",
+      "repro/t16.out.txt",
+      "repro/t17.out.txt"
+    ],
+    "note": "In-memory model R1(sim)+E2a-core+E2a-RC+E2b..E2d v5 (+ decoder D2-B only for observation; 231 FB = 226+5). Model, not native, not a test."
+  },
+  "questions": {
+    "B4-3": "analyst: legacy Bypass in S6 - (A) gate by b_Step1 at Network1/FBAnd4.AndIn5 or (B) leave to E4",
+    "RC-6 upper bound": "analyst: is the upper bound of Run moment normative (M-E2a-21)?",
+    "ES-06": "analyst: is \"no stage before Restart at group start\" normative (M-E2a-27)?",
+    "Q-T3-2b": "analyst: Door fall during Unlock in R&D (Network12/FBAnd3.AndIn2)"
+  },
+  "editorAllowedFiles": [
+    "TwinSafeGroup1.sal",
+    "TwinSafeGroup1.sal.diagram",
+    "GVL1.sgvl (E2a-RC, E2b..E2d)",
+    "E2a-PLC: 7 files listed, after path-guard extension"
+  ],
+  "forbidden": [
+    "Alias Devices",
+    "splcproj",
+    "tsproj/xti",
+    "TargetSystemConfig.xml",
+    "group parameters",
+    "existing timer values",
+    "FBEstop1 channel modes",
+    "PLC_Dyno",
+    "reference repository"
+  ],
+  "leadDecisions": [
+    "C-R1-2 (a): drop Symbol binding b_Step6 -> 65 Symbols",
+    "D2-A kept",
+    "Q-RC-13 B: common PLC Fault bit = OR at output; latches not merged",
+    "FB limit 512 (EL1918): no savings needed; options b, g1, e rejected; R2 not needed",
+    "HL_FAULT: two memories until Vadim answers (c)",
+    "E2a-PLC BLOCKED by Q-ARCH-11 contradiction"
+  ],
+  "safetyFaultSymbol": "b_SafetyFault (SGVL, created in E5)",
+  "mu24": "Q-REL fixed by MODE.OrIn4 := b_Step12 (E2d); RELEASE and STATE_A unchanged; MU24 killed by button-only 1999/2000 ms boundaries; new guard mutation M-E2d-03",
+  "r1Addendum": {
+    "candidate": "candidates/E2-R1/native SAL ca841a01fe44f776a5868968fde70cce728657aaf411d6b8bfa6689cfadc7bb3",
+    "D-1": "keep empty Network4/5/9 (native serialized <Network/>; deletion would renumber networkOrderId/intId and swimlanes - undeclared structural delta). Verify acceptance NV; stand parser must accept empty network (S1). Deletion only as a separate later step.",
+    "D-2": "accept geometry criterion with conditions: (a) relative positions of shapes and link routing points inside each lane exact; (b) lane shifts only from collapsed empty lanes/height fit; (c) no shapes/links referencing removed blocks, shape count = block count; (d) diagram is presentation only (DERIVED).",
+    "D-3": "N4/FBDecouple1 had 7 Symbol references DecOut1..7 (b_Step3/4/5/6_Reset, b_Step1_Reset, b_Step1_Set, b_Step2_Set); all 7 are in the 19 deleted Symbols and covered by the unused-proof; G2 checks all seven disappear (corrects C-R1-4 count)."
+  },
+  "base": "R1 (Vadim re-asked whether R1 is needed at limit 512; rebase-to-F1 delta in rebaseToF1)",
+  "standInjection": {
+    "stateCasesReplacedBy": [
+      "E2-01",
+      "E2-02",
+      "E2-03 (structural)"
+    ],
+    "robustnessProbes": [
+      {
+        "id": "G-1",
+        "inject": [
+          "b_Step2_Set_2",
+          "b_Step4_Set"
+        ],
+        "expect": "S4 only"
+      },
+      {
+        "id": "G-2",
+        "inject": [
+          "b_Step3_Set_2",
+          "b_Step4_Set"
+        ],
+        "expect": "S4 only"
+      },
+      {
+        "id": "G-3",
+        "inject": [
+          "b_Step12_Set_2",
+          "b_Step4_Set"
+        ],
+        "expect": "S4 only"
+      },
+      {
+        "id": "G-4",
+        "inject": [
+          "b_Step12_Set",
+          "b_Step3_Set_2"
+        ],
+        "expect": "two stages - expected: ring relies on grant source gating; shows limit, not a defect"
+      }
+    ]
+  },
+  "rebaseToF1Note": "not applicable (Q-64 A); see PLAN.v4.md section 8 for reference"
+}

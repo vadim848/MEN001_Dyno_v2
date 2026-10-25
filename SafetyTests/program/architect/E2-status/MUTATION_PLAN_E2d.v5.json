@@ -1,0 +1,177 @@
+{
+  "version": "sal-mutation-plan-v1",
+  "planVersion": 5,
+  "status": "Architect guard-mutation plan v5 for slice E2d (PLAN.md v5, base R1 ca841a01...). sourceSha256 filled at G2 (runner exit 3 until then by design). modelKill = architect in-memory prototype (not native, not a test).",
+  "sourceSha256": "FILL_AT_G2",
+  "sourceSha256Note": "Fill at G2: SHA256 of the editor candidate TwinSafeGroup1.sal for this slice (base: R1 candidate). Then run scripts/sal-mutation-check.js --validate-only before G3.",
+  "testFiles": [
+    "current-e2a-status.test.js",
+    "current-e2a-emg-safe.test.js",
+    "current-e2a-emg-rnd.test.js",
+    "current-e2a-emg-run.test.js",
+    "current-e2a-emg-rundown.test.js",
+    "current-e2a-sweep-estop.test.js",
+    "current-e2b-sweep-connector.test.js",
+    "current-e2a-race.test.js",
+    "current-e2a-rnd-cover-healthy.test.js",
+    "current-e2a-run-conf.test.js",
+    "current-e2b-interlock-run.test.js",
+    "current-e2b-cover-transitions.test.js",
+    "current-e2b-connector-safe.test.js",
+    "current-e2c-stp-i.test.js",
+    "current-e2c-hlt03.test.js",
+    "current-e2d-release-permit.test.js",
+    "current-e2d-unlock-cover.test.js",
+    "current-e2a-emg-anchor.test.js",
+    "current-e2a-emg-rd-sweep.test.js",
+    "current-e2d-unlock-door.test.js"
+  ],
+  "behaviouralTests": [
+    "^E2[a-d] "
+  ],
+  "structuralSoftwareCheckCases": [
+    "^BOOT:"
+  ],
+  "mutations": [
+    {
+      "id": "M-E2d-01",
+      "guard": "Bypass",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAnd4",
+      "port": "AndIn3",
+      "rationale": "NEW input: legacy Bypass ignores NC1",
+      "killingScenario": "R&D (or S12), NC1 FALSE, inPLC_BypassC1C2 TRUE: C2 ON (in Safe reset dominates - no kill there)",
+      "oracle": "CFG-02 (cover-open part); reviewer repro byp.out.txt"
+    },
+    {
+      "id": "M-E2d-02",
+      "guard": "Bypass",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAnd4",
+      "port": "AndIn4",
+      "rationale": "NEW input: legacy Bypass ignores NC2",
+      "killingScenario": "R&D, NC2 FALSE, Bypass TRUE: C2 ON",
+      "oracle": "CFG-02 (cover-open part)"
+    },
+    {
+      "id": "M-E2d-03",
+      "guard": "ReleaseAfterPermit",
+      "op": "deactivate-input",
+      "block": "//SafeResumption/MODE",
+      "port": "OrIn4",
+      "rationale": "permit dips during Safe->R&D and restarts 2 s count",
+      "killingScenario": "Safe->R&D with both buttons released at acceptance; new BOTH at release+2050 ms (R&D reached at +100): accepted in base, rejected in mutant",
+      "oracle": "Q-REL-AFTER-PERMIT A",
+      "modelKill": "repro/t14.out.txt"
+    },
+    {
+      "id": "M-E2d-04",
+      "guard": "UnlockDoor",
+      "op": "invert-contact",
+      "block": "//Network2/FBAnd8",
+      "port": "AndIn1",
+      "rationale": "Door removed from Unlock reset in Safe",
+      "killingScenario": "UNL-05 Safe: Door FALSE, NC1 FALSE, blue 1000 ms: Unlock 500 scans (base 0)",
+      "oracle": "UNL-05 (a)-(c), C5 viii",
+      "modelKill": "review v4 w13"
+    },
+    {
+      "id": "M-E2d-05",
+      "guard": "UnlockDoor",
+      "op": "deactivate-input",
+      "block": "//Network1/FBOr3",
+      "port": "OrIn1",
+      "rationale": "Safe Door reset path removed",
+      "killingScenario": "UNL-05 Safe: Unlock 500 (base 0)",
+      "oracle": "UNL-05",
+      "modelKill": "review v4 w13"
+    },
+    {
+      "id": "M-E2d-06",
+      "guard": "UnlockDoor",
+      "op": "deactivate-input",
+      "block": "//Network12/FBAnd2",
+      "port": "AndIn4",
+      "rationale": "Door removed from Unlock grant in R&D",
+      "killingScenario": "UNL-05 R&D: Unlock 500 (base 0)",
+      "oracle": "UNL-05",
+      "modelKill": "review v4 w13"
+    },
+    {
+      "id": "M-E2d-07",
+      "guard": "UnlockDoor",
+      "op": "deactivate-input",
+      "block": "//Network12/FBAnd11",
+      "port": "AndIn1",
+      "rationale": "Door removed (R&D grant feeder)",
+      "killingScenario": "UNL-05 R&D: Unlock 500",
+      "oracle": "UNL-05",
+      "modelKill": "review v4 w13"
+    },
+    {
+      "id": "M-E2d-08",
+      "guard": "UnlockDoor",
+      "op": "deactivate-input",
+      "block": "//Network2/FBAnd8",
+      "port": "AndIn1",
+      "rationale": "restrictive variant (Door term deactivated)",
+      "killingScenario": "UNL-04 Safe: Unlock 0 (base 500)",
+      "oracle": "UNL-04",
+      "modelKill": "review v4 w13"
+    },
+    {
+      "id": "M-E2d-09",
+      "guard": "Fbk10",
+      "op": "deactivate-input",
+      "block": "//Network2/FBAnd2",
+      "port": "AndIn2",
+      "rationale": "C1_FBK ON not blocking Safe->R&D",
+      "killingScenario": "FBK-10 Safe: C1_FBK ON without command, BOTH: S12 (base Safe)",
+      "oracle": "FBK-10 (C5 xiii)",
+      "modelKill": "repro/t17.out.txt"
+    },
+    {
+      "id": "M-E2d-10",
+      "guard": "Fbk10",
+      "op": "deactivate-input",
+      "block": "//Network2/FBAnd2",
+      "port": "AndIn3",
+      "rationale": "C2_FBK ON not blocking Safe->R&D",
+      "killingScenario": "FBK-10 Safe: C2_FBK ON, BOTH: S12",
+      "oracle": "FBK-10 (xiii)"
+    },
+    {
+      "id": "M-E2d-11",
+      "guard": "Fbk10",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_020",
+      "port": "AndIn8",
+      "rationale": "C2_FBK ON not blocking R&D->Run",
+      "killingScenario": "FBK-10 R&D: C2_FBK ON without command, BOTH: SU set, STO released (base no SU)",
+      "oracle": "FBK-10 (xiii)",
+      "modelKill": "repro/t17.out.txt"
+    }
+  ],
+  "note": "Q-ARCH-10 A: IL_SCOPE, linkIlScope, GATE_010.AndIn3 removed; current-e2d-unlock-cover.test.js is regression (no mutation killer).",
+  "blockedByQuestion": [
+    {
+      "block": "//Network12/FBAnd3",
+      "port": "AndIn2",
+      "question": "Q-T3-2b (Door fall during Unlock in R&D)"
+    }
+  ],
+  "removedGuards": [
+    {
+      "guard": "IL-04 Network2/FBAnd1.AndIn5",
+      "by": "E2d (V14-Q7)"
+    },
+    {
+      "guard": "IL-05 Network2/FBAnd1.AndIn6",
+      "by": "E2d (V14-Q7)"
+    }
+  ],
+  "notes": [
+    "REL-01(e) is closed in E2b (GATE_030.OrIn5), not by MODE.OrIn4; M-E2d-03 concerns Q-REL only",
+    "xiv (ack clears FBK-10 block) belongs to E5; xv (FBK-10 -> Emergency) structural - no path in E2"
+  ]
+}

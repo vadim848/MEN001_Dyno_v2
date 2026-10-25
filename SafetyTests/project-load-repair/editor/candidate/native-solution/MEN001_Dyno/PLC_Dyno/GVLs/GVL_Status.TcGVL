@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <GVL Name="GVL_Status" Id="{e1f9d9ed-0847-4cd6-838e-d5d2132c17d1}">
+    <Declaration><![CDATA[{attribute 'TcGvlVarFlags' := 'OPC'}
+VAR_GLOBAL
+    // Status structs written by PLC every cycle, read by Python over ADS
+    // ADS symbol: GVL_Status.stMotor1_Status
+    //             GVL_Status.stMotor2_Status
+    stMotor1_Status : ST_MotorStatus;
+    stMotor2_Status : ST_MotorStatus;
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

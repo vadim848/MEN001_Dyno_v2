@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_LoadProfileCmd" Id="{a4f2c1d6-8b37-4e92-9c15-2d6e0b3f5a48}">
+    <Declaration><![CDATA[// Load-motor (Beckhoff AX5000) motion-profile command + status, driven by
+// FB_LoadMotorProfile at the PLC task rate. Same online value(t) shapes as
+// ST_MenteeTrajCmd / FB_TrajectoryGen (Sinusoidal / Trapezoidal / Step /
+// S-Curve / Ramp), but with a DOMAIN selector because a load motor can run the
+// profile as a TORQUE waveform (streamed into the existing MC_TorqueControl via
+// stMotorN_Cmd.fTargetTorque) or as a POSITION / VELOCITY waveform (external
+// setpoint generation MC_ExtSetPointGen* on the NC axis).
+//
+// Values are in PLC-native units (the backend pre-converts): TORQUE = % of motor
+// rated; POSITION = deg; VELOCITY = deg/s (gear-scaled). Position profiles anchor
+// at the axis actual position at Start (no jump); velocity integrates to position
+// for the external-setpoint feed; torque is absolute.
+//
+// One per load motor in GVL_Profiles (stLoadProfile1 / stLoadProfile2). Started
+// either directly (bStart) or, for a synchronized run, by GVL_Profiles.bStartSync
+// (gated by bEnable) so it begins on the exact same PLC cycle as the Mentee half.
+TYPE ST_LoadProfileCmd :
+STRUCT
+    // --- domain + selection ---
+    nDomain      : BYTE;    // 0 TORQUE (-> fTargetTorque) | 1 POSITION | 2 VELOCITY (ext-setpoint)
+    nShape       : BYTE;    // 0 Sinusoidal | 1 Trapezoidal | 2 Step | 3 S-Curve | 4 Ramp
+
+    // --- shape parameters (union; only the relevant ones are used per shape) ---
+    fAmplitude   : REAL;    // Sinusoidal
+    fFrequency   : REAL;    // Sinusoidal [Hz]
+    fOffset      : REAL;    // Sinusoidal
+    fStartValue  : REAL;    // Trapezoid/S-Curve/Ramp start; Step initial
+    fPeakValue   : REAL;    // Trapezoid/S-Curve peak
+    fEndValue    : REAL;    // Ramp end; Step final
+    fAccelTime   : REAL;    // Trapezoid/S-Curve ramp-up [s]
+    fSteadyTime  : REAL;    // Trapezoid/S-Curve hold [s]
+    fDecelTime   : REAL;    // Trapezoid/S-Curve ramp-down [s]
+    fStepTime    : REAL;    // Step transition time [s]
+    fDuration    : REAL;    // Sinusoidal/Step/Ramp total time [s]
+
+    // --- repeat (loop the whole profile) ---
+    bRepetitive  : BOOL;
+    nReps        : UDINT;   // 0 = infinite
+    fRestS       : REAL;    // rest between reps [s]
+
+    // --- control ---
+    bEnable      : BOOL;    // participate in a synchronized (bStartSync) run
+    bStart       : BOOL;    // rising edge -> (re)start this profile alone
+    bStop        : BOOL;    // rising edge -> abort + hold
+
+    // --- status (written by FB_LoadMotorProfile) ---
+    bRunning     : BOOL;
+    bExtActive   : BOOL;    // POSITION/VELOCITY: external setpoint generator engaged
+    fSetpoint    : REAL;    // current generated value (native units)
+    fElapsed     : REAL;    // elapsed time in the current run [s]
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

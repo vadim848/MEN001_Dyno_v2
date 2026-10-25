@@ -1,0 +1,62 @@
+{
+  "schema": "plan-review-v1",
+  "slice": "E2-plan-v6",
+  "role": "v2-reviewer",
+  "date": "2026-10-22",
+  "subject": {
+    "planMd": "6e321cc961a54801b9c577297ca6bc348ad120e383b857b35f2bca938d7da87f",
+    "planJson": "0035820d0b65c3d5469b4b793af5260b1dbcb2ddff5e536c87b29cfbe857bd60",
+    "mutationPlanE2a": "9d43a8f8d6c757b552c05e8fc36c772567073937079b605a6dcc1ebc7f2defa1",
+    "mutationPlanE2aRC": "8b407fa795b65b9ed6daf6b4f9e00548d7f78e056289e7980e7721dde6da43b7",
+    "t18": "e5a2ffc79c651fa82140ae5ba048536337651a61a9360794e157f46cbb70dc8a"
+  },
+  "sources": {
+    "r1Sal": "ca841a01fe44f776a5868968fde70cce728657aaf411d6b8bfa6689cfadc7bb3",
+    "e2aCoreSal": "5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b",
+    "e2aCoreSgvl": "e60698840e556dbd6d838958eadb8545735a81aaff8efbfceabc3613a4e08010",
+    "e2aCoreDiagram": "27d7f20d890d48fc175fbd25af21a5b0c874ce4cf248b37ac73df26fe0624785",
+    "scenarioDecisionsAtReview": "f7ae580f7e6ad15067b02b6481b1976d8eaff7deea505a8973c9c53c21c0835d",
+    "scenarioDecisionsInPlan": "be839c37a0c05b48ad3586b147af88c0c873a1a6e61276efb85c4410179a4bf4",
+    "analystCriteria": "0a2f7de92239c7cf261ab1f959c613037c1defc2526a0fd8c5cccd24c9476b4c",
+    "head": "dbca5dd"
+  },
+  "verdicts": {
+    "E2a-RC": "NEEDS CHANGES",
+    "E2b": "NEEDS CHANGES",
+    "E2c": "READY FOR EDITOR (on corrected E2b stack)",
+    "E2d": "READY FOR EDITOR (on corrected E2b stack)",
+    "E2a-core-addendum": "ACCEPTED (D-1, D-2)"
+  },
+  "findings": [
+    {"id": "R6-1", "severity": "major", "slice": "E2a-RC", "to": "architect, tester",
+     "text": "linkRunUpAccepted = N12/FBOr1.OrOut includes OrIn2 = N12/FBAnd10 (raw legacy PLC level inPLC_RnD_Mode AND inPLC_RnD_Mode_2, ungated by stage/cover/EOk). Model: rejected PLC up (cover open) clears HV request; Emergency in R&D with PLC (1,1) clears it; Emergency from legacy Run with PLC (1,1) held: HV Discharge Request never issued, C2 OFF without Discharge. v5 did not. Use a gated acceptance source (feasible example: existing Symbol b_Set_HV_C2_1 = N12/FBAnd4.AndOut, model x2 alt: reqOFF at a+2 = u, all cases pass, no new SAL variable). Add mutation 'reset from ungated command level' with these killers.",
+     "evidence": ["repro/x1.out.txt (B, C)", "repro/x2.out.txt"]},
+    {"id": "R6-2", "severity": "moderate", "slice": "E2a-RC", "to": "architect (or analyst for known FAIL)",
+     "text": "LV reset b_Step12_Set includes legacy N2/FBAnd91 (not EOk-gated). Emergency in Safe then PLC (1,0): LV request FALSE for 2 scans (v5: TRUE). Violates TD-01 (Vadim, question 74) 'Emergency does not clear'. Gate or justified known FAIL until E4.",
+     "evidence": ["repro/x1.out.txt (D)"]},
+    {"id": "R6-3", "severity": "minor", "slice": "E2a-RC", "to": "architect",
+     "text": "M-E2a-30/31/33 killing point a+2 lies in observation interval [a,u] (model u=a+2); restate to u+1 / u1+1."},
+    {"id": "R6-4", "severity": "minor", "slice": "E2a-RC", "to": "architect, runner",
+     "text": "M-E2a-32 cover-open killer cannot kill on E2a-RC candidate (GATE_001.AndIn5/6 still NC1/NC2 -> BOTH not qualified). Use 'Safe->R&D BOTH keeps HV request TRUE' or run on E2b stack.",
+     "evidence": ["repro/x3.out.txt (full stack only; rc-only stack NV in prototype)"]},
+    {"id": "R6-5", "severity": "minor", "slice": "E2a-RC", "to": "architect (list), tester",
+     "text": "test/current-early-sto.test.js uses removed Symbol b_Reset_HV_Discharg_Req2 and expects 'old discharge Reset follows later feedback' - superseded by question 73 A; not listed in plan impact."},
+    {"id": "R6-6", "severity": "minor", "slice": "E2a-RC", "to": "architect",
+     "text": "PLAN.json E2a-RC.mutationPlan stale (MUTATION_PLAN_E2a.json); SCENARIO_DECISIONS SHA be839c37 -> f7ae580f; TD-01 confirmed by Vadim (q.74) while plan §11 says awaiting; renameImpact.plcPart 'BLOCKED' stale."},
+    {"id": "B6-1", "severity": "major", "slice": "E2b", "to": "architect, tester",
+     "text": "BOOT gate FBAndBootFbkOff -> N3/FBAnd1.AndIn3: g1 has no Restart edge, EOk latched by Restart with FBK ON; when FBK goes OFF later (r+1, r+2000) S1/SAFE at g+2 without a new Restart (all FBK variants). Forbidden by EMG6-01-BOOT. Require FBK OFF at the Restart edge (as G10_EXIT) or equivalent; add mutation killer 'FBK OFF without new Restart'.",
+     "evidence": ["repro/x4.out.txt"]},
+    {"id": "N6-1", "severity": "note", "slice": "E2a-core",
+     "text": "M-E2a-28/29 listed in mutations with expectedOnThisCandidate EQUIVALENT: G3 must report as expected-equivalent survivors (or move to equivalentBySearch). Duplication as M-E2b-31/32 correct."},
+    {"id": "N6-2", "severity": "note", "slice": "probes",
+     "text": "On E2a-core g7 sources only S3; G-1/G-2 from SR are construction checks there, normative on E2b+ stack."}
+  ],
+  "accepted": [
+    "TD-02 window text (u-1 start, Run K+101, no Run <= K+99); M-E2a-21 normal mutation; M-E2a-22/25 killed; M-E2a-26 composite recipe; M-E2a-27 equivalentByRequirement",
+    "D-1 matches candidate; D-2 geometry: 34/36 degenerate-point normalisation, 2 HEALTH_GUARD reroutes, endpoints same",
+    "E2b (A) Bypass gate + M-E2b-36; M-E2b-35 removed -> M-DEC-02/M-DEC-09; M-E2b-24/25/34 equivalentBySearch",
+    "E2d D5-1, D5-2",
+    "Resources 215/1832/65/75 (R1, core) verified; RC 217/1836/63/76; E2b 225/1908/78; E2c/E2d 227/1926/79"
+  ],
+  "limits": "Prototype model (F1 + simulated R1/E2), not editor candidate; mutations not run by runner; not native/CRC/IDE/Target/hardware."
+}

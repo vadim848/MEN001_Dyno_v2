@@ -1,0 +1,4698 @@
+{
+ "version": "stage-test-baseline-v1",
+ "label": "canonical F1 (checkpoint 0391fae)",
+ "purpose": "Pinned top-level node:test names/status per software-check stage on canonical F1, for explicit vanished-test reporting (E2-R1 S15). Test files of other roles evolve: NEW/status changes are informational; a MISSING name must be explained. Do not refresh to hide a vanished test.",
+ "createdBy": "v2-stand-engineer E2-R1-stand 2026-10-21",
+ "generatedFrom": "isolated sandbox (stand-sandbox.js) of the working tree, test files as of the E2-R1-stand before-snapshot",
+ "source": {
+  "salSha256": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "sgvlSha256": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104"
+ },
+ "stageFiles": {
+  "harness": [
+   "boot-preflight.test.js",
+   "button-cover-prototype.test.js",
+   "button-recognizer.test.js",
+   "current-code-checks.test.js",
+   "integrated-control-prototype.test.js",
+   "native-owner-plan.test.js",
+   "native-recognizer-plan.test.js",
+   "safety-model.test.js",
+   "sal-assumptions.test.js",
+   "sal-runtime.test.js",
+   "sal-semantics.test.js",
+   "scan-observer.test.js",
+   "stand-case-guards.test.js",
+   "stand-fb-semantics.test.js",
+   "stand-no-runtime-git.test.js",
+   "stand-sal-mutation-kill.test.js",
+   "stand-sal-mutation-plan.test.js",
+   "stand-sal-mutations.test.js",
+   "stand-sal-parser-empty-network.test.js",
+   "timer-observed-clock.test.js",
+   "timer-producer-experiment.test.js",
+   "transition-request-prototype.test.js"
+  ],
+  "historical": [
+   "baseline-fixture.test.js",
+   "candidate-acceptance-runner.test.js",
+   "sal-button-baseline.test.js",
+   "sal-cover-baseline.test.js",
+   "sal-emergency-baseline.test.js",
+   "sal-emergency-chain.test.js",
+   "sal-emergency-phases.test.js",
+   "sal-energy-baseline.test.js",
+   "sal-estop-runtime.test.js",
+   "sal-rnd-safe-outputs.test.js",
+   "sal-rundown-baseline.test.js",
+   "sal-rundown-outputs.test.js",
+   "sal-safe-exit-baseline.test.js",
+   "sal-state-baseline.test.js"
+  ],
+  "current": [
+   "current-btn-release-after-permit.test.js",
+   "current-door-interlock.test.js",
+   "current-e2a-emg-anchor.test.js",
+   "current-e2a-emg-rnd.test.js",
+   "current-e2a-emg-run.test.js",
+   "current-e2a-emg-rundown.test.js",
+   "current-e2a-emg-safe.test.js",
+   "current-e2a-race.test.js",
+   "current-e2a-rnd-cover-healthy.test.js",
+   "current-e2a-run-conf.test.js",
+   "current-e2a-status.test.js",
+   "current-e2a-sweep-estop.test.js",
+   "current-e2b-connector-safe.test.js",
+   "current-e2b-cover-transitions.test.js",
+   "current-e2b-interlock-run.test.js",
+   "current-e2b-sweep-connector.test.js",
+   "current-e2c-hlt03.test.js",
+   "current-e2c-stp-i.test.js",
+   "current-e2d-release-permit.test.js",
+   "current-e2d-unlock-cover.test.js",
+   "current-early-sto-bindings.test.js",
+   "current-early-sto.test.js",
+   "current-estop-native-pairs.test.js",
+   "current-f1-lock-and-q500.test.js",
+   "current-hv-set-permit.test.js",
+   "current-mentee-set-permit.test.js",
+   "current-native-bindings.test.js",
+   "current-native-structure.test.js",
+   "current-plc-pulse-set-permit.test.js",
+   "current-rnd-compact.test.js",
+   "current-rnd-down-no-reenergy.test.js",
+   "current-rnd-physical-integration.test.js",
+   "current-safe-input-slots.test.js",
+   "current-safe-run-gestures.test.js",
+   "current-step12-lv-permit.test.js",
+   "current-timer-one-ms.test.js",
+   "current-unlock-estop-permit.test.js",
+   "current-unlock-hold.test.js",
+   "current-v2-migration-negatives.test.js"
+  ],
+  "excluded": [
+   "sal-conformance.test.js",
+   "signal-bindings.test.js"
+  ]
+ },
+ "stages": {
+  "harness": [
+   {
+    "name": "BOOT preflight owns fresh full-source parsing, all native inventory and exact two unsupported categories",
+    "status": "pass"
+   },
+   {
+    "name": "BOOT Network4 lists eight unbound native inputs, seven precise phase writers/readers, unused channel8",
+    "status": "pass"
+   },
+   {
+    "name": "BOOT declared RunStop/ErrAck are typed connections, not inferred group RUN or main Restart",
+    "status": "pass"
+   },
+   {
+    "name": "BOOT rejects supplied filtered models, copied auditPASS, fallback/seeds and caller trust overrides",
+    "status": "pass"
+   },
+   {
+    "name": "BOOT accepts matching relocated file pairs, portable LF/CRLF without dropping any source attributes",
+    "status": "pass"
+   },
+   {
+    "name": "BOOT custom SGVL must be explicit and parser audits that exact requested file",
+    "status": "pass"
+   },
+   {
+    "name": "BOOT rejects present-but-null/undefined/invalid custom paths without canonical fallback",
+    "status": "pass"
+   },
+   {
+    "name": "BOOT file mutation rejected: remove complete Network4",
+    "status": "pass"
+   },
+   {
+    "name": "BOOT file mutation rejected: mask Network4 name",
+    "status": "pass"
+   },
+   {
+    "name": "BOOT file mutation rejected: remove one actual state writer",
+    "status": "pass"
+   },
+   {
+    "name": "BOOT file mutation rejected: foreign namespace relationship",
+    "status": "pass"
+   },
+   {
+    "name": "BOOT file mutation rejected: alter full-source metadata revision",
+    "status": "pass"
+   },
+   {
+    "name": "BOOT file mutation rejected: change native attribute while preserving count",
+    "status": "pass"
+   },
+   {
+    "name": "BOOT rejects a dropped trusted inventory entry instead of accepting copied source digests",
+    "status": "pass"
+   },
+   {
+    "name": "BOOT rejects an unsupported adapter revision rather than inventing group capability",
+    "status": "pass"
+   },
+   {
+    "name": "PROTO01 startup-held and incomplete neutral cannot create a command",
+    "status": "pass"
+   },
+   {
+    "name": "PROTO02 green pulse occurs once; short release cannot re-arm",
+    "status": "pass"
+   },
+   {
+    "name": "PROTO03 inclusive chord boundary accepts 490/500 and rejects 510 ms",
+    "status": "pass"
+   },
+   {
+    "name": "PROTO04 failed chord never degrades and requires a fresh simultaneous interval",
+    "status": "pass"
+   },
+   {
+    "name": "PROTO05 blue permission falls on release/fault and cannot resume while held",
+    "status": "pass"
+   },
+   {
+    "name": "PROTO06 mode/transition and missing energy proof inhibit access",
+    "status": "pass"
+   },
+   {
+    "name": "PROTO07 conflicting state memories inhibit outputs and return to release qualification",
+    "status": "pass"
+   },
+   {
+    "name": "B01 green requires release filter and stable single hold",
+    "status": "pass"
+   },
+   {
+    "name": "B03 staggered buttons inside chord window become one StepUp",
+    "status": "pass"
+   },
+   {
+    "name": "B09 flicker in two-button attempt never degrades to blue",
+    "status": "pass"
+   },
+   {
+    "name": "B11 two-button timer restarts after flicker",
+    "status": "pass"
+   },
+   {
+    "name": "B14 incomplete release filter cannot arm held input",
+    "status": "pass"
+   },
+   {
+    "name": "Software package executes working SAL components and preserves explicit assumptions",
+    "status": "pass"
+   },
+   {
+    "name": "Missing SAL bindings produce ERROR rather than acceptance success",
+    "status": "pass"
+   },
+   {
+    "name": "COMBINED01 down pulse retains native owner across release and blocks blue access",
+    "status": "pass"
+   },
+   {
+    "name": "COMBINED02 completion and mode change cannot re-enable held-blue access",
+    "status": "pass"
+   },
+   {
+    "name": "COMBINED03 emergency drops qualified unlock in the same frame and latches through recovery",
+    "status": "pass"
+   },
+   {
+    "name": "COMBINED04 interrupted route/energy context is frozen for diagnostics without normal requests",
+    "status": "pass"
+   },
+   {
+    "name": "COMBINED05 emergency wins over simultaneous completion and missing guards reject pulses",
+    "status": "pass"
+   },
+   {
+    "name": "NOWNER01 four routes retain pulses and complete equivalently to the host owner",
+    "status": "pass"
+   },
+   {
+    "name": "NOWNER02 deterministic mixed commands/faults/recovery match the reference across 1000 scans",
+    "status": "pass"
+   },
+   {
+    "name": "NOWNER03 timeout takeover is suppressed by valid completion at the same boundary",
+    "status": "pass"
+   },
+   {
+    "name": "NOWNER04 conflicts latch emergency and unspecified producer inputs are rejected",
+    "status": "pass"
+   },
+   {
+    "name": "NOWNER05 graph matches fault-over-completion and fresh manual recovery gating",
+    "status": "pass"
+   },
+   {
+    "name": "NATIVE01 Boolean contact lowering preserves next-state equations across varied contexts",
+    "status": "pass"
+   },
+   {
+    "name": "NATIVE02 schedule has contiguous relative order and keeps all latch writes after next-state gates",
+    "status": "pass"
+   },
+   {
+    "name": "D01/E01 full upward path requires feedback and locked cover",
+    "status": "pass"
+   },
+   {
+    "name": "C06 upward request with open cover is silently ignored",
+    "status": "pass"
+   },
+   {
+    "name": "C01/C05/C06/C08 cover unlock, open wait, rejected rise, relock and fresh rise",
+    "status": "pass"
+   },
+   {
+    "name": "F01 normal Run to R&D keeps C2 during SS1 and discharge",
+    "status": "pass"
+   },
+   {
+    "name": "F02 Healthy loss during SS1 immediately selects STO coast path",
+    "status": "pass"
+   },
+   {
+    "name": "G06 before timeout missing discharge completion prevents C2 opening and R&D",
+    "status": "pass"
+   },
+   {
+    "name": "A05 E-Stop dominates from Run and enters emergency coast",
+    "status": "pass"
+   },
+   {
+    "name": "END-TO-END normal Safe -> R&D -> Run -> R&D -> Safe cycle",
+    "status": "pass"
+   },
+   {
+    "name": "D04 LV ON feedback timeout prevents R&D",
+    "status": "pass"
+   },
+   {
+    "name": "E04 C2 ON feedback timeout prevents Run",
+    "status": "pass"
+   },
+   {
+    "name": "G06 discharge timeout faults while keeping C2 and discharge commanded",
+    "status": "pass"
+   },
+   {
+    "name": "G07 C2 OFF feedback timeout prevents R&D",
+    "status": "pass"
+   },
+   {
+    "name": "H02 LV OFF feedback timeout prevents Safe",
+    "status": "pass"
+   },
+   {
+    "name": "A05 E-Stop in Safe and R&D goes directly to de-energized Emergency",
+    "status": "pass"
+   },
+   {
+    "name": "A06 E-Stop in an HV-capable phase uses STO coast and keeps C2 connected",
+    "status": "pass"
+   },
+   {
+    "name": "A06 E-Stop during discharge continues discharge with C2 ON",
+    "status": "pass"
+   },
+   {
+    "name": "A06 E-Stop during C2 disconnect continues waiting for C2 OFF",
+    "status": "pass"
+   },
+   {
+    "name": "A06 complete E-Stop HV sequence cannot skip coast, discharge or C2 feedback",
+    "status": "pass"
+   },
+   {
+    "name": "C05 open cover is permitted indefinitely in Safe and R&D",
+    "status": "pass"
+   },
+   {
+    "name": "C09 loss of cover interlock in StartingRnD faults before R&D",
+    "status": "pass"
+   },
+   {
+    "name": "C09 cover interlock loss in HV-capable phases latches emergency energy removal",
+    "status": "pass"
+   },
+   {
+    "name": "C09 cover interlock loss during discharge continues emergency discharge",
+    "status": "pass"
+   },
+   {
+    "name": "C09 cover interlock loss during disconnect never re-closes C2",
+    "status": "pass"
+   },
+   {
+    "name": "P01 missing LV or HV connector interlock in Safe only blocks StepUp",
+    "status": "pass"
+   },
+   {
+    "name": "P02 connector loss after leaving Safe starts emergency response",
+    "status": "pass"
+   },
+   {
+    "name": "P03 either external emergency interlock channel causes Emergency",
+    "status": "pass"
+   },
+   {
+    "name": "P04 restored external interlock does not cancel emergency sequence",
+    "status": "pass"
+   },
+   {
+    "name": "SAL-INPUT01 inventory finds unresolved transition input and physical constant alias",
+    "status": "pass"
+   },
+   {
+    "name": "SAL-INPUT02 deleting a wired producer is reported rather than becoming an assumed constant",
+    "status": "pass"
+   },
+   {
+    "name": "SAL-INPUT03 a selected network cannot silently claim omitted global producers",
+    "status": "pass"
+   },
+   {
+    "name": "SAL-RUN01 runtime supports every function block present in v2",
+    "status": "pass"
+   },
+   {
+    "name": "SAL-RUN02 Network2 connector qualification drops immediately",
+    "status": "pass"
+   },
+   {
+    "name": "SAL-RUN03 connector recovery requires the configured 100 ms TON",
+    "status": "pass"
+   },
+   {
+    "name": "SAL-SEM01 default execution follows all group block numbers across network boundaries",
+    "status": "pass"
+   },
+   {
+    "name": "SAL-SEM02 real RS holds, sets and resets with Reset dominant",
+    "status": "pass"
+   },
+   {
+    "name": "SAL-SEM03 unconnected Decouple inputs are reported and sensitive to the chosen assumption",
+    "status": "pass"
+   },
+   {
+    "name": "Scan observer retains an interior one-millisecond pulse after output returns FALSE",
+    "status": "pass"
+   },
+   {
+    "name": "Scan observer advances every scan without short-circuiting after detection",
+    "status": "pass"
+   },
+   {
+    "name": "S14: unread injected Symbol makes STATE cases ERROR with the missing binding",
+    "status": "pass"
+   },
+   {
+    "name": "S14: unwritten observed phase Symbol makes STATE and PRIORITY cases ERROR, not PASS",
+    "status": "pass"
+   },
+   {
+    "name": "S14: pinned F1 has every STATE/PRIORITY injection and observation point",
+    "status": "pass"
+   },
+   {
+    "name": "S15: pinned case baseline loads and reports vanished, new and changed IDs",
+    "status": "pass"
+   },
+   {
+    "name": "S15: per-stage test names vanished from the pinned baseline are listed (multiset, load crash visible)",
+    "status": "pass"
+   },
+   {
+    "name": "FB-AND §4.1.1/§4.1.2: AND of active inputs, make contact negated before AND, deactivated inputs ignored",
+    "status": "pass"
+   },
+   {
+    "name": "FB-OR §4.2.1/§4.2.2: OR of active inputs, make contact negated before OR, deactivated inputs ignored",
+    "status": "pass"
+   },
+   {
+    "name": "FB-RS §4.10.1: Set1/Reset0 -> 1, Set0/Reset1 -> 0, both 1 -> Reset dominant 0, both 0 -> hold; initial STOP output 0",
+    "status": "pass"
+   },
+   {
+    "name": "FB-RS §4.10.2: input parameterization as make contact negates the Reset channel",
+    "status": "pass"
+   },
+   {
+    "name": "FB-TON §4.12.1: input 1 reaches output only after the delay; dropping before the delay never activates the output",
+    "status": "pass"
+   },
+   {
+    "name": "FB-ESTOP §4.4.2 Restart/§4.4.4: after group start the outputs stay safe until a Restart rising+falling edge with all active inputs TRUE",
+    "status": "pass"
+   },
+   {
+    "name": "FB-ESTOP §4.4.1 + status DELAYOUT: safety request drops EStopOut immediately, EStopDelOut only after Delay Time",
+    "status": "pass"
+   },
+   {
+    "name": "FB-ESTOP §4.4.1: restoring the input alone does not leave the safe state; a new Restart edge is required",
+    "status": "pass"
+   },
+   {
+    "name": "FB-ESTOP §4.4.4 Sample 2: Restart rising before inputs are TRUE; START once both TRUE, enable on Restart falling edge",
+    "status": "pass"
+   },
+   {
+    "name": "FB-ESTOP §4.4.4: Restart falling edge while an active input requests the safe state is not accepted",
+    "status": "pass"
+   },
+   {
+    "name": "FB-ESTOP §4.4.1/§4.4.2: a make-contact channel requests the safe state at logic 1",
+    "status": "pass"
+   },
+   {
+    "name": "FB-ESTOP NV guard: Two-Channel discrepancy and active EDM are rejected, never emulated",
+    "status": "pass"
+   },
+   {
+    "name": "FB-DECOUPLE §4.6.1: inputs looped through to the outputs one-to-one",
+    "status": "pass"
+   },
+   {
+    "name": "GROUP §3.1 (derived): blocks execute in configured execution-order numbering; a lower-numbered reader sees the previous-cycle value of a higher-numbered producer",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-REPRO suite runtime code never shells out to git",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-REPRO suite runtime code never reads the sibling reference checkout",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-REPRO every pinned source verifies its SHA256 and the manifest identity",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-KILL only assertion failures of allowlisted baseline-passing tests kill; load/SHA/file-level/exception/hook never do",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-KILL software-check: behavioural FAIL kills; BOOT, ERROR, probe crash and missing cases do not",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-KILL TAP parser keeps failureType/code and nested leaves; file path entries are file-level",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-MUTPLAN testFiles: wildcard, comment, path, duplicate and missing entries are errors, none dropped silently",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-MUTPLAN behaviouralTests: invalid/empty lists are errors; a pattern selecting no reported test is unmatched",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-MUTPLAN the E0 pilot plan resolves to exactly the files the previous existsSync filter kept (all 17, none dropped)",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-MUTPLAN runner: a missing/wildcard testFiles entry stops the run with exit 2 and lists every offender",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-MUTPLAN runner: a behaviouralTests pattern matching no baseline test of testFiles stops the run with exit 2",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-MUTPLAN runner: a valid plan passes --validate-only (exit 0) and records per-pattern match counts",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-MUT deactivate-input changes exactly //Network12/FBAnd16/AndIn1.channelInterface",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-MUT invert-contact changes exactly //Network12/FBAnd16/AndIn2.deactivate1",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-MUT set-channel-mode changes exactly //Network1/FBEstop1/EStopIn1.channelInterface",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-MUT set-parameter changes exactly //Network1/FBEstop1/Delay Time (ms).timing",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-MUT refuses unsupported or ambiguous targets instead of guessing",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-MUT verification rejects a mutant with an undeclared second change",
+    "status": "pass"
+   },
+   {
+    "name": "STAND-SANDBOX refuses destinations inside the repository and parses node TAP load failures",
+    "status": "pass"
+   },
+   {
+    "name": "S1: self-closing empty Networks are parsed as empty and do not swallow neighbours",
+    "status": "pass"
+   },
+   {
+    "name": "S1: element reader distinguishes self-closing and paired forms",
+    "status": "pass"
+   },
+   {
+    "name": "S1: a Network body that still contains another <Network> is rejected, not merged",
+    "status": "pass"
+   },
+   {
+    "name": "S1: mutation locator finds blocks after an empty Network and finds none inside it",
+    "status": "pass"
+   },
+   {
+    "name": "S1: on pinned F1 (no self-closing Network) the reader equals the legacy paired-only reader",
+    "status": "pass"
+   },
+   {
+    "name": "Observed dispatcher records exact fixed-grid deltas and rejects off-grid events",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network1/FBTon1 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network2/FBTon1 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network2/FBTon2 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon1 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon2 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon3 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon4 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network6/FBTon1 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network7/FBTon1 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network7/FBTon2 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network7/FBTon3 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network8/FBTon1 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network8/FBTon2 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network11/FBTon1 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network12/FBTon3 fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/RELEASE fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/GREEN fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/BLUE fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/BOTH fixed1: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network1/FBTon1 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network2/FBTon1 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network2/FBTon2 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon1 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon2 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon3 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon4 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network6/FBTon1 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network7/FBTon1 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network7/FBTon2 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network7/FBTon3 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network8/FBTon1 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network8/FBTon2 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network11/FBTon1 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network12/FBTon3 fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/RELEASE fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/GREEN fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/BLUE fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/BOTH fixed2: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network1/FBTon1 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network2/FBTon1 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network2/FBTon2 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon1 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon2 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon3 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon4 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network6/FBTon1 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network7/FBTon1 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network7/FBTon2 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network7/FBTon3 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network8/FBTon1 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network8/FBTon2 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network11/FBTon1 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network12/FBTon3 fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/RELEASE fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/GREEN fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/BLUE fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/BOTH fixed5: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network1/FBTon1 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network2/FBTon1 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network2/FBTon2 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon1 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon2 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon3 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network5/FBTon4 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network6/FBTon1 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network7/FBTon1 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network7/FBTon2 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network7/FBTon3 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network8/FBTon1 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network8/FBTon2 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network11/FBTon1 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //Network12/FBTon3 fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/RELEASE fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/GREEN fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/BLUE fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-TON //RndPhysicalCompact/BOTH fixed10: observed-edge boundary, interruption and rehold",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-ESTOP delay100 fixed1: startup, loss, threshold, recovery and new window",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-ESTOP delay250 fixed1: startup, loss, threshold, recovery and new window",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-ESTOP delay100 fixed2: startup, loss, threshold, recovery and new window",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-ESTOP delay250 fixed2: startup, loss, threshold, recovery and new window",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-ESTOP delay100 fixed5: startup, loss, threshold, recovery and new window",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-ESTOP delay250 fixed5: startup, loss, threshold, recovery and new window",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-ESTOP delay100 fixed10: startup, loss, threshold, recovery and new window",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-ESTOP delay250 fixed10: startup, loss, threshold, recovery and new window",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-CAUSAL helper250 fixed1 secondDelta249: before-helper capture",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-CAUSAL helper250 fixed1 secondDelta250: before-helper capture",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-CAUSAL helper250 fixed1 secondDelta251: before-helper capture",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-CAUSAL helper250 fixed2 secondDelta248: before-helper capture",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-CAUSAL helper250 fixed2 secondDelta250: before-helper capture",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-CAUSAL helper250 fixed2 secondDelta252: before-helper capture",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-CAUSAL helper250 fixed5 secondDelta245: before-helper capture",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-CAUSAL helper250 fixed5 secondDelta250: before-helper capture",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-CAUSAL helper250 fixed5 secondDelta255: before-helper capture",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-CAUSAL helper250 fixed10 secondDelta240: before-helper capture",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-CAUSAL helper250 fixed10 secondDelta250: before-helper capture",
+    "status": "pass"
+   },
+   {
+    "name": "OBS-CAUSAL helper250 fixed10 secondDelta260: before-helper capture",
+    "status": "pass"
+   },
+   {
+    "name": "TIMER01 Armed->Candidate maintains the first sample; faulty fixtures lose one scan",
+    "status": "pass"
+   },
+   {
+    "name": "TIMER02 Candidate->TwoAttempt preserves both-button timing and resets on channel loss",
+    "status": "pass"
+   },
+   {
+    "name": "TIMER03 inhibit clears timers and requires a new complete neutral interval",
+    "status": "pass"
+   },
+   {
+    "name": "OWNER01 one-scan down request survives release and repeated/up commands until completion",
+    "status": "pass"
+   },
+   {
+    "name": "OWNER02 held command cannot retrigger after completion and stale completion rejects a fresh attempt",
+    "status": "pass"
+   },
+   {
+    "name": "OWNER03 emergency beats completion and remains latched after fault disappears",
+    "status": "pass"
+   },
+   {
+    "name": "OWNER04 guard rejection and simultaneous commands never select upward over downward",
+    "status": "pass"
+   },
+   {
+    "name": "OWNER05 illustrative timeout escalates, while completion at the boundary wins",
+    "status": "pass"
+   },
+   {
+    "name": "OWNER06 integrated recognizer pulse retains request across release and inhibits new gestures",
+    "status": "pass"
+   }
+  ],
+  "historical": [
+   {
+    "name": "BASELINE01 pinned SAL is intact and modified baseline bytes are rejected",
+    "status": "pass"
+   },
+   {
+    "name": "ACCEPT-RUN01 historical defect fixture produces failures, not acceptance passes",
+    "status": "pass"
+   },
+   {
+    "name": "ACCEPT-RUN02 changing approved blue 0.5s to 1s fails timing acceptance",
+    "status": "pass"
+   },
+   {
+    "name": "ACCEPT-RUN03 missing cover binding is NOT VERIFIED, not a successful default FALSE",
+    "status": "pass"
+   },
+   {
+    "name": "ACCEPT-RUN04 approved timings do not satisfy the independent late-chord rule",
+    "status": "pass"
+   },
+   {
+    "name": "ACCEPT-RUN06 CHORD250 oracle covers both orders and preserves qualification/output distinction",
+    "status": "pass"
+   },
+   {
+    "name": "ACCEPT-RUN05 seeded emergency cover results retain the no-EDM limitation",
+    "status": "pass"
+   },
+   {
+    "name": "V2-BTN01 Network12 actual button timers are 0.5 s / 0.5 s / 1 s",
+    "status": "pass"
+   },
+   {
+    "name": "V2-BTN02 blue alone sets door-unlock request after 0.5 s",
+    "status": "pass"
+   },
+   {
+    "name": "V2-BTN03 both buttons produce the upward transition request after 1 s",
+    "status": "pass"
+   },
+   {
+    "name": "V2-BTN04 Network12 has no 2 s neutral-release qualification timer",
+    "status": "pass"
+   },
+   {
+    "name": "V2-BTN05 failed two-button attempt degrades to blue unlock in current v2",
+    "status": "pass"
+   },
+   {
+    "name": "V2-BTN06 failed two-button attempt degrades to green/down transition in current v2",
+    "status": "pass"
+   },
+   {
+    "name": "V2-COVER01 Safe blue button has a direct untimed path to unlock latch",
+    "status": "pass"
+   },
+   {
+    "name": "V2-COVER02 Safe unlock remains latched after blue release while door monitor stays locked",
+    "status": "pass"
+   },
+   {
+    "name": "V2-COVER03 Safe unlock resets when locked feedback drops",
+    "status": "pass"
+   },
+   {
+    "name": "V2-COVER04 R&D blue release resets unlock while locked feedback remains present",
+    "status": "pass"
+   },
+   {
+    "name": "V2-COVER05 current v2 can retain unlock while accepting an upward gesture",
+    "status": "pass"
+   },
+   {
+    "name": "V2-EMG01 active E-Stop block input assignments match the original stable SAL",
+    "status": "pass"
+   },
+   {
+    "name": "V2-EMG02 main E-Stop channel 1 is active and reaches b_EStop_Ok",
+    "status": "pass"
+   },
+   {
+    "name": "V2-EMG03 ES_NC_2 own field is inactive but SDK master activates its causal EStop path",
+    "status": "pass"
+   },
+   {
+    "name": "V2-EMG04 Mentee own field is inactive but SDK master activates its causal EStop path",
+    "status": "pass"
+   },
+   {
+    "name": "V2-EMG05 PLC E-Stop reaches the active EStopIn3 path",
+    "status": "pass"
+   },
+   {
+    "name": "V2-EMG06 in_InterLock_NC_1 has active paths to both STO reset chains",
+    "status": "pass"
+   },
+   {
+    "name": "V2-EMG06 in_InterLock_NC_2 has active paths to both STO reset chains",
+    "status": "pass"
+   },
+   {
+    "name": "V2-EMG06 in_LV_Connector_Interlock has active paths to both STO reset chains",
+    "status": "pass"
+   },
+   {
+    "name": "V2-EMG06 in_HV_Connector_Interlock has active paths to both STO reset chains",
+    "status": "pass"
+   },
+   {
+    "name": "V2-CHAIN01 NC1 loss removes EStop OK and enters Step4 under both constant assumptions",
+    "status": "pass"
+   },
+   {
+    "name": "V2-CHAIN02 physical restoration does not restore Run or EStop OK",
+    "status": "pass"
+   },
+   {
+    "name": "V2-CHAIN03 PLC emergency traverses the E-Stop block and starts removal",
+    "status": "pass"
+   },
+   {
+    "name": "V2-CHAIN04 emergency sequence reaches discharge and Step6 only after feedback",
+    "status": "pass"
+   },
+   {
+    "name": "V2-CHAIN05 in_ES_NC_2 starts Step4; NC2/Mentee also drop effective main EStop",
+    "status": "pass"
+   },
+   {
+    "name": "V2-CHAIN06 in_Mentee_EStop starts Step4; NC2/Mentee also drop effective main EStop",
+    "status": "pass"
+   },
+   {
+    "name": "V2-CHAIN07 in_LV_Connector_Interlock starts Step4; NC2/Mentee also drop effective main EStop",
+    "status": "pass"
+   },
+   {
+    "name": "V2-CHAIN08 in_HV_Connector_Interlock starts Step4; NC2/Mentee also drop effective main EStop",
+    "status": "pass"
+   },
+   {
+    "name": "V2-CHAIN09 in_InterLock_NC_1 starts Step4; NC2/Mentee also drop effective main EStop",
+    "status": "pass"
+   },
+   {
+    "name": "V2-CHAIN10 in_InterLock_NC_2 starts Step4; NC2/Mentee also drop effective main EStop",
+    "status": "pass"
+   },
+   {
+    "name": "V2-CHAIN11 raw HV Healthy TRUE selects STO removal only after common 2 s gate",
+    "status": "pass"
+   },
+   {
+    "name": "V2-CHAIN12 raw Healthy recovery before gate expiry changes the selected delay branch",
+    "status": "pass"
+   },
+   {
+    "name": "V2-PHASE01 NC1 removes EStop OK but does not clear seeded non-Run states",
+    "status": "pass"
+   },
+   {
+    "name": "V2-PHASE02 Step2 connector-loss trace raises HV command as does the no-fault control",
+    "status": "pass"
+   },
+   {
+    "name": "V2-PHASE03 Step12 can raise LV command despite NC1 loss in this scoped trace",
+    "status": "pass"
+   },
+   {
+    "name": "V2-ENERGY01 Step4 starts LV discharge and a 2 s common gate",
+    "status": "pass"
+   },
+   {
+    "name": "V2-ENERGY02 both HV Healthy branches are gated by the same 2 s TON",
+    "status": "pass"
+   },
+   {
+    "name": "V2-ENERGY03 retained-Healthy STO path adds 5 s after the 2 s gate",
+    "status": "pass"
+   },
+   {
+    "name": "V2-ENERGY04 Step5 commands HV discharge before the timed C2 reset",
+    "status": "pass"
+   },
+   {
+    "name": "V2-ENERGY05 no distinct safe-voltage or discharge-complete input exists",
+    "status": "pass"
+   },
+   {
+    "name": "V2-ENERGY06 SS1 outputs are controlled by Step2 and Step3",
+    "status": "pass"
+   },
+   {
+    "name": "V2-ESTOP01 healthy levels and held restart cannot enable without falling edge",
+    "status": "pass"
+   },
+   {
+    "name": "V2-ESTOP02 emergency output drops immediately and delayed output drops at 100 ms",
+    "status": "pass"
+   },
+   {
+    "name": "V2-ESTOP03 emergency recovery alone cannot restore the output",
+    "status": "pass"
+   },
+   {
+    "name": "V2-ESTOP04 restart release while unsafe is rejected",
+    "status": "pass"
+   },
+   {
+    "name": "V2-ESTOP05 active EDM fixture is rejected instead of silently passing",
+    "status": "pass"
+   },
+   {
+    "name": "V2-RNDSAFE01 green removes LV and requests discharge before LV OFF feedback",
+    "status": "pass"
+   },
+   {
+    "name": "V2-RNDSAFE02 legacy network order loses the short state handoff",
+    "status": "pass"
+   },
+   {
+    "name": "V2-RNDSAFE05 global block order accepts Step2 then raises LV/HV outputs",
+    "status": "pass"
+   },
+   {
+    "name": "V2-RNDSAFE03 releasing green before LV OFF feedback leaves R&D status active",
+    "status": "pass"
+   },
+   {
+    "name": "V2-RNDSAFE04 Network4ToBeDeleted has no explicitly driven input ports",
+    "status": "pass"
+   },
+   {
+    "name": "V2-DOWN01 green stop requests STO reset, discharge and C2 reset together",
+    "status": "pass"
+   },
+   {
+    "name": "V2-DOWN02 PLC mode 01 bypasses the physical green qualification",
+    "status": "pass"
+   },
+   {
+    "name": "V2-DOWN03 Step12 request waits for C2 OFF but no separate discharge feedback",
+    "status": "pass"
+   },
+   {
+    "name": "V2-DOWN04 releasing green removes the nonlatched removal requests",
+    "status": "pass"
+   },
+   {
+    "name": "V2-OUT01 green removal drops C2/STO while SS1 output remains at armed level",
+    "status": "pass"
+   },
+   {
+    "name": "V2-OUT04 PLC mode 01 changes SS1 and removes energy without physical green",
+    "status": "pass"
+   },
+   {
+    "name": "V2-OUT02 green release retains output removal but can strand Step3",
+    "status": "pass"
+   },
+   {
+    "name": "V2-OUT03 held green and C2 OFF reach Step12 then R&D on LV qualification",
+    "status": "pass"
+   },
+   {
+    "name": "V2-EXIT01 Step2 Safe request requires raw constant input TRUE and EStop OK FALSE",
+    "status": "pass"
+   },
+   {
+    "name": "V2-EXIT02 Step6 stays latched with raw constant FALSE and exits when TRUE",
+    "status": "pass"
+   },
+   {
+    "name": "V2-EXIT03 R&D exit request enters Step2 and raises LV/HV set requests with EStop OK",
+    "status": "pass"
+   },
+   {
+    "name": "V2-EXIT04 Step2 remains latched on EStop OK loss with raw constant FALSE",
+    "status": "pass"
+   },
+   {
+    "name": "V2-EXIT05 supposed constant is a physical alias, not an XML Boolean constant",
+    "status": "pass"
+   },
+   {
+    "name": "V2-STATE01 Network3 Safe -> Step12 -> R&D -> armed ownership",
+    "status": "pass"
+   },
+   {
+    "name": "V2-STATE02 Network3 armed -> Step12 -> R&D uses the same Step12 latch",
+    "status": "pass"
+   },
+   {
+    "name": "V2-STATE03 Network3 R&D -> Step2 -> Safe ownership",
+    "status": "pass"
+   },
+   {
+    "name": "V2-STATE04 Network3 armed -> Step4 -> Step5 -> Step6 -> Safe ownership",
+    "status": "pass"
+   }
+  ],
+  "current": [
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe green held across in_InterLock_NC_1 open/close, release, BOTH after 1999 ms neutral -> rejected",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe green held across in_InterLock_NC_1 open/close, release, BOTH after 2001 ms neutral -> accepted",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe green held across in_InterLock_NC_1 open/close, release, BLUE after 1999 ms neutral -> rejected",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe green held across in_InterLock_NC_1 open/close, release, BLUE after 2001 ms neutral -> accepted",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe blue held across in_InterLock_NC_1 open/close, release, BOTH after 1999 ms neutral -> rejected",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe blue held across in_InterLock_NC_1 open/close, release, BOTH after 2001 ms neutral -> accepted",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe blue held across in_InterLock_NC_1 open/close, release, BLUE after 1999 ms neutral -> rejected",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe blue held across in_InterLock_NC_1 open/close, release, BLUE after 2001 ms neutral -> accepted",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe green held across in_InterLock_NC_2 open/close, release, BOTH after 1999 ms neutral -> rejected",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe green held across in_InterLock_NC_2 open/close, release, BOTH after 2001 ms neutral -> accepted",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe green held across in_InterLock_NC_2 open/close, release, BLUE after 1999 ms neutral -> rejected",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe green held across in_InterLock_NC_2 open/close, release, BLUE after 2001 ms neutral -> accepted",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe blue held across in_InterLock_NC_2 open/close, release, BOTH after 1999 ms neutral -> rejected",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe blue held across in_InterLock_NC_2 open/close, release, BOTH after 2001 ms neutral -> accepted",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe blue held across in_InterLock_NC_2 open/close, release, BLUE after 1999 ms neutral -> rejected",
+    "status": "pass"
+   },
+   {
+    "name": "BTN-RELEASE-AFTER-PERMIT Safe blue held across in_InterLock_NC_2 open/close, release, BLUE after 2001 ms neutral -> accepted",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 exact alias targets separate solenoid consumers from energy InterLocks",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doorfalse/NC1false/NC2false/Falsefalse",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doorfalse/NC1false/NC2false/Falsetrue",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doorfalse/NC1false/NC2true/Falsefalse",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doorfalse/NC1false/NC2true/Falsetrue",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doorfalse/NC1true/NC2false/Falsefalse",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doorfalse/NC1true/NC2false/Falsetrue",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doorfalse/NC1true/NC2true/Falsefalse",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doorfalse/NC1true/NC2true/Falsetrue",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doortrue/NC1false/NC2false/Falsefalse",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doortrue/NC1false/NC2false/Falsetrue",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doortrue/NC1false/NC2true/Falsefalse",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doortrue/NC1false/NC2true/Falsetrue",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doortrue/NC1true/NC2false/Falsefalse",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doortrue/NC1true/NC2false/Falsetrue",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doortrue/NC1true/NC2true/Falsefalse",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 component Doortrue/NC1true/NC2true/Falsetrue",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain physical/Doorfalse/NC1false/NC2false",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain physical/Doorfalse/NC1false/NC2true",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain physical/Doorfalse/NC1true/NC2false",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain physical/Doorfalse/NC1true/NC2true",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain physical/Doortrue/NC1false/NC2false",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain physical/Doortrue/NC1false/NC2true",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain physical/Doortrue/NC1true/NC2false",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain physical/Doortrue/NC1true/NC2true",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain existing-PLC-levels/Doorfalse/NC1false/NC2false",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain existing-PLC-levels/Doorfalse/NC1false/NC2true",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain existing-PLC-levels/Doorfalse/NC1true/NC2false",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain existing-PLC-levels/Doorfalse/NC1true/NC2true",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain existing-PLC-levels/Doortrue/NC1false/NC2false",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain existing-PLC-levels/Doortrue/NC1false/NC2true",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain existing-PLC-levels/Doortrue/NC1true/NC2false",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 actual HV chain existing-PLC-levels/Doortrue/NC1true/NC2true",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 existing emergency/connector guards still prevent new HV; constant-FALSE False operand neutral",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 preserve all three original unlock consumers and their component truth tables",
+    "status": "pass"
+   },
+   {
+    "name": "DOOR06 Safe entry source has no hidden Door energy dependency",
+    "status": "pass"
+   },
+   {
+    "name": "E2-STAND L3 reference 4495a1f re-measured on the pinned copy equals helpers/e2-rule-l.js REF_RUN_PLC",
+    "status": "pass"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in R&D, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in R&D, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-LV: in_ES_NC_1 FALSE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in R&D, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-LV: in_ES_NC_2 FALSE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in R&D, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-LV: in_Mentee_EStop TRUE in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in R&D, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE steady in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE steady in R&D, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-LV: in_HV_Connector_Interlock FALSE steady in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE 1 scan in R&D, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE 1 scan in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE 1 scan in R&D, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-LV: in_HV_Connector_Interlock FALSE 1 scan in R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in R&D->Safe, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in R&D->Safe, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-LV: in_ES_NC_1 FALSE in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in R&D->Safe, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-LV: in_ES_NC_2 FALSE in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in R&D->Safe, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-LV: in_Mentee_EStop TRUE in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in R&D->Safe, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE steady in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE steady in R&D->Safe, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-LV: in_HV_Connector_Interlock FALSE steady in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE 1 scan in R&D->Safe, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE 1 scan in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE 1 scan in R&D->Safe, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-LV: in_HV_Connector_Interlock FALSE 1 scan in R&D->Safe -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 refused Restart: in_Estop_PLC TRUE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 refused Restart: in_ES_NC_1 FALSE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 refused Restart: in_ES_NC_2 FALSE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 refused Restart: in_Mentee_EStop TRUE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG6-01 refused Restart: in_LV_Connector_Interlock FALSE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG6-01 refused Restart: in_HV_Connector_Interlock FALSE in R&D, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in StartingRun, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-RUN: in_Estop_PLC TRUE in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in StartingRun, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-RUN: in_ES_NC_1 FALSE in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in StartingRun, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-RUN: in_ES_NC_2 FALSE in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in StartingRun, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-RUN: in_Mentee_EStop TRUE in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in StartingRun, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-RUN: in_LV_Connector_Interlock FALSE steady in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE steady in StartingRun, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-RUN: in_HV_Connector_Interlock FALSE steady in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE 1 scan in StartingRun, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-RUN: in_LV_Connector_Interlock FALSE 1 scan in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE 1 scan in StartingRun, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-RUN: in_HV_Connector_Interlock FALSE 1 scan in StartingRun -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Run, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-RUN: in_Estop_PLC TRUE in Run -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in Run, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-RUN: in_ES_NC_1 FALSE in Run -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in Run, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-RUN: in_ES_NC_2 FALSE in Run -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in Run, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-RUN: in_Mentee_EStop TRUE in Run -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in Run, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-RUN: in_LV_Connector_Interlock FALSE steady in Run -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE steady in Run, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-RUN: in_HV_Connector_Interlock FALSE steady in Run -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE 1 scan in Run, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-RUN: in_LV_Connector_Interlock FALSE 1 scan in Run -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE 1 scan in Run, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-RUN: in_HV_Connector_Interlock FALSE 1 scan in Run -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 refused Restart: in_Estop_PLC TRUE in Run, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 refused Restart: in_ES_NC_1 FALSE in Run, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 refused Restart: in_ES_NC_2 FALSE in Run, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 refused Restart: in_Mentee_EStop TRUE in Run, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG6-01 refused Restart: in_LV_Connector_Interlock FALSE in Run, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG6-01 refused Restart: in_HV_Connector_Interlock FALSE in Run, removed at e+500, green Restart at e+1000 before C1_FBK OFF -> stays Emergency, final Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Run-down, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-RUN: in_Estop_PLC TRUE in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in Run-down, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-RUN: in_ES_NC_1 FALSE in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in Run-down, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-RUN: in_ES_NC_2 FALSE in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in Run-down, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-RUN: in_Mentee_EStop TRUE in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in Run-down, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-RUN: in_LV_Connector_Interlock FALSE steady in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE steady in Run-down, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-RUN: in_HV_Connector_Interlock FALSE steady in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE 1 scan in Run-down, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-RUN: in_LV_Connector_Interlock FALSE 1 scan in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE 1 scan in Run-down, Restart",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-RUN: in_HV_Connector_Interlock FALSE 1 scan in Run-down -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Safe, Restart",
+    "status": "pass"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: in_Estop_PLC TRUE in Safe -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in Safe, Restart",
+    "status": "pass"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: in_ES_NC_1 FALSE in Safe -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "pass"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in Safe, Restart",
+    "status": "pass"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: in_ES_NC_2 FALSE in Safe -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "pass"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in Safe, Restart",
+    "status": "pass"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: in_Mentee_EStop TRUE in Safe -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "pass"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_Estop_PLC TRUE in Safe->R&D, Restart",
+    "status": "pass"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-LV: in_Estop_PLC TRUE in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_ES_NC_1 FALSE in Safe->R&D, Restart",
+    "status": "pass"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-LV: in_ES_NC_1 FALSE in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_ES_NC_2 FALSE in Safe->R&D, Restart",
+    "status": "pass"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-LV: in_ES_NC_2 FALSE in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: in_Mentee_EStop TRUE in Safe->R&D, Restart",
+    "status": "pass"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF-LV: in_Mentee_EStop TRUE in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE steady in Safe->R&D, Restart",
+    "status": "pass"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE steady in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE steady in Safe->R&D, Restart",
+    "status": "pass"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-LV: in_HV_Connector_Interlock FALSE steady in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_LV_Connector_Interlock FALSE 1 scan in Safe->R&D, Restart",
+    "status": "pass"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-LV: in_LV_Connector_Interlock FALSE 1 scan in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: in_HV_Connector_Interlock FALSE 1 scan in Safe->R&D, Restart",
+    "status": "pass"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF-LV: in_HV_Connector_Interlock FALSE 1 scan in Safe->R&D -> Emergency latch, energy chain, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+1; green held; h=C2 OFF cmd+50",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+2; green held; h=C2 OFF cmd+50",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+3; green held; h=C2 OFF cmd+50",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+4; green held; h=C2 OFF cmd+50",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+5; green held; h=C2 OFF cmd+50",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+1; green held; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+2; green held; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+3; green held; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+4; green held; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+5; green held; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+1; green released 550 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+2; green released 550 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+3; green released 550 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+4; green released 550 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+5; green released 550 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+1; green released 800 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+2; green released 800 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+3; green released 800 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+4; green released 800 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h, C2_FBK OFF at h+5; green released 800 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+1; green held; h=C2 OFF cmd+50",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+2; green held; h=C2 OFF cmd+50",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+3; green held; h=C2 OFF cmd+50",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+4; green held; h=C2 OFF cmd+50",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+5; green held; h=C2 OFF cmd+50",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+1; green held; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+2; green held; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+3; green held; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+4; green held; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+5; green held; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+1; green released 550 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+2; green released 550 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+3; green released 550 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+4; green released 550 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+5; green released 550 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+1; green released 800 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+2; green released 800 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+3; green released 800 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+4; green released 800 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 HV Healthy lost at h, C2_FBK OFF at h+5; green released 800 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h and restored at h+3 (Q-RC-16), C2_FBK OFF at h+3; green held; h=C2 OFF cmd+50",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-02 LV Healthy lost at h and restored at h+1 (Q-RC-16), C2_FBK OFF at h+1; green released 800 ms; h=C2 OFF cmd+300",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-01 Safe, NC1 FALSE, Door true: no Emergency; BOTH Safe->R&D accepted with the cover open",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02 R&D, NC1 FALSE, Door true: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02b(a) R&D, NC1 FALSE, Door true: green 600 ms -> R&D->Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-01b R&D, NC1 FALSE, Door true: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-01 Safe, NC1 FALSE, Door false: no Emergency; BOTH Safe->R&D accepted with the cover open",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02 R&D, NC1 FALSE, Door false: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02b(a) R&D, NC1 FALSE, Door false: green 600 ms -> R&D->Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-01b R&D, NC1 FALSE, Door false: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-01 Safe, NC2 FALSE, Door true: no Emergency; BOTH Safe->R&D accepted with the cover open",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02 R&D, NC2 FALSE, Door true: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02b(a) R&D, NC2 FALSE, Door true: green 600 ms -> R&D->Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-01b R&D, NC2 FALSE, Door true: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-01 Safe, NC2 FALSE, Door false: no Emergency; BOTH Safe->R&D accepted with the cover open",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02 R&D, NC2 FALSE, Door false: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02b(a) R&D, NC2 FALSE, Door false: green 600 ms -> R&D->Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-01b R&D, NC2 FALSE, Door false: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-01 Safe, both FALSE, Door true: no Emergency; BOTH Safe->R&D accepted with the cover open",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02 R&D, both FALSE, Door true: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02b(a) R&D, both FALSE, Door true: green 600 ms -> R&D->Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-01b R&D, both FALSE, Door true: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-01 Safe, both FALSE, Door false: no Emergency; BOTH Safe->R&D accepted with the cover open",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02 R&D, both FALSE, Door false: no Emergency, R&D and LV kept; BOTH rejected; held BOTH across cover close not executed; new BOTH accepted",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02b(a) R&D, both FALSE, Door false: green 600 ms -> R&D->Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-01b R&D, both FALSE, Door false: LV lost (in_LV_Faulty_FBK TRUE) -> R&D->Safe + SafetyFault",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02b(c) R&D->Safe accepted, then NC1 FALSE before C1_FBK OFF: continues to Safe, C1 not re-energised",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02b(c) R&D->Safe accepted, then NC2 FALSE before C1_FBK OFF: continues to Safe, C1 not re-energised",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02b(c) R&D->Safe accepted, then both FALSE before C1_FBK OFF: continues to Safe, C1 not re-energised",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-01 steady R&D with C3/BMS ON, LV lost for 100 ms then restored: R&D->Safe, C1/C3/BMS OFF, no return to R&D, SafetyFault",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-01 steady R&D with C3/BMS ON, LV lost for 3000 ms then restored: R&D->Safe, C1/C3/BMS OFF, no return to R&D, SafetyFault",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-02 steady R&D, HV Healthy constantly lost: ignored (R&D, LV kept, no Emergency, no SafetyFault); R&D->Run accepted with HV lost at start",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-02 steady R&D, HV Healthy toggling every 100 ms: ignored (R&D, LV kept, no Emergency, no SafetyFault); R&D->Run accepted with HV lost at start",
+    "status": "fail"
+   },
+   {
+    "name": "E2a POL-01(b) symbols renamed in_LV/HV_Faulty_FBK and outPLC_LV/HV_Faulty with unchanged hardware alias, old names removed",
+    "status": "fail"
+   },
+   {
+    "name": "E2a POL-01(c) Network10 relays the raw Faulty value: in_LV/HV_Faulty_FBK TRUE -> outPLC_LV/HV_Faulty TRUE, FALSE -> FALSE (in Safe)",
+    "status": "fail"
+   },
+   {
+    "name": "E2a RUN-CONF natural: C2_FBK ON one scan after the command, HV healthy: no Run <= u+99, Run at k+101, not at k+99",
+    "status": "fail"
+   },
+   {
+    "name": "E2a RUN-CONF C2_FBK delayed 400 ms (HV healthy): no Run while C2_FBK OFF; then Run at k+101, not at k+99",
+    "status": "fail"
+   },
+   {
+    "name": "E2a RUN-CONF HV Faulty TRUE for 3000 ms after C2_FBK ON: no Run meanwhile; HV healthy -> Run at k+101, not at k+99",
+    "status": "fail"
+   },
+   {
+    "name": "E2a RUN-CONF drives STO FBK pinned to \"STO active\" (in_STO_DRx_FBK TRUE): Run still confirmed at k+101 (RC-4: STO FBK not required)",
+    "status": "fail"
+   },
+   {
+    "name": "E2a RUN-CONF RC-6 HV Faulty TRUE for 1 scan at k+50 (before Run): count restarts - no Run <= (k+51)+99, Run at (k+51)+101, no Emergency (Q-RC-RUNCONF-01 \"В\")",
+    "status": "fail"
+   },
+   {
+    "name": "E2a RUN-CONF RC-7 (FBK-03) C2_FBK FALSE 1 scan at t_f+1 with the C2 command kept, before Run: Emergency (rule L1 vs in_Estop_PLC), Run never, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a RUN-CONF RC-7 (FBK-03) C2_FBK FALSE 1 scan at t_f+50 with the C2 command kept, before Run: Emergency (rule L1 vs in_Estop_PLC), Run never, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 stages<=1: lifecycle Safe->R&D->Run->green held->R&D->Run->R&D->Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 exactly one status: lifecycle Safe->R&D->Run->green held->R&D->Run->R&D->Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 endpoints: lifecycle Safe->R&D->Run->green held->R&D->Run->R&D->Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 stages<=1: lifecycle with green released 550 ms after press",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 exactly one status: lifecycle with green released 550 ms after press",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 endpoints: lifecycle with green released 550 ms after press",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 stages<=1: lifecycle with green released 800 ms after press",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 exactly one status: lifecycle with green released 800 ms after press",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 endpoints: lifecycle with green released 800 ms after press",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-04 group start before Restart: status Emergency only, no energy, 3000 ms [in_Safety_Run true]",
+    "status": "pass"
+   },
+   {
+    "name": "DIAG [injected-Safe, in_Safety_Run FALSE] E2a E2-04 group start before Restart [in_Safety_Run false] (not reachable on target; outside ID coverage)",
+    "status": "pass"
+   },
+   {
+    "name": "E2a E2-01 StartingRun (HV Healthy not yet present) + fresh green 600 ms: no R&D->Safe actions, LV C1 kept",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 R&D->Safe in progress (C1_FBK held ON) + BOTH 1100 ms after 2100 ms release: no StartingRun",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01/MOD-006 status publication: either all of STS_SAFE/STS_RND/STS_RUN/STS_EMG (D2-B) or none (D2-A derived) - partial publication FAIL",
+    "status": "pass"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE -3 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE -3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE -2 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE -2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE -1 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE -1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +0 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +0 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +1 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +2 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +3 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Estop_PLC TRUE +3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE -3 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE -3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE -2 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE -2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE -1 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE -1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +0 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +0 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +1 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +2 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +3 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_1 FALSE +3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE -3 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE -3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE -2 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE -2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE -1 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE -1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +0 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +0 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +1 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +2 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +3 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_ES_NC_2 FALSE +3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE -3 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE -3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE -2 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE -2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE -1 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE -1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +0 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +0 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +1 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +2 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2a E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +3 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2a EMG6-01 EMGREF: Run-down with C2_FBK held, green released: in_Mentee_EStop TRUE +3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 Safe, LV connector FALSE: no Emergency/fault, BOTH rejected; restoration does not start; new BOTH accepted",
+    "status": "todo"
+   },
+   {
+    "name": "E2b EMG4-03 Safe, HV connector FALSE: no Emergency/fault, BOTH rejected; restoration does not start; new BOTH accepted",
+    "status": "todo"
+   },
+   {
+    "name": "E2b EMG4-03 boundary: LV connector FALSE in u-1 (one scan before Safe->R&D acceptance) -> EMG-003: UP rejected, no Emergency",
+    "status": "pass"
+   },
+   {
+    "name": "E2b EMG4-03 boundary: LV connector FALSE in u+1 (Safe->R&D accepted) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), R&D never confirmed, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 boundary: HV connector FALSE in u-1 (one scan before Safe->R&D acceptance) -> EMG-003: UP rejected, no Emergency",
+    "status": "pass"
+   },
+   {
+    "name": "E2b EMG4-03 boundary: HV connector FALSE in u+1 (Safe->R&D accepted) -> EMGREF-LV: Emergency latched (rule L1 vs in_Estop_PLC), R&D never confirmed, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05a StartingRun, NC1 FALSE (Door true) at c=u+1: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05a StartingRun, NC1 FALSE (Door true) at c=u+50: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05a StartingRun, NC2 FALSE (Door true) at c=u+50: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05a StartingRun, both FALSE (Door true) at c=u+50: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05a StartingRun, both FALSE (Door false) at c=u+50: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05a StartingRun, NC1 FALSE (Door true) at c=r-1: Emergency, rule L vs in_Estop_PLC at c, Run not confirmed, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05a boundary c=r+1 (Run just confirmed), NC1 FALSE -> IL-03: Emergency, rule L vs in_Estop_PLC at c, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02 boundary NC1 FALSE in N=u-1 (UP qualifies in N+1): UP rejected - no C2 ON / STO release, R&D and LV kept, no Emergency; not executed after the cover closes",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02/IL-05a boundary N=c=u (NC1 FALSE in the UP acceptance scan): normative disjunction - (i) UP rejected, R&D, no Emergency, or (ii) Emergency by rule L with EMGREF-RUN; never Run",
+    "status": "fail"
+   },
+   {
+    "name": "E2d IL-02/IL-05a boundary N=c=u (both FALSE in the UP acceptance scan): normative disjunction - (i) UP rejected, R&D, no Emergency, or (ii) Emergency by rule L with EMGREF-RUN; never Run",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05b(1) normal Run->R&D by green, NC1 FALSE at t_a+1: stop continues with unchanged moments, R&D, then R&D kept with the cover open; no Emergency",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05b(1) normal Run->R&D by green, both FALSE at t_a+1: stop continues with unchanged moments, R&D, then R&D kept with the cover open; no Emergency",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05b(1) normal Run->R&D by green, NC2 FALSE at t_a+1000: stop continues with unchanged moments, R&D, then R&D kept with the cover open; no Emergency",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05b(1) normal Run->R&D by green, both FALSE at C2 OFF command+1 (C2_FBK pinned ON 200 ms): stop continues with unchanged moments, R&D, then R&D kept with the cover open; no Emergency",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05b boundary: NC1 FALSE in t_a-1 (before the down is accepted) -> IL-03 Emergency (rule L vs in_Estop_PLC), no normal R&D, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05b(2) Safe->R&D accepted, NC1 FALSE one scan after acceptance: continues to R&D, outputs as without the event, no Emergency",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05b(2) Safe->R&D accepted, both FALSE one scan after acceptance: continues to R&D, outputs as without the event, no Emergency",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05d(1) StartingRun aborted by LV loss (c=u+50), NC1 FALSE at c+100 during the abort -> Emergency (rule L vs in_Estop_PLC in the same phase), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05d(1) StartingRun (HV Faulty TRUE holds it) aborted by green 600 ms, NC1 FALSE 100 ms after the abort -> Emergency (rule L vs in_Estop_PLC in the same phase), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05d(3) steady Run, LV Healthy lost (protective descent, Q-RC-02), NC1 FALSE 100 ms later -> Emergency (rule L vs in_Estop_PLC in the same phase), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-05d(3) steady Run, HV Healthy lost (protective descent, Q-RC-02), NC1 FALSE 100 ms later -> Emergency (rule L vs in_Estop_PLC in the same phase), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-03 steady Run, NC1 FALSE (Door true), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-03 steady Run, NC1 FALSE (Door false), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-03 steady Run, NC1 FALSE (Door false), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-03 steady Run, NC2 FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-03 steady Run, NC2 FALSE (Door true), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-03 steady Run, NC2 FALSE (Door false), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-03 steady Run, NC2 FALSE (Door false), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-03 steady Run, both FALSE (Door true), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-03 steady Run, both FALSE (Door true), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-03 steady Run, both FALSE (Door false), cause removed after 12000 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b IL-03 steady Run, both FALSE (Door false), cause removed after 100 ms: reaction moments by rule L1 vs in_Estop_PLC, latch (EMGREF), Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady -3 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady -3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady -2 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady -2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady -1 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady -1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +0 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +0 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +1 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +2 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +3 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_LV_Connector_Interlock FALSE steady +3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady -3 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady -3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady -2 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady -2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady -1 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady -1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +0 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +0 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +1 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +1 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +2 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +2 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2b E2-01 one stage / one status: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +3 scans vs C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2b EMG4-03 EMGREF: Run-down with C2_FBK held, green released: in_HV_Connector_Interlock FALSE steady +3 scans vs C2_FBK OFF -> Emergency latch, rule L moments, Restart -> only Safe",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-03 Safe with SafetyFault after HLT-01, first press green 1 scan: acknowledges, no transition/Unlock; new BOTH after release 1999 ms rejected, 2000 ms accepted",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-03 Safe with SafetyFault after HLT-01, first press green 600 ms: acknowledges, no transition/Unlock; new BOTH after release 1999 ms rejected, 2000 ms accepted",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-03 Safe with SafetyFault after HLT-01, first press blue 1 scan: acknowledges, no transition/Unlock; new BOTH after release 1999 ms rejected, 2000 ms accepted",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-03 Safe with SafetyFault after HLT-01, first press blue 600 ms: acknowledges, no transition/Unlock; new BOTH after release 1999 ms rejected, 2000 ms accepted",
+    "status": "fail"
+   },
+   {
+    "name": "E2c HLT-03 Safe with SafetyFault after HLT-01, first press BOTH 1100 ms (UP gesture before acknowledgement): acknowledges, no transition/Unlock; new BOTH after release 1999 ms rejected, 2000 ms accepted",
+    "status": "fail"
+   },
+   {
+    "name": "E2c STP-I LV Healthy lost in StartingRun at c=u+1: abort (STO, Discharge, T_DIS, C2 OFF) -> R&D -> R&D->Safe, not Emergency",
+    "status": "fail"
+   },
+   {
+    "name": "E2c STP-I LV Healthy lost in StartingRun at c=u+50: abort (STO, Discharge, T_DIS, C2 OFF) -> R&D -> R&D->Safe, not Emergency",
+    "status": "fail"
+   },
+   {
+    "name": "E2c STP-I LV Healthy lost in StartingRun at c=r-1: abort (STO, Discharge, T_DIS, C2 OFF) -> R&D -> R&D->Safe, not Emergency",
+    "status": "fail"
+   },
+   {
+    "name": "E2c STP-I LV and HV Healthy lost together in StartingRun (c=u+50): LV decides, same abort sequence, not Emergency",
+    "status": "fail"
+   },
+   {
+    "name": "E2c STP-I green 600 ms pressed during the abort (c=u+50, press c+10): not executed - C1 not dropped before C2_FBK OFF",
+    "status": "fail"
+   },
+   {
+    "name": "E2c STP-I BOTH 1100 ms pressed during the abort (c=u+50, press c+10): not executed now or later (launch not resumed)",
+    "status": "fail"
+   },
+   {
+    "name": "E2c STP-I(4) LV lost at c=u+50 and restored at c+100 (before R&D): still abort -> R&D -> chained R&D->Safe (Q-RC-16 \"А\")",
+    "status": "fail"
+   },
+   {
+    "name": "E2c STP-I boundary c=u-1 (LV lost one scan before acceptance) -> HLT-01: UP not executed (no C2 ON / STO release), R&D->Safe, not Emergency",
+    "status": "fail"
+   },
+   {
+    "name": "E2d REL-PERMIT Safe, buttons released > 2 s, NC1 open 300 ms then closed, BOTH 1 s 1700 ms after closing -> accepted (Q-REL-AFTER-PERMIT \"А\")",
+    "status": "fail"
+   },
+   {
+    "name": "E2d REL-PERMIT Safe, buttons released > 2 s, NC2 open 300 ms then closed, BOTH 1 s 1700 ms after closing -> accepted (Q-REL-AFTER-PERMIT \"А\")",
+    "status": "fail"
+   },
+   {
+    "name": "E2d REL-PERMIT Safe, buttons released > 2 s, both open 300 ms then closed, BOTH 1 s 1700 ms after closing -> accepted (Q-REL-AFTER-PERMIT \"А\")",
+    "status": "fail"
+   },
+   {
+    "name": "E2d REL-PERMIT Safe, blue tap 100 ms, release 100 ms, NC1 open 300 ms, closed 1700 ms: buttons released 2100 ms at the BOTH press -> accepted",
+    "status": "fail"
+   },
+   {
+    "name": "E2d REL-PERMIT boundary by buttons: blue tap, release 100 + NC1 open 300 + closed 1599 = 1999 ms at the BOTH press -> rejected (item 9/11)",
+    "status": "pass"
+   },
+   {
+    "name": "E2d REL-PERMIT control without cover episode: blue tap, release 2100 ms -> accepted",
+    "status": "pass"
+   },
+   {
+    "name": "E2d REL-01(b) Safe, buttons released > 2 s, LV connector FALSE 300 ms then restored, BOTH 1 s 1700 ms later -> accepted, no fault (Q-REL-AFTER-PERMIT \"А\", EMG-003)",
+    "status": "pass"
+   },
+   {
+    "name": "E2d REL-01(b) Safe, buttons released > 2 s, HV connector FALSE 300 ms then restored, BOTH 1 s 1700 ms later -> accepted, no fault (Q-REL-AFTER-PERMIT \"А\", EMG-003)",
+    "status": "pass"
+   },
+   {
+    "name": "E2d REL-01(b) Safe, buttons released > 2 s, both connector FALSE 300 ms then restored, BOTH 1 s 1700 ms later -> accepted, no fault (Q-REL-AFTER-PERMIT \"А\", EMG-003)",
+    "status": "pass"
+   },
+   {
+    "name": "E2d REL-01(d) boundary by buttons with a LV connector episode: blue tap, release 100 + connector 300 + 1599 = 1999 ms at the BOTH press -> rejected without fault",
+    "status": "pass"
+   },
+   {
+    "name": "E2d REL-01(d) boundary by buttons with a HV connector episode: blue tap, release 100 + connector 300 + 1599 = 1999 ms at the BOTH press -> rejected without fault",
+    "status": "pass"
+   },
+   {
+    "name": "E2d REL-01(d) boundary by buttons with a LV connector episode: blue tap, release 100 + connector 300 + 1601 = 2001 ms at the BOTH press -> accepted",
+    "status": "pass"
+   },
+   {
+    "name": "E2d REL-01(d) boundary by buttons with a HV connector episode: blue tap, release 100 + connector 300 + 1601 = 2001 ms at the BOTH press -> accepted",
+    "status": "pass"
+   },
+   {
+    "name": "DIAG observation E2d REL-01(d): boundary 2000 ms by buttons with an LV connector episode (q, TON semantics)",
+    "status": "pass"
+   },
+   {
+    "name": "E2d REL-01(e) Safe, LV connector FALSE during the BOTH qualification (press+800..press+1300 of a 2000 ms press): rejected, not executed after restoration; new attempt after 2.1 s release -> accepted",
+    "status": "fail"
+   },
+   {
+    "name": "E2d REL-01(e) Safe, HV connector FALSE during the BOTH qualification (press+800..press+1300 of a 2000 ms press): rejected, not executed after restoration; new attempt after 2.1 s release -> accepted",
+    "status": "fail"
+   },
+   {
+    "name": "E2d REL-01(c) R&D, buttons released > 2 s, NC1 open 300 ms then closed, BOTH 1 s 1700 ms later -> R&D->Run accepted (Q-REL-AFTER-PERMIT \"А\")",
+    "status": "fail"
+   },
+   {
+    "name": "E2d REL-01(c) R&D, buttons released > 2 s, NC2 open 300 ms then closed, BOTH 1 s 1700 ms later -> R&D->Run accepted (Q-REL-AFTER-PERMIT \"А\")",
+    "status": "fail"
+   },
+   {
+    "name": "E2d REL-01(c) R&D, buttons released > 2 s, both open 300 ms then closed, BOTH 1 s 1700 ms later -> R&D->Run accepted (Q-REL-AFTER-PERMIT \"А\")",
+    "status": "fail"
+   },
+   {
+    "name": "E2d REL-01(c)(d) R&D boundary by buttons with a cover episode: blue tap, release 100 + NC1 300 + 1599 = 1999 ms -> R&D->Run rejected",
+    "status": "fail"
+   },
+   {
+    "name": "E2d UNL-04 Safe, cover NC1 open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+    "status": "fail"
+   },
+   {
+    "name": "E2d UNL-04 Safe, cover NC2 open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+    "status": "fail"
+   },
+   {
+    "name": "E2d UNL-04 Safe, cover both open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+    "status": "fail"
+   },
+   {
+    "name": "E2d UNL-04 Safe, cover closed (control), Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+    "status": "pass"
+   },
+   {
+    "name": "E2d UNL-04 Safe, cover NC1 open: blue held, green pressed 1000 ms later for 300 ms -> Unlock FALSE in every scan with green pressed",
+    "status": "fail"
+   },
+   {
+    "name": "E2d UNL-04 Safe, cover closed (control): blue held, green pressed 1000 ms later for 300 ms -> Unlock FALSE in every scan with green pressed",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO composed LV254 exact manifest,247 historical native survivors, reviewed relative moves and SGVL delta",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO composed LV254 critical STO contacts and explicit canonical graph layers",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO composed LV254 retained native port identities with only approved contact changes",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO historical deterministic manifest remains exact; LV254 identities source bound separately",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO additive observation contract preserves default map and rejects rebinding/unknown writers",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO union closure contains actual complete old STO aggregates, RS, status and typed requests",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical green/HVHealthyfalse early N+2 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical green/HVHealthytrue early N+2 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical blue/HVHealthyfalse early N+2 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical blue/HVHealthytrue early N+2 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical green/HVHealthyfalse early N+2 fixed2",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical green/HVHealthytrue early N+2 fixed2",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical blue/HVHealthyfalse early N+2 fixed2",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical blue/HVHealthytrue early N+2 fixed2",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical green/HVHealthyfalse early N+2 fixed5",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical green/HVHealthytrue early N+2 fixed5",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical blue/HVHealthyfalse early N+2 fixed5",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical blue/HVHealthytrue early N+2 fixed5",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical green/HVHealthyfalse early N+2 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical green/HVHealthytrue early N+2 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical blue/HVHealthyfalse early N+2 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical blue/HVHealthytrue early N+2 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/ordinary healthy pending Set positive fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/ordinary first fault in_ES_NC_1 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/ordinary first fault in_ES_NC_2 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/ordinary first fault in_InterLock_NC_1 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/ordinary first fault in_InterLock_NC_2 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/ordinary first fault in_LV_Connector_Interlock fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/ordinary first fault in_HV_Connector_Interlock fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/ordinary first fault in_Estop_PLC fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/ordinary first fault in_Mentee_EStop fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/ordinary single-sample PLC pulse and raw restore fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/ordinary single-sample PLC pulse and raw restore fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/ordinary latched output not forcibly reset by new Set guard fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/completion healthy pending Set positive fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/completion first fault in_ES_NC_1 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/completion first fault in_ES_NC_2 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/completion first fault in_InterLock_NC_1 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/completion first fault in_InterLock_NC_2 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/completion first fault in_LV_Connector_Interlock fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/completion first fault in_HV_Connector_Interlock fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/completion first fault in_Estop_PLC fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/completion first fault in_Mentee_EStop fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/completion single-sample PLC pulse and raw restore fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/completion single-sample PLC pulse and raw restore fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/completion latched output not forcibly reset by new Set guard fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/ordinary healthy pending Set positive fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/ordinary first fault in_ES_NC_1 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/ordinary first fault in_ES_NC_2 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/ordinary first fault in_InterLock_NC_1 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/ordinary first fault in_InterLock_NC_2 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/ordinary first fault in_LV_Connector_Interlock fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/ordinary first fault in_HV_Connector_Interlock fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/ordinary first fault in_Estop_PLC fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/ordinary first fault in_Mentee_EStop fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/ordinary single-sample PLC pulse and raw restore fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/ordinary single-sample PLC pulse and raw restore fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/ordinary latched output not forcibly reset by new Set guard fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/completion healthy pending Set positive fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/completion first fault in_ES_NC_1 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/completion first fault in_ES_NC_2 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/completion first fault in_InterLock_NC_1 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/completion first fault in_InterLock_NC_2 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/completion first fault in_LV_Connector_Interlock fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/completion first fault in_HV_Connector_Interlock fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/completion first fault in_Estop_PLC fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/completion first fault in_Mentee_EStop fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/completion single-sample PLC pulse and raw restore fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/completion single-sample PLC pulse and raw restore fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/completion latched output not forcibly reset by new Set guard fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1 Step4 timed Reset / Healthyfalse fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1 Step4 timed Reset / Healthytrue fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2 Step4 timed Reset / Healthyfalse fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2 Step4 timed Reset / Healthytrue fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical accepted SU then current fault in_ES_NC_1 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical accepted SU then current fault in_ES_NC_2 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical accepted SU then current fault in_InterLock_NC_1 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical accepted SU then current fault in_InterLock_NC_2 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical accepted SU then current fault in_LV_Connector_Interlock fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical accepted SU then current fault in_HV_Connector_Interlock fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical accepted SU then current fault in_Estop_PLC fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical accepted SU then current fault in_Mentee_EStop fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical accepted SU pulse before N+2 raw restore fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO physical accepted SU pulse before N+2 raw restore fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/ordinary accepted manual Restart healthy positive fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1/completion accepted manual Restart healthy positive fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/ordinary accepted manual Restart healthy positive fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2/completion accepted manual Restart healthy positive fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1 actual Reset/Set collision remains Reset dominant fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2 actual Reset/Set collision remains Reset dominant fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive1 Step1 existing Reset waveform fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "EARLYSTO drive2 Step1 existing Reset waveform fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts00 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts00 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts00 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts00 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts01 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts01 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts01 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts01 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts10 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts10 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts10 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts10 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts11 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts11 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts11 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first masterContacts11 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts00 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts00 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts00 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts00 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts01 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts01 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts01 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts01 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts10 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts10 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts10 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts10 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts11 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts11 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts11 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second masterContacts11 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts00 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts00 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts00 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts00 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts01 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts01 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts01 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts01 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts10 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts10 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts10 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts10 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts11 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts11 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts11 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both masterContacts11 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts00 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts00 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts00 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts00 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts01 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts01 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts01 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts01 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts10 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts10 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts10 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts10 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts11 raw00 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts11 raw01 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts11 raw10 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR none masterContacts11 raw11 slaveOwnIgnored",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR inactive master ignores independently activated slave own field",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first-only ignores unbound inactive second channel",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second-only ignores unbound inactive first channel",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR both active slave missing",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR first active master missing",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR second active slave missing",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR generic AND enum unsupported",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR unknown pair enum unsupported",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR two-channel discrepancy lifecycle unsupported",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR actual WINDOW master is exact first-only; remaining metadata is genuinely unbound",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR actual WINDOW Both-mode mutation plus unbound slave is rejected, not treated as first-only",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR intended first-only helper control uses existing off and Restart sources with no added slave",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR actual main in_ES_NC_2 single-sample fault/recovery requires new manual Restart",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR actual main in_Mentee_EStop single-sample fault/recovery requires new manual Restart",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR actual main in_ES_NC_2 bad input and held Restart at entry",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR actual main in_Mentee_EStop bad input and held Restart at entry",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR actual PLC producer95/main ESTOP21 first-fault latency is preserved",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR shared closure demands actual main slave in_ES_NC_2 despite own inactive field",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR shared closure demands actual main slave in_Mentee_EStop despite own inactive field",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR missing main effective slave binding in_ES_NC_2 fails before first execution",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR missing main effective slave binding in_Mentee_EStop fails before first execution",
+    "status": "pass"
+   },
+   {
+    "name": "R3PAIR closure already rejects a missing helper master source as a paired negative control",
+    "status": "pass"
+   },
+   {
+    "name": "F1-green-qualified-lateblue500-cannot-cancel",
+    "status": "pass"
+   },
+   {
+    "name": "F1-green-qualified-lateblue600-cannot-cancel",
+    "status": "pass"
+   },
+   {
+    "name": "F1-blue-qualified-lategreen500-cannot-become-down",
+    "status": "pass"
+   },
+   {
+    "name": "F1-blue-qualified-lategreen600-cannot-become-down",
+    "status": "pass"
+   },
+   {
+    "name": "F1-real-lock-producer-rejects-green-and-doesnotqueue",
+    "status": "pass"
+   },
+   {
+    "name": "F1-green-qualified-lateblue501-cannot-cancel",
+    "status": "pass"
+   },
+   {
+    "name": "F1-green-lateblue499-before-single-no-command",
+    "status": "pass"
+   },
+   {
+    "name": "F1-blue-qualified-lategreen499-cannot-become-down",
+    "status": "pass"
+   },
+   {
+    "name": "F1-blue-qualified-lategreen501-cannot-become-down",
+    "status": "pass"
+   },
+   {
+    "name": "HV LV254 sole Set path and unchanged aggregate sources, exact reviewed223 order",
+    "status": "pass"
+   },
+   {
+    "name": "HV current SAL: permission truth table and already-latched HV without Reset",
+    "status": "pass"
+   },
+   {
+    "name": "HV current SAL: real legacy/R&D/third-route stale aggregate paired first-fault scans",
+    "status": "pass"
+   },
+   {
+    "name": "HV LV254 SGVL declarations and writers unchanged, composed target-usage changes",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 paired LV/legacy-Network5/Menteefalse: first scan after stale request",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 paired LV/legacy-Network5/Menteetrue: first scan after stale request",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 paired LV/Step12/Menteefalse: first scan after stale request",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 paired LV/Step12/Menteetrue: first scan after stale request",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 paired HV/legacy-Network5/Menteefalse: first scan after stale request",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 paired HV/legacy-Network5/Menteetrue: first scan after stale request",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 paired HV/RnD-Network12/Menteefalse: first scan after stale request",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 paired HV/RnD-Network12/Menteetrue: first scan after stale request",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 LV: already latched output is preserved without Reset",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 LV: all previous eight permission controls remain effective",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 LV: third gate input has typed native alias binding and inverted contact",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 HV: already latched output is preserved without Reset",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 HV: all previous eight permission controls remain effective",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 HV: third gate input has typed native alias binding and inverted contact",
+    "status": "pass"
+   },
+   {
+    "name": "MENTEE05 original Safe/Run protections, diagnostic alias and inactive main EStop port remain unchanged",
+    "status": "pass"
+   },
+   {
+    "name": "B1 V2 physical aliases and required wires preserved through exact logical consumer delta",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects foreign inherited default namespace before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects foreign single-quoted default namespace before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects cleared inherited namespace before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects foreign declared prefix before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects undeclared element prefix before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects foreign SGVL child namespace before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects bare global ref before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects alias GUID as global before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects unknown global GUID, correct basename before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects wrong qualified path before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects missing SGVL usage before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects nonexistent port moniker before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects reversed direction before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects missing relationship wrapper before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 rejects duplicate wire pair before any functional execution",
+    "status": "pass"
+   },
+   {
+    "name": "B1 conflicting producers fail closed for two aliases, wire+alias and global+alias",
+    "status": "pass"
+   },
+   {
+    "name": "B1 serialized input-side and output-side single wires normalize identically",
+    "status": "pass"
+   },
+   {
+    "name": "B1 LV254 SGVL declarations and all source indices unchanged through exact composed target delta",
+    "status": "pass"
+   },
+   {
+    "name": "PLC V2 native producer96, preserved contacts and exact whole graph fanout",
+    "status": "pass"
+   },
+   {
+    "name": "NATIVE source whole singleton grammar and zero cross-network graphical wires",
+    "status": "pass"
+   },
+   {
+    "name": "NATIVE exact10singleton repairs retire only54container IDs preserving usage identities",
+    "status": "pass"
+   },
+   {
+    "name": "NATIVE all10symbols and source/collection/usages reject unique empty duplicate containers",
+    "status": "pass"
+   },
+   {
+    "name": "NATIVE full-network scan rejects a reintroduced cross-network wire",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed1 paired healthy positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed1 one-sample PLC pulse and first/later raw recovery",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed1 held fault later recovery then real manual Restart positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed1 already latched output receives no forced Reset from Set gate",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed2 paired healthy positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed2 one-sample PLC pulse and first/later raw recovery",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed2 held fault later recovery then real manual Restart positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed2 already latched output receives no forced Reset from Set gate",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed5 paired healthy positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed5 one-sample PLC pulse and first/later raw recovery",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed5 held fault later recovery then real manual Restart positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed5 already latched output receives no forced Reset from Set gate",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed10 paired healthy positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed10 one-sample PLC pulse and first/later raw recovery",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed10 held fault later recovery then real manual Restart positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed10 already latched output receives no forced Reset from Set gate",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed1 paired healthy positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed1 one-sample PLC pulse and first/later raw recovery",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed1 held fault later recovery then real manual Restart positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed1 already latched output receives no forced Reset from Set gate",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed2 paired healthy positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed2 one-sample PLC pulse and first/later raw recovery",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed2 held fault later recovery then real manual Restart positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed2 already latched output receives no forced Reset from Set gate",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed5 paired healthy positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed5 one-sample PLC pulse and first/later raw recovery",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed5 held fault later recovery then real manual Restart positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed5 already latched output receives no forced Reset from Set gate",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed10 paired healthy positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed10 one-sample PLC pulse and first/later raw recovery",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed10 held fault later recovery then real manual Restart positive",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed10 already latched output receives no forced Reset from Set gate",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/legacy/fixed1 independent actual Network5 paired healthy",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/legacy/fixed1 independent actual Network5 PLC pulse/recovery",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed1 constant-FALSE False operand is neutral; PLC alone drives producer, latched EStop needs manual Restart",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/legacy/fixed10 independent actual Network5 paired healthy",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/legacy/fixed10 independent actual Network5 PLC pulse/recovery",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE LV/primary/fixed10 constant-FALSE False operand is neutral; PLC alone drives producer, latched EStop needs manual Restart",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/legacy/fixed1 independent actual Network5 paired healthy",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/legacy/fixed1 independent actual Network5 PLC pulse/recovery",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed1 constant-FALSE False operand is neutral; PLC alone drives producer, latched EStop needs manual Restart",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/legacy/fixed10 independent actual Network5 paired healthy",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/legacy/fixed10 independent actual Network5 PLC pulse/recovery",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE HV/primary/fixed10 constant-FALSE False operand is neutral; PLC alone drives producer, latched EStop needs manual Restart",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE existing PLCproducer actual role PLCfalse/Falsefalse",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE existing PLCproducer actual role PLCfalse/Falsetrue",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE existing PLCproducer actual role PLCtrue/Falsefalse",
+    "status": "pass"
+   },
+   {
+    "name": "PLCPULSE existing PLCproducer actual role PLCtrue/Falsetrue",
+    "status": "pass"
+   },
+   {
+    "name": "RNDCOMPACT LV254 exact order manifest and native primitive templates",
+    "status": "pass"
+   },
+   {
+    "name": "RNDCOMPACT LV254 retained native ports and seven surviving historical additions",
+    "status": "pass"
+   },
+   {
+    "name": "RNDCOMPACT V2 exact canonical graph delta and retained early STO integration",
+    "status": "pass"
+   },
+   {
+    "name": "RNDCOMPACT V2 sole Safe TON3 retirement; all retained timer values and identities exact",
+    "status": "pass"
+   },
+   {
+    "name": "RNDCOMPACT V2 all SGVL declarations and source indices exact; only eleven target changes",
+    "status": "pass"
+   },
+   {
+    "name": "current SAL: healthy LV completion later-off reaches Safe and real fresh RnD without reenergization",
+    "status": "pass"
+   },
+   {
+    "name": "current SAL: healthy LV completion already-off reaches Safe and real fresh RnD without reenergization",
+    "status": "pass"
+   },
+   {
+    "name": "current SAL: ordinary Step2 startup preserved, generic discharge=false",
+    "status": "pass"
+   },
+   {
+    "name": "current SAL: ordinary Step2 startup preserved, generic discharge=true",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green window249 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green window250 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green window251 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green window248 fixed2",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green window250 fixed2",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green window252 fixed2",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green window245 fixed5",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green window250 fixed5",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green window255 fixed5",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green window240 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green window250 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green window260 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green single threshold fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green late300 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green late500 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green late600 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green primary swap without sampled both-off fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green piano then held primary without release fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green chord flicker requires fresh1000 and never degrades fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green short neutral cannot rearm fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green full release permits a fresh single after blue cycle fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue window249 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue window250 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue window251 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue window248 fixed2",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue window250 fixed2",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue window252 fixed2",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue window245 fixed5",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue window250 fixed5",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue window255 fixed5",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue window240 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue window250 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue window260 fixed10",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue single threshold fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue late300 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue late500 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue late600 fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue primary swap without sampled both-off fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue piano then held primary without release fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue chord flicker requires fresh1000 and never degrades fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue short neutral cannot rearm fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS blue full release permits a fresh single after blue cycle fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS held-at-RnD-entry green fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS held-at-RnD-entry blue fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green request retained after release until explicit phase exit fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS up request retained after release until explicit phase exit fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS reentry with held chord requires new release fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS safety inhibit in_ES_NC_1 blocks new physical request fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS safety inhibit in_Estop_PLC blocks new physical request fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS safety inhibit in_Mentee_EStop blocks new physical request fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS Doorfalse energy requires both NC fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS Doortrue energy requires both NC fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS Doorfalse missingin_InterLock_NC_1 never energizes HV fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS Doorfalse missingin_InterLock_NC_2 never energizes HV fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS Doortrue missingin_InterLock_NC_1 never energizes HV fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS Doortrue missingin_InterLock_NC_2 never energizes HV fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS green consumes qualified blue authorization without automatic resumption fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS qualified blue plus in_ES_NC_1 raw restoration never unlocks without Restart fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS qualified blue plus in_Estop_PLC raw restoration never unlocks without Restart fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS accepted green cleared by actual NC1 inhibit fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS accepted up cleared by actual NC1 inhibit fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS fresh green chord249 after accepted blue and full2000 release fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS fresh green chord250 after accepted blue and full2000 release fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS fresh green chord251 after accepted blue and full2000 release fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS fresh blue chord249 after accepted blue and full2000 release fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS fresh blue chord250 after accepted blue and full2000 release fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS fresh blue chord251 after accepted blue and full2000 release fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS new green before full1999 release remains invalid fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "RNDPHYS new blue before full1999 release remains invalid fixed1",
+    "status": "pass"
+   },
+   {
+    "name": "SAFEINPUT given standard PLC source retains all six native first-slot stop guards",
+    "status": "pass"
+   },
+   {
+    "name": "SAFEINPUT all three conjunctions retain exact signed source guards and PLC stop priority",
+    "status": "pass"
+   },
+   {
+    "name": "SAFEINPUT nonfirst filter3, deactivated stop and contact-only changes are rejected",
+    "status": "pass"
+   },
+   {
+    "name": "SR-OBSERVER interior one-sample pulse cannot be hidden by endpoint FALSE",
+    "status": "pass"
+   },
+   {
+    "name": "SR-SB-QUAL fresh Safe blue minimum500 and actual grant",
+    "status": "pass"
+   },
+   {
+    "name": "SR-SB-ACCESS connector absence preserves Safe access control",
+    "status": "pass"
+   },
+   {
+    "name": "SR-SB-DOOR original Safe Door reset control",
+    "status": "pass"
+   },
+   {
+    "name": "SR-SB-GREEN qualified blue final green suppression control",
+    "status": "pass"
+   },
+   {
+    "name": "SR-SC-VALID-green both250 availability and minimum1000",
+    "status": "pass"
+   },
+   {
+    "name": "SR-SC-VALID-blue both250 availability and minimum1000",
+    "status": "pass"
+   },
+   {
+    "name": "SR-SC-LATE-green second300 never legalizes and recovery positive",
+    "status": "pass"
+   },
+   {
+    "name": "SR-SC-LATE-blue second300 never legalizes and recovery positive",
+    "status": "pass"
+   },
+   {
+    "name": "SR-SC-GUARD-PRESERVE qualify not-ready then release cannot queue launch",
+    "status": "pass"
+   },
+   {
+    "name": "SR-RG-QUAL actual Run green500 branch and fanout availability",
+    "status": "pass"
+   },
+   {
+    "name": "SR-RG-INVALID-green-remain-green failed chord cannot degrade",
+    "status": "pass"
+   },
+   {
+    "name": "SR-RG-INVALID-green-remain-blue failed chord cannot degrade",
+    "status": "pass"
+   },
+   {
+    "name": "SR-RG-INVALID-blue-remain-green failed chord cannot degrade",
+    "status": "pass"
+   },
+   {
+    "name": "SR-RG-INVALID-blue-remain-blue failed chord cannot degrade",
+    "status": "pass"
+   },
+   {
+    "name": "LV LV254 sole Set path and original aggregate sources, reviewed222 order",
+    "status": "pass"
+   },
+   {
+    "name": "LV current SAL: permission truth table and preserved already-latched LV",
+    "status": "pass"
+   },
+   {
+    "name": "LV current SAL: paired real producer prehistory denies stale Set on first fault scan",
+    "status": "pass"
+   },
+   {
+    "name": "Current SAL TON adapter preserves configured millisecond boundaries at dt1",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 Safe: healthy actual grant producer remains available",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 Safe/NC1-held: fault then raw recovery without Restart",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 Safe/PLC-held: fault then raw recovery without Restart",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 Safe/PLC-single-sample: fault then raw recovery without Restart",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 R&D: healthy actual grant producer remains available",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 R&D/NC1-held: fault then raw recovery without Restart",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 R&D/PLC-held: fault then raw recovery without Restart",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 R&D/PLC-single-sample: fault then raw recovery without Restart",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluefalse/greenfalse/EStopfalse/PLCfalse",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluefalse/greenfalse/EStopfalse/PLCtrue",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluefalse/greenfalse/EStoptrue/PLCfalse",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluefalse/greenfalse/EStoptrue/PLCtrue",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluefalse/greentrue/EStopfalse/PLCfalse",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluefalse/greentrue/EStopfalse/PLCtrue",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluefalse/greentrue/EStoptrue/PLCfalse",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluefalse/greentrue/EStoptrue/PLCtrue",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluetrue/greenfalse/EStopfalse/PLCfalse",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluetrue/greenfalse/EStopfalse/PLCtrue",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluetrue/greenfalse/EStoptrue/PLCfalse",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluetrue/greenfalse/EStoptrue/PLCtrue",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluetrue/greentrue/EStopfalse/PLCfalse",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluetrue/greentrue/EStopfalse/PLCtrue",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluetrue/greentrue/EStoptrue/PLCfalse",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 component bluetrue/greentrue/EStoptrue/PLCtrue",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 final component does not acquire an energy connector/InterLock access ban",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 existing Door solenoid consumers and EStop configuration are preserved",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 global permission is a resolved SGVL reference with usage index",
+    "status": "pass"
+   },
+   {
+    "name": "UNLOCK07 current PLC stop uses native inverted alias usage, not a fake global",
+    "status": "pass"
+   },
+   {
+    "name": "CVR LV254 sole final writer254, exact composed order manifest, timers and physical aliases",
+    "status": "pass"
+   },
+   {
+    "name": "CVR current SAL: eight final gate combinations use the actual parsed block",
+    "status": "pass"
+   },
+   {
+    "name": "CVR current SAL: reset dominates a concurrent Set and clears stale permission",
+    "status": "pass"
+   },
+   {
+    "name": "CVR approved Safe blue500 qualification, original grant conditions, release clears",
+    "status": "pass"
+   },
+   {
+    "name": "CVR current SAL: actual R&D TON must expire again after blue interruption",
+    "status": "pass"
+   },
+   {
+    "name": "CVR current SAL: full selected chain cannot bypass final held-blue/green gate",
+    "status": "pass"
+   },
+   {
+    "name": "V2 DELTA negative: unlisted wire bypass rejected",
+    "status": "pass"
+   },
+   {
+    "name": "V2 DELTA negative: native retained port ID mutation rejected",
+    "status": "pass"
+   },
+   {
+    "name": "V2 DELTA negative: early STO contact inversion rejected",
+    "status": "pass"
+   },
+   {
+    "name": "V2 DELTA negative: unexpected timer value rejected",
+    "status": "pass"
+   },
+   {
+    "name": "V2 DELTA negative: moved And15 after Safe publisher rejected",
+    "status": "pass"
+   },
+   {
+    "name": "V2 DELTA negative: output alias source mapping mutation rejected",
+    "status": "pass"
+   }
+  ]
+ }
+}

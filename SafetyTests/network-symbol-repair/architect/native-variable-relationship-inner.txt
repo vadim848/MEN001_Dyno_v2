@@ -1,0 +1,66 @@
+SafetyApplicationHasVariablesSerializer::InternalTryCreateInstance RVA 498940
+0000 ldnull 
+0001 stloc.0 
+0002 ldarg.1 
+0003 callvirt get_Result
+0008 callvirt get_Failed
+000D brtrue 134
+0012 ldarg.2 
+0013 callvirt get_EOF
+0018 brtrue.s 126
+001A ldarg.2 
+001B callvirt get_NodeType
+0020 ldc.i4.1 
+0021 bne.un.s 117
+0023 ldarg.2 
+0024 callvirt get_LocalName
+0029 stloc.1 
+002A ldarg.s 4
+002C brtrue.s 27
+002E ldloc.1 
+002F ldarg.0 
+0030 callvirt get_XmlTagName
+0035 ldc.i4.0 
+0036 call Compare
+003B brtrue.s 12
+003D ldarg.0 
+003E ldarg.1 
+003F ldarg.2 
+0040 ldarg.3 
+0041 callvirt CreateInstance
+0046 stloc.0 
+0047 br.s 79
+0049 ldarg.0 
+004A ldfld SafetyApplicationHasVariablesSerializer::derivedClasses
+004F brtrue.s 13
+0051 ldarg.0 
+0052 ldarg.1 
+0053 ldarg.3 
+0054 callvirt get_DomainDataDirectory
+0059 call ConstructDerivedClassesLookupTable
+005E ldnull 
+005F stloc.2 
+0060 ldarg.0 
+0061 ldfld SafetyApplicationHasVariablesSerializer::derivedClasses
+0066 ldloc.1 
+0067 ldloca.s 2
+0069 callvirt TryGetValue
+006E brfalse.s 40
+0070 ldloc.2 
+0071 ldnull 
+0072 call op_Inequality
+0077 brfalse.s 31
+0079 ldarg.1 
+007A callvirt get_Directory
+007F ldloc.2 
+0080 callvirt get_Id
+0085 callvirt GetSerializer
+008A isinst TypeDefinition
+008F ldarg.1 
+0090 ldarg.2 
+0091 ldarg.3 
+0092 callvirt CreateInstance
+0097 stloc.0 
+0098 ldloc.0 
+0099 ret 
+

@@ -1,0 +1,11 @@
+HV base            pre=1 SU@16519 reqOFF@16520 (reqOFF-a=1) end req=0 S_RnD
+HV base rejected   pre=1 SU@-1 reqOFF@-1 (-) end req=1 S_RnD
+HV M FBOr5.OrIn2   pre=1 SU@16519 reqOFF@-1 (-) end req=1 S_RnD
+LV base            pre=1 g2@13517 reqOFF@13518 (reqOFF-a=1)
+LV M FBOr1.OrIn2   pre=1 g2@13517 reqOFF@-1 (-)
+BOOT base          FBK ON Restart -> none/EMG; FBK OFF Restart -> S1/SAFE
+BOOT M Boot.AndIn1 FBK ON Restart -> S1/SAFE; FBK OFF Restart -> S1/SAFE
+BOOT M FBAnd1.AndIn3 FBK ON Restart -> S1/SAFE; FBK OFF Restart -> S1/SAFE
+BYP base           R&D Bypass 3 s: C2=0
+BYP M FBAnd4.AndIn5 R&D Bypass 3 s: C2=1
+Note: HV base end state S_RnD is measured ~1300 ms after acceptance; Run is reached at acceptance+600 after the 1100 ms gesture (debug run: SU@999, Run@1601) - not a defect.

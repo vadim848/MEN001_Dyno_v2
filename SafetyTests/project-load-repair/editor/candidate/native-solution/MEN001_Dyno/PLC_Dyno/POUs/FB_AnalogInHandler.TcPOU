@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_AnalogInHandler" Id="{e9958b18-b370-47a9-bc59-12b8046c5564}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_AnalogInHandler
+VAR_IN_OUT
+    stAnalogIn      : ST_AnalogInData;  // Shared with GVL_AnalogIn
+END_VAR
+
+VAR
+    //--- EL3702 PDO inputs — oversampling x5 per channel ---
+    // Each sample is a signed INT [-32768 to 32767]
+    // AT %I* — linked in XAE instance tree to EL3702 PDO channels
+    nCh1_S1     AT %I* : INT;   // Ch1 sample 1
+    nCh1_S2     AT %I* : INT;   // Ch1 sample 2
+    nCh1_S3     AT %I* : INT;   // Ch1 sample 3
+    nCh1_S4     AT %I* : INT;   // Ch1 sample 4
+    nCh1_S5     AT %I* : INT;   // Ch1 sample 5
+
+    nCh2_S1     AT %I* : INT;   // Ch2 sample 1
+    nCh2_S2     AT %I* : INT;   // Ch2 sample 2
+    nCh2_S3     AT %I* : INT;   // Ch2 sample 3
+    nCh2_S4     AT %I* : INT;   // Ch2 sample 4
+    nCh2_S5     AT %I* : INT;   // Ch2 sample 5
+
+    //--- Internal ---
+    fCh1_Sum    : LREAL;
+    fCh2_Sum    : LREAL;
+    fScale      : LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//----------------------------------------------------------------------
+// STORE RAW SAMPLES INTO STRUCT
+//----------------------------------------------------------------------
+stAnalogIn.nCh1_Sample[1] := nCh1_S1;
+stAnalogIn.nCh1_Sample[2] := nCh1_S2;
+stAnalogIn.nCh1_Sample[3] := nCh1_S3;
+stAnalogIn.nCh1_Sample[4] := nCh1_S4;
+stAnalogIn.nCh1_Sample[5] := nCh1_S5;
+
+stAnalogIn.nCh2_Sample[1] := nCh2_S1;
+stAnalogIn.nCh2_Sample[2] := nCh2_S2;
+stAnalogIn.nCh2_Sample[3] := nCh2_S3;
+stAnalogIn.nCh2_Sample[4] := nCh2_S4;
+stAnalogIn.nCh2_Sample[5] := nCh2_S5;
+
+//----------------------------------------------------------------------
+// OVERSAMPLING PROCESSING — average 5 samples per channel
+// Scale: INT [-32768..32767] → voltage [-fFullScale..+fFullScale]
+// Formula: V = (avg_raw / 32767.0) * fFullScale
+//----------------------------------------------------------------------
+fScale := stAnalogIn.fFullScale / 32767.0;
+
+fCh1_Sum := INT_TO_LREAL(nCh1_S1)
+           + INT_TO_LREAL(nCh1_S2)
+           + INT_TO_LREAL(nCh1_S3)
+           + INT_TO_LREAL(nCh1_S4)
+           + INT_TO_LREAL(nCh1_S5);
+
+fCh2_Sum := INT_TO_LREAL(nCh2_S1)
+           + INT_TO_LREAL(nCh2_S2)
+           + INT_TO_LREAL(nCh2_S3)
+           + INT_TO_LREAL(nCh2_S4)
+           + INT_TO_LREAL(nCh2_S5);
+
+stAnalogIn.fCh1_Voltage := (fCh1_Sum / 5.0) * fScale;
+stAnalogIn.fCh2_Voltage := (fCh2_Sum / 5.0) * fScale;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

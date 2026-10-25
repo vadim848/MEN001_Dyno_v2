@@ -1,0 +1,269 @@
+Variable::ValidateVariableUsages RVA 71112
+0000 ldarg.0 
+0001 call GetDisplayName
+0006 stloc.0 
+0007 ldarg.0 
+0008 callvirt get_SafetyApplication
+000D brfalse 449
+0012 ldarg.0 
+0013 callvirt get_SafetyApplication
+0018 callvirt get_IsFileExtensionSalCallback
+001D callvirt Invoke
+0022 brtrue 428
+0027 ldarg.0 
+0028 callvirt get_SourceUsages
+002D brfalse.s 31
+002F ldarg.0 
+0030 callvirt get_SourceUsages
+0035 callvirt get_Usages
+003A brfalse.s 18
+003C ldarg.0 
+003D callvirt get_SourceUsages
+0042 callvirt get_Usages
+0047 callvirt get_Count
+004C brtrue.s 81
+004E ldarg.0 
+004F callvirt get_TargetUsages
+0054 brfalse.s 31
+0056 ldarg.0 
+0057 callvirt get_TargetUsages
+005C callvirt get_Usages
+0061 brfalse.s 18
+0063 ldarg.0 
+0064 callvirt get_TargetUsages
+0069 callvirt get_Usages
+006E callvirt get_Count
+0073 brtrue.s 42
+0075 ldarg.1 
+0076 call get_Variable_ValidateVariableUsages
+007B ldloc.0 
+007C call Format
+0081 ldstr VariablesUsageCounts
+0086 ldc.i4.2 
+0087 newarr ModelElement
+008C dup 
+008D ldc.i4.0 
+008E ldarg.0 
+008F stelem.ref 
+0090 dup 
+0091 ldc.i4.1 
+0092 ldarg.0 
+0093 callvirt get_SafetyApplication
+0098 stelem.ref 
+0099 callvirt LogError
+009E pop 
+009F ldarg.0 
+00A0 callvirt get_TargetUsages
+00A5 brfalse 158
+00AA ldarg.0 
+00AB callvirt get_TargetUsages
+00B0 callvirt get_Usages
+00B5 callvirt get_Count
+00BA ldc.i4.1 
+00BB ble 136
+00C0 newobj .ctor
+00C5 stloc.1 
+00C6 ldarg.0 
+00C7 callvirt get_TargetUsages
+00CC callvirt get_Usages
+00D1 callvirt GetEnumerator
+00D6 stloc.2 
+00D7 br.s 30
+00D9 ldloca.s 2
+00DB call get_Current
+00E0 castclass TypeDefinition
+00E5 stloc.3 
+00E6 ldloc.1 
+00E7 ldloc.3 
+00E8 callvirt get_FunctionBlockPort
+00ED callvirt get_PortDataType
+00F2 callvirt Add
+00F7 ldloca.s 2
+00F9 call MoveNext
+00FE brtrue.s 217
+0100 leave.s 14
+0102 ldloca.s 2
+0104 constrained. TypeSpecification
+010A callvirt Dispose
+010F endfinally 
+0110 ldloc.1 
+0111 call MethodSpecification
+0116 call MethodSpecification
+011B ldc.i4.1 
+011C ble.s 42
+011E ldarg.1 
+011F call get_Variable_ValidateVariableUsagesCanBeUsedWithTheSameDataType
+0124 ldloc.0 
+0125 call Format
+012A ldstr VariablesUsageCounts
+012F ldc.i4.2 
+0130 newarr ModelElement
+0135 dup 
+0136 ldc.i4.0 
+0137 ldarg.0 
+0138 stelem.ref 
+0139 dup 
+013A ldc.i4.1 
+013B ldarg.0 
+013C callvirt get_SafetyApplication
+0141 stelem.ref 
+0142 callvirt LogError
+0147 pop 
+0148 ldarg.0 
+0149 call get_IsLocal
+014E brfalse 364
+0153 ldarg.0 
+0154 callvirt get_SourceUsages
+0159 brfalse.s 73
+015B ldarg.0 
+015C callvirt get_SourceUsages
+0161 callvirt get_Usages
+0166 brfalse.s 60
+0168 ldarg.0 
+0169 callvirt get_SourceUsages
+016E callvirt get_Usages
+0173 callvirt get_Count
+0178 brfalse.s 42
+017A ldarg.0 
+017B callvirt get_TargetUsages
+0180 brfalse.s 34
+0182 ldarg.0 
+0183 callvirt get_TargetUsages
+0188 callvirt get_Usages
+018D brfalse.s 21
+018F ldarg.0 
+0190 callvirt get_TargetUsages
+0195 callvirt get_Usages
+019A callvirt get_Count
+019F brtrue 283
+01A4 ldarg.1 
+01A5 call get_Variable_ValidateVariableUsagesLocalVariableShouldBeAssigned
+01AA ldloc.0 
+01AB call Format
+01B0 ldstr VariablesUsageCounts
+01B5 ldc.i4.2 
+01B6 newarr ModelElement
+01BB dup 
+01BC ldc.i4.0 
+01BD ldarg.0 
+01BE stelem.ref 
+01BF dup 
+01C0 ldc.i4.1 
+01C1 ldarg.0 
+01C2 callvirt get_SafetyApplication
+01C7 stelem.ref 
+01C8 callvirt LogError
+01CD pop 
+01CE br 236
+01D3 ldarg.0 
+01D4 callvirt get_SourceUsages
+01D9 brfalse.s 31
+01DB ldarg.0 
+01DC callvirt get_SourceUsages
+01E1 callvirt get_Usages
+01E6 brfalse.s 18
+01E8 ldarg.0 
+01E9 callvirt get_SourceUsages
+01EE callvirt get_Usages
+01F3 callvirt get_Count
+01F8 brtrue.s 79
+01FA newobj .ctor
+01FF stloc.s 4
+0201 ldloc.s 4
+0203 ldarg.0 
+0204 callvirt Add
+0209 ldloc.s 4
+020B ldarg.0 
+020C callvirt get_SafetyApplication
+0211 callvirt Add
+0216 ldarg.0 
+0217 callvirt get_SourceUsages
+021C brfalse.s 13
+021E ldloc.s 4
+0220 ldarg.0 
+0221 callvirt get_SourceUsages
+0226 callvirt Add
+022B ldarg.1 
+022C call get_Variable_ValidateVariableUsagesVariableNeverAssigned
+0231 ldloc.0 
+0232 call Format
+0237 ldstr VariablesUsageCounts
+023C ldloc.s 4
+023E callvirt ToArray
+0243 callvirt LogError
+0248 pop 
+0249 ldarg.0 
+024A callvirt get_TargetUsages
+024F brfalse.s 31
+0251 ldarg.0 
+0252 callvirt get_TargetUsages
+0257 callvirt get_Usages
+025C brfalse.s 18
+025E ldarg.0 
+025F callvirt get_TargetUsages
+0264 callvirt get_Usages
+0269 callvirt get_Count
+026E brtrue.s 79
+0270 newobj .ctor
+0275 stloc.s 5
+0277 ldloc.s 5
+0279 ldarg.0 
+027A callvirt Add
+027F ldloc.s 5
+0281 ldarg.0 
+0282 callvirt get_SafetyApplication
+0287 callvirt Add
+028C ldarg.0 
+028D callvirt get_TargetUsages
+0292 brfalse.s 13
+0294 ldloc.s 5
+0296 ldarg.0 
+0297 callvirt get_TargetUsages
+029C callvirt Add
+02A1 ldarg.1 
+02A2 call get_Variable_ValidateVariableUsages
+02A7 ldloc.0 
+02A8 call Format
+02AD ldstr VariablesUsageCounts
+02B2 ldloc.s 5
+02B4 callvirt ToArray
+02B9 callvirt LogError
+02BE pop 
+02BF ldarg.0 
+02C0 callvirt get_SourceUsages
+02C5 brfalse.s 83
+02C7 ldarg.0 
+02C8 callvirt get_SourceUsages
+02CD callvirt get_Usages
+02D2 brfalse.s 70
+02D4 ldarg.0 
+02D5 callvirt get_SourceUsages
+02DA callvirt get_Usages
+02DF callvirt get_Count
+02E4 ldc.i4.1 
+02E5 ble.s 51
+02E7 ldarg.1 
+02E8 call get_Variable_ValidateVariableUsagesVariableIsAssignedFromDifferentSources
+02ED ldloc.0 
+02EE call Format
+02F3 ldstr VariablesUsageCounts
+02F8 ldc.i4.3 
+02F9 newarr ModelElement
+02FE dup 
+02FF ldc.i4.0 
+0300 ldarg.0 
+0301 stelem.ref 
+0302 dup 
+0303 ldc.i4.1 
+0304 ldarg.0 
+0305 callvirt get_SourceUsages
+030A stelem.ref 
+030B dup 
+030C ldc.i4.2 
+030D ldarg.0 
+030E callvirt get_SafetyApplication
+0313 stelem.ref 
+0314 callvirt LogError
+0319 pop 
+031A ret 
+

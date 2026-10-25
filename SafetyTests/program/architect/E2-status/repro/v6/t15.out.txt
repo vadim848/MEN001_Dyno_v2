@@ -1,0 +1,14 @@
+L1 R&D {"in_Estop_PLC":true} EStop_Ok falls at e+1 S4 at e+2
+L1 R&D {"in_LV_Connector_Interlock":false} EStop_Ok falls at e+1 S4 at e+2
+L1 R&D {"in_HV_Connector_Interlock":false} EStop_Ok falls at e+1 S4 at e+2
+RC base                   cmd@0 FBK@30 Run@132 (rel FBK 102)
+RC base dip@40            cmd@0 FBK@30 Run@173 (rel FBK 143)
+RC base HV faulty         cmd@0 FBK@30 Run@none (rel FBK -)
+RC FBAnd6.AndIn2          cmd@0 FBK@30 Run@100 (rel FBK 70)
+RC FBAnd6.AndIn3          cmd@0 FBK@30 Run@132 (rel FBK 102)
+RC FBAnd6.AndIn2 dip@40   cmd@0 FBK@30 Run@100 (rel FBK 70)
+G10 AndIn1 base         S4 viol 0
+G10 AndIn1 G10.AndIn1   S1+S4 viol 50
+G10 AndIn6 base         S6 C2FBK 1
+G10 AndIn6 G10.AndIn6   S1 C2FBK 1
+UNL R&D cover open blue 700: UL 1

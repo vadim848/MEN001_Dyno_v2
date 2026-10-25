@@ -1,0 +1,278 @@
+{
+  "version": "sal-mutation-plan-v1",
+  "status": "Architect guard-mutation plan for slice E2a (program/architect/E2-status/PLAN.md). Block/port names are those specified by the plan; editor must keep them. Each mutation names its intended killing behavioural scenario (oracle = REQ-CONSOLIDATION criteria). Tester fills sourceSha256 with the G2 candidate SAL and authors killing tests in G1.",
+  "sourceSha256": "TBD: G2 candidate SAL of slice E2a",
+  "testFiles": [
+    "current-door-interlock.test.js",
+    "current-early-sto.test.js",
+    "current-estop-native-pairs.test.js",
+    "current-hv-set-permit.test.js",
+    "current-mentee-set-permit.test.js",
+    "current-plc-pulse-set-permit.test.js",
+    "current-rnd-down-no-reenergy.test.js",
+    "current-rnd-physical-integration.test.js",
+    "current-safe-run-gestures.test.js",
+    "current-step12-lv-permit.test.js",
+    "current-timer-one-ms.test.js",
+    "current-unlock-estop-permit.test.js",
+    "current-unlock-hold.test.js",
+    "current-code-checks.test.js",
+    "sal-runtime.test.js",
+    "sal-semantics.test.js",
+    "timer-observed-clock.test.js",
+    "current-e2a-*.test.js (to be authored by v2-tester in G1)"
+  ],
+  "behaviouralTests": [
+    "^DOOR06 (component|actual|existing emergency)",
+    "^EARLYSTO (drive[12]|physical)",
+    "^R3PAIR ",
+    "^MENTEE05 (paired|HV: (all|already)|LV: (all|already))",
+    "^PLCPULSE ",
+    "^RNDPHYS ",
+    "^SR-",
+    "^current SAL",
+    "^UNLOCK07 (component|final component|[^ ]+: healthy|[^ ]+/[^ ]+: fault)",
+    "^CVR (current SAL|approved)",
+    "^(HV|LV) current SAL",
+    "^SAL-RUN0[23]",
+    "^SAL-SEM02",
+    "^Current SAL TON adapter",
+    "^E2a "
+  ],
+  "structuralSoftwareCheckCases": [
+    "^BOOT:"
+  ],
+  "mutations": [
+    {
+      "id": "M-E2a-01",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr1",
+      "port": "OrIn3",
+      "rationale": "S1 not reset by g2 (b_Step12_Set)",
+      "killingScenario": "Safe->R&D by BOTH: S1 stays with S12; N2/FBAnd12 (S1 and not green) keeps resetting C1, R&D never reached",
+      "oracle": "MOD1-01, E2-01"
+    },
+    {
+      "id": "M-E2a-02",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr13",
+      "port": "OrIn3",
+      "rationale": "SR not reset by g5 (b_Step2_Set_2)",
+      "killingScenario": "R&D->Safe (green 500 ms): S1 and SR both active after C1_FBK OFF",
+      "oracle": "E2-01, MOD5-01"
+    },
+    {
+      "id": "M-E2a-03",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr13",
+      "port": "OrIn4",
+      "rationale": "SR not reset by g4 (b_Step3_Set_2)",
+      "killingScenario": "R&D->Run (BOTH): SR and S3 both active after Run confirmation",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-E2a-04",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr5",
+      "port": "OrIn2",
+      "rationale": "S3 not reset by g7 (b_Step4_Set)",
+      "killingScenario": "Steady Run + in_ES_NC_1 FALSE: S3 and S4 both active; SS1 not requested",
+      "oracle": "E2-01, EMG-001 (EMGREF)"
+    },
+    {
+      "id": "M-E2a-05",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr5",
+      "port": "OrIn3",
+      "rationale": "S3 not reset by g6 (b_Step12_Set_2)",
+      "killingScenario": "Run->R&D green down to C2_FBK OFF: S3 and SR both active",
+      "oracle": "E2-01, STP-A last row"
+    },
+    {
+      "id": "M-E2a-06",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr16",
+      "port": "OrIn2",
+      "rationale": "g6 does not set SR",
+      "killingScenario": "Run->R&D green down: after C2_FBK OFF no stage, STS_EMG instead of STS_RND",
+      "oracle": "STP-A (R&D after C2_FBK OFF), E2-02"
+    },
+    {
+      "id": "M-E2a-07",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr16",
+      "port": "OrIn1",
+      "rationale": "g3 does not set SR",
+      "killingScenario": "Safe->R&D: S12 reset at LV confirmation, no stage, STS_EMG, R&D not reached",
+      "oracle": "MOD1-01, E2-01"
+    },
+    {
+      "id": "M-E2a-08",
+      "guard": "ChildOwner",
+      "op": "deactivate-input",
+      "block": "//Network6/RUN_DOWN_RESET",
+      "port": "OrIn1",
+      "rationale": "RUN_DOWN_OWNER survives return to R&D",
+      "killingScenario": "Run->R&D green down, then BOTH R&D->Run: Run not reached, C2 stays OFF. Verified in architect prototype repro/t5.out.txt",
+      "oracle": "MOD-002 positive path after STP-A; E2-01"
+    },
+    {
+      "id": "M-E2a-09",
+      "guard": "Arbitration",
+      "op": "deactivate-input",
+      "block": "//Network6/FBAnd18",
+      "port": "AndIn3",
+      "rationale": "g6 not masked by g7",
+      "killingScenario": "Run->R&D with C2_FBK held ON; in_ES_NC_1 FALSE swept -3..+3 scans around C2_FBK OFF: at -1 SR and S4 both active. Verified in prototype repro/t5.out.txt",
+      "oracle": "E2-01, EMG-001 priority"
+    },
+    {
+      "id": "M-E2a-10",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr7",
+      "port": "OrIn2",
+      "rationale": "S4 not reset by g8",
+      "killingScenario": "EStop in Run to Step5: out_Step4 and out_Step5 both TRUE",
+      "oracle": "E2-01 (phase belongs to one transition)"
+    },
+    {
+      "id": "M-E2a-11",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr9",
+      "port": "OrIn2",
+      "rationale": "S5 not reset by g9",
+      "killingScenario": "EStop in Run to Step6: out_Step5 and out_Step6 both TRUE",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-E2a-12",
+      "guard": "Ring",
+      "op": "invert-contact",
+      "block": "//Network3/FBRs8",
+      "port": "Reset",
+      "rationale": "S12 Reset polarity inverted",
+      "killingScenario": "Safe->R&D: S12 never holds, LV never requested, R&D not reached",
+      "oracle": "MOD1-01"
+    },
+    {
+      "id": "M-E2a-13",
+      "guard": "RaceMask",
+      "op": "deactivate-input",
+      "block": "//Network6/HEALTH_GUARD",
+      "port": "OrIn1",
+      "rationale": "Healthy loss during accepted Run-down starts Step4",
+      "killingScenario": "E2-02 L/H d=1..5: ends S4/S5 Emergency instead of R&D (L: then Safe). Verified in prototype repro/t4.out.txt",
+      "oracle": "E2-02"
+    },
+    {
+      "id": "M-E2a-14",
+      "guard": "Healthy",
+      "op": "invert-contact",
+      "block": "//Network6/HEALTHY_OK",
+      "port": "AndIn1",
+      "rationale": "LV Healthy polarity inverted in Run guard",
+      "killingScenario": "Steady Run with in_LV_Healthy_FBK raw FALSE (healthy): Step4 starts immediately",
+      "oracle": "MOD-002 (Run held while healthy), D-ARCH-POL"
+    },
+    {
+      "id": "M-E2a-15",
+      "guard": "ChildExclusion",
+      "op": "deactivate-input",
+      "block": "//SafeResumption/SG_OWNER_SET",
+      "port": "AndIn3",
+      "rationale": "SG may be set during StartingRun",
+      "killingScenario": "StartingRun (SU) + fresh green 500 ms: C1 OFF/LV discharge issued while SU active (two child phases of SR)",
+      "oracle": "E2-01; STP-E forbids R&D->Safe actions in StartingRun"
+    },
+    {
+      "id": "M-E2a-16",
+      "guard": "ChildExclusion",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_020",
+      "port": "AndIn6",
+      "rationale": "SU may be set during R&D->Safe",
+      "killingScenario": "R&D->Safe in progress (SG) + BOTH 1000 ms: SU set, STO released while LV removed",
+      "oracle": "E2-01, MOD-004"
+    },
+    {
+      "id": "M-E2a-17",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_RND",
+      "port": "AndIn2",
+      "rationale": "R&D status not masked by Emergency",
+      "killingScenario": "Steady R&D + in_ES_NC_1 FALSE: STS_RND and STS_EMG both TRUE",
+      "oracle": "E2-01, MOD-006"
+    },
+    {
+      "id": "M-E2a-18",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_EMG",
+      "port": "AndIn2",
+      "rationale": "Emergency complement ignores R&D",
+      "killingScenario": "Steady R&D: STS_RND and STS_EMG both TRUE",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-E2a-19",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_SAFE",
+      "port": "AndIn2",
+      "rationale": "Safe status not masked by Emergency",
+      "killingScenario": "Safe + in_ES_NC_1 FALSE: STS_SAFE and STS_EMG both TRUE",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-E2a-20",
+      "guard": "Decoder",
+      "op": "deactivate-input",
+      "block": "//Network3/DEC_SAFE_OR",
+      "port": "OrIn2",
+      "rationale": "Safe->R&D phase not attributed to Safe",
+      "killingScenario": "Safe->R&D in progress (S12): STS_EMG TRUE instead of STS_SAFE",
+      "oracle": "READY-D: SPEC 6 (State_RnD only after confirmations; no Emergency) + E2-01"
+    },
+    {
+      "id": "M-E2a-21",
+      "guard": "Order",
+      "op": "swap-order",
+      "block": "//Network3/FBRs7",
+      "port": "",
+      "operatorAvailable": false,
+      "value": {
+        "moveAfter": "//RndPhysicalCompact/GATE_001"
+      },
+      "rationale": "Stage RS moved out of the contiguous head (after RndPhysicalCompact/GATE_001)",
+      "killingScenario": "Transitions into/out of SR: a reader between head and FBRs7 sees two/zero stages (class reproduced in prototype when Network3/FBOr6 was left outside the head: S1+S3 at Run entry)",
+      "oracle": "E2-01, INV-4"
+    }
+  ],
+  "equivalentByProof": [
+    {
+      "block": "//Network6/RUN_DOWN_RESET",
+      "port": "OrIn2",
+      "ref": "MU11; PLAN 9: one extra owner scan only re-asserts already latched STO-reset/discharge/C2-reset requests; g6 gated by S3 and not g7. Re-evaluate in E3."
+    },
+    {
+      "block": "//Network7/FBAnd8",
+      "port": "AndIn5",
+      "ref": "PLAN 9: S4 gate against stale TON output; g8 re-firing after S4->S5 is idempotent."
+    },
+    {
+      "block": "//Network6/FBAnd18",
+      "port": "AndIn4",
+      "ref": "S3 gate; stale Ton1 one scan after g6 only re-sets SR (idempotent). Kept for INV-1 proof; tester may report EQUIVALENT."
+    }
+  ]
+}

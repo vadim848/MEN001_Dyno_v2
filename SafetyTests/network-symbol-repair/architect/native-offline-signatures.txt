@@ -1,0 +1,192 @@
+TYPE Public, BeforeFieldInit BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageDomainModel
+Family, Virtual, HideBySig System.Type[] GetCustomDomainModelTypes() 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(Microsoft.VisualStudio.Modeling.Store) 1:store 
+Private, HideBySig Void InitializeSerialization(Microsoft.VisualStudio.Modeling.Store) 1:store 
+Family, Final, Virtual, HideBySig System.Type[] GetGeneratedDomainModelTypes() 
+Family, Final, Virtual, HideBySig .DomainMemberInfo[] GetGeneratedDomainProperties() 
+Family, Final, Virtual, HideBySig .DomainRolePlayerInfo[] GetGeneratedDomainRoles() 
+Public, Final, Virtual, HideBySig Microsoft.VisualStudio.Modeling.ModelElement CreateElement(Microsoft.VisualStudio.Modeling.Partition,System.Type,Microsoft.VisualStudio.Modeling.PropertyAssignment[]) 1:partition 2:elementType 3:propertyAssignments 
+Public, Final, Virtual, HideBySig Microsoft.VisualStudio.Modeling.ElementLink CreateElementLink(Microsoft.VisualStudio.Modeling.Partition,System.Type,Microsoft.VisualStudio.Modeling.RoleAssignment[],Microsoft.VisualStudio.Modeling.PropertyAssignment[]) 1:partition 2:elementLinkType 3:roleAssignments 4:propertyAssignments 
+Public, Virtual, HideBySig, SpecialName System.Resources.ResourceManager get_ResourceManager() 
+Public, Static, HideBySig, SpecialName System.Resources.ResourceManager get_SingletonResourceManager() 
+Public, Virtual, HideBySig Microsoft.VisualStudio.Modeling.IElementVisitorFilter GetClosureFilter(Microsoft.VisualStudio.Modeling.ClosureType,System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>) 1:type 2:rootElements 
+Private, Static, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.IElementVisitorFilter get_CopyClosure() 
+Private, Static, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.IElementVisitorFilter get_DeleteClosure() 
+Public, Static, HideBySig Void EnableDiagramRules(Microsoft.VisualStudio.Modeling.Store) 1:store 
+Public, Static, HideBySig Void DisableDiagramRules(Microsoft.VisualStudio.Modeling.Store) 1:store 
+Private, Static, HideBySig, SpecialName, RTSpecialName Void .cctor() 
+TYPE Public, BeforeFieldInit BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.ModelAndDiagramCrcAccumulator
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+TYPE Public, BeforeFieldInit BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.ModelAndDiagramCrcDictionary
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(UInt32,UInt32,System.Text.Encoding) 1:generatorPolynomial 2:initialValue 3:encoding 
+TYPE Public, Abstract, Sealed BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.ModelAndDiagramCrcSettings
+Public, Static, HideBySig, SpecialName UInt32 get_GeneratorPolynomial() 
+Public, Static, HideBySig, SpecialName UInt32 get_InitialValue() 
+Public, Static, HideBySig, SpecialName System.Text.Encoding get_Encoding() 
+Public, Static, HideBySig, SpecialName BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.ModelAndDiagramCrcDictionary get_CrcDictionary() 
+Private, Static, HideBySig, SpecialName, RTSpecialName Void .cctor() 
+TYPE Public, BeforeFieldInit BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.ModelAndDiagramCrcXmlWriterSettings
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+TYPE Public, BeforeFieldInit BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.ModelAndDiagramCrcXmlWriter
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(System.IO.MemoryStream) 1:stream 
+TYPE Public, BeforeFieldInit BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.ModelAndDiagramCrcXmlReaderSettings
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+TYPE Public, BeforeFieldInit BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.ModelAndDiagramCrcXmlReader
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(System.IO.Stream) 1:input 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(System.IO.Stream,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.ModelAndDiagramCrcXmlReaderSettings) 1:input 2:settings 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(System.IO.TextReader) 1:input 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(String) 1:inputUri 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(System.Xml.XmlReader) 1:input 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(System.Xml.XmlReader,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.ModelAndDiagramCrcXmlReaderSettings) 1:input 2:settings 
+TYPE Public, Sealed, BeforeFieldInit BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageSerializationHelper
+Public, Virtual, HideBySig String GetSerializedModelString(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication,System.Text.Encoding) 1:modelRoot 2:encoding 
+Public, HideBySig String GetSerializedDiagramString(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication,System.Text.Encoding) 1:modelRoot 2:encoding 
+Public, Virtual, HideBySig Void SaveModel(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication,String,System.Text.Encoding,Boolean) 1:serializationResult 2:modelRoot 3:fileName 4:encoding 5:writeOptionalPropertiesWithDefaultValue 
+Public, Virtual, HideBySig Void SaveModelAndDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication,String,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageDiagram,String,System.Text.Encoding,Boolean) 1:serializationResult 2:modelRoot 3:modelFileName 4:diagram 5:diagramFileName 6:encoding 7:writeOptionalPropertiesWithDefaultValue 
+Public, Virtual, HideBySig Void SaveDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageDiagram,String,System.Text.Encoding,Boolean) 1:serializationResult 2:diagram 3:diagramFileName 4:encoding 5:writeOptionalPropertiesWithDefaultValue 
+Assembly, HideBySig System.IO.MemoryStream InternalSaveModelWithCrc(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication,String,System.Text.Encoding,Boolean) 1:serializationResult 2:modelRoot 3:fileName 4:encoding 5:writeOptionalPropertiesWithDefaultValue 
+Assembly, HideBySig System.IO.MemoryStream InternalSaveDiagramWithCrc(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageDiagram,String,System.Text.Encoding,Boolean) 1:serializationResult 2:diagram 3:diagramFileName 4:encoding 5:writeOptionalPropertiesWithDefaultValue 
+Public, Virtual, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadModel(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator) 1:serializationResult 2:partition 3:fileName 4:schemaResolver 5:validationController 6:serializerLocator 
+Public, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadModel(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator,Boolean&,UInt32&) 1:serializationResult 2:partition 3:fileName 4:schemaResolver 5:validationController 6:serializerLocator 7:isCrcValid 8:accCrc 
+Public, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadModelFromUserFbLib(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator,Boolean&,UInt32&) 1:serializationResult 2:partition 3:serializedXml 4:schemaResolver 5:validationController 6:serializerLocator 7:isCrcValid 8:accCrc 
+Public, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadModelFromMemoryStream(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Partition,System.IO.MemoryStream,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator,Boolean&,UInt32&) 1:serializationResult 2:partition 3:memStream 4:schemaResolver 5:validationController 6:serializerLocator 7:isCrcValid 8:accCrc 
+Public, Virtual, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadModelAndDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator) 1:serializationResult 2:modelPartition 3:modelFileName 4:diagramPartition 5:diagramFileName 6:schemaResolver 7:validationController 8:serializerLocator 
+Public, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadModelAndDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator,Boolean&,UInt32&) 1:serializationResult 2:modelPartition 3:modelFileName 4:diagramPartition 5:diagramFileName 6:schemaResolver 7:validationController 8:serializerLocator 9:isCrcValid 10:accCrc 
+Public, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadModelAndDiagramFromUserFbLibrary(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator,Boolean&,UInt32&) 1:serializationResult 2:modelPartition 3:modelSerializedXml 4:diagramPartition 5:diagramSerializedXml 6:schemaResolver 7:validationController 8:serializerLocator 9:isCrcValid 10:accCrc 
+Public, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadDiagramFromMemoryStream(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Partition,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication,Microsoft.VisualStudio.Modeling.Partition,System.IO.MemoryStream,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator,Boolean&,UInt32&) 1:serializationResult 2:modelPartition 3:modelRoot 4:diagramPartition 5:diagramStream 6:schemaResolver 7:validationController 8:serializerLocator 9:isCrcValid 10:accCrc 
+Private, HideBySig Boolean IsCrcCheckNeeded(String,Boolean&) 1:fileName 2:needsCrcProtectionCheck 
+Private, HideBySig System.Xml.XmlReader CreateXmlReader(System.IO.FileStream,System.Xml.XmlReaderSettings,Boolean) 1:fileStream 2:settings 3:isCrcCheckNeeded 
+Private, HideBySig System.Xml.XmlReader CreateXmlReaderToReadUfbLibrary(String,System.Xml.XmlReaderSettings) 1:serializedXml 2:settings 
+Private, HideBySig System.Xml.XmlReader CreateXmlReaderFromMemmoryStream(System.IO.MemoryStream,System.Xml.XmlReaderSettings) 1:memStream 2:settings 
+Family, Virtual, HideBySig Void CheckVersion(Microsoft.VisualStudio.Modeling.SerializationContext,System.Xml.XmlReader) 1:serializationContext 2:reader 
+Private, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+Public, Static, HideBySig, SpecialName BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageSerializationHelper get_Instance() 
+TYPE BeforeFieldInit BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FixUpDiagramBase
+Family, Virtual, HideBySig, VtableLayoutMask Boolean SkipFixup(Microsoft.VisualStudio.Modeling.ModelElement) 1:childElement 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+TYPE Sealed, BeforeFieldInit BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FixUpDiagram
+Public, Virtual, HideBySig Void ElementAdded(Microsoft.VisualStudio.Modeling.ElementAddedEventArgs) 1:e 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase GetParentForInPort(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.InPort) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase GetParentForOutPort(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.OutPort) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication GetParentForComment(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Comment) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase GetParentForParameterPort(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.ParameterPort) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication GetParentForNetwork(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBAnd(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBEstop(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBMon(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBConnShutdown(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBDecouple(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBOpmode(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBOr(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBEdm(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBMuting(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBRs(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBSr(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBTof(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBTon(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBTwohand(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBAdd(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBCompare(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBCounter(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBDiv(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBLimit(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBMul(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBScaling(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBSub(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBSpeed(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBLoadSensing(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBCamMonitor(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForUserFunctionBlock(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForAnalogFunctionBlock(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBViolationCNT(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBSLI(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBEnvelope(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBXor(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBTon2(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBSLI2(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBSBT(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBSLP(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Public, Static, HideBySig BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network GetParentForFBAdvPosMon(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.FunctionBlockBase) 1:root 
+Private, Static, HideBySig Microsoft.VisualStudio.Modeling.ModelElement GetParentForRelationship(Microsoft.VisualStudio.Modeling.ElementLink) 1:elementLink 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+TYPE Public, Abstract, BeforeFieldInit BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageSerializationHelperBase
+Family, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+FamORAssem, Virtual, HideBySig, VtableLayoutMask Void InitializeSerialization(Microsoft.VisualStudio.Modeling.Store) 1:store 
+Family, Virtual, HideBySig, VtableLayoutMask Void InitializeSerializationContext(Microsoft.VisualStudio.Modeling.Partition,Microsoft.VisualStudio.Modeling.SerializationContext,Boolean) 1:partition 2:serializationContext 3:isLoading 
+Family, Virtual, HideBySig, VtableLayoutMask Microsoft.VisualStudio.Modeling.DomainXmlSerializerDirectory GetDirectory(Microsoft.VisualStudio.Modeling.Store) 1:store 
+FamORAssem, Virtual, HideBySig, VtableLayoutMask System.Collections.Generic.IDictionary`2<System.Guid,Microsoft.VisualStudio.Modeling.IMonikerResolver> GetMonikerResolvers(Microsoft.VisualStudio.Modeling.Store) 1:store 
+FamORAssem, Virtual, HideBySig, VtableLayoutMask Void WriteExtensions(Microsoft.VisualStudio.Modeling.SerializationContext,Microsoft.VisualStudio.Modeling.ModelElement,System.Xml.XmlWriter) 1:serializationContext 2:element 3:writer 
+FamORAssem, Virtual, HideBySig, VtableLayoutMask Void ReadExtensions(Microsoft.VisualStudio.Modeling.SerializationContext,Microsoft.VisualStudio.Modeling.ModelElement,System.Xml.XmlReader) 1:serializationContext 2:element 3:reader 
+Assembly, Virtual, HideBySig, VtableLayoutMask, CheckAccessOnOverride Void WriteAttributeString(Microsoft.VisualStudio.Modeling.SerializationContext,Microsoft.VisualStudio.Modeling.ModelElement,System.Xml.XmlWriter,String,String) 1:serializationContext 2:element 3:writer 4:attributeName 5:attributeValue 
+Assembly, Virtual, HideBySig, VtableLayoutMask, CheckAccessOnOverride Void WriteElementString(Microsoft.VisualStudio.Modeling.SerializationContext,Microsoft.VisualStudio.Modeling.ModelElement,System.Xml.XmlWriter,String,String) 1:serializationContext 2:element 3:writer 4:elementName 5:elementValue 
+Assembly, Virtual, HideBySig, VtableLayoutMask, CheckAccessOnOverride String ReadAttribute(Microsoft.VisualStudio.Modeling.SerializationContext,Microsoft.VisualStudio.Modeling.ModelElement,System.Xml.XmlReader,String) 1:serializationContext 2:element 3:reader 4:attributeName 
+Assembly, Virtual, HideBySig, VtableLayoutMask, CheckAccessOnOverride String ReadElementContentAsString(Microsoft.VisualStudio.Modeling.SerializationContext,Microsoft.VisualStudio.Modeling.ModelElement,System.Xml.XmlReader) 1:serializationContext 2:element 3:reader 
+Assembly, Virtual, HideBySig, VtableLayoutMask, CheckAccessOnOverride System.Xml.XmlReaderSettings CreateXmlReaderSettings(Microsoft.VisualStudio.Modeling.SerializationContext,Boolean) 1:serializationContext 2:isDiagram 
+Assembly, Virtual, HideBySig, VtableLayoutMask, CheckAccessOnOverride System.Xml.XmlWriterSettings CreateXmlWriterSettings(Microsoft.VisualStudio.Modeling.SerializationContext,Boolean,System.Text.Encoding) 1:serializationContext 2:isDiagram 3:encoding 
+Public, Virtual, HideBySig, VtableLayoutMask BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadModel(Microsoft.VisualStudio.Modeling.Store,String,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator) 1:store 2:fileName 3:schemaResolver 4:validationController 5:serializerLocator 
+Public, Virtual, HideBySig, VtableLayoutMask BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadModel(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Store,String,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator) 1:serializationResult 2:store 3:fileName 4:schemaResolver 5:validationController 6:serializerLocator 
+Public, Virtual, HideBySig, VtableLayoutMask BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadModel(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator) 1:serializationResult 2:partition 3:fileName 4:schemaResolver 5:validationController 6:serializerLocator 
+Public, Virtual, HideBySig, VtableLayoutMask BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadModel(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator,System.IO.Stream) 1:serializationResult 2:partition 3:location 4:schemaResolver 5:validationController 6:serializerLocator 7:stream 
+Family, Virtual, HideBySig, VtableLayoutMask Boolean TryGetEncoding(System.Xml.XmlReader,System.Text.Encoding&) 1:reader 2:encoding 
+Public, Virtual, HideBySig, VtableLayoutMask Void SaveModel(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication,String) 1:serializationResult 2:modelRoot 3:fileName 
+Public, Virtual, HideBySig, VtableLayoutMask Void SaveModel(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication,String,Boolean) 1:serializationResult 2:modelRoot 3:fileName 4:writeOptionalPropertiesWithDefaultValue 
+Public, Virtual, HideBySig, VtableLayoutMask Void SaveModel(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication,String,System.Text.Encoding,Boolean) 1:serializationResult 2:modelRoot 3:fileName 4:encoding 5:writeOptionalPropertiesWithDefaultValue 
+Assembly, HideBySig System.IO.MemoryStream InternalSaveModel(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication,String,System.Text.Encoding,Boolean) 1:serializationResult 2:modelRoot 3:fileName 4:encoding 5:writeOptionalPropertiesWithDefaultValue 
+Assembly, HideBySig System.IO.MemoryStream InternalSaveDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageDiagram,String,System.Text.Encoding,Boolean) 1:serializationResult 2:diagram 3:diagramFileName 4:encoding 5:writeOptionalPropertiesWithDefaultValue 
+FamORAssem, Virtual, HideBySig, VtableLayoutMask BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication CreateModelHelper(Microsoft.VisualStudio.Modeling.Partition) 1:modelPartition 
+Public, Virtual, HideBySig, VtableLayoutMask BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadModelAndDiagram(Microsoft.VisualStudio.Modeling.Store,String,String,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator) 1:store 2:modelFileName 3:diagramFileName 4:schemaResolver 5:validationController 6:serializerLocator 
+Public, Virtual, HideBySig, VtableLayoutMask BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadModelAndDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Store,String,String,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator) 1:serializationResult 2:store 3:modelFileName 4:diagramFileName 5:schemaResolver 6:validationController 7:serializerLocator 
+Public, Virtual, HideBySig, VtableLayoutMask BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication LoadModelAndDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.ISchemaResolver,Microsoft.VisualStudio.Modeling.Validation.ValidationController,Microsoft.VisualStudio.Modeling.ISerializerLocator) 1:serializationResult 2:modelPartition 3:modelFileName 4:diagramPartition 5:diagramFileName 6:schemaResolver 7:validationController 8:serializerLocator 
+FamORAssem, Virtual, HideBySig, VtableLayoutMask BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageDiagram CreateDiagramHelper(Microsoft.VisualStudio.Modeling.Partition,Microsoft.VisualStudio.Modeling.ModelElement) 1:diagramPartition 2:modelRoot 
+Family, Virtual, HideBySig, VtableLayoutMask BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.Network CreateSwimLaneRootForNetworkSwimLane(Microsoft.VisualStudio.Modeling.Partition) 1:modelPartition 
+Public, Virtual, HideBySig, VtableLayoutMask Void SaveModelAndDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication,String,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageDiagram,String) 1:serializationResult 2:modelRoot 3:modelFileName 4:diagram 5:diagramFileName 
+Public, Virtual, HideBySig, VtableLayoutMask Void SaveModelAndDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication,String,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageDiagram,String,Boolean) 1:serializationResult 2:modelRoot 3:modelFileName 4:diagram 5:diagramFileName 6:writeOptionalPropertiesWithDefaultValue 
+Public, Virtual, HideBySig, VtableLayoutMask Void SaveModelAndDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication,String,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageDiagram,String,System.Text.Encoding,Boolean) 1:serializationResult 2:modelRoot 3:modelFileName 4:diagram 5:diagramFileName 6:encoding 7:writeOptionalPropertiesWithDefaultValue 
+Public, Virtual, HideBySig, VtableLayoutMask Void SaveDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageDiagram,String) 1:serializationResult 2:diagram 3:diagramFileName 
+Public, Virtual, HideBySig, VtableLayoutMask Void SaveDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageDiagram,String,Boolean) 1:serializationResult 2:diagram 3:diagramFileName 4:writeOptionalPropertiesWithDefaultValue 
+Public, Virtual, HideBySig, VtableLayoutMask Void SaveDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageDiagram,String,System.Text.Encoding,Boolean) 1:serializationResult 2:diagram 3:diagramFileName 4:encoding 5:writeOptionalPropertiesWithDefaultValue 
+Family, Virtual, HideBySig, VtableLayoutMask Void ReadRootElement(Microsoft.VisualStudio.Modeling.SerializationContext,Microsoft.VisualStudio.Modeling.ModelElement,System.Xml.XmlReader,Microsoft.VisualStudio.Modeling.ISchemaResolver) 1:serializationContext 2:rootElement 3:reader 4:schemaResolver 
+Public, Virtual, HideBySig, VtableLayoutMask Void WriteRootElement(Microsoft.VisualStudio.Modeling.SerializationContext,Microsoft.VisualStudio.Modeling.ModelElement,System.Xml.XmlWriter) 1:serializationContext 2:rootElement 3:writer 
+Family, Virtual, HideBySig, VtableLayoutMask Void CheckVersion(Microsoft.VisualStudio.Modeling.SerializationContext,System.Xml.XmlReader) 1:serializationContext 2:reader 
+Family, Virtual, HideBySig, VtableLayoutMask System.Xml.XmlReader TryCreateValidatingReader(Microsoft.VisualStudio.Modeling.ISchemaResolver,System.Xml.XmlReader,Microsoft.VisualStudio.Modeling.SerializationContext) 1:schemaResolver 2:reader 3:serializationContext 
+Family, Static, HideBySig Boolean ResolveSchema(String,System.Xml.Schema.XmlSchemaSet,Microsoft.VisualStudio.Modeling.ISchemaResolver,System.Xml.XmlReader,Microsoft.VisualStudio.Modeling.SerializationContext) 1:targetNamespace 2:schemaSet 3:schemaResolver 4:reader 5:serializationContext 
+Public, Virtual, HideBySig, VtableLayoutMask String GetSerializedModelString(BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplication,System.Text.Encoding) 1:modelRoot 2:encoding 
+Family, Virtual, HideBySig, VtableLayoutMask Void CheckForOrphanedShapes(Microsoft.VisualStudio.Modeling.Diagrams.Diagram,Microsoft.VisualStudio.Modeling.SerializationResult) 1:diagram 2:serializationResult 
+TYPE Public, BeforeFieldInit BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageDomainModelSerializer
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+TYPE Public, Abstract, BeforeFieldInit BeckhoffAutomation.SALDesigner.SafetyApplicationLanguage.SafetyApplicationLanguageDomainModelSerializerBase
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName String get_DomainModelNamespace() 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName Boolean get_IsSerializable() 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName System.Type get_DomainModelType() 
+Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName String get_ModelFileExtension() 
+Public, Virtual, HideBySig, VtableLayoutMask Microsoft.VisualStudio.Modeling.ModelElement LoadModel(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.ISerializerLocator) 1:serializationResult 2:partition 3:fileName 4:serializerLocator 
+Public, Final, Virtual, HideBySig, VtableLayoutMask Void SaveModel(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.ModelElement,String,System.Text.Encoding) 1:serializationResult 2:modelRoot 3:fileName 4:encoding 
+Public, Virtual, HideBySig, VtableLayoutMask String CalculateDiagramFileName(String) 1:modelFileName 
+Public, Final, Virtual, HideBySig, VtableLayoutMask Microsoft.VisualStudio.Modeling.ModelElement LoadModelAndDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.Partition,String,Microsoft.VisualStudio.Modeling.ISerializerLocator) 1:serializationResult 2:modelPartition 3:modelFileName 4:diagramPartition 5:diagramFileName 6:serializerLocator 
+Public, Final, Virtual, HideBySig, VtableLayoutMask Void SaveModelAndDiagram(Microsoft.VisualStudio.Modeling.SerializationResult,Microsoft.VisualStudio.Modeling.ModelElement,String,Microsoft.VisualStudio.Modeling.ModelElement,String,System.Text.Encoding) 1:serializationResult 2:modelRoot 3:modelFileName 4:diagram 5:diagramFileName 6:encoding 
+Family, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+ASSEMBLY REFERENCES
+mscorlib 4.0.0.0
+System.Drawing 4.0.0.0
+Microsoft.VisualStudio.Modeling.Sdk.Diagrams 17.0.0.0
+System.Windows.Forms 4.0.0.0
+Microsoft.VisualStudio.Modeling.Sdk 17.0.0.0
+System 4.0.0.0
+System.Design 4.0.0.0
+VariableList 1.4.16.0
+System.Core 4.0.0.0
+Microsoft.VisualStudio.Interop 17.0.0.0
+Utils 1.4.16.0
+System.Drawing.Design 4.0.0.0
+PresentationFramework 4.0.0.0
+System.Xaml 4.0.0.0
+PresentationCore 4.0.0.0
+System.Xml 4.0.0.0
+WindowsBase 4.0.0.0
+Microsoft.VisualStudio.TextTemplating 17.0.0.0
+System.ComponentModel.Composition 4.0.0.0
+Microsoft.VisualStudio.Shell.15.0 17.0.0.0
+Resources 1.4.16.0
+Microsoft.VisualStudio.TextTemplating.Interfaces.10.0 10.0.0.0
+Microsoft.VisualStudio.TextTemplating.Modeling 17.0.0.0
+

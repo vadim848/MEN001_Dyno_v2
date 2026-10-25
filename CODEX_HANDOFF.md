@@ -1,5 +1,21 @@
 # Codex handoff
 
+**Latest working LV254, 2026-10-20:** branch `Safety-Develop_2_Agent`,
+source `b7096fa3cf7349ea0be08f347180deb071a0f6b75612c4e5c8a7f45cf0557161` /
+SGVL `4eb263924e8ca5d77a4017c7f82b0a13396d981d881158be8c8f2a169d393ee5`.
+Exact21-file transfer and canonical189/75/436-of438 verified; cases200PASS,
+1STATEFAIL,7NV,0ERROR, all295 inputs unchanged. Normal LV completion now reaches
+real Safe and permits a fresh real cycle. See lv-working-transfer final evidence
+and LV_WORKING_TRANSFER_REVIEW. Earlier72f source entries below are history.
+Full Run/StartingRun stop V2 is not implemented: use latest user answers and
+USER_STOP_SEQUENCE_HANDOFF, not the old simultaneous N6 fanout draft.
+Latest clarification is answered: unfinished StartingRun applies discharge
+immediately after STO, with its existing hold before C2OFF and no5s coast.
+Full5s coast remains for Healthy loss during SS1 in Run. Do not re-ask
+LV/HV success, SS1=2s, STO/coast=5s or noSS1
+abort decisions. Local checkpoint preparation follows final working review;
+no push or equipment actions by the agents.
+
 **Действующий объём:** AGENTS.md и WORK_STATUS_AND_PLAN.md. Только программные
 проверки; hardware принято как исходное условие. Reference проверен чтением Git:
 MEN001_Dyno / Prodoction / 4495a1f6049f6a58ebfd436761faa84d17c8d643, origin

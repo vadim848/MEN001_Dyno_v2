@@ -1,0 +1,29 @@
+{
+  "slice": "E2-G1-v9-q",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "basis": ["program/tester/E2-G1/HANDOFF_v9.md observation Q-XPHASE-01"],
+  "sources": {
+    "tester/E2-G1/HANDOFF_v9.md": "342a0107995c0cca60c9dc9d0c0eb974a84114ae4167445505eb83b850c69f87",
+    "SOFTWARE_ACCEPTANCE_SCOPE.md": "ced610f7adbc51b5a10149339c55b7fdae30e2c255f35180f7af309153531f8c",
+    "SAFETY_STATE_MACHINE_SPEC.md": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472",
+    "SCENARIO_DECISIONS.md": "d27bb963196d37191201ee51e60bb9e8f7a397fa181068e4269dc78c51f143e0",
+    "candidate.E2d-v7.5.sal": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b"
+  },
+  "criteria": [{
+    "id": "XPH-01", "status": "READY", "decision": "normative (MOD-004/SPEC 15, SCOPE MOD-004 via Q-RC-08 A, BTN-002; analogy V14-Q11, V14-Q13)",
+    "initial": "stable Safe, buttons released >= 2000 ms, cover closed, permits OK, no Emergency/SafetyFault; Safe->R&D started by legacy (1,0) (variant: BOTH + release + 2000 ms)",
+    "marks": {"A1": "first b_Step12 or C1 ON (TD-08)", "R": "first main-state R&D scan (no-gesture trace)"},
+    "stimulus": "first press f, second f+delta (delta 0/250, both orders), hold 1100 ms after second, release",
+    "rows": {"f in {A1+10, A1+300, R-1}": "no recRndC_SU / C2 ON / STO release / Run to >= R+6000; Safe->R&D completes as X0; no Emergency/fault/SafetyFault",
+             "f = R": "observation",
+             "f = R+1 with >= 2000 ms clean release before": "normal gesture: R&D->Run per TD-06/TD-08"},
+    "retry": "after release g: f2 >= g+2001 accepted, g+1999 ignored, g+2000 observation; counted by buttons only",
+    "variants": ["first press in phase, second after R -> ignored", "hold through R >= 3000 ms -> no raise"],
+    "forbidden": ["raise from gesture begun in phase", "execution after release without new attempt", "Emergency/fault/SafetyFault from gesture", "gesture changing Safe->R&D (except V14-Q13 single green, not here)"],
+    "emergencyCombos": ["EStop/in_Estop_PLC with held BOTH -> Emergency, Restart -> Safe only, gesture not executed", "cover in phase -> Safe->R&D continues (Q-RC-03(b1)); R&D->Run forbidden until closed + new gesture"],
+    "factCandidate": "E2d v7.5: R&D->Run at +1012 -> FAIL MOD-004 (tester observation)",
+    "ids": ["MOD-004", "MOD-001", "MOD-002", "BTN-001", "BTN-002", "BTN-006", "BTN-007"]
+  }],
+  "questionsToVadim": []
+}

@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_LoadMotorProfile" Id="{1b9e4c27-7a36-4d58-9f02-3c6a1e8b5d40}" SpecialFunc="None">
+    <Declaration><![CDATA[// Load-motor (Beckhoff AX5000) motion-profile generator. Same online value(t)
+// shapes as FB_TrajectoryGen, but applied in one of three DOMAINS (cfg.nDomain):
+//
+//   TORQUE   : fSetpoint is a torque % waveform. PRG_Motion streams it into
+//              stMotorN_Cmd.fTargetTorque while bRunning; the existing
+//              FB_TorqueControl (MC_TorqueControl, ContinuousUpdate) applies it.
+//              No axis ownership change -> coexists with FB_MotorControl freely.
+//
+//   POSITION : fSetpoint is an absolute position [deg], anchored at the axis
+//              actual position at Start (no jump). Fed via external setpoint
+//              generation (MC_ExtSetPointGen*).
+//
+//   VELOCITY : fSetpoint is a velocity [deg/s] waveform, integrated to position
+//              for the external-setpoint feed.
+//
+// IMPORTANT (POSITION/VELOCITY): this FB does NOT call MC_Power. The load motor
+// must already be ENABLED (FB_MotorControl in READY) so FB_MotorControl stays the
+// single power owner -> no MC_Power conflict. While the external generator is
+// engaged FB_MotorControl's move FBs must stay idle (no MC_Move* executing); the
+// app/sequencer guarantees this by not issuing moves during a profile.
+//
+// On Start the command is LATCHED into 'cfg'; valueAt + the body read cfg only.
+FUNCTION_BLOCK FB_LoadMotorProfile
+VAR_IN_OUT
+    stProfile       : ST_LoadProfileCmd;
+    Axis            : AXIS_REF;          // used for POSITION/VELOCITY external setpoint
+END_VAR
+VAR_INPUT
+    fMeasuredPos    : LREAL;    // axis actual position [deg] (Axis.NcToPlc.ActPos, LREAL) for anchoring
+    fDt             : REAL;     // task cycle time [s]
+    bStartSync      : BOOL;     // shared synchronized start (self-gated by stProfile.bEnable)
+    bStopSync       : BOOL;     // shared synchronized stop
+END_VAR
+VAR_OUTPUT
+    bRunning        : BOOL;
+    fSetpoint       : REAL;     // generated value, native units (% torque | deg | deg/s)
+END_VAR
+VAR
+    cfg             : ST_LoadProfileCmd;  // latched command (read by body + valueAt)
+    rStart          : R_TRIG;
+    rStop           : R_TRIG;
+    eState          : INT;
+    fElapsed        : REAL;
+    fTotalDur       : REAL;
+    fStartPos       : LREAL;    // anchor (POSITION) / integrator base (VELOCITY) [deg] — LREAL to match the NC axis
+    fValue0         : REAL;     // value(0) for POSITION anchoring (small shape value)
+    bAnchor         : BOOL;     // POSITION domain -> anchor at current pos
+    nRepDone        : UDINT;
+    fRest           : REAL;
+    fRaw            : REAL;
+    bWasActive      : BOOL;
+    fPosAccum       : LREAL;    // VELOCITY domain: integral of velocity [deg] — LREAL (large absolute)
+
+    // external setpoint generation (POSITION / VELOCITY only)
+    fbExtEnable     : MC_ExtSetPointGenEnable;
+    fbExtDisable    : MC_ExtSetPointGenDisable;
+    fbSyncPos       : MC_SetPosition;   // set := actual BEFORE engaging (see below)
+    bSyncExec       : BOOL;     // latch: set-position sync requested / running
+    bEnableExec     : BOOL;     // latch: ext-generator enable requested / running
+    bWaitStill      : BOOL;     // latch: waiting for NC standstill before the sync
+    tonStill        : TON;      // standstill-wait timeout (proceed anyway)
+    rFeedOn         : R_TRIG;   // first feed cycle -> re-anchor at engagement
+    bExtWant        : BOOL;     // this cycle wants the external generator engaged
+    rExtOn          : R_TRIG;
+    fExtOff         : F_TRIG;
+    fExtPos         : LREAL;    // position fed to the generator [deg] — LREAL (NC interface)
+    fExtVel         : LREAL;    // velocity fed [deg/s]
+    fPrevExtPos     : LREAL;    // for POSITION numeric velocity feed-forward
+    nExtDir         : DINT;     // 1 = +, -1 = -, 0 = standstill
+END_VAR
+VAR CONSTANT
+    F_STILL_VELO    : LREAL := 1.0;    // NC standstill threshold [deg/s] before engaging
+    T_STILL_TIMEOUT : TIME := T#2S;    // give up waiting for standstill -> proceed anyway
+    ST_IDLE         : INT := 0;
+    ST_RUN          : INT := 1;
+    ST_REST         : INT := 2;
+    ST_DONE         : INT := 3;
+    DOM_TORQUE      : BYTE := 0;
+    DOM_POSITION    : BYTE := 1;
+    DOM_VELOCITY    : BYTE := 2;
+    SH_SINE         : BYTE := 0;
+    SH_TRAP         : BYTE := 1;
+    SH_STEP         : BYTE := 2;
+    SH_SCURVE       : BYTE := 3;
+    SH_RAMP         : BYTE := 4;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// bStart (direct) OR a synchronized start gated by this profile's own bEnable.
+rStart(CLK := stProfile.bStart OR (bStartSync AND stProfile.bEnable));
+rStop (CLK := stProfile.bStop  OR bStopSync);
+
+// Stop -> hold (idle; the external generator is disabled below on the falling edge).
+IF rStop.Q THEN
+    eState := ST_IDLE;
+END_IF
+
+// Start a new run -> latch the command into cfg; everything below reads cfg.
+IF rStart.Q AND (stProfile.nShape <= SH_RAMP) AND (stProfile.nDomain <= DOM_VELOCITY) THEN
+    cfg       := stProfile;
+    fElapsed  := 0.0;
+    nRepDone  := 0;
+    fPosAccum := 0.0;
+    // total duration of one run, per shape
+    IF (cfg.nShape = SH_TRAP) OR (cfg.nShape = SH_SCURVE) THEN
+        fTotalDur := cfg.fAccelTime + cfg.fSteadyTime + cfg.fDecelTime;
+    ELSE
+        fTotalDur := cfg.fDuration;
+    END_IF
+    // POSITION rides on the current axis position (no jump); VELOCITY integrates
+    // from it; TORQUE is absolute.
+    bAnchor := (cfg.nDomain = DOM_POSITION);
+    IF (cfg.nDomain = DOM_POSITION) OR (cfg.nDomain = DOM_VELOCITY) THEN
+        fStartPos := fMeasuredPos;
+    ELSE
+        fStartPos := 0.0;
+    END_IF
+    IF bAnchor THEN
+        fValue0 := valueAt(0.0);
+    ELSE
+        fValue0 := 0.0;
+    END_IF
+    fPrevExtPos := fMeasuredPos;   // fresh velocity-FF seed (no spike from a prior run)
+    eState := ST_RUN;
+END_IF
+
+// Latched BEFORE transitions so the cycle that ends the run still writes the value.
+bWasActive := (eState = ST_RUN) OR (eState = ST_REST);
+
+CASE eState OF
+
+ST_RUN:
+    // fSetpoint = the raw generated value (REAL telemetry / torque %). The absolute
+    // POSITION/VELOCITY commands fed to the NC are built in LREAL below so a small
+    // shape delta isn't swallowed when added to a large absolute axis position.
+    fRaw := valueAt(fElapsed);
+    stProfile.fSetpoint := fRaw;
+    IF cfg.nDomain = DOM_VELOCITY THEN
+        fPosAccum := fPosAccum + fRaw * fDt;
+    END_IF
+    fElapsed := fElapsed + fDt;
+    IF fElapsed >= fTotalDur THEN
+        // land on the exact end value
+        fRaw := valueAt(fTotalDur);
+        stProfile.fSetpoint := fRaw;
+        IF NOT cfg.bRepetitive THEN
+            eState := ST_DONE;
+        ELSE
+            nRepDone := nRepDone + 1;
+            IF (cfg.nReps > 0) AND (nRepDone >= cfg.nReps) THEN
+                eState := ST_DONE;
+            ELSE
+                fRest  := cfg.fRestS;
+                eState := ST_REST;
+            END_IF
+        END_IF
+    END_IF
+
+ST_REST:
+    fRest := fRest - fDt;                   // hold last value during the rest
+    IF fRest <= 0.0 THEN
+        fElapsed := 0.0;
+        // VELOCITY rides on the position integral: re-anchor to the current actual
+        // position and zero the accumulator each repeat, so any drift during the
+        // rest is absorbed instead of compounding.
+        IF cfg.nDomain = DOM_VELOCITY THEN
+            fStartPos := fMeasuredPos;
+            fPosAccum := 0.0;
+        END_IF
+        eState   := ST_RUN;
+    END_IF
+
+ST_DONE:
+    ;                                       // hold fSetpoint
+
+ST_IDLE:
+    ;                                       // not running
+
+END_CASE
+
+//----------------------------------------------------------------------
+// EXTERNAL SETPOINT GENERATION (POSITION / VELOCITY domains only).
+// Engage on the first running cycle, feed each cycle while Enabled, disable when
+// the run ends. TORQUE domain never touches the axis (PRG_Motion routes its value
+// into stMotorN_Cmd.fTargetTorque).
+//----------------------------------------------------------------------
+bExtWant := ((cfg.nDomain = DOM_POSITION) OR (cfg.nDomain = DOM_VELOCITY))
+            AND ((eState = ST_RUN) OR (eState = ST_REST));
+rExtOn(CLK := bExtWant);
+fExtOff(CLK := bExtWant);
+
+// Engagement chain (POSITION/VELOCITY): scrub mailbox -> wait-standstill ->
+// sync -> enable -> re-anchor at first feed.
+// ROOT CAUSE of the F324 on profile sequences (bench-proven 2026-07-14):
+// MC_ExtSetPointGenFeed writes a PERSISTENT PlcToNc image (ExtSetPos/Velo/
+// Direction). Nothing cleared it after a run, so it kept the LAST run's
+// sample armed (Direction<>0). At the next MC_ExtSetPointGenEnable the NC
+// consumes that image in the 1..2-cycle window before the PLC can see
+// Enabled and feed fresh values -> the drive command steps by the whole
+// shaft displacement of the intervening torque run in ONE cycle -> F324
+// (window ~5 deg / 250us on Axis 2). The scrub below (feed actual pos,
+// vel 0, Direction 0 = "do not apply" while engagement is pending, plus a
+// disarm sample at run end) closes that window. Standstill wait + sync stay
+// as defense in depth against a stale NC setpoint.
+IF rExtOn.Q THEN
+    bWaitStill  := TRUE;                // stage 0: let residual creep die out
+    bSyncExec   := FALSE;
+    bEnableExec := FALSE;
+    tonStill(IN := FALSE);
+END_IF
+IF fExtOff.Q THEN                       // run ended/stopped mid-sequence
+    bWaitStill  := FALSE;
+    bSyncExec   := FALSE;
+    bEnableExec := FALSE;
+    tonStill(IN := FALSE);
+    // disarm the mailbox: leave the last commanded position with vel 0 and
+    // Direction 0, so a later engagement can never replay this run's sample
+    MC_ExtSetPointGenFeed(Position := fPrevExtPos, Velocity := 0.0,
+                          Acceleration := 0.0, Direction := 0, Axis := Axis);
+END_IF
+// stage 0: NC-side standstill (position hold kills coast quickly); a
+// SUSTAINED external drive can prevent it -> timeout proceeds anyway (the
+// re-anchor below keeps the command step-free even then).
+IF bWaitStill THEN
+    tonStill(IN := TRUE, PT := T_STILL_TIMEOUT);
+    IF (ABS(Axis.NcToPlc.ActVelo) <= F_STILL_VELO) OR tonStill.Q THEN
+        tonStill(IN := FALSE);
+        bWaitStill := FALSE;
+        bSyncExec  := TRUE;             // stage 1: set := actual
+    END_IF
+END_IF
+// stage 1: MC_SetPosition(set := actual) — moves a number, not the motor;
+// no-op when set and actual already match.
+fbSyncPos(Axis := Axis, Execute := bSyncExec,
+          Position := fMeasuredPos, Mode := FALSE);
+IF bSyncExec AND (fbSyncPos.Done OR fbSyncPos.Error) THEN
+    bSyncExec := FALSE;
+    IF bExtWant THEN
+        bEnableExec := TRUE;            // stage 2: engage the generator
+    END_IF
+END_IF
+
+fbExtEnable(
+    Axis         := Axis,
+    Execute      := bEnableExec,
+    Position     := fMeasuredPos,
+    PositionType := POSITIONTYPE_ABSOLUTE);
+IF bEnableExec AND (fbExtEnable.Enabled OR fbExtEnable.Error) THEN
+    bEnableExec := FALSE;               // one-shot: drop Execute once engaged
+END_IF
+
+// stage 3: re-anchor at the ACTUAL engagement instant. The start-edge anchor
+// is stale by the standstill-wait + sync + enable cycles; on a shaft that
+// crept meanwhile, feeding from the old anchor would step the command by the
+// drift in one cycle (F324). Anchoring here makes the first command exactly
+// the current position — step-free even on a still-moving shaft.
+rFeedOn(CLK := fbExtEnable.Enabled AND bExtWant);
+IF rFeedOn.Q THEN
+    fStartPos   := fMeasuredPos;
+    fValue0     := fRaw;        // shape continues from its current value
+    fPosAccum   := 0.0;         // VELOCITY: restart the integral here
+    fPrevExtPos := fMeasuredPos;
+END_IF
+
+IF fbExtEnable.Enabled AND bExtWant THEN
+    IF cfg.nDomain = DOM_POSITION THEN
+        // LREAL anchor + small REAL shape delta -> the delta survives the add
+        fExtPos := fStartPos + (fRaw - fValue0);
+        fExtVel := (fExtPos - fPrevExtPos) / MAX(fDt, 1E-6);   // numeric feed-forward
+    ELSE
+        // VELOCITY: position = start + integral; velocity = the value (0 in REST)
+        fExtPos := fStartPos + fPosAccum;
+        IF eState = ST_RUN THEN
+            fExtVel := fRaw;
+        ELSE
+            fExtVel := 0.0;
+        END_IF
+    END_IF
+    fPrevExtPos := fExtPos;
+
+    IF   fExtVel > 0.0 THEN nExtDir := 1;
+    ELSIF fExtVel < 0.0 THEN nExtDir := -1;
+    ELSE                    nExtDir := 0;
+    END_IF
+
+    // Function: copies into the cyclic axis interface (fExtSetPos/Velo/Acc/Dir).
+    MC_ExtSetPointGenFeed(
+        Position     := fExtPos,
+        Velocity     := fExtVel,
+        Acceleration := 0.0,
+        Direction    := nExtDir,
+        Axis         := Axis);
+ELSIF bExtWant THEN
+    // engagement pending (standstill wait / sync / enable in flight): scrub
+    // the mailbox every cycle so the NC's activation window can only ever
+    // see (current actual position, vel 0, Direction 0 = do not apply)
+    MC_ExtSetPointGenFeed(Position := fMeasuredPos, Velocity := 0.0,
+                          Acceleration := 0.0, Direction := 0, Axis := Axis);
+    fPrevExtPos := fMeasuredPos;
+ELSE
+    fPrevExtPos := fMeasuredPos;        // keep the derivative seed fresh while idle
+END_IF
+
+fbExtDisable(Axis := Axis, Execute := fExtOff.Q);
+
+//----------------------------------------------------------------------
+// STATUS
+//----------------------------------------------------------------------
+stProfile.fElapsed   := fElapsed;
+bRunning             := bWasActive;
+fSetpoint            := stProfile.fSetpoint;
+stProfile.bRunning   := bRunning;
+stProfile.bExtActive := fbExtEnable.Enabled;
+]]></ST>
+    </Implementation>
+    <Method Name="valueAt" Id="{2c8f5d39-8b47-4e69-a013-4d7b2f9c6e51}">
+      <Declaration><![CDATA[// Shape value at time fT [s] — closed-form, mirrors FB_TrajectoryGen.valueAt.
+// Reads the latched 'cfg' (FB-local), never the VAR_IN_OUT.
+METHOD valueAt : REAL
+VAR_INPUT
+    fT  : REAL;
+END_VAR
+VAR
+    fU  : REAL;
+END_VAR
+VAR CONSTANT
+    TWO_PI : REAL := 6.2831853;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE cfg.nShape OF
+
+0:  // Sinusoidal: offset + A * sin(2*pi*f*t)
+    valueAt := cfg.fOffset + cfg.fAmplitude * SIN(TWO_PI * cfg.fFrequency * fT);
+
+1:  // Trapezoidal: ramp start->peak / hold / ramp peak->start
+    IF fT < cfg.fAccelTime THEN
+        valueAt := cfg.fStartValue
+                 + (cfg.fPeakValue - cfg.fStartValue) * (fT / MAX(cfg.fAccelTime, 1E-6));
+    ELSIF fT < (cfg.fAccelTime + cfg.fSteadyTime) THEN
+        valueAt := cfg.fPeakValue;
+    ELSE
+        fU := (fT - cfg.fAccelTime - cfg.fSteadyTime) / MAX(cfg.fDecelTime, 1E-6);
+        IF fU > 1.0 THEN fU := 1.0; END_IF
+        valueAt := cfg.fPeakValue - (cfg.fPeakValue - cfg.fStartValue) * fU;
+    END_IF
+
+2:  // Step: start until step time, then end
+    IF fT < cfg.fStepTime THEN
+        valueAt := cfg.fStartValue;
+    ELSE
+        valueAt := cfg.fEndValue;
+    END_IF
+
+3:  // S-Curve: quintic smoothstep start->peak / hold / peak->start
+    IF fT < cfg.fAccelTime THEN
+        fU := fT / MAX(cfg.fAccelTime, 1E-6);
+        valueAt := cfg.fStartValue
+                 + (cfg.fPeakValue - cfg.fStartValue) * (fU*fU*fU*(10.0 + fU*(-15.0 + fU*6.0)));
+    ELSIF fT < (cfg.fAccelTime + cfg.fSteadyTime) THEN
+        valueAt := cfg.fPeakValue;
+    ELSE
+        fU := (fT - cfg.fAccelTime - cfg.fSteadyTime) / MAX(cfg.fDecelTime, 1E-6);
+        IF fU > 1.0 THEN fU := 1.0; END_IF
+        valueAt := cfg.fPeakValue
+                 - (cfg.fPeakValue - cfg.fStartValue) * (fU*fU*fU*(10.0 + fU*(-15.0 + fU*6.0)));
+    END_IF
+
+4:  // Ramp: linear start->end over duration
+    fU := fT / MAX(cfg.fDuration, 1E-6);
+    IF fU > 1.0 THEN fU := 1.0; END_IF
+    valueAt := cfg.fStartValue + (cfg.fEndValue - cfg.fStartValue) * fU;
+
+ELSE
+    valueAt := 0.0;
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,248 @@
+{
+ "schema": "analyst-criteria-delta/v5",
+ "slice": "E2-G1-v3-questions",
+ "role": "v2-analyst",
+ "date": "2026-10-21",
+ "base": {
+  "criteriaDeltaV4Md": "2b405938d002343a65afc73db8d2b83f172106462368121792c2539d70a60c04"
+ },
+ "sources": {
+  "scenarioDecisions": "ff59e2f8372c873926dce18a2e6551176e3a8de9a497f97c6a651cf9329ca645",
+  "spec": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472",
+  "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+  "reference": "4495a1f6049f6a58ebfd436761faa84d17c8d643",
+  "referenceSalGitBlobLF": "c5f0c0cea479f65e3a11fbe9cf2520a2b54d2cbf85602fd7a2cbab8e27132153",
+  "referenceSalPinnedCRLF": "efddc60b1263144ae73b3d5184158100ec09c4de739dc8919309ef7b1b0dc334",
+  "testerHelperRuleL": "9942ab6ea609bae4e14bc94abfdbc5c5ae823c1a2827df6e7fff3ecc9893a450",
+  "unlockHoldTest": "5d10186d05333ea4b0bc3f8806fd35999ddb055281b7bab4859ee4a07e4ca75b",
+  "head": "b580920"
+ },
+ "precedence": "v5 over v4 over deltaV3 over criteriaV2",
+ "criteria": [
+  {
+   "id": "UNL-04",
+   "change": "correction",
+   "status": "READY",
+   "ids": [
+    "CVR-001",
+    "CVR-002",
+    "CVR-003"
+   ],
+   "initial": {
+    "state": [
+     "Safe",
+     "R&D"
+    ],
+    "cover": [
+     "NC1 FALSE",
+     "NC2 FALSE",
+     "both FALSE",
+     "control closed"
+    ],
+    "in_Door_Monitor": true,
+    "estopOk": true,
+    "in_Estop_PLC": false,
+    "buttonsReleasedMs": 2000
+   },
+   "expected": "unchanged from v4: Unlock FALSE at s+499, TRUE by s+501 (s+500 observation), held while blue without green, release -> FALSE; green clears",
+   "source": [
+    "Q-ARCH-04 A (InterLock NC only)",
+    "Q-ARCH-10 A",
+    "reference 4495a1f Network2 FBAnd8/FBRs1",
+    "D-DOOR-INTERLOCK",
+    "SPEC 5 p6,p9"
+   ],
+   "note": "v4 \"Door TRUE/FALSE\" was an unsourced analyst generalisation"
+  },
+  {
+   "id": "UNL-05",
+   "change": "new",
+   "status": "READY",
+   "ids": [
+    "CVR-001",
+    "CVR-003",
+    "CVR-004",
+    "CVR-006"
+   ],
+   "initial": {
+    "state": [
+     "Safe (S)",
+     "R&D (R)"
+    ],
+    "in_Door_Monitor": false,
+    "doorFalseStableMsBefore": 2000,
+    "cover": [
+     "(a) NC1 FALSE",
+     "(b) NC2 FALSE",
+     "(c) both FALSE",
+     "(d) both TRUE control"
+    ],
+    "estopOk": true,
+    "in_Estop_PLC": false,
+    "buttonsReleasedMs": 2000,
+    "noEmergency": true,
+    "noSafetyFault": true
+   },
+   "inputs": [
+    {
+     "t": "s",
+     "blue": true,
+     "holdMs": [
+      1000,
+      3000
+     ]
+    },
+    {
+     "t": "s+hold",
+     "blue": false,
+     "observeAfterMs": 2000
+    }
+   ],
+   "expected": {
+    "everyScan": {
+     "out_Door_Unlock_Solonoeid": false,
+     "state": "unchanged",
+     "emergency": false,
+     "fault": false,
+     "safetyFault": false,
+     "transition": "none"
+    }
+   },
+   "forbidden": [
+    "Unlock TRUE in any scan"
+   ],
+   "boundaries": [
+    {
+     "case": "Door TRUE stable from s-1",
+     "expect": "UNL-04 (Unlock TRUE by s+501)"
+    },
+    {
+     "case": "Door FALSE only in scan s",
+     "expect": "observation"
+    }
+   ],
+   "doorDropDuringUnlockSafe": {
+    "initial": "UNL-04 Safe, Unlock TRUE, blue held",
+    "event": "Door FALSE at d>=s+600 (also with NC FALSE)",
+    "expected": "Unlock FALSE not later than d+1; FALSE at d allowed (observation); TRUE at d-1",
+    "source": "reference FBAnd8 order 100 after FBRs1 order 96"
+   },
+   "emergencyCombos": [
+    "Door FALSE + in_Estop_PLC TRUE same scan -> EMGREF, Unlock FALSE",
+    "Door FALSE + green -> Unlock FALSE"
+   ],
+   "blocked": {
+    "question": "Q-T3-2b",
+    "items": [
+     "Door back TRUE while blue still held (Safe): re-grant immediately or new qualification",
+     "Door FALSE during Unlock in R&D"
+    ],
+    "handling": "observation only"
+   },
+   "mutationsToKill": [
+    "remove Door from Safe reset (canonical N2/FBAnd8.AndIn1)",
+    "remove Door from R&D grant (canonical N12/FBAnd2 via FBAnd11)"
+   ],
+   "mutationNote": "variants (a)-(c) mandatory; (d) alone does not isolate Door when NC guard remains; block names are F1 reference, architect owns names",
+   "source": [
+    "reference 4495a1f Network2 FBAnd7/FBAnd8/FBRs1 (reset-dominant)",
+    "canonical F1 N2/FBAnd8, N12/FBAnd2/FBAnd3/FBAnd11/FBAnd17",
+    "D-DOOR-INTERLOCK",
+    "SPEC 5 p6,p9",
+    "CVR-004",
+    "CVR-006",
+    "Q-ARCH-04 as in reference",
+    "Q-ARCH-10 as in Safe"
+   ]
+  },
+  {
+   "id": "EMG-RD-L",
+   "change": "new (supplements rule L 0.1 v4; replaces tester assumption A11)",
+   "status": "READY-D (disjunction); branch choice BLOCKED Q-T3-1",
+   "ids": [
+    "EMG-001",
+    "EMG-011",
+    "EMG-002",
+    "EMG-004",
+    "EMG-006"
+   ],
+   "scope": [
+    "Run->R&D (STP-A/B: SS1, coast, discharge hold, C2_FBK OFF wait)",
+    "abort StartingRun (STP-E/I)",
+    "WDG-03 rollback",
+    "protective descent STP-G/H",
+    "R&D->Safe (MOD5-01)",
+    "Config rollback (E4)"
+   ],
+   "delOutputs": [
+    "STO_DR1",
+    "STO_DR2",
+    "out_HV_Discharge_Request",
+    "out_HV_C2",
+    "out_LV_C1"
+   ],
+   "definitions": {
+    "W_N": "[q_N, q_N+1] normative moment from the phase criterion without event (Run->R&D: STO t_a+2000; Discharge t_s+5000; C2 OFF t_d+T_DIS; t_s,t_d actual scans in the same event trace)",
+    "q_R": "tau of the same output for in_Estop_PLC in steady Run (L2/L3)",
+    "forbiddenSource": "q_N must NOT be taken from the observed no-event trace of the implementation (canonical normal stop is defective, E3); observed trace = diagnostic only"
+   },
+   "rules": [
+    "q_N >= e+q_R: literal L2/L1, Del in [e+q_R, e+q_R+1]",
+    "q_N < e+q_R: disjunction normative, branch -> t.diagnostic: (A) tau in W_N; (B) tau in [e+q_R, e+q_R+1]; anything else FAIL (tau in (q_N+1, e+q_R); tau < min(q_N, e+q_R); never)",
+    "one branch per trace for all such outputs; mixing A and B = FAIL",
+    "outputs not changed by the normal sequence (C3/BMS OFF, LV discharge, C1 OFF in Run->R&D): L1/L2 unchanged",
+    "output already at target before e: stays at target every scan >= e (EMGREF(2) for STO)",
+    "L4: Emergency status not later than first change of branch-(B) or rule-3 emergency outputs; changes within W_N not counted",
+    "final state, latch, EMGREF(1)(2), Restart -> Safe only: unchanged"
+   ],
+   "boundaries": [
+    "e=t_a-1 -> steady Run (L3)",
+    "e=t_a+1 -> EMG-RD-L",
+    "e=t_a observation",
+    "sweep e: t_a+1, t_a+1999, t_a+2001, t_s+4999, t_d+T_DIS-1, during C2_FBK OFF wait"
+   ],
+   "emergencyCombos": [
+    "e in scan q_N(STO) or q_N(Discharge) -> observation",
+    "e together with Healthy loss in SS1 (STP-D) -> Emergency priority, moments per EMG-RD-L"
+   ],
+   "afterAnswer": "A -> branch A only; B -> branch B only; other answer -> analyst revises",
+   "source": [
+    "CRITERIA_DELTA_v4 0.1 (rule L, analyst-derived)",
+    "v2-questions T1 p3 (Del lead >=2 = shortened timer)",
+    "SCENARIO_DECISIONS Run->R&D sequence clarification (STP-A)",
+    "SPEC 13",
+    "EMG-008/009 (analogy only)"
+   ]
+  }
+ ],
+ "answersToTester": {
+  "Q-T3-2": "answered from sources: Q-ARCH-04/10 concern only InterLock NC (F1 GATE_001 guard); Door keeps reference reset/grant role; UNL-04 restricted to Door TRUE; UNL-05 Door FALSE -> Unlock FALSE (Safe and R&D, any NC). current-unlock-hold.test.js line 54 consistent.",
+  "Q-T3-1": "A11 weakens the oracle: (1) only upper bound asserted, accepts delayed-but-not-to-chain moments wrong under both answers; (2) N taken from observed implementation trace (defective canonical normal stop). Replace by EMG-RD-L disjunction with normative q_N; branch choice -> question to Vadim."
+ },
+ "blocked": [
+  {
+   "what": "EMG-RD-L branch choice (A/B)",
+   "question": "Q-T3-1"
+  },
+  {
+   "what": "UNL-05 Door changes during held Unlock: Safe re-grant, R&D drop",
+   "question": "Q-T3-2b"
+  }
+ ],
+ "questions": [
+  {
+   "id": "Q-T3-1",
+   "priority": "medium",
+   "to": "Vadim",
+   "needBy": "G3 E3",
+   "recommendation": "A"
+  },
+  {
+   "id": "Q-T3-2b",
+   "priority": "low",
+   "to": "Vadim (optional)",
+   "blocks": "only Door changes during held Unlock"
+  }
+ ]
+}

@@ -1,0 +1,158 @@
+{
+  "gate": "G1",
+  "slice": "E2",
+  "revision": "v3",
+  "role": "v2-reviewer",
+  "date": "2026-10-21",
+  "verdict": "FAIL (return to tester N3-N7, analyst C-A1)",
+  "sources": {
+    "canonicalSal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "canonicalSgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "head": "b580920",
+    "scenarioDecisions": "ff59e2f8372c873926dce18a2e6551176e3a8de9a497f97c6a651cf9329ca645",
+    "criteriaDeltaV4Md": "2b405938d002343a65afc73db8d2b83f172106462368121792c2539d70a60c04",
+    "e2RunconfCriteriaMd": "9607276bce6f1bcd70e94da3c6251290e718b183fe99376c77b60b7baa801897",
+    "referencePinnedSal": "efddc60b1263144ae73b3d5184158100ec09c4de739dc8919309ef7b1b0dc334 (CRLF working tree; LF == blob c5f0c0ce...)",
+    "referenceSgvlCopy": "8020e3d679f97d4bff8e99742a71db0dec840fdc0adf48904cbeb0d056b5e757 (== git show 4495a1f blob)",
+    "criteriaDeltaV5Md": "29f4288f926ab2459f239ffe3414bbf94f5990d947efc1037c8c12e02ae29b47 (received during review)",
+    "criteriaDeltaV5Questions": "1d06963987389cc8c1c3bffff3f0203745d934619099c9f7fb31c397a4353d77"
+  },
+  "reviewerRuns": {
+    "e2": {
+      "tests": 380,
+      "PASS": 30,
+      "FAIL": 345,
+      "NV": 2,
+      "DIAG": 3,
+      "diffVsBaselineV3ByName": 0,
+      "tap": "repro/e2-rerun.tap"
+    },
+    "nonE2Current": {
+      "tests": 470,
+      "pass": 470,
+      "fail": 0,
+      "all461FromV2Present": true,
+      "tap": "repro/non-e2.tap"
+    },
+    "probes": [
+      "repro/rel01e-probe.mjs",
+      "repro/emgrefrun-ref-probe.mjs",
+      "repro/l3-canonical-split-probe.mjs (split: steady Run unreachable, no comparison)"
+    ]
+  },
+  "findings": [
+    {
+      "id": "N3",
+      "severity": "significant",
+      "owner": "tester",
+      "where": "test/helpers/e2-emergency.js:118 emergencyChecks fam run",
+      "text": "EMGREF-RUN requires no STS_RUN already at scan e (offset 0) and no b_Step3 after e+1; not in CRITERIA v2/v4, contradicts rule L (status Imm <= ref+1). Pinned reference 4495a1f fails it (STS_RUN at e, Emergency at +1). False RED for an anchor-conforming candidate in all StartingRun/Run/Run-down EMGREF-RUN tests.",
+      "due": "before G3; notify editor now"
+    },
+    {
+      "id": "N4",
+      "severity": "significant",
+      "owner": "tester (analyst for the reference trace)",
+      "where": "test/current-e2b-cover-transitions.test.js ruleL / N=u branch (ii)",
+      "text": "Profile pre = scan u-1 (STO active, C2 OFF) -> STO/C2 'n/a' -> moment of STO re-activation / C2 OFF after a transient release at u is unbounded until the end-state check at ~u+12000.",
+      "due": "before G3"
+    },
+    {
+      "id": "N5",
+      "severity": "significant",
+      "owner": "tester",
+      "where": "test/current-e2d-release-permit.test.js REL-01(e)",
+      "text": "Gesture held 2000 ms = only 700 ms after restoration; an implementation restarting the 1 s qualification after restoration passes. Add hold >= restoration+1000+margin (e.g. 3000 ms) and the both-connector variant.",
+      "due": "before G3"
+    },
+    {
+      "id": "N6",
+      "severity": "significant",
+      "owner": "tester",
+      "where": "test/helpers/e2-rule-l.js L2 relax (A11), e2-emergency.js noEvent/sweep NONE",
+      "text": "A11 weakens the oracle (only upper bound; shortened or partially delayed normal steps pass) and derives the relax trigger and L4 base from the observed no-event trace of the implementation (canonical normal stop is defective). Replace by EMG-RD-L (CRITERIA_DELTA v5 §2): normative q_N from STP-A/B, disjunction A/B, single branch per trace, mixing FAIL, sweep/boundaries.",
+      "due": "before re-G1"
+    },
+    {
+      "id": "N7",
+      "severity": "significant",
+      "owner": "tester",
+      "text": "UNL-05 (CRITERIA_DELTA v5 §1) not written: Door FALSE -> no Unlock in Safe/R&D with NC variants (a)-(d), Door drop during Unlock in Safe (<= d+1), emergency combinations.",
+      "due": "before re-G1"
+    },
+    {
+      "id": "C-A1",
+      "severity": "condition",
+      "owner": "analyst",
+      "text": "v5 resolved Q-T3-1 (as EMG-RD-L disjunction), Q-T3-2 (UNL-05), UNL-04 R&D. Still to record: RC-5/RC-6 READY under В in E2-runconf; L2 applicability in Safe; SS1 under Emergency; reference for N=u branch (ii)."
+    },
+    {
+      "id": "C3",
+      "severity": "closed",
+      "owner": "architect",
+      "text": "MUTATION_PLAN_E2a..d.json: 17 existing files, behaviouralTests ^E2[a-d] ."
+    },
+    {
+      "id": "m-1",
+      "owner": "analyst",
+      "text": "SS1 not covered by rule L (diagnostic only)."
+    },
+    {
+      "id": "m-2",
+      "owner": "tester",
+      "text": "N=u disjunction: NC2 variant missing."
+    },
+    {
+      "id": "m-3",
+      "owner": "tester",
+      "text": "REL-01(c) R&D 2001 ms boundary missing."
+    },
+    {
+      "id": "m-4",
+      "owner": "tester",
+      "text": "UNL-04 R&D green-pressed variant missing."
+    },
+    {
+      "id": "m-5",
+      "owner": "tester",
+      "text": "RC-6 20 ms HV flicker variant missing."
+    },
+    {
+      "id": "m-6",
+      "owner": "tester/stand",
+      "text": "HANDOFF_v3 harness 218/218 vs saved check-software-v3.out 227/227."
+    }
+  ],
+  "answers": {
+    "ruleL": "implemented per CRITERIA_DELTA_v4 §0.1; A10 removed; L3 anchor justified by reference code (Network2/FBTon3 2.0 s entry to Step2->Run; Network7 2 s/5 s, Network8 1 s chain); A12 reproduces the reference's own start sequence, not fitting",
+    "A11": "weakens the oracle (agreeing with analyst v5): upper bound only and relax/L4 base taken from the implementation no-event trace -> N6, replace by EMG-RD-L",
+    "IL02_IL05a_Nu": "disjunction correct per §C, except N4",
+    "REL01": "(b)(c)(d) derived from criteria; (e) RED correctly derived (canonical executes the held gesture, C1 ON p+1503); N5",
+    "UNL04": "UNL-04 tests are Door TRUE, consistent with v5; UNL-05 missing -> N7",
+    "RUNCONF": "RC-1..RC-7 correct under 'В'",
+    "minors": "M-a, m-b, m-c, m-d closed; m-e added",
+    "EMG6_01_PLC_Safe": "correct RED by coverage (L2 is the only bound on the status moment; counting PASS would weaken); analyst to confirm L2 in Safe",
+    "nonE2": "470/470 unchanged"
+  },
+  "limits": "Program SAL model only; no native CRC/Verify/Target/hardware; no mutation run (no candidate); probes are diagnostics.",
+  "returnTo": {
+    "tester": [
+      "N3",
+      "N4",
+      "N5",
+      "N6",
+      "N7",
+      "m-2..m-6"
+    ],
+    "analyst": [
+      "C-A1",
+      "m-1",
+      "N4 reference"
+    ],
+    "lead": [
+      "Q-T3-1 to Vadim",
+      "REL-01(e) canonical defect to editor/architect",
+      "warn editor about N3/N6"
+    ]
+  }
+}

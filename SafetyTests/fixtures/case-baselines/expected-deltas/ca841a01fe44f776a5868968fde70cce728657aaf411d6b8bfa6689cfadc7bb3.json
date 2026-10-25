@@ -1,0 +1,284 @@
+{
+  "version": "expected-deltas-v1",
+  "label": "candidate E2-R1 native (ca841a01) vs pinned F1 baseline",
+  "source": {
+    "salSha256": "ca841a01fe44f776a5868968fde70cce728657aaf411d6b8bfa6689cfadc7bb3",
+    "sgvlSha256": "4f205138337ea3de3660d5ef2d8978db438e3e8d19f2e9dd393ec7a5816cdb36",
+    "diagramSha256": "b82aa41a6ee065267852d78ccaff961714eca1e8e8c006f087de715fb2a137b6",
+    "candidate": "SafetyTests/candidates/E2-R1/native/"
+  },
+  "baseline": {
+    "casesFileSha256": "93aa3d81774d977ee2421f37cca728f67843f7b9a3d3f5f70f2d1a78341b9d29",
+    "testsFileSha256": "f75461bb30fb7675b6f38fa95405998709536cb662b2ba062037ee68e29546e0",
+    "cases": "fixtures/case-baselines/F1-04b45456.cases.json",
+    "tests": "fixtures/case-baselines/F1-04b45456.tests.json"
+  },
+  "approval": {
+    "status": "DRAFT",
+    "by": null,
+    "date": null,
+    "note": "черновик, не утверждён: proposed by v2-stand-engineer E2-R1-stand-2 2026-10-21; lead approval required (set status APPROVED, by, date). Until then it explains nothing for the exit code. | E2a-rename 2026-10-22: +4 STATE case-not-applicable entries with replacedBy (A4-3), still DRAFT; they change no status until approved. | lead 2026-10-22: STATE:Run-RnD NOT replaced on R1 (executes PASS there); entry removed. Approval of R1/E2a drafts only at G3/G4 of the slice after test migration."
+  },
+  "cases": [
+    {
+      "kind": "case-missing",
+      "id": "TIMER://Network5/FBTon1",
+      "reason": "R1 removes Network5 entirely incl. FBTon1..4 (architect E2-status PLAN R1 slice; editor program/editor/E2-R1/HANDOFF.md 'Сделано' п.1, S15). TIMER case is generated per safeTon of the source.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-missing",
+      "id": "TIMER://Network5/FBTon2",
+      "reason": "R1 removes Network5 entirely incl. FBTon1..4 (architect E2-status PLAN R1 slice; editor program/editor/E2-R1/HANDOFF.md 'Сделано' п.1, S15). TIMER case is generated per safeTon of the source.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-missing",
+      "id": "TIMER://Network5/FBTon3",
+      "reason": "R1 removes Network5 entirely incl. FBTon1..4 (architect E2-status PLAN R1 slice; editor program/editor/E2-R1/HANDOFF.md 'Сделано' п.1, S15). TIMER case is generated per safeTon of the source.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-missing",
+      "id": "TIMER://Network5/FBTon4",
+      "reason": "R1 removes Network5 entirely incl. FBTon1..4 (architect E2-status PLAN R1 slice; editor program/editor/E2-R1/HANDOFF.md 'Сделано' п.1, S15). TIMER case is generated per safeTon of the source.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-missing",
+      "id": "BOOT:UNSUPPORTED_UNBOUND_PROGRAM_INPUT",
+      "reason": "Not a planned removal: BOOT preflight rejects a source absent from BOOT_PREFLIGHT_SOURCE_MANIFEST.json (S12, pinned to F1) and emits BOOT:SOURCE_REJECTED (NEW, ERROR) instead of the NV capability cases. Expected to reappear after the manifest is regenerated for the adopted source (tester/lead). Lead to decide whether this is an acceptable explanation or must stay unexplained.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-missing",
+      "id": "BOOT:UNSUPPORTED_GROUP_LIFECYCLE",
+      "reason": "Not a planned removal: BOOT preflight rejects a source absent from BOOT_PREFLIGHT_SOURCE_MANIFEST.json (S12, pinned to F1) and emits BOOT:SOURCE_REJECTED (NEW, ERROR) instead of the NV capability cases. Expected to reappear after the manifest is regenerated for the adopted source (tester/lead). Lead to decide whether this is an acceptable explanation or must stay unexplained.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:NC1:fallback=false",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:NC1:fallback=true",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:PLC:fallback=false",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:PLC:fallback=true",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:NC2:fallback=false",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:NC2:fallback=true",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:Mentee:fallback=false",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:Mentee:fallback=true",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:LVConnector:fallback=false",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:LVConnector:fallback=true",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:HVConnector:fallback=false",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:HVConnector:fallback=true",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:ExternalNC1:fallback=false",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:ExternalNC1:fallback=true",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:ExternalNC2:fallback=false",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "PRIORITY:Step2:ExternalNC2:fallback=true",
+      "reason": "R1 removes N3/FBRs2 (Step2 state RS) and Symbol b_Step2 (editor E2-R1 HANDOFF п.1). NOTE: current architect PLAN.md (v4) §8 keeps FBRs2 for the F1 rebase; R1 candidate follows PLAN v2 R1 slice.",
+      "proposedBy": "v2-stand-engineer"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "STATE:Safe-RnD-Run",
+      "replacedBy": [
+        "E2-01",
+        "E2-02",
+        "E2-03"
+      ],
+      "decision": "A4-3 (architect program/architect/E2-status/PLAN.v5.md §3.1; PLAN.md §3 addendum 'STATE:Run-RnD PASS→FAIL'), analyst+architect decision relayed by lead 2026-10-22",
+      "reason": "Old Network3 injection points (b_Step1_Set) removed in R1; the R1/E2 stage ring is covered by E2-01 (per-scan <=1 stage / exactly 1 status), E2-02, E2-03 (structural). On R1 the case executes as ERROR INJECTION_POINT_MISSING.",
+      "proposedBy": "v2-stand-engineer E2a-rename 2026-10-22"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "STATE:Emergency-removal",
+      "replacedBy": [
+        "E2-01",
+        "E2-02",
+        "E2-03"
+      ],
+      "decision": "A4-3 (architect program/architect/E2-status/PLAN.v5.md §3.1; PLAN.md §3 addendum 'STATE:Run-RnD PASS→FAIL'), analyst+architect decision relayed by lead 2026-10-22",
+      "reason": "Old injection points (b_Step3_Set_3, b_Step1_Set_2) removed in R1; replaced by E2-01/E2-02/E2-03 (A4-3). On R1 the case executes as ERROR INJECTION_POINT_MISSING.",
+      "proposedBy": "v2-stand-engineer E2a-rename 2026-10-22"
+    },
+    {
+      "kind": "case-not-applicable",
+      "id": "STATE:conflicting-set-requests",
+      "replacedBy": [
+        "E2-01",
+        "E2-02",
+        "E2-03"
+      ],
+      "decision": "A4-3 (architect program/architect/E2-status/PLAN.v5.md §3.1; PLAN.md §3 addendum 'STATE:Run-RnD PASS→FAIL'), analyst+architect decision relayed by lead 2026-10-22",
+      "reason": "Old injection point b_Step1_Set_2 removed in R1; replaced by E2-01/E2-02/E2-03 (A4-3). On R1 the case executes as ERROR INJECTION_POINT_MISSING.",
+      "proposedBy": "v2-stand-engineer E2a-rename 2026-10-22"
+    }
+  ],
+  "tests": {
+    "harness": [
+      {
+        "name": "OBS-TON //Network5/FBTon1 fixed1: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon2 fixed1: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon3 fixed1: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon4 fixed1: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon1 fixed2: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon2 fixed2: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon3 fixed2: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon4 fixed2: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon1 fixed5: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon2 fixed5: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon3 fixed5: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon4 fixed5: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon1 fixed10: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon2 fixed10: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon3 fixed10: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "OBS-TON //Network5/FBTon4 fixed10: observed-edge boundary, interruption and rehold",
+        "reason": "S15b: test/timer-observed-clock.test.js generates OBS-TON per safeTon of the source; R1 removes Network5/FBTon1..4.",
+        "proposedBy": "v2-stand-engineer"
+      },
+      {
+        "name": "S14: unwritten observed phase Symbol makes STATE and PRIORITY cases ERROR, not PASS",
+        "reason": "Stand self-test (test/stand-case-guards.test.js) renamed to 'S14/D1: removed phase Symbol is observed at its state RS output, not turned into ERROR or vacuous PASS': lead decision 1 (E2-R1-stand-2) replaces the Symbol observation rule it asserted. Not a SAL/requirement test.",
+        "proposedBy": "v2-stand-engineer"
+      }
+    ],
+    "historical": [],
+    "current": []
+  },
+  "notExplained": "The 84 MISSING current-* tests on R1 come from 8 test files that fail at load on the R1 SHA pins (S2, tester). They are deliberately NOT in this file: they are a test-migration gap, not a planned removal."
+}

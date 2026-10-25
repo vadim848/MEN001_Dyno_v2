@@ -5,20 +5,22 @@ import {readBindingXml} from '../../src/sal-binding-validator.js';
 import {effectiveEstopInputs,SAL_NATIVE_PAIR_CONTRACT} from '../../src/estop-native-pairs.js';
 import {SalRuntime,SAL_CLOCK_CONTRACT} from '../../src/sal-runtime.js';
 import {ObservedSamples} from '../../src/observed-samples.js';
+import {withActualNames} from '../../src/signal-names.js';
 const source=new URL('../../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',import.meta.url);
 const sgvl=new URL('../../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl',import.meta.url);
 const phases=['b_Step1','b_Step2','b_Step3','b_Step4','b_Step5','b_Step6','b_Step12','b_Step_RnD'];
+// G1 v6: D-ARCH-POL-RENAME keys written with the renamed names and mapped to the actual SAL names (stand src/signal-names.js); raw values unchanged (FALSE = healthy).
 const rawCommon={in_ES_NC_1:true,in_ES_NC_2:true,in_InterLock_NC_1:true,in_InterLock_NC_2:true,
  in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,in_Mentee_EStop:false,in_Estop_PLC:false,in_False_SI2_CH8:false,
  in_Reset_PB:false,in_Relase_Door_PB:false,in_Door_Monitor:true,in_Safety_Run:false,inPLC_RnD_Mode:false,inPLC_RnD_Mode_2:false,inPLC_BypassC1C2:false,
- in_LV_Healthy_FBK:false,in_HV_Healthy_FBK:false,in_C3_Manual_Set:false,in_C3_Manual_Reset:false,in_RBM_Manual_Set:false,in_RBM_Manual_Reset:false};
+ in_LV_Faulty_FBK:false,in_HV_Faulty_FBK:false,in_C3_Manual_Set:false,in_C3_Manual_Reset:false,in_RBM_Manual_Set:false,in_RBM_Manual_Reset:false};
 const rootSignals={safeBlue:'b_Set_Door_Unlock',rndBlue:'b_Set_Door_Unlock_1',safeUp:'b_Step12_Set',safeTransition:'b_Set_Transition_1',safeLockRequest:'b_SetLock_ResetPB_1',
  runResetSto1:'b_Reset_STO_DR1_4',runResetSto2:'b_Reset_STO_DR2_4',runDischarge:'b_Set_HV_Discharge_Request_3',runResetHv:'b_Reset_HV_C2_4',
  laterStep12:'b_Step12_Set_2',laterLockRequest:'b_SetLock_ResetPB_3',lock:'b_ResetPB_Lock',estop:'b_EStop_Ok',
  lv:'out_LV_C1',hv:'out_HV_C2',sto1:'STO_DR1',sto2:'STO_DR2',unlock:'out_Door_Unlock_Solonoeid',
  lvDischarge:'out_LV_Discharge_Request',hvDischarge:'out_HV_Discharge_Request',plcSto1:'outPLC_STO_1',plcSto2:'outPLC_STO_2',
  safeBoth:'//RndPhysicalCompact/BOTH/TonOut',safeTonQ:'//RndPhysicalCompact/BOTH/TonOut',safeReady:'//Network2/FBAnd3/AndOut',safeGate:'//Network2/FBAnd4/AndOut',
- safePlc:'//Network2/FBAnd91/AndOut',runPlc:'//Network6/FBAnd17/AndOut',runTonQ:'//Network6/FBTon2/TonOut',runQualifier:'//Network6/FBAnd24/AndOut',
+ safePlc:'//Network2/FBAnd91/AndOut',runPlc:'//Network6/FBAnd17/AndOut',runTonQ:'//RndPhysicalCompact/GREEN/TonOut',runQualifier:'//Network6/FBAnd24/AndOut',
  grant:'//Network1/FBRs6/RsOut',grantSet:'//Network1/FBOr4/OrOut',grantReset:'//Network1/FBOr3/OrOut',runAggregate:'//Network6/FBOr5/OrOut'};
 const hash=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const walk=n=>[n,...n.children.flatMap(walk)];
@@ -30,8 +32,8 @@ export function createSafeRunFixture(mode,{scanMs=1,rawOverrides={}}={}){
  const add=(name,path)=>{if(!writers.has(name))writers.set(name,[]);writers.get(name).push(path);};
  for(const v of model.variables){for(const p of v.sourcePorts)add(v.name,p);for(const p of v.targetPorts)targets.set(p,v);}
  for(const b of all)for(const p of b.outputs)for(const g of p.globals)add(g.resolvedName,p.path);
- const raw={...rawCommon,in_LV_C1_FBK:mode==='Run',in_HV_C2_FBK:mode==='Run',in_STO_DR1_FBK:mode==='Safe',in_STO_DR2_FBK:mode==='Safe'};
- for(const [name,value]of Object.entries(rawOverrides)){if(!Object.hasOwn(raw,name)||typeof value!=='boolean')throw Error('Not a given raw input '+name);raw[name]=value;}
+ const raw={...withActualNames(model,rawCommon),in_LV_C1_FBK:mode==='Run',in_HV_C2_FBK:mode==='Run',in_STO_DR1_FBK:mode==='Safe',in_STO_DR2_FBK:mode==='Safe'};
+ for(const [name,value]of Object.entries(withActualNames(model,rawOverrides))){if(!Object.hasOwn(raw,name)||typeof value!=='boolean')throw Error('Not a given raw input '+name);raw[name]=value;}
  const runPhysical=ports.get('//Network6/FBOr5/OrIn1')?.sources;
  if(runPhysical?.length!==1||!outputOwners.has(runPhysical[0]))throw Error('Actual Run physical consumer source missing');
  const signals={...rootSignals,runPhysical:runPhysical[0]},demandedOutputs=new Set(),demandedInputs=new Set(),selected=new Set(),pending=[];
@@ -63,7 +65,7 @@ export function createSafeRunFixture(mode,{scanMs=1,rawOverrides={}}={}){
  r.setInputs({...raw,...Object.fromEntries(phases.map(p=>[p,false]))});
  const clock=new ObservedSamples(r,scanMs),frames=[],setup=[],transitions=[],rises=Object.fromEntries(Object.keys(signals).map(k=>[k,0]));
  let previous=Object.fromEntries(Object.keys(signals).map(k=>[k,false])),preparing=true,consumed={};
- const evaluate=r.evaluate.bind(r);r.evaluate=(b,dt)=>{for(const [key,path]of Object.entries({safeTonInput:'//RndPhysicalCompact/BOTH/TonIn',runTonInput:'//Network6/FBTon2/TonIn',runConsumedQualifier:'//Network6/FBAnd23/AndIn1'})){const p=ports.get(path);if(p&&b.inputs.some(i=>i.path===path))consumed[key]=r.readRaw(p);}return evaluate(b,dt);};
+ const evaluate=r.evaluate.bind(r);r.evaluate=(b,dt)=>{for(const [key,path]of Object.entries({safeTonInput:'//RndPhysicalCompact/BOTH/TonIn',runTonInput:'//RndPhysicalCompact/GREEN/TonIn',runConsumedQualifier:'//Network6/FBAnd23/AndIn1'})){const p=ports.get(path);if(p&&b.inputs.some(i=>i.path===path))consumed[key]=r.readRaw(p);}return evaluate(b,dt);};
  const scan=r.scan.bind(r);r.scan=dt=>{consumed={};scan(dt);const current=Object.fromEntries(Object.entries(signals).map(([k,v])=>[k,r.get(v)]));
   const frame={timeMs:clock.timeMs+dt,signals:current,consumed:{...consumed},raw:Object.fromEntries(Object.keys(raw).map(k=>[k,r.get(k)])),phases:Object.fromEntries(phases.map(k=>[k,r.get(k)]))};
   if(preparing)setup.push(frame);else{frames.push(frame);for(const k of Object.keys(signals))if(current[k]&&!previous[k])rises[k]++;if(Object.keys(signals).some(k=>current[k]!==previous[k]))transitions.push(frame);}previous=current;return r;};

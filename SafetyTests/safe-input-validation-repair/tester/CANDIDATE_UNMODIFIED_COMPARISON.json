@@ -1,0 +1,92 @@
+{
+  "status": "FAIL",
+  "sha256": "59bf4ec1fe83d49f50b32ea89a230f42a1f18cb20122649cf5c4de435d552c33",
+  "sgvlSha256": "c31e129072e2837234e376e51038ff988a92373cbfea97b383fbf23536c7946b",
+  "reportSha256": "0805f20f81bc39bb0a3b07490dd3fad9b7edf8a1dafbf324bd5fa26bea3cf9c3",
+  "stages": [
+    {
+      "name": "harness",
+      "status": "ERROR",
+      "counts": {
+        "tests": 189,
+        "pass": 183,
+        "fail": 6,
+        "skipped": 0
+      },
+      "failures": [
+        "BOOT preflight owns fresh full-source parsing, all native inventory and exact two unsupported categories",
+        "BOOT Network4 lists eight unbound native inputs, seven precise phase writers/readers, unused channel8",
+        "BOOT declared RunStop/ErrAck are typed connections, not inferred group RUN or main Restart",
+        "BOOT accepts matching relocated file pairs, portable LF/CRLF without dropping any source attributes",
+        "BOOT file mutation rejected: alter full-source metadata revision",
+        "BOOT rejects an unsupported adapter revision rather than inventing group capability"
+      ]
+    },
+    {
+      "name": "historical",
+      "status": "PASS",
+      "counts": {
+        "tests": 75,
+        "pass": 75,
+        "fail": 0,
+        "skipped": 0
+      },
+      "failures": []
+    },
+    {
+      "name": "current",
+      "status": "FAIL",
+      "counts": {
+        "tests": 366,
+        "pass": 354,
+        "fail": 12,
+        "skipped": 0
+      },
+      "failures": [
+        "test\\\\current-door-interlock.test.js",
+        "test\\\\current-early-sto-bindings.test.js",
+        "test\\\\current-hv-set-permit.test.js",
+        "MENTEE05 original Safe/Run protections, diagnostic alias and inactive main EStop port remain unchanged",
+        "test\\\\current-native-bindings.test.js",
+        "test\\\\current-rnd-compact.test.js",
+        "SR-RG-INVALID-green-remain-green failed chord cannot degrade",
+        "SR-RG-INVALID-blue-remain-green failed chord cannot degrade",
+        "test\\\\current-step12-lv-permit.test.js",
+        "UNLOCK07 current PLC stop uses native inverted alias usage, not a fake global",
+        "test\\\\current-unlock-hold.test.js",
+        "test\\\\current-v2-migration-negatives.test.js"
+      ]
+    }
+  ],
+  "summary": {
+    "PASS": 200,
+    "FAIL": 1,
+    "NOT VERIFIED": 5,
+    "ERROR": 1
+  },
+  "checks": [
+    {
+      "name": "all stage files counts and statuses preserved",
+      "status": "FAIL",
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    {\n      counts: {\n+       fail: 6,\n+       pass: 183,\n-       fail: 0,\n-       pass: 189,\n        skipped: 0,\n        tests: 189\n      },\n      files: [\n        'boot-preflight.test.js',\n...\n      name: 'harness',\n+     status: 'ERROR'\n-     status: 'PASS'\n    },\n    {\n      counts: {\n        fail: 0,\n        pass: 75,\n...\n      counts: {\n+       fail: 12,\n+       pass: 354,\n-       fail: 2,\n-       pass: 440,\n        skipped: 0,\n+       tests: 366\n-       tests: 442\n      },\n      files: [\n        'current-door-interlock.test.js',\n        'current-early-sto-bindings.test.js',\n        'current-early-sto.test.js',\n"
+    },
+    {
+      "name": "exact two old failed tests preserved",
+      "status": "FAIL",
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n+   [\n+     'BOOT preflight owns fresh full-source parsing, all native inventory and exact two unsupported categories',\n+     'BOOT Network4 lists eight unbound native inputs, seven precise phase writers/readers, unused channel8',\n+     'BOOT declared RunStop/ErrAck are typed connections, not inferred group RUN or main Restart',\n+     'BOOT accepts matching relocated file pairs, portable LF/CRLF without dropping any source attributes',\n+     'BOOT file mutation rejected: alter full-source metadata revision',\n+     'BOOT rejects an unsupported adapter revision rather than inventing group capability'\n+   ],\n    [],\n-   [],\n    [\n+     'test\\\\\\\\current-door-interlock.test.js',\n+     'test\\\\\\\\current-early-sto-bindings.test.js',\n+     'test\\\\\\\\current-hv-set-permit.test.js',\n+     'MENTEE05 original Safe/Run protections, diagnostic alias and inactive main EStop port remain unchanged',\n+     'test\\\\\\\\current-native-bindings.test.js',\n+     'test\\\\\\\\current-rnd-compact.test.js',\n      'SR-RG-INVALID-green-remain-green failed chord cannot degrade',\n      'SR-RG-INVALID-blue-remain-green failed chord cannot degrade',\n+     'test\\\\\\\\current-step12-lv-permit.test.js',\n+     'UNLOCK07 current PLC stop uses native inverted alias usage, not a fake global',\n+     'test\\\\\\\\current-unlock-hold.test.js',\n+     'test\\\\\\\\current-v2-migration-negatives.test.js'\n    ]\n  ]\n"
+    },
+    {
+      "name": "summary and all 208 case statuses preserved",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n\n207 !== 208\n"
+    },
+    {
+      "name": "all observations failures and assumptions preserved",
+      "status": "FAIL",
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    {\n      id: 'ACC-B01-R',\n      observationsAndStateSha256: '421d2e9bb1f86e264e0baec629e4f0f58bccb7004a8b13317176b1eb621c4da1',\n      status: 'PASS'\n...\n    {\n+     id: 'BOOT:SOURCE_REJECTED',\n+     observationsAndStateSha256: 'bfd0cbe7baae25e3be361685b757fe3d24e5b264b3d723e617bcb789a164e917',\n+     status: 'ERROR'\n-     id: 'BOOT:UNSUPPORTED_UNBOUND_PROGRAM_INPUT',\n-     observationsAndStateSha256: '41ea2d5fec84d11eb1e8e88deb29005b250cc1ce67148efcf314e6809041f4e0',\n-     status: 'NOT VERIFIED'\n    },\n-   {\n-     id: 'BOOT:UNSUPPORTED_GROUP_LIFECYCLE',\n-     observationsAndStateSha256: '66be00f50e7c0979ee0be54d2471f093eff4a237771895a3241c70a4f4d9369c',\n-     status: 'NOT VERIFIED'\n-   }\n  ]\n"
+    }
+  ],
+  "limits": [
+    "Software regression only, not compiler/safe-source validation, IDE Verify/Build or target reachability. Existing failures are preserved, not accepted as fixed."
+  ]
+}

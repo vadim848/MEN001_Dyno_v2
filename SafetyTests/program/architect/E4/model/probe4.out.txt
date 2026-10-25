@@ -1,0 +1,11 @@
+a Bypass held(open-ish)+S2R edge: status, C1, FAULT  ["SAFE",false,true]
+a  after 990 ms all FALSE: FAULT                     true
+a  after 1020 ms: FAULT                              false
+b BOTH + Bypass edge while pressed: status, C1, C2   ["RND",true,false]
+c Config: status, C1, C2, STO(torque off), LVDis, HVDis ["CFG",true,true,true,false,false]
+c  EStop in Config -> status, C1, C2                 ["EMG",false,false]
+c  Restart (Bypass still TRUE) -> status             SAFE
+d heartbeat stop in Config -> EMG at +ms             2779
+e exit: HVDis set, C2 off, C1 off, LVDis set, SAFE (+ms) [2,1003,1003,1002,1025]
+f SU + RUN2R edge with R2S TRUE: STO at, C2 off at, status, FAULT [3,1003,"RND",false]
+g PLC Run->R&D in SS1, NC1 lost: status              ["RND","no EMG"]

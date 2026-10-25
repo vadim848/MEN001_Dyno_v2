@@ -1,0 +1,273 @@
+{
+  "sourceSha256": "ffd6c64e567131cb4fd5c4dd58816e0e5e8bb4f60777142d7959d9cc591ef0d1",
+  "plan": [
+    {
+      "from": "//Network1/FBRs1/RsOut",
+      "targets": [
+        "//Network12/FBAnd15/AndIn3"
+      ],
+      "existingAlias": [
+        {
+          "Id": "af138469-87b7-4db9-b52a-6c7a34a72ec3",
+          "name": "out_LV_C1",
+          "isLocal": "false",
+          "sourcePorts": [
+            "//Network1/FBRs1/RsOut"
+          ],
+          "targets": [
+            "//Network1/FBAnd5/AndIn2",
+            "//Network1/FBAnd7/AndIn2"
+          ]
+        }
+      ],
+      "existingGlobal": [],
+      "mechanism": "reuse-sal-symbol",
+      "symbolName": "out_LV_C1",
+      "wireIds": [
+        "7294795b-f7a7-41ad-9b14-ddc98707d42b"
+      ]
+    },
+    {
+      "from": "//Network1/FBRs2/RsOut",
+      "targets": [
+        "//Network12/FBAnd15/AndIn4"
+      ],
+      "existingAlias": [
+        {
+          "Id": "bb93ca04-6113-4658-aa2b-910b225f10e1",
+          "name": "out_HV_C2",
+          "isLocal": "false",
+          "sourcePorts": [
+            "//Network1/FBRs2/RsOut"
+          ],
+          "targets": [
+            "//Network1/FBAnd6/AndIn2",
+            "//Network1/FBAnd8/AndIn2"
+          ]
+        }
+      ],
+      "existingGlobal": [],
+      "mechanism": "reuse-sal-symbol",
+      "symbolName": "out_HV_C2",
+      "wireIds": [
+        "665425c0-8a82-45e8-b80a-5ae53d797d8b"
+      ]
+    },
+    {
+      "from": "//Network1/FBAndLvCurrentPermit/AndOut",
+      "targets": [
+        "//SafeResumption/SAFE_UP_SCOPE/AndIn3",
+        "//Network12/FBAnd15/AndIn6"
+      ],
+      "existingAlias": [],
+      "existingGlobal": [],
+      "mechanism": "new-sal-symbol",
+      "symbolName": "linkLvCurrentPermit",
+      "wireIds": [
+        "033a6394-82a4-4747-8851-eb054e7da949",
+        "dca9f6ab-91d6-46c3-8e58-54b3a6bbfbf0"
+      ]
+    },
+    {
+      "from": "//Network2/FBAnd4/AndOut",
+      "targets": [
+        "//SafeResumption/SAFE_ACCEPTED_UP/Set"
+      ],
+      "existingAlias": [],
+      "existingGlobal": [],
+      "mechanism": "new-sal-symbol",
+      "symbolName": "linkSafeAcceptedUpSet",
+      "wireIds": [
+        "d2a58d62-7e82-42e1-ad35-2ceaef1286ec"
+      ]
+    },
+    {
+      "from": "//RndPhysicalCompact/GATE_001/AndOut",
+      "targets": [
+        "//SafeResumption/RND_SCOPE/AndIn1",
+        "//SafeResumption/SAFE_UP_SCOPE/AndIn1"
+      ],
+      "existingAlias": [],
+      "existingGlobal": [],
+      "mechanism": "new-sal-symbol",
+      "symbolName": "linkRndGatePermit",
+      "wireIds": [
+        "730e3286-a55a-4597-b234-8d4f2e1ec1c2",
+        "77cf73ab-8b22-40f4-8131-5149a179d7a3"
+      ]
+    },
+    {
+      "from": "//RndPhysicalCompact/GREEN/TonOut",
+      "targets": [
+        "//SafeResumption/SG_OWNER_SET/AndIn1"
+      ],
+      "existingAlias": [],
+      "existingGlobal": [],
+      "mechanism": "new-sal-symbol",
+      "symbolName": "linkRndGreenQualified",
+      "wireIds": [
+        "7c9a3841-b398-4b3b-ad97-8320c1e47cd8"
+      ]
+    },
+    {
+      "from": "//RndPhysicalCompact/BOTH/TonOut",
+      "targets": [
+        "//Network2/FBAnd4/AndIn1"
+      ],
+      "existingAlias": [],
+      "existingGlobal": [],
+      "mechanism": "new-sal-symbol",
+      "symbolName": "linkRndBothQualified",
+      "wireIds": [
+        "99a9bfdb-8372-4390-9ced-276f871eff23"
+      ]
+    },
+    {
+      "from": "//RndPhysicalCompact/STATE_SG/RsOut",
+      "targets": [
+        "//Network12/FBOr2/OrIn1"
+      ],
+      "existingAlias": [],
+      "existingGlobal": [
+        {
+          "Id": "18a30c52-330c-495d-b31c-e24fd11f9fba",
+          "variableId": "83760054-a3ce-0767-904f-b51b255819a5",
+          "lastKnownPath": "GVL1.recRndC_SG"
+        }
+      ],
+      "mechanism": "reuse-sgvl-symbol",
+      "symbolName": "GVL1.recRndC_SG",
+      "wireIds": [
+        "bb18c869-abd7-4755-8fee-1ab5f6f4062c"
+      ]
+    },
+    {
+      "from": "//RndPhysicalCompact/STATE_SU/RsOut",
+      "targets": [
+        "//Network12/FBOr1/OrIn1",
+        "//Network1/FBOr8/OrIn3",
+        "//Network1/FBOr10/OrIn3"
+      ],
+      "existingAlias": [],
+      "existingGlobal": [
+        {
+          "Id": "8dd14942-3979-4ce8-b432-f34993586e28",
+          "variableId": "898bf9e2-c89d-991e-d7a9-a74690a9a01b",
+          "lastKnownPath": "GVL1.recRndC_SU"
+        }
+      ],
+      "mechanism": "reuse-sgvl-symbol",
+      "symbolName": "GVL1.recRndC_SU",
+      "wireIds": [
+        "81338d90-868c-40b4-b792-c92cac7764bc",
+        "6195cba2-d29a-42db-82d4-37981789840d",
+        "420c2e16-0d9a-fc60-a314-13d24d2c3c90"
+      ]
+    },
+    {
+      "from": "//RndPhysicalCompact/STATE_BA/RsOut",
+      "targets": [
+        "//Network12/FBAnd2/AndIn2",
+        "//Network2/FBAnd7/AndIn2"
+      ],
+      "existingAlias": [],
+      "existingGlobal": [
+        {
+          "Id": "5317e217-65cc-4c8e-8f32-158d7be524e6",
+          "variableId": "927bc8e4-7201-3c01-f7ac-e977120c1138",
+          "lastKnownPath": "GVL1.recRndC_BA"
+        }
+      ],
+      "mechanism": "reuse-sgvl-symbol",
+      "symbolName": "GVL1.recRndC_BA",
+      "wireIds": [
+        "5cb9f9e9-8e30-4acf-b7ee-6894f9e7952a",
+        "9749037e-b5b5-416d-b9ce-d5589f087cfc"
+      ]
+    },
+    {
+      "from": "//SafeResumption/MODE/OrOut",
+      "targets": [
+        "//RndPhysicalCompact/GATE_001/AndIn1"
+      ],
+      "existingAlias": [],
+      "existingGlobal": [],
+      "mechanism": "new-sal-symbol",
+      "symbolName": "linkSafeMode",
+      "wireIds": [
+        "ac4882f5-a158-4e84-8f1c-5c9c1caae470"
+      ]
+    },
+    {
+      "from": "//SafeResumption/CONNECTOR_SCOPE/OrOut",
+      "targets": [
+        "//RndPhysicalCompact/GATE_001/AndIn7"
+      ],
+      "existingAlias": [],
+      "existingGlobal": [],
+      "mechanism": "new-sal-symbol",
+      "symbolName": "linkSafeConnectorScope",
+      "wireIds": [
+        "9d16c9d2-8d55-4ba7-9199-971e3415263e"
+      ]
+    },
+    {
+      "from": "//SafeResumption/RND_SCOPE/AndOut",
+      "targets": [
+        "//RndPhysicalCompact/GATE_020/AndIn5",
+        "//RndPhysicalCompact/STATE_SU/Reset",
+        "//RndPhysicalCompact/STATE_SG/Reset"
+      ],
+      "existingAlias": [],
+      "existingGlobal": [],
+      "mechanism": "new-sal-symbol",
+      "symbolName": "linkSafeRndScope",
+      "wireIds": [
+        "b2a87027-6a5b-4322-b3a1-d4b635e8de33",
+        "552719c8-7e12-4b86-b8b4-9c91fc57002a",
+        "5c7a5558-9b82-4c03-a1c7-28f4dcb8df9b"
+      ]
+    },
+    {
+      "from": "//SafeResumption/SAFE_UP_SCOPE/AndOut",
+      "targets": [
+        "//Network2/FBAnd4/AndIn3"
+      ],
+      "existingAlias": [],
+      "existingGlobal": [],
+      "mechanism": "new-sal-symbol",
+      "symbolName": "linkSafeUpScope",
+      "wireIds": [
+        "1cd087e8-30d8-4692-85df-e2a84a3493c1"
+      ]
+    },
+    {
+      "from": "//SafeResumption/SG_OWNER_SET/AndOut",
+      "targets": [
+        "//RndPhysicalCompact/STATE_SG/Set"
+      ],
+      "existingAlias": [],
+      "existingGlobal": [],
+      "mechanism": "new-sal-symbol",
+      "symbolName": "linkSafeSgOwnerSet",
+      "wireIds": [
+        "d319cf2a-87c5-40d6-9d44-7b44dc93ba3c"
+      ]
+    },
+    {
+      "from": "//SafeResumption/SAFE_ACCEPTED_UP/RsOut",
+      "targets": [
+        "//RndPhysicalCompact/GATE_030/OrIn4",
+        "//Network2/FBOr1/OrIn1"
+      ],
+      "existingAlias": [],
+      "existingGlobal": [],
+      "mechanism": "new-sal-symbol",
+      "symbolName": "linkSafeAcceptedUp",
+      "wireIds": [
+        "96f4d89b-127d-434d-8129-5a974cbd5fc6",
+        "d52085f4-d467-438a-ba7b-164c9d78b5fc"
+      ]
+    }
+  ]
+}

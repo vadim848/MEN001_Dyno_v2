@@ -1,0 +1,580 @@
+{
+  "version": "sal-mutation-plan-v1",
+  "planVersion": "7.4.1",
+  "status": "Architect guard-mutation plan v7 for E2b (PLAN.md v6). sourceSha256 filled at G2 (runner exit 3 until then). operatorAvailable:false only for operators the stand does not implement (rebind-global, composite). modelKill = architect prototype (not native, not a test).",
+  "sourceSha256": "FILL_AT_G2",
+  "sourceSha256Note": "Fill at G2: SHA256 of the editor candidate TwinSafeGroup1.sal for this slice (base: R1 candidate). Then run scripts/sal-mutation-check.js --validate-only before G3.",
+  "testFiles": [
+    "current-e2a-status.test.js",
+    "current-e2a-emg-safe.test.js",
+    "current-e2a-emg-rnd.test.js",
+    "current-e2a-emg-run.test.js",
+    "current-e2a-emg-rundown.test.js",
+    "current-e2a-sweep-estop.test.js",
+    "current-e2b-sweep-connector.test.js",
+    "current-e2a-race.test.js",
+    "current-e2a-rnd-cover-healthy.test.js",
+    "current-e2a-run-conf.test.js",
+    "current-e2b-interlock-run.test.js",
+    "current-e2b-cover-transitions.test.js",
+    "current-e2b-connector-safe.test.js",
+    "current-e2c-stp-i.test.js",
+    "current-e2c-hlt03.test.js",
+    "current-e2d-release-permit.test.js",
+    "current-e2d-unlock-cover.test.js",
+    "current-e2a-emg-anchor.test.js",
+    "current-e2a-emg-rd-sweep.test.js",
+    "current-e2d-unlock-door.test.js",
+    "current-e2d-fbk-unsolicited.test.js"
+  ],
+  "behaviouralTests": [
+    "^E2[a-d] "
+  ],
+  "structuralSoftwareCheckCases": [
+    "^BOOT:"
+  ],
+  "mutations": [
+    {
+      "id": "M-E2b-01",
+      "guard": "CoverRun",
+      "op": "deactivate-input",
+      "block": "//Network1/FBOrIlRunOk",
+      "port": "OrIn2",
+      "rationale": "cover term lost",
+      "killingScenario": "Steady Run reached -> Emergency immediately",
+      "oracle": "MOD-002, IL-03"
+    },
+    {
+      "id": "M-E2b-02",
+      "guard": "CoverRun",
+      "op": "deactivate-input",
+      "block": "//Network1/FBOrIlRunOk",
+      "port": "OrIn1",
+      "rationale": "not-Run/not-SU term lost",
+      "killingScenario": "Safe or R&D with NC1 FALSE: Emergency latched",
+      "oracle": "IL-01, IL-02"
+    },
+    {
+      "id": "M-E2b-03",
+      "guard": "CoverRunDown",
+      "op": "deactivate-input",
+      "block": "//Network1/FBOrIlRunOk",
+      "port": "OrIn3",
+      "rationale": "normal Run-down not exempt",
+      "killingScenario": "Run->R&D accepted + NC1 FALSE: Emergency instead of R&D",
+      "oracle": "IL-05b (Q-RC-03 b1)",
+      "modelKill": "repro/v2/t8.out.txt"
+    },
+    {
+      "id": "M-E2b-04",
+      "guard": "CoverSU",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAndNotRunSu",
+      "port": "AndIn2",
+      "rationale": "StartingRun not covered",
+      "killingScenario": "StartingRun + NC1 FALSE: no Emergency, STO released, C2 ON",
+      "oracle": "IL-05a (Q-RC-03 a)",
+      "modelKill": "repro/v2/t8.out.txt"
+    },
+    {
+      "id": "M-E2b-05",
+      "guard": "CoverRun",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAndNotRunSu",
+      "port": "AndIn1",
+      "rationale": "steady Run not latched",
+      "killingScenario": "Steady Run + NC1 FALSE: b_EStop_Ok stays TRUE (Step4 only via FBAnd9); Restart not required",
+      "oracle": "IL-03"
+    },
+    {
+      "id": "M-E2b-06",
+      "guard": "CoverRun",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAnd1",
+      "port": "AndIn3",
+      "rationale": "cover cause not fed to FBEstop1",
+      "killingScenario": "Steady Run + NC1 FALSE: b_EStop_Ok stays TRUE",
+      "oracle": "IL-03"
+    },
+    {
+      "id": "M-E2b-07",
+      "guard": "CoverRun",
+      "op": "deactivate-input",
+      "block": "//Network12/FBAnd16",
+      "port": "AndIn1",
+      "rationale": "NC1 dropped from linkCoverClosed",
+      "killingScenario": "Steady Run, only NC1 FALSE: no Emergency",
+      "oracle": "IL-03"
+    },
+    {
+      "id": "M-E2b-08",
+      "guard": "CoverRun",
+      "op": "deactivate-input",
+      "block": "//Network12/FBAnd16",
+      "port": "AndIn3",
+      "rationale": "NC2 dropped",
+      "killingScenario": "Steady Run, only NC2 FALSE: no Emergency",
+      "oracle": "IL-03"
+    },
+    {
+      "id": "M-E2b-09",
+      "guard": "CoverRun",
+      "op": "deactivate-input",
+      "block": "//Network6/HEALTHY_OK",
+      "port": "AndIn3",
+      "rationale": "cover not in Run hold (g7)",
+      "killingScenario": "Steady Run + NC1 FALSE: latched but S3 kept, C2 ON",
+      "oracle": "IL-03 EMGREF-RUN",
+      "modelKill": "repro/v2/t8.out.txt"
+    },
+    {
+      "id": "M-E2b-10",
+      "guard": "Connector",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAnd1",
+      "port": "AndIn4",
+      "rationale": "connector after Safe not Emergency",
+      "killingScenario": "Steady R&D + LV connector FALSE: b_EStop_Ok TRUE, LV ON",
+      "oracle": "EMG4-02/03, Q-RC-14"
+    },
+    {
+      "id": "M-E2b-11",
+      "guard": "EmgLvStage",
+      "op": "deactivate-input",
+      "block": "//Network6/STAGE_LVON",
+      "port": "OrIn2",
+      "rationale": "SR not a source of emergency chain",
+      "killingScenario": "Steady R&D + in_ES_NC_1 FALSE 12 s: SR kept, C1 ON (check outputs C1/C3/BMS and stage)",
+      "oracle": "EMGREF-LV (1), Q-ARCH-01",
+      "modelKill": "repro/t11.out.txt"
+    },
+    {
+      "id": "M-E2b-12",
+      "guard": "EmgLvStage",
+      "op": "deactivate-input",
+      "block": "//Network6/STAGE_LVON",
+      "port": "OrIn1",
+      "rationale": "S12 not a source of emergency chain",
+      "killingScenario": "Safe->R&D with C1_FBK held OFF + EStop: S12 kept, C1 ON",
+      "oracle": "EMGREF-LV (2), Q-E2Q-01",
+      "modelKill": "repro/t12.out.txt"
+    },
+    {
+      "id": "M-E2b-13",
+      "guard": "EmgLvStage",
+      "op": "deactivate-input",
+      "block": "//Network6/FBAndLvEmg",
+      "port": "AndIn2",
+      "rationale": "chain fires without Emergency",
+      "killingScenario": "Safe->R&D: on reaching S12 system goes to S4 without any cause (not the rndEstop scenario)",
+      "oracle": "MOD1-01, E2-01"
+    },
+    {
+      "id": "M-E2b-14",
+      "guard": "EmgLvStage",
+      "op": "deactivate-input",
+      "block": "//Network6/FBOrStep4",
+      "port": "OrIn2",
+      "rationale": "no chain from S12/SR",
+      "killingScenario": "StartingRun + 3 ms in_Estop_PLC pulse: SR kept, STO released, C2 ON (B-1); R&D + EStop: LV ON",
+      "oracle": "EMGREF-RUN (StartingRun), EMGREF-LV",
+      "modelKill": "repro/v2/t8.out.txt"
+    },
+    {
+      "id": "M-E2b-15",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOrS12Reset",
+      "port": "OrIn2",
+      "rationale": "S12 not reset by g7",
+      "killingScenario": "Safe->R&D with C1_FBK held OFF + EStop: b_Step12 and b_Step4 both TRUE",
+      "oracle": "E2-01",
+      "modelKill": "repro/t11.out.txt"
+    },
+    {
+      "id": "M-E2b-16",
+      "guard": "EmgExit",
+      "op": "deactivate-input",
+      "block": "//Network3/G10_EXIT",
+      "port": "AndIn2",
+      "rationale": "exit without released EStop",
+      "killingScenario": "S6 with in_ES_NC_1 still FALSE, green press/release: Safe",
+      "oracle": "EMG6-01",
+      "modelKill": "repro/t11.out.txt"
+    },
+    {
+      "id": "M-E2b-17",
+      "guard": "EmgExit",
+      "op": "deactivate-input",
+      "block": "//Network3/G10_EXIT",
+      "port": "AndIn3",
+      "rationale": "exit on green press instead of release",
+      "killingScenario": "Early Restart during chain, then at S6 green held 300 ms: Safe during hold",
+      "oracle": "EMG6-01 (press+release)",
+      "modelKill": "repro/t13.out.txt"
+    },
+    {
+      "id": "M-E2b-18",
+      "guard": "EmgExit",
+      "op": "deactivate-input",
+      "block": "//Network3/G10_EXIT",
+      "port": "AndIn4",
+      "rationale": "exit without green gesture",
+      "killingScenario": "Early Restart during chain (energy on): Safe automatically at S6 without new Restart",
+      "oracle": "EMG6-01 (Restart with FBK ON keeps Emergency)",
+      "modelKill": "repro/t11.out.txt"
+    },
+    {
+      "id": "M-E2b-19",
+      "guard": "EmgExit",
+      "op": "deactivate-input",
+      "block": "//Network3/G10_EXIT",
+      "port": "AndIn5",
+      "rationale": "exit with C1_FBK ON",
+      "killingScenario": "R&D EStop with C1_FBK stuck ON; S6; Restart: Safe while C1_FBK ON",
+      "oracle": "EMG6-01",
+      "modelKill": "repro/t11.out.txt"
+    },
+    {
+      "id": "M-E2b-20",
+      "guard": "CoverUp",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_020",
+      "port": "AndIn6",
+      "rationale": "R&D->Run without closed cover",
+      "killingScenario": "Steady R&D, NC1 FALSE, BOTH 1000 ms: StartingRun accepted",
+      "oracle": "IL-02, CVR-004",
+      "modelKill": "repro/v2/t8.out.txt"
+    },
+    {
+      "id": "M-E2b-21",
+      "guard": "CoverAttempt",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_030",
+      "port": "OrIn5",
+      "rationale": "rejected BOTH not consumed",
+      "killingScenario": "Steady R&D, NC1 FALSE, BOTH held, NC restored while held: Run executes; REL-01(e): Safe, connector episode overlaps BOTH qualification -> mutant C1 ON at p+1503 (base never)",
+      "oracle": "IL-02, REL-01(e)",
+      "modelKill": "repro/v2/t8.out.txt",
+      "killStatus": "candidate for equivalentBySearch on v7.3 (tester: search for killer; if none, record equivalentBySearch with scenario list; do not drop silently)",
+      "searchedWithoutKill": [
+        "cover open during whole gesture, restored after Q",
+        "cover restored after release",
+        "connector lost during whole gesture, restored after Q",
+        "BOTH at r+1999"
+      ],
+      "ref": "review PLAN_REVIEW.md v7.3/v7.4 V73-C (M-E2b-21)"
+    },
+    {
+      "id": "M-E2b-22",
+      "guard": "EmgExit",
+      "op": "deactivate-input",
+      "block": "//Network3/G10_EXIT",
+      "port": "AndIn1",
+      "rationale": "exit not tied to S6",
+      "killingScenario": "R&D EStop, ES released, Restart during S4 at +2.5 s (C1 already OFF): S1 and S4 both TRUE",
+      "oracle": "E2-01, EMG6-01",
+      "modelKill": "repro/t15.out.txt"
+    },
+    {
+      "id": "M-E2b-23",
+      "guard": "EmgExit",
+      "op": "deactivate-input",
+      "block": "//Network3/G10_EXIT",
+      "port": "AndIn6",
+      "rationale": "exit with C2_FBK ON",
+      "killingScenario": "S6, then in_HV_C2_FBK TRUE (stuck/forced), ES released, Restart: Safe with C2_FBK ON",
+      "oracle": "EMG6-01",
+      "modelKill": "repro/t15.out.txt"
+    },
+    {
+      "id": "M-E2b-26",
+      "guard": "EmgLvStage",
+      "op": "deactivate-input",
+      "block": "//Network6/FBAndLvEmg",
+      "port": "AndIn1",
+      "rationale": "chain from any stage incl. S1",
+      "killingScenario": "Safe + in_ES_NC_1 FALSE: S1 goes to S4 (Safe stage must stay, energy already off)",
+      "oracle": "EMG6-01 (Safe stays Safe), E2-01"
+    },
+    {
+      "id": "M-E2b-27",
+      "guard": "EmgRun",
+      "op": "deactivate-input",
+      "block": "//Network6/FBOrStep4",
+      "port": "OrIn1",
+      "rationale": "no chain from Run via FBAnd9",
+      "killingScenario": "Steady Run + in_ES_NC_1 FALSE: Run memory kept, STO/C2 not removed (only latch)",
+      "oracle": "EMGREF-RUN, EMG-001"
+    },
+    {
+      "id": "M-E2b-28",
+      "guard": "Ring",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOrS12Reset",
+      "port": "OrIn1",
+      "rationale": "S12 not reset by g3",
+      "killingScenario": "Safe->R&D completes: S12 and SR both TRUE",
+      "oracle": "E2-01"
+    },
+    {
+      "id": "M-E2b-29",
+      "guard": "EmgExit",
+      "op": "deactivate-input",
+      "block": "//Network3/FBOr2",
+      "port": "OrIn3",
+      "rationale": "g10 not into S1",
+      "killingScenario": "S6, causes cleared, Restart: stays S6 (no exit)",
+      "oracle": "EMG6-01"
+    },
+    {
+      "id": "M-E2b-31",
+      "guard": "Order",
+      "op": "swap-order",
+      "block": "//Network12/FBAnd16",
+      "port": "",
+      "value": {
+        "moveAfter": "//Network1/FBAnd1"
+      },
+      "rationale": "cover AND after N1/FBAnd1",
+      "killingScenario": "StartingRun/Run + NC1 FALSE: b_EStop_Ok one scan later than in_Estop_PLC (L1)",
+      "oracle": "IL-03, IL-05a (L1)",
+      "note": "blocks reordered in E2a-core (D-1); killable from the E2b stack"
+    },
+    {
+      "id": "M-E2b-32",
+      "guard": "Order",
+      "op": "swap-order",
+      "block": "//SafeResumption/CONNECTOR_SCOPE",
+      "port": "",
+      "value": {
+        "moveAfter": "//Network1/FBAnd1"
+      },
+      "rationale": "connector scope after N1/FBAnd1",
+      "killingScenario": "R&D + LV connector FALSE: b_EStop_Ok at e+2 instead of e+1 (L1 vs in_Estop_PLC)",
+      "oracle": "EMG4-03 (L1)",
+      "modelKill": "repro/t15.out.txt (base equal e+1)",
+      "note": "blocks reordered in E2a-core (D-1); killable from the E2b stack"
+    },
+    {
+      "id": "M-E2b-33",
+      "guard": "Order",
+      "op": "swap-order",
+      "block": "//Network3/G10_EXIT",
+      "port": "",
+      "value": {
+        "moveAfter": "//Network6/FBDecouple2"
+      },
+      "rationale": "G10 after recRndC_PrevG writer",
+      "killingScenario": "Restart press/release: exit on press scan or never (PrevG current)",
+      "oracle": "EMG6-01"
+    },
+    {
+      "id": "M-E2b-36",
+      "guard": "BypassGate",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAnd4",
+      "port": "AndIn5",
+      "rationale": "legacy Bypass outside Safe (B4-3, variant A)",
+      "killingScenario": "B43-01(a): S6 after early Restart + Bypass -> energy with status EMG; B43-02 delta in {-1,0}: one scan SAFE with energy; R&D + Bypass 3 s -> C2 ON",
+      "oracle": "B43-01, B43-02 (V14-Q16, Q-RC-05, EMG-011)",
+      "modelKill": "repro/t18.out.txt (R&D variant)"
+    },
+    {
+      "id": "M-E2b-37",
+      "guard": "Boot",
+      "op": "deactivate-input",
+      "block": "//Network3/FBAndBootFbkOff",
+      "port": "AndIn1",
+      "rationale": "start exit with C1_FBK ON",
+      "killingScenario": "EMG6-01-BOOT: group start with in_LV_C1_FBK TRUE, Restart -> Safe",
+      "oracle": "EMG6-01-BOOT (SPEC 12)",
+      "modelKill": "repro/t18.out.txt"
+    },
+    {
+      "id": "M-E2b-38",
+      "guard": "Boot",
+      "op": "deactivate-input",
+      "block": "//Network3/FBAndBootFbkOff",
+      "port": "AndIn2",
+      "rationale": "start exit with C2_FBK ON",
+      "killingScenario": "EMG6-01-BOOT with in_HV_C2_FBK TRUE",
+      "oracle": "EMG6-01-BOOT"
+    },
+    {
+      "id": "M-E2b-39",
+      "guard": "Boot",
+      "op": "deactivate-input",
+      "block": "//Network3/FBAnd1",
+      "port": "AndIn3",
+      "rationale": "FBK gate removed from g1",
+      "killingScenario": "EMG6-01-BOOT: Restart -> Safe with FBK ON",
+      "oracle": "EMG6-01-BOOT",
+      "modelKill": "repro/t18.out.txt"
+    },
+    {
+      "id": "M-E2b-40",
+      "guard": "Boot",
+      "op": "deactivate-input",
+      "block": "//Network3/FBAndBootFbkOff",
+      "port": "AndIn4",
+      "rationale": "start exit not tied to Restart release (B6-1)",
+      "killingScenario": "start with C1_FBK ON, Restart, FBK OFF at r+1 or r+2000, no new Restart: Safe (base stays Emergency)",
+      "oracle": "EMG6-01-BOOT (no deferred Restart)",
+      "modelKill": "repro/t20.out.txt"
+    },
+    {
+      "id": "M-E2b-41",
+      "guard": "Boot",
+      "op": "deactivate-input",
+      "block": "//Network3/FBAndBootFbkOff",
+      "port": "AndIn3",
+      "rationale": "start exit on green press instead of release",
+      "killingScenario": "start with C1_FBK ON, Restart, FBK OFF, then green pressed and held 300 ms: Safe during press (base only after release)",
+      "oracle": "EMG6-01-BOOT (press+release)",
+      "modelKill": "repro/t21.out.txt"
+    },
+    {
+      "id": "M-E2b-42",
+      "guard": "AttemptSpoil",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_029",
+      "port": "OrIn6",
+      "rationale": "cover episode during BOTH hold in R&D does not spoil the attempt",
+      "killingScenario": "R&D, BOTH held, NC1 FALSE 200 ms at +300, restored, hold continues: Run (base R&D, new gesture needed)",
+      "oracle": "REL-01(c), IL-02, TD-07",
+      "modelKill": "repro/c4.out.txt"
+    },
+    {
+      "id": "M-E2b-43",
+      "guard": "AttemptSpoil",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_029",
+      "port": "OrIn7",
+      "rationale": "connector episode during BOTH hold in Safe does not spoil the attempt",
+      "killingScenario": "Safe, BOTH held, LV connector FALSE 200 ms, restored: Safe->R&D executed (base Safe)",
+      "oracle": "REL01-e2 connector, EMG-003, Q-RC-14",
+      "modelKill": "repro/c4.out.txt"
+    },
+    {
+      "id": "M-E2b-44",
+      "guard": "AttemptSpoil",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_SPOIL_R",
+      "port": "AndIn3",
+      "rationale": "spoil in R&D regardless of cover",
+      "killingScenario": "R&D, cover closed, BOTH: R&D->Run never (base Run)",
+      "oracle": "MOD-002 positive"
+    },
+    {
+      "id": "M-E2b-45",
+      "guard": "AttemptSpoil",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_SPOIL_S",
+      "port": "AndIn3",
+      "rationale": "spoil in Safe regardless of connectors",
+      "killingScenario": "Safe, BOTH: Safe->R&D never (base R&D)",
+      "oracle": "MOD1-01 positive"
+    },
+    {
+      "id": "M-E2b-46",
+      "guard": "AttemptSpoil",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_SPOIL_R",
+      "port": "AndIn2",
+      "rationale": "cover spoil also in Safe",
+      "killingScenario": "E2d stack only: Safe, cover open, BOTH: mutant Safe (attempt spoiled), base R&D (V14-Q7). Not killable on E2b stack because V14-Q7 is known FAIL there until E2d",
+      "oracle": "V14-Q7, IL-01",
+      "killStatus": "kill deferred to E2d stack (not equivalent)",
+      "killStack": "E2d (E2c/E2d rebuilt on E2b+v7.3 with v7.4)",
+      "ref": "review PLAN_REVIEW.md v7.3/v7.4 V73-C"
+    },
+    {
+      "id": "M-E2b-47",
+      "guard": "AttemptSpoil",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_SPOIL_R",
+      "port": "AndIn1",
+      "rationale": "spoil without both buttons held: in R&D with open cover every gesture is spoiled",
+      "killingScenario": "E2d stack (and E2b where applicable): steady R&D, cover open (NC1 FALSE). (a) green single: mutant stays R&D, base R&D->Safe; (b) blue single: mutant Unlock 0, base Unlock 1",
+      "oracle": "V14-Q21a, Q-ARCH-10 A, UNL-04 (R&D)",
+      "modelKill": "reviewer repro/v7.3 (c4 \"green down\"/\"blue\" with open cover)",
+      "killStack": "E2d (cover-open R&D cases are E2d criteria)",
+      "ref": "review PLAN_REVIEW.md v7.3/v7.4 V73-C"
+    },
+    {
+      "id": "M-E2b-48",
+      "guard": "AttemptSpoil",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_SPOIL_S",
+      "port": "AndIn1",
+      "rationale": "connector-lost spoil in Safe without both buttons held",
+      "killingScenario": "killer not found (reviewer: Safe, connector 50 ms without buttons, BOTH 550 ms later -> no difference; R&D scenarios -> no difference). Tester: search (e.g. connector lost in Safe, then single blue/green and attempts within the filter clearing time); if none -> equivalentBySearch with scenario list",
+      "oracle": "EMG-003, Q-RC-14, MOD1-01",
+      "killStatus": "killer search; candidate equivalentBySearch",
+      "ref": "review PLAN_REVIEW.md v7.3/v7.4 V73-C"
+    },
+    {
+      "id": "M-E2b-49",
+      "guard": "AttemptSpoil",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_SPOIL_S",
+      "port": "AndIn2",
+      "rationale": "connector spoil also outside Safe",
+      "killingScenario": "killer not found: outside Safe connector loss already leads to Emergency (R&D) or is out of scope; tester: search; if none -> equivalentBySearch with scenario list",
+      "oracle": "EMG-003, Q-RC-14",
+      "killStatus": "probable equivalent (connector loss in R&D -> Emergency); killer search",
+      "ref": "review PLAN_REVIEW.md v7.3/v7.4 V73-C"
+    }
+  ],
+  "equivalentByProof": [
+    {
+      "block": "//Network6/FBAndLvEmg",
+      "port": "AndIn3",
+      "ref": "in_False_SI2_CH8 constant FALSE (Q-MU06-01)"
+    }
+  ],
+  "equivalentBySearch": [
+    {
+      "block": "//Network3/G10_EXIT",
+      "port": "AndIn7",
+      "ref": "review w6/w8: legacy Bypass raises C1 and C2 in the same scan; AndIn8 masks; pair mutation M-E2b-34"
+    },
+    {
+      "block": "//Network3/G10_EXIT",
+      "port": "AndIn8",
+      "ref": "symmetric to AndIn7"
+    },
+    {
+      "block": "//Network3/G10_EXIT",
+      "port": "AndIn7+AndIn8",
+      "id": "ex-M-E2b-34",
+      "ref": "after (A) no command source in S6 (Bypass gated, chain removes commands before S6); review v5 x1 delta in {-100,-1,0,1,2,held}; inputs kept, re-evaluate in E4 (Config)"
+    }
+  ],
+  "removedGuards": [
+    {
+      "guard": "IL-06 Network6/FBAnd9.AndIn2",
+      "by": "E2b",
+      "replacedBy": [
+        "M-E2b-07",
+        "M-E2b-08",
+        "M-E2b-09"
+      ]
+    },
+    {
+      "guard": "IL-07 RndPhysicalCompact/GATE_001.AndIn5",
+      "by": "E2b",
+      "replacedBy": [
+        "M-E2b-20",
+        "M-E2b-21"
+      ]
+    }
+  ],
+  "notes": [
+    "C5 (vi) moved to decoder: M-DEC-02 and M-DEC-09 (E4)",
+    "M-E2b-30 (FBOr1.OrIn4) moved to E2a-core plan as equivalentBySearch",
+    "v7.3: M-E2b-21 (GATE_030.OrIn5) may become equivalent with the spoil mechanism - verify, else equivalentBySearch",
+    "v7.4.1 (review PLAN_REVIEW.md v7.3/v7.4 V73-C): added M-E2b-47 (SPOIL_R.AndIn1, essential), M-E2b-48/49 (SPOIL_S.AndIn1/AndIn2, killer search or equivalentBySearch); M-E2b-46 kill deferred to E2d stack; M-E2b-21 candidate equivalentBySearch"
+  ]
+}

@@ -1,0 +1,267 @@
+{
+  "version": "sal-mutation-plan-v1",
+  "status": "PILOT (E0) re-targeted to canonical F1 by v2-stand-engineer, 2026-10-21. Copy of program/stand/E0-stand/sal-mutation-plan.pilot.json (sha256 3da26e6b…bd34, P0 34b5b850…); mutations, testFiles and behaviouralTests unchanged. Not the architect's guard plan.",
+  "sourceSha256": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "testFiles": [
+    "current-door-interlock.test.js",
+    "current-early-sto.test.js",
+    "current-estop-native-pairs.test.js",
+    "current-hv-set-permit.test.js",
+    "current-mentee-set-permit.test.js",
+    "current-plc-pulse-set-permit.test.js",
+    "current-rnd-down-no-reenergy.test.js",
+    "current-rnd-physical-integration.test.js",
+    "current-safe-run-gestures.test.js",
+    "current-step12-lv-permit.test.js",
+    "current-timer-one-ms.test.js",
+    "current-unlock-estop-permit.test.js",
+    "current-unlock-hold.test.js",
+    "current-code-checks.test.js",
+    "sal-runtime.test.js",
+    "sal-semantics.test.js",
+    "timer-observed-clock.test.js"
+  ],
+  "behaviouralTests": [
+    "^DOOR06 (component|actual|existing emergency)",
+    "^EARLYSTO (drive[12]|physical)",
+    "^R3PAIR ",
+    "^MENTEE05 (paired|HV: (all|already)|LV: (all|already))",
+    "^PLCPULSE ",
+    "^RNDPHYS ",
+    "^SR-",
+    "^current SAL",
+    "^UNLOCK07 (component|final component|[^ ]+: healthy|[^ ]+/[^ ]+: fault)",
+    "^CVR (current SAL|approved)",
+    "^(HV|LV) current SAL",
+    "^SAL-RUN0[23]",
+    "^SAL-SEM02",
+    "^Current SAL TON adapter"
+  ],
+  "structuralSoftwareCheckCases": [
+    "^BOOT:"
+  ],
+  "mutations": [
+    {
+      "id": "IL-01",
+      "guard": "InterLock",
+      "op": "deactivate-input",
+      "block": "//Network12/FBAnd16",
+      "port": "AndIn1",
+      "rationale": "Energy producer loses in_InterLock_NC_1 term (DOOR06 decision)"
+    },
+    {
+      "id": "IL-02",
+      "guard": "InterLock",
+      "op": "deactivate-input",
+      "block": "//Network12/FBAnd16",
+      "port": "AndIn3",
+      "rationale": "Energy producer loses in_InterLock_NC_2 term"
+    },
+    {
+      "id": "IL-03",
+      "guard": "InterLock",
+      "op": "invert-contact",
+      "block": "//Network12/FBAnd16",
+      "port": "AndIn1",
+      "rationale": "NC1 polarity inverted"
+    },
+    {
+      "id": "IL-04",
+      "guard": "InterLock",
+      "op": "deactivate-input",
+      "block": "//Network2/FBAnd1",
+      "port": "AndIn5",
+      "rationale": "Network2 connector/interlock aggregate loses NC1"
+    },
+    {
+      "id": "IL-05",
+      "guard": "InterLock",
+      "op": "deactivate-input",
+      "block": "//Network2/FBAnd1",
+      "port": "AndIn6",
+      "rationale": "Network2 connector/interlock aggregate loses NC2"
+    },
+    {
+      "id": "IL-06",
+      "guard": "InterLock",
+      "op": "deactivate-input",
+      "block": "//Network6/FBAnd9",
+      "port": "AndIn2",
+      "rationale": "Network6 guard loses NC1"
+    },
+    {
+      "id": "IL-07",
+      "guard": "InterLock",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_001",
+      "port": "AndIn5",
+      "rationale": "R&D gate permit loses NC1"
+    },
+    {
+      "id": "IL-08",
+      "guard": "InterLock",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAndLvCurrentPermit",
+      "port": "AndIn4",
+      "rationale": "LV current permit loses NC1"
+    },
+    {
+      "id": "ES-01",
+      "guard": "EStop",
+      "op": "set-channel-mode",
+      "block": "//Network1/FBEstop1",
+      "port": "EStopIn1",
+      "value": "Single-Channel 1 Activated",
+      "rationale": "Main ESTOP drops channel 2 (in_ES_NC_2)"
+    },
+    {
+      "id": "ES-02",
+      "guard": "EStop",
+      "op": "set-channel-mode",
+      "block": "//Network1/FBEstop1",
+      "port": "EStopIn1",
+      "value": "Single-Channel 2 Activated",
+      "rationale": "Main ESTOP drops channel 1 (in_ES_NC_1)"
+    },
+    {
+      "id": "ES-03",
+      "guard": "EStop",
+      "op": "set-channel-mode",
+      "block": "//Network1/FBEstop1",
+      "port": "EStopIn3",
+      "value": "Single-Channel 1 Activated",
+      "rationale": "Main ESTOP drops Mentee channel (EStopIn4)"
+    },
+    {
+      "id": "ES-04",
+      "guard": "EStop",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAndUnlockHold",
+      "port": "AndIn4",
+      "rationale": "Unlock solenoid ignores b_EStop_Ok"
+    },
+    {
+      "id": "ES-05",
+      "guard": "EStop",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAndUnlockHold",
+      "port": "AndIn1",
+      "rationale": "Unlock solenoid ignores PLC EStop"
+    },
+    {
+      "id": "ES-06",
+      "guard": "EStop",
+      "op": "deactivate-input",
+      "block": "//Network3/FBAnd1",
+      "port": "AndIn2",
+      "rationale": "Network3 consumer ignores b_EStop_Ok"
+    },
+    {
+      "id": "ES-07",
+      "guard": "EStop",
+      "op": "deactivate-input",
+      "block": "//Network5/FBAnd1",
+      "port": "AndIn3",
+      "rationale": "Network5 consumer ignores b_EStop_Ok"
+    },
+    {
+      "id": "ES-08",
+      "guard": "EStop",
+      "op": "deactivate-input",
+      "block": "//RndPhysicalCompact/GATE_001",
+      "port": "AndIn3",
+      "rationale": "R&D gate permit ignores b_EStop_Ok"
+    },
+    {
+      "id": "ES-09",
+      "guard": "EStop",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAndLvCurrentPermit",
+      "port": "AndIn8",
+      "rationale": "LV current permit ignores b_EStop_Ok"
+    },
+    {
+      "id": "ES-10",
+      "guard": "EStop",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAndHvSetPermit",
+      "port": "AndIn3",
+      "rationale": "HV set permit ignores Mentee EStop"
+    },
+    {
+      "id": "UL-01",
+      "guard": "Unlock",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAndUnlockHold",
+      "port": "AndIn2",
+      "rationale": "Unlock solenoid no longer requires held release PB"
+    },
+    {
+      "id": "UL-02",
+      "guard": "Unlock",
+      "op": "invert-contact",
+      "block": "//Network1/FBAndUnlockHold",
+      "port": "AndIn2",
+      "rationale": "Release PB polarity inverted"
+    },
+    {
+      "id": "UL-03",
+      "guard": "Unlock",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAndUnlockHold",
+      "port": "AndIn3",
+      "rationale": "Unlock solenoid ignores green (Reset PB) cancel"
+    },
+    {
+      "id": "UL-04",
+      "guard": "Unlock",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAndUnlockHold",
+      "port": "AndIn5",
+      "rationale": "Unlock solenoid ignores latched grant (FBRs6)"
+    },
+    {
+      "id": "UL-05",
+      "guard": "Unlock",
+      "op": "deactivate-input",
+      "block": "//Network12/FBAnd2",
+      "port": "AndIn3",
+      "rationale": "R&D unlock set ignores green"
+    },
+    {
+      "id": "UL-06",
+      "guard": "Unlock",
+      "op": "deactivate-input",
+      "block": "//Network2/FBAnd8",
+      "port": "AndIn1",
+      "rationale": "Door unlock reset ignores DoorMonitor"
+    },
+    {
+      "id": "UL-07",
+      "guard": "Unlock",
+      "op": "deactivate-input",
+      "block": "//Network2/FBAnd7",
+      "port": "AndIn2",
+      "rationale": "Safe unlock set ignores recRndC_BA qualification"
+    }
+  ],
+  "derivedFrom": {
+    "plan": "program/stand/E0-stand/sal-mutation-plan.pilot.json",
+    "planSha256": "3da26e6b759371921da7ed9eada498f41bdde8065924a11cbe2060239056bd34",
+    "sourceSha256": "34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b"
+  },
+  "f1Remap": {
+    "method": "Parsed P0 (git 0391fae~1) vs F1 SAL with src/sal-parser.js: for every mutated port, all attributes (Id, channelInterface, deactivate1/2, filter, wires, global refs) and the bound alias variable compared.",
+    "result": "All 25 target ports are byte-equivalent in the parsed model and bound to the same variables on P0 and F1; no mutation targets a block changed by F1. All 25 applicable as-is; none re-mapped, none marked not applicable.",
+    "f1Changes": [
+      "//Network6/FBTon2 removed (P0: TonIn=in_Reset_PB, 0.5 s, TonOut->FBAnd24/AndIn3)",
+      "//Network6/RUN_DOWN_OWNER (safeRs) and //Network6/RUN_DOWN_RESET (safeOr) added",
+      "//Network6/FBAnd23/AndIn3 (P0 in_Relase_Door_PB, NO) deactivated; FBAnd23/AndOut now -> RUN_DOWN_OWNER/Set (P0 -> FBOr5/OrIn1)",
+      "//Network6/FBAnd24/AndIn3 now bound to linkRndGreenQualified (P0 wire from FBTon2/TonOut)",
+      "//Network6/FBOr5/OrIn1 now from RUN_DOWN_OWNER/RsOut",
+      "//SafeResumption/MODE/OrIn3 activated, GVL1.b_Step3",
+      "orderOfExecution shifted by +-1 on ~45 blocks (incl. FBAnd16, FBAndUnlockHold)"
+    ],
+    "notCoveredByPilot": "The F1-changed Run-down ownership blocks (FBAnd23, FBAnd24, RUN_DOWN_OWNER, RUN_DOWN_RESET, SafeResumption/MODE/OrIn3) have no mutation in this pilot; they belong to the architect's per-slice G3 plan."
+  }
+}

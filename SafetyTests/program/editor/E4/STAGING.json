@@ -1,0 +1,4365 @@
+{
+ "source": {
+  "sal": "9ee66e7868547d7d42fb9ed4faf9f69030a2b4e6a5c64b1b0db2787176714d1e",
+  "sgvl": "72eade07b554a7b463676d5bb0d7b52bdebf734b875e293b6a84a3ac608d85b2",
+  "diagram": "9fe9aa7eb8f93068710044c986148fb423df26ab58181a3f6847e1a4cccd0af5"
+ },
+ "plan": {
+  "md": "276ac70c36fc79aeda2403bca9722ba50eea0fa4175b383d88873a68072b7dc0",
+  "json": "6836c56c7a28d27e8a05587fdf5232c099861085f3f6b0f4a61b4b391ced7b57"
+ },
+ "planFilesAreCurrent": true,
+ "staged": {
+  "sal": "87dc4abb9aa6151091ad8857ef89ef86708bc2e9d96f694430e0e326bc915416",
+  "sgvl": "acf65b3f89812b8969b9ab7159afbb3b21d2d456f90a00059a7bfd0f325a153a",
+  "diagram": "fcbcf03561ddcfd13a75299db756c05c2992e250125e7597baa20f80e74b4046"
+ },
+ "expected": {
+  "fb": 297,
+  "symbols": 63,
+  "salVariables": 99,
+  "ports": 2264
+ },
+ "newBlocks": [
+  {
+   "path": "Network3/CFG_RST",
+   "fn": "safeOr",
+   "id": "855748c8-e392-42f4-95ec-b414dfda76ea",
+   "inputs": {
+    "OrIn1": {
+     "variable": "linkCfgDone",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "symbol": "b_Step4_Set",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network3/STATE_CFG",
+   "fn": "safeRs",
+   "id": "3ef213f7-5d67-4983-95bc-b3e9b105b51a",
+   "inputs": {
+    "Reset": {
+     "wire": "Network3/CFG_RST/OrOut",
+     "contact": "Break Contact (NC)"
+    },
+    "Set": {
+     "variable": "linkCfgAccept",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/HB_LO",
+   "fn": "safeAnd",
+   "id": "8f7d5e7e-0c98-4c7c-bb72-e34ac7fa0edb",
+   "inputs": {
+    "AndIn1": {
+     "variable": "in_PLC_Heartbeat",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "path": "Network1/HB_T_HI",
+   "fn": "safeTon",
+   "id": "89e19d96-8f7d-43e1-b65c-20f6839ce8e8",
+   "inputs": {
+    "TonIn": {
+     "variable": "in_PLC_Heartbeat",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/HB_T_LO",
+   "fn": "safeTon",
+   "id": "8f95063f-d998-4f00-b69b-00bd323d1b6f",
+   "inputs": {
+    "TonIn": {
+     "wire": "Network1/HB_LO/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/HB_OK",
+   "fn": "safeAnd",
+   "id": "b5e75e0c-1433-4599-a7a4-76f6be5a3ab5",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network1/HB_T_HI/TonOut",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn2": {
+     "wire": "Network1/HB_T_LO/TonOut",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PS_SAFE",
+   "fn": "safeAnd",
+   "id": "cc899b56-53be-4f03-9af7-ae9ac9173a91",
+   "inputs": {
+    "AndIn1": {
+     "symbol": "b_Step1",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "symbol": "b_EStop_Ok",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PS_RND",
+   "fn": "safeAnd",
+   "id": "af1ece3a-273f-4d9d-8d0c-361580fbb482",
+   "inputs": {
+    "AndIn1": {
+     "variable": "linkSafeRndScope",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "symbol": "b_EStop_Ok",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn3": {
+     "symbol": "recRndC_SU",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn4": {
+     "variable": "linkAbortActive",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn5": {
+     "symbol": "recRndC_SG",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PS_RUN",
+   "fn": "safeAnd",
+   "id": "e6963f50-e5ce-4345-a17e-0dbca9a42c73",
+   "inputs": {
+    "AndIn1": {
+     "symbol": "b_Step3",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "symbol": "b_EStop_Ok",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn3": {
+     "variable": "linkDescActive",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PS_ANY",
+   "fn": "safeOr",
+   "id": "51da5457-e37f-4aa8-99f9-7ecee7a67096",
+   "inputs": {
+    "OrIn1": {
+     "wire": "Network1/PS_SAFE/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "wire": "Network1/PS_RND/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn3": {
+     "wire": "Network1/PS_RUN/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PC_O2",
+   "fn": "safeOr",
+   "id": "cf616d8a-22d7-4837-a493-ce95fc8b7640",
+   "inputs": {
+    "OrIn1": {
+     "variable": "CMD_SAFE_TO_RND",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "variable": "CMD_RND_TO_RUN",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PC_A2",
+   "fn": "safeAnd",
+   "id": "c59b99c8-7c53-4fc7-b528-05c965be6e67",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_SAFE_TO_RND",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "variable": "CMD_RND_TO_RUN",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PC_A3",
+   "fn": "safeAnd",
+   "id": "cf0eeb4c-1825-475a-9210-31efd2dd272a",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_RUN_TO_RND",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PC_O2/OrOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PC_O3",
+   "fn": "safeOr",
+   "id": "0295654a-3edc-4a6d-bab9-b25bb7036ab6",
+   "inputs": {
+    "OrIn1": {
+     "wire": "Network1/PC_O2/OrOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "variable": "CMD_RUN_TO_RND",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PC_A4",
+   "fn": "safeAnd",
+   "id": "7c296f71-f02f-4024-8f4b-ef4e665c2561",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_RND_TO_SAFE",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PC_O3/OrOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PC_O4",
+   "fn": "safeOr",
+   "id": "10f9a4fb-b3fa-4e48-8181-c1051c754368",
+   "inputs": {
+    "OrIn1": {
+     "wire": "Network1/PC_O3/OrOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "variable": "CMD_RND_TO_SAFE",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PC_A5",
+   "fn": "safeAnd",
+   "id": "6b899228-e1ac-4fd4-8cca-5bc090ed3889",
+   "inputs": {
+    "AndIn1": {
+     "variable": "inPLC_BypassC1C2",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PC_O4/OrOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PC_TWO",
+   "fn": "safeOr",
+   "id": "2599560d-1450-42a3-9416-161b5b85c3c2",
+   "inputs": {
+    "OrIn1": {
+     "wire": "Network1/PC_A2/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "wire": "Network1/PC_A3/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn3": {
+     "wire": "Network1/PC_A4/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn4": {
+     "wire": "Network1/PC_A5/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PE_SET",
+   "fn": "safeAnd",
+   "id": "d658cc22-66fe-4a24-ab57-ce506a3d987b",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network1/PC_TWO/OrOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PS_ANY/OrOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PE_ALLF",
+   "fn": "safeAnd",
+   "id": "4223a38a-aaaf-4f26-84e3-dc7a6c838526",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_SAFE_TO_RND",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn2": {
+     "variable": "CMD_RND_TO_RUN",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "variable": "CMD_RUN_TO_RND",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn4": {
+     "variable": "CMD_RND_TO_SAFE",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn5": {
+     "variable": "inPLC_BypassC1C2",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PE_T_CLR",
+   "fn": "safeTon",
+   "id": "467cfdfd-35b7-488e-ad6a-fa06a755d0b3",
+   "inputs": {
+    "TonIn": {
+     "wire": "Network1/PE_ALLF/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PE_ERR",
+   "fn": "safeRs",
+   "id": "a5134adb-1037-4e50-8863-eb500b246633",
+   "inputs": {
+    "Reset": {
+     "wire": "Network1/PE_T_CLR/TonOut",
+     "contact": "Break Contact (NC)"
+    },
+    "Set": {
+     "wire": "Network1/PE_SET/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PK_OK",
+   "fn": "safeAnd",
+   "id": "2365249b-47e3-415a-8d08-6f0aa6cf3ce1",
+   "inputs": {
+    "AndIn1": {
+     "variable": "in_Reset_PB",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn2": {
+     "variable": "in_Relase_Door_PB",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "wire": "Network1/PE_ERR/RsOut",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PA_S2R",
+   "fn": "safeAnd",
+   "id": "e0b63b81-239f-4d51-a8a2-cdae2d91912a",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_SAFE_TO_RND",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PK_PREV/DecOut1",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "wire": "Network1/PS_SAFE/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn4": {
+     "wire": "Network1/PK_OK/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PA_R2RUN",
+   "fn": "safeAnd",
+   "id": "9eb422c6-917e-4fbd-a66b-37fe7cf7ab54",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_RND_TO_RUN",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PK_PREV/DecOut2",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "wire": "Network1/PS_RND/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn4": {
+     "wire": "Network1/PK_OK/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn5": {
+     "variable": "linkCoverClosed",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn6": {
+     "variable": "in_HV_C2_FBK",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PA_RUN2R_T",
+   "fn": "safeAnd",
+   "id": "40cd3de0-6dcb-412e-9e2a-a21e4258330f",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_RUN_TO_RND",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PK_PREV/DecOut3",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "wire": "Network1/PK_OK/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PA_RUN2R",
+   "fn": "safeAnd",
+   "id": "2a390047-d0f3-4a41-b30b-f85c3548b620",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network1/PA_RUN2R_T/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PS_RUN/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PA_R2S_ST",
+   "fn": "safeAnd",
+   "id": "6415ee79-a41c-4aed-a39f-6a4797ca4b51",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_RND_TO_SAFE",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PK_PREV/DecOut4",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "wire": "Network1/PS_RND/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn4": {
+     "wire": "Network1/PK_OK/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PA_R2S_AB",
+   "fn": "safeAnd",
+   "id": "5d919db7-a221-4cac-812c-1ed10147b31f",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_RND_TO_SAFE",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PK_PREV/DecOut4",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "symbol": "b_Step12",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn4": {
+     "wire": "Network1/PK_OK/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PA_R2S",
+   "fn": "safeOr",
+   "id": "72fcceba-d04c-4724-91e5-cba037d0424c",
+   "inputs": {
+    "OrIn1": {
+     "wire": "Network1/PA_R2S_ST/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "wire": "Network1/PA_R2S_AB/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PA_CFG",
+   "fn": "safeAnd",
+   "id": "95ead8e9-c8ac-42cd-b6a7-f1fac81ece5d",
+   "inputs": {
+    "AndIn1": {
+     "variable": "inPLC_BypassC1C2",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PK_PREV/DecOut5",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "wire": "Network1/PS_SAFE/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn4": {
+     "wire": "Network1/PK_OK/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn5": {
+     "variable": "linkSafeUpScope",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn6": {
+     "variable": "linkCoverClosed",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn7": {
+     "variable": "out_ReadyForStep2",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PF_OR",
+   "fn": "safeOr",
+   "id": "4056ce16-330c-438a-8289-f6e292dab4f9",
+   "inputs": {
+    "OrIn1": {
+     "wire": "Network1/PE_ERR/RsOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "deactivate": true
+    }
+   }
+  },
+  {
+   "path": "Network1/CFG_EX_SET",
+   "fn": "safeAnd",
+   "id": "e4b7f397-b52c-496a-ad07-cf480f6ff794",
+   "inputs": {
+    "AndIn1": {
+     "variable": "linkCfgActive",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "variable": "inPLC_BypassC1C2",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "path": "Network1/CFG_EX",
+   "fn": "safeRs",
+   "id": "cc6d1c78-4baa-4cc6-8199-d357e6565906",
+   "inputs": {
+    "Reset": {
+     "variable": "linkCfgActive",
+     "contact": "Make Contact (NO)"
+    },
+    "Set": {
+     "wire": "Network1/CFG_EX_SET/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/CFG_T_HOLD",
+   "fn": "safeTon",
+   "id": "8282049b-6173-46b4-916a-7e7dd64e44ed",
+   "inputs": {
+    "TonIn": {
+     "wire": "Network1/CFG_EX/RsOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/CFG_OFF",
+   "fn": "safeAnd",
+   "id": "1628c1cd-9a77-44ac-b569-f6f5676690ca",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network1/CFG_EX/RsOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/CFG_T_HOLD/TonOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network1/CFG_DONE",
+   "fn": "safeAnd",
+   "id": "43276110-b70e-41fd-838f-52197f7c0246",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network1/CFG_OFF/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "variable": "out_LV_C1",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "variable": "out_HV_C2",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn4": {
+     "variable": "in_LV_C1_FBK",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn5": {
+     "variable": "in_HV_C2_FBK",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "path": "Network1/PK_PREV",
+   "fn": "safeDecouple",
+   "id": "0f3750b2-8851-4ade-9316-757e24905e06",
+   "inputs": {
+    "DecIn1": {
+     "variable": "CMD_SAFE_TO_RND",
+     "contact": "Break Contact (NC)"
+    },
+    "DecIn2": {
+     "variable": "CMD_RND_TO_RUN",
+     "contact": "Break Contact (NC)"
+    },
+    "DecIn3": {
+     "variable": "CMD_RUN_TO_RND",
+     "contact": "Break Contact (NC)"
+    },
+    "DecIn4": {
+     "variable": "CMD_RND_TO_SAFE",
+     "contact": "Break Contact (NC)"
+    },
+    "DecIn5": {
+     "variable": "inPLC_BypassC1C2",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network2/S2R_REQ",
+   "fn": "safeOr",
+   "id": "66597493-1f90-4872-832a-50adcc29b81e",
+   "inputs": {
+    "OrIn1": {
+     "variable": "linkRndBothQualified",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "variable": "linkPlcAccS2R",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "RndPhysicalCompact/SU_SET",
+   "fn": "safeOr",
+   "id": "7dafbc25-cefc-4eb3-b38a-39c574514aee",
+   "inputs": {
+    "OrIn1": {
+     "wire": "RndPhysicalCompact/GATE_020/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "variable": "linkPlcAccR2Run",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network6/RUN_DOWN_REQ",
+   "fn": "safeOr",
+   "id": "dee52686-aaf7-4e2e-a4c8-240ade236d40",
+   "inputs": {
+    "OrIn1": {
+     "wire": "Network6/FBAnd24/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "variable": "linkPlcAccRun2R",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network3/DEC_S",
+   "fn": "safeOr",
+   "id": "ba7896e6-f2e3-412f-a73d-dbe83b9eabee",
+   "inputs": {
+    "OrIn1": {
+     "symbol": "b_Step1",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "symbol": "b_Step12",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network3/DEC_SAFE",
+   "fn": "safeAnd",
+   "id": "0aac203a-76f4-4268-82d3-f8fb6f5373cd",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network3/DEC_S/OrOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "symbol": "b_EStop_Ok",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network3/DEC_RND",
+   "fn": "safeAnd",
+   "id": "bd815100-c94f-42b5-9795-6b971c730d9e",
+   "inputs": {
+    "AndIn1": {
+     "symbol": "b_Step_RnD",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "symbol": "b_EStop_Ok",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network3/DEC_RUN",
+   "fn": "safeAnd",
+   "id": "46fbab08-a79c-4632-aae5-54928496d057",
+   "inputs": {
+    "AndIn1": {
+     "symbol": "b_Step3",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "symbol": "b_EStop_Ok",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network3/DEC_CFG",
+   "fn": "safeAnd",
+   "id": "5ac9c07d-f856-4bb2-88cd-129a11095424",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network3/STATE_CFG/RsOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "symbol": "b_EStop_Ok",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "path": "Network3/DEC_EMG",
+   "fn": "safeAnd",
+   "id": "67e9def3-96a1-41b0-9eaa-e62cc3b999f8",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network3/DEC_SAFE/AndOut",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn2": {
+     "wire": "Network3/DEC_RND/AndOut",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "wire": "Network3/DEC_RUN/AndOut",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn4": {
+     "wire": "Network3/DEC_CFG/AndOut",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  }
+ ],
+ "newVariables": [
+  {
+   "name": "in_PLC_Heartbeat",
+   "template": "linkRunDownOwner",
+   "aliasIn": 48,
+   "id": "e6633172-00b9-4f1a-9904-8a5d36485087",
+   "targets": [
+    "Network1/HB_LO/AndIn1",
+    "Network1/HB_T_HI/TonIn"
+   ]
+  },
+  {
+   "name": "CMD_RUN_TO_RND",
+   "template": "linkRunDownOwner",
+   "aliasIn": 63,
+   "id": "520beb49-522d-42ef-ab6e-50e8aa9d2969",
+   "targets": [
+    "Network1/PC_A3/AndIn1",
+    "Network1/PC_O3/OrIn2",
+    "Network1/PE_ALLF/AndIn3",
+    "Network1/PA_RUN2R_T/AndIn1",
+    "Network1/PK_PREV/DecIn3"
+   ]
+  },
+  {
+   "name": "CMD_RND_TO_SAFE",
+   "template": "linkRunDownOwner",
+   "aliasIn": 64,
+   "id": "23851547-2026-4252-be85-63938cf11e82",
+   "targets": [
+    "Network1/PC_A4/AndIn1",
+    "Network1/PC_O4/OrIn2",
+    "Network1/PE_ALLF/AndIn4",
+    "Network1/PA_R2S_ST/AndIn1",
+    "Network1/PA_R2S_AB/AndIn1",
+    "Network1/PK_PREV/DecIn4"
+   ]
+  },
+  {
+   "name": "linkPlcAccS2R",
+   "template": "linkRunDownOwner",
+   "source": "Network1/PA_S2R/AndOut",
+   "id": "58c23082-c053-454b-a515-717461d39cdb",
+   "targets": [
+    "Network2/S2R_REQ/OrIn2"
+   ]
+  },
+  {
+   "name": "linkPlcAccR2Run",
+   "template": "linkRunDownOwner",
+   "source": "Network1/PA_R2RUN/AndOut",
+   "id": "eea5b24b-e2c4-4b1d-b458-947c33c6314f",
+   "targets": [
+    "RndPhysicalCompact/SU_SET/OrIn2"
+   ]
+  },
+  {
+   "name": "linkPlcAbortSu",
+   "template": "linkRunDownOwner",
+   "source": "Network1/PA_RUN2R_T/AndOut",
+   "id": "fedfa6aa-9713-4ba5-859b-e17a33ae7e87",
+   "targets": [
+    "Network6/SU_ABORT_CAUSE/OrIn3"
+   ]
+  },
+  {
+   "name": "linkPlcAccRun2R",
+   "template": "linkRunDownOwner",
+   "source": "Network1/PA_RUN2R/AndOut",
+   "id": "7a1822b5-a39f-41f5-872a-724ea80fa225",
+   "targets": [
+    "Network6/RUN_DOWN_REQ/OrIn2"
+   ]
+  },
+  {
+   "name": "linkPlcAccR2S",
+   "template": "linkRunDownOwner",
+   "source": "Network1/PA_R2S/OrOut",
+   "id": "8bac6b50-ff36-4cc3-8530-8901bb6d3e05",
+   "targets": [
+    "RndPhysicalCompact/GATE_SG_SET/OrIn3"
+   ]
+  },
+  {
+   "name": "linkCfgAccept",
+   "template": "linkRunDownOwner",
+   "source": "Network1/PA_CFG/AndOut",
+   "id": "c414f8d5-1201-474b-95c8-19428592eada",
+   "targets": [
+    "Network1/FBOr1/OrIn1",
+    "Network1/FBOr5/OrIn1",
+    "Network3/FBOr1/OrIn1",
+    "Network3/STATE_CFG/Set"
+   ]
+  },
+  {
+   "name": "STS_FAULT",
+   "template": "linkRunDownOwner",
+   "source": "Network1/PF_OR/OrOut",
+   "aliasOut": 105,
+   "id": "e3f69f03-bf35-4682-a251-0d507058d80d"
+  },
+  {
+   "name": "linkCfgActive",
+   "template": "linkRunDownOwner",
+   "source": "Network3/STATE_CFG/RsOut",
+   "id": "5a7975d3-e8d3-42af-9bd4-a326084e01a1",
+   "targets": [
+    "Network1/FBAnd4/AndIn1",
+    "Network1/FBAndNotRunSu/AndIn4",
+    "Network6/STAGE_LVON/OrIn3",
+    "Network1/CFG_EX_SET/AndIn1",
+    "Network1/CFG_EX/Reset"
+   ]
+  },
+  {
+   "name": "linkCfgDone",
+   "template": "linkRunDownOwner",
+   "source": "Network1/CFG_DONE/AndOut",
+   "id": "2295c461-af53-44f3-927c-3dc062e9bc83",
+   "targets": [
+    "Network3/FBOr2/OrIn1",
+    "Network3/CFG_RST/OrIn1"
+   ]
+  },
+  {
+   "name": "STS_SAFE",
+   "template": "linkRunDownOwner",
+   "source": "Network3/DEC_SAFE/AndOut",
+   "aliasOut": 14,
+   "id": "3cae50d4-443c-41e0-9bfe-9d7804a287e0"
+  },
+  {
+   "name": "STS_RND",
+   "template": "linkRunDownOwner",
+   "source": "Network3/DEC_RND/AndOut",
+   "aliasOut": 100,
+   "id": "45a952f5-5f22-450e-b8b6-891279768ece"
+  },
+  {
+   "name": "STS_RUN",
+   "template": "linkRunDownOwner",
+   "source": "Network3/DEC_RUN/AndOut",
+   "aliasOut": 101,
+   "id": "8d15661d-4271-4084-82b4-ca3471dde48d"
+  },
+  {
+   "name": "STS_CFG",
+   "template": "linkRunDownOwner",
+   "source": "Network3/DEC_CFG/AndOut",
+   "aliasOut": 103,
+   "id": "073679d2-0211-42b5-a6f0-79698319fd6a"
+  },
+  {
+   "name": "STS_EMG",
+   "template": "linkRunDownOwner",
+   "source": "Network3/DEC_EMG/AndOut",
+   "aliasOut": 102,
+   "id": "2a9ff5dd-66a9-44cf-94e0-938656308e86"
+  },
+  {
+   "name": "STS_COVER_LOCKED",
+   "template": "linkRunDownOwner",
+   "source": "Network10/FBDecouple2/DecOut5",
+   "aliasOut": 104,
+   "id": "76b36bf6-7400-4e55-8740-0e8d9eb92294"
+  }
+ ],
+ "deletedBlocks": [
+  "Network1/FBTon1",
+  "Network1/FBAnd10",
+  "Network1/FBAnd12",
+  "Network2/FBAnd61",
+  "Network2/FBAnd81",
+  "Network2/FBAnd91",
+  "Network2/FBAnd11",
+  "Network6/FBAnd15",
+  "Network6/FBAnd16",
+  "Network6/FBAnd17"
+ ],
+ "removedWires": [
+  "5b0d18f7-b450-4ddd-b0ba-24e83d183671",
+  "e8cd0bea-5823-4d48-bb31-ae52d99322e4",
+  "95e1d8d7-ae2c-402f-951e-60c56551705e",
+  "7c146633-0300-484f-b14d-9dcf0404b451",
+  "a7165bc3-7fbd-4e09-8cd8-b2bcf6caa3bc",
+  "3d3cdcaf-a966-485d-81cd-424604fdacf5",
+  "f9bccd04-3ed9-4740-8f2d-b594ff6f4873",
+  "5ad8385d-231b-4673-a754-049f26f10d4a",
+  "107191ef-a09b-4928-862b-c09a70161387",
+  "b0503bdc-dac1-4440-9435-7a304d2a8aaa",
+  "882c5f57-fd84-444a-96da-4d64c3bb789b",
+  "3455c9f0-4092-4727-85c1-7f549c8de3fa",
+  "aac18d99-d546-4583-9903-e653153153d0",
+  "7b29da7d-bed3-451e-8054-4c7536d156bb",
+  "682b7313-733c-40b8-b49f-02011312ba48"
+ ],
+ "addedWires": [
+  {
+   "id": "52f48c57-461d-40c3-b8be-60fbb4b84ee4",
+   "from": "Network1/HB_OK/AndOut",
+   "to": "Network1/FBEstop1/EStopIn7"
+  },
+  {
+   "id": "33869e1d-bbf7-4789-aaa0-ecfc04de1549",
+   "from": "Network1/CFG_OFF/AndOut",
+   "to": "Network1/FBOr2/OrIn3"
+  },
+  {
+   "id": "ec583d5d-cbaf-462c-b1ce-8bea3d9b10d0",
+   "from": "Network1/CFG_OFF/AndOut",
+   "to": "Network1/FBAnd7/AndIn1"
+  },
+  {
+   "id": "d9ebabaf-3f65-474a-bec6-fa66f381cc34",
+   "from": "Network1/CFG_OFF/AndOut",
+   "to": "Network1/FBAnd8/AndIn1"
+  },
+  {
+   "id": "ceb31aac-485c-4ec7-8ce3-bf19477144c6",
+   "from": "Network1/CFG_OFF/AndOut",
+   "to": "Network1/CFG_DONE/AndIn1"
+  },
+  {
+   "id": "d71512bc-5b01-41aa-92c5-1bb9303182be",
+   "from": "Network1/CFG_EX/RsOut",
+   "to": "Network1/FBOr6/OrIn2"
+  },
+  {
+   "id": "c04f0365-2d8f-4beb-a925-266bb01d142a",
+   "from": "Network1/CFG_EX/RsOut",
+   "to": "Network1/FBAnd4/AndIn5"
+  },
+  {
+   "id": "2e3e166a-204b-4298-848e-fefe711c4b4c",
+   "from": "Network1/CFG_EX/RsOut",
+   "to": "Network1/CFG_T_HOLD/TonIn"
+  },
+  {
+   "id": "84f11e38-585e-488c-ad43-fae4f996e6e6",
+   "from": "Network1/CFG_EX/RsOut",
+   "to": "Network1/CFG_OFF/AndIn1"
+  },
+  {
+   "id": "051bd135-421b-4697-8115-3b231cc39343",
+   "from": "Network2/S2R_REQ/OrOut",
+   "to": "Network2/FBAnd4/AndIn1"
+  },
+  {
+   "id": "549ed92f-4b52-4350-974c-692efb63175e",
+   "from": "Network3/STATE_CFG/RsOut",
+   "to": "Network3/FBAnd2/AndIn5"
+  },
+  {
+   "id": "237435d2-ef84-49b0-8d64-6a950f911b29",
+   "from": "Network3/STATE_CFG/RsOut",
+   "to": "Network3/DEC_CFG/AndIn1"
+  },
+  {
+   "id": "26deee09-1634-4ee8-bdc5-8bdca116a85d",
+   "from": "Network6/RUN_DOWN_REQ/OrOut",
+   "to": "Network6/FBAnd23/AndIn1"
+  },
+  {
+   "id": "336b4b4d-730e-409a-b252-de21883fa8fa",
+   "from": "RndPhysicalCompact/SU_SET/OrOut",
+   "to": "RndPhysicalCompact/STATE_SU/Set"
+  },
+  {
+   "id": "3e4d9855-ca6a-428d-91b3-c70b45be25e4",
+   "from": "Network3/CFG_RST/OrOut",
+   "to": "Network3/STATE_CFG/Reset"
+  },
+  {
+   "id": "28475fdf-64cf-4349-9e3d-e6509bb24644",
+   "from": "Network1/HB_LO/AndOut",
+   "to": "Network1/HB_T_LO/TonIn"
+  },
+  {
+   "id": "c93233fd-cccc-4631-ba2a-8e5098c82b1b",
+   "from": "Network1/HB_T_HI/TonOut",
+   "to": "Network1/HB_OK/AndIn1"
+  },
+  {
+   "id": "5a74ccdd-5756-43f3-8308-4c824ec4dc09",
+   "from": "Network1/HB_T_LO/TonOut",
+   "to": "Network1/HB_OK/AndIn2"
+  },
+  {
+   "id": "12d9d67b-c75d-44c2-a7fa-d2ed2e1d4416",
+   "from": "Network1/PS_SAFE/AndOut",
+   "to": "Network1/PS_ANY/OrIn1"
+  },
+  {
+   "id": "494af670-4887-4f1f-b722-cf20a30af756",
+   "from": "Network1/PS_SAFE/AndOut",
+   "to": "Network1/PA_S2R/AndIn3"
+  },
+  {
+   "id": "75410343-9966-4a83-aad7-0189f57bb7a3",
+   "from": "Network1/PS_SAFE/AndOut",
+   "to": "Network1/PA_CFG/AndIn3"
+  },
+  {
+   "id": "7b55ab29-c3a3-449b-979d-cb911e5b1432",
+   "from": "Network1/PS_RND/AndOut",
+   "to": "Network1/PS_ANY/OrIn2"
+  },
+  {
+   "id": "62121822-4305-4f11-8cc5-6eb6fd572404",
+   "from": "Network1/PS_RND/AndOut",
+   "to": "Network1/PA_R2RUN/AndIn3"
+  },
+  {
+   "id": "d448ce24-0fac-471e-aa76-1084d7e2c181",
+   "from": "Network1/PS_RND/AndOut",
+   "to": "Network1/PA_R2S_ST/AndIn3"
+  },
+  {
+   "id": "5f9b7d8a-682b-48c8-ac16-8eadc9a7dee9",
+   "from": "Network1/PS_RUN/AndOut",
+   "to": "Network1/PS_ANY/OrIn3"
+  },
+  {
+   "id": "22b8b9ce-83c2-42d8-922d-f3c183619170",
+   "from": "Network1/PS_RUN/AndOut",
+   "to": "Network1/PA_RUN2R/AndIn2"
+  },
+  {
+   "id": "fe5a122c-a731-405e-8fec-df3fcaf43c00",
+   "from": "Network1/PC_O2/OrOut",
+   "to": "Network1/PC_A3/AndIn2"
+  },
+  {
+   "id": "a624470f-43bd-4a30-aebc-d9bcff7c2aed",
+   "from": "Network1/PC_O2/OrOut",
+   "to": "Network1/PC_O3/OrIn1"
+  },
+  {
+   "id": "2b9ea52d-1bb0-4a9b-b2d6-c49f53ecca4e",
+   "from": "Network1/PC_O3/OrOut",
+   "to": "Network1/PC_A4/AndIn2"
+  },
+  {
+   "id": "74bd3234-ae39-4d77-8122-0608dd58dbc4",
+   "from": "Network1/PC_O3/OrOut",
+   "to": "Network1/PC_O4/OrIn1"
+  },
+  {
+   "id": "cba66c2b-b382-4d37-9258-222f72765e29",
+   "from": "Network1/PC_O4/OrOut",
+   "to": "Network1/PC_A5/AndIn2"
+  },
+  {
+   "id": "9d4800a1-f5f3-4f4f-bd8f-caccfbed0bfe",
+   "from": "Network1/PC_A2/AndOut",
+   "to": "Network1/PC_TWO/OrIn1"
+  },
+  {
+   "id": "4b53e0a2-4fe6-4f27-a36a-f6eaa42f8582",
+   "from": "Network1/PC_A3/AndOut",
+   "to": "Network1/PC_TWO/OrIn2"
+  },
+  {
+   "id": "c0cc16a7-f202-4194-ac35-8b280cd00e38",
+   "from": "Network1/PC_A4/AndOut",
+   "to": "Network1/PC_TWO/OrIn3"
+  },
+  {
+   "id": "28077715-e414-4fab-a028-96c04ba310d7",
+   "from": "Network1/PC_A5/AndOut",
+   "to": "Network1/PC_TWO/OrIn4"
+  },
+  {
+   "id": "132a590b-dbf2-4519-9571-5e66eabc4ca8",
+   "from": "Network1/PC_TWO/OrOut",
+   "to": "Network1/PE_SET/AndIn1"
+  },
+  {
+   "id": "e3eec4c9-ea32-4e0d-a8f6-b65a9a8828b1",
+   "from": "Network1/PS_ANY/OrOut",
+   "to": "Network1/PE_SET/AndIn2"
+  },
+  {
+   "id": "4e5a13db-9c01-47c1-aefa-2b4b0e1d66c0",
+   "from": "Network1/PE_ALLF/AndOut",
+   "to": "Network1/PE_T_CLR/TonIn"
+  },
+  {
+   "id": "3530479c-c140-4761-83c9-943e16372c83",
+   "from": "Network1/PE_T_CLR/TonOut",
+   "to": "Network1/PE_ERR/Reset"
+  },
+  {
+   "id": "887ba908-f62f-4e77-80d6-75f65096fc96",
+   "from": "Network1/PE_SET/AndOut",
+   "to": "Network1/PE_ERR/Set"
+  },
+  {
+   "id": "3ecf65b4-ad75-40e2-97cd-c6f7cf67b4f6",
+   "from": "Network1/PE_ERR/RsOut",
+   "to": "Network1/PK_OK/AndIn3"
+  },
+  {
+   "id": "81031da8-d994-47ff-ac08-75c1f27618a0",
+   "from": "Network1/PE_ERR/RsOut",
+   "to": "Network1/PF_OR/OrIn1"
+  },
+  {
+   "id": "2a764766-900f-4946-a021-b90d51640471",
+   "from": "Network1/PK_PREV/DecOut1",
+   "to": "Network1/PA_S2R/AndIn2"
+  },
+  {
+   "id": "e3d8d67b-aa94-486b-a47d-c30e262abc31",
+   "from": "Network1/PK_OK/AndOut",
+   "to": "Network1/PA_S2R/AndIn4"
+  },
+  {
+   "id": "4c9f16a7-490f-4fc5-95c3-e39a29cbbc92",
+   "from": "Network1/PK_OK/AndOut",
+   "to": "Network1/PA_R2RUN/AndIn4"
+  },
+  {
+   "id": "9d0d017b-2047-44e0-bf65-16f4e79d8cee",
+   "from": "Network1/PK_OK/AndOut",
+   "to": "Network1/PA_RUN2R_T/AndIn3"
+  },
+  {
+   "id": "99948c54-b321-4354-8e22-38db1d47f306",
+   "from": "Network1/PK_OK/AndOut",
+   "to": "Network1/PA_R2S_ST/AndIn4"
+  },
+  {
+   "id": "c19a2f64-11ba-452c-90f9-76b719188ef7",
+   "from": "Network1/PK_OK/AndOut",
+   "to": "Network1/PA_R2S_AB/AndIn4"
+  },
+  {
+   "id": "7d5ca537-45f8-4ad1-be1c-390e39240d95",
+   "from": "Network1/PK_OK/AndOut",
+   "to": "Network1/PA_CFG/AndIn4"
+  },
+  {
+   "id": "c185de31-9075-4ca7-a35e-9373828493cc",
+   "from": "Network1/PK_PREV/DecOut2",
+   "to": "Network1/PA_R2RUN/AndIn2"
+  },
+  {
+   "id": "0b5ced2f-b29b-46f4-9062-117fafb77bee",
+   "from": "Network1/PK_PREV/DecOut3",
+   "to": "Network1/PA_RUN2R_T/AndIn2"
+  },
+  {
+   "id": "c52ce903-639c-4c43-92b1-d85cf6e1643f",
+   "from": "Network1/PA_RUN2R_T/AndOut",
+   "to": "Network1/PA_RUN2R/AndIn1"
+  },
+  {
+   "id": "8d3881ec-404b-46ab-9212-8fc861228757",
+   "from": "Network1/PK_PREV/DecOut4",
+   "to": "Network1/PA_R2S_ST/AndIn2"
+  },
+  {
+   "id": "980fe2b3-654b-4ed2-a254-36207fa26337",
+   "from": "Network1/PK_PREV/DecOut4",
+   "to": "Network1/PA_R2S_AB/AndIn2"
+  },
+  {
+   "id": "376f09d8-b6e0-4632-8f27-6a77da26ebc2",
+   "from": "Network1/PA_R2S_ST/AndOut",
+   "to": "Network1/PA_R2S/OrIn1"
+  },
+  {
+   "id": "65b8ee1d-e6ca-468a-b329-3d42bcf8eddb",
+   "from": "Network1/PA_R2S_AB/AndOut",
+   "to": "Network1/PA_R2S/OrIn2"
+  },
+  {
+   "id": "0f281f07-83f4-459a-848e-d2de249c78dc",
+   "from": "Network1/PK_PREV/DecOut5",
+   "to": "Network1/PA_CFG/AndIn2"
+  },
+  {
+   "id": "6fca9d5b-6505-4083-8f01-dffd8b1f457c",
+   "from": "Network1/CFG_EX_SET/AndOut",
+   "to": "Network1/CFG_EX/Set"
+  },
+  {
+   "id": "1620c360-460f-43a7-a71b-3ceb5e7ede1b",
+   "from": "Network1/CFG_T_HOLD/TonOut",
+   "to": "Network1/CFG_OFF/AndIn2"
+  },
+  {
+   "id": "dcfe4f2c-af10-4a5d-a0e3-ca34b30eb396",
+   "from": "RndPhysicalCompact/GATE_020/AndOut",
+   "to": "RndPhysicalCompact/SU_SET/OrIn1"
+  },
+  {
+   "id": "eb9f089e-d2e1-41c1-b830-b2cea776d46a",
+   "from": "Network6/FBAnd24/AndOut",
+   "to": "Network6/RUN_DOWN_REQ/OrIn1"
+  },
+  {
+   "id": "fbb2c307-a21d-4d65-a6c9-00f136652765",
+   "from": "Network3/DEC_S/OrOut",
+   "to": "Network3/DEC_SAFE/AndIn1"
+  },
+  {
+   "id": "8d95e335-d7f0-4829-b6b8-5481494a7795",
+   "from": "Network3/DEC_SAFE/AndOut",
+   "to": "Network3/DEC_EMG/AndIn1"
+  },
+  {
+   "id": "d0ef7566-0b67-4684-87d9-c70f30e47bdb",
+   "from": "Network3/DEC_RND/AndOut",
+   "to": "Network3/DEC_EMG/AndIn2"
+  },
+  {
+   "id": "139763ea-a22e-425d-a848-6dc1a3c26f66",
+   "from": "Network3/DEC_RUN/AndOut",
+   "to": "Network3/DEC_EMG/AndIn3"
+  },
+  {
+   "id": "3669d810-11ed-4695-8df6-5d2f529b1842",
+   "from": "Network3/DEC_CFG/AndOut",
+   "to": "Network3/DEC_EMG/AndIn4"
+  }
+ ],
+ "connectorsRemoved": 15,
+ "inputs": [
+  {
+   "port": "Network1/FBEstop1/EStopIn7",
+   "wire": "Network1/HB_OK/AndOut",
+   "contact": "Break Contact (NC)",
+   "estop": true,
+   "why": "plan Deactivated -> W://Network1/HB_OK/AndOut"
+  },
+  {
+   "port": "Network1/FBOr1/OrIn1",
+   "variable": "linkCfgAccept",
+   "contact": "Break Contact (NC)",
+   "why": "plan Deactivated -> V:linkCfgAccept"
+  },
+  {
+   "port": "Network1/FBOr2/OrIn3",
+   "wire": "Network1/CFG_OFF/AndOut",
+   "contact": "Break Contact (NC)",
+   "why": "plan Deactivated -> W://Network1/CFG_OFF/AndOut"
+  },
+  {
+   "port": "Network1/FBOr5/OrIn1",
+   "variable": "linkCfgAccept",
+   "contact": "Break Contact (NC)",
+   "why": "plan Deactivated -> V:linkCfgAccept"
+  },
+  {
+   "port": "Network1/FBOr6/OrIn2",
+   "wire": "Network1/CFG_EX/RsOut",
+   "contact": "Break Contact (NC)",
+   "why": "plan Deactivated -> W://Network1/CFG_EX/RsOut"
+  },
+  {
+   "port": "Network1/FBAnd2/AndIn2",
+   "deactivate": true,
+   "why": "plan W://Network1/FBAnd12/AndOut -> Deactivated"
+  },
+  {
+   "port": "Network1/FBAnd2/AndIn3",
+   "deactivate": true,
+   "why": "plan W://Network1/FBAnd10/AndOut -> Deactivated"
+  },
+  {
+   "port": "Network1/FBAnd4/AndIn1",
+   "variable": "linkCfgActive",
+   "contact": "Break Contact (NC)",
+   "why": "plan V:inPLC_BypassC1C2 -> V:linkCfgActive"
+  },
+  {
+   "port": "Network1/FBAnd4/AndIn5",
+   "wire": "Network1/CFG_EX/RsOut",
+   "contact": "Make Contact (NO)",
+   "why": "plan G:b_Step1 -> !W://Network1/CFG_EX/RsOut"
+  },
+  {
+   "port": "Network1/FBAnd7/AndIn1",
+   "wire": "Network1/CFG_OFF/AndOut",
+   "contact": "Break Contact (NC)",
+   "why": "plan W://Network1/FBTon1/TonOut -> W://Network1/CFG_OFF/AndOut"
+  },
+  {
+   "port": "Network1/FBAnd8/AndIn1",
+   "wire": "Network1/CFG_OFF/AndOut",
+   "contact": "Break Contact (NC)",
+   "why": "plan W://Network1/FBTon1/TonOut -> W://Network1/CFG_OFF/AndOut"
+  },
+  {
+   "port": "Network1/FBAndNotRunSu/AndIn4",
+   "variable": "linkCfgActive",
+   "contact": "Make Contact (NO)",
+   "why": "plan Deactivated -> !V:linkCfgActive"
+  },
+  {
+   "port": "Network2/FBAnd4/AndIn1",
+   "wire": "Network2/S2R_REQ/OrOut",
+   "contact": "Break Contact (NC)",
+   "why": "plan V:linkRndBothQualified -> W://Network2/S2R_REQ/OrOut"
+  },
+  {
+   "port": "Network2/FBOr1/OrIn2",
+   "deactivate": true,
+   "why": "plan W://Network2/FBAnd91/AndOut -> Deactivated"
+  },
+  {
+   "port": "Network3/FBOr1/OrIn1",
+   "variable": "linkCfgAccept",
+   "contact": "Break Contact (NC)",
+   "why": "plan Deactivated -> V:linkCfgAccept"
+  },
+  {
+   "port": "Network3/FBOr2/OrIn1",
+   "variable": "linkCfgDone",
+   "contact": "Break Contact (NC)",
+   "why": "plan Deactivated -> V:linkCfgDone"
+  },
+  {
+   "port": "Network3/FBAnd2/AndIn5",
+   "wire": "Network3/STATE_CFG/RsOut",
+   "contact": "Make Contact (NO)",
+   "why": "plan Deactivated -> !W://Network3/STATE_CFG/RsOut"
+  },
+  {
+   "port": "Network6/FBOr5/OrIn2",
+   "deactivate": true,
+   "why": "plan W://Network6/FBAnd17/AndOut -> Deactivated"
+  },
+  {
+   "port": "Network6/FBAnd23/AndIn1",
+   "wire": "Network6/RUN_DOWN_REQ/OrOut",
+   "contact": "Break Contact (NC)",
+   "why": "plan W://Network6/FBAnd24/AndOut -> W://Network6/RUN_DOWN_REQ/OrOut"
+  },
+  {
+   "port": "Network6/STAGE_LVON/OrIn3",
+   "variable": "linkCfgActive",
+   "contact": "Break Contact (NC)",
+   "why": "plan Deactivated -> V:linkCfgActive"
+  },
+  {
+   "port": "Network6/SU_ABORT_CAUSE/OrIn3",
+   "variable": "linkPlcAbortSu",
+   "contact": "Break Contact (NC)",
+   "why": "plan Deactivated -> V:linkPlcAbortSu"
+  },
+  {
+   "port": "Network10/FBDecouple2/DecIn5",
+   "variable": "linkCoverClosed",
+   "why": "plan - -> V:linkCoverClosed"
+  },
+  {
+   "port": "RndPhysicalCompact/STATE_SU/Set",
+   "wire": "RndPhysicalCompact/SU_SET/OrOut",
+   "contact": "Break Contact (NC)",
+   "why": "plan W://RndPhysicalCompact/GATE_020/AndOut -> W://RndPhysicalCompact/SU_SET/OrOut"
+  },
+  {
+   "port": "RndPhysicalCompact/GATE_SG_SET/OrIn3",
+   "variable": "linkPlcAccR2S",
+   "contact": "Break Contact (NC)",
+   "why": "plan Deactivated -> V:linkPlcAccR2S"
+  }
+ ],
+ "orderMap": [
+  {
+   "block": "Network3/FBOr2",
+   "from": 1,
+   "to": 1
+  },
+  {
+   "block": "Network3/FBOr1",
+   "from": 2,
+   "to": 2
+  },
+  {
+   "block": "Network3/FBOrS12Reset",
+   "from": 3,
+   "to": 3
+  },
+  {
+   "block": "Network3/FBOr16",
+   "from": 4,
+   "to": 4
+  },
+  {
+   "block": "Network3/FBOr13",
+   "from": 5,
+   "to": 5
+  },
+  {
+   "block": "Network3/FBOr5",
+   "from": 6,
+   "to": 6
+  },
+  {
+   "block": "Network3/FBOr7",
+   "from": 7,
+   "to": 7
+  },
+  {
+   "block": "Network3/FBOr9",
+   "from": 8,
+   "to": 8
+  },
+  {
+   "block": "Network3/FBRs1",
+   "from": 9,
+   "to": 9
+  },
+  {
+   "block": "Network3/FBRs8",
+   "from": 10,
+   "to": 10
+  },
+  {
+   "block": "Network3/FBRs7",
+   "from": 11,
+   "to": 11
+  },
+  {
+   "block": "Network3/FBRs3",
+   "from": 12,
+   "to": 12
+  },
+  {
+   "block": "Network3/FBRs4",
+   "from": 13,
+   "to": 13
+  },
+  {
+   "block": "Network3/FBRs5",
+   "from": 14,
+   "to": 14
+  },
+  {
+   "block": "Network3/FBRs6",
+   "from": 15,
+   "to": 15
+  },
+  {
+   "block": "Network3/CFG_RST",
+   "from": null,
+   "to": 16
+  },
+  {
+   "block": "Network3/STATE_CFG",
+   "from": null,
+   "to": 17
+  },
+  {
+   "block": "Network2/FBAnd1",
+   "from": 16,
+   "to": 18
+  },
+  {
+   "block": "Network1/FBAndLvCurrentPermit",
+   "from": 17,
+   "to": 19
+  },
+  {
+   "block": "Network1/FBAndLvSetPermit",
+   "from": 18,
+   "to": 20
+  },
+  {
+   "block": "Network1/FBRs1",
+   "from": 19,
+   "to": 21
+  },
+  {
+   "block": "Network1/FBAndHvSetPermit",
+   "from": 20,
+   "to": 22
+  },
+  {
+   "block": "Network1/FBRs2",
+   "from": 21,
+   "to": 23
+  },
+  {
+   "block": "Network2/FBTon1",
+   "from": 22,
+   "to": 24
+  },
+  {
+   "block": "Network2/FBAnd2",
+   "from": 23,
+   "to": 25
+  },
+  {
+   "block": "Network2/FBDecouple1",
+   "from": 24,
+   "to": 26
+  },
+  {
+   "block": "Network1/FBAndSto1SetPermit",
+   "from": 25,
+   "to": 27
+  },
+  {
+   "block": "Network1/FBRs3",
+   "from": 26,
+   "to": 28
+  },
+  {
+   "block": "Network1/FBAndSto2SetPermit",
+   "from": 27,
+   "to": 29
+  },
+  {
+   "block": "Network1/FBRs4",
+   "from": 28,
+   "to": 30
+  },
+  {
+   "block": "Network2/FBDecouple2",
+   "from": 29,
+   "to": 31
+  },
+  {
+   "block": "Network2/FBTon2",
+   "from": 30,
+   "to": 32
+  },
+  {
+   "block": "Network2/FBAnd3",
+   "from": 31,
+   "to": 33
+  },
+  {
+   "block": "Network1/FBK_OFF",
+   "from": 32,
+   "to": 34
+  },
+  {
+   "block": "Network1/EXIT_FBK_OK",
+   "from": 33,
+   "to": 35
+  },
+  {
+   "block": "Network1/HB_LO",
+   "from": null,
+   "to": 36
+  },
+  {
+   "block": "Network1/HB_T_HI",
+   "from": null,
+   "to": 37
+  },
+  {
+   "block": "Network1/HB_T_LO",
+   "from": null,
+   "to": 38
+  },
+  {
+   "block": "Network1/HB_OK",
+   "from": null,
+   "to": 39
+  },
+  {
+   "block": "Network1/FBEstop1",
+   "from": 34,
+   "to": 40
+  },
+  {
+   "block": "Network3/G10_EXIT",
+   "from": 35,
+   "to": 41
+  },
+  {
+   "block": "Network3/FBAndBootFbkOff",
+   "from": 36,
+   "to": 42
+  },
+  {
+   "block": "Network3/FBAnd2",
+   "from": 37,
+   "to": 43
+  },
+  {
+   "block": "Network3/FBAnd1",
+   "from": 38,
+   "to": 44
+  },
+  {
+   "block": "Network1/FBOr1",
+   "from": 39,
+   "to": 45
+  },
+  {
+   "block": "Network1/FBOr2",
+   "from": 40,
+   "to": 46
+  },
+  {
+   "block": "Network1/FBRs5",
+   "from": 41,
+   "to": 47
+  },
+  {
+   "block": "Network1/FBOr5",
+   "from": 42,
+   "to": 48
+  },
+  {
+   "block": "Network1/FBOr6",
+   "from": 43,
+   "to": 49
+  },
+  {
+   "block": "Network1/FBRs7",
+   "from": 44,
+   "to": 50
+  },
+  {
+   "block": "Network1/FBOr7",
+   "from": 45,
+   "to": 51
+  },
+  {
+   "block": "Network1/FBOr8",
+   "from": 46,
+   "to": 52
+  },
+  {
+   "block": "Network1/FBOr9",
+   "from": 47,
+   "to": 53
+  },
+  {
+   "block": "Network1/FBOr10",
+   "from": 48,
+   "to": 54
+  },
+  {
+   "block": "Network6/FBAnd1",
+   "from": 49,
+   "to": 55
+  },
+  {
+   "block": "Network3/FBDecouple1",
+   "from": 50,
+   "to": 56
+  },
+  {
+   "block": "Network6/FBAnd2",
+   "from": 51,
+   "to": 57
+  },
+  {
+   "block": "Network6/FBAnd3",
+   "from": 52,
+   "to": 58
+  },
+  {
+   "block": "Network6/FBAnd4",
+   "from": 53,
+   "to": 59
+  },
+  {
+   "block": "Network6/FBRs1",
+   "from": 54,
+   "to": 60
+  },
+  {
+   "block": "Network6/FBAnd5",
+   "from": 55,
+   "to": 61
+  },
+  {
+   "block": "Network6/FBAnd6",
+   "from": 56,
+   "to": 62
+  },
+  {
+   "block": "Network6/FBRs2",
+   "from": 57,
+   "to": 63
+  },
+  {
+   "block": "Network6/FBOr2",
+   "from": 58,
+   "to": 64
+  },
+  {
+   "block": "Network6/FBOr3",
+   "from": 59,
+   "to": 65
+  },
+  {
+   "block": "Network6/STAGE_LVON",
+   "from": 60,
+   "to": 66
+  },
+  {
+   "block": "Network6/FBAndLvEmg",
+   "from": 61,
+   "to": 67
+  },
+  {
+   "block": "Network6/FBOrStep4",
+   "from": 62,
+   "to": 68
+  },
+  {
+   "block": "Network6/FBDecouple1",
+   "from": 63,
+   "to": 69
+  },
+  {
+   "block": "Network7/FBAnd1",
+   "from": 64,
+   "to": 70
+  },
+  {
+   "block": "Network7/FBDecouple1",
+   "from": 65,
+   "to": 71
+  },
+  {
+   "block": "Network1/FBOr11",
+   "from": 66,
+   "to": 72
+  },
+  {
+   "block": "Network7/FBAnd2",
+   "from": 67,
+   "to": 73
+  },
+  {
+   "block": "Network7/FBAnd3",
+   "from": 68,
+   "to": 74
+  },
+  {
+   "block": "Network7/FBOr1",
+   "from": 69,
+   "to": 75
+  },
+  {
+   "block": "Network7/FBOr2",
+   "from": 70,
+   "to": 76
+  },
+  {
+   "block": "Network7/FBAnd8",
+   "from": 71,
+   "to": 77
+  },
+  {
+   "block": "Network8/FBOrS5",
+   "from": 72,
+   "to": 78
+  },
+  {
+   "block": "Network8/FBAnd1",
+   "from": 73,
+   "to": 79
+  },
+  {
+   "block": "Network8/FBDecouple1",
+   "from": 74,
+   "to": 80
+  },
+  {
+   "block": "Network8/FBTon1",
+   "from": 75,
+   "to": 81
+  },
+  {
+   "block": "Network8/FBAnd2",
+   "from": 76,
+   "to": 82
+  },
+  {
+   "block": "Network8/FBOr1",
+   "from": 77,
+   "to": 83
+  },
+  {
+   "block": "Network8/FBTon2",
+   "from": 78,
+   "to": 84
+  },
+  {
+   "block": "Network1/FBOr16",
+   "from": 79,
+   "to": 85
+  },
+  {
+   "block": "Network8/FBAnd3",
+   "from": 80,
+   "to": 86
+  },
+  {
+   "block": "Network6/FBAnd7",
+   "from": 81,
+   "to": 87
+  },
+  {
+   "block": "Network6/FBAnd8",
+   "from": 82,
+   "to": 88
+  },
+  {
+   "block": "Network6/HEALTHY_OK",
+   "from": 83,
+   "to": 89
+  },
+  {
+   "block": "Network6/HEALTH_GUARD",
+   "from": 84,
+   "to": 90
+  },
+  {
+   "block": "Network6/FBAnd9",
+   "from": 85,
+   "to": 91
+  },
+  {
+   "block": "Network12/FBAnd16",
+   "from": 86,
+   "to": 92
+  },
+  {
+   "block": "SafeResumption/CONNECTORS",
+   "from": 87,
+   "to": 93
+  },
+  {
+   "block": "SafeResumption/CONNECTOR_SCOPE",
+   "from": 88,
+   "to": 94
+  },
+  {
+   "block": "Network1/FBAndNotRunSu",
+   "from": 89,
+   "to": 95
+  },
+  {
+   "block": "Network1/FBOrIlRunOk",
+   "from": 90,
+   "to": 96
+  },
+  {
+   "block": "Network1/FBAnd1",
+   "from": 91,
+   "to": 97
+  },
+  {
+   "block": "Network2/FBAnd5",
+   "from": 92,
+   "to": 98
+  },
+  {
+   "block": "Network2/FBAnd6",
+   "from": 93,
+   "to": 99
+  },
+  {
+   "block": "Network2/FBDecouple3",
+   "from": 94,
+   "to": 100
+  },
+  {
+   "block": "Network2/FBAnd7",
+   "from": 95,
+   "to": 101
+  },
+  {
+   "block": "Network7/FBTon1",
+   "from": 96,
+   "to": 102
+  },
+  {
+   "block": "Network3/FBDecouple2",
+   "from": 97,
+   "to": 103
+  },
+  {
+   "block": "Network2/FBAnd8",
+   "from": 98,
+   "to": 104
+  },
+  {
+   "block": "Network1/FBDecouple1",
+   "from": 99,
+   "to": 105
+  },
+  {
+   "block": "Network7/FBTon2",
+   "from": 100,
+   "to": 106
+  },
+  {
+   "block": "Network7/FBTon3",
+   "from": 101,
+   "to": 107
+  },
+  {
+   "block": "Network7/FBDecouple3",
+   "from": 102,
+   "to": 108
+  },
+  {
+   "block": "Network1/FBOr12",
+   "from": 103,
+   "to": 109
+  },
+  {
+   "block": "Network1/FBOr13",
+   "from": 104,
+   "to": 110
+  },
+  {
+   "block": "Network1/FBDecouple2",
+   "from": 105,
+   "to": 111
+  },
+  {
+   "block": "Network1/PS_SAFE",
+   "from": null,
+   "to": 112
+  },
+  {
+   "block": "Network1/PS_RND",
+   "from": null,
+   "to": 113
+  },
+  {
+   "block": "Network1/PS_RUN",
+   "from": null,
+   "to": 114
+  },
+  {
+   "block": "Network1/PS_ANY",
+   "from": null,
+   "to": 115
+  },
+  {
+   "block": "Network1/PC_O2",
+   "from": null,
+   "to": 116
+  },
+  {
+   "block": "Network1/PC_A2",
+   "from": null,
+   "to": 117
+  },
+  {
+   "block": "Network1/PC_A3",
+   "from": null,
+   "to": 118
+  },
+  {
+   "block": "Network1/PC_O3",
+   "from": null,
+   "to": 119
+  },
+  {
+   "block": "Network1/PC_A4",
+   "from": null,
+   "to": 120
+  },
+  {
+   "block": "Network1/PC_O4",
+   "from": null,
+   "to": 121
+  },
+  {
+   "block": "Network1/PC_A5",
+   "from": null,
+   "to": 122
+  },
+  {
+   "block": "Network1/PC_TWO",
+   "from": null,
+   "to": 123
+  },
+  {
+   "block": "Network1/PE_SET",
+   "from": null,
+   "to": 124
+  },
+  {
+   "block": "Network1/PE_ALLF",
+   "from": null,
+   "to": 125
+  },
+  {
+   "block": "Network1/PE_T_CLR",
+   "from": null,
+   "to": 126
+  },
+  {
+   "block": "Network1/PE_ERR",
+   "from": null,
+   "to": 127
+  },
+  {
+   "block": "Network1/PK_OK",
+   "from": null,
+   "to": 128
+  },
+  {
+   "block": "Network1/PA_S2R",
+   "from": null,
+   "to": 129
+  },
+  {
+   "block": "Network1/PA_R2RUN",
+   "from": null,
+   "to": 130
+  },
+  {
+   "block": "Network1/PA_RUN2R_T",
+   "from": null,
+   "to": 131
+  },
+  {
+   "block": "Network1/PA_RUN2R",
+   "from": null,
+   "to": 132
+  },
+  {
+   "block": "Network1/PA_R2S_ST",
+   "from": null,
+   "to": 133
+  },
+  {
+   "block": "Network1/PA_R2S_AB",
+   "from": null,
+   "to": 134
+  },
+  {
+   "block": "Network1/PA_R2S",
+   "from": null,
+   "to": 135
+  },
+  {
+   "block": "Network1/PA_CFG",
+   "from": null,
+   "to": 136
+  },
+  {
+   "block": "Network1/PF_OR",
+   "from": null,
+   "to": 137
+  },
+  {
+   "block": "Network1/CFG_EX_SET",
+   "from": null,
+   "to": 138
+  },
+  {
+   "block": "Network1/CFG_EX",
+   "from": null,
+   "to": 139
+  },
+  {
+   "block": "Network1/CFG_T_HOLD",
+   "from": null,
+   "to": 140
+  },
+  {
+   "block": "Network1/CFG_OFF",
+   "from": null,
+   "to": 141
+  },
+  {
+   "block": "Network1/CFG_DONE",
+   "from": null,
+   "to": 142
+  },
+  {
+   "block": "Network1/PK_PREV",
+   "from": null,
+   "to": 143
+  },
+  {
+   "block": "Network2/FBAnd9",
+   "from": 106,
+   "to": 144
+  },
+  {
+   "block": "Network10/FBDecouple1",
+   "from": 107,
+   "to": 145
+  },
+  {
+   "block": "Network10/FBDecouple2",
+   "from": 108,
+   "to": 146
+  },
+  {
+   "block": "Network11/FBAnd1",
+   "from": 109,
+   "to": 147
+  },
+  {
+   "block": "Network11/WIN_C1_IN",
+   "from": 110,
+   "to": 148
+  },
+  {
+   "block": "Network11/WIN_C1",
+   "from": 111,
+   "to": 149
+  },
+  {
+   "block": "Network11/FBAnd4",
+   "from": 112,
+   "to": 150
+  },
+  {
+   "block": "Network11/FBTon1",
+   "from": 113,
+   "to": 151
+  },
+  {
+   "block": "Network11/FBAnd5",
+   "from": 114,
+   "to": 152
+  },
+  {
+   "block": "RndPhysicalCompact/SNAP_0",
+   "from": 115,
+   "to": 153
+  },
+  {
+   "block": "RndPhysicalCompact/SNAP_1",
+   "from": 116,
+   "to": 154
+  },
+  {
+   "block": "SafeResumption/MODE",
+   "from": 117,
+   "to": 155
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_001",
+   "from": 118,
+   "to": 156
+  },
+  {
+   "block": "SafeResumption/RND_SCOPE",
+   "from": 119,
+   "to": 157
+  },
+  {
+   "block": "SafeResumption/SAFE_UP_SCOPE",
+   "from": 120,
+   "to": 158
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_002",
+   "from": 121,
+   "to": 159
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_003",
+   "from": 122,
+   "to": 160
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_004",
+   "from": 123,
+   "to": 161
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_005",
+   "from": 124,
+   "to": 162
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_006",
+   "from": 125,
+   "to": 163
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_007",
+   "from": 126,
+   "to": 164
+  },
+  {
+   "block": "RndPhysicalCompact/WINDOW",
+   "from": 127,
+   "to": 165
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_008",
+   "from": 128,
+   "to": 166
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_009",
+   "from": 129,
+   "to": 167
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_010",
+   "from": 130,
+   "to": 168
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_011",
+   "from": 131,
+   "to": 169
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_012",
+   "from": 132,
+   "to": 170
+  },
+  {
+   "block": "RndPhysicalCompact/RELEASE",
+   "from": 133,
+   "to": 171
+  },
+  {
+   "block": "RndPhysicalCompact/GREEN",
+   "from": 134,
+   "to": 172
+  },
+  {
+   "block": "RndPhysicalCompact/BLUE",
+   "from": 135,
+   "to": 173
+  },
+  {
+   "block": "RndPhysicalCompact/BOTH",
+   "from": 136,
+   "to": 174
+  },
+  {
+   "block": "Network2/S2R_REQ",
+   "from": null,
+   "to": 175
+  },
+  {
+   "block": "Network2/FBAnd4",
+   "from": 137,
+   "to": 176
+  },
+  {
+   "block": "SafeResumption/SAFE_ACCEPTED_UP",
+   "from": 138,
+   "to": 177
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_013",
+   "from": 139,
+   "to": 178
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_014",
+   "from": 140,
+   "to": 179
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_015",
+   "from": 141,
+   "to": 180
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_016",
+   "from": 142,
+   "to": 181
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_020",
+   "from": 143,
+   "to": 182
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_022",
+   "from": 144,
+   "to": 183
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_023",
+   "from": 145,
+   "to": 184
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_024",
+   "from": 146,
+   "to": 185
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_025",
+   "from": 147,
+   "to": 186
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_026",
+   "from": 148,
+   "to": 187
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_SPOIL_R",
+   "from": 149,
+   "to": 188
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_SPOIL_S",
+   "from": 150,
+   "to": 189
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_PHASE",
+   "from": 151,
+   "to": 190
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_PF_SET",
+   "from": 152,
+   "to": 191
+  },
+  {
+   "block": "RndPhysicalCompact/STATE_PF",
+   "from": 153,
+   "to": 192
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_SPOIL_PF",
+   "from": 154,
+   "to": 193
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_029",
+   "from": 155,
+   "to": 194
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_030",
+   "from": 156,
+   "to": 195
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_031",
+   "from": 157,
+   "to": 196
+  },
+  {
+   "block": "RndPhysicalCompact/STATE_A",
+   "from": 158,
+   "to": 197
+  },
+  {
+   "block": "RndPhysicalCompact/STATE_T",
+   "from": 159,
+   "to": 198
+  },
+  {
+   "block": "RndPhysicalCompact/STATE_L",
+   "from": 160,
+   "to": 199
+  },
+  {
+   "block": "RndPhysicalCompact/STATE_C",
+   "from": 161,
+   "to": 200
+  },
+  {
+   "block": "Network6/RD_HLOSS",
+   "from": 162,
+   "to": 201
+  },
+  {
+   "block": "Network6/RD_PROT_SET",
+   "from": 163,
+   "to": 202
+  },
+  {
+   "block": "Network6/RD_RESET",
+   "from": 164,
+   "to": 203
+  },
+  {
+   "block": "Network6/RD_PROT",
+   "from": 165,
+   "to": 204
+  },
+  {
+   "block": "Network6/RD_SEQ",
+   "from": 166,
+   "to": 205
+  },
+  {
+   "block": "Network6/RD_T_SS1",
+   "from": 167,
+   "to": 206
+  },
+  {
+   "block": "Network6/RD_STO_TRIG",
+   "from": 168,
+   "to": 207
+  },
+  {
+   "block": "Network6/RD_STO",
+   "from": 169,
+   "to": 208
+  },
+  {
+   "block": "Network6/RD_T_COAST",
+   "from": 170,
+   "to": 209
+  },
+  {
+   "block": "Network6/RD_DIS",
+   "from": 171,
+   "to": 210
+  },
+  {
+   "block": "Network6/SU_ABORT_CAUSE",
+   "from": 172,
+   "to": 211
+  },
+  {
+   "block": "Network6/SU_ABORT_SET",
+   "from": 173,
+   "to": 212
+  },
+  {
+   "block": "Network6/SU_ABORT_END",
+   "from": 174,
+   "to": 213
+  },
+  {
+   "block": "Network6/SU_ABORT_RESET",
+   "from": 175,
+   "to": 214
+  },
+  {
+   "block": "Network6/SU_ABORT",
+   "from": 176,
+   "to": 215
+  },
+  {
+   "block": "Network6/DN_STO",
+   "from": 177,
+   "to": 216
+  },
+  {
+   "block": "Network6/DN_DIS",
+   "from": 178,
+   "to": 217
+  },
+  {
+   "block": "Network6/DN_T_HOLD",
+   "from": 179,
+   "to": 218
+  },
+  {
+   "block": "Network6/DN_C2",
+   "from": 180,
+   "to": 219
+  },
+  {
+   "block": "Network6/DN_ACTIVE",
+   "from": 181,
+   "to": 220
+  },
+  {
+   "block": "RndPhysicalCompact/SU_RESET",
+   "from": 182,
+   "to": 221
+  },
+  {
+   "block": "RndPhysicalCompact/SU_SET",
+   "from": null,
+   "to": 222
+  },
+  {
+   "block": "RndPhysicalCompact/STATE_SU",
+   "from": 183,
+   "to": 223
+  },
+  {
+   "block": "SafeResumption/SG_OWNER_SET",
+   "from": 184,
+   "to": 224
+  },
+  {
+   "block": "SafeResumption/HLT_DESC_SET",
+   "from": 185,
+   "to": 225
+  },
+  {
+   "block": "SafeResumption/HLT_MEM",
+   "from": 186,
+   "to": 226
+  },
+  {
+   "block": "SafeResumption/HLT_LV_SRC",
+   "from": 187,
+   "to": 227
+  },
+  {
+   "block": "SafeResumption/HLT_LV",
+   "from": 188,
+   "to": 228
+  },
+  {
+   "block": "RndPhysicalCompact/GATE_SG_SET",
+   "from": 189,
+   "to": 229
+  },
+  {
+   "block": "RndPhysicalCompact/SG_S12_SCOPE",
+   "from": 190,
+   "to": 230
+  },
+  {
+   "block": "RndPhysicalCompact/SG_SCOPE",
+   "from": 191,
+   "to": 231
+  },
+  {
+   "block": "RndPhysicalCompact/STATE_SG",
+   "from": 192,
+   "to": 232
+  },
+  {
+   "block": "RndPhysicalCompact/STATE_BA",
+   "from": 193,
+   "to": 233
+  },
+  {
+   "block": "Network12/FBAnd1",
+   "from": 194,
+   "to": 234
+  },
+  {
+   "block": "Network1/FBOr3",
+   "from": 195,
+   "to": 235
+  },
+  {
+   "block": "Network1/FBOr4",
+   "from": 196,
+   "to": 236
+  },
+  {
+   "block": "Network1/FBRs6",
+   "from": 197,
+   "to": 237
+  },
+  {
+   "block": "Network12/FBAnd2",
+   "from": 198,
+   "to": 238
+  },
+  {
+   "block": "Network12/FBAnd3",
+   "from": 199,
+   "to": 239
+  },
+  {
+   "block": "Network12/FBAnd4",
+   "from": 200,
+   "to": 240
+  },
+  {
+   "block": "Network12/WIN_C2",
+   "from": 201,
+   "to": 241
+  },
+  {
+   "block": "Network12/FBAnd6",
+   "from": 202,
+   "to": 242
+  },
+  {
+   "block": "Network12/FBTon3",
+   "from": 203,
+   "to": 243
+  },
+  {
+   "block": "Network12/FBDecouple2",
+   "from": 204,
+   "to": 244
+  },
+  {
+   "block": "Network6/FBOr1",
+   "from": 205,
+   "to": 245
+  },
+  {
+   "block": "Network6/FBAnd11",
+   "from": 206,
+   "to": 246
+  },
+  {
+   "block": "Network6/FBAnd12",
+   "from": 207,
+   "to": 247
+  },
+  {
+   "block": "Network6/FBAnd13",
+   "from": 208,
+   "to": 248
+  },
+  {
+   "block": "Network6/FBOr4",
+   "from": 209,
+   "to": 249
+  },
+  {
+   "block": "Network6/FBAnd14",
+   "from": 210,
+   "to": 250
+  },
+  {
+   "block": "Network12/FBOr1",
+   "from": 211,
+   "to": 251
+  },
+  {
+   "block": "Network12/FBOr2",
+   "from": 212,
+   "to": 252
+  },
+  {
+   "block": "Network12/FBDecouple1",
+   "from": 213,
+   "to": 253
+  },
+  {
+   "block": "Network12/FBAnd15",
+   "from": 214,
+   "to": 254
+  },
+  {
+   "block": "Network6/FBDecouple2",
+   "from": 218,
+   "to": 255
+  },
+  {
+   "block": "Network6/FBAnd18",
+   "from": 219,
+   "to": 256
+  },
+  {
+   "block": "Network6/FBTon1",
+   "from": 220,
+   "to": 257
+  },
+  {
+   "block": "Network1/FBAnd2",
+   "from": 221,
+   "to": 258
+  },
+  {
+   "block": "Network6/FBOr5",
+   "from": 222,
+   "to": 259
+  },
+  {
+   "block": "Network1/FBOr14",
+   "from": 223,
+   "to": 260
+  },
+  {
+   "block": "Network1/FBOr15",
+   "from": 224,
+   "to": 261
+  },
+  {
+   "block": "Network1/FBRs8",
+   "from": 225,
+   "to": 262
+  },
+  {
+   "block": "Network11/FBDecouple1",
+   "from": 226,
+   "to": 263
+  },
+  {
+   "block": "Network12/FBDecouple3",
+   "from": 227,
+   "to": 264
+  },
+  {
+   "block": "Network6/FBAnd19",
+   "from": 228,
+   "to": 265
+  },
+  {
+   "block": "Network1/FBAnd4",
+   "from": 229,
+   "to": 266
+  },
+  {
+   "block": "Network1/FBOr17",
+   "from": 230,
+   "to": 267
+  },
+  {
+   "block": "Network1/FBOr18",
+   "from": 231,
+   "to": 268
+  },
+  {
+   "block": "Network1/FBAnd5",
+   "from": 232,
+   "to": 269
+  },
+  {
+   "block": "Network1/FBAnd6",
+   "from": 233,
+   "to": 270
+  },
+  {
+   "block": "Network1/FBAnd7",
+   "from": 235,
+   "to": 271
+  },
+  {
+   "block": "Network1/FBAnd8",
+   "from": 236,
+   "to": 272
+  },
+  {
+   "block": "Network12/FBAnd11",
+   "from": 237,
+   "to": 273
+  },
+  {
+   "block": "Network6/FBAnd20",
+   "from": 239,
+   "to": 274
+  },
+  {
+   "block": "Network12/FBAnd17",
+   "from": 241,
+   "to": 275
+  },
+  {
+   "block": "Network6/FBAnd21",
+   "from": 242,
+   "to": 276
+  },
+  {
+   "block": "Network6/FBAnd22",
+   "from": 243,
+   "to": 277
+  },
+  {
+   "block": "Network2/FBOr1",
+   "from": 244,
+   "to": 278
+  },
+  {
+   "block": "Network2/FBDecouple5",
+   "from": 249,
+   "to": 279
+  },
+  {
+   "block": "Network6/RUN_DOWN_REQ",
+   "from": null,
+   "to": 280
+  },
+  {
+   "block": "Network6/FBAnd23",
+   "from": 250,
+   "to": 281
+  },
+  {
+   "block": "Network2/FBAnd12",
+   "from": 251,
+   "to": 282
+  },
+  {
+   "block": "Network1/FBRs9",
+   "from": 252,
+   "to": 283
+  },
+  {
+   "block": "Network1/FBAnd13",
+   "from": 253,
+   "to": 284
+  },
+  {
+   "block": "Network1/FBOr19",
+   "from": 254,
+   "to": 285
+  },
+  {
+   "block": "Network1/FBAnd14",
+   "from": 255,
+   "to": 286
+  },
+  {
+   "block": "Network6/FBAnd24",
+   "from": 256,
+   "to": 287
+  },
+  {
+   "block": "Network6/RUN_DOWN_RESET",
+   "from": 257,
+   "to": 288
+  },
+  {
+   "block": "Network6/RUN_DOWN_OWNER",
+   "from": 258,
+   "to": 289
+  },
+  {
+   "block": "Network6/FBDecouple3",
+   "from": 259,
+   "to": 290
+  },
+  {
+   "block": "Network1/FBAndUnlockHold",
+   "from": 260,
+   "to": 291
+  },
+  {
+   "block": "Network3/DEC_S",
+   "from": null,
+   "to": 292
+  },
+  {
+   "block": "Network3/DEC_SAFE",
+   "from": null,
+   "to": 293
+  },
+  {
+   "block": "Network3/DEC_RND",
+   "from": null,
+   "to": 294
+  },
+  {
+   "block": "Network3/DEC_RUN",
+   "from": null,
+   "to": 295
+  },
+  {
+   "block": "Network3/DEC_CFG",
+   "from": null,
+   "to": 296
+  },
+  {
+   "block": "Network3/DEC_EMG",
+   "from": null,
+   "to": 297
+  }
+ ],
+ "log": [
+  {
+   "dropWire": "Network1/FBAnd12/AndOut -> Network1/FBAnd2/AndIn2"
+  },
+  {
+   "dropWire": "Network1/FBAnd10/AndOut -> Network1/FBAnd2/AndIn3"
+  },
+  {
+   "salVariableTargetUsageRemoved": "inPLC_BypassC1C2",
+   "port": "Network1/FBAnd4/AndIn1"
+  },
+  {
+   "dropWire": "Network1/FBTon1/TonOut -> Network1/FBAnd7/AndIn1"
+  },
+  {
+   "dropWire": "Network1/FBTon1/TonOut -> Network1/FBAnd8/AndIn1"
+  },
+  {
+   "salVariableTargetUsageRemoved": "linkRndBothQualified",
+   "port": "Network2/FBAnd4/AndIn1"
+  },
+  {
+   "dropWire": "Network2/FBAnd91/AndOut -> Network2/FBOr1/OrIn2"
+  },
+  {
+   "dropWire": "Network6/FBAnd17/AndOut -> Network6/FBOr5/OrIn2"
+  },
+  {
+   "dropWire": "Network6/FBAnd24/AndOut -> Network6/FBAnd23/AndIn1"
+  },
+  {
+   "dropWire": "RndPhysicalCompact/GATE_020/AndOut -> RndPhysicalCompact/STATE_SU/Set"
+  },
+  {
+   "deleteBlock": "Network1/FBTon1"
+  },
+  {
+   "salVariableTargetUsageRemoved": "inPLC_RnD_Mode_2",
+   "port": "Network1/FBAnd10/AndIn1",
+   "why": "deleted Network1/FBAnd10"
+  },
+  {
+   "salVariableTargetUsageRemoved": "in_False_SI2_CH8",
+   "port": "Network1/FBAnd10/AndIn2",
+   "why": "deleted Network1/FBAnd10"
+  },
+  {
+   "deleteBlock": "Network1/FBAnd10"
+  },
+  {
+   "salVariableTargetUsageRemoved": "inPLC_RnD_Mode",
+   "port": "Network1/FBAnd12/AndIn1",
+   "why": "deleted Network1/FBAnd12"
+  },
+  {
+   "salVariableTargetUsageRemoved": "in_False_SI2_CH8",
+   "port": "Network1/FBAnd12/AndIn2",
+   "why": "deleted Network1/FBAnd12"
+  },
+  {
+   "deleteBlock": "Network1/FBAnd12"
+  },
+  {
+   "salVariableTargetUsageRemoved": "inPLC_RnD_Mode",
+   "port": "Network2/FBAnd61/AndIn1",
+   "why": "deleted Network2/FBAnd61"
+  },
+  {
+   "salVariableTargetUsageRemoved": "in_False_SI2_CH8",
+   "port": "Network2/FBAnd61/AndIn2",
+   "why": "deleted Network2/FBAnd61"
+  },
+  {
+   "deleteBlock": "Network2/FBAnd61"
+  },
+  {
+   "salVariableTargetUsageRemoved": "inPLC_RnD_Mode_2",
+   "port": "Network2/FBAnd81/AndIn1",
+   "why": "deleted Network2/FBAnd81"
+  },
+  {
+   "salVariableTargetUsageRemoved": "in_False_SI2_CH8",
+   "port": "Network2/FBAnd81/AndIn2",
+   "why": "deleted Network2/FBAnd81"
+  },
+  {
+   "deleteBlock": "Network2/FBAnd81"
+  },
+  {
+   "salVariableTargetUsageRemoved": "in_LV_C1_FBK",
+   "port": "Network2/FBAnd91/AndIn5",
+   "why": "deleted Network2/FBAnd91"
+  },
+  {
+   "salVariableTargetUsageRemoved": "in_HV_C2_FBK",
+   "port": "Network2/FBAnd91/AndIn6",
+   "why": "deleted Network2/FBAnd91"
+  },
+  {
+   "deleteBlock": "Network2/FBAnd91"
+  },
+  {
+   "salVariableTargetUsageRemoved": "in_False_SI2_CH8",
+   "port": "Network2/FBAnd11/AndIn2",
+   "why": "deleted Network2/FBAnd11"
+  },
+  {
+   "deleteBlock": "Network2/FBAnd11"
+  },
+  {
+   "salVariableTargetUsageRemoved": "inPLC_RnD_Mode",
+   "port": "Network6/FBAnd15/AndIn1",
+   "why": "deleted Network6/FBAnd15"
+  },
+  {
+   "salVariableTargetUsageRemoved": "in_False_SI2_CH8",
+   "port": "Network6/FBAnd15/AndIn2",
+   "why": "deleted Network6/FBAnd15"
+  },
+  {
+   "deleteBlock": "Network6/FBAnd15"
+  },
+  {
+   "salVariableTargetUsageRemoved": "inPLC_RnD_Mode_2",
+   "port": "Network6/FBAnd16/AndIn1",
+   "why": "deleted Network6/FBAnd16"
+  },
+  {
+   "salVariableTargetUsageRemoved": "in_False_SI2_CH8",
+   "port": "Network6/FBAnd16/AndIn2",
+   "why": "deleted Network6/FBAnd16"
+  },
+  {
+   "deleteBlock": "Network6/FBAnd16"
+  },
+  {
+   "deleteBlock": "Network6/FBAnd17"
+  },
+  {
+   "outPort": "Network6/FBAnd24/AndOut",
+   "droppedWires": 1,
+   "added": [
+    "Network6/RUN_DOWN_REQ/OrIn1"
+   ]
+  },
+  {
+   "outPort": "RndPhysicalCompact/GATE_020/AndOut",
+   "droppedWires": 1,
+   "added": [
+    "RndPhysicalCompact/SU_SET/OrIn1"
+   ]
+  },
+  {
+   "outPort": "Network1/FBAnd4/AndOut",
+   "droppedWires": 1,
+   "added": []
+  },
+  {
+   "outPort": "Network6/FBAnd1/AndOut",
+   "droppedWires": 1,
+   "added": []
+  },
+  {
+   "newBlock": "Network3/CFG_RST",
+   "fn": "safeOr",
+   "template": "Network6/FBOr5",
+   "inputs": {
+    "OrIn1": {
+     "variable": "linkCfgDone",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "symbol": "b_Step4_Set",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network3/STATE_CFG",
+   "fn": "safeRs",
+   "template": "Network6/RUN_DOWN_OWNER",
+   "inputs": {
+    "Reset": {
+     "wire": "Network3/CFG_RST/OrOut",
+     "contact": "Break Contact (NC)"
+    },
+    "Set": {
+     "variable": "linkCfgAccept",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/HB_LO",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "in_PLC_Heartbeat",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/HB_T_HI",
+   "fn": "safeTon",
+   "template": "Network2/FBTon2",
+   "inputs": {
+    "TonIn": {
+     "variable": "in_PLC_Heartbeat",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/HB_T_LO",
+   "fn": "safeTon",
+   "template": "Network2/FBTon2",
+   "inputs": {
+    "TonIn": {
+     "wire": "Network1/HB_LO/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/HB_OK",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network1/HB_T_HI/TonOut",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn2": {
+     "wire": "Network1/HB_T_LO/TonOut",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PS_SAFE",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "symbol": "b_Step1",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "symbol": "b_EStop_Ok",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PS_RND",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "linkSafeRndScope",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "symbol": "b_EStop_Ok",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn3": {
+     "symbol": "recRndC_SU",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn4": {
+     "variable": "linkAbortActive",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn5": {
+     "symbol": "recRndC_SG",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PS_RUN",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "symbol": "b_Step3",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "symbol": "b_EStop_Ok",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn3": {
+     "variable": "linkDescActive",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PS_ANY",
+   "fn": "safeOr",
+   "template": "Network6/FBOr5",
+   "inputs": {
+    "OrIn1": {
+     "wire": "Network1/PS_SAFE/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "wire": "Network1/PS_RND/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn3": {
+     "wire": "Network1/PS_RUN/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PC_O2",
+   "fn": "safeOr",
+   "template": "Network6/FBOr5",
+   "inputs": {
+    "OrIn1": {
+     "variable": "CMD_SAFE_TO_RND",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "variable": "CMD_RND_TO_RUN",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PC_A2",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_SAFE_TO_RND",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "variable": "CMD_RND_TO_RUN",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PC_A3",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_RUN_TO_RND",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PC_O2/OrOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PC_O3",
+   "fn": "safeOr",
+   "template": "Network6/FBOr5",
+   "inputs": {
+    "OrIn1": {
+     "wire": "Network1/PC_O2/OrOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "variable": "CMD_RUN_TO_RND",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PC_A4",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_RND_TO_SAFE",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PC_O3/OrOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PC_O4",
+   "fn": "safeOr",
+   "template": "Network6/FBOr5",
+   "inputs": {
+    "OrIn1": {
+     "wire": "Network1/PC_O3/OrOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "variable": "CMD_RND_TO_SAFE",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PC_A5",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "inPLC_BypassC1C2",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PC_O4/OrOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PC_TWO",
+   "fn": "safeOr",
+   "template": "Network6/FBOr5",
+   "inputs": {
+    "OrIn1": {
+     "wire": "Network1/PC_A2/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "wire": "Network1/PC_A3/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn3": {
+     "wire": "Network1/PC_A4/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn4": {
+     "wire": "Network1/PC_A5/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PE_SET",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network1/PC_TWO/OrOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PS_ANY/OrOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PE_ALLF",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_SAFE_TO_RND",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn2": {
+     "variable": "CMD_RND_TO_RUN",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "variable": "CMD_RUN_TO_RND",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn4": {
+     "variable": "CMD_RND_TO_SAFE",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn5": {
+     "variable": "inPLC_BypassC1C2",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PE_T_CLR",
+   "fn": "safeTon",
+   "template": "Network2/FBTon2",
+   "inputs": {
+    "TonIn": {
+     "wire": "Network1/PE_ALLF/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PE_ERR",
+   "fn": "safeRs",
+   "template": "Network6/RUN_DOWN_OWNER",
+   "inputs": {
+    "Reset": {
+     "wire": "Network1/PE_T_CLR/TonOut",
+     "contact": "Break Contact (NC)"
+    },
+    "Set": {
+     "wire": "Network1/PE_SET/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PK_OK",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "in_Reset_PB",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn2": {
+     "variable": "in_Relase_Door_PB",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "wire": "Network1/PE_ERR/RsOut",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PA_S2R",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_SAFE_TO_RND",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PK_PREV/DecOut1",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "wire": "Network1/PS_SAFE/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn4": {
+     "wire": "Network1/PK_OK/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PA_R2RUN",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_RND_TO_RUN",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PK_PREV/DecOut2",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "wire": "Network1/PS_RND/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn4": {
+     "wire": "Network1/PK_OK/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn5": {
+     "variable": "linkCoverClosed",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn6": {
+     "variable": "in_HV_C2_FBK",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PA_RUN2R_T",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_RUN_TO_RND",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PK_PREV/DecOut3",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "wire": "Network1/PK_OK/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PA_RUN2R",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network1/PA_RUN2R_T/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PS_RUN/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PA_R2S_ST",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_RND_TO_SAFE",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PK_PREV/DecOut4",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "wire": "Network1/PS_RND/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn4": {
+     "wire": "Network1/PK_OK/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PA_R2S_AB",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "CMD_RND_TO_SAFE",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PK_PREV/DecOut4",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "symbol": "b_Step12",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn4": {
+     "wire": "Network1/PK_OK/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PA_R2S",
+   "fn": "safeOr",
+   "template": "Network6/FBOr5",
+   "inputs": {
+    "OrIn1": {
+     "wire": "Network1/PA_R2S_ST/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "wire": "Network1/PA_R2S_AB/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PA_CFG",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "inPLC_BypassC1C2",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/PK_PREV/DecOut5",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "wire": "Network1/PS_SAFE/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn4": {
+     "wire": "Network1/PK_OK/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn5": {
+     "variable": "linkSafeUpScope",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn6": {
+     "variable": "linkCoverClosed",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn7": {
+     "variable": "out_ReadyForStep2",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PF_OR",
+   "fn": "safeOr",
+   "template": "Network6/FBOr5",
+   "inputs": {
+    "OrIn1": {
+     "wire": "Network1/PE_ERR/RsOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "deactivate": true
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/CFG_EX_SET",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "variable": "linkCfgActive",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "variable": "inPLC_BypassC1C2",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/CFG_EX",
+   "fn": "safeRs",
+   "template": "Network6/RUN_DOWN_OWNER",
+   "inputs": {
+    "Reset": {
+     "variable": "linkCfgActive",
+     "contact": "Make Contact (NO)"
+    },
+    "Set": {
+     "wire": "Network1/CFG_EX_SET/AndOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/CFG_T_HOLD",
+   "fn": "safeTon",
+   "template": "Network2/FBTon2",
+   "inputs": {
+    "TonIn": {
+     "wire": "Network1/CFG_EX/RsOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/CFG_OFF",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network1/CFG_EX/RsOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "wire": "Network1/CFG_T_HOLD/TonOut",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/CFG_DONE",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network1/CFG_OFF/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "variable": "out_LV_C1",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "variable": "out_HV_C2",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn4": {
+     "variable": "in_LV_C1_FBK",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn5": {
+     "variable": "in_HV_C2_FBK",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network1/PK_PREV",
+   "fn": "safeDecouple",
+   "template": "Network1/FBDecouple2",
+   "inputs": {
+    "DecIn1": {
+     "variable": "CMD_SAFE_TO_RND",
+     "contact": "Break Contact (NC)"
+    },
+    "DecIn2": {
+     "variable": "CMD_RND_TO_RUN",
+     "contact": "Break Contact (NC)"
+    },
+    "DecIn3": {
+     "variable": "CMD_RUN_TO_RND",
+     "contact": "Break Contact (NC)"
+    },
+    "DecIn4": {
+     "variable": "CMD_RND_TO_SAFE",
+     "contact": "Break Contact (NC)"
+    },
+    "DecIn5": {
+     "variable": "inPLC_BypassC1C2",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network2/S2R_REQ",
+   "fn": "safeOr",
+   "template": "Network6/FBOr5",
+   "inputs": {
+    "OrIn1": {
+     "variable": "linkRndBothQualified",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "variable": "linkPlcAccS2R",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "RndPhysicalCompact/SU_SET",
+   "fn": "safeOr",
+   "template": "Network6/FBOr5",
+   "inputs": {
+    "OrIn1": {
+     "wire": "RndPhysicalCompact/GATE_020/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "variable": "linkPlcAccR2Run",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network6/RUN_DOWN_REQ",
+   "fn": "safeOr",
+   "template": "Network6/FBOr5",
+   "inputs": {
+    "OrIn1": {
+     "wire": "Network6/FBAnd24/AndOut",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "variable": "linkPlcAccRun2R",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network3/DEC_S",
+   "fn": "safeOr",
+   "template": "Network6/FBOr5",
+   "inputs": {
+    "OrIn1": {
+     "symbol": "b_Step1",
+     "contact": "Break Contact (NC)"
+    },
+    "OrIn2": {
+     "symbol": "b_Step12",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network3/DEC_SAFE",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network3/DEC_S/OrOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "symbol": "b_EStop_Ok",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network3/DEC_RND",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "symbol": "b_Step_RnD",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "symbol": "b_EStop_Ok",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network3/DEC_RUN",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "symbol": "b_Step3",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "symbol": "b_EStop_Ok",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network3/DEC_CFG",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network3/STATE_CFG/RsOut",
+     "contact": "Break Contact (NC)"
+    },
+    "AndIn2": {
+     "symbol": "b_EStop_Ok",
+     "contact": "Break Contact (NC)"
+    }
+   }
+  },
+  {
+   "newBlock": "Network3/DEC_EMG",
+   "fn": "safeAnd",
+   "template": "Network6/FBAnd9",
+   "inputs": {
+    "AndIn1": {
+     "wire": "Network3/DEC_SAFE/AndOut",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn2": {
+     "wire": "Network3/DEC_RND/AndOut",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn3": {
+     "wire": "Network3/DEC_RUN/AndOut",
+     "contact": "Make Contact (NO)"
+    },
+    "AndIn4": {
+     "wire": "Network3/DEC_CFG/AndOut",
+     "contact": "Make Contact (NO)"
+    }
+   }
+  },
+  {
+   "salVariableTargetUsageAdded": "linkCoverClosed",
+   "port": "Network10/FBDecouple2/DecIn5"
+  },
+  {
+   "salVariableTargetUsageAdded": "linkCoverClosed",
+   "port": "Network1/PA_R2RUN/AndIn5"
+  },
+  {
+   "salVariableTargetUsageAdded": "linkCoverClosed",
+   "port": "Network1/PA_CFG/AndIn6"
+  },
+  {
+   "salVariableTargetUsageAdded": "linkSafeRndScope",
+   "port": "Network1/PS_RND/AndIn1"
+  },
+  {
+   "salVariableTargetUsageAdded": "linkAbortActive",
+   "port": "Network1/PS_RND/AndIn4"
+  },
+  {
+   "salVariableTargetUsageAdded": "linkDescActive",
+   "port": "Network1/PS_RUN/AndIn3"
+  },
+  {
+   "salVariableTargetUsageAdded": "CMD_SAFE_TO_RND",
+   "port": "Network1/PC_O2/OrIn1"
+  },
+  {
+   "salVariableTargetUsageAdded": "CMD_SAFE_TO_RND",
+   "port": "Network1/PC_A2/AndIn1"
+  },
+  {
+   "salVariableTargetUsageAdded": "CMD_SAFE_TO_RND",
+   "port": "Network1/PE_ALLF/AndIn1"
+  },
+  {
+   "salVariableTargetUsageAdded": "CMD_SAFE_TO_RND",
+   "port": "Network1/PA_S2R/AndIn1"
+  },
+  {
+   "salVariableTargetUsageAdded": "CMD_SAFE_TO_RND",
+   "port": "Network1/PK_PREV/DecIn1"
+  },
+  {
+   "salVariableTargetUsageAdded": "CMD_RND_TO_RUN",
+   "port": "Network1/PC_O2/OrIn2"
+  },
+  {
+   "salVariableTargetUsageAdded": "CMD_RND_TO_RUN",
+   "port": "Network1/PC_A2/AndIn2"
+  },
+  {
+   "salVariableTargetUsageAdded": "CMD_RND_TO_RUN",
+   "port": "Network1/PE_ALLF/AndIn2"
+  },
+  {
+   "salVariableTargetUsageAdded": "CMD_RND_TO_RUN",
+   "port": "Network1/PA_R2RUN/AndIn1"
+  },
+  {
+   "salVariableTargetUsageAdded": "CMD_RND_TO_RUN",
+   "port": "Network1/PK_PREV/DecIn2"
+  },
+  {
+   "salVariableTargetUsageAdded": "inPLC_BypassC1C2",
+   "port": "Network1/PC_A5/AndIn1"
+  },
+  {
+   "salVariableTargetUsageAdded": "inPLC_BypassC1C2",
+   "port": "Network1/PE_ALLF/AndIn5"
+  },
+  {
+   "salVariableTargetUsageAdded": "inPLC_BypassC1C2",
+   "port": "Network1/PA_CFG/AndIn1"
+  },
+  {
+   "salVariableTargetUsageAdded": "inPLC_BypassC1C2",
+   "port": "Network1/CFG_EX_SET/AndIn2"
+  },
+  {
+   "salVariableTargetUsageAdded": "inPLC_BypassC1C2",
+   "port": "Network1/PK_PREV/DecIn5"
+  },
+  {
+   "salVariableTargetUsageAdded": "in_Reset_PB",
+   "port": "Network1/PK_OK/AndIn1"
+  },
+  {
+   "salVariableTargetUsageAdded": "in_Relase_Door_PB",
+   "port": "Network1/PK_OK/AndIn2"
+  },
+  {
+   "salVariableTargetUsageAdded": "in_HV_C2_FBK",
+   "port": "Network1/PA_R2RUN/AndIn6"
+  },
+  {
+   "salVariableTargetUsageAdded": "in_HV_C2_FBK",
+   "port": "Network1/CFG_DONE/AndIn5"
+  },
+  {
+   "salVariableTargetUsageAdded": "linkSafeUpScope",
+   "port": "Network1/PA_CFG/AndIn5"
+  },
+  {
+   "salVariableTargetUsageAdded": "out_ReadyForStep2",
+   "port": "Network1/PA_CFG/AndIn7"
+  },
+  {
+   "salVariableTargetUsageAdded": "out_LV_C1",
+   "port": "Network1/CFG_DONE/AndIn2"
+  },
+  {
+   "salVariableTargetUsageAdded": "out_HV_C2",
+   "port": "Network1/CFG_DONE/AndIn3"
+  },
+  {
+   "salVariableTargetUsageAdded": "in_LV_C1_FBK",
+   "port": "Network1/CFG_DONE/AndIn4"
+  },
+  {
+   "salVariableTargetUsageAdded": "linkRndBothQualified",
+   "port": "Network2/S2R_REQ/OrIn1"
+  },
+  {
+   "newSalVariable": "in_PLC_Heartbeat",
+   "source": "sds 48",
+   "targets": [
+    "Network1/HB_LO/AndIn1",
+    "Network1/HB_T_HI/TonIn"
+   ]
+  },
+  {
+   "newSalVariable": "CMD_RUN_TO_RND",
+   "source": "sds 63",
+   "targets": [
+    "Network1/PC_A3/AndIn1",
+    "Network1/PC_O3/OrIn2",
+    "Network1/PE_ALLF/AndIn3",
+    "Network1/PA_RUN2R_T/AndIn1",
+    "Network1/PK_PREV/DecIn3"
+   ]
+  },
+  {
+   "newSalVariable": "CMD_RND_TO_SAFE",
+   "source": "sds 64",
+   "targets": [
+    "Network1/PC_A4/AndIn1",
+    "Network1/PC_O4/OrIn2",
+    "Network1/PE_ALLF/AndIn4",
+    "Network1/PA_R2S_ST/AndIn1",
+    "Network1/PA_R2S_AB/AndIn1",
+    "Network1/PK_PREV/DecIn4"
+   ]
+  },
+  {
+   "newSalVariable": "linkPlcAccS2R",
+   "source": "Network1/PA_S2R/AndOut",
+   "targets": [
+    "Network2/S2R_REQ/OrIn2"
+   ]
+  },
+  {
+   "newSalVariable": "linkPlcAccR2Run",
+   "source": "Network1/PA_R2RUN/AndOut",
+   "targets": [
+    "RndPhysicalCompact/SU_SET/OrIn2"
+   ]
+  },
+  {
+   "newSalVariable": "linkPlcAbortSu",
+   "source": "Network1/PA_RUN2R_T/AndOut",
+   "targets": [
+    "Network6/SU_ABORT_CAUSE/OrIn3"
+   ]
+  },
+  {
+   "newSalVariable": "linkPlcAccRun2R",
+   "source": "Network1/PA_RUN2R/AndOut",
+   "targets": [
+    "Network6/RUN_DOWN_REQ/OrIn2"
+   ]
+  },
+  {
+   "newSalVariable": "linkPlcAccR2S",
+   "source": "Network1/PA_R2S/OrOut",
+   "targets": [
+    "RndPhysicalCompact/GATE_SG_SET/OrIn3"
+   ]
+  },
+  {
+   "newSalVariable": "linkCfgAccept",
+   "source": "Network1/PA_CFG/AndOut",
+   "targets": [
+    "Network1/FBOr1/OrIn1",
+    "Network1/FBOr5/OrIn1",
+    "Network3/FBOr1/OrIn1",
+    "Network3/STATE_CFG/Set"
+   ]
+  },
+  {
+   "newSalVariable": "STS_FAULT",
+   "source": "Network1/PF_OR/OrOut",
+   "targets": [],
+   "aliasOut": 105
+  },
+  {
+   "newSalVariable": "linkCfgActive",
+   "source": "Network3/STATE_CFG/RsOut",
+   "targets": [
+    "Network1/FBAnd4/AndIn1",
+    "Network1/FBAndNotRunSu/AndIn4",
+    "Network6/STAGE_LVON/OrIn3",
+    "Network1/CFG_EX_SET/AndIn1",
+    "Network1/CFG_EX/Reset"
+   ]
+  },
+  {
+   "newSalVariable": "linkCfgDone",
+   "source": "Network1/CFG_DONE/AndOut",
+   "targets": [
+    "Network3/FBOr2/OrIn1",
+    "Network3/CFG_RST/OrIn1"
+   ]
+  },
+  {
+   "newSalVariable": "STS_SAFE",
+   "source": "Network3/DEC_SAFE/AndOut",
+   "targets": [],
+   "aliasOut": 14
+  },
+  {
+   "newSalVariable": "STS_RND",
+   "source": "Network3/DEC_RND/AndOut",
+   "targets": [],
+   "aliasOut": 100
+  },
+  {
+   "newSalVariable": "STS_RUN",
+   "source": "Network3/DEC_RUN/AndOut",
+   "targets": [],
+   "aliasOut": 101
+  },
+  {
+   "newSalVariable": "STS_CFG",
+   "source": "Network3/DEC_CFG/AndOut",
+   "targets": [],
+   "aliasOut": 103
+  },
+  {
+   "newSalVariable": "STS_EMG",
+   "source": "Network3/DEC_EMG/AndOut",
+   "targets": [],
+   "aliasOut": 102
+  },
+  {
+   "newSalVariable": "STS_COVER_LOCKED",
+   "source": "Network10/FBDecouple2/DecOut5",
+   "targets": [],
+   "aliasOut": 104
+  },
+  {
+   "renameVariable": "inPLC_RnD_Mode",
+   "to": "CMD_SAFE_TO_RND"
+  },
+  {
+   "renameVariable": "inPLC_RnD_Mode_2",
+   "to": "CMD_RND_TO_RUN"
+  },
+  {
+   "sgvlTargetUsageRemoved": "b_Step1",
+   "portId": "3a5e3154-6d5a-4eef-983b-0ac4cf9e821b",
+   "why": "Network1/FBAnd4/AndIn5"
+  },
+  {
+   "sgvlTargetUsageRemoved": "b_EStop_Ok",
+   "portId": "9445b03c-5417-4294-aafa-2a764583a6f5",
+   "why": "deleted Network2/FBAnd91"
+  },
+  {
+   "sgvlTargetUsageRemoved": "b_Step1",
+   "portId": "4e40f666-0ae2-41df-9a6f-d927460dd31f",
+   "why": "deleted Network2/FBAnd11"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_Step4_Set",
+   "port": "Network3/CFG_RST/OrIn2",
+   "portId": "de4e7d2d-de51-4364-b694-7f24d00f9fe1"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_Step1",
+   "port": "Network1/PS_SAFE/AndIn1",
+   "portId": "575fe9fd-a194-421a-9412-7db25f1bd466"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_Step1",
+   "port": "Network3/DEC_S/OrIn1",
+   "portId": "75dfc083-f996-4def-96db-a093bc8ca5a9"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_EStop_Ok",
+   "port": "Network1/PS_SAFE/AndIn2",
+   "portId": "568f388c-f909-4ddc-a5ac-6929bb8265c4"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_EStop_Ok",
+   "port": "Network1/PS_RND/AndIn2",
+   "portId": "ee1132f3-7529-40d2-b417-2b34b40e1f8c"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_EStop_Ok",
+   "port": "Network1/PS_RUN/AndIn2",
+   "portId": "5241a305-2b53-4fd3-a8b2-21c7098b73b1"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_EStop_Ok",
+   "port": "Network3/DEC_SAFE/AndIn2",
+   "portId": "962da71d-6133-4102-97b6-df6d04958271"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_EStop_Ok",
+   "port": "Network3/DEC_RND/AndIn2",
+   "portId": "e56cdabf-1089-489d-a142-c4cc96c70210"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_EStop_Ok",
+   "port": "Network3/DEC_RUN/AndIn2",
+   "portId": "ff8bf51d-2a9b-49b8-956c-05104bb046ef"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_EStop_Ok",
+   "port": "Network3/DEC_CFG/AndIn2",
+   "portId": "1553abe6-a38c-400a-8082-4fffb3c8fed7"
+  },
+  {
+   "sgvlTargetUsageAdded": "recRndC_SU",
+   "port": "Network1/PS_RND/AndIn3",
+   "portId": "bf9b936d-e3fe-4209-9ed7-eb1c4d463ed9"
+  },
+  {
+   "sgvlTargetUsageAdded": "recRndC_SG",
+   "port": "Network1/PS_RND/AndIn5",
+   "portId": "fe00634f-44ad-4051-9e97-1895b4c34831"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_Step3",
+   "port": "Network1/PS_RUN/AndIn1",
+   "portId": "9f0f3e7a-db48-48d1-b1d0-bf99aa69721d"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_Step3",
+   "port": "Network3/DEC_RUN/AndIn1",
+   "portId": "4019f218-aeeb-4c0d-8ced-b43740ff0d84"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_Step12",
+   "port": "Network1/PA_R2S_AB/AndIn3",
+   "portId": "80fb768a-3f23-47c0-aa3a-16659330fc60"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_Step12",
+   "port": "Network3/DEC_S/OrIn2",
+   "portId": "12a12651-3e08-4369-b648-b608c2ec8c90"
+  },
+  {
+   "sgvlTargetUsageAdded": "b_Step_RnD",
+   "port": "Network3/DEC_RND/AndIn1",
+   "portId": "07c67940-9bb2-462a-9d79-d0a9e3da3647"
+  }
+ ],
+ "crc": "stored CRC attributes unchanged in staging; native writers regenerate them"
+}

@@ -1,0 +1,125 @@
+{
+  "review": "E2-plan-v7 (+ addendum v7.1)",
+  "role": "v2-reviewer",
+  "date": "2026-10-22",
+  "subject": {
+    "PLAN.md": "35225c3c7c144759c2568d16261abce2a91f75928718e750b5b26e507f10248c",
+    "PLAN.json": "7422ab65a6e6081c56008372a3421973fbea8bca8ecdd3abd975458cbe5312fb",
+    "MUTATION_PLAN_E2a.json": "1110aa8fa9c060ab501b3344043e52857cef6f20d212afb30d3740e8074b92aa",
+    "MUTATION_PLAN_E2a-RC.json": "2d5fabd06d72bc92e54a3af270aee7ebed0e403993a8fdf7d9578fad3918bc0f",
+    "MUTATION_PLAN_E2b.json": "70dc40d4ecf3e980e3dc1d78a033563b70a062d41f677e5ecb1be11be9dd314f",
+    "MUTATION_PLAN_E2c.json": "f7fabd98a6083a62fd8b8b53014cca063fd409c2f143917566b43850c8c61d92",
+    "MUTATION_PLAN_E2d.json": "2054018e52e49d760181a3f59797eebd06c91c862f50d9edf3463fc014304c4f",
+    "R1_SAL": "ca841a01fe44f776a5868968fde70cce728657aaf411d6b8bfa6689cfadc7bb3",
+    "E2a_core_SAL": "5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b",
+    "SCENARIO_DECISIONS_at_review": "052956fe6c7897c87b469815666ca61f252b1e26f14bdfb54ecd39c6dfefc44d",
+    "SCENARIO_DECISIONS_in_plan": "f7ae580f7e6ad15067b02b6481b1976d8eaff7deea505a8973c9c53c21c0835d",
+    "HEAD": "dbca5dd"
+  },
+  "verdicts": {
+    "E2a-RC": "READY FOR EDITOR",
+    "E2b": "READY FOR EDITOR",
+    "E2c": "READY FOR EDITOR",
+    "E2d": "READY FOR EDITOR (v7.2)"
+  },
+  "closed": {
+    "R6-1": "b_Set_HV_C2_1 source: rows B/C/D/E pass on model (x1,x2); EOk gate on N12/FBAnd10 justified by delta sweep x8 (no clear for delta>=0)",
+    "R6-2": "N2/FBAnd91.AndIn4 := b_EStop_Ok; row D pass; positive control x6; TD-05 recorded 052956fe",
+    "B6-1": "x4: no Safe without new Restart (r+1, r+2000); x9 boundary r-1/r -> Safe, r+1/r+2 -> EMG; M-E2b-40/41 killable (t20/t21)",
+    "R6-3": "closed",
+    "R6-4": "closed (killer reachability on real E2a-RC to be shown at G3)",
+    "R6-5": "closed",
+    "R6-6": "closed"
+  },
+  "findings": [
+    {
+      "id": "N7-1",
+      "severity": "major",
+      "slice": "E2d",
+      "to": "architect; tester (FBK10-PLC-REG mandatory)",
+      "text": "Raw-level gate N12/FBAnd10.AndIn3 := !in_HV_C2_FBK kills own legacy R&D->Run: own C2_FBK ON at +4 drops FBAnd10, b_Set_HV_C2_1 falls at +6, window resets; stage stays R&D 30 s with C2 ON, STO active, HV request cleared. Without gate Run at +603. Effectively option (b) plus a stuck energized state; violates FBK10-PLC-REG(2). Gate must test 'FBK ON without command' (e.g. !C2_FBK OR out_HV_C2) or only at acceptance; add t22 positive control R&D (1,1); add mutant 'raw-level gate' killed by FBK10-PLC-REG(2). FBAnd91.AndIn5/6 OK (g2 grant, S12 latched).",
+      "evidence": "repro/x5.out.txt, repro/x6.out.txt"
+    },
+    {
+      "id": "N7-2",
+      "severity": "moderate (known-FAIL listing)",
+      "slice": "E2a-RC/E2d text",
+      "to": "architect (PLAN §13/addendum71), analyst (KF-5), lead (question to Vadim on option b?)",
+      "text": "Legacy (1,1) pulse shorter than window (1/50/300 ms): R&D with C2 ON, no Run, no rollback; green R&D->Safe not executed (C1 OFF, C2 ON, stage R&D 15 s); exit only via Emergency. Pre-existing on v5 proto; with DIS-HOLD (v6/v7) HV request additionally cleared. Not in KF-1..KF-4.",
+      "evidence": "repro/x7.out.txt, repro/x7b.out.txt, repro/x10.out.txt, repro/x10b.out.txt"
+    },
+    {
+      "id": "N7-3",
+      "severity": "minor",
+      "to": "architect",
+      "text": "§13 inventory: add inPLC_BypassC1C2 (inert from E2b) and reference C3/RBM manual battery relays (stage-gated, no EOk, no transitions)."
+    },
+    {
+      "id": "T7-1",
+      "severity": "text",
+      "to": "architect",
+      "text": "PLAN.json E2a-RC e4 note still mentions linkRunUpAccepted"
+    },
+    {
+      "id": "T7-2",
+      "severity": "text",
+      "to": "architect",
+      "text": "PLAN.md §7 header '79 SAL variables' vs 78"
+    },
+    {
+      "id": "T7-3",
+      "severity": "text",
+      "to": "architect",
+      "text": "SCENARIO_DECISIONS SHA -> 052956fe; §11 TD-05 done"
+    },
+    {
+      "id": "R7-rec",
+      "severity": "recommendation",
+      "to": "architect",
+      "text": "Record 'EOk on N12/FBAnd10' in E2a-RC equivalentBySearch with delta-sweep reference; M-E2a-28/29 shown as expected-equivalent at G3"
+    }
+  ],
+  "testerAdditions": [
+    "DIS-HOLD-HV legacy variant C with delta in {-1,0,+1,+2}",
+    "EMG6-01-BOOT g in {r-1, r, r+1, r+2000}, C1/C2/both",
+    "FBK10-PLC-REG (1) and (2), x in {1,250,499}; on current plan (2) must FAIL, not weakened"
+  ],
+  "limits": "Architect prototype model (F1 + simulated R1/E2), 1 ms scan, plant FBK=cmd+1; mutations not run by runner; legacy PLC semantics NV; N7-2 not run on F1 canonical; not native/CRC/IDE/Target/hardware.",
+  "reproDir": "SafetyTests/program/reviewer/E2-plan-v7/repro",
+  "v72": {
+    "date": "2026-10-22",
+    "subject": {
+      "PLAN.md": "6557525a20782eaf9650edb9c5078e3ab4237654464b51a9d4e10a3b330e9405",
+      "PLAN.json": "5198d426fb1e2ea3e983bb3694cc7a4b8a98ea938ab9947fc649dd125852f5c3",
+      "MUTATION_PLAN_E2d.json": "01f5db61d46355a90622915d459c714773ac4ca9e3088bccab457d957a0d4b89"
+    },
+    "verdictE2d": "READY FOR EDITOR",
+    "closed": {
+      "N7-1": "FBOrFbk10C2 = !C2_FBK OR out_HV_C2: legacy R&D->Run Run at +603 equal to no-gate (x6.v72); unsolicited FBK blocked (x11)",
+      "N7-2": "KF-5 in PLAN; analyst CRITERIA KF-5 still missing",
+      "N7-3": "section 13 completed"
+    },
+    "mutations": {
+      "M-E2d-14": "killed (unsolicited -> Run)",
+      "M-E2d-15": "killed (REG(2) -> R&D with C2 ON)",
+      "M-E2d-16": "killed (positive control -> no C2); behaviour equals isolation point"
+    },
+    "isolation": "N12/FBOr1.OrIn2 deact: legacy R&D->Run off, button R&D->Run intact (x11 ISO); only on Vadim decision",
+    "openText": [
+      "PLAN.md section 1 E2d row 227/1926 vs 228/1935",
+      "section 13 original table: FBK-10 bypassed - outdated",
+      "analyst: add KF-5 to E2-plan-v7-TD/CRITERIA.md before G3"
+    ],
+    "notes": [
+      "heldThroughDescent: held (1,1) re-lifts after green Run->R&D = KF-3, same with M-E2d-14",
+      "weldedAfterDescent NV (E6-Q1)"
+    ],
+    "evidence": [
+      "repro/x5.v72.out.txt",
+      "repro/x6.v72.out.txt",
+      "repro/x7.v72.out.txt",
+      "repro/x10.v72.out.txt",
+      "repro/x11.out.txt"
+    ]
+  }
+}

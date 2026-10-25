@@ -1,0 +1,34 @@
+{
+  "plan": "E2-S2",
+  "date": "2026-10-23",
+  "source": { "dir": "SafetyTests/candidates/E2d/native", "sal": "c2f9ccd7a901e40f1ad5a3db780898c32b19180d6993528ce34afaffdb903689", "sgvl": "d845bd26331cfb166e13094c2a4c9cf9918252bb2cb34b6644acccc4c4564433", "diagram": "8797b832fee722dc068dce8e7f37ce4390acc8303abea1237f670bd394d71469", "fb": 230 },
+  "target": { "dir": "SafetyTests/candidates/E2e/native", "fb": 237, "fbLimit": 512 },
+  "conventions": { "direct": "deactivate1=Break Contact (NC)", "inverted": "deactivate1=Make Contact (NO)", "var": "SAL variable usage", "glob": "SGVL global reference", "wire": "intra-network wiredLink" },
+  "fixes": [
+    { "id": "L3", "network": "Network8",
+      "add": [ { "block": "FBOrS5", "fn": "safeOr", "orderBefore": "Network8/FBAnd1", "inputs": { "OrIn1": "glob:b_Step5", "OrIn2": "glob:b_Step5_Set" } } ],
+      "change": [ { "port": "Network8/FBAnd1/AndIn1", "from": "glob:b_Step5", "to": "wire:Network8/FBOrS5/OrOut" } ],
+      "mustPass": ["E-01", "M:EStop->E-01"] },
+    { "id": "E2-02", "network": "SafeResumption",
+      "add": [
+        { "block": "HLT_DESC_SET", "fn": "safeAnd", "orderBefore": "SafeResumption/HLT_LV", "inputs": { "AndIn1": "var:in_LV_Faulty_FBK", "AndIn2": "var:linkRunDownOwner", "AndIn3": "var:in_False_SI2_CH8 inverted" } },
+        { "block": "HLT_MEM", "fn": "safeRs", "orderBefore": "SafeResumption/HLT_LV", "inputs": { "Set": "wire:SafeResumption/HLT_DESC_SET/AndOut", "Reset": "glob:b_Step1" } },
+        { "block": "HLT_LV_SRC", "fn": "safeOr", "orderBefore": "SafeResumption/HLT_LV", "inputs": { "OrIn1": "var:in_LV_Faulty_FBK", "OrIn2": "wire:SafeResumption/HLT_MEM/RsOut" } } ],
+      "change": [ { "port": "SafeResumption/HLT_LV/AndIn1", "from": "var:in_LV_Faulty_FBK", "to": "wire:SafeResumption/HLT_LV_SRC/OrOut" } ],
+      "mustPass": ["D-08", "H-07(memory)", "H-05", "H-01"], "nv": ["SafetyFault HealthyLost: no symbol in E2 (A8)"] },
+    { "id": "EMG6-FBK", "network": "Network1",
+      "add": [
+        { "block": "FBK_OFF", "fn": "safeAnd", "orderBefore": "Network1/FBEstop1", "inputs": { "AndIn1": "var:in_LV_C1_FBK inverted", "AndIn2": "var:in_HV_C2_FBK inverted" } },
+        { "block": "EXIT_FBK_OK", "fn": "safeOr", "orderBefore": "Network1/FBEstop1", "inputs": { "OrIn1": "glob:b_EStop_Ok", "OrIn2": "wire:Network1/FBK_OFF/AndOut" } } ],
+      "change": [ { "port": "Network1/FBEstop1/EStopIn5", "from": "unbound, channelInterface=Both Deactivated", "to": "wire:Network1/EXIT_FBK_OK/OrOut, channelInterface=Single-Channel 1 Activated, deactivate1=Break Contact (NC) (pattern RndPhysicalCompact/WINDOW/EStopIn1)" } ],
+      "rejected": "RESTART_OK gating Restart (STOP_v7.8): falling edge when FBK turns ON while button held -> exit with FBK ON",
+      "mustPass": ["E-04", "E-05", "E-06", "M:Restart-only-in-Safe->E-04"] },
+    { "id": "S4a", "network": "Network11",
+      "add": [ { "block": "WIN_C1_IN", "fn": "safeAnd", "orderAfter": "Network11/FBAnd1", "orderBefore": "Network11/WIN_C1", "inputs": { "AndIn1": "wire:Network11/FBAnd1/AndOut", "AndIn2": "var:out_LV_C1" } } ],
+      "change": [ { "port": "Network11/WIN_C1/TonIn", "from": "wire:Network11/FBAnd1/AndOut", "to": "wire:Network11/WIN_C1_IN/AndOut" } ],
+      "mustPass": ["U-01", "K-01", "U-07", "outPLC_RnD per вопрос 78"] }
+  ],
+  "S4b": { "verdict": "not a defect of E2; consequence of missing StartingRun abort (Q-ARCH-03, D-09, E3)", "evidence": "program/architect/E2-status/repro/c11.out.txt" },
+  "delta": { "fb": 7, "wiresAdded": 8, "wiresRemoved": 1, "newSymbols": 0, "newSalVariables": 0, "timersChanged": 0, "hardwareGroupTarget": "unchanged" },
+  "expectedModel": { "L3": "HVD 7009, C2 OFF 8010 (ref 7008/8009)", "S4a": "R&D u1+601 both paths", "fullCycleDiffE2dToE2e": "only R&D arrival +1 scan per Safe->R&D" }
+}

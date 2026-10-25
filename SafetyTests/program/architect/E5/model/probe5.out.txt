@@ -1,0 +1,10 @@
+W-04*: C1 OFF at tf+ 30002 status [ 'SAFE' ] SF true emg false
+W-03*: STO at tf+ 30002 run? false status [ 'RND' ] SF true
+G-07: C2 ON 4 HVdis + 502 C2 OFF + 1503 C1 OFF + 1503 status [ 'SAFE' ] SF true STS_FAULT true
+spont C2 Safe: SF true emg [ 'SAFE' ]
+Config exit welded C2: EMG at C2 OFF+ 502
+Config C1 loss: EMG at + 3
+R&D C1 loss: EMG at + 3
+dither in window: status [ 'RND' ] SF false emg false
+blue ack: SF before true after false unlock seen true
+R&D->Safe welded C1 (FBK held before green): C1 OFF 503 EMG at C1 OFF+ 502 SF false

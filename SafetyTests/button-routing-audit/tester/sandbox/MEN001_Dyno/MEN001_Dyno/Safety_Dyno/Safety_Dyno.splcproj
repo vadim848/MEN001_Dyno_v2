@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Crc="3686454299" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ab6a1d61-b327-4270-bf0e-69cb4173ac8e}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TwinCAT3SafePlcProject</RootNamespace>
+    <AssemblyName>TwinCAT3SafePlcProject</AssemblyName>
+    <FileUpgradeFlags />
+    <UpgradeBackupLocation />
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetSystem>EL6900</TargetSystem>
+    <ProgrammingLanguage>Graphical Editor</ProgrammingLanguage>
+    <Worker>Total Control</Worker>
+    <IntProjName>Safety_Dyno</IntProjName>
+    <IsNewCreated>false</IsNewCreated>
+    <SPlcProjVersion>1.8.0.0</SPlcProjVersion>
+    <NextSdsId>93</NextSdsId>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="GVLs\GVL1.sgvl" />
+    <None Include="TwinSafeGroup1\Alias Devices\A1 - SI1 %28EL1918%29_1 - Module 1 %28FSOE%29.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\A12 - SI2 %28EL1918%29_1 - Module 1 %28FSOE%29.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\EL2904, A2 -SO1 4 digital outputs_1.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\EL2904, A3 - SO2 4 digital outputs_1.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\EL2904, A13 - SO3 4 digital outputs_1.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\IN_BIT_DoorMonitor.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\IN_BIT_InitSystem.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\IN_BIT_SolenoidMonitor.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\IN_Bypass1.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\IN_Bypass2.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\IN_C3_BatRealy_Manual_Off.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\IN_C3_BatRealy_Manual_On.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\IN_ESTOP_PLC.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\in_False.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\IN_RB_BatBMS_Manual_Off.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\IN_RB_BatBMS_Manual_On.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\IN_SAFETY_RUN.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\OUT_BIT_MotoCoolingEnable.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\OUT_Estop_OK.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\out_EStop_Status.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\OUT_ReadyForStep2.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\OUT_Safety_Armed.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\SimuTest\in_DisCharge_Cmd.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\SimuTest\in_HV_Inhibit_Cmd.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\SimuTest\in_LV_Inhibit_Cmd.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\StatusToPLC\outPLC_C1_FBK.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\StatusToPLC\outPLC_C2_FBK.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\StatusToPLC\outPLC_EStop_MantiRob.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\StatusToPLC\outPLC_EStop_NC1.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\StatusToPLC\outPLC_EStop_NC2.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\StatusToPLC\outPLC_HV_Healthy.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\StatusToPLC\outPLC_HV_Interlock.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\StatusToPLC\outPLC_LV_Healthy.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\StatusToPLC\outPLC_LV_Interlock.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\StatusToPLC\outPLC_STO_1.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\StatusToPLC\outPLC_STO_2.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\Steps\OUT_Step1.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\Steps\OUT_Step2.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\Steps\OUT_Step3.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\Steps\OUT_Step4.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\Steps\OUT_Step5.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\PLC_IO\Steps\OUT_Step6.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\Safety_Step.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\STO_Drive1 %28AX5805%29 - Module 1 %28Safety Process Data, 1 axis%29.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\STO_Drive2 %28AX5805%29 - Module 1 %28Safety Process Data, 1 axis%29.sds" />
+    <None Include="TwinSafeGroup1\TwinSafeGroup1.sal" />
+    <None Include="TwinSafeGroup1\TwinSafeGroup1.sal.diagram">
+      <DependentUpon>TwinSafeGroup1\TwinSafeGroup1.sal</DependentUpon>
+      <Visible>false</Visible>
+    </None>
+    <None Include="TargetSystemConfig.xml">
+      <Visible>false</Visible>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GVLs" />
+    <Folder Include="TwinSafeGroup1" />
+    <Folder Include="TwinSafeGroup1\Alias Devices" />
+    <Folder Include="TwinSafeGroup1\Alias Devices\PLC_IO" />
+    <Folder Include="TwinSafeGroup1\Alias Devices\PLC_IO\StatusToPLC" />
+    <Folder Include="TwinSafeGroup1\Alias Devices\PLC_IO\SimuTest" />
+    <Folder Include="TwinSafeGroup1\Alias Devices\PLC_IO\Steps" />
+    <Folder Include="User FBs" />
+    <None Include="TwinSafeGroup1\Alias Devices\ErrorAcknowledgement.sds" />
+  </ItemGroup>
+  <ProjectExtensions />
+</Project>

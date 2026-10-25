@@ -1,0 +1,345 @@
+{
+ "version": "sal-mutation-plan-v1",
+ "planVersion": "7.5",
+ "status": "Architect guard-mutation plan v6 for E2d (PLAN.md v6). sourceSha256 filled at G2 (runner exit 3 until then). operatorAvailable:false only for operators the stand does not implement (rebind-global, composite). modelKill = architect prototype (not native, not a test).",
+ "sourceSha256": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b",
+ "sourceSha256Note": "v7.5 E2d to be rebuilt on E2c ee8439ae...; fill at G2",
+ "testFiles": [
+  "current-e2a-boot.test.js",
+  "current-e2a-dis-hold.test.js",
+  "current-e2a-emg-anchor.test.js",
+  "current-e2a-emg-rd-sweep.test.js",
+  "current-e2a-emg-rnd.test.js",
+  "current-e2a-emg-run.test.js",
+  "current-e2a-emg-rundown.test.js",
+  "current-e2a-emg-safe.test.js",
+  "current-e2a-race.test.js",
+  "current-e2a-rnd-cover-healthy.test.js",
+  "current-e2a-run-conf.test.js",
+  "current-e2a-status.test.js",
+  "current-e2a-sweep-estop.test.js",
+  "current-e2b-bypass.test.js",
+  "current-e2b-connector-safe.test.js",
+  "current-e2b-cover-transitions.test.js",
+  "current-e2b-interlock-run.test.js",
+  "current-e2b-rel01-e2.test.js",
+  "current-e2b-sweep-connector.test.js",
+  "current-e2c-hlt03.test.js",
+  "current-e2c-stp-i.test.js",
+  "current-e2d-fbk-k3ack.test.js",
+  "current-e2d-fbk-unsolicited.test.js",
+  "current-e2d-fbk-window-abort.test.js",
+  "current-e2d-first-fault-scan.test.js",
+  "current-e2d-release-permit.test.js",
+  "current-e2d-unlock-cover.test.js",
+  "current-e2d-unlock-door.test.js"
+ ],
+ "behaviouralTests": [
+  "^E2[a-d] "
+ ],
+ "structuralSoftwareCheckCases": [
+  "^BOOT:"
+ ],
+ "mutations": [
+  {
+   "id": "M-E2d-03",
+   "guard": "ReleaseAfterPermit",
+   "op": "deactivate-input",
+   "block": "//SafeResumption/MODE",
+   "port": "OrIn4",
+   "rationale": "permit dips during Safe->R&D and restarts 2 s count",
+   "killingScenario": "Safe->R&D with both buttons released at acceptance; new BOTH at release+2050 ms (R&D reached at +100): accepted in base, rejected in mutant",
+   "oracle": "Q-REL-AFTER-PERMIT A",
+   "modelKill": "repro/t14.out.txt"
+  },
+  {
+   "id": "M-E2d-04",
+   "guard": "UnlockDoor",
+   "op": "invert-contact",
+   "block": "//Network2/FBAnd8",
+   "port": "AndIn1",
+   "rationale": "Door removed from Unlock reset in Safe",
+   "killingScenario": "UNL-05 Safe: Door FALSE, NC1 FALSE, blue 1000 ms: Unlock 500 scans (base 0)",
+   "oracle": "UNL-05 (a)-(c), C5 viii",
+   "modelKill": "review v4 w13"
+  },
+  {
+   "id": "M-E2d-05",
+   "guard": "UnlockDoor",
+   "op": "deactivate-input",
+   "block": "//Network1/FBOr3",
+   "port": "OrIn1",
+   "rationale": "Safe Door reset path removed",
+   "killingScenario": "UNL-05 Safe: Unlock 500 (base 0)",
+   "oracle": "UNL-05",
+   "modelKill": "review v4 w13"
+  },
+  {
+   "id": "M-E2d-06",
+   "guard": "UnlockDoor",
+   "op": "deactivate-input",
+   "block": "//Network12/FBAnd2",
+   "port": "AndIn4",
+   "rationale": "Door removed from Unlock grant in R&D",
+   "killingScenario": "UNL-05 R&D: Unlock 500 (base 0)",
+   "oracle": "UNL-05",
+   "modelKill": "review v4 w13"
+  },
+  {
+   "id": "M-E2d-07",
+   "guard": "UnlockDoor",
+   "op": "deactivate-input",
+   "block": "//Network12/FBAnd11",
+   "port": "AndIn1",
+   "rationale": "Door removed (R&D grant feeder)",
+   "killingScenario": "UNL-05 R&D: Unlock 500",
+   "oracle": "UNL-05",
+   "modelKill": "review v4 w13"
+  },
+  {
+   "id": "M-E2d-08",
+   "guard": "UnlockDoor",
+   "op": "deactivate-input",
+   "block": "//Network2/FBAnd8",
+   "port": "AndIn1",
+   "rationale": "restrictive variant (Door term deactivated)",
+   "killingScenario": "UNL-04 Safe: Unlock 0 (base 500)",
+   "oracle": "UNL-04",
+   "modelKill": "review v4 w13"
+  },
+  {
+   "id": "M-E2d-09",
+   "guard": "Fbk10",
+   "op": "deactivate-input",
+   "block": "//Network2/FBAnd2",
+   "port": "AndIn2",
+   "rationale": "C1_FBK ON not blocking Safe->R&D",
+   "killingScenario": "FBK-10 Safe: C1_FBK ON without command, BOTH: S12 (base Safe)",
+   "oracle": "FBK-10 (C5 xiii)",
+   "modelKill": "repro/t17.out.txt"
+  },
+  {
+   "id": "M-E2d-10",
+   "guard": "Fbk10",
+   "op": "deactivate-input",
+   "block": "//Network2/FBAnd2",
+   "port": "AndIn3",
+   "rationale": "C2_FBK ON not blocking Safe->R&D",
+   "killingScenario": "FBK-10 Safe: C2_FBK ON, BOTH: S12",
+   "oracle": "FBK-10 (xiii)"
+  },
+  {
+   "id": "M-E2d-11",
+   "guard": "Fbk10",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_020",
+   "port": "AndIn8",
+   "rationale": "C2_FBK ON not blocking R&D->Run",
+   "killingScenario": "FBK-10 R&D: C2_FBK ON without command, BOTH: SU set, STO released (base no SU)",
+   "oracle": "FBK-10 (xiii)",
+   "modelKill": "repro/t17.out.txt"
+  },
+  {
+   "id": "M-E2d-12",
+   "guard": "Fbk10Legacy",
+   "op": "deactivate-input",
+   "block": "//Network2/FBAnd91",
+   "port": "AndIn5",
+   "rationale": "FBK-10 gate on legacy PLC up path removed",
+   "killingScenario": "Safe, C1_FBK ON without command, PLC (1,0): S12 and C1 ON (base stays S1)",
+   "oracle": "FBK-10 (Q-V4-02 V) via legacy PLC",
+   "modelKill": "repro/t22.out.txt"
+  },
+  {
+   "id": "M-E2d-13",
+   "guard": "Fbk10Legacy",
+   "op": "deactivate-input",
+   "block": "//Network2/FBAnd91",
+   "port": "AndIn6",
+   "rationale": "FBK-10 gate on legacy PLC up path removed",
+   "killingScenario": "Safe, C2_FBK ON without command, PLC (1,0): S12 (base S1)",
+   "oracle": "FBK-10 (Q-V4-02 V) via legacy PLC",
+   "modelKill": "repro/t22.out.txt"
+  },
+  {
+   "id": "M-E2d-17",
+   "guard": "CoverHvSto",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAndHvSetPermit",
+   "port": "AndIn5",
+   "rationale": "cover term NC1 removed from FBAndHvSetPermit",
+   "killingScenario": "E2d-COV-1: R&D->Run accepted (SU at u-2), NC1 FALSE from u: no scan with C2 ON and no scan with STO released from u (base E2d candidate: C2 u+0..u+8009, STO u+0..u+7005)",
+   "oracle": "IL-05a, V14-Q5/Q7, E2d-COV-1",
+   "modelKill": "repro/c6.out.txt"
+  },
+  {
+   "id": "M-E2d-18",
+   "guard": "CoverHvSto",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAndHvSetPermit",
+   "port": "AndIn6",
+   "rationale": "cover term NC2 removed from FBAndHvSetPermit",
+   "killingScenario": "E2d-COV-1: R&D->Run accepted (SU at u-2), NC2 FALSE from u: no scan with C2 ON and no scan with STO released from u (base E2d candidate: C2 u+0..u+8009, STO u+0..u+7005)",
+   "oracle": "IL-05a, V14-Q5/Q7, E2d-COV-1"
+  },
+  {
+   "id": "M-E2d-19",
+   "guard": "CoverHvSto",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAndSto1SetPermit",
+   "port": "AndIn5",
+   "rationale": "cover term NC1 removed from FBAndSto1SetPermit",
+   "killingScenario": "E2d-COV-1: R&D->Run accepted (SU at u-2), NC1 FALSE from u: no scan with C2 ON and no scan with STO released from u (base E2d candidate: C2 u+0..u+8009, STO u+0..u+7005)",
+   "oracle": "IL-05a, V14-Q5/Q7, E2d-COV-1",
+   "modelKill": "repro/c6.out.txt"
+  },
+  {
+   "id": "M-E2d-20",
+   "guard": "CoverHvSto",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAndSto1SetPermit",
+   "port": "AndIn6",
+   "rationale": "cover term NC2 removed from FBAndSto1SetPermit",
+   "killingScenario": "E2d-COV-1: R&D->Run accepted (SU at u-2), NC2 FALSE from u: no scan with C2 ON and no scan with STO released from u (base E2d candidate: C2 u+0..u+8009, STO u+0..u+7005)",
+   "oracle": "IL-05a, V14-Q5/Q7, E2d-COV-1"
+  },
+  {
+   "id": "M-E2d-21",
+   "guard": "CoverHvSto",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAndSto2SetPermit",
+   "port": "AndIn5",
+   "rationale": "cover term NC1 removed from FBAndSto2SetPermit",
+   "killingScenario": "E2d-COV-1: R&D->Run accepted (SU at u-2), NC1 FALSE from u: no scan with C2 ON and no scan with STO released from u (base E2d candidate: C2 u+0..u+8009, STO u+0..u+7005) (observe STO_DR2)",
+   "oracle": "IL-05a, V14-Q5/Q7, E2d-COV-1"
+  },
+  {
+   "id": "M-E2d-22",
+   "guard": "CoverHvSto",
+   "op": "deactivate-input",
+   "block": "//Network1/FBAndSto2SetPermit",
+   "port": "AndIn6",
+   "rationale": "cover term NC2 removed from FBAndSto2SetPermit",
+   "killingScenario": "E2d-COV-1: R&D->Run accepted (SU at u-2), NC2 FALSE from u: no scan with C2 ON and no scan with STO released from u (base E2d candidate: C2 u+0..u+8009, STO u+0..u+7005) (observe STO_DR2)",
+   "oracle": "IL-05a, V14-Q5/Q7, E2d-COV-1"
+  },
+  {
+   "id": "M-E2d-23",
+   "guard": "Legacy11Off",
+   "op": "restore-legacy-11-path",
+   "operatorAvailable": false,
+   "mutant": "legacy (1,1) active again = the frozen E2d-v7.4.1 (Network12/FBAnd8/9/10 present, FBOr1.OrIn2 Activated NC wired from FBAnd10; additionally FBOrFbk10C2 on FBAnd10.AndIn3)",
+   "rationale": "isolation of legacy PLC R&D->Run lost",
+   "killingScenario": "LEG11-OFF: steady R&D (C2 OFF, STO active, cover closed, EOk, buttons released >= 2 s), PLC (1,1) held 5 s, then pulse 300 ms: no C2 command, no STO release, no Run (stage R&D every scan). Mutant (model): C2 at +3, STO released, Run (held) / R&D with C2 ON (pulse)",
+   "oracle": "question 76 B (SCENARIO_DECISIONS), KF-5 closed",
+   "modelKill": "repro/c7.out.txt (cases A, B, C, F)",
+   "runnerNote": "standard runner operator not available (block re-creation); counted at G3 as \"killed by frozen mutant source\" under killCriterion, not as a runner kill",
+   "mutantSource": "frozen E2d-v7.4.1: candidates/E2d-v7.4.1/native, SAL a5acf29175b041d243aac19e5ffee4c260f0c6cab3b538679c36ed1e59286c1b",
+   "killCriterion": [
+    "LEG11-OFF FAIL on frozen E2d-v7.4.1 (a5acf291)",
+    "LEG11-OFF PASS on the new E2d (declared SAL)",
+    "exact delta E2d-v7.4.1 -> new E2d equals exactly v7.5 (PLAN.json slices[] E2d rationale.v75.declaredDelta.vsFrozenE2dV741: 4 blocks, 6 target usages, 4 wires, FBOr1.OrIn2 deactivated, nothing added)",
+    "E2c (ee8439ae) only as a supplement, not the mutant"
+   ],
+   "g3Label": "killed by frozen mutant source"
+  }
+ ],
+ "note": "Q-ARCH-10 A: IL_SCOPE, linkIlScope, GATE_010.AndIn3 removed; current-e2d-unlock-cover.test.js is regression (no mutation killer).",
+ "blockedByQuestion": [
+  {
+   "block": "//Network12/FBAnd3",
+   "port": "AndIn2",
+   "question": "Q-T3-2b (Door fall during Unlock in R&D)"
+  }
+ ],
+ "removedGuards": [
+  {
+   "guard": "IL-04 Network2/FBAnd1.AndIn5",
+   "by": "E2d (V14-Q7)"
+  },
+  {
+   "guard": "IL-05 Network2/FBAnd1.AndIn6",
+   "by": "E2d (V14-Q7)"
+  }
+ ],
+ "notes": [
+  "REL-01(e) is closed in E2b (GATE_030.OrIn5), not by MODE.OrIn4; M-E2d-03 concerns Q-REL only",
+  "xiv (ack clears FBK-10 block) belongs to E5; xv (FBK-10 -> Emergency) structural - no path in E2",
+  "D5-1: FBAnd4.AndIn3/4 change dropped (dead after Bypass gate A); M-E2d-01/02 removed",
+  "D5-2: known FAIL FBK-10 k3/k4 until E5/E6",
+  "v7.5: M-E2d-14/15/16 moved to removedMutations; M-E2d-23 added (operatorAvailable false, E2c-as-mutant kill). M-E2d-12/13 (FBK10-PLC-A, Safe (1,0)) unchanged.",
+  "V75-B: M-E2d-23 mutant = frozen E2d-v7.4.1 a5acf291 (not E2c); M-E2d-14/15/16 status \"removed with v7.5\", not equivalent."
+ ],
+ "removedMutations": [
+  {
+   "id": "M-E2d-14",
+   "guard": "Fbk10Legacy",
+   "op": "deactivate-input",
+   "block": "//Network12/FBAnd10",
+   "port": "AndIn3",
+   "rationale": "FBK-10 gate (FBOrFbk10C2) removed from legacy R&D->Run",
+   "killingScenario": "R&D, C2_FBK ON without command, PLC (1,1): C2 command, STO released, Run (base: no command)",
+   "oracle": "FBK-10 (Q-V4-02 V) via legacy PLC",
+   "modelKill": "repro/t23.out.txt",
+   "removedBy": "removed with v7.5 (question 76 B): guarded legacy (1,1) path deleted (Network12/FBAnd10, FBOrFbk10C2); not an equivalence verdict; oracles FBK10-PLC-B and FBK10-PLC-REG(2) obsolete (replaced by LEG11-OFF); FBK10-PLC-REG(1) ((1,0) path) stays (Q76-P4)",
+   "status": "removed with v7.5 (not equivalent)"
+  },
+  {
+   "id": "M-E2d-15",
+   "guard": "Fbk10Legacy",
+   "op": "deactivate-input",
+   "block": "//Network12/FBOrFbk10C2",
+   "port": "OrIn2",
+   "rationale": "gate by raw FBK level (v7.1 variant)",
+   "killingScenario": "FBK10-PLC-REG (2): R&D, PLC (1,1), own C2_FBK at u+1: Run never, R&D with C2 ON (base Run at u+600)",
+   "oracle": "FBK10-PLC-REG (2)",
+   "modelKill": "repro/t23.out.txt",
+   "removedBy": "removed with v7.5 (question 76 B): guarded legacy (1,1) path deleted (Network12/FBAnd10, FBOrFbk10C2); not an equivalence verdict; oracles FBK10-PLC-B and FBK10-PLC-REG(2) obsolete (replaced by LEG11-OFF); FBK10-PLC-REG(1) ((1,0) path) stays (Q76-P4)",
+   "status": "removed with v7.5 (not equivalent)"
+  },
+  {
+   "id": "M-E2d-16",
+   "guard": "Fbk10Legacy",
+   "op": "deactivate-input",
+   "block": "//Network12/FBOrFbk10C2",
+   "port": "OrIn1",
+   "rationale": "legacy R&D->Run blocked always",
+   "killingScenario": "FBK10-PLC-REG (1) positive control: R&D, PLC (1,1), no unsolicited FBK: no C2 command, no Run (base Run at u+600)",
+   "oracle": "FBK10-PLC-REG (1)",
+   "removedBy": "removed with v7.5 (question 76 B): guarded legacy (1,1) path deleted (Network12/FBAnd10, FBOrFbk10C2); not an equivalence verdict; oracles FBK10-PLC-B and FBK10-PLC-REG(2) obsolete (replaced by LEG11-OFF); FBK10-PLC-REG(1) ((1,0) path) stays (Q76-P4)",
+   "status": "removed with v7.5 (not equivalent)"
+  }
+ ],
+ "g3Copy": {
+  "by": "v2-tester E2-G3",
+  "from": "program/architect/E2-status/MUTATION_PLAN_E2d.json",
+  "changes": [
+   "sourceSha256 := E2d candidate SAL",
+   "testFiles := all 28 current-e2*.test.js of frozen G1 v8 snapshot (superset of the plan 21)"
+  ],
+  "originalSourceSha256": "FILL_AT_G2",
+  "originalTestFiles": [
+   "current-e2a-status.test.js",
+   "current-e2a-emg-safe.test.js",
+   "current-e2a-emg-rnd.test.js",
+   "current-e2a-emg-run.test.js",
+   "current-e2a-emg-rundown.test.js",
+   "current-e2a-sweep-estop.test.js",
+   "current-e2b-sweep-connector.test.js",
+   "current-e2a-race.test.js",
+   "current-e2a-rnd-cover-healthy.test.js",
+   "current-e2a-run-conf.test.js",
+   "current-e2b-interlock-run.test.js",
+   "current-e2b-cover-transitions.test.js",
+   "current-e2b-connector-safe.test.js",
+   "current-e2c-stp-i.test.js",
+   "current-e2c-hlt03.test.js",
+   "current-e2d-release-permit.test.js",
+   "current-e2d-unlock-cover.test.js",
+   "current-e2a-emg-anchor.test.js",
+   "current-e2a-emg-rd-sweep.test.js",
+   "current-e2d-unlock-door.test.js",
+   "current-e2d-fbk-unsolicited.test.js"
+  ]
+ }
+}

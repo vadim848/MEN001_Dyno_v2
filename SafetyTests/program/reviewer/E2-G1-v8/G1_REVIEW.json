@@ -1,0 +1,56 @@
+{
+  "slice": "E2-G1-v8",
+  "role": "v2-reviewer",
+  "date": "2026-10-22",
+  "verdict": "G1 PASS WITH CONDITIONS",
+  "expectedDeltasV8": {"names": 8, "verdict": "OK", "note": "all renames/stricter replacements (TD-08, TD-09, N17); F1 status preserved pass->pass / fail->fail; no hidden deletion"},
+  "source": {
+    "head": "dbca5dd",
+    "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "testSnapshot": "repro/v8-test-snapshot.sha256 (all 16 HANDOFF_v8 files matched)",
+    "scenarioDecisionsNow": "de4996a6... (question 76 recorded after HANDOFF_v8; HANDOFF cites 5a148eed...)",
+    "candidates": {"E2b-v7.2": "386e208b...", "E2d-v7.4.1": "a5acf291... (contains SPOIL_R/SPOIL_S)"}
+  },
+  "closed": ["N16 (oracle construction; 05 executability -> N19)", "N17", "m-15", "m-16", "m-18"],
+  "applied": ["TD-07 (Safe ok, R&D defect N18)", "TD-08", "E2d-COV-1", "TD-09", "TD-10", "D-E2d-1 (m-20)"],
+  "conditions": [
+    {"id": "N18", "severity": "substantive", "to": "tester", "due": "before G3",
+     "text": "REL01-e2-LATE R&D defines a only by stage b_Step3; ignores STATE_SU/TD-08 A. On correct candidates (E2b v7.2, E2d v7.4.1) 9 false RED (s in {Q+1,Q+2,l0} x NC1/NC2/both): candidate gives Emergency at s+1 without lift (TD-08 §1.3 norm), test demands refusal without Emergency. Fix a := A (recRndC_SU | C2 | STO). Not usable as M-E2b-42..45 killers until fixed.",
+     "evidence": ["repro/rel01-late.E2b.tap", "repro/rel01.E2d741.tap"]},
+    {"id": "N19", "severity": "substantive", "to": "analyst/architect -> tester", "due": "before G3",
+     "text": "FBK-05 family treats StartingRun as 'not b_Step_RnD/STS_RND'; candidates represent StartingRun as SU inside b_Step_RnD/STS_RND. All FBK-05-W/NEG/POS fail from the first scan; pos() releases HV Faulty immediately so the valid abort is never exercised. Decide StartingRun observation (SU vs status); separate status check from behavioural predicates; fix pos() end-of-abort detection; check STP-I.",
+     "evidence": ["repro/wa.E2d741.tap"]},
+    {"id": "m-19", "to": "tester/lead", "text": "Mark 9 FBK-06-NEG/POS F1 RED as D-ARCH-POL-derived (no independent §1 evidence)"},
+    {"id": "m-20", "to": "tester", "text": "step12 truth table: keep aggregate FALSE rows for NC1/NC2"},
+    {"id": "m-21", "to": "tester->analyst", "text": "REL01-e2-LATE a = s with l never: refusal admissible?"},
+    {"id": "m-22", "to": "analyst", "text": "Priority of E2b-dev §2.3 over TD-08 §1.3 (ii) at A = u (legacy)"},
+    {"id": "m-23", "to": "tester", "text": "R&D->Run c = A+1 rows for connector / ES_NC / Mentee"},
+    {"id": "m-24", "to": "tester/stand", "text": "'ERROR precondition (TD-09)' not classified as ERROR by summarize"},
+    {"id": "m-25", "to": "analyst", "text": "K-2: E2d v7.4.1 refuses Safe->R&D with LV Faulty TRUE before the gesture; WDG-02 does not foresee it; affects FBK-06-NEG/POS base reachability"},
+    {"id": "F-76", "to": "tester (v9)", "text": "Question 76 'Б': legacy (1,1) R&D->Run disabled in E2 - rewrite FFS legacy route, KF-5, FBK10-PLC (1,1), TD-08 A=u legacy; (1,0) and legacy downs unchanged. Future condition, not a v8 defect."},
+    {"id": "C5", "to": "architect/G3", "text": "M-E2b-21 killer measured by reviewer on E2d v7.4.1 (base ok#TODO S1/S2/R, mutant FAIL S1/S2/R); re-check on exact E2b v7.3 or record. FBK-06-W usable; FBK-05-* after N19; REL01-e2-LATE R&D after N18; AND6 first-scan uncovered on candidates."},
+    {"id": "D2", "to": "stand/G4", "text": "as in review v7"},
+    {"id": "D-v8", "to": "lead", "text": "approve expected-deltas v8 fragment (8 names) as is"}
+  ],
+  "candidateObservations": [
+    {"id": "K-1", "text": "E2d v7.4.1 accepts BOTH with permit episode [f-300, f+10) (REL01-e2 oracle: refused) - to architect/editor"},
+    {"id": "K-2", "text": "E2d v7.4.1: no Safe->R&D with in_LV_Faulty_FBK TRUE before the gesture - analyst m-25"}
+  ],
+  "counts": {
+    "e2": {"total": 999, "normative": {"PASS": 94, "FAIL": 796, "NV": 48}, "DIAG": 39, "KF": 22, "failSplit": {"ERROR": 2, "coverage": 618, "red": 176}},
+    "nonE2": {"tests": 487, "pass": 466, "fail": 21, "explained": 21},
+    "checkSoftware": {"exit": 4, "unexplained": 8, "source": "baseline-v8/check-software-v8.out (not re-run by reviewer)"}
+  },
+  "reviewerRuns": {
+    "rel01-late.E2b.tap": "Safe 18/18 ok; R&D 9 not ok (N18)",
+    "rel01.E2d741.tap": "51 pass / 15 fail / 42 todo (9 = N18, 6 = K-1)",
+    "ffs.E2b.tap": "22/24 (Safe->R&D NC1/NC2 expected outside E2b); legacy 8/8",
+    "ffs.E2d741.tap": "24/24",
+    "k4.E2b.tap": "qualified-while-ON S1/S2 ok#TODO, R fail",
+    "k4.E2d741.tap": "qualified-while-ON S1/S2/R ok#TODO",
+    "k4.E2d741mut.tap": "M-E2b-21 mutant: S1/S2/R not ok",
+    "wa.E2d741.tap": "3 pass / 31 fail / 12 todo (FBK-05: N19; FBK-06-W: no E6; FBK-06-NEG/POS: K-2 precondition)"
+  },
+  "limits": "Software model only (1 ms scan, plant A2). No native CRC/Verify/IDE/Target/hardware. G3 not run (one mutation measured). check:software not run (write zone). v7 test sources not preserved: N17/STP-I stimulus continuity checked against v8 code and v7-q §4."
+}

@@ -1,0 +1,12 @@
+import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';import crypto from 'node:crypto';
+const here=import.meta.dirname,bp=path.join(here,'baseline/SOFTWARE_CHECK_RESULTS.json'),cp=path.resolve(process.argv[2]);const b=JSON.parse(fs.readFileSync(bp)),c=JSON.parse(fs.readFileSync(cp));const checks=[];
+function check(name,fn){try{const detail=fn();checks.push({name,status:'PASS',detail});}catch(e){checks.push({name,status:'FAIL',error:e.message});}}
+check('stage exact counts and status',()=>assert.deepEqual(c.stages.map(({name,status,counts})=>({name,status,counts})),b.stages.map(({name,status,counts})=>({name,status,counts}))));
+const failures=s=>(s.diagnostics?.stdout??'').split('\n').filter(l=>/^not ok \d+ - /.test(l)).map(l=>l.replace(/^not ok \d+ - /,''));
+check('exact failed current test identities preserved',()=>assert.deepEqual(c.stages.map(failures),b.stages.map(failures)));
+check('exact summary and all requirement/case statuses preserved',()=>{assert.deepEqual(c.summary,b.summary);assert.deepEqual(c.cases.map(({id,status})=>({id,status})),b.cases.map(({id,status})=>({id,status})));});
+check('all per-case observations internal state failure values and assumptions preserved',()=>{
+ const keys=['observations','firstViolation','active','assumedUnconnectedPorts','limitations','expected','actual'];const select=r=>Object.fromEntries(['id',...keys].filter(k=>k in r).map(k=>[k,r[k]]));assert.deepEqual(c.cases.map(select),b.cases.map(select));
+ return{cases:c.cases.length,observationArrays:c.cases.filter(r=>r.observations).length};
+});
+const report={status:checks.every(r=>r.status==='PASS')?'PASS':'FAIL',baselineSalSha256:b.sha256,candidateSalSha256:c.sha256,candidateSgvlSha256:c.sgvlSha256,baselineReportSha256:crypto.createHash('sha256').update(fs.readFileSync(bp)).digest('hex'),candidateReportSha256:crypto.createHash('sha256').update(fs.readFileSync(cp)).digest('hex'),checks,limits:['Source SHA/CRC, binding counts, capability hashes and serialization-only inventories are expected to change and reviewed separately. Semantic statuses/observations and failure identities are compared exactly.','Selected software adapter scenarios preserve historical gaps; native CRC is separate.']};fs.writeFileSync(path.join(here,'REGRESSION_COMPARISON.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));process.exitCode=report.status==='PASS'?0:1;

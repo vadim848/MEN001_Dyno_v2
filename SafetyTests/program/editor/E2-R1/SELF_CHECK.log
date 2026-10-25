@@ -1,0 +1,30 @@
+PASS native-equals-staged-semantics blocks/ports/attrs/order/wires/global refs/SAL usages/SGVL usages identical; only CRC/formatting differ
+PASS native-structure-preflight {"status":"PASS","errors":[],"counts":{"networks":14,"blocks":215,"ports":1832,"variables":75,"wires":277,"crossNetworkWires":0}}
+PASS binding-audit {"status":"PASS","errors":[],"globalRefs":163,"edges":277}
+PASS counts-215-1832-65 {"source":{"networks":14,"fb":242,"ports":2076,"symbols":85,"salVariables":75,"wires":307,"globalRefs":209,"sgvlUsages":209},"native":{"networks":14,"fb":215,"ports":1832,"symbols":65,"salVariables":75,"wires":277,"globalRefs":163,"sgvlUsages":163}}
+PASS global-refs-equal-sgvl-usages {"networks":14,"fb":215,"ports":1832,"symbols":65,"salVariables":75,"wires":277,"globalRefs":163,"sgvlUsages":163}
+PASS no-dangling-references []
+PASS global-ref-sgvl-usage-pairing []
+PASS every-symbol-has-source-and-consumer []
+PASS every-symbol-single-source []
+PASS C-R1-4-N4-port-ids-gone {"n4PortIds":16,"remaining":[]}
+PASS removed-symbols-fully-gone {"removed":["b_Set_LV_C1","b_Set_HV_C2","b_Set_STO_DR1","b_Set_STO_DR2","b_Step2","b_Step1_Set","b_Step1_Reset","b_Step2_Reset","b_Step2_Set","b_Reset_LV_Discharge_Req","b_Reset_HV_Discharg_Req","b_Step3_Reset","b_Step4_Reset","b_Step5_Reset","b_Step6","b_Step6_Reset","b_Step1_Set_2","b_Step1_Set_3"
+PASS deleted-blocks-equal-plan ["Network1/FBAnd11","Network1/FBAnd3","Network1/FBAnd9","Network12/FBAnd12","Network12/FBAnd13","Network12/FBAnd14","Network3/FBOr3","Network3/FBOr4","Network3/FBRs2","Network4/FBDecouple1","Network5/FBAnd1","Network5/FBAnd10","Network5/FBAnd2","Network5/FBAnd3","Network5/FBAnd5","Network5/FBAnd7","
+PASS deleted-symbols-equal-plan-plus-b_Step6 ["b_Reset_HV_Discharg_Req","b_Reset_LV_Discharge_Req","b_Reset_Transition_1","b_Set_HV_C2","b_Set_LV_C1","b_Set_STO_DR1","b_Set_STO_DR2","b_Step1_Reset","b_Step1_Set","b_Step1_Set_2","b_Step1_Set_3","b_Step2","b_Step2_Reset","b_Step2_Set","b_Step3_Reset","b_Step3_Set_3","b_Step4_Reset","b_Step5_Rese
+PASS surviving-port-deltas-only-planned []
+PASS all-19-deactivations-applied 19
+PASS sal-variable-usage-deltas-only-planned [{"v":"in_ES_NC_1","removed":1,"added":[]},{"v":"in_ES_NC_2","removed":1,"added":[]},{"v":"in_Mentee_EStop","removed":1,"added":[]},{"v":"in_LV_C1_FBK","removed":1,"added":[]},{"v":"in_HV_C2_FBK","removed":1,"added":[]},{"v":"in_STO_DR1_FBK","removed":1,"added":[]},{"v":"in_STO_DR2_FBK","removed":1,
+PASS rewire-DecIn2-in_False 
+PASS rewire-FBAnd2-to-FBOr12.OrIn2 [{"Id":"4cd1eeaf-c3fb-4e9e-bb44-65189f23032d","to":"//Network1/FBOr13/OrIn2"},{"Id":"758fbb79-5afa-46f6-b738-be27bc23bac6","to":"//Network1/FBOr12/OrIn2"}]
+PASS rewire-FBAnd9.AndIn1-out_EStop_Status 
+PASS single-source-per-input-and-unique-wire-pairs {"dupPairs":0,"multi":[]}
+PASS activated-inputs-have-source {"native":[],"canonicalBaseline":[]}
+PASS deactivated-inputs-have-no-source []
+PASS order-contiguous-and-relative-F1-order {"contiguous":true,"relativeOrderPreserved":true}
+PASS surviving-timer-params-unchanged []
+PASS networks-unchanged-attrs ["Network4","Network5","Network9"]
+PASS staged-kept-source-crc {"source":{"sal":"3702999762","sgvl":"1885429689"},"staged":{"sal":"3702999762","sgvl":"1885429689"},"native":{"sal":"1331029666","sgvl":"2739962901"}}
+PASS diagram-shapes-match-model {"fBAndShape":101,"fBOrShape":48,"fBRsShape":27,"fBTonShape":15,"fBDecoupleShape":22,"fBEstopShape":2,"inPortShape":1459,"outPortShape":373,"paramPortShape":17,"wiredLinkConnector":277,"networkSwimLane":14}
+PASS diagram-connectors-resolve {"badConn":[],"connectors":277,"wires":277}
+
+28/28 self-checks PASS

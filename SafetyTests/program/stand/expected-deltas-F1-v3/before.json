@@ -1,0 +1,64 @@
+{
+ "version": "expected-deltas-v1",
+ "label": "canonical F1 (04b45456) vs pinned F1 baseline: stand self-test rename only",
+ "source": {
+  "salSha256": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "sgvlSha256": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+  "diagramSha256": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603"
+ },
+ "baseline": {
+  "casesFileSha256": "93aa3d81774d977ee2421f37cca728f67843f7b9a3d3f5f70f2d1a78341b9d29",
+  "testsFileSha256": "f75461bb30fb7675b6f38fa95405998709536cb662b2ba062037ee68e29546e0",
+  "cases": "fixtures/case-baselines/F1-04b45456.cases.json",
+  "tests": "fixtures/case-baselines/F1-04b45456.tests.json"
+ },
+ "approval": {
+  "status": "APPROVED",
+  "by": "lead (main session)",
+  "date": "2026-10-21",
+  "note": "утверждено ведущим: переименование stand-самотеста по решению D1; 2026-10-22: +6 RUN-CONF renames approved by lead after reviewer G1 v5 §3 (oracle replaced by Q-V4-01/Q68)"
+ },
+ "cases": [],
+ "tests": {
+  "harness": [
+   {
+    "name": "S14: unwritten observed phase Symbol makes STATE and PRIORITY cases ERROR, not PASS",
+    "reason": "Stand self-test (test/stand-case-guards.test.js) renamed to 'S14/D1: removed phase Symbol is observed at its state RS output, not turned into ERROR or vacuous PASS': lead decision 1 (E2-R1-stand-2) replaces the Symbol observation rule it asserted. Not a SAL/requirement test.",
+    "proposedBy": "v2-stand-engineer"
+   }
+  ],
+  "historical": [],
+  "current": [
+   {
+    "name": "E2a RUN-CONF natural: C2_FBK ON one scan after the command, HV healthy: no Run <= u+99, Run at k+101, not at k+99",
+    "reason": "Renamed to 'E2a RUN-CONF RC-5 (i) natural: …: no Run <= u+599, Run at u+601 …': oracle replaced by CRITERIA_DELTA v7 §4.1 (Q-V4-01 'Б', question 68 'Б': FBK window 500 ms + 100 ms). Test file current-e2a-run-conf.test.js (G1 v5).",
+    "proposedBy": "v2-tester"
+   },
+   {
+    "name": "E2a RUN-CONF C2_FBK delayed 400 ms (HV healthy): no Run while C2_FBK OFF; then Run at k+101, not at k+99",
+    "reason": "Renamed to 'E2a RUN-CONF RC-5 (iii) C2_FBK delayed 400 ms (ON from u+400): no Run <= u+599, Run at u+601 …' (v7 §4.1: K = u+500).",
+    "proposedBy": "v2-tester"
+   },
+   {
+    "name": "E2a RUN-CONF drives STO FBK pinned to \"STO active\" (in_STO_DRx_FBK TRUE): Run still confirmed at k+101 (RC-4: STO FBK not required)",
+    "reason": "Renamed to 'E2a RUN-CONF RC-4 … Run at K+101 = u+601 …' (v7 §4.1 RC-4).",
+    "proposedBy": "v2-tester"
+   },
+   {
+    "name": "E2a RUN-CONF RC-6 HV Faulty TRUE for 1 scan at k+50 (before Run): count restarts - no Run <= (k+51)+99, Run at (k+51)+101, no Emergency (Q-RC-RUNCONF-01 \"В\")",
+    "reason": "v7 §4.1 RC-6: k+50 = u+51 now lies inside the 500 ms window (count not affected, Run u+601) - renamed 'E2a RUN-CONF RC-6 (v7) HV Faulty TRUE 1 scan at u+51 (inside the window) …'; the after-window case is the new 'u+550' test.",
+    "proposedBy": "v2-tester"
+   },
+   {
+    "name": "E2a RUN-CONF RC-7 (FBK-03) C2_FBK FALSE 1 scan at t_f+1 with the C2 command kept, before Run: Emergency (rule L1 vs in_Estop_PLC), Run never, Restart -> only Safe",
+    "reason": "Oracle inverted by Q-V4-01 'Б' (v7 §4.1 RC-7): a drop inside the window is not an emergency - renamed 'E2a RUN-CONF RC-7 (v7) C2_FBK FALSE 1 scan at t_f+1 inside the 500 ms window …: not an emergency, no rollback, Run at u+601'.",
+    "proposedBy": "v2-tester"
+   },
+   {
+    "name": "E2a RUN-CONF RC-7 (FBK-03) C2_FBK FALSE 1 scan at t_f+50 with the C2 command kept, before Run: Emergency (rule L1 vs in_Estop_PLC), Run never, Restart -> only Safe",
+    "reason": "As t_f+1: renamed '… at t_f+50 inside the 500 ms window …: not an emergency …'; Emergency now at u+502/u+550/u+599 (new tests).",
+    "proposedBy": "v2-tester"
+   }
+  ]
+ }
+}

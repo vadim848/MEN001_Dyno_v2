@@ -1,0 +1,34 @@
+TYPE Public, BeforeFieldInit Beckhoff.TwinCAT.XAE.Vsx.TwinSafe.Variables.GVL.XmlCrcSerialization.GlobalVariableListXmlCrcAccumulator
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+TYPE Public, BeforeFieldInit Beckhoff.TwinCAT.XAE.Vsx.TwinSafe.Variables.GVL.XmlCrcSerialization.GlobalVariableListXmlCrcVerifier
+Public, HideBySig, SpecialName System.Version get_FileFormatVersion() 
+Family, HideBySig, SpecialName Void set_FileFormatVersion(System.Version) 1:value 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(System.Version) 1:fileFormatVersion 
+Public, Virtual, HideBySig Boolean Verify(System.Xml.XmlElement,String,System.Text.Encoding) 1:element 2:crcAttributeName 3:encoding 
+TYPE Public, BeforeFieldInit Beckhoff.TwinCAT.XAE.Vsx.TwinSafe.Variables.GVL.XmlCrcSerialization.GlobalVariableListXmlCrcDictionary
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(UInt32,UInt32,System.Text.Encoding) 1:generatorPolynomial 2:initialValue 3:encoding 
+TYPE Public, BeforeFieldInit Beckhoff.TwinCAT.XAE.Vsx.TwinSafe.Variables.GVL.XmlCrcSerialization.GlobalVariableListXmlCrcReaderSettings
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+TYPE Public, BeforeFieldInit Beckhoff.TwinCAT.XAE.Vsx.TwinSafe.Variables.GVL.XmlCrcSerialization.GlobalVariableListXmlCrcWriterSettings
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+TYPE Public, BeforeFieldInit Beckhoff.TwinCAT.XAE.Vsx.TwinSafe.Variables.GVL.XmlCrcSerialization.GlobalVariableListXmlCrcWriter
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(System.IO.MemoryStream) 1:stream 
+TYPE Public, BeforeFieldInit Beckhoff.TwinCAT.XAE.Vsx.TwinSafe.Variables.GVL.XmlCrcSerialization.GlobalVariableListXmlCrcReader
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(System.IO.Stream) 1:input 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(System.IO.TextReader) 1:input 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(String) 1:inputUri 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(System.Xml.XmlReader) 1:input 
+TYPE Public, Abstract, Sealed Beckhoff.TwinCAT.XAE.Vsx.TwinSafe.Variables.GVL.XmlCrcSerialization.GlobalVariableListXmlCrcSettings
+Public, Static, HideBySig, SpecialName UInt32 get_GeneratorPolynomial() 
+Public, Static, HideBySig, SpecialName UInt32 get_InitialValue() 
+Public, Static, HideBySig, SpecialName System.Text.Encoding get_Encoding() 
+Public, Static, HideBySig, SpecialName Beckhoff.TwinCAT.XAE.Vsx.TwinSafe.Variables.GVL.XmlCrcSerialization.GlobalVariableListXmlCrcDictionary get_CrcDictionary() 
+Private, Static, HideBySig, SpecialName, RTSpecialName Void .cctor() 
+ASSEMBLY REFERENCES
+mscorlib 4.0.0.0
+VariableList 1.4.16.0
+System 4.0.0.0
+System.Xml 4.0.0.0
+Utils 1.4.16.0
+System.Core 4.0.0.0
+

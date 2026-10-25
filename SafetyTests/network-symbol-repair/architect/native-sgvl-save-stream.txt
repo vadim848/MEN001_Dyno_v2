@@ -1,0 +1,54 @@
+GlobalVariableList::SaveToMemoryStream RVA 14216
+0000 ldnull 
+0001 stloc.0 
+0002 newobj MemoryStream::.ctor
+0007 stloc.0 
+0008 ldloc.0 
+0009 newobj .ctor
+000E stloc.1 
+000F ldtoken 33554437
+0014 call Type::GetTypeFromHandle
+0019 newobj XmlSerializer::.ctor
+001E ldloc.1 
+001F ldarg.0 
+0020 callvirt XmlSerializer::Serialize
+0025 leave.s 10
+0027 ldloc.1 
+0028 brfalse.s 6
+002A ldloc.1 
+002B callvirt IDisposable::Dispose
+0030 endfinally 
+0031 ldloc.0 
+0032 ldc.i4.0 
+0033 conv.i8 
+0034 callvirt Stream::set_Position
+0039 ldloc.0 
+003A newobj .ctor
+003F stloc.2 
+0040 br.s 7
+0042 ldloc.2 
+0043 callvirt XmlReader::Read
+0048 pop 
+0049 ldloc.2 
+004A callvirt XmlReader::get_EOF
+004F brfalse.s 241
+0051 leave.s 10
+0053 ldloc.2 
+0054 brfalse.s 6
+0056 ldloc.2 
+0057 callvirt IDisposable::Dispose
+005C endfinally 
+005D ldloc.0 
+005E ldc.i4.0 
+005F conv.i8 
+0060 callvirt Stream::set_Position
+0065 ldloc.0 
+0066 stloc.3 
+0067 leave.s 9
+0069 pop 
+006A ldloc.0 
+006B callvirt Stream::Dispose
+0070 rethrow 
+0072 ldloc.3 
+0073 ret 
+

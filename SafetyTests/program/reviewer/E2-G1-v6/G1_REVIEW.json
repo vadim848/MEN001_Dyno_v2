@@ -1,0 +1,44 @@
+{
+  "review": "E2-G1-v6",
+  "role": "v2-reviewer",
+  "date": "2026-10-22",
+  "verdict": "G1 PASS WITH CONDITIONS",
+  "expectedDeltasEarlysto": "OK (condition D1: expand to 16 exact names, reason pass->replaced, new FAIL)",
+  "rndDownTwo": "honest RED (canonical N11/FBAnd4.AndIn3 polarity defect, D-ARCH-POL); misclassified as 'Fixture ERROR' -> N13",
+  "source": {
+    "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "head": "dbca5dd",
+    "handoffFilesSha12Match": 20,
+    "scenarioDecisionsNow": "c26025c3946f43a9769555f509f11ff47114a3a0848beb5c0e617e604917260a (TD-06 added 04:30; HANDOFF had 052956fe)",
+    "k3CriteriaNow": "2c13e002b36786e386981c75851a98cc62eb73f1790c70f3bb9128bdb452f54c (window [Q2,Q2+1] struck by TD-06)",
+    "analystV6q": "f86f8ed53e062e30405c1201a723d6e9c9ccbe509c782204191ba7adaf7723ee",
+    "analystV7TD": "17a66e67a3342d32915d5497bc5234dcd9b1a6571916fe810b518648c5b1734d"
+  },
+  "rerun": {
+    "nonE2": {"tests": 479, "pass": 461, "fail": 18, "skip": 0, "fails": "16 EARLYSTO DIS-HOLD + 2 rnd-down LV completion", "file": "repro/non-e2.tap"},
+    "e2": {"tests": 811, "baselineMatched": 808, "statusDiffs": 0, "added": "3 FBK10-PLC-REG (FAIL coverage)", "PASS": 93, "FAIL": 656, "NV": 33, "DIAG_PASS": 29, "file": "repro/e2-rerun.tap"},
+    "earlystoSeedProbe": "pre-acceptance frames fixed1 1101/1101 TRUE, fixed10 111/111 TRUE; request stays TRUE after u until later feedback",
+    "rndDownProbe": {"LVfalse_HVfalse": "no R&D", "LVtrue_HVfalse": "R&D", "LVfalse_HVtrue": "no R&D", "LVtrue_HVtrue": "R&D", "prepOnlyWorkaround": "descent invariants pass; fresh R&D NV", "files": ["repro/rnd.mjs", "repro/rd_prep.test.mjs", "repro/rd_all.test.mjs"]}
+  },
+  "previousConditions": {"N1": "closed", "N2": "closed for G1 (stimulus defect N11)", "N3": "closed vs K3-ACK v5, superseded by TD-06 (N10) and missing SF check (N14)", "N4": "closed (analyst)", "N5": "closed (TD-02)", "N6": "closed", "N7": "closed for G1 (N15)", "N8": "closed", "N9": "closed with remainder (TD-05/TD-06 unmarked)", "m-9": "closed"},
+  "naSkipR1": "structural only; 0 skips on F1; plc-pulse marker weaker (m-12)",
+  "substantiveRedOnF1": {
+    "valid": ["K3-ACK/K4 BOTH-1 lifts", "legacy (1,0) with FBK ON", "Restart with FBK ON leaves Emergency", "EMG6-01-BOOT Safe with FBK TRUE", "ES06/BOOT-C held Bypass/RnD_Mode (RnD_Mode = known KF-3)", "B43-02 BOOT", "B51-01 Safe->R&D", "B43 Safe->R&D early Restart", "REL01-e2 Safe refusals and s=Q+1/Q+2", "REL01-e2 control (V14-Q7 B1)", "FBK-06 a_b=u+300", "RND-CONF-T u1+550"],
+    "invalid": ["K3-ACK BOTH-2 lift at Q2+3 (window without source, superseded by TD-06)", "FBK-05/06 a_b=u+10 (stimulus does not realise a fresh green 600 ms)"]
+  },
+  "conditions": [
+    {"id": "N10", "to": "tester", "text": "liftIn -> TD-06: no lift in [p2,Q2-1], first lift <= Q2+400, moment diagnostic, mark TEAM-DEFAULT TD-06; remove Q2+3 RED"},
+    {"id": "N11", "to": "tester (analyst if unreachable)", "text": "FBK-05/06 a_b=u+10: release BOTH before abort, fresh green 600 ms at u+a_b, stimulus precondition"},
+    {"id": "N12", "to": "tester", "text": "v7-TD: mark TD-05; full TD5-EOK; FBK10-PLC-A/B points/variants/checks/g-1; FBK10-PLC-REG scenario (1); KF-1..5, KF-3-DESC as known-FAIL tests or explicit list"},
+    {"id": "N13", "to": "tester / lead", "text": "rnd-down: classify as canonical defect N11/FBAnd4 not Fixture ERROR; DIAG variant with LV raw TRUE only during preparation; statusChanged in stand report"},
+    {"id": "N14", "to": "tester", "text": "FBK10-K4 g-1 hold: SafetyFault TRUE [g,p2-1], FALSE from [p2,p2+1] (NV until A8)"},
+    {"id": "N15", "to": "tester", "text": "REL01-e2 accepted = first lift <= Q+400, refused = none until >= Q+1500 (TD-06)"},
+    {"id": "D1", "to": "lead", "text": "approve EARLYSTO expected-deltas expanded to 16 names"},
+    {"id": "m-11", "to": "tester", "text": "HANDOFF: name removal of completionDischargeReset from two composite checks"},
+    {"id": "m-12", "to": "tester", "text": "plc-pulse R1 marker: FBAnd1 absent AND b_Set_STO_DR1/2 absent"},
+    {"id": "m-13", "to": "tester", "text": "ES06 held RnD_Mode coincides with known KF-3"},
+    {"id": "C5", "to": "architect / G3", "text": "mutants per v5 + M-E2a-35, anti-vacuity EMG-RD-L, testFiles=27"}
+  ],
+  "limits": ["SAL software model only; no native/IDE/target/hardware claims", "Run/R&D paths not executed on canonical (N11/FBAnd4)", "no mutations run", "analyst sources changed during review; state as of 04:31"]
+}

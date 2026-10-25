@@ -1,0 +1,2825 @@
+{
+  "scope": "Source trace and conditional reproduction only; independent workflow review pending. No full startup reachability or native lifecycle claim.",
+  "sources": [
+    {
+      "label": "reference",
+      "sha256": {
+        "sal": "efddc60b1263144ae73b3d5184158100ec09c4de739dc8919309ef7b1b0dc334",
+        "gvl": "bfb5f5f73a606b705470c82fe7c900fe195daba7e2b130f19d295d097e189605"
+      },
+      "nativeStatus": "PASS",
+      "bindingStatus": "PASS",
+      "network": [
+        {
+          "path": "//Network3/FBOr1",
+          "id": "566f1bf9-0d31-490f-b878-1ef69b09819a",
+          "order": 12,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr1/OrIn1",
+              "id": "a33ddd43-ad62-4ae4-9e98-6fd36a981d56",
+              "negated": false,
+              "sources": [
+                "//Network4/FBDecouple1/DecOut5"
+              ],
+              "globals": [
+                "b_Step1_Reset"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr1/OrIn2",
+              "id": "f012cf96-64d5-401d-ac64-f84f477db9ea",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr4/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr1/OrOut",
+              "id": "7fbdb111-ab48-46a7-8b47-565e7c0d1454",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr2",
+          "id": "647eea2b-517c-47d0-8d05-3618bf8f454a",
+          "order": 13,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr2/OrIn1",
+              "id": "800b4404-39a4-4299-97ce-4962a87080df",
+              "negated": false,
+              "sources": [
+                "//Network4/FBDecouple1/DecOut6"
+              ],
+              "globals": [
+                "b_Step1_Set"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr2/OrIn2",
+              "id": "b11df967-3f50-4881-af25-254d58a9fa1c",
+              "negated": false,
+              "sources": [
+                "//Network3/FBAnd1/AndOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBOr2/OrIn3",
+              "id": "68d457a1-59b2-4c8e-af5e-7f0bcda35efc",
+              "negated": false,
+              "sources": [
+                "//Network9/FBAnd1/AndOut"
+              ],
+              "globals": [
+                "b_Step1_Set_2"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr2/OrIn4",
+              "id": "b1281959-58a7-4d90-ae70-cb40fabecc31",
+              "negated": false,
+              "sources": [
+                "//Network5/FBAnd7/AndOut"
+              ],
+              "globals": [
+                "b_Step1_Set_3"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr2/OrOut",
+              "id": "72a25a93-ff0c-4195-a07f-590bd3392cf4",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBRs1",
+          "id": "ce012666-73e3-4367-9665-890dfd93e843",
+          "order": 14,
+          "type": "safeRs",
+          "inputs": [
+            {
+              "path": "//Network3/FBRs1/Reset",
+              "id": "e7037b25-9333-449d-9840-83dcc4ed04ba",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr1/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBRs1/Set",
+              "id": "f6be1fb5-63fa-4a73-bad3-8b39055f69f0",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr2/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBRs1/RsOut",
+              "id": "73da4b10-fe49-4a26-8264-753bcfa91eb3",
+              "names": [
+                "b_Step1"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr3",
+          "id": "c5e1cb0f-1bcf-4894-8049-896daccc9c77",
+          "order": 15,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr3/OrIn1",
+              "id": "aae05dc8-d3ab-42e9-9fce-3d6e61a5d46b",
+              "negated": false,
+              "sources": [
+                "//Network5/FBDecouple4/DecOut1"
+              ],
+              "globals": [
+                "b_Step2_Reset"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr3/OrIn2",
+              "id": "0a8e4011-9d53-4091-9ba2-614780f2bb9c",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr2/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBOr3/OrIn3",
+              "id": "2b28883b-a03f-4d68-90f9-802514f2094f",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs3/RsOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr3/OrOut",
+              "id": "dd6199c7-9d35-4938-be84-185be9b18140",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr4",
+          "id": "172f2c53-f45c-480f-bcee-50596f1bb71a",
+          "order": 16,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr4/OrIn1",
+              "id": "1bd227cf-6df9-4dbc-bd00-9d5f144f8344",
+              "negated": false,
+              "sources": [
+                "//Network2/FBAnd4/AndOut"
+              ],
+              "globals": [
+                "b_Step2_Set"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr4/OrOut",
+              "id": "b0fb5913-8bce-4279-978b-321a367edea4",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBRs2",
+          "id": "448db2db-b259-4b13-b5ca-65a8750c49d0",
+          "order": 17,
+          "type": "safeRs",
+          "inputs": [
+            {
+              "path": "//Network3/FBRs2/Reset",
+              "id": "7e525b1d-cc9a-4910-a4b9-f71ef485ce9a",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr3/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBRs2/Set",
+              "id": "512875c3-5cf8-4333-b1b0-9609e4666412",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr4/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBRs2/RsOut",
+              "id": "7608d2ce-c7dc-4c64-a82b-887a027eaebe",
+              "names": [
+                "b_Step2"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBAnd1",
+          "id": "4329f034-fd5a-4bb8-ba0f-9b1732a3313a",
+          "order": 19,
+          "type": "safeAnd",
+          "inputs": [
+            {
+              "path": "//Network3/FBAnd1/AndIn1",
+              "id": "f8225f28-21d8-488f-b0a2-ed0d8da7d354",
+              "negated": false,
+              "sources": [],
+              "globals": [],
+              "alias": "in_Safety_Run"
+            },
+            {
+              "path": "//Network3/FBAnd1/AndIn2",
+              "id": "ca89bd03-8872-4efc-a1d3-54f973ef6459",
+              "negated": false,
+              "sources": [
+                "//Network1/FBEstop1/EStopOut"
+              ],
+              "globals": [
+                "b_EStop_Ok"
+              ]
+            },
+            {
+              "path": "//Network3/FBAnd1/AndIn3",
+              "id": "63ea2326-d2ef-4398-a525-02d8ebdb97a6",
+              "negated": true,
+              "sources": [
+                "//Network3/FBRs2/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBAnd1/AndIn4",
+              "id": "fe95a3f2-53ee-4282-abcb-9abdcebf9498",
+              "negated": true,
+              "sources": [
+                "//Network3/FBRs1/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBAnd1/AndIn5",
+              "id": "de1162b3-a10c-4c09-82bb-3f72334a6eca",
+              "negated": true,
+              "sources": [
+                "//Network3/FBRs3/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBAnd1/AndIn6",
+              "id": "8a4fbc6f-fd08-434e-b7dd-1b0226ce5e30",
+              "negated": true,
+              "sources": [
+                "//Network3/FBRs4/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBAnd1/AndIn7",
+              "id": "c34703c7-9761-4c0c-b608-a23fde77b15f",
+              "negated": true,
+              "sources": [
+                "//Network3/FBRs5/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBAnd1/AndIn8",
+              "id": "7e650461-ed45-42ae-b455-8efe62478908",
+              "negated": true,
+              "sources": [
+                "//Network3/FBRs6/RsOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBAnd1/AndOut",
+              "id": "2e258fb9-7fd7-46d6-9a5f-a30fb062917f",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr5",
+          "id": "29b77e4b-7c8f-4cf0-a35d-071151a380a4",
+          "order": 42,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr5/OrIn1",
+              "id": "ad5da6a4-17ee-4d56-8875-088d1175dff6",
+              "negated": false,
+              "sources": [
+                "//Network4/FBDecouple1/DecOut1"
+              ],
+              "globals": [
+                "b_Step3_Reset"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr5/OrIn2",
+              "id": "05cbfa66-057c-426e-a80e-7335513cf7d9",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs4/RsOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr5/OrOut",
+              "id": "7daa5f51-a779-45e1-a4be-1cec4ea3d22d",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr6",
+          "id": "0b8e91f2-1049-4596-8a15-2cc785f0355e",
+          "order": 43,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr6/OrIn1",
+              "id": "58a5b589-627a-4dd5-ae3e-f05a2aeb7e91",
+              "negated": false,
+              "sources": [
+                "//Network5/FBAnd5/AndOut"
+              ],
+              "globals": [
+                "b_Step3_Set"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr6/OrOut",
+              "id": "2c6a560b-32a0-4134-97cc-018cb47a6b34",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBRs3",
+          "id": "e6b7eb89-9102-4250-b446-bc97e944ee5f",
+          "order": 44,
+          "type": "safeRs",
+          "inputs": [
+            {
+              "path": "//Network3/FBRs3/Reset",
+              "id": "10fc5d9d-24ab-493c-9a6b-94fce821ed86",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr5/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBRs3/Set",
+              "id": "88ba01be-402c-48ce-a37d-468c924143d6",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr6/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBRs3/RsOut",
+              "id": "5609fe11-89b1-4f20-8a80-063decd44a35",
+              "names": [
+                "b_Step3"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBDecouple1",
+          "id": "99da1b9b-e7eb-4b21-b678-5cdb8ae512b6",
+          "order": 48,
+          "type": "safeDecouple",
+          "inputs": [
+            {
+              "path": "//Network3/FBDecouple1/DecIn1",
+              "id": "5f79cb4b-6253-440a-82ab-e140f8379bd3",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs3/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecIn2",
+              "id": "b1504ca3-7bc7-4d1f-a2e5-92ec7b242a6a",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecIn3",
+              "id": "25cadc89-2dff-499f-b648-a328fb38b1ec",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecIn4",
+              "id": "b75d6812-fb80-4719-9b76-cbc83210c369",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecIn5",
+              "id": "d3561b25-9414-4e83-8c47-b9ccb6226e57",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecIn6",
+              "id": "95687342-bb68-4e93-a893-e8da4a10eb1b",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecIn7",
+              "id": "e2b3b393-5409-4ab7-a9bc-b00706886d37",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecIn8",
+              "id": "fb9eb6d1-e880-424f-8d13-4cb91d14c94a",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBDecouple1/DecOut1",
+              "id": "b0ee10a3-1527-48d9-a17a-666df1fb7a3d",
+              "names": [
+                "out_Safety_Armed"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecOut2",
+              "id": "784bdbe9-8e2c-4891-b8b0-cda3d170d7d4",
+              "names": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecOut3",
+              "id": "0eccf72d-f7a7-4213-bcf8-cbe7c2f12b84",
+              "names": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecOut4",
+              "id": "81333628-7b0c-4896-a7c2-337f3a38d210",
+              "names": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecOut5",
+              "id": "115a09bf-ac6d-4d3c-9df3-dbe971c4cc92",
+              "names": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecOut6",
+              "id": "a3b9022f-3a7f-434b-835e-7add9b762dd1",
+              "names": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecOut7",
+              "id": "08c4da73-8827-463e-9ca6-a213683afc27",
+              "names": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecOut8",
+              "id": "bb767b87-a7e5-4070-b22e-64b14891a302",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr7",
+          "id": "f9114d3a-7c09-40d6-9f9f-3d213eb6689e",
+          "order": 59,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr7/OrIn1",
+              "id": "a600db3f-547c-407a-8c48-2c8f78da769e",
+              "negated": false,
+              "sources": [
+                "//Network4/FBDecouple1/DecOut2"
+              ],
+              "globals": [
+                "b_Step4_Reset"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr7/OrIn2",
+              "id": "19bde6c9-fd53-47e2-ae18-3fd7530060c2",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs5/RsOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr7/OrOut",
+              "id": "81039e39-670f-4100-ba2f-9641514b3b25",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr8",
+          "id": "ff4a5a87-2fbe-42b8-9a32-c53e9762b94a",
+          "order": 60,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr8/OrIn1",
+              "id": "49df6117-c8ff-4e28-838d-b4efa8015251",
+              "negated": false,
+              "sources": [
+                "//Network6/FBDecouple1/DecOut1"
+              ],
+              "globals": [
+                "b_Step4_Set"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr8/OrOut",
+              "id": "7268a5c0-2c20-4582-a5ed-ee863676e9c8",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBRs4",
+          "id": "7ea81e98-f5fe-4c17-ac25-3b9b45f29586",
+          "order": 61,
+          "type": "safeRs",
+          "inputs": [
+            {
+              "path": "//Network3/FBRs4/Reset",
+              "id": "9a5fde42-74bf-46a9-aa0e-8a76ae10da64",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr7/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBRs4/Set",
+              "id": "dba1a4c2-dd51-4a97-9509-443a5f0b23c9",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr8/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBRs4/RsOut",
+              "id": "faa9bdf9-08a9-412d-b3bc-a927431c9fbe",
+              "names": [
+                "b_Step4"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr9",
+          "id": "a14e87e0-ade9-4810-9d72-36124eaa7fbc",
+          "order": 73,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr9/OrIn1",
+              "id": "55437c01-b7b0-4c2d-87e1-590c4d3edc3c",
+              "negated": false,
+              "sources": [
+                "//Network4/FBDecouple1/DecOut3"
+              ],
+              "globals": [
+                "b_Step5_Reset"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr9/OrIn2",
+              "id": "c55cf5e4-1e70-490a-91aa-f06996822f15",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs6/RsOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr9/OrOut",
+              "id": "7d9c51d6-238e-4407-9d6b-682deb26bf6f",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr10",
+          "id": "3152c7ad-5273-4567-a986-46b715187ddb",
+          "order": 74,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr10/OrIn1",
+              "id": "2982e643-fa31-4bce-936b-6066a6e6d34f",
+              "negated": false,
+              "sources": [
+                "//Network7/FBAnd8/AndOut"
+              ],
+              "globals": [
+                "b_Step5_Set"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr10/OrOut",
+              "id": "8696d47c-ef3d-4b7a-8d81-62135026cde1",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBRs5",
+          "id": "cacbfdde-1eea-49ef-904d-1f9b0d755e4a",
+          "order": 75,
+          "type": "safeRs",
+          "inputs": [
+            {
+              "path": "//Network3/FBRs5/Reset",
+              "id": "8ea49f6d-d433-455c-9f11-84eb725ef76f",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr9/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBRs5/Set",
+              "id": "af3d0c73-30ac-4f29-a966-be9d3ceea6e2",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr10/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBRs5/RsOut",
+              "id": "1b52eb4a-03d1-4316-96e0-d365dab74168",
+              "names": [
+                "b_Step5"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr11",
+          "id": "abeaa4fa-4f0f-460c-8745-0ad77e296e57",
+          "order": 84,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr11/OrIn1",
+              "id": "273bd604-b459-476e-a5f1-0329764d9dab",
+              "negated": false,
+              "sources": [
+                "//Network4/FBDecouple1/DecOut4"
+              ],
+              "globals": [
+                "b_Step6_Reset"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr11/OrIn2",
+              "id": "6a268500-1975-43d3-b7b3-ec2ea9d71892",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs1/RsOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr11/OrOut",
+              "id": "e1d0b3cc-c8a6-4f4a-8bb8-9c72c5ffeb2b",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr12",
+          "id": "ffede492-b60f-499b-85c8-882686d5b00c",
+          "order": 85,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr12/OrIn1",
+              "id": "601b007b-5666-49d8-97af-74f680ab48d7",
+              "negated": false,
+              "sources": [
+                "//Network8/FBAnd3/AndOut"
+              ],
+              "globals": [
+                "b_Step6_Set"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr12/OrOut",
+              "id": "13b9ce43-a3ee-4d0e-b028-5055f104925e",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBRs6",
+          "id": "420c2f81-15cd-486c-8ccb-da25cbb5d35b",
+          "order": 86,
+          "type": "safeRs",
+          "inputs": [
+            {
+              "path": "//Network3/FBRs6/Reset",
+              "id": "3a4403d3-3c83-4c5a-9489-b496fff22823",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr11/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBRs6/Set",
+              "id": "6e2cd14a-bf00-45cc-a78d-fe55faeea596",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr12/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBRs6/RsOut",
+              "id": "19da8355-2896-4afa-b49a-9a069cba6b54",
+              "names": [
+                "b_Step6"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBDecouple2",
+          "id": "7ba6143a-a737-4368-aa68-52cd79a7a198",
+          "order": 99,
+          "type": "safeDecouple",
+          "inputs": [
+            {
+              "path": "//Network3/FBDecouple2/DecIn1",
+              "id": "9ad3af09-55bd-47a6-afab-b7c7b1712d87",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs1/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecIn2",
+              "id": "865783d7-4460-49af-ad63-649024c2362a",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs2/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecIn3",
+              "id": "2ddb7ae0-0f08-4be0-9562-71dd2833070f",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs3/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecIn4",
+              "id": "2e56b39e-1eee-49b3-9ded-2f4db127ec2e",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs4/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecIn5",
+              "id": "cc95c78e-0553-4250-abc0-b76f52c356a2",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs5/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecIn6",
+              "id": "0a54b93d-2208-4080-b29d-3cf35a0be413",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs6/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecIn7",
+              "id": "e8946261-ee82-4131-9cc5-c9f68032cb3e",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecIn8",
+              "id": "2e706f11-edb2-4911-8e33-fabe234bf6ea",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBDecouple2/DecOut1",
+              "id": "3ead5f0c-cb68-4ce7-a211-cda588e1e803",
+              "names": [
+                "out_Step1"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecOut2",
+              "id": "d0eaa831-fdd2-4e23-8bf5-94e3051e0a87",
+              "names": [
+                "out_Step2"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecOut3",
+              "id": "259d6f84-0019-4cb8-8326-852e0072df35",
+              "names": [
+                "out_Step3"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecOut4",
+              "id": "09d62e45-51cc-473d-b078-048e72a3bc61",
+              "names": [
+                "out_Step4"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecOut5",
+              "id": "5cc97a61-888c-4fd4-97ee-72af78e4a370",
+              "names": [
+                "out_Step5"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecOut6",
+              "id": "689c4b0b-8ac6-4a82-9f1a-e4cf20824c87",
+              "names": [
+                "out_Step6"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecOut7",
+              "id": "0268883e-8053-4693-8c85-c49bd0785a9b",
+              "names": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecOut8",
+              "id": "57efd50b-9b5e-48ad-8bee-c16852657c21",
+              "names": []
+            }
+          ]
+        }
+      ],
+      "directWriters": {
+        "b_Step1": [
+          {
+            "path": "//Network3/FBRs1/RsOut",
+            "order": 14,
+            "inputs": [
+              {
+                "path": "//Network3/FBRs1/Reset",
+                "id": "e7037b25-9333-449d-9840-83dcc4ed04ba",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBOr1/OrOut"
+                ],
+                "globals": []
+              },
+              {
+                "path": "//Network3/FBRs1/Set",
+                "id": "f6be1fb5-63fa-4a73-bad3-8b39055f69f0",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBOr2/OrOut"
+                ],
+                "globals": []
+              }
+            ]
+          }
+        ],
+        "b_Step3": [
+          {
+            "path": "//Network3/FBRs3/RsOut",
+            "order": 44,
+            "inputs": [
+              {
+                "path": "//Network3/FBRs3/Reset",
+                "id": "10fc5d9d-24ab-493c-9a6b-94fce821ed86",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBOr5/OrOut"
+                ],
+                "globals": []
+              },
+              {
+                "path": "//Network3/FBRs3/Set",
+                "id": "88ba01be-402c-48ce-a37d-468c924143d6",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBOr6/OrOut"
+                ],
+                "globals": []
+              }
+            ]
+          }
+        ],
+        "out_Step1": [
+          {
+            "path": "//Network3/FBDecouple2/DecOut1",
+            "order": 99,
+            "inputs": [
+              {
+                "path": "//Network3/FBDecouple2/DecIn1",
+                "id": "9ad3af09-55bd-47a6-afab-b7c7b1712d87",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBRs1/RsOut"
+                ],
+                "globals": []
+              }
+            ]
+          }
+        ],
+        "out_Step3": [
+          {
+            "path": "//Network3/FBDecouple2/DecOut3",
+            "order": 99,
+            "inputs": [
+              {
+                "path": "//Network3/FBDecouple2/DecIn3",
+                "id": "2ddb7ae0-0f08-4be0-9562-71dd2833070f",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBRs3/RsOut"
+                ],
+                "globals": []
+              }
+            ]
+          }
+        ],
+        "out_Safety_Armed": [
+          {
+            "path": "//Network3/FBDecouple1/DecOut1",
+            "order": 48,
+            "inputs": [
+              {
+                "path": "//Network3/FBDecouple1/DecIn1",
+                "id": "5f79cb4b-6253-440a-82ab-e140f8379bd3",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBRs3/RsOut"
+                ],
+                "globals": []
+              }
+            ]
+          }
+        ],
+        "b_Step1_Set": [
+          {
+            "path": "//Network4/FBDecouple1/DecOut6",
+            "order": 20,
+            "inputs": [
+              {
+                "path": "//Network4/FBDecouple1/DecIn6",
+                "id": "b583d546-b9ea-4896-9240-b9e75712ed3b",
+                "negated": false,
+                "sources": [],
+                "globals": []
+              }
+            ]
+          }
+        ],
+        "b_Step1_Set_2": [
+          {
+            "path": "//Network9/FBAnd1/AndOut",
+            "order": 87,
+            "inputs": [
+              {
+                "path": "//Network9/FBAnd1/AndIn1",
+                "id": "1fe27e82-0cab-4441-8149-d85b1bac43c3",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBRs6/RsOut"
+                ],
+                "globals": [
+                  "b_Step6"
+                ]
+              },
+              {
+                "path": "//Network9/FBAnd1/AndIn2",
+                "id": "de6108cd-82db-4c26-aa2f-73506840d01f",
+                "negated": true,
+                "sources": [],
+                "globals": [],
+                "alias": "in_False_SI2_CH8"
+              }
+            ]
+          }
+        ],
+        "b_Step1_Set_3": [
+          {
+            "path": "//Network5/FBAnd7/AndOut",
+            "order": 107,
+            "inputs": [
+              {
+                "path": "//Network5/FBAnd7/AndIn1",
+                "id": "5b7adef7-14a3-44a0-b7a1-77bbf3242d93",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBRs2/RsOut"
+                ],
+                "globals": [
+                  "b_Step2"
+                ]
+              },
+              {
+                "path": "//Network5/FBAnd7/AndIn2",
+                "id": "3d96ba39-ebc6-4291-ad38-6b1876530410",
+                "negated": true,
+                "sources": [],
+                "globals": [],
+                "alias": "in_False_SI2_CH8"
+              },
+              {
+                "path": "//Network5/FBAnd7/AndIn3",
+                "id": "4ca05d34-8a05-47eb-8780-86680ef5733f",
+                "negated": true,
+                "sources": [
+                  "//Network1/FBEstop1/EStopOut"
+                ],
+                "globals": [
+                  "b_EStop_Ok"
+                ]
+              }
+            ]
+          }
+        ],
+        "b_Step3_Set": [
+          {
+            "path": "//Network5/FBAnd5/AndOut",
+            "order": 45,
+            "inputs": [
+              {
+                "path": "//Network5/FBAnd5/AndIn1",
+                "id": "0df8c9d2-3b23-4466-a88f-8f6a4054067f",
+                "negated": false,
+                "sources": [
+                  "//Network5/FBTon4/TonOut"
+                ],
+                "globals": []
+              },
+              {
+                "path": "//Network5/FBAnd5/AndIn2",
+                "id": "4fc9aa44-ad63-401a-83a5-f2f73ecc9e5d",
+                "negated": true,
+                "sources": [],
+                "globals": [],
+                "alias": "in_STO_DR1_FBK"
+              },
+              {
+                "path": "//Network5/FBAnd5/AndIn3",
+                "id": "9ea29537-8dd3-4fbd-8f15-5992654c7c0b",
+                "negated": true,
+                "sources": [],
+                "globals": [],
+                "alias": "in_STO_DR2_FBK"
+              }
+            ]
+          }
+        ],
+        "b_Step3_Set_2": [],
+        "b_Step3_Set_3": []
+      },
+      "conditionalTrials": []
+    },
+    {
+      "label": "canonical",
+      "sha256": {
+        "sal": "59bf4ec1fe83d49f50b32ea89a230f42a1f18cb20122649cf5c4de435d552c33",
+        "gvl": "c31e129072e2837234e376e51038ff988a92373cbfea97b383fbf23536c7946b"
+      },
+      "nativeStatus": "PASS",
+      "bindingStatus": "PASS",
+      "network": [
+        {
+          "path": "//Network3/FBOr1",
+          "id": "566f1bf9-0d31-490f-b878-1ef69b09819a",
+          "order": 17,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr1/OrIn1",
+              "id": "a33ddd43-ad62-4ae4-9e98-6fd36a981d56",
+              "negated": false,
+              "sources": [
+                "//Network4/FBDecouple1/DecOut5"
+              ],
+              "globals": [
+                "b_Step1_Reset"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr1/OrIn2",
+              "id": "f012cf96-64d5-401d-ac64-f84f477db9ea",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr4/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBOr1/OrIn3",
+              "id": "e2107296-82f2-4a17-9090-ba35530a9742",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs8/RsOut"
+              ],
+              "globals": [
+                "b_Step12"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr1/OrIn4",
+              "id": "eb01b983-8430-443e-9886-ff6e3321e7c5",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs7/RsOut"
+              ],
+              "globals": [
+                "b_Step_RnD"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr1/OrOut",
+              "id": "7fbdb111-ab48-46a7-8b47-565e7c0d1454",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr2",
+          "id": "647eea2b-517c-47d0-8d05-3618bf8f454a",
+          "order": 19,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr2/OrIn1",
+              "id": "800b4404-39a4-4299-97ce-4962a87080df",
+              "negated": false,
+              "sources": [
+                "//Network4/FBDecouple1/DecOut6"
+              ],
+              "globals": [
+                "b_Step1_Set"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr2/OrIn2",
+              "id": "b11df967-3f50-4881-af25-254d58a9fa1c",
+              "negated": false,
+              "sources": [
+                "//Network3/FBAnd1/AndOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBOr2/OrIn3",
+              "id": "68d457a1-59b2-4c8e-af5e-7f0bcda35efc",
+              "negated": false,
+              "sources": [
+                "//Network9/FBAnd1/AndOut"
+              ],
+              "globals": [
+                "b_Step1_Set_2"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr2/OrIn4",
+              "id": "b1281959-58a7-4d90-ae70-cb40fabecc31",
+              "negated": false,
+              "sources": [
+                "//Network5/FBAnd7/AndOut"
+              ],
+              "globals": [
+                "b_Step1_Set_3"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr2/OrIn5",
+              "id": "75c6ccb5-ecc6-46eb-a760-fbf96349d3b9",
+              "negated": false,
+              "sources": [
+                "//Network12/FBAnd15/AndOut"
+              ],
+              "globals": [
+                "b_Step2_Set_2"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr2/OrOut",
+              "id": "72a25a93-ff0c-4195-a07f-590bd3392cf4",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBRs1",
+          "id": "ce012666-73e3-4367-9665-890dfd93e843",
+          "order": 20,
+          "type": "safeRs",
+          "inputs": [
+            {
+              "path": "//Network3/FBRs1/Reset",
+              "id": "e7037b25-9333-449d-9840-83dcc4ed04ba",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr1/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBRs1/Set",
+              "id": "f6be1fb5-63fa-4a73-bad3-8b39055f69f0",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr2/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBRs1/RsOut",
+              "id": "73da4b10-fe49-4a26-8264-753bcfa91eb3",
+              "names": [
+                "b_Step1"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr3",
+          "id": "c5e1cb0f-1bcf-4894-8049-896daccc9c77",
+          "order": 21,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr3/OrIn1",
+              "id": "aae05dc8-d3ab-42e9-9fce-3d6e61a5d46b",
+              "negated": false,
+              "sources": [
+                "//Network5/FBDecouple4/DecOut1"
+              ],
+              "globals": [
+                "b_Step2_Reset"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr3/OrIn2",
+              "id": "0a8e4011-9d53-4091-9ba2-614780f2bb9c",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr2/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBOr3/OrIn3",
+              "id": "2b28883b-a03f-4d68-90f9-802514f2094f",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs3/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBOr3/OrIn4",
+              "id": "4def6246-dd16-4c07-b634-f79482361e4d",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs8/RsOut"
+              ],
+              "globals": [
+                "b_Step12"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr3/OrIn5",
+              "id": "974ebe13-90df-4920-90ce-dd0dafb70085",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs7/RsOut"
+              ],
+              "globals": [
+                "b_Step_RnD"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr3/OrOut",
+              "id": "dd6199c7-9d35-4938-be84-185be9b18140",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr4",
+          "id": "172f2c53-f45c-480f-bcee-50596f1bb71a",
+          "order": 22,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr4/OrIn1",
+              "id": "1bd227cf-6df9-4dbc-bd00-9d5f144f8344",
+              "negated": false,
+              "sources": [
+                "//Network4/FBDecouple1/DecOut7"
+              ],
+              "globals": [
+                "b_Step2_Set"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr4/OrOut",
+              "id": "b0fb5913-8bce-4279-978b-321a367edea4",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBRs2",
+          "id": "448db2db-b259-4b13-b5ca-65a8750c49d0",
+          "order": 23,
+          "type": "safeRs",
+          "inputs": [
+            {
+              "path": "//Network3/FBRs2/Reset",
+              "id": "7e525b1d-cc9a-4910-a4b9-f71ef485ce9a",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr3/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBRs2/Set",
+              "id": "512875c3-5cf8-4333-b1b0-9609e4666412",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr4/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBRs2/RsOut",
+              "id": "7608d2ce-c7dc-4c64-a82b-887a027eaebe",
+              "names": [
+                "b_Step2"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBAnd1",
+          "id": "4329f034-fd5a-4bb8-ba0f-9b1732a3313a",
+          "order": 25,
+          "type": "safeAnd",
+          "inputs": [
+            {
+              "path": "//Network3/FBAnd1/AndIn1",
+              "id": "f8225f28-21d8-488f-b0a2-ed0d8da7d354",
+              "negated": false,
+              "sources": [],
+              "globals": [],
+              "alias": "in_Safety_Run"
+            },
+            {
+              "path": "//Network3/FBAnd1/AndIn2",
+              "id": "ca89bd03-8872-4efc-a1d3-54f973ef6459",
+              "negated": false,
+              "sources": [
+                "//Network1/FBEstop1/EStopOut"
+              ],
+              "globals": [
+                "b_EStop_Ok"
+              ]
+            },
+            {
+              "path": "//Network3/FBAnd1/AndIn3",
+              "id": "63ea2326-d2ef-4398-a525-02d8ebdb97a6",
+              "negated": true,
+              "sources": [
+                "//Network3/FBRs2/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBAnd1/AndIn4",
+              "id": "fe95a3f2-53ee-4282-abcb-9abdcebf9498",
+              "negated": true,
+              "sources": [
+                "//Network3/FBRs1/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBAnd1/AndIn5",
+              "id": "de1162b3-a10c-4c09-82bb-3f72334a6eca",
+              "negated": true,
+              "sources": [
+                "//Network3/FBRs3/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBAnd1/AndIn6",
+              "id": "8a4fbc6f-fd08-434e-b7dd-1b0226ce5e30",
+              "negated": true,
+              "sources": [
+                "//Network3/FBRs4/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBAnd1/AndIn7",
+              "id": "c34703c7-9761-4c0c-b608-a23fde77b15f",
+              "negated": true,
+              "sources": [
+                "//Network3/FBRs5/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBAnd1/AndIn8",
+              "id": "7e650461-ed45-42ae-b455-8efe62478908",
+              "negated": false,
+              "sources": [
+                "//Network3/FBAnd2/AndOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBAnd1/AndOut",
+              "id": "2e258fb9-7fd7-46d6-9a5f-a30fb062917f",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr5",
+          "id": "29b77e4b-7c8f-4cf0-a35d-071151a380a4",
+          "order": 46,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr5/OrIn1",
+              "id": "ad5da6a4-17ee-4d56-8875-088d1175dff6",
+              "negated": false,
+              "sources": [
+                "//Network4/FBDecouple1/DecOut1"
+              ],
+              "globals": [
+                "b_Step3_Reset"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr5/OrIn2",
+              "id": "05cbfa66-057c-426e-a80e-7335513cf7d9",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs4/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBOr5/OrIn3",
+              "id": "a0831cdb-6fad-4139-9ddf-5ec2de4c7675",
+              "negated": false,
+              "sources": [
+                "//Network6/FBAnd18/AndOut"
+              ],
+              "globals": [
+                "b_Step12_Set_2"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr5/OrOut",
+              "id": "7daa5f51-a779-45e1-a4be-1cec4ea3d22d",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr6",
+          "id": "0b8e91f2-1049-4596-8a15-2cc785f0355e",
+          "order": 47,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr6/OrIn1",
+              "id": "58a5b589-627a-4dd5-ae3e-f05a2aeb7e91",
+              "negated": false,
+              "sources": [
+                "//Network5/FBAnd5/AndOut"
+              ],
+              "globals": [
+                "b_Step3_Set_3"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr6/OrIn2",
+              "id": "d49276d3-52be-4387-8c51-e856dca382de",
+              "negated": false,
+              "sources": [
+                "//Network12/FBDecouple2/DecOut3"
+              ],
+              "globals": [
+                "b_Step3_Set_2"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr6/OrOut",
+              "id": "2c6a560b-32a0-4134-97cc-018cb47a6b34",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBRs3",
+          "id": "e6b7eb89-9102-4250-b446-bc97e944ee5f",
+          "order": 48,
+          "type": "safeRs",
+          "inputs": [
+            {
+              "path": "//Network3/FBRs3/Reset",
+              "id": "10fc5d9d-24ab-493c-9a6b-94fce821ed86",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr5/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBRs3/Set",
+              "id": "88ba01be-402c-48ce-a37d-468c924143d6",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr6/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBRs3/RsOut",
+              "id": "5609fe11-89b1-4f20-8a80-063decd44a35",
+              "names": [
+                "b_Step3"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBDecouple1",
+          "id": "99da1b9b-e7eb-4b21-b678-5cdb8ae512b6",
+          "order": 52,
+          "type": "safeDecouple",
+          "inputs": [
+            {
+              "path": "//Network3/FBDecouple1/DecIn1",
+              "id": "5f79cb4b-6253-440a-82ab-e140f8379bd3",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs3/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecIn2",
+              "id": "b1504ca3-7bc7-4d1f-a2e5-92ec7b242a6a",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecIn3",
+              "id": "25cadc89-2dff-499f-b648-a328fb38b1ec",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecIn4",
+              "id": "b75d6812-fb80-4719-9b76-cbc83210c369",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecIn5",
+              "id": "d3561b25-9414-4e83-8c47-b9ccb6226e57",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecIn6",
+              "id": "95687342-bb68-4e93-a893-e8da4a10eb1b",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecIn7",
+              "id": "e2b3b393-5409-4ab7-a9bc-b00706886d37",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecIn8",
+              "id": "fb9eb6d1-e880-424f-8d13-4cb91d14c94a",
+              "negated": false,
+              "sources": [],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBDecouple1/DecOut1",
+              "id": "b0ee10a3-1527-48d9-a17a-666df1fb7a3d",
+              "names": [
+                "out_Safety_Armed"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecOut2",
+              "id": "784bdbe9-8e2c-4891-b8b0-cda3d170d7d4",
+              "names": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecOut3",
+              "id": "0eccf72d-f7a7-4213-bcf8-cbe7c2f12b84",
+              "names": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecOut4",
+              "id": "81333628-7b0c-4896-a7c2-337f3a38d210",
+              "names": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecOut5",
+              "id": "115a09bf-ac6d-4d3c-9df3-dbe971c4cc92",
+              "names": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecOut6",
+              "id": "a3b9022f-3a7f-434b-835e-7add9b762dd1",
+              "names": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecOut7",
+              "id": "08c4da73-8827-463e-9ca6-a213683afc27",
+              "names": []
+            },
+            {
+              "path": "//Network3/FBDecouple1/DecOut8",
+              "id": "bb767b87-a7e5-4070-b22e-64b14891a302",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr7",
+          "id": "f9114d3a-7c09-40d6-9f9f-3d213eb6689e",
+          "order": 63,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr7/OrIn1",
+              "id": "a600db3f-547c-407a-8c48-2c8f78da769e",
+              "negated": false,
+              "sources": [
+                "//Network4/FBDecouple1/DecOut2"
+              ],
+              "globals": [
+                "b_Step4_Reset"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr7/OrIn2",
+              "id": "19bde6c9-fd53-47e2-ae18-3fd7530060c2",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs5/RsOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr7/OrOut",
+              "id": "81039e39-670f-4100-ba2f-9641514b3b25",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr8",
+          "id": "ff4a5a87-2fbe-42b8-9a32-c53e9762b94a",
+          "order": 64,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr8/OrIn1",
+              "id": "49df6117-c8ff-4e28-838d-b4efa8015251",
+              "negated": false,
+              "sources": [
+                "//Network6/FBDecouple1/DecOut1"
+              ],
+              "globals": [
+                "b_Step4_Set"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr8/OrOut",
+              "id": "7268a5c0-2c20-4582-a5ed-ee863676e9c8",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBRs4",
+          "id": "7ea81e98-f5fe-4c17-ac25-3b9b45f29586",
+          "order": 65,
+          "type": "safeRs",
+          "inputs": [
+            {
+              "path": "//Network3/FBRs4/Reset",
+              "id": "9a5fde42-74bf-46a9-aa0e-8a76ae10da64",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr7/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBRs4/Set",
+              "id": "dba1a4c2-dd51-4a97-9509-443a5f0b23c9",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr8/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBRs4/RsOut",
+              "id": "faa9bdf9-08a9-412d-b3bc-a927431c9fbe",
+              "names": [
+                "b_Step4"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr9",
+          "id": "a14e87e0-ade9-4810-9d72-36124eaa7fbc",
+          "order": 77,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr9/OrIn1",
+              "id": "55437c01-b7b0-4c2d-87e1-590c4d3edc3c",
+              "negated": false,
+              "sources": [
+                "//Network4/FBDecouple1/DecOut3"
+              ],
+              "globals": [
+                "b_Step5_Reset"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr9/OrIn2",
+              "id": "c55cf5e4-1e70-490a-91aa-f06996822f15",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs6/RsOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr9/OrOut",
+              "id": "7d9c51d6-238e-4407-9d6b-682deb26bf6f",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr10",
+          "id": "3152c7ad-5273-4567-a986-46b715187ddb",
+          "order": 78,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr10/OrIn1",
+              "id": "2982e643-fa31-4bce-936b-6066a6e6d34f",
+              "negated": false,
+              "sources": [
+                "//Network7/FBAnd8/AndOut"
+              ],
+              "globals": [
+                "b_Step5_Set"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr10/OrOut",
+              "id": "8696d47c-ef3d-4b7a-8d81-62135026cde1",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBRs5",
+          "id": "cacbfdde-1eea-49ef-904d-1f9b0d755e4a",
+          "order": 79,
+          "type": "safeRs",
+          "inputs": [
+            {
+              "path": "//Network3/FBRs5/Reset",
+              "id": "8ea49f6d-d433-455c-9f11-84eb725ef76f",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr9/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBRs5/Set",
+              "id": "af3d0c73-30ac-4f29-a966-be9d3ceea6e2",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr10/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBRs5/RsOut",
+              "id": "1b52eb4a-03d1-4316-96e0-d365dab74168",
+              "names": [
+                "b_Step5"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr11",
+          "id": "abeaa4fa-4f0f-460c-8745-0ad77e296e57",
+          "order": 88,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr11/OrIn1",
+              "id": "273bd604-b459-476e-a5f1-0329764d9dab",
+              "negated": false,
+              "sources": [
+                "//Network4/FBDecouple1/DecOut4"
+              ],
+              "globals": [
+                "b_Step6_Reset"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr11/OrIn2",
+              "id": "6a268500-1975-43d3-b7b3-ec2ea9d71892",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs1/RsOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr11/OrOut",
+              "id": "e1d0b3cc-c8a6-4f4a-8bb8-9c72c5ffeb2b",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr12",
+          "id": "ffede492-b60f-499b-85c8-882686d5b00c",
+          "order": 89,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr12/OrIn1",
+              "id": "601b007b-5666-49d8-97af-74f680ab48d7",
+              "negated": false,
+              "sources": [
+                "//Network8/FBAnd3/AndOut"
+              ],
+              "globals": [
+                "b_Step6_Set"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr12/OrOut",
+              "id": "13b9ce43-a3ee-4d0e-b028-5055f104925e",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBRs6",
+          "id": "420c2f81-15cd-486c-8ccb-da25cbb5d35b",
+          "order": 90,
+          "type": "safeRs",
+          "inputs": [
+            {
+              "path": "//Network3/FBRs6/Reset",
+              "id": "3a4403d3-3c83-4c5a-9489-b496fff22823",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr11/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBRs6/Set",
+              "id": "6e2cd14a-bf00-45cc-a78d-fe55faeea596",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr12/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBRs6/RsOut",
+              "id": "19da8355-2896-4afa-b49a-9a069cba6b54",
+              "names": [
+                "b_Step6"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBDecouple2",
+          "id": "7ba6143a-a737-4368-aa68-52cd79a7a198",
+          "order": 102,
+          "type": "safeDecouple",
+          "inputs": [
+            {
+              "path": "//Network3/FBDecouple2/DecIn1",
+              "id": "9ad3af09-55bd-47a6-afab-b7c7b1712d87",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs1/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecIn2",
+              "id": "865783d7-4460-49af-ad63-649024c2362a",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs2/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecIn3",
+              "id": "2ddb7ae0-0f08-4be0-9562-71dd2833070f",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs3/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecIn4",
+              "id": "2e56b39e-1eee-49b3-9ded-2f4db127ec2e",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs4/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecIn5",
+              "id": "cc95c78e-0553-4250-abc0-b76f52c356a2",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs5/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecIn6",
+              "id": "0a54b93d-2208-4080-b29d-3cf35a0be413",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs6/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecIn7",
+              "id": "e8946261-ee82-4131-9cc5-c9f68032cb3e",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs7/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecIn8",
+              "id": "2e706f11-edb2-4911-8e33-fabe234bf6ea",
+              "negated": false,
+              "sources": [
+                "//Network3/FBRs8/RsOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBDecouple2/DecOut1",
+              "id": "3ead5f0c-cb68-4ce7-a211-cda588e1e803",
+              "names": [
+                "out_Step1"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecOut2",
+              "id": "d0eaa831-fdd2-4e23-8bf5-94e3051e0a87",
+              "names": [
+                "out_Step2"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecOut3",
+              "id": "259d6f84-0019-4cb8-8326-852e0072df35",
+              "names": [
+                "out_Step3"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecOut4",
+              "id": "09d62e45-51cc-473d-b078-048e72a3bc61",
+              "names": [
+                "out_Step4"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecOut5",
+              "id": "5cc97a61-888c-4fd4-97ee-72af78e4a370",
+              "names": [
+                "out_Step5"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecOut6",
+              "id": "689c4b0b-8ac6-4a82-9f1a-e4cf20824c87",
+              "names": [
+                "out_Step6"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecOut7",
+              "id": "0268883e-8053-4693-8c85-c49bd0785a9b",
+              "names": [
+                "outPLC_RnD"
+              ]
+            },
+            {
+              "path": "//Network3/FBDecouple2/DecOut8",
+              "id": "57efd50b-9b5e-48ad-8bee-c16852657c21",
+              "names": [
+                "out_Step12"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr13",
+          "id": "3601c82e-9480-45d5-a4d3-8087a0daeba3",
+          "order": 182,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr13/OrIn2",
+              "id": "971f6321-ae79-4a78-a14b-132163073e91",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr6/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBOr13/OrIn3",
+              "id": "e0c7e501-2ca3-42fe-b743-50c8ce907e9e",
+              "negated": false,
+              "sources": [
+                "//Network12/FBAnd15/AndOut"
+              ],
+              "globals": [
+                "b_Step2_Set_2"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr13/OrIn4",
+              "id": "0d40ebeb-aa9b-4f7c-96a4-404b5ef56a53",
+              "negated": false,
+              "sources": [
+                "//Network12/FBDecouple2/DecOut3"
+              ],
+              "globals": [
+                "b_Step3_Set_2"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr13/OrOut",
+              "id": "d4f39d14-0cd5-4083-8c9e-3b803a9ea6a7",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr14",
+          "id": "196d0480-d399-4189-bea1-5923cf6f7de8",
+          "order": 183,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr14/OrIn1",
+              "id": "beb65238-5dfe-4753-8fdf-041eb4f828a8",
+              "negated": false,
+              "sources": [
+                "//Network11/FBAnd5/AndOut"
+              ],
+              "globals": [
+                "b_Step_RnD_Set"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr14/OrOut",
+              "id": "8d969356-8ae6-475f-9461-ebff3be54f7e",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBRs7",
+          "id": "b5bf64d2-9ded-4eb1-9084-ad6a82b15c4a",
+          "order": 184,
+          "type": "safeRs",
+          "inputs": [
+            {
+              "path": "//Network3/FBRs7/Reset",
+              "id": "14b3bfeb-9d98-48d7-b6cf-bf2e506dadd4",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr13/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBRs7/Set",
+              "id": "7ab0ac45-5d5a-4f0b-a3fe-9fd10834a9f7",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr14/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBRs7/RsOut",
+              "id": "e3ae64c2-af58-49f9-9399-92323fea095d",
+              "names": [
+                "b_Step_RnD"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr15",
+          "id": "dbc75128-7a04-4696-a231-f9015210a500",
+          "order": 185,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr15/OrIn2",
+              "id": "70e5ff62-0678-4cb8-8cd1-5bc2f324eece",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr14/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBOr15/OrIn3",
+              "id": "119b23cd-e83f-4e91-a0d5-6cf92812e7dd",
+              "negated": false,
+              "sources": [
+                "//Network11/FBAnd5/AndOut"
+              ],
+              "globals": [
+                "b_Step_RnD_Set"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr15/OrOut",
+              "id": "50670f62-e462-4fc2-bc0c-16f606dc19ba",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBOr16",
+          "id": "7080ee2b-2061-47df-8a39-9e49dc6c18f8",
+          "order": 186,
+          "type": "safeOr",
+          "inputs": [
+            {
+              "path": "//Network3/FBOr16/OrIn1",
+              "id": "b3b6869a-970d-4904-9c50-e6ada0155726",
+              "negated": false,
+              "sources": [
+                "//Network2/FBOr1/OrOut"
+              ],
+              "globals": [
+                "b_Step12_Set"
+              ]
+            },
+            {
+              "path": "//Network3/FBOr16/OrIn2",
+              "id": "95fbfe4f-b90e-43dc-907f-0d5c0d8e1760",
+              "negated": false,
+              "sources": [
+                "//Network6/FBAnd18/AndOut"
+              ],
+              "globals": [
+                "b_Step12_Set_2"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBOr16/OrOut",
+              "id": "1854e6dd-52c2-4518-9403-37927c5c9419",
+              "names": []
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBRs8",
+          "id": "d119df2c-0328-4a1b-96fb-c182d5c92614",
+          "order": 187,
+          "type": "safeRs",
+          "inputs": [
+            {
+              "path": "//Network3/FBRs8/Reset",
+              "id": "56d6bece-263d-439a-9d8b-5d15c2eede80",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr15/OrOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBRs8/Set",
+              "id": "68326b4a-ee91-4b70-80dd-4c7904ae1e47",
+              "negated": false,
+              "sources": [
+                "//Network3/FBOr16/OrOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBRs8/RsOut",
+              "id": "e9f0e83e-9614-40d3-b0b9-05dc9826e3d0",
+              "names": [
+                "b_Step12"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "//Network3/FBAnd2",
+          "id": "c8b526ba-c2f3-4e98-abfa-c0c81dd591e3",
+          "order": 253,
+          "type": "safeAnd",
+          "inputs": [
+            {
+              "path": "//Network3/FBAnd2/AndIn1",
+              "id": "6bbc60a3-5e55-4113-9076-8f88d8f8a746",
+              "negated": true,
+              "sources": [
+                "//Network3/FBRs8/RsOut"
+              ],
+              "globals": [
+                "b_Step12"
+              ]
+            },
+            {
+              "path": "//Network3/FBAnd2/AndIn2",
+              "id": "b63ba311-bde6-4098-ac7d-4fa9933e1a4b",
+              "negated": true,
+              "sources": [],
+              "globals": [],
+              "alias": "in_False_SI2_CH8"
+            },
+            {
+              "path": "//Network3/FBAnd2/AndIn3",
+              "id": "2a1cf9d6-494f-42e6-9a7d-ecd6de993e81",
+              "negated": true,
+              "sources": [
+                "//Network3/FBRs7/RsOut"
+              ],
+              "globals": []
+            },
+            {
+              "path": "//Network3/FBAnd2/AndIn4",
+              "id": "b732eedd-96cc-40b8-9531-d71024f1cb57",
+              "negated": true,
+              "sources": [
+                "//Network3/FBRs6/RsOut"
+              ],
+              "globals": []
+            }
+          ],
+          "outputs": [
+            {
+              "path": "//Network3/FBAnd2/AndOut",
+              "id": "867bc3bf-cd70-45d3-83c9-1f7123cc0b02",
+              "names": []
+            }
+          ]
+        }
+      ],
+      "directWriters": {
+        "b_Step1": [
+          {
+            "path": "//Network3/FBRs1/RsOut",
+            "order": 20,
+            "inputs": [
+              {
+                "path": "//Network3/FBRs1/Reset",
+                "id": "e7037b25-9333-449d-9840-83dcc4ed04ba",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBOr1/OrOut"
+                ],
+                "globals": []
+              },
+              {
+                "path": "//Network3/FBRs1/Set",
+                "id": "f6be1fb5-63fa-4a73-bad3-8b39055f69f0",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBOr2/OrOut"
+                ],
+                "globals": []
+              }
+            ]
+          }
+        ],
+        "b_Step3": [
+          {
+            "path": "//Network3/FBRs3/RsOut",
+            "order": 48,
+            "inputs": [
+              {
+                "path": "//Network3/FBRs3/Reset",
+                "id": "10fc5d9d-24ab-493c-9a6b-94fce821ed86",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBOr5/OrOut"
+                ],
+                "globals": []
+              },
+              {
+                "path": "//Network3/FBRs3/Set",
+                "id": "88ba01be-402c-48ce-a37d-468c924143d6",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBOr6/OrOut"
+                ],
+                "globals": []
+              }
+            ]
+          }
+        ],
+        "out_Step1": [
+          {
+            "path": "//Network3/FBDecouple2/DecOut1",
+            "order": 102,
+            "inputs": [
+              {
+                "path": "//Network3/FBDecouple2/DecIn1",
+                "id": "9ad3af09-55bd-47a6-afab-b7c7b1712d87",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBRs1/RsOut"
+                ],
+                "globals": []
+              }
+            ]
+          }
+        ],
+        "out_Step3": [
+          {
+            "path": "//Network3/FBDecouple2/DecOut3",
+            "order": 102,
+            "inputs": [
+              {
+                "path": "//Network3/FBDecouple2/DecIn3",
+                "id": "2ddb7ae0-0f08-4be0-9562-71dd2833070f",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBRs3/RsOut"
+                ],
+                "globals": []
+              }
+            ]
+          }
+        ],
+        "out_Safety_Armed": [
+          {
+            "path": "//Network3/FBDecouple1/DecOut1",
+            "order": 52,
+            "inputs": [
+              {
+                "path": "//Network3/FBDecouple1/DecIn1",
+                "id": "5f79cb4b-6253-440a-82ab-e140f8379bd3",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBRs3/RsOut"
+                ],
+                "globals": []
+              }
+            ]
+          }
+        ],
+        "b_Step1_Set": [
+          {
+            "path": "//Network4/FBDecouple1/DecOut6",
+            "order": 26,
+            "inputs": [
+              {
+                "path": "//Network4/FBDecouple1/DecIn6",
+                "id": "b583d546-b9ea-4896-9240-b9e75712ed3b",
+                "negated": false,
+                "sources": [],
+                "globals": []
+              }
+            ]
+          }
+        ],
+        "b_Step1_Set_2": [
+          {
+            "path": "//Network9/FBAnd1/AndOut",
+            "order": 91,
+            "inputs": [
+              {
+                "path": "//Network9/FBAnd1/AndIn1",
+                "id": "1fe27e82-0cab-4441-8149-d85b1bac43c3",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBRs6/RsOut"
+                ],
+                "globals": [
+                  "b_Step6"
+                ]
+              },
+              {
+                "path": "//Network9/FBAnd1/AndIn2",
+                "id": "de6108cd-82db-4c26-aa2f-73506840d01f",
+                "negated": false,
+                "sources": [],
+                "globals": [],
+                "alias": "in_False_SI2_CH8"
+              }
+            ]
+          }
+        ],
+        "b_Step1_Set_3": [
+          {
+            "path": "//Network5/FBAnd7/AndOut",
+            "order": 110,
+            "inputs": [
+              {
+                "path": "//Network5/FBAnd7/AndIn1",
+                "id": "5b7adef7-14a3-44a0-b7a1-77bbf3242d93",
+                "negated": false,
+                "sources": [
+                  "//Network3/FBRs2/RsOut"
+                ],
+                "globals": [
+                  "b_Step2"
+                ]
+              },
+              {
+                "path": "//Network5/FBAnd7/AndIn2",
+                "id": "3d96ba39-ebc6-4291-ad38-6b1876530410",
+                "negated": false,
+                "sources": [],
+                "globals": [],
+                "alias": "in_False_SI2_CH8"
+              },
+              {
+                "path": "//Network5/FBAnd7/AndIn3",
+                "id": "4ca05d34-8a05-47eb-8780-86680ef5733f",
+                "negated": true,
+                "sources": [
+                  "//Network1/FBEstop1/EStopOut"
+                ],
+                "globals": [
+                  "b_EStop_Ok"
+                ]
+              }
+            ]
+          }
+        ],
+        "b_Step3_Set": [],
+        "b_Step3_Set_2": [
+          {
+            "path": "//Network12/FBDecouple2/DecOut3",
+            "order": 181,
+            "inputs": [
+              {
+                "path": "//Network12/FBDecouple2/DecIn3",
+                "id": "cd055815-fcab-4b38-b874-e597dfe4d819",
+                "negated": false,
+                "sources": [
+                  "//Network12/FBAnd6/AndOut"
+                ],
+                "globals": []
+              }
+            ]
+          }
+        ],
+        "b_Step3_Set_3": [
+          {
+            "path": "//Network5/FBAnd5/AndOut",
+            "order": 49,
+            "inputs": [
+              {
+                "path": "//Network5/FBAnd5/AndIn1",
+                "id": "0df8c9d2-3b23-4466-a88f-8f6a4054067f",
+                "negated": false,
+                "sources": [
+                  "//Network5/FBTon4/TonOut"
+                ],
+                "globals": []
+              },
+              {
+                "path": "//Network5/FBAnd5/AndIn2",
+                "id": "4fc9aa44-ad63-401a-83a5-f2f73ecc9e5d",
+                "negated": true,
+                "sources": [],
+                "globals": [],
+                "alias": "in_STO_DR1_FBK"
+              },
+              {
+                "path": "//Network5/FBAnd5/AndIn3",
+                "id": "9ea29537-8dd3-4fbd-8f15-5992654c7c0b",
+                "negated": true,
+                "sources": [],
+                "globals": [],
+                "alias": "in_STO_DR2_FBK"
+              }
+            ]
+          }
+        ]
+      },
+      "conditionalTrials": [
+        {
+          "scope": "CONDITIONAL Network3 only; upstream removed; internal Set variables injected; NOT legal-input reachability",
+          "fallback": false,
+          "frames": [
+            {
+              "scan": 1,
+              "Safe": true,
+              "Run": true,
+              "outSafe": true,
+              "outArmed": true
+            },
+            {
+              "scan": 2,
+              "Safe": true,
+              "Run": true,
+              "outSafe": true,
+              "outArmed": true
+            },
+            {
+              "scan": 3,
+              "Safe": true,
+              "Run": true,
+              "outSafe": true,
+              "outArmed": true
+            },
+            {
+              "scan": 4,
+              "Safe": true,
+              "Run": true,
+              "outSafe": true,
+              "outArmed": true
+            },
+            {
+              "scan": 5,
+              "Safe": true,
+              "Run": true,
+              "outSafe": true,
+              "outArmed": true
+            }
+          ],
+          "assumedUnconnected": [
+            "//Network3/FBDecouple1/DecIn2",
+            "//Network3/FBDecouple1/DecIn3",
+            "//Network3/FBDecouple1/DecIn4",
+            "//Network3/FBDecouple1/DecIn5",
+            "//Network3/FBDecouple1/DecIn6",
+            "//Network3/FBDecouple1/DecIn7",
+            "//Network3/FBDecouple1/DecIn8"
+          ]
+        },
+        {
+          "scope": "CONDITIONAL Network3 only; upstream removed; internal Set variables injected; NOT legal-input reachability",
+          "fallback": true,
+          "frames": [
+            {
+              "scan": 1,
+              "Safe": true,
+              "Run": true,
+              "outSafe": true,
+              "outArmed": true
+            },
+            {
+              "scan": 2,
+              "Safe": true,
+              "Run": true,
+              "outSafe": true,
+              "outArmed": true
+            },
+            {
+              "scan": 3,
+              "Safe": true,
+              "Run": true,
+              "outSafe": true,
+              "outArmed": true
+            },
+            {
+              "scan": 4,
+              "Safe": true,
+              "Run": true,
+              "outSafe": true,
+              "outArmed": true
+            },
+            {
+              "scan": 5,
+              "Safe": true,
+              "Run": true,
+              "outSafe": true,
+              "outArmed": true
+            }
+          ],
+          "assumedUnconnected": [
+            "//Network3/FBDecouple1/DecIn2",
+            "//Network3/FBDecouple1/DecIn3",
+            "//Network3/FBDecouple1/DecIn4",
+            "//Network3/FBDecouple1/DecIn5",
+            "//Network3/FBDecouple1/DecIn6",
+            "//Network3/FBDecouple1/DecIn7",
+            "//Network3/FBDecouple1/DecIn8"
+          ]
+        }
+      ]
+    }
+  ]
+}

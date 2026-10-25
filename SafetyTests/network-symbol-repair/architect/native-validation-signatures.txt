@@ -1,0 +1,100 @@
+TYPE Public, Sealed, BeforeFieldInit Microsoft.VisualStudio.Modeling.DomainModelInfo
+Assembly, HideBySig, SpecialName, RTSpecialName Void .ctor(System.Guid,System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.DomainModelInfo>,System.Type) 1:id 2:extendedDomainModels 3:implementationType 
+Public, HideBySig, SpecialName System.Type get_ImplementationType() 
+Public, Final, Virtual, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.DomainModelInfo get_DomainModel() 
+Public, HideBySig, SpecialName System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.DomainModelInfo> get_ExtendedDomainModels() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.IMonikerResolver get_MonikerResolver() 
+Assembly, HideBySig, SpecialName Void set_MonikerResolver(Microsoft.VisualStudio.Modeling.IMonikerResolver) 1:value 
+Assembly, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.DomainModel get_DomainModelInstance() 
+Assembly, HideBySig, SpecialName Void set_DomainModelInstance(Microsoft.VisualStudio.Modeling.DomainModel) 1:value 
+Assembly, Final, Virtual, HideBySig M0 GetAttribute() 
+Public, HideBySig, SpecialName System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.DomainClassInfo> get_DomainClasses() 
+Public, HideBySig, SpecialName System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.DomainRelationshipInfo> get_DomainRelationships() 
+Assembly, HideBySig Void AddDomainClass(Microsoft.VisualStudio.Modeling.DomainClassInfo) 1:domainClass 
+Assembly, HideBySig Void AddDomainRelationship(Microsoft.VisualStudio.Modeling.DomainRelationshipInfo) 1:domainRelationship 
+Assembly, HideBySig Void AddBeginningRule(Microsoft.VisualStudio.Modeling.TransactionBeginningRule) 1:rule 
+Assembly, HideBySig Void AddCommittingRule(Microsoft.VisualStudio.Modeling.TransactionCommittingRule) 1:rule 
+Assembly, HideBySig Void AddRollingBackRule(Microsoft.VisualStudio.Modeling.TransactionRollingBackRule) 1:rule 
+Private, HideBySig, SpecialName Boolean get_ParentHasBeginningRules() 
+Private, HideBySig, SpecialName Boolean get_ParentHasCommittingRules() 
+Private, HideBySig, SpecialName Boolean get_ParentHasRollingBackRules() 
+Assembly, HideBySig Void ResetRuleCache() 
+Assembly, HideBySig, SpecialName Boolean get_HasBeginningRules() 
+Assembly, HideBySig, SpecialName Boolean get_HasCommittingRules() 
+Assembly, HideBySig, SpecialName Boolean get_HasRollingBackRules() 
+Assembly, HideBySig Void AppendBeginningRules(System.Collections.Generic.List`1<Microsoft.VisualStudio.Modeling.TransactionBeginningRule>) 1:rules 
+Assembly, HideBySig Void AppendCommittingRules(System.Collections.Generic.List`1<Microsoft.VisualStudio.Modeling.TransactionCommittingRule>) 1:rules 
+Assembly, HideBySig Void AppendRollingBackRules(System.Collections.Generic.List`1<Microsoft.VisualStudio.Modeling.TransactionRollingBackRule>) 1:rules 
+Private, Static, HideBySig, SpecialName, RTSpecialName Void .cctor() 
+TYPE Public, BeforeFieldInit Microsoft.VisualStudio.Modeling.SerializationResult
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+Public, HideBySig, SpecialName Boolean get_Failed() 
+Public, HideBySig, SpecialName Void set_Failed(Boolean) 1:value 
+Public, HideBySig, SpecialName System.Text.Encoding get_Encoding() 
+Public, HideBySig, SpecialName Void set_Encoding(System.Text.Encoding) 1:value 
+Public, Virtual, HideBySig, VtableLayoutMask Void AddMessage(Microsoft.VisualStudio.Modeling.SerializationMessage) 1:message 
+Public, HideBySig Void Append(Microsoft.VisualStudio.Modeling.SerializationResult) 1:newResult 
+Public, Final, Virtual, HideBySig, VtableLayoutMask System.Collections.Generic.IEnumerator`1<Microsoft.VisualStudio.Modeling.SerializationMessage> GetEnumerator() 
+Private, Final, Virtual, HideBySig, VtableLayoutMask System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() 
+TYPE Public, BeforeFieldInit Microsoft.VisualStudio.Modeling.TransactionManager
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Store get_Store() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Transaction get_CurrentTransaction() 
+Public, HideBySig, SpecialName Boolean get_InTransaction() 
+Public, HideBySig, SpecialName Int32 get_TransactionDepth() 
+Assembly, Static, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.CommandFactory get_CommandFactory() 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(Microsoft.VisualStudio.Modeling.Store) 1:store 
+Public, HideBySig Microsoft.VisualStudio.Modeling.Transaction BeginTransaction() 
+Public, HideBySig Microsoft.VisualStudio.Modeling.Transaction BeginTransaction(String) 1:name 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.Transaction BeginHiddenTransaction(String) 1:name 
+Public, HideBySig Microsoft.VisualStudio.Modeling.Transaction BeginTransaction(String,Boolean) 1:name 2:isSerializing 
+Public, HideBySig Microsoft.VisualStudio.Modeling.Transaction BeginTransaction(String,Boolean,Microsoft.VisualStudio.Modeling.TransactionContext) 1:name 2:isSerializing 3:context 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.Transaction BeginTransaction(String,Boolean,Boolean) 1:name 2:isSerializing 3:isHidden 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.Transaction BeginTransaction(String,Boolean,Boolean,Microsoft.VisualStudio.Modeling.TransactionContext) 1:name 2:isSerializing 3:isHidden 4:context 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.Transaction InternalBeginTransaction(String,Boolean,Boolean,Microsoft.VisualStudio.Modeling.TransactionContext) 1:name 2:isSerializing 3:isHidden 4:context 
+Assembly, HideBySig Void setTransaction(Microsoft.VisualStudio.Modeling.Transaction) 1:transaction 
+Assembly, HideBySig, SpecialName System.Collections.ObjectModel.Collection`1<Microsoft.VisualStudio.Modeling.CanCommitCallback> get_CanCommitCallbacks() 
+Public, HideBySig Void AddCanCommitCallback(Microsoft.VisualStudio.Modeling.CanCommitCallback) 1:canCommitCallback 
+Public, HideBySig Void RemoveCanCommitCallback(Microsoft.VisualStudio.Modeling.CanCommitCallback) 1:canCommitCallback 
+Private, Static, HideBySig, SpecialName, RTSpecialName Void .cctor() 
+TYPE Public, BeforeFieldInit Microsoft.VisualStudio.Modeling.Validation.ValidationController
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor() 
+Public, HideBySig Boolean Validate(Microsoft.VisualStudio.Modeling.ModelElement,Microsoft.VisualStudio.Modeling.Validation.ValidationCategories) 1:subject 2:categories 
+Public, HideBySig Boolean Validate(Microsoft.VisualStudio.Modeling.Store,Microsoft.VisualStudio.Modeling.Validation.ValidationCategories) 1:store 2:categories 
+Public, HideBySig Boolean Validate(Microsoft.VisualStudio.Modeling.Partition,Microsoft.VisualStudio.Modeling.Validation.ValidationCategories) 1:partition 2:categories 
+Public, Virtual, HideBySig, VtableLayoutMask Boolean Validate(System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.ModelElement>,Microsoft.VisualStudio.Modeling.Validation.ValidationCategories) 1:subjects 2:categories 
+Public, HideBySig Boolean ValidateCustom(Microsoft.VisualStudio.Modeling.ModelElement,String[]) 1:subject 2:customCategories 
+Public, HideBySig Boolean ValidateCustom(Microsoft.VisualStudio.Modeling.Store,String[]) 1:store 2:customCategories 
+Public, HideBySig Boolean ValidateCustom(Microsoft.VisualStudio.Modeling.Partition,String[]) 1:partition 2:customCategories 
+Public, Virtual, HideBySig, VtableLayoutMask Boolean ValidateCustom(System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.ModelElement>,String[]) 1:subjects 2:customCategories 
+Public, HideBySig Void AddObserver(Microsoft.VisualStudio.Modeling.Validation.ValidationMessageObserver) 1:observer 
+Public, HideBySig Void RemoveObserver(Microsoft.VisualStudio.Modeling.Validation.ValidationMessageObserver) 1:observer 
+Private, HideBySig, SpecialName Boolean get_HasObserversRegistered() 
+Public, HideBySig, SpecialName Boolean get_IncludeLinkedExtensionElements() 
+Public, HideBySig, SpecialName Void set_IncludeLinkedExtensionElements(Boolean) 1:value 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.ExtensionEnablement.ValidationExtensionRegistrar get_ValidationExtensionRegistrar() 
+Public, HideBySig, SpecialName Void set_ValidationExtensionRegistrar(Microsoft.VisualStudio.Modeling.ExtensionEnablement.ValidationExtensionRegistrar) 1:value 
+Private, HideBySig Boolean Validate(Microsoft.VisualStudio.Modeling.Validation.ValidationContext) 1:context 
+Assembly, HideBySig Void ResetValidationMessages(Microsoft.VisualStudio.Modeling.Validation.ValidationEmissary) 1:emissary 
+Public, HideBySig, SpecialName System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.Validation.ValidationMessage> get_ValidationMessages() 
+Public, HideBySig, SpecialName System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.Validation.ValidationMessage> get_ErrorMessages() 
+Public, HideBySig, SpecialName System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.Validation.ValidationMessage> get_WarningMessages() 
+Public, HideBySig, SpecialName System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.Validation.ValidationMessage> get_InformationalMessages() 
+Public, HideBySig, SpecialName System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.Validation.ValidationMessage> get_FatalMessages() 
+Private, HideBySig System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.Validation.ValidationMessage> CollectMessages(Microsoft.VisualStudio.Modeling.Validation.ViolationType) 1:searchTypes 
+Private, HideBySig Void UpdateValidationMessages(Microsoft.VisualStudio.Modeling.Validation.ValidationEmissary) 1:emissary 
+Private, Static, HideBySig System.Collections.Generic.List`1<Microsoft.VisualStudio.Modeling.Validation.ValidationMessage> DoValidation(Microsoft.VisualStudio.Modeling.Validation.ValidationContext,Microsoft.VisualStudio.Modeling.ExtensionEnablement.ValidationExtensionRegistrar) 1:validationContext 2:validationRegistrar 
+Private, HideBySig System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.ModelElement> GetExtendedValidationSubjects(System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.ModelElement>) 1:subjects 
+Private, Static, HideBySig Void AddExtensionsForElement(Microsoft.VisualStudio.Modeling.ModelElement,System.Collections.Generic.HashSet`1<Microsoft.VisualStudio.Modeling.ExtensionElement>) 1:element 2:elements 
+Public, Virtual, HideBySig, VtableLayoutMask Void ClearMessages() 
+Family, Virtual, HideBySig, VtableLayoutMask Microsoft.VisualStudio.Modeling.Validation.ValidationContext CreateValidationContext(System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.ModelElement>,Microsoft.VisualStudio.Modeling.Validation.ValidationCategories) 1:subjects 2:categories 
+Family, Virtual, HideBySig, VtableLayoutMask Microsoft.VisualStudio.Modeling.Validation.ValidationContext CreateValidationContext(System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.ModelElement>,String[]) 1:subjects 2:customCategories 
+Family, Virtual, HideBySig, VtableLayoutMask System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.ExtensionElement> GetExtensionElements(System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.ModelElement>) 1:elementsToValidate 
+ASSEMBLY REFERENCES
+mscorlib 4.0.0.0
+System 4.0.0.0
+System.Core 4.0.0.0
+System.Xml 4.0.0.0
+System.ComponentModel.Composition 4.0.0.0
+System.Windows.Forms 4.0.0.0
+System.Drawing 4.0.0.0
+

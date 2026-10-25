@@ -1,0 +1,1212 @@
+{
+ "generatedAt": "2026-10-21T10:29:35.942Z",
+ "tool": "SafetyTests/program/tester/E1-f1/delta-check.mjs",
+ "toolSha256": "654a041a39eccfe345c98ac49efd7fa906044ce8da6349d595173184a8de81c7",
+ "inputs": {
+  "p0/TwinSafeGroup1.sal": "34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b",
+  "p0/TwinSafeGroup1.sal.diagram": "7b5eb79439011cdf9a3206aa815dec4349a35cf8155bfac7492b7ffd75e578ce",
+  "p0/GVL1.sgvl": "517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635",
+  "f1/TwinSafeGroup1.sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "f1/TwinSafeGroup1.sal.diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+  "f1/GVL1.sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104"
+ },
+ "planSha256": "b52f6b0e440a09ce138ad91e633b2fcd78f431d246a4dbdabc083809a0a08b60",
+ "counts": {
+  "p0": {
+   "networks": 14,
+   "blocks": 241,
+   "ports": 2066,
+   "params": 22,
+   "variables": 75,
+   "globalRefs": 206,
+   "wires": 306
+  },
+  "f1": {
+   "networks": 14,
+   "blocks": 242,
+   "ports": 2076,
+   "params": 21,
+   "variables": 75,
+   "globalRefs": 209,
+   "wires": 307
+  }
+ },
+ "keyOrders": {
+  "//Network6/FBOr5": 199,
+  "//Network6/FBAnd23": 231,
+  "//Network6/FBAnd24": 237,
+  "//Network6/RUN_DOWN_RESET": 238,
+  "//Network6/RUN_DOWN_OWNER": 239,
+  "//RndPhysicalCompact/GREEN": 135,
+  "//SafeResumption/MODE": 116
+ },
+ "timers": [
+  {
+   "path": "//Network1/FBEstop1/Delay Time (ms)",
+   "timing": "100"
+  },
+  {
+   "path": "//Network1/FBTon1/Delay Time (s)",
+   "timing": "10"
+  },
+  {
+   "path": "//Network2/FBTon1/Delay Time (s)",
+   "timing": "0.1"
+  },
+  {
+   "path": "//Network2/FBTon2/Delay Time (s)",
+   "timing": "0.1"
+  },
+  {
+   "path": "//Network5/FBTon1/Delay Time (s)",
+   "timing": "0.1"
+  },
+  {
+   "path": "//Network5/FBTon2/Delay Time (s)",
+   "timing": "5.0"
+  },
+  {
+   "path": "//Network5/FBTon3/Delay Time (s)",
+   "timing": "0.2"
+  },
+  {
+   "path": "//Network5/FBTon4/Delay Time (s)",
+   "timing": "0.2"
+  },
+  {
+   "path": "//Network6/FBTon1/Delay Time (s)",
+   "timing": "0.2"
+  },
+  {
+   "path": "//Network7/FBTon1/Delay Time (s)",
+   "timing": "2"
+  },
+  {
+   "path": "//Network7/FBTon2/Delay Time (s)",
+   "timing": "5"
+  },
+  {
+   "path": "//Network7/FBTon3/Delay Time (s)",
+   "timing": "5"
+  },
+  {
+   "path": "//Network8/FBTon1/Delay Time (s)",
+   "timing": "1"
+  },
+  {
+   "path": "//Network8/FBTon2/Delay Time (s)",
+   "timing": "1"
+  },
+  {
+   "path": "//Network11/FBTon1/Delay Time (s)",
+   "timing": "0.1"
+  },
+  {
+   "path": "//Network12/FBTon3/Delay Time (s)",
+   "timing": "0.1"
+  },
+  {
+   "path": "//RndPhysicalCompact/WINDOW/Delay Time (ms)",
+   "timing": "250"
+  },
+  {
+   "path": "//RndPhysicalCompact/RELEASE/Delay Time (s)",
+   "timing": "2"
+  },
+  {
+   "path": "//RndPhysicalCompact/GREEN/Delay Time (s)",
+   "timing": "0.5"
+  },
+  {
+   "path": "//RndPhysicalCompact/BLUE/Delay Time (s)",
+   "timing": "0.5"
+  },
+  {
+   "path": "//RndPhysicalCompact/BOTH/Delay Time (s)",
+   "timing": "1"
+  }
+ ],
+ "resetOrInputs": [
+  {
+   "n": "OrIn1",
+   "ci": "Activated",
+   "c": "Break Contact (NC)"
+  },
+  {
+   "n": "OrIn2",
+   "ci": "Activated",
+   "c": "Break Contact (NC)"
+  },
+  {
+   "n": "OrIn3",
+   "ci": "Activated",
+   "c": "Make Contact (NO)"
+  },
+  {
+   "n": "OrIn4",
+   "ci": "Deactivated",
+   "c": null
+  },
+  {
+   "n": "OrIn5",
+   "ci": "Deactivated",
+   "c": null
+  },
+  {
+   "n": "OrIn6",
+   "ci": "Deactivated",
+   "c": null
+  },
+  {
+   "n": "OrIn7",
+   "ci": "Deactivated",
+   "c": null
+  },
+  {
+   "n": "OrIn8",
+   "ci": "Deactivated",
+   "c": null
+  }
+ ],
+ "ownerInputs": [
+  {
+   "n": "Reset",
+   "ci": "Activated",
+   "c": "Break Contact (NC)"
+  },
+  {
+   "n": "Set",
+   "ci": "Activated",
+   "c": "Break Contact (NC)"
+  }
+ ],
+ "semanticInputs": {
+  "//Network6/FBAnd24": [
+   {
+    "n": "AndIn1",
+    "ci": "Activated",
+    "c": "Make Contact (NO)",
+    "src": [],
+    "glob": [
+     "GVL1.b_ResetPB_Lock"
+    ],
+    "sym": []
+   },
+   {
+    "n": "AndIn2",
+    "ci": "Activated",
+    "c": "Make Contact (NO)",
+    "src": [],
+    "glob": [],
+    "sym": [
+     "in_False_SI2_CH8"
+    ]
+   },
+   {
+    "n": "AndIn3",
+    "ci": "Activated",
+    "c": "Break Contact (NC)",
+    "src": [],
+    "glob": [],
+    "sym": [
+     "linkRndGreenQualified"
+    ]
+   },
+   {
+    "n": "AndIn4",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "AndIn5",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "AndIn6",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "AndIn7",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "AndIn8",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   }
+  ],
+  "//Network6/FBAnd23": [
+   {
+    "n": "AndIn1",
+    "ci": "Activated",
+    "c": "Break Contact (NC)",
+    "src": [
+     "//Network6/FBAnd24/AndOut"
+    ],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "AndIn2",
+    "ci": "Activated",
+    "c": "Break Contact (NC)",
+    "src": [
+     "//Network6/FBAnd1/AndOut"
+    ],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "AndIn3",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "AndIn4",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "AndIn5",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "AndIn6",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "AndIn7",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "AndIn8",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   }
+  ],
+  "//Network6/FBOr5": [
+   {
+    "n": "OrIn1",
+    "ci": "Activated",
+    "c": "Break Contact (NC)",
+    "src": [
+     "//Network6/RUN_DOWN_OWNER/RsOut"
+    ],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn2",
+    "ci": "Activated",
+    "c": "Break Contact (NC)",
+    "src": [
+     "//Network6/FBAnd17/AndOut"
+    ],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn3",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn4",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn5",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn6",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn7",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn8",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   }
+  ],
+  "//Network6/RUN_DOWN_RESET": [
+   {
+    "n": "OrIn1",
+    "ci": "Activated",
+    "c": "Break Contact (NC)",
+    "src": [],
+    "glob": [
+     "GVL1.b_Step_RnD_Set"
+    ],
+    "sym": []
+   },
+   {
+    "n": "OrIn2",
+    "ci": "Activated",
+    "c": "Break Contact (NC)",
+    "src": [],
+    "glob": [
+     "GVL1.b_Step4_Set"
+    ],
+    "sym": []
+   },
+   {
+    "n": "OrIn3",
+    "ci": "Activated",
+    "c": "Make Contact (NO)",
+    "src": [],
+    "glob": [],
+    "sym": [
+     "linkRndGatePermit"
+    ]
+   },
+   {
+    "n": "OrIn4",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn5",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn6",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn7",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn8",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   }
+  ],
+  "//Network6/RUN_DOWN_OWNER": [
+   {
+    "n": "Reset",
+    "ci": "Activated",
+    "c": "Break Contact (NC)",
+    "src": [
+     "//Network6/RUN_DOWN_RESET/OrOut"
+    ],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "Set",
+    "ci": "Activated",
+    "c": "Break Contact (NC)",
+    "src": [
+     "//Network6/FBAnd23/AndOut"
+    ],
+    "glob": [],
+    "sym": []
+   }
+  ],
+  "//SafeResumption/MODE": [
+   {
+    "n": "OrIn1",
+    "ci": "Activated",
+    "c": "Break Contact (NC)",
+    "src": [],
+    "glob": [
+     "GVL1.b_Step1"
+    ],
+    "sym": []
+   },
+   {
+    "n": "OrIn2",
+    "ci": "Activated",
+    "c": "Break Contact (NC)",
+    "src": [],
+    "glob": [
+     "GVL1.b_Step_RnD"
+    ],
+    "sym": []
+   },
+   {
+    "n": "OrIn3",
+    "ci": "Activated",
+    "c": "Break Contact (NC)",
+    "src": [],
+    "glob": [
+     "GVL1.b_Step3"
+    ],
+    "sym": []
+   },
+   {
+    "n": "OrIn4",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn5",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn6",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn7",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   },
+   {
+    "n": "OrIn8",
+    "ci": "Deactivated",
+    "c": null,
+    "src": [],
+    "glob": [],
+    "sym": []
+   }
+  ]
+ },
+ "newSalIds": 43,
+ "geometry": {
+  "compared": 2340,
+  "missing": [
+   {
+    "id": "ee55e2b4-29fa-40cd-a847-4918d3093a7f",
+    "tag": "fBTonShape",
+    "moniker": "//Network6/FBTon2"
+   },
+   {
+    "id": "33f4df44-580b-4e1e-bd82-0b307ce61ce3",
+    "tag": "inPortShape",
+    "moniker": "//Network6/FBTon2/TonIn"
+   },
+   {
+    "id": "a89ea963-70fe-4292-a4cb-efa958063142",
+    "tag": "outPortShape",
+    "moniker": "//Network6/FBTon2/TonOut"
+   },
+   {
+    "id": "a12164a9-328c-45b4-a297-6f589ec62196",
+    "tag": "paramPortShape",
+    "moniker": "//Network6/FBTon2/Delay Time (s)"
+   },
+   {
+    "id": "16835083-23c1-4bfb-98d6-6bd67785fa97",
+    "tag": "wiredLinkConnector",
+    "moniker": "a989d5db-befb-484b-848a-f20755f3665a"
+   },
+   {
+    "id": "e584bd1d-2a6b-474f-bb26-ee2e7bd45794",
+    "tag": "wiredLinkConnector",
+    "moniker": "0c2082f3-9009-4f1a-a57c-2e53f3307f67"
+   }
+  ],
+  "moved": [],
+  "unexpectedRemoved": [],
+  "edgeChanged": [
+   {
+    "id": "6e5bcb73-4d54-484d-a9f8-9e4a8d21eaf9",
+    "wire": "d090ea9f-8de6-429e-b15f-b3e360765692",
+    "p0": "[(19.8 : 176.69); (23.545 : 176.69); (23.545 : 158.84); (23.7166666666667 : 158.84 : JumpStart); (23.7833333333333 : 158.84 : JumpEnd); (23.92 : 158.84)]",
+    "f1": "[(19.8 : 176.69); (20.1416666666667 : 176.69 : JumpStart); (20.2083333333333 : 176.69 : JumpEnd); (23.545 : 176.69); (23.545 : 158.84); (23.7166666666667 : 158.84 : JumpStart); (23.7833333333333 : 158.84 : JumpEnd); (23.92 : 158.84)]"
+   },
+   {
+    "id": "7f00965e-da9b-46b2-b168-05e6df8ac4a6",
+    "wire": "f9bccd04-3ed9-4740-8f2d-b594ff6f4873",
+    "p0": "[(33.8 : 176.69); (34.175 : 176.69); (34.175 : 177.875); (23.545 : 177.875); (23.545 : 175.07); (23.92 : 175.07)]",
+    "f1": "[(33.8 : 176.69); (34.175 : 176.69); (34.175 : 177.875); (27.2083333333333 : 177.875 : JumpStart); (27.1416666666667 : 177.875 : JumpEnd); (23.545 : 177.875); (23.545 : 175.07); (23.92 : 175.07)]"
+   }
+  ],
+  "containerResized": [],
+  "newShapes": [
+   {
+    "id": "b94d409d-bbd1-4718-b8fa-9847542e621d",
+    "tag": "fBOrShape",
+    "moniker": "//Network6/RUN_DOWN_RESET"
+   },
+   {
+    "id": "d8ee9843-6229-40d8-8f70-378f155ab7f3",
+    "tag": "inPortShape",
+    "moniker": "//Network6/RUN_DOWN_RESET/OrIn1"
+   },
+   {
+    "id": "cc6ff32b-1334-497c-a744-b268f507d82f",
+    "tag": "inPortShape",
+    "moniker": "//Network6/RUN_DOWN_RESET/OrIn2"
+   },
+   {
+    "id": "52480af8-946e-470d-b821-1c0b61988382",
+    "tag": "inPortShape",
+    "moniker": "//Network6/RUN_DOWN_RESET/OrIn3"
+   },
+   {
+    "id": "1f957106-9c5a-4974-a67a-38457f024912",
+    "tag": "inPortShape",
+    "moniker": "//Network6/RUN_DOWN_RESET/OrIn4"
+   },
+   {
+    "id": "8dad0ac6-2629-46b4-9ef6-c41b805011e8",
+    "tag": "inPortShape",
+    "moniker": "//Network6/RUN_DOWN_RESET/OrIn5"
+   },
+   {
+    "id": "8d34ea59-286e-4a7d-81f8-caebb862a58c",
+    "tag": "inPortShape",
+    "moniker": "//Network6/RUN_DOWN_RESET/OrIn6"
+   },
+   {
+    "id": "5cfdd1e9-70ea-443b-ae70-eb98ace89635",
+    "tag": "inPortShape",
+    "moniker": "//Network6/RUN_DOWN_RESET/OrIn7"
+   },
+   {
+    "id": "8bde1339-4455-44b2-a7dd-0edb8413b7cc",
+    "tag": "inPortShape",
+    "moniker": "//Network6/RUN_DOWN_RESET/OrIn8"
+   },
+   {
+    "id": "96adbf47-20dc-4775-a7d3-eed31a4a95f8",
+    "tag": "outPortShape",
+    "moniker": "//Network6/RUN_DOWN_RESET/OrOut"
+   },
+   {
+    "id": "423f7d80-6498-422b-a108-96e74815000a",
+    "tag": "fBRsShape",
+    "moniker": "//Network6/RUN_DOWN_OWNER"
+   },
+   {
+    "id": "d724cc9c-9251-4912-b6a1-aff505de036a",
+    "tag": "inPortShape",
+    "moniker": "//Network6/RUN_DOWN_OWNER/Reset"
+   },
+   {
+    "id": "aa4ea62d-631b-46b0-8c79-c1906ff550d4",
+    "tag": "inPortShape",
+    "moniker": "//Network6/RUN_DOWN_OWNER/Set"
+   },
+   {
+    "id": "816d1258-7e22-43e5-bbbf-c6bf8e9ce9d2",
+    "tag": "outPortShape",
+    "moniker": "//Network6/RUN_DOWN_OWNER/RsOut"
+   },
+   {
+    "id": "431b7fdb-b891-4e8c-9e25-160419299983",
+    "tag": "wiredLinkConnector",
+    "moniker": "219b6e15-e6e5-428d-a74a-2862c53fbd9e"
+   },
+   {
+    "id": "f53de8a5-47d3-4e4a-8b61-f588ce2c6633",
+    "tag": "wiredLinkConnector",
+    "moniker": "343deeea-ab74-4ad3-acdb-7656ae716646"
+   },
+   {
+    "id": "777c3f99-6ff9-45ac-b0a9-d67c91137661",
+    "tag": "wiredLinkConnector",
+    "moniker": "277eb1ad-9b9c-451b-83fd-c8b56e771237"
+   }
+  ],
+  "p0Shapes": 2650,
+  "f1Shapes": 2661
+ },
+ "geometryNotes": {
+  "containerResized": [],
+  "edgeChangedCount": 2,
+  "edgeChangedWires": [
+   {
+    "wire": "d090ea9f-8de6-429e-b15f-b3e360765692",
+    "id": "d090ea9f-8de6-429e-b15f-b3e360765692",
+    "from": "//Network6/FBAnd22/AndOut",
+    "to": "//Network6/FBAnd13/AndIn2",
+    "p0Points": 6,
+    "f1Points": 8,
+    "jumpsOnly": true
+   },
+   {
+    "wire": "f9bccd04-3ed9-4740-8f2d-b594ff6f4873",
+    "id": "f9bccd04-3ed9-4740-8f2d-b594ff6f4873",
+    "from": "//Network6/FBAnd24/AndOut",
+    "to": "//Network6/FBAnd23/AndIn1",
+    "p0Points": 6,
+    "f1Points": 8,
+    "jumpsOnly": true
+   }
+  ]
+ },
+ "checks": [
+  {
+   "name": "plan frozen SHA b52f6b0e",
+   "status": "PASS",
+   "detail": "b52f6b0e440a09ce138ad91e633b2fcd78f431d246a4dbdabc083809a0a08b60"
+  },
+  {
+   "name": "plan source equals P0 SAL",
+   "status": "PASS"
+  },
+  {
+   "name": "P0 counts equal plan.sourceCounts",
+   "status": "PASS",
+   "detail": {
+    "networks": 14,
+    "blocks": 241,
+    "ports": 2066,
+    "params": 22,
+    "variables": 75,
+    "globalRefs": 206,
+    "wires": 306
+   }
+  },
+  {
+   "name": "F1 counts equal plan.expectedCounts (242/2076/75/209/307)",
+   "status": "PASS",
+   "detail": {
+    "networks": 14,
+    "blocks": 242,
+    "ports": 2076,
+    "params": 21,
+    "variables": 75,
+    "globalRefs": 209,
+    "wires": 307
+   }
+  },
+  {
+   "name": "networks 14 and parameter ports 22->21",
+   "status": "PASS",
+   "detail": {
+    "p0": 22,
+    "f1": 21
+   }
+  },
+  {
+   "name": "safetyApplication root attributes unchanged except Crc",
+   "status": "PASS",
+   "detail": [
+    "Crc"
+   ]
+  },
+  {
+   "name": "networks (ids, wrappers, attributes, order) unchanged",
+   "status": "PASS"
+  },
+  {
+   "name": "non-program SAL records (alias ports etc.) byte-canonical identical",
+   "status": "PASS",
+   "detail": {
+    "p0": 1,
+    "f1": 1
+   }
+  },
+  {
+   "name": "exactly one block removed = plan.retire //Network6/FBTon2",
+   "status": "PASS",
+   "detail": [
+    "//Network6/FBTon2"
+   ]
+  },
+  {
+   "name": "exactly planned new blocks added (ids/paths/functionName)",
+   "status": "PASS",
+   "detail": [
+    "//Network6/RUN_DOWN_RESET",
+    "//Network6/RUN_DOWN_OWNER"
+   ]
+  },
+  {
+   "name": "retired block ports are exactly plan.retire port ids",
+   "status": "PASS"
+  },
+  {
+   "name": "retired timer parameter was the duplicate Run TON 0.5 s",
+   "status": "PASS"
+  },
+  {
+   "name": "retained 241-1 blocks: identity, wrappers, network and all attributes except order unchanged",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "name": "every F1 orderOfExecution equals plan fullOrderedManifest (242 rows), P0 oldOrder matches",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "name": "F1 orders are a permutation 1..242",
+   "status": "PASS"
+  },
+  {
+   "name": "relative execution order of all retained blocks preserved",
+   "status": "PASS"
+  },
+  {
+   "name": "chronology: OR5 < And23 < And24, RESET = And24+1, OWNER = And24+2 (plan text)",
+   "status": "PASS",
+   "detail": {
+    "//Network6/FBOr5": 199,
+    "//Network6/FBAnd23": 231,
+    "//Network6/FBAnd24": 237,
+    "//Network6/RUN_DOWN_RESET": 238,
+    "//Network6/RUN_DOWN_OWNER": 239,
+    "//RndPhysicalCompact/GREEN": 135,
+    "//SafeResumption/MODE": 116
+   }
+  },
+  {
+   "name": "shared GREEN executes before And24 (plan: GREEN TRUE before late And24)",
+   "status": "PASS",
+   "detail": {
+    "//Network6/FBOr5": 199,
+    "//Network6/FBAnd23": 231,
+    "//Network6/FBAnd24": 237,
+    "//Network6/RUN_DOWN_RESET": 238,
+    "//Network6/RUN_DOWN_OWNER": 239,
+    "//RndPhysicalCompact/GREEN": 135,
+    "//SafeResumption/MODE": 116
+   }
+  },
+  {
+   "name": "all retained ports: identity/wrapper/attributes identical except the 2 planned portAttributeDelta",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "name": "planned portAttributeDelta applied: MODE.OrIn3 Activated NC; And23.AndIn3 Deactivated without contact",
+   "status": "PASS"
+  },
+  {
+   "name": "all 21 retained timer parameters: GUID and timing value unchanged",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "name": "new OR/RS port shapes equal native template ports (portNum/objectIndex/varId/filter/type)",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "name": "RUN_DOWN_RESET: OrIn1/OrIn2 Activated NC (direct), OrIn3 Activated NO (inverted), OrIn4..8 Deactivated without contact attrs",
+   "status": "PASS",
+   "detail": [
+    {
+     "n": "OrIn1",
+     "ci": "Activated",
+     "c": "Break Contact (NC)"
+    },
+    {
+     "n": "OrIn2",
+     "ci": "Activated",
+     "c": "Break Contact (NC)"
+    },
+    {
+     "n": "OrIn3",
+     "ci": "Activated",
+     "c": "Make Contact (NO)"
+    },
+    {
+     "n": "OrIn4",
+     "ci": "Deactivated",
+     "c": null
+    },
+    {
+     "n": "OrIn5",
+     "ci": "Deactivated",
+     "c": null
+    },
+    {
+     "n": "OrIn6",
+     "ci": "Deactivated",
+     "c": null
+    },
+    {
+     "n": "OrIn7",
+     "ci": "Deactivated",
+     "c": null
+    },
+    {
+     "n": "OrIn8",
+     "ci": "Deactivated",
+     "c": null
+    }
+   ]
+  },
+  {
+   "name": "RUN_DOWN_OWNER Reset/Set Activated NC (direct, no inversion)",
+   "status": "PASS",
+   "detail": [
+    {
+     "n": "Reset",
+     "ci": "Activated",
+     "c": "Break Contact (NC)"
+    },
+    {
+     "n": "Set",
+     "ci": "Activated",
+     "c": "Break Contact (NC)"
+    }
+   ]
+  },
+  {
+   "name": "wire delta = plan.wireRemove (2) / plan.wireAdd (3) exactly, with planned ids",
+   "status": "PASS",
+   "detail": {
+    "wRemoved": [
+     "//Network6/FBAnd23/AndOut->//Network6/FBOr5/OrIn1#0c2082f3-9009-4f1a-a57c-2e53f3307f67",
+     "//Network6/FBTon2/TonOut->//Network6/FBAnd24/AndIn3#a989d5db-befb-484b-848a-f20755f3665a"
+    ],
+    "wAdded": [
+     "//Network6/FBAnd23/AndOut->//Network6/RUN_DOWN_OWNER/Set#219b6e15-e6e5-428d-a74a-2862c53fbd9e",
+     "//Network6/RUN_DOWN_OWNER/RsOut->//Network6/FBOr5/OrIn1#277eb1ad-9b9c-451b-83fd-c8b56e771237",
+     "//Network6/RUN_DOWN_RESET/OrOut->//Network6/RUN_DOWN_OWNER/Reset#343deeea-ab74-4ad3-acdb-7656ae716646"
+    ]
+   }
+  },
+  {
+   "name": "F1 wires equal plan.expectedCanonicalWires (307)",
+   "status": "PASS"
+  },
+  {
+   "name": "no cross-network graphical wiredLink",
+   "status": "PASS"
+  },
+  {
+   "name": "no input port driven by more than one wire",
+   "status": "PASS"
+  },
+  {
+   "name": "every wire endpoint exists as out/in port",
+   "status": "PASS"
+  },
+  {
+   "name": "global refs: none removed; exactly the 3 planned readers added (variableId/port/referenceId)",
+   "status": "PASS",
+   "detail": {
+    "gRemoved": [],
+    "gAdded": [
+     {
+      "relId": "3d8df8ef-c043-9b2f-ea9b-a0eabc928ded",
+      "id": "8b60345e-8f6f-48f3-aeda-534de77da9bc",
+      "variableId": "37d9b4ea-e689-43f6-99f5-ad5d2b2cf780",
+      "lastKnownPath": "GVL1.b_Step_RnD_Set",
+      "port": "//Network6/RUN_DOWN_RESET/OrIn1",
+      "portId": "b939f25d-cf10-44ad-8dbb-272f0a284c5e"
+     },
+     {
+      "relId": "1e0bd544-a5af-8d2b-7ca8-c41c031ca1b3",
+      "id": "745a0e81-efc3-4b93-8b02-da9564d9d802",
+      "variableId": "6e2d55db-cbcb-43f0-8861-d5e807bdc9af",
+      "lastKnownPath": "GVL1.b_Step4_Set",
+      "port": "//Network6/RUN_DOWN_RESET/OrIn2",
+      "portId": "83ad25d7-f881-4819-9f44-684e112c8ac8"
+     },
+     {
+      "relId": "519c5864-913b-af49-010d-1a9436d772b3",
+      "id": "2979b2bc-486b-47f9-9780-740142f1ce35",
+      "variableId": "d2a516fd-0c3a-4e36-ae1b-ab27e304e530",
+      "lastKnownPath": "GVL1.b_Step3",
+      "port": "//SafeResumption/MODE/OrIn3",
+      "portId": "ac0f79c2-038c-441d-bdf5-6b22637dac4b"
+     }
+    ]
+   }
+  },
+  {
+   "name": "retired block had no global refs",
+   "status": "PASS"
+  },
+  {
+   "name": "75 Symbols: ids/wrappers/sources identical; target usages differ only by plan.localReaderRemove/localReaderAdd",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "name": "every Symbol usage resolves to an existing F1 port",
+   "status": "PASS"
+  },
+  {
+   "name": "no retired port referenced by any Symbol",
+   "status": "PASS"
+  },
+  {
+   "name": "all F1 SAL object/relationship Ids unique",
+   "status": "PASS",
+   "detail": 6793
+  },
+  {
+   "name": "SGVL: 85 declarations unchanged; only Crc and 3 TargetUsages for planned global readers added",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "name": "F1 SGVL FbPortUsages and SAL fbPortGlobalVariableReferences are the same set",
+   "status": "PASS",
+   "detail": {
+    "sal": 209,
+    "sgvl": 209
+   }
+  },
+  {
+   "name": "diagram: no retained block/port shape moved or resized (absoluteBounds exact)",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "name": "diagram: only retired FBTon2 shapes and the 2 removed wire connectors disappeared",
+   "status": "PASS",
+   "detail": {
+    "unexpected": [],
+    "missing": [
+     {
+      "id": "ee55e2b4-29fa-40cd-a847-4918d3093a7f",
+      "tag": "fBTonShape",
+      "moniker": "//Network6/FBTon2"
+     },
+     {
+      "id": "33f4df44-580b-4e1e-bd82-0b307ce61ce3",
+      "tag": "inPortShape",
+      "moniker": "//Network6/FBTon2/TonIn"
+     },
+     {
+      "id": "a89ea963-70fe-4292-a4cb-efa958063142",
+      "tag": "outPortShape",
+      "moniker": "//Network6/FBTon2/TonOut"
+     },
+     {
+      "id": "a12164a9-328c-45b4-a297-6f589ec62196",
+      "tag": "paramPortShape",
+      "moniker": "//Network6/FBTon2/Delay Time (s)"
+     },
+     {
+      "id": "16835083-23c1-4bfb-98d6-6bd67785fa97",
+      "tag": "wiredLinkConnector",
+      "moniker": "a989d5db-befb-484b-848a-f20755f3665a"
+     },
+     {
+      "id": "e584bd1d-2a6b-474f-bb26-ee2e7bd45794",
+      "tag": "wiredLinkConnector",
+      "moniker": "0c2082f3-9009-4f1a-a57c-2e53f3307f67"
+     }
+    ]
+   }
+  },
+  {
+   "name": "diagram: new shapes exactly = 2 new block shapes + their 12 planned port shapes + 3 new wire connectors",
+   "status": "PASS",
+   "detail": [
+    {
+     "id": "b94d409d-bbd1-4718-b8fa-9847542e621d",
+     "tag": "fBOrShape",
+     "moniker": "//Network6/RUN_DOWN_RESET"
+    },
+    {
+     "id": "d8ee9843-6229-40d8-8f70-378f155ab7f3",
+     "tag": "inPortShape",
+     "moniker": "//Network6/RUN_DOWN_RESET/OrIn1"
+    },
+    {
+     "id": "cc6ff32b-1334-497c-a744-b268f507d82f",
+     "tag": "inPortShape",
+     "moniker": "//Network6/RUN_DOWN_RESET/OrIn2"
+    },
+    {
+     "id": "52480af8-946e-470d-b821-1c0b61988382",
+     "tag": "inPortShape",
+     "moniker": "//Network6/RUN_DOWN_RESET/OrIn3"
+    },
+    {
+     "id": "1f957106-9c5a-4974-a67a-38457f024912",
+     "tag": "inPortShape",
+     "moniker": "//Network6/RUN_DOWN_RESET/OrIn4"
+    },
+    {
+     "id": "8dad0ac6-2629-46b4-9ef6-c41b805011e8",
+     "tag": "inPortShape",
+     "moniker": "//Network6/RUN_DOWN_RESET/OrIn5"
+    },
+    {
+     "id": "8d34ea59-286e-4a7d-81f8-caebb862a58c",
+     "tag": "inPortShape",
+     "moniker": "//Network6/RUN_DOWN_RESET/OrIn6"
+    },
+    {
+     "id": "5cfdd1e9-70ea-443b-ae70-eb98ace89635",
+     "tag": "inPortShape",
+     "moniker": "//Network6/RUN_DOWN_RESET/OrIn7"
+    },
+    {
+     "id": "8bde1339-4455-44b2-a7dd-0edb8413b7cc",
+     "tag": "inPortShape",
+     "moniker": "//Network6/RUN_DOWN_RESET/OrIn8"
+    },
+    {
+     "id": "96adbf47-20dc-4775-a7d3-eed31a4a95f8",
+     "tag": "outPortShape",
+     "moniker": "//Network6/RUN_DOWN_RESET/OrOut"
+    },
+    {
+     "id": "423f7d80-6498-422b-a108-96e74815000a",
+     "tag": "fBRsShape",
+     "moniker": "//Network6/RUN_DOWN_OWNER"
+    },
+    {
+     "id": "d724cc9c-9251-4912-b6a1-aff505de036a",
+     "tag": "inPortShape",
+     "moniker": "//Network6/RUN_DOWN_OWNER/Reset"
+    },
+    {
+     "id": "aa4ea62d-631b-46b0-8c79-c1906ff550d4",
+     "tag": "inPortShape",
+     "moniker": "//Network6/RUN_DOWN_OWNER/Set"
+    },
+    {
+     "id": "816d1258-7e22-43e5-bbbf-c6bf8e9ce9d2",
+     "tag": "outPortShape",
+     "moniker": "//Network6/RUN_DOWN_OWNER/RsOut"
+    },
+    {
+     "id": "431b7fdb-b891-4e8c-9e25-160419299983",
+     "tag": "wiredLinkConnector",
+     "moniker": "219b6e15-e6e5-428d-a74a-2862c53fbd9e"
+    },
+    {
+     "id": "f53de8a5-47d3-4e4a-8b61-f588ce2c6633",
+     "tag": "wiredLinkConnector",
+     "moniker": "343deeea-ab74-4ad3-acdb-7656ae716646"
+    },
+    {
+     "id": "777c3f99-6ff9-45ac-b0a9-d67c91137661",
+     "tag": "wiredLinkConnector",
+     "moniker": "277eb1ad-9b9c-451b-83fd-c8b56e771237"
+    }
+   ]
+  },
+  {
+   "name": "diagram: every wire has exactly one connector and every connector node references existing port shapes",
+   "status": "PASS"
+  },
+  {
+   "name": "diagram: every block/port has exactly one shape",
+   "status": "PASS"
+  },
+  {
+   "name": "diagram: changed connector routes differ only by line-crossing Jump markers (route vertices identical)",
+   "status": "PASS",
+   "detail": [
+    {
+     "wire": "d090ea9f-8de6-429e-b15f-b3e360765692",
+     "id": "d090ea9f-8de6-429e-b15f-b3e360765692",
+     "from": "//Network6/FBAnd22/AndOut",
+     "to": "//Network6/FBAnd13/AndIn2",
+     "p0Points": 6,
+     "f1Points": 8,
+     "jumpsOnly": true
+    },
+    {
+     "wire": "f9bccd04-3ed9-4740-8f2d-b594ff6f4873",
+     "id": "f9bccd04-3ed9-4740-8f2d-b594ff6f4873",
+     "from": "//Network6/FBAnd24/AndOut",
+     "to": "//Network6/FBAnd23/AndIn1",
+     "p0Points": 6,
+     "f1Points": 8,
+     "jumpsOnly": true
+    }
+   ]
+  }
+ ],
+ "notes": [
+  "Connector edgePoints changes (jump markers/routing) are reported, not treated as block geometry; container bounds listed separately."
+ ],
+ "status": "PASS",
+ "failed": []
+}

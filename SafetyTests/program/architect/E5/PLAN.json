@@ -1,0 +1,490 @@
+{
+ "stage": "E5/E6 (S5)",
+ "base": {
+  "sal": "candidates/E4/native/TwinSafeGroup1.sal",
+  "sha256": "4ee8d3d96da1a1b91860131fc4c1b52a017aced44408f07532e960d565307a8f",
+  "sgvlSha256": "98a0d10f4dfe9a9898c1acd5f8c5c89ac526e93e3b781bdb44f5f1c6141a9b4c",
+  "fb": 297
+ },
+ "fbAfter": 336,
+ "deleted": [],
+ "newVariables": [
+  "linkWdRollSu",
+  "linkWdCfgFail",
+  "linkWdEmg",
+  "linkHltRunLost",
+  "linkSafetyFault",
+  "linkUpBlock"
+ ],
+ "removedVariables": [],
+ "orderNote": "fractional orders = insertion points; editor renumbers contiguously 1..N keeping relative order",
+ "added": {
+  "//Network1/CFG_EX_OR": {
+   "fn": "safeOr",
+   "order": 138.5,
+   "in": {
+    "OrIn1": "W://Network1/CFG_EX_SET/AndOut",
+    "OrIn2": "V:linkWdCfgFail"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC1_WIN": {
+   "fn": "safeTon",
+   "order": 170.01,
+   "timing": "0.5",
+   "in": {
+    "TonIn": "V:out_LV_C1"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC1_FAIL_SET": {
+   "fn": "safeAnd",
+   "order": 170.01999999999998,
+   "in": {
+    "AndIn1": "W://RndPhysicalCompact/WDC1_WIN/TonOut",
+    "AndIn2": "!V:in_LV_C1_FBK",
+    "AndIn3": "!W://RndPhysicalCompact/WDC1_OK/RsOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC1_FAIL": {
+   "fn": "safeRs",
+   "order": 170.02999999999997,
+   "in": {
+    "Reset": "!V:out_LV_C1",
+    "Set": "W://RndPhysicalCompact/WDC1_FAIL_SET/AndOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC1_OK_SET": {
+   "fn": "safeAnd",
+   "order": 170.03999999999996,
+   "in": {
+    "AndIn1": "W://RndPhysicalCompact/WDC1_WIN/TonOut",
+    "AndIn2": "V:in_LV_C1_FBK",
+    "AndIn3": "!W://RndPhysicalCompact/WDC1_FAIL/RsOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC1_OK": {
+   "fn": "safeRs",
+   "order": 170.04999999999995,
+   "in": {
+    "Reset": "!V:out_LV_C1",
+    "Set": "W://RndPhysicalCompact/WDC1_OK_SET/AndOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC1_LOSS": {
+   "fn": "safeAnd",
+   "order": 170.05999999999995,
+   "in": {
+    "AndIn1": "W://RndPhysicalCompact/WDC1_OK/RsOut",
+    "AndIn2": "!V:in_LV_C1_FBK"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC1_SEEN_SET": {
+   "fn": "safeAnd",
+   "order": 170.06999999999994,
+   "in": {
+    "AndIn1": "V:out_LV_C1",
+    "AndIn2": "V:in_LV_C1_FBK"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC1_SEEN": {
+   "fn": "safeRs",
+   "order": 170.07999999999993,
+   "in": {
+    "Reset": "!V:in_LV_C1_FBK",
+    "Set": "W://RndPhysicalCompact/WDC1_SEEN_SET/AndOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC1_OFF_IN": {
+   "fn": "safeAnd",
+   "order": 170.08999999999992,
+   "in": {
+    "AndIn1": "!V:out_LV_C1",
+    "AndIn2": "W://RndPhysicalCompact/WDC1_SEEN/RsOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC1_OFF": {
+   "fn": "safeTon",
+   "order": 170.0999999999999,
+   "timing": "0.5",
+   "in": {
+    "TonIn": "W://RndPhysicalCompact/WDC1_OFF_IN/AndOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC2_WIN": {
+   "fn": "safeTon",
+   "order": 170.1099999999999,
+   "timing": "0.5",
+   "in": {
+    "TonIn": "V:out_HV_C2"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC2_FAIL_SET": {
+   "fn": "safeAnd",
+   "order": 170.1199999999999,
+   "in": {
+    "AndIn1": "W://RndPhysicalCompact/WDC2_WIN/TonOut",
+    "AndIn2": "!V:in_HV_C2_FBK",
+    "AndIn3": "!W://RndPhysicalCompact/WDC2_OK/RsOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC2_FAIL": {
+   "fn": "safeRs",
+   "order": 170.12999999999988,
+   "in": {
+    "Reset": "!V:out_HV_C2",
+    "Set": "W://RndPhysicalCompact/WDC2_FAIL_SET/AndOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC2_OK_SET": {
+   "fn": "safeAnd",
+   "order": 170.13999999999987,
+   "in": {
+    "AndIn1": "W://RndPhysicalCompact/WDC2_WIN/TonOut",
+    "AndIn2": "V:in_HV_C2_FBK",
+    "AndIn3": "!W://RndPhysicalCompact/WDC2_FAIL/RsOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC2_OK": {
+   "fn": "safeRs",
+   "order": 170.14999999999986,
+   "in": {
+    "Reset": "!V:out_HV_C2",
+    "Set": "W://RndPhysicalCompact/WDC2_OK_SET/AndOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC2_LOSS": {
+   "fn": "safeAnd",
+   "order": 170.15999999999985,
+   "in": {
+    "AndIn1": "W://RndPhysicalCompact/WDC2_OK/RsOut",
+    "AndIn2": "!V:in_HV_C2_FBK"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC2_SEEN_SET": {
+   "fn": "safeAnd",
+   "order": 170.16999999999985,
+   "in": {
+    "AndIn1": "V:out_HV_C2",
+    "AndIn2": "V:in_HV_C2_FBK"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC2_SEEN": {
+   "fn": "safeRs",
+   "order": 170.17999999999984,
+   "in": {
+    "Reset": "!V:in_HV_C2_FBK",
+    "Set": "W://RndPhysicalCompact/WDC2_SEEN_SET/AndOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC2_OFF_IN": {
+   "fn": "safeAnd",
+   "order": 170.18999999999983,
+   "in": {
+    "AndIn1": "!V:out_HV_C2",
+    "AndIn2": "W://RndPhysicalCompact/WDC2_SEEN/RsOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC2_OFF": {
+   "fn": "safeTon",
+   "order": 170.19999999999982,
+   "timing": "0.5",
+   "in": {
+    "TonIn": "W://RndPhysicalCompact/WDC2_OFF_IN/AndOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC1_SPONT": {
+   "fn": "safeAnd",
+   "order": 170.2099999999998,
+   "in": {
+    "AndIn1": "!V:out_LV_C1",
+    "AndIn2": "V:in_LV_C1_FBK",
+    "AndIn3": "!W://RndPhysicalCompact/WDC1_SEEN/RsOut",
+    "AndIn4": "G:b_Step1",
+    "AndIn5": "G:b_EStop_Ok"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC2_SCOPE": {
+   "fn": "safeOr",
+   "order": 170.2199999999998,
+   "in": {
+    "OrIn1": "G:b_Step1",
+    "OrIn2": "G:b_Step_RnD"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDC2_SPONT": {
+   "fn": "safeAnd",
+   "order": 170.2299999999998,
+   "in": {
+    "AndIn1": "!V:out_HV_C2",
+    "AndIn2": "V:in_HV_C2_FBK",
+    "AndIn3": "!W://RndPhysicalCompact/WDC2_SEEN/RsOut",
+    "AndIn4": "W://RndPhysicalCompact/WDC2_SCOPE/OrOut",
+    "AndIn5": "G:b_EStop_Ok"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDH1_LAT": {
+   "fn": "safeRs",
+   "order": 170.23999999999978,
+   "in": {
+    "Reset": "!G:b_Step12",
+    "Set": "V:in_LV_C1_FBK"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDH1_T": {
+   "fn": "safeTon",
+   "order": 170.24999999999977,
+   "timing": "30",
+   "in": {
+    "TonIn": "W://RndPhysicalCompact/WDH1_LAT/RsOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDH2_LAT": {
+   "fn": "safeRs",
+   "order": 170.25999999999976,
+   "in": {
+    "Reset": "!G:recRndC_SU",
+    "Set": "V:in_HV_C2_FBK"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WDH2_T": {
+   "fn": "safeTon",
+   "order": 170.26999999999975,
+   "timing": "30",
+   "in": {
+    "TonIn": "W://RndPhysicalCompact/WDH2_LAT/RsOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WD_ROLL_S12": {
+   "fn": "safeOr",
+   "order": 170.27999999999975,
+   "in": {
+    "OrIn1": "W://RndPhysicalCompact/WDC1_FAIL/RsOut",
+    "OrIn2": "W://RndPhysicalCompact/WDH1_T/TonOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/WD_ROLL_SU": {
+   "fn": "safeOr",
+   "order": 170.28999999999974,
+   "in": {
+    "OrIn1": "W://RndPhysicalCompact/WDC2_FAIL/RsOut",
+    "OrIn2": "W://RndPhysicalCompact/WDH2_T/TonOut"
+   },
+   "out": {
+    "OrOut": [
+     "V:linkWdRollSu"
+    ]
+   }
+  },
+  "//RndPhysicalCompact/WD_FAIL_ANY": {
+   "fn": "safeOr",
+   "order": 170.29999999999973,
+   "in": {
+    "OrIn1": "W://RndPhysicalCompact/WDC1_FAIL/RsOut",
+    "OrIn2": "W://RndPhysicalCompact/WDC2_FAIL/RsOut"
+   },
+   "out": {
+    "OrOut": [
+     "V:linkWdCfgFail"
+    ]
+   }
+  },
+  "//RndPhysicalCompact/WD_EMG": {
+   "fn": "safeOr",
+   "order": 170.30999999999972,
+   "in": {
+    "OrIn1": "W://RndPhysicalCompact/WDC1_LOSS/AndOut",
+    "OrIn2": "W://RndPhysicalCompact/WDC2_LOSS/AndOut",
+    "OrIn3": "W://RndPhysicalCompact/WDC1_OFF/TonOut",
+    "OrIn4": "W://RndPhysicalCompact/WDC2_OFF/TonOut"
+   },
+   "out": {
+    "OrOut": [
+     "V:linkWdEmg"
+    ]
+   }
+  },
+  "//RndPhysicalCompact/SF_HL_SU": {
+   "fn": "safeAnd",
+   "order": 170.3199999999997,
+   "in": {
+    "AndIn1": "G:recRndC_SU",
+    "AndIn2": "V:in_LV_Faulty_FBK"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/SF_SET": {
+   "fn": "safeOr",
+   "order": 170.3299999999997,
+   "in": {
+    "OrIn1": "W://RndPhysicalCompact/WD_ROLL_S12/OrOut",
+    "OrIn2": "W://RndPhysicalCompact/WD_ROLL_SU/OrOut",
+    "OrIn3": "W://RndPhysicalCompact/WDC1_SPONT/AndOut",
+    "OrIn4": "W://RndPhysicalCompact/WDC2_SPONT/AndOut",
+    "OrIn5": "V:linkHltRunLost",
+    "OrIn6": "W://RndPhysicalCompact/SF_HL_SU/AndOut",
+    "OrIn7": "V:linkHltLvLost"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/SF_ACK": {
+   "fn": "safeAnd",
+   "order": 170.3399999999997,
+   "in": {
+    "AndIn1": "!W://RndPhysicalCompact/GATE_002/AndOut",
+    "AndIn2": "W://RndPhysicalCompact/RELEASE/TonOut",
+    "AndIn3": "!W://RndPhysicalCompact/SF_SET/OrOut",
+    "AndIn4": "W://RndPhysicalCompact/SF/RsOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/SF": {
+   "fn": "safeRs",
+   "order": 170.34999999999968,
+   "in": {
+    "Reset": "W://RndPhysicalCompact/SF_ACK/AndOut",
+    "Set": "W://RndPhysicalCompact/SF_SET/OrOut"
+   },
+   "out": {
+    "RsOut": [
+     "V:linkSafetyFault"
+    ]
+   }
+  },
+  "//RndPhysicalCompact/SF_ACKC": {
+   "fn": "safeRs",
+   "order": 171.51,
+   "in": {
+    "Reset": "W://RndPhysicalCompact/RELEASE/TonOut",
+    "Set": "W://RndPhysicalCompact/SF_ACK/AndOut"
+   },
+   "out": {}
+  },
+  "//RndPhysicalCompact/SF_UPBLK": {
+   "fn": "safeOr",
+   "order": 171.51999999999998,
+   "in": {
+    "OrIn1": "W://RndPhysicalCompact/SF/RsOut",
+    "OrIn2": "W://RndPhysicalCompact/SF_ACKC/RsOut"
+   },
+   "out": {
+    "OrOut": [
+     "V:linkUpBlock"
+    ]
+   }
+  },
+  "//RndPhysicalCompact/SU_SET_G": {
+   "fn": "safeAnd",
+   "order": 222.5,
+   "in": {
+    "AndIn1": "W://RndPhysicalCompact/SU_SET/OrOut",
+    "AndIn2": "!W://RndPhysicalCompact/SF_UPBLK/OrOut"
+   },
+   "out": {}
+  }
+ },
+ "changed": {
+  "//Network1/FBAnd1": {
+   "inputs": {
+    "AndIn5": {
+     "from": "(deactivated)",
+     "to": "!V:linkWdEmg"
+    }
+   }
+  },
+  "//Network1/PA_CFG": {
+   "inputs": {
+    "AndIn8": {
+     "from": "(deactivated)",
+     "to": "!V:linkUpBlock"
+    }
+   }
+  },
+  "//Network1/PF_OR": {
+   "inputs": {
+    "OrIn2": {
+     "from": "(deactivated)",
+     "to": "V:linkSafetyFault"
+    }
+   }
+  },
+  "//Network1/CFG_EX": {
+   "inputs": {
+    "Set": {
+     "from": "W://Network1/CFG_EX_SET/AndOut",
+     "to": "W://Network1/CFG_EX_OR/OrOut"
+    }
+   }
+  },
+  "//Network2/FBAnd4": {
+   "inputs": {
+    "AndIn4": {
+     "from": "(deactivated)",
+     "to": "!V:linkUpBlock"
+    }
+   }
+  },
+  "//Network6/RD_PROT_SET": {
+   "inputs": {},
+   "outputs": {
+    "from": {},
+    "to": {
+     "AndOut": [
+      "V:linkHltRunLost"
+     ]
+    }
+   }
+  },
+  "//Network6/SU_ABORT_CAUSE": {
+   "inputs": {
+    "OrIn4": {
+     "from": "(deactivated)",
+     "to": "V:linkWdRollSu"
+    }
+   }
+  },
+  "//RndPhysicalCompact/STATE_SU": {
+   "inputs": {
+    "Set": {
+     "from": "W://RndPhysicalCompact/SU_SET/OrOut",
+     "to": "W://RndPhysicalCompact/SU_SET_G/AndOut"
+    }
+   }
+  },
+  "//RndPhysicalCompact/GATE_SG_SET": {
+   "inputs": {
+    "OrIn4": {
+     "from": "(deactivated)",
+     "to": "W://RndPhysicalCompact/WD_ROLL_S12/OrOut"
+    }
+   }
+  }
+ }
+}

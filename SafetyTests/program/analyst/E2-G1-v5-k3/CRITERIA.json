@@ -1,0 +1,74 @@
+{
+  "slice": "E2-G1-v5-k3",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "question": "tester/E2-G1/HANDOFF_v5.md (1b4de9544689b71d1e5603bed4bbc5471ef5897249eb51c0c1458746e073648c) Вопросы п.1",
+  "sources": {
+    "SCENARIO_DECISIONS.md": "304a18cabbee40f10fb77b97e7232a7cf70cb6db9c7bf9aa237e383012209082",
+    "SOFTWARE_ACCEPTANCE_SCOPE.md": "03facdcebc8b54763d5bbfa0fc634dba85a5ed6bb5070e1b82ca33e76f9e9537",
+    "REQ-CONSOLIDATION/CRITERIA.md": "f2f11d77eba0d3b4441b42ff55666fbfc741bdd2867ebb763829328ad909eaa3",
+    "E2-G1-v2-questions/CRITERIA_DELTA_v4.md": "2b405938d002343a65afc73db8d2b83f172106462368121792c2539d70a60c04",
+    "E2-G1-v4/CRITERIA_DELTA_v7.md": "378a9f935e63c5e05d6bbd404a0d810386c5f125687f04e9f88943f1b41f8459",
+    "TRACE_MATRIX.json": "cd5b050f560bf7212dbc24389949f7bbc99d1cd8e6d4dda8b77a3e416a903a28",
+    "reference_4495a1f": "не применим: нет SafetyFault-квитирования/FBK-10"
+  },
+  "verdict": "Первый BOTH после FBK OFF без квитирования только квитирует SafetyFault (со скана нажатия) и потребляет попытку; подъёма в этом жесте нет; подъём — новым жестом после обеOFF непрерывно 2 с от r.",
+  "basis": ["Q-V4-02 В", "66(a)", "E6-Q2 А", "п.13 РЕШЕНО 2026-10-21", "Q-RC-07 (исключение только для зелёной вниз)", "WDG-06(a)(b)(c)"],
+  "criteria": [
+    {
+      "id": "K3-ACK",
+      "matrixIds": ["MOD-008", "WDG-004"],
+      "status": "READY",
+      "initial": {
+        "variants": {"S1": "устойчивый Safe, C1_FBK", "S2": "устойчивый Safe, C2_FBK", "R": "устойчивый R&D, C2_FBK"},
+        "buttonsReleasedFrom": "<= f-2000 до p",
+        "permits": "все прочие разрешения подъёма есть; нет EStop/Emergency/PLC-ошибки; R0; нет SafetyFault до f"
+      },
+      "inputs": [
+        {"t": "f..g-1", "FBK": true, "note": "без команды ON; g = f+3000 основной"},
+        {"t": "g", "FBK": false},
+        {"t": "f..p-1", "ack": "нет нажатий и PLC-фронтов"},
+        {"t": "p", "firstButton": ["blue", "green"]},
+        {"t": "p+delta", "secondButton": true, "delta_ms": [0, 250]},
+        {"t": "Q1+100 (вариант Q1+4000)", "release": "обе", "Q1": "p+delta+1000"},
+        {"t": "r", "note": "первый скан, обе отпущены"},
+        {"t": "p2", "both2": "1100 мс", "Q2": "p2+delta+1000"}
+      ],
+      "pPoints": [
+        {"p": "g+2100", "class": "READY"},
+        {"p": "g+1", "class": "READY"},
+        {"p": "g", "class": "READY-D", "note": "FBK уже OFF в этом скане -> k3"},
+        {"p": "<= g-1", "class": "BLOCKED Q-V7-04", "note": "k1/k4"}
+      ],
+      "expected": [
+        {"what": "SafetyFault TRUE", "window": "[f+1, p-1]", "src": "Q-V4-02, E6-Q2, v7 §4.5 k3"},
+        {"what": "SafetyFault FALSE", "window": "с [p, p+1]", "class": "READY-D (момент), NV до символа A8", "src": "п.13, WDG-06(a)"},
+        {"what": "подъём BOTH-1 не исполняется", "window": "каждый скан [p, p2-1], в т.ч. Q1, Q1+1, длинное удержание", "S": "C1 ON нет, STO не снят, статус Safe", "R": "C2 ON нет, STO_DR1/2 не сняты, SS1 без изменений, статус R&D, нет StartingRun", "src": "E6-Q2, п.13, Q-RC-07"},
+        {"what": "(R) зелёная-первая delta<=250: нет R&D->Safe", "src": "п.6/п.7 2026-10-21; Q-RC-07 только для квалифицированной зелёной 0,5 с"},
+        {"what": "нет Emergency; энергия/состояние неизменны", "src": "Q-V4-02"},
+        {"what": "Unlock FALSE во время BOTH-1", "src": "WDG-06(a)/(a')"},
+        {"what": "BOTH-2 при p2 >= r+2001 исполняется", "window": "начало подъёма в [Q2, Q2+1] — SUPERSEDED by TD-06 (E2-G1-v6-q): no lift <= Q2-1, first lift in [Q2, Q2+400], exact scan observation", "src": "E6-Q2, п.9, v7 §4.5 k2"}
+      ],
+      "boundaries": [
+        {"p2": "r+1999", "expect": "отклонён, без fault, SafetyFault FALSE"},
+        {"p2": "r+2000", "expect": "наблюдение", "note": "REL-01(d) v4 наблюдение; WDG-06(b) v2 принимается — берётся более поздняя/слабая"},
+        {"p2": "r+2001", "expect": "исполняется"}
+      ],
+      "forbidden": [
+        "подъём в любом скане BOTH-1 (квитирование совмещено с подъёмом)",
+        "одиночная команда из BOTH-1 при отпускании одной кнопки",
+        "отсчёт паузы 2 с от p или Q1 вместо r",
+        "SafetyFault TRUE после p+1 без нового FBK-эпизода (NV до A8)",
+        "Emergency или изменение энергии/состояния из-за FBK-10/квитирования"
+      ],
+      "related": [
+        {"case": "PLC-фронт CMD_SAFE_TO_R&D / CMD_R&D_TO_RUN после g без квитирования кнопкой", "expect": "не исполняется, SafetyFault TRUE", "class": "READY", "src": "E6-Q2, WDG-06(c)"},
+        {"case": "PLC новый фронт после квитирования BOTH-1", "expect": "исполняется; нужна ли пауза 2 с от r — наблюдение", "class": "READY / наблюдение"},
+        {"case": "in_Estop_PLC/EStop в [f, Q2]", "expect": "Emergency по EStop (EMGREF)", "src": "v7 §4.5"}
+      ],
+      "mutants": [{"id": "xvi", "desc": "квитирующее нажатие не потребляет попытку: BOTH-1 после FBK OFF квитирует и поднимает в Q1", "killOn": "S1/S2 p=g+2100 и p=g+1"}]
+    }
+  ],
+  "blocked": [{"what": "p <= g-1 (k1/k4)", "question": "Q-V7-04"}],
+  "newQuestions": []
+}

@@ -1,0 +1,85 @@
+{
+ "generatedAt": "2026-10-22T21:18:49.448Z",
+ "tool": "scratchpad/tools/mutkill.mjs (v2-tester E2-G3)",
+ "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2c_on_E2c.json",
+ "planSha256": "74db718093e11178a10f2b184d429114a7182fd6a903a561a5b59dbeca953a57",
+ "sourceSha256": "ee8439ae2a58c4e51eba8bcba225831d4a024b06975c7eb3e19b8e859aaa4d97",
+ "killBase": {
+  "eligible": 29,
+  "excluded": [],
+  "excludeRegex": [
+   "/^(DIAG \\S+ )?KF-/"
+  ]
+ },
+ "behaviouralTests": [
+  "^E2[a-d] "
+ ],
+ "summary": {
+  "KILLED": 0,
+  "SURVIVED": 3,
+  "STRUCTURAL-ONLY": 0,
+  "INVALID": 0,
+  "NOT-RUN": 0
+ },
+ "results": [
+  {
+   "id": "M-E2c-05",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_030",
+   "port": "OrIn6",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_030/OrIn6",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "dfb7f3958deec7f46bcb5ce9c838147c55b568463d425ddcffee0c02d46efbb7",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 29,
+   "eligible": 29
+  },
+  {
+   "id": "M-E2c-06",
+   "op": "swap-order",
+   "block": "//SafeResumption/HLT_LV",
+   "port": "",
+   "value": {
+    "moveBefore": "//RndPhysicalCompact/STATE_SU"
+   },
+   "verification": {
+    "parsedDelta": [
+     "//RndPhysicalCompact/STATE_SU#block",
+     "//SafeResumption/HLT_LV#block",
+     "//SafeResumption/SG_OWNER_SET#block"
+    ],
+    "attribute": "orderOfExecution",
+    "movedBlocks": 3,
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "e66b57475b6c6b7ed5e4dac8ba6078f2f08b6b9820c8d7d0125c5a79e8bb9061",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 29,
+   "eligible": 29
+  },
+  {
+   "id": "M-E2c-04",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_020",
+   "port": "AndIn7",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_020/AndIn7",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "f66a2746fcb35371d5dabfba94b18c682b4bdb5e17aeab6268e04f734e975e77",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 29,
+   "eligible": 29
+  }
+ ]
+}

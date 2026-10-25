@@ -1,0 +1,26 @@
+lifecycle Safe->R&D->Run                             | R1: S1 -> S12 -> S12 viol 1 | E2a: S1 -> SR -> S3 viol 0 
+Run -> green down -> R&D -> green -> Safe            | R1: S12 -> S12 -> S12 EOk=1 C1=1 C2=0 STO=0 viol 1 | E2a: S3 -> SR -> S1 EOk=1 C1=0 C2=0 STO=0 viol 0 
+t10#2 SU + in_Estop_PLC 3ms (B-1) + Restart          | R1: S12 -> restart S12 EOk=1 C1=1 C2=0 STO=0 viol 1 | E2a: SR -> restart SR EOk=1 C1=1 C2=1 STO=1 viol 0 
+t10#3 SU + LV connector lost + Restart               | R1: S12 -> restart S12 viol 1 | E2a: SR -> restart SR viol 0 
+t10#4 R&D EStop +12s + Restart + BOTH                | R1: S12 -> S12 -> S12 viol 1 | E2a: SR -> SR -> S3 viol 0 
+t10#5 S12 (C1 FBK held off) EStop                    | R1: S12 -> S12 EOk=0 C1=1 C2=0 STO=0 viol 1 | E2a: S12 -> SR EOk=0 C1=1 C2=0 STO=0 viol 0 
+t10#6 R&D HV connector lost + Restart                | R1: S12 -> S12 -> S12 viol 1 | E2a: SR -> SR -> SR viol 0 
+t10#7 C-1 LV faulty 1 scan before BOTH               | R1: SR EOk=1 C1=1 C2=0 STO=0 viol 1 | E2a: S4 EOk=1 C1=0 C2=1 STO=1 viol 0 
+t10#8 C-2 BOTH held through LV faulty                | R1: SR EOk=1 C1=1 C2=0 STO=0 viol 1 | E2a: S4 EOk=1 C1=0 C2=1 STO=1 viol 0 
+t10#9a Safe cover open blue 700                      | R1: S1 UL=0 viol 0 | E2a: S1 UL=0 viol 0 
+t10#9b R&D cover open blue 700                       | R1: S12 UL=0 viol 1 | E2a: SR UL=0 viol 0 
+t10#10 Q-REL cover 300ms then BOTH                   | R1: S1 viol 0 | E2a: S1 viol 0 
+t10#11 Run EStop, early Restart                      | R1: S12 -> S12 -> S12 viol 1 | E2a: S4 -> S6 -> S6 viol 0 
+t11 earlyRestart Run EStop +12s                      | R1: S12 viol 1 | E2a: S6 viol 0 
+t11 c1Stuck R&D EStop C1 FBK stuck                   | R1: S12 viol 1 | E2a: SR viol 0 
+t15 L1 R&D in_Estop_PLC                              | R1: EOk falls e+1 S4 at e+never final S12 viol 1 | E2a: EOk falls e+1 S4 at e+never final SR viol 0 
+t15 L1 R&D LV connector                              | R1: EOk falls e+-2 S4 at e+never final S12 viol 1 | E2a: EOk falls e+-2 S4 at e+never final SR viol 0 
+t15 L1 R&D HV connector                              | R1: EOk falls e+-2 S4 at e+never final S12 viol 1 | E2a: EOk falls e+-2 S4 at e+never final SR viol 0 
+Run + in_Estop_PLC (S3 emergency chain)              | R1: S4 at +-1 final S12 EOk=0 C1=1 C2=0 STO=0 viol 1 | E2a: S4 at +4 final S6 EOk=0 C1=0 C2=0 STO=0 viol 0 
+Run + NC1 cover open                                 | R1: S4 at +-1 final S12 EOk=1 C1=1 C2=0 STO=0 viol 1 | E2a: S4 at +3 final S6 EOk=1 C1=0 C2=0 STO=0 viol 0 
+Run + LV Faulty 1 scan (HEALTH_GUARD)                | R1: SR EOk=1 C1=1 C2=0 STO=0 viol 1 | E2a: S4 EOk=1 C1=0 C2=1 STO=1 viol 0 
+Run + HV Faulty held                                 | R1: S12 EOk=1 C1=1 C2=0 STO=0 viol 1 | E2a: S6 EOk=1 C1=0 C2=0 STO=0 viol 0 
+Run down (green) + LV Faulty during run-down         | R1: SR EOk=1 C1=1 C2=0 STO=0 viol 1 | E2a: SR EOk=1 C1=1 C2=0 STO=0 viol 0 
+S12 LV completion with LV Faulty held (N11 polarity) | R1: faulty: SR -> healthy: SR viol 1 | E2a: faulty: S12 -> healthy: SR viol 0 
+Safe EStop then Restart (no stage before Restart)    | R1: boot none -> after Restart S1 viol 0 | E2a: boot none -> after Restart S1 viol 0 
+total violations R1 22 E2a 0

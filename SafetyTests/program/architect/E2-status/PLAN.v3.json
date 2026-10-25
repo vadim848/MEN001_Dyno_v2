@@ -1,0 +1,625 @@
+{
+  "schema": "men001-v2-architect-plan/1",
+  "planVersion": 3,
+  "previous": [
+    "*.v1.*",
+    "*.v2.*",
+    "repro/v1/",
+    "repro/v2/"
+  ],
+  "review": [
+    "program/reviewer/E2-plan-v2/PLAN_REVIEW.md (A-1..3, B-1..5, C-1..3, D-1..3, sections 8-10)",
+    "program/reviewer/E2-G1-v2/G1_REVIEW.md (C3, MU24, m-e, RUN-CONF)",
+    "program/stand/E2-runner/HANDOFF.md (strict runner)"
+  ],
+  "slice": "E2-status v2: R1 + E2a..E2d exact; E3..E6 sketch",
+  "role": "v2-architect",
+  "date": "2026-10-21",
+  "source": {
+    "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+    "scenarioDecisions": "bdf55216dab6e4aa3e3a1c01ae51f9441d2a3664c5ec8fd93955379bbbdb86fe",
+    "reference": "4495a1f (git show only)"
+  },
+  "decisionsUsed": [
+    "E2",
+    "E2-Q1",
+    "E2-Q2",
+    "Q-RC-01=V",
+    "Q-RC-02=A",
+    "Q-RC-03 (a) Emergency, (b1) continue, (b2) Emergency",
+    "Q-RC-04..09",
+    "Q-RC-10=A",
+    "D-ARCH-POL",
+    "D-ARCH-POL-RENAME",
+    "Q-ARCH-06=A (R1 allowed under conditions; R2 and HL/SF merge not allowed)",
+    "V14-Q7",
+    "V14-Q16..Q21",
+    "Q-MU06-01/02",
+    "Q-ARCH-01=A",
+    "Q-E2Q-01=A",
+    "Q-RC-14=A",
+    "Q-ARCH-03=B",
+    "Q-ARCH-04=A",
+    "Q-ARCH-05/Q-RC-11=A",
+    "Q-ARCH-08=B",
+    "Q-ARCH-09=V",
+    "Q-RC-12",
+    "Q-RC-13=B",
+    "Q-RC-15=B",
+    "Q-RC-16=A",
+    "Q-RC-17=B",
+    "Q-RC-18",
+    "Q-RC-19=V",
+    "Q-E2Q-02=A",
+    "Q-REL-AFTER-PERMIT=A",
+    "D-ARCH-POL-RENAME incl. outPLC"
+  ],
+  "baselineResources": {
+    "fb": 242,
+    "ports": 2076,
+    "sgvlSymbols": 85,
+    "salVariables": 75,
+    "wiredLinks": 307,
+    "limitFb": 255
+  },
+  "mechanism": {
+    "stages": {
+      "S1": "Network3/FBRs1",
+      "S12": "Network3/FBRs8",
+      "SR": "Network3/FBRs7",
+      "S3": "Network3/FBRs3",
+      "S4": "Network3/FBRs4",
+      "S5": "Network3/FBRs5",
+      "S6": "Network3/FBRs6"
+    },
+    "statusFormula": {
+      "STS_SAFE": "(b_Step1 or b_Step12) and b_EStop_Ok",
+      "STS_RND": "b_Step_RnD and b_EStop_Ok",
+      "STS_RUN": "b_Step3 and b_EStop_Ok",
+      "STS_EMG": "not(any other) (Q-RC-10=A)"
+    },
+    "decoder": {
+      "primary": "D2-A: not built in SAL in E2; tester evaluates formula over Symbols; built in E4 with alias publication (consumer exists)",
+      "alternative": "D2-B: 5 FB + 4 Symbols STS_* in E2a; Symbols without consumer = NV for G2 (no precedent in canonical/reference); on native rejection fall back to D2-A"
+    },
+    "grants": {
+      "g1": "N3/FBAnd1 none->S1",
+      "g2": "b_Step12_Set S1->S12",
+      "g3": "b_Step_RnD_Set S12->SR",
+      "g4": "b_Step3_Set_2 SR->S3",
+      "g5": "b_Step2_Set_2 SR->S1",
+      "g6": "b_Step12_Set_2 S3->SR",
+      "g7": "b_Step4_Set = N6/FBOrStep4: N6/FBAnd2 (S3 and not FBAnd9) or N6/FBAndLvEmg ((S12 or SR) and not b_EStop_Ok) - stage-based, independent of SU (B-1)",
+      "g8": "b_Step5_Set S4->S5",
+      "g9": "b_Step6_Set S5->S6",
+      "g10": "Network3/G10_EXIT S6->S1: S6, b_EStop_Ok, not in_Reset_PB, recRndC_PrevG, not C1_FBK, not C2_FBK, not out_LV_C1, not out_HV_C2"
+    },
+    "resets": {
+      "FBRs1": "Set FBOr2=g1,g5,g10; Reset FBOr1=g2",
+      "FBRs8": "Set g2; Reset N3/FBOrS12Reset=g3,g7",
+      "FBRs7": "Set FBOr16=g3,g6; Reset FBOr13=g5,g4,g7",
+      "FBRs3": "Set g4; Reset FBOr5=g6,g7",
+      "FBRs4": "Set g7; Reset FBOr7=g8",
+      "FBRs5": "Set g8; Reset FBOr9=g9",
+      "FBRs6": "Set g9; Reset wire FBOr2"
+    },
+    "arbitration": [
+      "S3: g6 vs g7 by reset dominance (g7 in FBOr13 cancels SR Set); v1 FBAnd18.AndIn3 dropped",
+      "SR: g4 vs g5 by C2_FBK level same snapshot; g7 cancels g4 by reset dominance in FBOr5; g5 requires SG, SG/SU exclusive by recognizer RP-1 and HLT_LV !SU"
+    ],
+    "order": {
+      "moves": [
+        "Network12/FBAnd15 after Network12/FBDecouple1",
+        "Network3/FBAnd2 before Network3/FBAnd1",
+        "Network2/FBAnd11 before Network2/FBAnd91",
+        "STAGE_LVON, FBAndLvEmg, FBOrStep4 between Network6/FBAnd2 and Network6/FBDecouple1",
+        "G10_EXIT right after Network1/FBEstop1",
+        "E2c: SG_OWNER_SET right after STATE_SU, then HLT_LV, GATE_SG_SET, STATE_SG",
+        "E2d: IL_SCOPE before GATE_010"
+      ],
+      "head15": [
+        "Network3/FBOr2",
+        "Network3/FBOr1",
+        "Network3/FBOrS12Reset",
+        "Network3/FBOr16",
+        "Network3/FBOr13",
+        "Network3/FBOr5",
+        "Network3/FBOr7",
+        "Network3/FBOr9",
+        "Network3/FBRs1",
+        "Network3/FBRs8",
+        "Network3/FBRs7",
+        "Network3/FBRs3",
+        "Network3/FBRs4",
+        "Network3/FBRs5",
+        "Network3/FBRs6"
+      ]
+    },
+    "limits": "GRP-2, input constancy, RS-4/GRP-4 DERIVED; EST-4 DOC; proof about stage memories and status, not hardware energy"
+  },
+  "slices": [
+    {
+      "id": "R1",
+      "approved": "Q-ARCH-06=A with conditions: reviewer confirms unused-proof; full regression before/after",
+      "fbAfter": 215,
+      "portsAfter": 1832,
+      "sgvlAfter": 65,
+      "salVarsAfter": 75,
+      "delete": [
+        "Network5/* (15)",
+        "Network3/FBRs2",
+        "Network3/FBOr3",
+        "Network3/FBOr4",
+        "Network4/FBDecouple1",
+        "Network9/FBAnd1",
+        "Network12/FBAnd12",
+        "Network12/FBAnd13",
+        "Network12/FBAnd14",
+        "Network1/FBAnd3",
+        "Network1/FBAnd9",
+        "Network1/FBAnd11",
+        "Network6/FBAnd10"
+      ],
+      "rewire": [
+        "Network3/FBDecouple2.DecIn2 := in_False_SI2_CH8",
+        "Network1/FBAnd2.AndOut -> Network1/FBOr12.OrIn2",
+        "Network6/FBAnd9.AndIn1 := out_EStop_Status"
+      ],
+      "deactivate": [
+        "Network3/FBOr1.OrIn1",
+        "Network3/FBOr1.OrIn2",
+        "Network3/FBOr2.OrIn1",
+        "Network3/FBOr2.OrIn3",
+        "Network3/FBOr2.OrIn4",
+        "Network3/FBOr5.OrIn1",
+        "Network3/FBOr6.OrIn1",
+        "Network3/FBOr7.OrIn1",
+        "Network3/FBOr9.OrIn1",
+        "Network3/FBOr11.OrIn1",
+        "Network3/FBAnd1.AndIn3",
+        "Network1/FBOr1.OrIn1",
+        "Network1/FBOr5.OrIn1",
+        "Network1/FBOr8.OrIn1",
+        "Network1/FBOr10.OrIn1",
+        "Network1/FBOr14.OrIn1",
+        "Network1/FBOr17.OrIn1",
+        "Network1/FBOr18.OrIn1",
+        "Network12/FBOr2.OrIn2"
+      ],
+      "deleteSymbols": [
+        "b_Step1_Reset",
+        "b_Step1_Set",
+        "b_Step1_Set_2",
+        "b_Step1_Set_3",
+        "b_Step2_Set",
+        "b_Step2_Reset",
+        "b_Step2",
+        "b_Step3_Reset",
+        "b_Step3_Set_3",
+        "b_Step4_Reset",
+        "b_Step5_Reset",
+        "b_Step6_Reset",
+        "b_Set_LV_C1",
+        "b_Set_HV_C2",
+        "b_Reset_HV_Discharg_Req",
+        "b_Reset_LV_Discharge_Req",
+        "b_Set_STO_DR1",
+        "b_Set_STO_DR2",
+        "b_Reset_Transition_1",
+        "b_Step6 (binding only)"
+      ],
+      "referenceTrace": "PLAN.md section 3 R1 table: nothing executed by v2 is removed; gaps (5 s settle, STO FBK before Run) pre-exist in F1 -> Q-ARCH-09",
+      "unusedProof": "PLAN.md section 3 R1 points 1-7 (Network4ToBeDeleted, identical DecIn config, reference-working argument DERIVED)",
+      "extra": "C-R1-2 (a): drop Symbol binding b_Step6 from Network3/FBRs6.RsOut (wires kept)"
+    },
+    {
+      "id": "E2a",
+      "ids": [
+        "EMG-012",
+        "MOD-006",
+        "STP-004",
+        "MOD-001 (polarity)"
+      ],
+      "criteria": [
+        "E2-01",
+        "E2-02",
+        "E2-03 structural",
+        "E2-04 (Q-RC-10)"
+      ],
+      "fbAfter": 215,
+      "newBlocks": [
+        "Network6/HEALTHY_OK safeAnd (in_LV_Faulty_FBK NO, in_HV_Faulty_FBK NO)",
+        "Network6/HEALTH_GUARD safeOr (wire RUN_DOWN_OWNER, wire HEALTHY_OK)"
+      ],
+      "deleteBlocks": [
+        "Network3/FBOr6",
+        "Network3/FBOr11"
+      ],
+      "changes": [
+        "Network3/FBOr1.OrIn3 := b_Step12_Set; OrIn4 deactivate",
+        "Network3/FBOr5.OrIn2 := b_Step4_Set (remove wire FBRs4->FBOr5)",
+        "Network3/FBOr7.OrIn2 := b_Step5_Set",
+        "Network3/FBOr9.OrIn2 := b_Step6_Set",
+        "Network3/FBRs6.Reset := wire Network3/FBOr2",
+        "Network3/FBRs8.Set := b_Step12_Set",
+        "Network3/FBOr16.OrIn1 := b_Step_RnD_Set; Network3/FBRs7.Set := wire FBOr16",
+        "Network3/FBRs3.Set := b_Step3_Set_2",
+        "Network3/FBOr13.OrIn2 := b_Step4_Set",
+        "Network6/FBAnd18.AndIn4 := wire Network6/FBAnd1",
+        "Network6/RUN_DOWN_RESET.OrIn1 := b_Step12_Set_2",
+        "Network7/FBAnd8.AndIn5 := b_Step4",
+        "Network6/FBAnd9.AndIn6 := wire HEALTH_GUARD; AndIn7 deactivate",
+        "Network11/FBAnd4.AndIn3 contact NC -> NO (D-ARCH-POL)",
+        "SAL variable rename (name attribute only): in_LV_Healthy_FBK->in_LV_Faulty_FBK, in_HV_Healthy_FBK->in_HV_Faulty_FBK, outPLC_LV_Healthy->outPLC_LV_Faulty, outPLC_HV_Healthy->outPLC_HV_Faulty"
+      ],
+      "renameImpact": {
+        "sal": "2 variable name attributes only",
+        "sgvl": 0,
+        "diagram": 0,
+        "untouched": [
+          "Alias Devices .sds",
+          "tsproj",
+          "PLC_Dyno MAIN.TcPOU",
+          "outPLC_LV_Healthy/outPLC_HV_Healthy (E4)"
+        ],
+        "testsAndStand": [
+          "src/candidate-button-cover.js",
+          "src/current-code-checks.js",
+          "src/current-gesture-boundaries.js",
+          "src/physical-rnd-source.js",
+          "test/current-e2a-race.test.js",
+          "test/current-e2a-status.test.js",
+          "test/current-early-sto.test.js",
+          "test/sal-button-baseline.test.js",
+          "test/sal-cover-baseline.test.js",
+          "test/sal-emergency-chain.test.js",
+          "test/sal-rnd-safe-outputs.test.js",
+          "test/sal-rundown-baseline.test.js",
+          "test/sal-rundown-outputs.test.js",
+          "test/helpers/e2-lifecycle.js",
+          "test/helpers/full-program-source.js",
+          "test/helpers/rnd-down-source.js",
+          "test/helpers/safe-run-source.js",
+          "program/stand/E0-stand/undefined-inputs-registry.json (if listed)"
+        ],
+        "history": "old JSON/MD reports and old-SHA fixtures keep old names",
+        "testsNote": "A-1: tests that read both reference/pinned SAL (old names) and canonical (new names) need an explicit mapping table"
+      },
+      "mutationPlan": "MUTATION_PLAN_E2a.json",
+      "plcStep": {
+        "id": "E2a-PLC",
+        "requires": "lead path-guard extension (V14-Q2)",
+        "files": [
+          "Alias Devices/PLC_IO/StatusToPLC/outPLC_LV_Healthy.sds, outPLC_HV_Healthy.sds (file rename)",
+          "Safety_Dyno.splcproj lines 63,65",
+          "MEN001_Dyno.tsproj Name LV_Healthy/HV_Healthy(+_Invert) lines 1728-1746, Link lines 13171,13173",
+          "PLC_Dyno/DUTs/ST_TwinSAFE_IN.TcDUT lines 21-25",
+          "PLC_Dyno/POUs/MAIN.TcPOU (2)",
+          "PLC_Dyno/VISUs/Visualization.TcVIS (4)"
+        ],
+        "question": "Q-ARCH-11 (_Invert fields)"
+      },
+      "conditional": {
+        "id": "E2a-RC",
+        "status": "awaiting analyst (RUN-CONF / Q-ARCH-09 V)",
+        "change": "Network12/FBAnd6 before FBTon3 with inputs wire FBAnd4, in_HV_C2_FBK, in_HV_Faulty_FBK NO; FBTon3 input := FBAnd6; FBTon3 out -> FBDecouple2.DecIn1..4; move Symbol b_Reset_HV_Discharg_Req2 to FBTon3.TonOut",
+        "fb": 0
+      },
+      "knownFail": [
+        "Emergency energy in R&D/S12/SU (E2b)",
+        "Healthy loss in steady Run -> Step4 (E3; not oracle in E2a, A-2)",
+        "SafetyFault (E5)"
+      ]
+    },
+    {
+      "id": "E2b",
+      "ids": [
+        "EMG-001",
+        "EMG-002",
+        "EMG-004",
+        "EMG-006",
+        "CVR-006"
+      ],
+      "criteria": [
+        "IL-03",
+        "IL-05a",
+        "IL-05b(1)(2)(3)",
+        "EMG4-02",
+        "EMG4-03",
+        "EMG6-01",
+        "EMGREF-LV (1)(2)",
+        "EMGREF-RUN (StartingRun)",
+        "E2-01"
+      ],
+      "fbDelta": 7,
+      "fbAfter": 222,
+      "portsAfter": 1895,
+      "salVarsAfter": 77,
+      "newBlocks": [
+        "Network1/FBAndNotRunSu safeAnd (b_Step3 NO, recRndC_SU NO)",
+        "Network1/FBOrIlRunOk safeOr (wire FBAndNotRunSu, linkCoverClosed, linkRunDownOwner)",
+        "Network6/STAGE_LVON safeOr (b_Step12, b_Step_RnD)",
+        "Network6/FBAndLvEmg safeAnd (wire STAGE_LVON, b_EStop_Ok NO, in_False NO)",
+        "Network6/FBOrStep4 safeOr (wire FBAnd2, wire FBAndLvEmg)",
+        "Network3/FBOrS12Reset safeOr (b_Step_RnD_Set, b_Step4_Set)",
+        "Network3/G10_EXIT safeAnd (8 inputs, see mechanism.grants.g10)"
+      ],
+      "changes": [
+        "Network12/FBAnd16.AndOut += linkCoverClosed",
+        "Network6/RUN_DOWN_OWNER.RsOut += linkRunDownOwner",
+        "Network1/FBAnd1.AndIn3 := wire FBOrIlRunOk",
+        "Network1/FBAnd1.AndIn4 := linkSafeConnectorScope",
+        "Network6/HEALTHY_OK.AndIn3 := linkCoverClosed",
+        "Network6/FBAnd9.AndIn2, AndIn3 deactivate",
+        "Network6/FBDecouple1.DecIn1 := wire FBOrStep4",
+        "Network3/FBRs8.Reset := wire FBOrS12Reset",
+        "RndPhysicalCompact/GATE_001.AndIn5, AndIn6 deactivate",
+        "RndPhysicalCompact/GATE_020.AndIn6 := linkCoverClosed",
+        "RndPhysicalCompact/GATE_030.OrIn5 := wire BOTH.TonOut",
+        "Network3/FBOr2.OrIn3 := wire G10_EXIT"
+      ],
+      "mutationPlan": "MUTATION_PLAN_E2b.json"
+    },
+    {
+      "id": "E2c",
+      "ids": [
+        "HLT-001",
+        "MOD-005",
+        "MOD-008"
+      ],
+      "criteria": [
+        "HLT-01",
+        "HLT-02"
+      ],
+      "fbDelta": 2,
+      "fbAfter": 224,
+      "portsAfter": 1913,
+      "salVarsAfter": 78,
+      "newBlocks": [
+        "SafeResumption/HLT_LV safeAnd (in_LV_Faulty_FBK NC, recRndC_SU NO, in_False NO) -> linkHltLvLost",
+        "RndPhysicalCompact/GATE_SG_SET safeOr (linkSafeSgOwnerSet, linkHltLvLost) -> STATE_SG.Set"
+      ],
+      "mutationPlan": "MUTATION_PLAN_E2c.json",
+      "changes": [
+        "RndPhysicalCompact/STATE_SG.Set := wire GATE_SG_SET",
+        "RndPhysicalCompact/GATE_020.AndIn7 := recRndC_SG NO (C-1)",
+        "RndPhysicalCompact/GATE_030.OrIn6 := linkHltLvLost (C-2)",
+        "order: STATE_SU, SG_OWNER_SET, HLT_LV, GATE_SG_SET, STATE_SG"
+      ],
+      "knownFail": [
+        "STP-I until E3 (ABT by LV)",
+        "HLT-03 SafetyFault until E5"
+      ]
+    },
+    {
+      "id": "E2d",
+      "ids": [
+        "EMG-002 (Safe)",
+        "CVR-004",
+        "CVR-001/002",
+        "Q-REL-AFTER-PERMIT"
+      ],
+      "criteria": [
+        "IL-01",
+        "IL-02b",
+        "Q-ARCH-04",
+        "Q-REL-AFTER-PERMIT"
+      ],
+      "fbDelta": 1,
+      "fbAfter": 225,
+      "portsAfter": 1922,
+      "salVarsAfter": 79,
+      "newBlocks": [
+        "SafeResumption/IL_SCOPE safeOr (b_Step1, linkCoverClosed) -> linkIlScope"
+      ],
+      "changes": [
+        "Network1/FBAndLvCurrentPermit.AndIn4, AndIn5 deactivate",
+        "Network2/FBAnd1.AndIn5, AndIn6 deactivate",
+        "NEW Network1/FBAnd4.AndIn3 := in_InterLock_NC_1, AndIn4 := in_InterLock_NC_2",
+        "NEW RndPhysicalCompact/GATE_010.AndIn3 := linkIlScope",
+        "SafeResumption/MODE.OrIn4 := b_Step12"
+      ],
+      "knownFail": [
+        "CFG-02 legacy Bypass in R&D with cover closed (E4)"
+      ],
+      "mutationPlan": "MUTATION_PLAN_E2d.json"
+    },
+    {
+      "id": "E3",
+      "sketch": true,
+      "fbDeltaEstimate": 21,
+      "parts": {
+        "core": 4,
+        "HEALTH_DESC": 1,
+        "NORMAL_DOWN": 1,
+        "HL_MEM": 4,
+        "ABT": 7,
+        "OFF_WDG": 4
+      },
+      "notes": [
+        "Q-RC-17 fix: FBOrIlRunOk.OrIn3 := wire NORMAL_DOWN = owner and not HEALTH_DESC",
+        "FBAndNotRunSu.AndIn3 := not ABT",
+        "STAGE_LVON.OrIn3 := b_Step3",
+        "no separate HL_FAULT: HealthyLost is a Set cause of b_SafetyFault (E5)"
+      ]
+    },
+    {
+      "id": "E4",
+      "sketch": true,
+      "frozen": true,
+      "fbDeltaEstimate": 19,
+      "parts": {
+        "deleted": -18,
+        "prevDecouple": 1,
+        "edges": 4,
+        "simultaneity2of5": 8,
+        "stableGate": 1,
+        "errLatchTon": 3,
+        "config": 8,
+        "heartbeat": 3,
+        "suSetOr": 1,
+        "decoder": 6,
+        "publishDecouple": 1,
+        "faultOr": 1
+      }
+    },
+    {
+      "id": "E5",
+      "sketch": true,
+      "fbDeltaEstimate": 5,
+      "symbol": "b_SafetyFault"
+    },
+    {
+      "id": "E6",
+      "sketch": true,
+      "fbDeltaEstimate": 16,
+      "parts": {
+        "onWdg": 4,
+        "healthy30s": 4,
+        "s12Abort": 3,
+        "route": 1,
+        "qrc19": 4
+      }
+    }
+  ],
+  "budget": {
+    "exact": {
+      "R1": 215,
+      "E2a": 215,
+      "E2b": 222,
+      "E2c": 224,
+      "E2d": 225
+    },
+    "estimate": {
+      "E3": 246,
+      "E4": 265,
+      "E5": 270,
+      "E6": 286,
+      "tolerance": "+-5"
+    },
+    "options": {
+      "a_R2": {
+        "dFB": -12,
+        "stage": "before E3",
+        "change": "native structure only",
+        "permission": "not granted (Q-ARCH-06)"
+      },
+      "b_transitionLatch": {
+        "dFB": -4,
+        "stage": "E4",
+        "change": "meaning of alias out_TransitionStep"
+      },
+      "c_HL_FAULT": {
+        "dFB": 0,
+        "note": "already applied (-4 vs v1): HealthyLost is a cause of b_SafetyFault; lead to confirm not a prohibited merge"
+      },
+      "g1_noDecoder": {
+        "dFB": -6,
+        "stage": "E4",
+        "change": "statuses computed in PLC from published stages"
+      },
+      "g2_hb2Ton": {
+        "dFB": -1,
+        "stage": "E4",
+        "change": "none; TON NO input native NV"
+      },
+      "d_duplicates": {
+        "dFB": -3,
+        "stage": "with R1/R2",
+        "change": "none (N12/FBAnd17=FBAnd11, N6/FBAnd20=FBAnd7, N6/FBAnd11=N12/FBAnd1 via Symbol)"
+      },
+      "e_qrc19Monitor": {
+        "dFB": -4,
+        "stage": "E6",
+        "change": "Q-RC-19 with 0.5 s debounce"
+      }
+    },
+    "sets": {
+      "A_none": {
+        "E3": 246,
+        "E4": 265,
+        "E5": 270,
+        "E6": 286
+      },
+      "B_noBehaviour_a_d_g2": {
+        "E3": 231,
+        "E4": 249,
+        "E5": 254,
+        "E6": 270
+      },
+      "C_all": {
+        "E3": 231,
+        "E4": 239,
+        "E5": 244,
+        "E6": 256
+      }
+    },
+    "conclusion": "E2 fits exactly (225). Without savings the limit is exceeded at E4. Set B fits E4/E5, not E6. Set C reaches about 256+-5 at E6 - borderline; one more decision needed for E6 (drop/defer part of functions, shared ON-watchdog TON -2, or move indication to PLC)."
+  },
+  "mu11": "EQUIVALENT in E2a..E2d by construction; C3 of E1 review fulfilled by equivalence proof (PLAN.md section 9); re-evaluate in E3",
+  "prototype": {
+    "files": [
+      "repro/proto.mjs",
+      "repro/run.mjs",
+      "repro/h.mjs",
+      "repro/dump.mjs",
+      "repro/t6.mjs",
+      "repro/t7.mjs",
+      "repro/t9.mjs",
+      "repro/t10.mjs",
+      "repro/t11.mjs",
+      "repro/t12.mjs",
+      "repro/t13.mjs",
+      "repro/t14.mjs"
+    ],
+    "outputs": [
+      "repro/t6.out.txt",
+      "repro/t7.out.txt",
+      "repro/t9.out.txt",
+      "repro/t10.out.txt",
+      "repro/t11.out.txt",
+      "repro/t12.out.txt",
+      "repro/t13.out.txt",
+      "repro/t14.out.txt"
+    ],
+    "note": "In-memory model R1 (simulated) + E2a..E2d v3 with decoder D2-B for observation (230 FB = 225+5). Older outputs t4/t5/t8 in repro/v2. Model, not native, not a test."
+  },
+  "questions": {
+    "Q-ARCH-10": "Stable R&D, cover open, blue >=500 ms: F1 gives no Unlock; Q-ARCH-04 covers only Safe. Allowed or forbidden? (plan keeps F1 prohibition via linkIlScope)",
+    "Q-ARCH-11": "PLC fields LV_Healthy_Invert/HV_Healthy_Invert (ST_TwinSAFE_IN, tsproj): rename with E2a-PLC or keep?",
+    "RUN-CONF": "R&D->Run accepted, C2_FBK at +30 ms after C2 command; now Run at command+100 ms. Is 0.1 s (Q-ARCH-09) from command, or 0.1 s of continuous C2_FBK and HV ok? (E2a-RC, 0 FB)",
+    "budget": "PLAN section 5 options b, g1, d, e and confirmation of c - for Vadim"
+  },
+  "editorAllowedFiles": [
+    "MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal",
+    "MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal.diagram",
+    "MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl",
+    "E2a-PLC files only after lead path-guard extension"
+  ],
+  "forbidden": [
+    "Alias Devices",
+    "splcproj",
+    "tsproj/xti",
+    "TargetSystemConfig.xml",
+    "group parameters",
+    "existing timer values",
+    "FBEstop1 channel modes",
+    "PLC_Dyno",
+    "reference repository"
+  ],
+  "leadDecisions": [
+    "C-R1-2 (a): drop Symbol binding b_Step6 -> 65 Symbols",
+    "D2-A kept",
+    "Q-RC-13 B: common PLC Fault bit = OR at output; latches not merged"
+  ],
+  "safetyFaultSymbol": "b_SafetyFault (SGVL, created in E5)",
+  "mu24": "Q-REL fixed by MODE.OrIn4 := b_Step12 (E2d); RELEASE and STATE_A unchanged; STATE_A reset only by not GATE_001 = emergency or no stage; MU24 killed by button-only 1999/2000 ms boundaries; new guard M-E2d-05",
+  "r1Addendum": {
+    "candidate": "candidates/E2-R1/native SAL ca841a01fe44f776a5868968fde70cce728657aaf411d6b8bfa6689cfadc7bb3",
+    "D-1": "keep empty Network4/5/9 (native serialized <Network/>; deletion would renumber networkOrderId/intId and swimlanes - undeclared structural delta). Verify acceptance NV; stand parser must accept empty network (S1). Deletion only as a separate later step.",
+    "D-2": "accept geometry criterion with conditions: (a) relative positions of shapes and link routing points inside each lane exact; (b) lane shifts only from collapsed empty lanes/height fit; (c) no shapes/links referencing removed blocks, shape count = block count; (d) diagram is presentation only (DERIVED).",
+    "D-3": "N4/FBDecouple1 had 7 Symbol references DecOut1..7 (b_Step3/4/5/6_Reset, b_Step1_Reset, b_Step1_Set, b_Step2_Set); all 7 are in the 19 deleted Symbols and covered by the unused-proof; G2 checks all seven disappear (corrects C-R1-4 count)."
+  }
+}

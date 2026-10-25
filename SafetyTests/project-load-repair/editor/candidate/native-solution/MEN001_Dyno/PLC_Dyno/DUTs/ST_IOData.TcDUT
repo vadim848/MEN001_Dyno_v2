@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_IOData" Id="{a5ccebcc-6395-4b75-94da-8994a5b9c380}">
+    <Declaration><![CDATA[TYPE ST_IOData :
+STRUCT
+    //------------------------------------------------------------------
+    // Digital inputs  (e.g. EL1008 — 8-channel 24V DC)
+    //------------------------------------------------------------------
+
+    // Raw 8-bit word from digital input terminal (bit 0 = DI channel 1)
+    nDigitalInputs      : BYTE;
+
+    // Named aliases — mapped in FB_IOHandler from nDigitalInputs bits
+    bDI_EmergencyStop   : BOOL;   // Channel 1 — E-stop button
+    bDI_HomeSensor_M1   : BOOL;   // Channel 2 — Home/ref switch Motor 1
+    bDI_HomeSensor_M2   : BOOL;   // Channel 3 — Home/ref switch Motor 2
+    bDI_LimitPos_M1     : BOOL;   // Channel 4 — Positive limit Motor 1
+    bDI_LimitNeg_M1     : BOOL;   // Channel 5 — Negative limit Motor 1
+    bDI_LimitPos_M2     : BOOL;   // Channel 6 — Positive limit Motor 2
+    bDI_LimitNeg_M2     : BOOL;   // Channel 7 — Negative limit Motor 2
+    bDI_UserInput1      : BOOL;   // Channel 8 — Spare / user-defined
+
+    //------------------------------------------------------------------
+    // Digital outputs  (e.g. EL2008 — 8-channel 24V DC)
+    //------------------------------------------------------------------
+
+    // Named aliases — written in FB_IOHandler, packed into nDigitalOutputs
+    bDO_BrakeRelease_M1 : BOOL;   // Channel 1 — Release brake Motor 1
+    bDO_BrakeRelease_M2 : BOOL;   // Channel 2 — Release brake Motor 2
+    bDO_StatusLED_Green : BOOL;   // Channel 3 — System OK indicator
+    bDO_StatusLED_Red   : BOOL;   // Channel 4 — Fault indicator
+    bDO_UserOutput1     : BOOL;   // Channel 5 — Spare / user-defined
+    bDO_UserOutput2     : BOOL;   // Channel 6 — Spare / user-defined
+
+    // Packed output word (written to EL2008 terminal)
+    nDigitalOutputs     : BYTE;
+
+    //------------------------------------------------------------------
+    // Analog inputs  (e.g. EL3002 — 2-channel ±10V or 0-20mA)
+    //------------------------------------------------------------------
+
+    // Raw ADC value from terminal [-32768 to 32767]
+    nAnalogIn_Raw_Ch1   : INT;
+    nAnalogIn_Raw_Ch2   : INT;
+
+    // Scaled engineering values — conversion in FB_IOHandler
+    fAnalogIn_Ch1       : LREAL;   // [V] or [mA] or user units
+    fAnalogIn_Ch2       : LREAL;
+
+    //------------------------------------------------------------------
+    // Analog outputs  (e.g. EL4002 — 2-channel ±10V)
+    //------------------------------------------------------------------
+
+    // Setpoint from Python/GVL, written to terminal by FB_IOHandler
+    fAnalogOut_Ch1      : LREAL;   // [V] or [mA] or user units
+    fAnalogOut_Ch2      : LREAL;
+
+    // Raw DAC value sent to terminal [-32768 to 32767]
+    nAnalogOut_Raw_Ch1  : INT;
+    nAnalogOut_Raw_Ch2  : INT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

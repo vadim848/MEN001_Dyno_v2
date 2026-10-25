@@ -1,0 +1,225 @@
+{
+  "version": "sal-mutation-plan-v1",
+  "structuralSoftwareCheckCases": [
+    "^BOOT:"
+  ],
+  "planVersion": 6,
+  "testFiles": [
+    "current-e2a-status.test.js",
+    "current-e2a-emg-safe.test.js",
+    "current-e2a-emg-rnd.test.js",
+    "current-e2a-emg-run.test.js",
+    "current-e2a-emg-rundown.test.js",
+    "current-e2a-sweep-estop.test.js",
+    "current-e2b-sweep-connector.test.js",
+    "current-e2a-race.test.js",
+    "current-e2a-rnd-cover-healthy.test.js",
+    "current-e2a-run-conf.test.js",
+    "current-e2b-interlock-run.test.js",
+    "current-e2b-cover-transitions.test.js",
+    "current-e2b-connector-safe.test.js",
+    "current-e2c-stp-i.test.js",
+    "current-e2c-hlt03.test.js",
+    "current-e2d-release-permit.test.js",
+    "current-e2d-unlock-cover.test.js",
+    "current-e2a-emg-anchor.test.js",
+    "current-e2a-emg-rd-sweep.test.js",
+    "current-e2d-unlock-door.test.js",
+    "current-e2d-fbk-unsolicited.test.js"
+  ],
+  "behaviouralTests": [
+    "^E2[a-d] "
+  ],
+  "sourceSha256": "FILL_AT_G2",
+  "status": "Architect guard-mutation plan v6 for E2a-RC (PLAN.md v6). sourceSha256 filled at G2 (runner exit 3 until then). operatorAvailable:false only for operators the stand does not implement (rebind-global, composite). modelKill = architect prototype (not native, not a test).",
+  "mutations": [
+    {
+      "id": "M-E2a-18",
+      "guard": "RunConf",
+      "op": "deactivate-input",
+      "block": "//Network12/FBAnd6",
+      "port": "AndIn2",
+      "rationale": "Run without C2_FBK",
+      "killingScenario": "R&D->Run with C2_FBK never ON: Run at u+600",
+      "oracle": "RC-1",
+      "modelKill": "repro/t16.out.txt"
+    },
+    {
+      "id": "M-E2a-19",
+      "guard": "RunConf",
+      "op": "deactivate-input",
+      "block": "//Network12/FBAnd6",
+      "port": "AndIn3",
+      "rationale": "Run with HV Faulty",
+      "killingScenario": "R&D->Run with in_HV_Faulty_FBK TRUE: Run reached",
+      "oracle": "RC-1, Q-ARCH-09",
+      "modelKill": "repro/t16.out.txt"
+    },
+    {
+      "id": "M-E2a-20",
+      "guard": "RunConfWindow",
+      "op": "deactivate-input",
+      "block": "//Network12/FBAnd6",
+      "port": "AndIn1",
+      "rationale": "500 ms window bypassed (count from command, C5 ix)",
+      "killingScenario": "C2_FBK at u+30: Run at u+132 (<= u+599 forbidden)",
+      "oracle": "RC-2, RC-5 (question 68 B)",
+      "modelKill": "repro/t16.out.txt"
+    },
+    {
+      "id": "M-E2a-21",
+      "guard": "Order",
+      "op": "swap-order",
+      "block": "//Network12/FBAnd6",
+      "port": "",
+      "value": {
+        "moveAfter": "//Network12/FBTon3"
+      },
+      "rationale": "FBAnd6 after FBTon3",
+      "killingScenario": "RC-5(iv): C2_FBK ON from u+1, HV Faulty until u+2999: base Run u+3101, mutant u+3102 (review x4); also FBK late k+102 and RC-6",
+      "oracle": "RUN-CONF-T (TD-02: Run at K+101)"
+    },
+    {
+      "id": "M-E2a-22",
+      "guard": "RunConfWindow",
+      "op": "set-parameter",
+      "block": "//Network12/WIN_C2",
+      "port": "Delay Time (s)",
+      "value": "0.4",
+      "rationale": "window shortened",
+      "killingScenario": "C2_FBK at u+30: Run at u+500 (<= u+599 forbidden)",
+      "oracle": "RC-2"
+    },
+    {
+      "id": "M-E2a-23",
+      "guard": "RndConfWindow",
+      "op": "deactivate-input",
+      "block": "//Network11/FBAnd4",
+      "port": "AndIn1",
+      "rationale": "C1 window bypassed",
+      "killingScenario": "Safe->R&D, C1_FBK at u1+30: R&D at u1+132 (<= u1+499 forbidden)",
+      "oracle": "MOD1-01 (question 68 B)",
+      "modelKill": "repro/t16.out.txt"
+    },
+    {
+      "id": "M-E2a-24",
+      "guard": "RndConf",
+      "op": "deactivate-input",
+      "block": "//Network11/FBAnd4",
+      "port": "AndIn2",
+      "rationale": "R&D without C1_FBK",
+      "killingScenario": "Safe->R&D with C1_FBK never ON: R&D at u1+600",
+      "oracle": "MOD1-01",
+      "modelKill": "repro/t16.out.txt"
+    },
+    {
+      "id": "M-E2a-25",
+      "guard": "RndConfWindow",
+      "op": "set-parameter",
+      "block": "//Network11/WIN_C1",
+      "port": "Delay Time (s)",
+      "value": "0.4",
+      "rationale": "C1 window shortened",
+      "killingScenario": "RND-CONF-T: C1_FBK at u1+30, mutant R&D at u1+500 (<= K1+99 forbidden, K1=u1+500)",
+      "oracle": "RND-CONF-T (TD-02, question 68 B)"
+    },
+    {
+      "id": "M-E2a-26",
+      "guard": "RunConfRestart",
+      "op": "composite",
+      "block": "//Network12/FBTon3",
+      "port": "TonIn",
+      "operatorAvailable": false,
+      "steps": [
+        {
+          "op": "rewire",
+          "block": "//Network12/FBTon3",
+          "port": "TonIn",
+          "value": {
+            "source": "//Network12/WIN_C2/TonOut"
+          }
+        },
+        {
+          "op": "rewire",
+          "block": "//Network12/FBAnd6",
+          "port": "AndIn1",
+          "value": {
+            "source": "//Network12/FBTon3/TonOut"
+          }
+        },
+        {
+          "op": "rewire",
+          "block": "//Network12/FBDecouple2",
+          "port": "DecIn1..DecIn4",
+          "value": {
+            "source": "//Network12/FBAnd6/AndOut"
+          }
+        },
+        {
+          "op": "swap-order",
+          "block": "//Network12/FBAnd6",
+          "value": {
+            "moveAfter": "//Network12/FBTon3"
+          }
+        }
+      ],
+      "manualProcedure": "apply steps in order with stand operators on the E2a-RC candidate; record mutant SHA; run current-e2a-run-conf; report as 'manual composite' separately in G3",
+      "rationale": "no restart of 0.1 s count (C5 x): TON fed by window, FBK/HV checked after TON",
+      "killingScenario": "RC-6 HV glitch at K+50: base u+652, mutant u+600; RC-5(iv): mutant u+3001 <= u+3099",
+      "oracle": "RC-6, RC-5(iv)"
+    },
+    {
+      "id": "M-E2a-30",
+      "guard": "DisHold",
+      "op": "deactivate-input",
+      "block": "//Network1/FBOr5",
+      "port": "OrIn2",
+      "rationale": "HV discharge request not reset at R&D->Run acceptance",
+      "killingScenario": "R&D after Run->R&D (request TRUE), accepted BOTH: request still TRUE at a+2",
+      "oracle": "DIS-HOLD-HV (Q-V7-01 G, question 73 A)",
+      "modelKill": "repro/t18.out.txt"
+    },
+    {
+      "id": "M-E2a-31",
+      "guard": "DisHold",
+      "op": "deactivate-input",
+      "block": "//Network1/FBOr1",
+      "port": "OrIn2",
+      "rationale": "LV discharge request not reset at Safe->R&D acceptance",
+      "killingScenario": "Safe after R&D->Safe (LV request TRUE), accepted BOTH: request TRUE at a+2",
+      "oracle": "DIS-HOLD-LV (TD-01)",
+      "modelKill": "repro/t18.out.txt"
+    },
+    {
+      "id": "M-E2a-32",
+      "guard": "DisHold",
+      "op": "rebind-global",
+      "block": "//Network1/FBOr5",
+      "port": "OrIn2",
+      "operatorAvailable": false,
+      "value": {
+        "global": "linkRndBothQualified"
+      },
+      "manualProcedure": "replace fbPortGlobalVariableReference of FBOr5.OrIn2 to linkRndBothQualified (update SAL variable targetUsages); record SHA; run DIS-HOLD tests",
+      "rationale": "reset from BOTH qualification instead of acceptance",
+      "killingScenario": "rejected BOTH (cover open / REL01-e2): request becomes FALSE (base stays TRUE, t18)",
+      "oracle": "DIS-HOLD-HV"
+    },
+    {
+      "id": "M-E2a-33",
+      "guard": "DisHold",
+      "op": "rebind-global",
+      "block": "//Network1/FBOr5",
+      "port": "OrIn2",
+      "operatorAvailable": false,
+      "value": {
+        "global": "temporary SAL variable on Network12/WIN_C2/TonOut"
+      },
+      "manualProcedure": "add temporary SAL variable on WIN_C2.TonOut, bind FBOr5.OrIn2 to it; record SHA; run DIS-HOLD tests",
+      "rationale": "reset from 500 ms window instead of acceptance",
+      "killingScenario": "accepted R&D->Run: request still TRUE at a+2...a+499",
+      "oracle": "DIS-HOLD-HV"
+    }
+  ],
+  "equivalentByProof": []
+}

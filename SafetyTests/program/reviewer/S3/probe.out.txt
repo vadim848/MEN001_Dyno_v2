@@ -1,0 +1,32 @@
+P0 normal Run->R&D STO=+2006 SS1=+5 DIS=+7005 C2=+8006 FBK=+8027 RND=+8206 SAFE=none EMG=none C1OFF=none end RND viol=0
+P1 green held 12 s in Run STO=+2006 SS1=+5 DIS=+7005 C2=+8006 FBK=+8027 RND=+8206 SAFE=none EMG=none C1OFF=none end RND C1 true viol=0
+P2 green held 3 s in SU STO=+3 SS1=+0 DIS=+3 C2=+1003 FBK=+1024 RND=+1024 SAFE=none EMG=none C1OFF=none end RND C1 true viol=0
+P2b after abort: new BOTH -> RUN viol=0
+P3 BOTH in SU then HV ok RND -> RUN unlock false viol=0
+P3b then green down STO=+2006 SS1=+5 DIS=+7005 C2=+8006 FBK=+8027 RND=+8206 SAFE=none EMG=none C1OFF=none RND viol=0
+P4 blue in R&D after abort: unlock true RND viol=0
+P5 EStop at a+1000 STO=+2006 SS1=+5 DIS=+7005 C2=+8006 FBK=+8027 RND=none SAFE=none EMG=+1001 C1OFF=+3006 viol=0
+P5 EStop at a+3000 STO=+2006 SS1=+5 DIS=+7005 C2=+8006 FBK=+8027 RND=none SAFE=none EMG=+3001 C1OFF=+5006 viol=0
+P5 EStop at a+6500 STO=+2006 SS1=+5 DIS=+7005 C2=+8006 FBK=+8027 RND=none SAFE=none EMG=+6501 C1OFF=+8506 viol=0
+P5 EStop at a+7300 STO=+2006 SS1=+5 DIS=+7005 C2=+8006 FBK=+8027 RND=none SAFE=none EMG=+7301 C1OFF=+9306 viol=0
+P5 EStop at a+7900 STO=+2006 SS1=+5 DIS=+7005 C2=+8006 FBK=+8027 RND=none SAFE=none EMG=+7901 C1OFF=+9906 viol=0
+P6 EStop abort+200 STO=+3 SS1=+0 DIS=+3 C2=+1003 FBK=+1024 RND=none SAFE=none EMG=+252 C1OFF=+2255 viol=0
+P6b restart -> SAFE viol=0
+P6c BOTH -> RND
+P6d BOTH -> RUN
+P6e normal descent after STO=+2006 SS1=+5 DIS=+7005 C2=+8006 FBK=+8027 RND=+8206 SAFE=none EMG=none C1OFF=none RND viol=0
+P7 HV loss Run, EStop +3000 STO=+3 SS1=+3 DIS=+5002 C2=+6003 FBK=+6024 RND=none SAFE=none EMG=+3001 C1OFF=+5006 viol=0
+P7b restart,BOTH,BOTH -> RUN
+P7c normal descent after STO=+2006 SS1=+5 DIS=+7005 C2=+8006 FBK=+8027 RND=+8206 SAFE=none EMG=none C1OFF=none RND viol=0
+P8 HV loss in Run STO=+3 SS1=+3 DIS=+5002 C2=+6003 FBK=+6024 RND=+6203 SAFE=none EMG=none C1OFF=none RND viol=0
+P8b BOTH -> RUN
+P8c descent after STO=+2006 SS1=+5 DIS=+7005 C2=+8006 FBK=+8027 RND=+8206 SAFE=none EMG=none C1OFF=none RND viol=0
+P9 LV@SS1 then NC1 STO=+554 SS1=+5 DIS=+5553 C2=+6554 FBK=+6575 RND=none SAFE=none EMG=+1553 C1OFF=+3557 viol=0
+P9b LV blip after STO then NC1 STO=+2006 SS1=+5 DIS=+7005 C2=+8006 FBK=+8027 RND=+8206 SAFE=+8230 EMG=none C1OFF=+8208 end SAFE viol=0
+P10 LV blip in SU STO=+3 SS1=+0 DIS=+3 C2=+1003 FBK=+1024 RND=+1024 SAFE=+1048 EMG=none C1OFF=+1026 end SAFE viol=0
+P11 green before clearance in SU: STO false C2 off false RND
+P12 green during protective STO=+3 SS1=+3 DIS=+5002 C2=+6003 FBK=+6024 RND=+6203 SAFE=none EMG=none C1OFF=none RND C1 true viol=0
+P13 cycle 0 STO=+2006 SS1=+5 DIS=+7005 C2=+8006 FBK=+8027 RND=+8206 SAFE=none EMG=none C1OFF=none RND
+P13 cycle 1 STO=+2006 SS1=+5 DIS=+7005 C2=+8006 FBK=+8027 RND=+8206 SAFE=none EMG=none C1OFF=none RND
+P13 end RUN viol=0
+P14 green+LV in SU STO=+503 SS1=+0 DIS=+503 C2=+1503 FBK=+1524 RND=+1524 SAFE=+1548 EMG=none C1OFF=+1526 SAFE viol=0

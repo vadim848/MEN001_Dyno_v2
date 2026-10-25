@@ -1,0 +1,23 @@
+== E2-02-R: Run, green 600 ms (descent); C2_FBK OFF delayed; LV Faulty TRUE at h for r scans (h after C2 OFF command, before C2_FBK OFF)
+v7.7 r=1                   C2 OFF cmd 506, h 508: S3@1
+v7.7 r=3                   C2 OFF cmd 506, h 508: S3@1
+v7.7 r=100                 C2 OFF cmd 506, h 508: S3@1
+v7.7 r=none                C2 OFF cmd 506, h 508: S3@1
+v7.8 all r=1               C2 OFF cmd 506, h 508: S3@1
+v7.8 all r=3               C2 OFF cmd 506, h 508: S3@1
+v7.8 all r=100             C2 OFF cmd 506, h 508: S3@1
+v7.8 all r=none            C2 OFF cmd 506, h 508: S3@1
+mut set.AndIn2 r=1         C2 OFF cmd 506, h 508: S3@1
+mut set.AndIn2 r=3         C2 OFF cmd 506, h 508: S3@1
+mut set.AndIn2 r=100       C2 OFF cmd 506, h 508: S3@1
+mut set.AndIn2 r=none      C2 OFF cmd 506, h 508: S3@1
+mut src.OrIn2 r=1          C2 OFF cmd 506, h 508: S3@1
+mut src.OrIn2 r=3          C2 OFF cmd 506, h 508: S3@1
+mut src.OrIn2 r=100        C2 OFF cmd 506, h 508: S3@1
+mut src.OrIn2 r=none       C2 OFF cmd 506, h 508: S3@1
+mut noReset r=1            C2 OFF cmd 506, h 508: S3@1
+mut noReset r=3            C2 OFF cmd 506, h 508: S3@1
+mut noReset r=100          C2 OFF cmd 506, h 508: S3@1
+mut noReset r=none         C2 OFF cmd 506, h 508: S3@1
+v7.8 all: after descent with 1-scan LV loss -> S3; then clean BOTH Safe->R&D +5 s -> S3
+mut noReset: after descent with 1-scan LV loss -> S3; then clean BOTH Safe->R&D +5 s -> S3

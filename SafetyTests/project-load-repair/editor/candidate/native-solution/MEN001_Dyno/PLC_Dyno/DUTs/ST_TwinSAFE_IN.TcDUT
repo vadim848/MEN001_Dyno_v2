@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_TwinSAFE_IN" Id="{fe80606b-5627-4eb2-ad0d-d112d6f6235c}">
+    <Declaration><![CDATA[TYPE ST_TwinSAFE_IN :
+STRUCT
+	Safety_Armed: BOOL;
+	ReadyForStep2: BOOL;
+	Speps: ST_Safety_Speps;
+	EStop_Ok	:	BOOL	;//SI 2026 05 25
+	EStop_Status:	BOOL	;//SI 2026 05 25
+	TransitionStep	:	BOOL	;
+	
+
+	EStop_NC1	:	BOOL	;
+	EStop_NC2	:	BOOL	;
+	EStop_MantiRob : BOOL	;
+	STO_1		:	BOOL	;
+	STO_2		:	BOOL	;
+	C1_FBK		:	BOOL	;
+	C2_FBK		:	BOOL	;
+	LV_Healthy	:	BOOL	;
+	HV_Healthy	:	BOOL	;
+	
+	LV_Healthy_Invert	:	BOOL	;
+	HV_Healthy_Invert	:	BOOL	;
+	
+	LV_Interlock	:	BOOL	;
+	HV_Interlock	:	BOOL	;
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

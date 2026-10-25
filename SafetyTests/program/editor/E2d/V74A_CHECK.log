@@ -1,0 +1,29 @@
+PASS in_InterLock_NC_1 singleton wrappers targetUsages/variableHasTargetUsages/variableUsages/usages {"tu":1,"vht":1,"vu":1,"us":1}
+PASS in_InterLock_NC_1 every usage item holds exactly one fbPortUsage/functionBlockPort/reference/moniker 4
+PASS in_InterLock_NC_1 -> //Network1/FBAndHvSetPermit/AndIn5 exactly once 1
+PASS //Network1/FBAndHvSetPermit/AndIn5 Activated NC, no global ref, no wire {"Id":"25bea297-a16f-415f-a45c-92b609a8893c","name":"AndIn5","portName":"AndIn5","portNum":"6","objectIndex":"12","varId":"6","filter":"2","portDataType":"1","channelInterface":"Activated","deactivate1":"Break Contact (NC)","maxDeviation":"0","resetTime":"0"}
+PASS //Network1/FBAndHvSetPermit/AndIn5 was Deactivated in E2c, non-contact attributes unchanged {"base":"Deactivated"}
+PASS in_InterLock_NC_1 -> //Network1/FBAndSto1SetPermit/AndIn5 exactly once 1
+PASS //Network1/FBAndSto1SetPermit/AndIn5 Activated NC, no global ref, no wire {"Id":"109125df-335a-eda9-c60b-3793503ae36e","name":"AndIn5","portName":"AndIn5","portNum":"6","objectIndex":"12","varId":"6","filter":"2","portDataType":"1","channelInterface":"Activated","deactivate1":"Break Contact (NC)","maxDeviation":"0","resetTime":"0"}
+PASS //Network1/FBAndSto1SetPermit/AndIn5 was Deactivated in E2c, non-contact attributes unchanged {"base":"Deactivated"}
+PASS in_InterLock_NC_1 -> //Network1/FBAndSto2SetPermit/AndIn5 exactly once 1
+PASS //Network1/FBAndSto2SetPermit/AndIn5 Activated NC, no global ref, no wire {"Id":"b075cdb6-eb88-3ea6-212f-a2dcdc62501d","name":"AndIn5","portName":"AndIn5","portNum":"6","objectIndex":"12","varId":"6","filter":"2","portDataType":"1","channelInterface":"Activated","deactivate1":"Break Contact (NC)","maxDeviation":"0","resetTime":"0"}
+PASS //Network1/FBAndSto2SetPermit/AndIn5 was Deactivated in E2c, non-contact attributes unchanged {"base":"Deactivated"}
+PASS //Network1/FBAndLvCurrentPermit/AndIn4 deactivated, in_InterLock_NC_1 usage removed (atomic with v7.4) "Deactivated"
+PASS //Network2/FBAnd1/AndIn5 deactivated, in_InterLock_NC_1 usage removed (atomic with v7.4) "Deactivated"
+PASS in_InterLock_NC_1 usage delta: -2 (LvCurrentPermit, N2/FBAnd1) +3 (permits), other usage Ids preserved {"lost":2,"added":3}
+PASS in_InterLock_NC_2 singleton wrappers targetUsages/variableHasTargetUsages/variableUsages/usages {"tu":1,"vht":1,"vu":1,"us":1}
+PASS in_InterLock_NC_2 every usage item holds exactly one fbPortUsage/functionBlockPort/reference/moniker 4
+PASS in_InterLock_NC_2 -> //Network1/FBAndHvSetPermit/AndIn6 exactly once 1
+PASS //Network1/FBAndHvSetPermit/AndIn6 Activated NC, no global ref, no wire {"Id":"341fbd75-5738-4615-8aee-adf3dc00c843","name":"AndIn6","portName":"AndIn6","portNum":"7","objectIndex":"13","varId":"7","filter":"2","portDataType":"1","channelInterface":"Activated","deactivate1":"Break Contact (NC)","maxDeviation":"0","resetTime":"0"}
+PASS //Network1/FBAndHvSetPermit/AndIn6 was Deactivated in E2c, non-contact attributes unchanged {"base":"Deactivated"}
+PASS in_InterLock_NC_2 -> //Network1/FBAndSto1SetPermit/AndIn6 exactly once 1
+PASS //Network1/FBAndSto1SetPermit/AndIn6 Activated NC, no global ref, no wire {"Id":"8194472d-17ac-57a8-4088-de520d2b6d1e","name":"AndIn6","portName":"AndIn6","portNum":"7","objectIndex":"13","varId":"7","filter":"2","portDataType":"1","channelInterface":"Activated","deactivate1":"Break Contact (NC)","maxDeviation":"0","resetTime":"0"}
+PASS //Network1/FBAndSto1SetPermit/AndIn6 was Deactivated in E2c, non-contact attributes unchanged {"base":"Deactivated"}
+PASS in_InterLock_NC_2 -> //Network1/FBAndSto2SetPermit/AndIn6 exactly once 1
+PASS //Network1/FBAndSto2SetPermit/AndIn6 Activated NC, no global ref, no wire {"Id":"82292749-6940-f1ce-44fa-278b72b7cff2","name":"AndIn6","portName":"AndIn6","portNum":"7","objectIndex":"13","varId":"7","filter":"2","portDataType":"1","channelInterface":"Activated","deactivate1":"Break Contact (NC)","maxDeviation":"0","resetTime":"0"}
+PASS //Network1/FBAndSto2SetPermit/AndIn6 was Deactivated in E2c, non-contact attributes unchanged {"base":"Deactivated"}
+PASS //Network1/FBAndLvCurrentPermit/AndIn5 deactivated, in_InterLock_NC_2 usage removed (atomic with v7.4) "Deactivated"
+PASS //Network2/FBAnd1/AndIn6 deactivated, in_InterLock_NC_2 usage removed (atomic with v7.4) "Deactivated"
+PASS in_InterLock_NC_2 usage delta: -2 (LvCurrentPermit, N2/FBAnd1) +3 (permits), other usage Ids preserved {"lost":2,"added":3}
+28/28 PASS

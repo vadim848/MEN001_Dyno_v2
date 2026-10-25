@@ -1,0 +1,16 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {parseSalFile} from '../../src/sal-parser.js';
+const here=new URL('./',import.meta.url),repo=new URL('../../../',here);
+const old=parseSalFile(new URL('MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',repo));
+const now=parseSalFile(new URL('TwinSafeGroup1.sal',here),{bindingMode:'current',sgvlPath:new URL('GVL1.sgvl',here)});
+const rows=m=>m.networks.flatMap(n=>n.blocks),previous=rows(old),current=rows(now),lookup=new Map(current.map(b=>[b.path,b]));
+assert.equal(now.bindingAudit.status,'PASS');assert.equal(current.length,254);
+assert.deepEqual(current.map(b=>b.orderOfExecution).sort((a,b)=>a-b),Array.from({length:254},(_,i)=>i+1));
+const stripOrder=b=>({...b,orderOfExecution:undefined});
+for(const path of ['//Network6/FBTon2','//Network6/FBAnd24','//Network6/FBAnd23'])assert.deepEqual(stripOrder(lookup.get(path)),stripOrder(previous.find(b=>b.path===path)),path);
+for(const b of previous)if(lookup.has(b.path))assert.deepEqual(lookup.get(b.path).parameters,b.parameters,b.path+' timer/parameters unchanged');
+const retained=previous.filter(b=>lookup.has(b.path)&&b.path!=='//Network2/FBAnd4').sort((a,b)=>a.orderOfExecution-b.orderOfExecution);
+assert.deepEqual(retained.map(b=>b.path),retained.toSorted((a,b)=>lookup.get(a.path).orderOfExecution-lookup.get(b.path).orderOfExecution).map(b=>b.path));
+const evidence={status:'PASS',blockCount:254,bindingAudit:'PASS',checks:['contiguous order','retained relative order except declared And4 move','all retained parameters exact','Run TON2 And24 And23 port identities and bindings unchanged'],limits:['No native build CRC or hardware validation','No lifecycle reachability claim']};
+fs.writeFileSync(new URL('invariants.json',here),JSON.stringify(evidence,null,2));console.log(evidence);

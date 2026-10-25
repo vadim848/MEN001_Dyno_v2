@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <GVL Name="GVL_MenteeMotor" Id="{6c48deb4-c334-4be6-b5b1-49fe7ed0ee96}">
+    <Declaration><![CDATA[{attribute 'TcGvlVarFlags' := 'OPC'}
+VAR_GLOBAL
+    // Commands — written by Python over ADS, sent to device every cycle
+    // ADS symbol: GVL_MenteeMotor.stCmd
+    stCmd               : ST_MenteeMotorCmd;
+
+    // Status — read from device every cycle, read by Python over ADS
+    // ADS symbol: GVL_MenteeMotor.stStatus
+    stStatus            : ST_MenteeMotorStatus;
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

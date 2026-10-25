@@ -1,0 +1,71 @@
+{
+  "schema": "men001-v2-architect-plan/1",
+  "slice": "E2-status (mechanism) + roadmap R1,E2a-d,R2,E3,EX,E4,E5,E6",
+  "role": "v2-architect",
+  "date": "2026-10-21",
+  "source": {
+    "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+    "scenarioDecisions": "ab1be3652a304fb29c2e41ac0c927cbdf1ba5fccb0b6860426e38dd35f4edd66",
+    "reference": "4495a1f (git show only)",
+    "criteria": "program/analyst/REQ-CONSOLIDATION/CRITERIA.md"
+  },
+  "decisionsUsed": ["E2", "E2-Q1", "E2-Q2", "Q-RC-01=V Emergency", "Q-RC-02=A descent to R&D immediate STO", "V14-Q7", "V14-Q16..Q21", "E6-Q1", "Q-MU06-01/02"],
+  "baselineResources": {"fb": 242, "byType": {"safeAnd": 115, "safeOr": 51, "safeRs": 28, "safeTon": 19, "safeDecouple": 27, "safeEstop": 2}, "ports": 2076, "portsPerType": {"safeAnd": 9, "safeOr": 9, "safeRs": 3, "safeTon": 2, "safeDecouple": 16, "safeEstop": 14}, "sgvlSymbols": 85, "salVariables": 75, "wiredLinks": 307, "limitFb": 255},
+  "mechanism": {
+    "stages": {"S1": "Network3/FBRs1 b_Step1", "S12": "Network3/FBRs8 b_Step12", "SR": "Network3/FBRs7 b_Step_RnD", "S3": "Network3/FBRs3 b_Step3", "S4": "Network3/FBRs4", "S5": "Network3/FBRs5", "S6": "Network3/FBRs6", "SC": "E4 new", "SCX": "E4 new"},
+    "statusGroups": {"SAFE": ["S1", "S12"], "RND": ["SR"], "RUN": ["S3"], "CFG": ["SC", "SCX"], "EMG": ["S4", "S5", "S6", "none (group start only)"]},
+    "grants": {
+      "g1": {"symbol": "wire Network3/FBAnd1", "from": "none", "to": "S1"},
+      "g2": {"symbol": "b_Step12_Set", "from": "S1", "to": "S12"},
+      "g3": {"symbol": "b_Step_RnD_Set", "from": "S12", "to": "SR"},
+      "g4": {"symbol": "b_Step3_Set_2", "from": "SR", "to": "S3"},
+      "g5": {"symbol": "b_Step2_Set_2", "from": "SR", "to": "S1"},
+      "g6": {"symbol": "b_Step12_Set_2", "from": "S3", "to": "SR"},
+      "g7": {"symbol": "b_Step4_Set", "from": "S3", "to": "S4"},
+      "g8": {"symbol": "b_Step5_Set", "from": "S4", "to": "S5"},
+      "g9": {"symbol": "b_Step6_Set", "from": "S5", "to": "S6"},
+      "g10": {"symbol": "EX slice", "from": "S6", "to": "S1"}
+    },
+    "rules": ["Set_t = OR(grants into t)", "Reset_s contains all grants out of s, may contain grants impossible while s active, never a grant into s", "I-ORD-1 contiguous stage-RS head preceded by all their Set/Reset ORs, no readers between", "I-ORD-2 every grant producer and its stage-memory cone after the head in the same scan", "I-ORD-3 decoder right after Network1/FBEstop1", "arbitration: S3 g6 masked by !g7; SR g4 (C2_FBK TRUE) vs g5 (C2_FBK FALSE) same scan"],
+    "invariants": ["INV-1 at most one stage after every head", "INV-2 empty stage set only from group start until g1 (b_EStop_Ok after Restart)", "INV-3 exactly one STS_* every scan", "INV-4 no reader sees mixed stage snapshot", "INV-5 exclusivity by source gating + arbitration (structural); no separate conflict detector"],
+    "decoder": {"STS_SAFE": "(S1 or S12) and b_EStop_Ok", "STS_RND": "SR and b_EStop_Ok", "STS_RUN": "S3 and b_EStop_Ok", "STS_EMG": "not(STS_SAFE or STS_RND or STS_RUN [or STS_CFG])"}
+  },
+  "slices": [
+    {"id": "R1", "kind": "dead/duplicate removal", "required": true, "fbDelta": -27, "fbAfter": 215, "portsAfter": 1832, "sgvlAfter": 66, "salVarsAfter": 75,
+     "delete": ["Network5/* (15)", "Network3/FBRs2", "Network3/FBOr3", "Network3/FBOr4", "Network4/FBDecouple1", "Network9/FBAnd1", "Network12/FBAnd12", "Network12/FBAnd13", "Network12/FBAnd14", "Network1/FBAnd3", "Network1/FBAnd9", "Network1/FBAnd11", "Network6/FBAnd10"],
+     "rewire": ["Network3/FBDecouple2.DecIn2 := in_False_SI2_CH8", "Network1/FBAnd2.AndOut -> Network1/FBOr12.OrIn2", "Network6/FBAnd9.AndIn1 := out_EStop_Status"],
+     "deactivate": ["Network3/FBOr1.OrIn1,OrIn2", "Network3/FBOr2.OrIn1,OrIn3,OrIn4", "Network3/FBOr5.OrIn1", "Network3/FBOr6.OrIn1", "Network3/FBOr7.OrIn1", "Network3/FBOr9.OrIn1", "Network3/FBOr11.OrIn1", "Network3/FBAnd1.AndIn3", "Network1/FBOr1.OrIn1", "Network1/FBOr5.OrIn1", "Network1/FBOr8.OrIn1", "Network1/FBOr10.OrIn1", "Network1/FBOr14.OrIn1", "Network1/FBOr17.OrIn1", "Network1/FBOr18.OrIn1", "Network12/FBOr2.OrIn2"],
+     "deleteSymbols": ["b_Step1_Reset", "b_Step1_Set", "b_Step1_Set_2", "b_Step1_Set_3", "b_Step2_Set", "b_Step2_Reset", "b_Step2", "b_Step3_Reset", "b_Step3_Set_3", "b_Step4_Reset", "b_Step5_Reset", "b_Step6_Reset", "b_Set_LV_C1", "b_Set_HV_C2", "b_Reset_HV_Discharg_Req", "b_Reset_LV_Discharge_Req", "b_Set_STO_DR1", "b_Set_STO_DR2", "b_Reset_Transition_1"],
+     "g3": "differential regression before/after (alias outputs, stage memories except b_Step2), no guard mutations"},
+    {"id": "E2a", "ids": ["EMG-012", "MOD-006", "STP-004"], "criteria": ["E2-01", "E2-02", "E2-03 structural"], "fbDelta": 5, "fbAfter": 220, "portsAfter": 1877, "sgvlAfter": 70,
+     "newBlocks": ["Network3/DEC_SAFE_OR safeOr", "Network3/DEC_SAFE safeAnd -> STS_SAFE", "Network3/DEC_RND safeAnd -> STS_RND", "Network3/DEC_RUN safeAnd -> STS_RUN", "Network3/DEC_EMG safeAnd -> STS_EMG", "Network6/HEALTHY_OK safeAnd", "Network6/HEALTH_GUARD safeOr"],
+     "deleteBlocks": ["Network3/FBOr6", "Network3/FBOr11"],
+     "changes": ["Network3/FBOr1.OrIn3 := b_Step12_Set; OrIn4 deactivate", "Network3/FBOr5.OrIn2 := b_Step4_Set", "Network3/FBOr7.OrIn2 := b_Step5_Set", "Network3/FBOr9.OrIn2 := b_Step6_Set", "Network3/FBRs6.Reset := wire Network3/FBOr2", "Network3/FBRs8.Set := b_Step12_Set", "Network3/FBOr16.OrIn1 := b_Step_RnD_Set; FBRs7.Set := wire FBOr16", "Network3/FBRs3.Set := b_Step3_Set_2; FBOr13.OrIn2 deactivate", "Network6/FBAnd18.AndIn3 := b_Step4_Set NO; AndIn4 := wire Network6/FBAnd1", "Network6/RUN_DOWN_RESET.OrIn1 := b_Step12_Set_2", "Network7/FBAnd8.AndIn5 := b_Step4", "SafeResumption/SG_OWNER_SET.AndIn3 := recRndC_SU NO", "RndPhysicalCompact/GATE_020.AndIn6 := recRndC_SG NO", "Network6/FBAnd9.AndIn6 := wire HEALTH_GUARD; AndIn7 deactivate"],
+     "order": {"head": ["Network3/FBOr2", "Network3/FBOr1", "Network3/FBOr16", "Network3/FBOr13", "Network3/FBOr5", "Network3/FBOr7", "Network3/FBOr9", "Network3/FBRs1", "Network3/FBRs8", "Network3/FBRs7", "Network3/FBRs3", "Network3/FBRs4", "Network3/FBRs5", "Network3/FBRs6"], "afterFBEstop1": ["DEC_SAFE_OR", "DEC_SAFE", "DEC_RND", "DEC_RUN", "DEC_EMG"], "moves": ["Network12/FBAnd15 after Network12/FBDecouple1", "Network3/FBAnd2 before Network3/FBAnd1", "Network2/FBAnd11 before Network2/FBAnd91", "SafeResumption/SG_OWNER_SET after RndPhysicalCompact/STATE_SU", "RndPhysicalCompact/STATE_SG after SG_OWNER_SET", "Network6/HEALTHY_OK, HEALTH_GUARD before Network6/FBAnd9"], "rest": "F1 relative order, renumber 1..N"},
+     "mutationPlan": "MUTATION_PLAN_E2a.json"},
+    {"id": "E2b", "ids": ["EMG-002 (Run)", "CVR-006 (Run)"], "criteria": ["IL-03a", "IL-03b"], "fbDelta": 1, "fbAfter": 221, "newBlocks": ["Network1/FBOrIlRunOk safeOr (b_Step3 NO, linkCoverClosed)"], "changes": ["Network12/FBAnd16.AndOut += SAL variable linkCoverClosed", "Network1/FBAnd1.AndIn3 := wire FBOrIlRunOk"], "order": ["Network12/FBAnd16, Network1/FBOrIlRunOk immediately before Network1/FBAnd1"], "isolation": "Q-RC-03 at FBOrIlRunOk.OrIn1", "mutationPlan": "MUTATION_PLAN_E2b.json"},
+    {"id": "E2c", "ids": ["HLT-001", "MOD-005", "MOD-008", "MOD-001 (polarity)"], "criteria": ["HLT-01", "HLT-02", "MOD1-01 polarity"], "fbDelta": 2, "fbAfter": 223, "architectDecision": "D-ARCH-POL raw FALSE = Healthy (reference N5/N6/N7)", "newBlocks": ["SafeResumption/HLT_LV safeAnd -> linkHltLvLost", "RndPhysicalCompact/GATE_SG_SET safeOr"], "changes": ["Network11/FBAnd4.AndIn3 contact NC -> NO", "RndPhysicalCompact/STATE_SG.Set := wire GATE_SG_SET"], "isolation": "Q-ARCH-03 at HLT_LV.AndIn2", "mutationPlan": "MUTATION_PLAN_E2c.json"},
+    {"id": "E2d", "ids": ["EMG-002 (Safe/R&D)", "CVR-004", "CVR-006"], "criteria": ["IL-01", "IL-02"], "fbDelta": 1, "fbAfter": 224, "newBlocks": ["SafeResumption/IL_SCOPE safeOr (b_Step1, linkCoverClosed) -> linkIlScope"], "changes": ["RndPhysicalCompact/GATE_001.AndIn5 := linkIlScope; AndIn6 deactivate", "Network1/FBAndLvCurrentPermit.AndIn4/5 deactivate", "Network2/FBAnd1.AndIn5/6 deactivate", "Network1/FBAnd4.AndIn3/4 := NC1/NC2", "RndPhysicalCompact/GATE_010.AndIn3/4 := NC1/NC2"], "isolation": "Q-ARCH-04 at GATE_010.AndIn3/4", "mutationPlan": "MUTATION_PLAN_E2d.json"},
+    {"id": "R2", "kind": "DECOUPLE fan-out refactor", "requiresApproval": "Q-ARCH-06", "fbDeltaEstimate": -12, "candidates": ["Network2/FBDecouple1", "Network2/FBDecouple3", "Network2/FBDecouple5", "Network6/FBDecouple1", "Network6/FBDecouple3", "Network11/FBDecouple1", "Network12/FBDecouple1", "Network12/FBDecouple2", "Network12/FBDecouple3", "Network7/FBDecouple1", "Network1/FBOr12+FBOr13 via Network3/FBDecouple1 ch2/3"]},
+    {"id": "E3", "ids": ["STP-001", "STP-002", "STP-003", "STP-004", "STP-006", "EMG-008", "EMG-009", "EMG-010", "MOD-002"], "criteria": ["STP-A", "STP-B (PLC part after E4)", "STP-C", "STP-D", "STP-E", "STP-G"], "fbDeltaEstimate": 17, "detail": "PLAN.md section E3", "mutationPlan": "MUTATION_PLAN_E3.draft.json", "blocked": ["STP-F Q-RC-09 (default continues)", "IL-05 Q-RC-03", "Q-ARCH-05"]},
+    {"id": "EX", "ids": ["EMG-006", "EMG-001 non-Run"], "criteria": ["EMG6-01"], "fbDeltaEstimate": "+1 (exit) +3 if Q-ARCH-01=A", "blocked": ["Q-ARCH-01"]},
+    {"id": "E4", "frozen": "until lead/Vadim release", "fbDeltaEstimate": 11, "configFiles": ["Alias Devices/PLC_IO/*.sds", "Safety_Dyno.splcproj", "TwinSafeGroup1.sal variables/aliasDeviceIoUsage", "MEN001_Dyno.tsproj (+xti)", "PLC_Dyno/** variables", "TargetSystemConfig.xml only if process image size changes"], "physicalRewiring": "none required", "blocked": ["Q-RC-04", "Q-RC-05", "Q-RC-08", "Q-RC-13", "Q-ARCH-08", "HB-04 returns to analyst"]},
+    {"id": "E5", "fbDeltaEstimate": "+3 (0 if HL_FAULT merged with SafetyFault)", "blocked": ["Q-RC-07", "Q-RC-11", "Q-RC-13"]},
+    {"id": "E6", "fbDeltaEstimate": 12, "blocked": ["Q-RC-06", "Q-RC-12 (assumed ABT+SF)"], "fits": false}
+  ],
+  "budget": {"R1": 215, "E2a": 220, "E2b": 221, "E2c": 223, "E2d": 224, "R2": 212, "E3": 229, "EX": 233, "E4": 244, "E5": 247, "E6": 259, "E6withMerges": 256, "conclusion": "R1+E2 fit exactly; E3-E5 fit only with R2; E6 needs R2 + HL/SF merge + one more reduction (out_TransitionStep latch -> decoder, -4). Decision Q-ARCH-06."},
+  "timingNote": "Stage changes whose RS was after its grant (S4,S5,S6, SR from S12) occur 1 scan later than F1; Run reset/SS1 on Emergency unchanged; no timer value changed.",
+  "questions": {
+    "Q-ARCH-01": "Steady R&D (LV ON), or Safe->R&D in progress, or StartingRun -> in_ES_NC_1 FALSE (or PLC/Mentee). Now: stage kept, LV stays ON, after Restart system resumes R&D. Missing: which energy-removal sequence in Emergency outside Run (A: existing Step4 chain as in Run - C3/BMS OFF + LV discharge at once, C1 OFF after 2 s, STO, HV discharge, C2 OFF; then Safe only by green Restart; B: keep as now)?",
+    "Q-ARCH-03": "StartingRun (STO released, C2 switching on) -> LV Healthy lost. Missing: ignore until Run/abort, abort StartingRun, or StartingRun abort then R&D->Safe?",
+    "Q-ARCH-04": "Safe, cover open (NC1 or NC2 FALSE), blue held >=500 ms. F1 forbids Unlock; reference allowed it. Missing: Unlock allowed or forbidden?",
+    "Q-ARCH-05": "Steady Run (no down requested) -> HV or LV Healthy lost (Q-RC-02 descent). Missing: record HealthyLost fault (as STP-D in SS1) or descent without fault?",
+    "Q-ARCH-06 (lead)": "Approve R1 (dead/duplicate removal incl. Network5/Step2, Network4, Network9, Network12 PLC00), R2 (DECOUPLE fan-out refactor), and for E6 merging HL fault with SafetyFault and replacing out_TransitionStep latch by decoder status; otherwise E6 is deferred.",
+    "Q-ARCH-08": "Steady Safe, cover closed -> in the same scan BOTH qualifies (Safe->R&D) and Bypass rises (Config). Missing: which wins, or neither?"
+  },
+  "prototype": {"files": ["repro/proto.mjs", "repro/run.mjs", "repro/h.mjs", "repro/t2.mjs", "repro/t4.mjs", "repro/t5.mjs", "repro/dump.mjs"], "note": "In-memory model of E2a-d applied to canonical F1 without R1 (FB 252 = 242+11-1, Network3/FBOr6 kept in head instead of deleted); canonical file untouched. Outputs repro/t2.out.txt, t4.out.txt, t5.out.txt. Model run, not native validation."},
+  "editorAllowedFiles": ["MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal", "MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal.diagram", "MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl"],
+  "forbidden": ["Alias Devices", "splcproj", "tsproj/xti", "TargetSystemConfig.xml", "group parameters", "existing timer values", "FBEstop1 channel modes", "reference repository"]
+}

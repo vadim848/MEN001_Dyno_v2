@@ -1,0 +1,48 @@
+{
+  "capturedAt": "2026-10-20T11:36:21.843Z",
+  "baselineSalSha256": "ffd6c64e567131cb4fd5c4dd58816e0e5e8bb4f60777142d7959d9cc591ef0d1",
+  "baselineSgvlSha256": "4eb263924e8ca5d77a4017c7f82b0a13396d981d881158be8c8f2a169d393ee5",
+  "candidateSalSha256": "ffd6c64e567131cb4fd5c4dd58816e0e5e8bb4f60777142d7959d9cc591ef0d1",
+  "candidateSgvlSha256": "4eb263924e8ca5d77a4017c7f82b0a13396d981d881158be8c8f2a169d393ee5",
+  "checks": [
+    {
+      "name": "full source binding namespace wrappers symbol indices and single writer",
+      "status": "PASS",
+      "detail": {
+        "beforeWires": 343,
+        "afterWires": 343,
+        "baselineCrossNetwork": 24
+      }
+    },
+    {
+      "name": "planned ordinary symbols and exact single source/multi-target allocation",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n\n64 !== 75\n"
+    },
+    {
+      "name": "zero graphical cross-network wires",
+      "status": "FAIL",
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   {\n+     from: '//Network1/FBRs1/RsOut',\n+     id: '7294795b-f7a7-41ad-9b14-ddc98707d42b',\n+     to: '//Network12/FBAnd15/AndIn3'\n+   },\n+   {\n+     from: '//Network1/FBRs2/RsOut',\n+     id: '665425c0-8a82-45e8-b80a-5ae53d797d8b',\n+     to: '//Network12/FBAnd15/AndIn4'\n+   },\n+   {\n+     from: '//Network1/FBAndLvCurrentPermit/AndOut',\n+     id: '033a6394-82a4-4747-8851-eb054e7da949',\n+     to: '//SafeResumption/SAFE_UP_SCOPE/AndIn3'\n+   },\n+   {\n+     from: '//Network1/FBAndLvCurrentPermit/AndOut',\n+     id: 'dca9f6ab-91d6-46c3-8e58-54b3a6bbfbf0',\n+     to: '//Network12/FBAnd15/AndIn6'\n+   },\n+   {\n+     from: '//Network2/FBAnd4/AndOut',\n+     id: 'd2a58d62-7e82-42e1-ad35-2ceaef1286ec',\n+     to: '//SafeResumption/SAFE_ACCEPTED_UP/Set'\n+   },\n+   {\n+     from: '//RndPhysicalCompact/GATE_001/AndOut',\n+     id: '730e3286-a55a-4597-b234-8d4f2e1ec1c2',\n+     to: '//SafeResumption/RND_SCOPE/AndIn1'\n+   },\n+   {\n+     from: '//RndPhysicalCompact/GATE_001/AndOut',\n+     id: '77cf73ab-8b22-40f4-8131-5149a179d7a3',\n+     to: '//SafeResumption/SAFE_UP_SCOPE/AndIn1'\n+   },\n+   {\n+     from: '//RndPhysicalCompact/GREEN/TonOut',\n+     id: '7c9a3841-b398-4b3b-ad97-8320c1e47cd8',\n+     to: '//SafeResumption/SG_OWNER_SET/AndIn1'\n+   },\n+   {\n+     from: '//RndPhysicalCompact/BOTH/TonOut',\n+     id: '99a9bfdb-8372-4390-9ced-276f871eff23',\n+     to: '//Network2/FBAnd4/AndIn1'\n+   },\n+   {\n+     from: '//RndPhysicalCompact/STATE_SG/RsOut',\n+     id: 'bb18c869-abd7-4755-8fee-1ab5f6f4062c',\n+     to: '//Network12/FBOr2/OrIn1'\n+   },\n+   {\n+     from: '//RndPhysicalCompact/STATE_SU/RsOut',\n+     id: '81338d90-868c-40b4-b792-c92cac7764bc',\n+     to: '//Network12/FBOr1/OrIn1'\n+   },\n+   {\n+     from: '//RndPhysicalCompact/STATE_SU/RsOut',\n+     id: '6195cba2-d29a-42db-82d4-37981789840d',\n+     to: '//Network1/FBOr8/OrIn3'\n+   },\n+   {\n+     from: '//RndPhysicalCompact/STATE_SU/RsOut',\n+     id: '420c2e16-0d9a-fc60-a314-13d24d2c3c90',\n+     to: '//Network1/FBOr10/OrIn3'\n+   },\n+   {\n+     from: '//RndPhysicalCompact/STATE_BA/RsOut',\n+     id: '5cb9f9e9-8e30-4acf-b7ee-6894f9e7952a',\n+     to: '//Network12/FBAnd2/AndIn2'\n+   },\n+   {\n+     from: '//RndPhysicalCompact/STATE_BA/RsOut',\n+     id: '9749037e-b5b5-416d-b9ce-d5589f087cfc',\n+     to: '//Network2/FBAnd7/AndIn2'\n+   },\n+   {\n+     from: '//SafeResumption/MODE/OrOut',\n+     id: 'ac4882f5-a158-4e84-8f1c-5c9c1caae470',\n+     to: '//RndPhysicalCompact/GATE_001/AndIn1'\n+   },\n+   {\n+     from: '//SafeResumption/CONNECTOR_SCOPE/OrOut',\n+     id: '9d16c9d2-8d55-4ba7-9199-971e3415263e',\n+     to: '//RndPhysicalCompact/GATE_001/AndIn7'\n+   },\n+   {\n+     from: '//SafeResumption/RND_SCOPE/AndOut',\n+     id: 'b2a87027-6a5b-4322-b3a1-d4b635e8de33',\n+     to: '//RndPhysicalCompact/GATE_020/AndIn5'\n+   },\n+   {\n+     from: '//SafeResumption/RND_SCOPE/AndOut',\n+     id: '552719c8-7e12-4b86-b8b4-9c91fc57002a',\n+     to: '//RndPhysicalCompact/STATE_SU/Reset'\n+   },\n+   {\n+     from: '//SafeResumption/RND_SCOPE/AndOut',\n+     id: '5c7a5558-9b82-4c03-a1c7-28f4dcb8df9b',\n+     to: '//RndPhysicalCompact/STATE_SG/Reset'\n+   },\n+   {\n+     from: '//SafeResumption/SAFE_UP_SCOPE/AndOut',\n+     id: '1cd087e8-30d8-4692-85df-e2a84a3493c1',\n+     to: '//Network2/FBAnd4/AndIn3'\n+   },\n+   {\n+     from: '//SafeResumption/SG_OWNER_SET/AndOut',\n+     id: 'd319cf2a-87c5-40d6-9d44-7b44dc93ba3c',\n+     to: '//RndPhysicalCompact/STATE_SG/Set'\n+   },\n+   {\n+     from: '//SafeResumption/SAFE_ACCEPTED_UP/RsOut',\n+     id: '96f4d89b-127d-434d-8129-5a974cbd5fc6',\n+     to: '//RndPhysicalCompact/GATE_030/OrIn4'\n+   },\n+   {\n+     from: '//SafeResumption/SAFE_ACCEPTED_UP/RsOut',\n+     id: 'd52085f4-d467-438a-ba7b-164c9d78b5fc',\n+     to: '//Network2/FBOr1/OrIn1'\n+   }\n+ ]\n- []\n"
+    },
+    {
+      "name": "exact normalized direct and global-symbol endpoint graph equivalence",
+      "status": "PASS"
+    },
+    {
+      "name": "preserve every original SAL node attribute ordering and local wire; only remove cross wires add global refs",
+      "status": "PASS"
+    },
+    {
+      "name": "existing SGVL definitions identity metadata and usage records immutable; only append usages or new symbols",
+      "status": "PASS",
+      "detail": {
+        "newSymbols": 0
+      }
+    },
+    {
+      "name": "new references limited to exact baseline cross-wire endpoints and source producer",
+      "status": "PASS"
+    }
+  ],
+  "status": "FAIL"
+}

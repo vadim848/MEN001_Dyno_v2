@@ -1,0 +1,786 @@
+{
+  "kind": "non-deployable native connection plan; no aliases or SAL CRC",
+  "snapshot": {
+    "name": "REC_SNAPSHOT",
+    "type": "safeDecouple",
+    "relativeExecutionOrder": 1,
+    "channels": [
+      {
+        "input": "State.W",
+        "output": "Snapshot.W"
+      },
+      {
+        "input": "State.A",
+        "output": "Snapshot.A"
+      },
+      {
+        "input": "State.G",
+        "output": "Snapshot.G"
+      },
+      {
+        "input": "State.B",
+        "output": "Snapshot.B"
+      },
+      {
+        "input": "State.T",
+        "output": "Snapshot.T"
+      },
+      {
+        "input": "State.U",
+        "output": "Snapshot.U"
+      },
+      {
+        "input": "State.L",
+        "output": "Snapshot.L"
+      }
+    ]
+  },
+  "boundaries": [
+    {
+      "name": "Boundary.inhibit",
+      "status": "requires reviewed producer; never default TRUE/FALSE"
+    },
+    {
+      "name": "Boundary.off",
+      "status": "requires reviewed producer; never default TRUE/FALSE"
+    },
+    {
+      "name": "Boundary.releaseDone",
+      "status": "requires reviewed producer; never default TRUE/FALSE"
+    },
+    {
+      "name": "Boundary.greenOnly",
+      "status": "requires reviewed producer; never default TRUE/FALSE"
+    },
+    {
+      "name": "Boundary.blueOnly",
+      "status": "requires reviewed producer; never default TRUE/FALSE"
+    },
+    {
+      "name": "Boundary.singleDone",
+      "status": "requires reviewed producer; never default TRUE/FALSE"
+    },
+    {
+      "name": "Boundary.both",
+      "status": "requires reviewed producer; never default TRUE/FALSE"
+    },
+    {
+      "name": "Boundary.candidate",
+      "status": "requires reviewed producer; never default TRUE/FALSE"
+    },
+    {
+      "name": "Boundary.within",
+      "status": "requires reviewed producer; never default TRUE/FALSE"
+    },
+    {
+      "name": "Boundary.bothDone",
+      "status": "requires reviewed producer; never default TRUE/FALSE"
+    },
+    {
+      "name": "Boundary.primaryLost",
+      "status": "requires reviewed producer; never default TRUE/FALSE"
+    }
+  ],
+  "booleanBlocks": 33,
+  "next": {
+    "W": {
+      "signal": "REC_GATE_004.Out",
+      "inverted": false
+    },
+    "A": {
+      "signal": "REC_GATE_008.Out",
+      "inverted": false
+    },
+    "G": {
+      "signal": "REC_GATE_012.Out",
+      "inverted": false
+    },
+    "B": {
+      "signal": "REC_GATE_016.Out",
+      "inverted": false
+    },
+    "T": {
+      "signal": "REC_GATE_021.Out",
+      "inverted": false
+    },
+    "U": {
+      "signal": "REC_GATE_025.Out",
+      "inverted": false
+    },
+    "L": {
+      "signal": "REC_GATE_033.Out",
+      "inverted": false
+    }
+  },
+  "blocks": [
+    {
+      "name": "REC_GATE_001",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.W",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.releaseDone",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 2
+    },
+    {
+      "name": "REC_GATE_002",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "Snapshot.G",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.B",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.T",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.U",
+          "inverted": false
+        },
+        {
+          "signal": "Snapshot.L",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 3
+    },
+    {
+      "name": "REC_GATE_003",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Boundary.off",
+          "inverted": false
+        },
+        {
+          "signal": "REC_GATE_002.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 4
+    },
+    {
+      "name": "REC_GATE_004",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "Boundary.inhibit",
+          "inverted": false
+        },
+        {
+          "signal": "REC_GATE_001.Out",
+          "inverted": false
+        },
+        {
+          "signal": "REC_GATE_003.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 5
+    },
+    {
+      "name": "REC_GATE_005",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.W",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.releaseDone",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 6
+    },
+    {
+      "name": "REC_GATE_006",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.A",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.off",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 7
+    },
+    {
+      "name": "REC_GATE_007",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "REC_GATE_005.Out",
+          "inverted": false
+        },
+        {
+          "signal": "REC_GATE_006.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 8
+    },
+    {
+      "name": "REC_GATE_008",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Boundary.inhibit",
+          "inverted": true
+        },
+        {
+          "signal": "REC_GATE_007.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 9
+    },
+    {
+      "name": "REC_GATE_009",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.A",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.greenOnly",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 10
+    },
+    {
+      "name": "REC_GATE_010",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.G",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.greenOnly",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.singleDone",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 11
+    },
+    {
+      "name": "REC_GATE_011",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "REC_GATE_009.Out",
+          "inverted": false
+        },
+        {
+          "signal": "REC_GATE_010.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 12
+    },
+    {
+      "name": "REC_GATE_012",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Boundary.inhibit",
+          "inverted": true
+        },
+        {
+          "signal": "REC_GATE_011.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 13
+    },
+    {
+      "name": "REC_GATE_013",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.A",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.blueOnly",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 14
+    },
+    {
+      "name": "REC_GATE_014",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.B",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.blueOnly",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.singleDone",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 15
+    },
+    {
+      "name": "REC_GATE_015",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "REC_GATE_013.Out",
+          "inverted": false
+        },
+        {
+          "signal": "REC_GATE_014.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 16
+    },
+    {
+      "name": "REC_GATE_016",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Boundary.inhibit",
+          "inverted": true
+        },
+        {
+          "signal": "REC_GATE_015.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 17
+    },
+    {
+      "name": "REC_GATE_017",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.A",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.both",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 18
+    },
+    {
+      "name": "REC_GATE_018",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Boundary.candidate",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.both",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.within",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 19
+    },
+    {
+      "name": "REC_GATE_019",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.T",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.off",
+          "inverted": true
+        },
+        {
+          "signal": "Boundary.bothDone",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 20
+    },
+    {
+      "name": "REC_GATE_020",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "REC_GATE_017.Out",
+          "inverted": false
+        },
+        {
+          "signal": "REC_GATE_018.Out",
+          "inverted": false
+        },
+        {
+          "signal": "REC_GATE_019.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 21
+    },
+    {
+      "name": "REC_GATE_021",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Boundary.inhibit",
+          "inverted": true
+        },
+        {
+          "signal": "REC_GATE_020.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 22
+    },
+    {
+      "name": "REC_GATE_022",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.B",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.blueOnly",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.singleDone",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 23
+    },
+    {
+      "name": "REC_GATE_023",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.U",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.blueOnly",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 24
+    },
+    {
+      "name": "REC_GATE_024",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "REC_GATE_022.Out",
+          "inverted": false
+        },
+        {
+          "signal": "REC_GATE_023.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 25
+    },
+    {
+      "name": "REC_GATE_025",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Boundary.inhibit",
+          "inverted": true
+        },
+        {
+          "signal": "REC_GATE_024.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 26
+    },
+    {
+      "name": "REC_GATE_026",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.G",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.greenOnly",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.singleDone",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 27
+    },
+    {
+      "name": "REC_GATE_027",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.T",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.bothDone",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 28
+    },
+    {
+      "name": "REC_GATE_028",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Boundary.candidate",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.both",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.within",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 29
+    },
+    {
+      "name": "REC_GATE_029",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Boundary.primaryLost",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.off",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 30
+    },
+    {
+      "name": "REC_GATE_030",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.U",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.off",
+          "inverted": true
+        },
+        {
+          "signal": "Boundary.blueOnly",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 31
+    },
+    {
+      "name": "REC_GATE_031",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Snapshot.L",
+          "inverted": false
+        },
+        {
+          "signal": "Boundary.off",
+          "inverted": true
+        }
+      ],
+      "relativeExecutionOrder": 32
+    },
+    {
+      "name": "REC_GATE_032",
+      "type": "safeOr",
+      "inputs": [
+        {
+          "signal": "REC_GATE_026.Out",
+          "inverted": false
+        },
+        {
+          "signal": "REC_GATE_027.Out",
+          "inverted": false
+        },
+        {
+          "signal": "REC_GATE_028.Out",
+          "inverted": false
+        },
+        {
+          "signal": "REC_GATE_029.Out",
+          "inverted": false
+        },
+        {
+          "signal": "REC_GATE_030.Out",
+          "inverted": false
+        },
+        {
+          "signal": "REC_GATE_031.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 33
+    },
+    {
+      "name": "REC_GATE_033",
+      "type": "safeAnd",
+      "inputs": [
+        {
+          "signal": "Boundary.inhibit",
+          "inverted": true
+        },
+        {
+          "signal": "REC_GATE_032.Out",
+          "inverted": false
+        }
+      ],
+      "relativeExecutionOrder": 34
+    },
+    {
+      "name": "REC_STATE_W",
+      "type": "safeRs",
+      "set": {
+        "signal": "REC_GATE_004.Out",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "REC_GATE_004.Out",
+        "inverted": true
+      },
+      "output": "State.W",
+      "relativeExecutionOrder": 35
+    },
+    {
+      "name": "REC_STATE_A",
+      "type": "safeRs",
+      "set": {
+        "signal": "REC_GATE_008.Out",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "REC_GATE_008.Out",
+        "inverted": true
+      },
+      "output": "State.A",
+      "relativeExecutionOrder": 36
+    },
+    {
+      "name": "REC_STATE_G",
+      "type": "safeRs",
+      "set": {
+        "signal": "REC_GATE_012.Out",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "REC_GATE_012.Out",
+        "inverted": true
+      },
+      "output": "State.G",
+      "relativeExecutionOrder": 37
+    },
+    {
+      "name": "REC_STATE_B",
+      "type": "safeRs",
+      "set": {
+        "signal": "REC_GATE_016.Out",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "REC_GATE_016.Out",
+        "inverted": true
+      },
+      "output": "State.B",
+      "relativeExecutionOrder": 38
+    },
+    {
+      "name": "REC_STATE_T",
+      "type": "safeRs",
+      "set": {
+        "signal": "REC_GATE_021.Out",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "REC_GATE_021.Out",
+        "inverted": true
+      },
+      "output": "State.T",
+      "relativeExecutionOrder": 39
+    },
+    {
+      "name": "REC_STATE_U",
+      "type": "safeRs",
+      "set": {
+        "signal": "REC_GATE_025.Out",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "REC_GATE_025.Out",
+        "inverted": true
+      },
+      "output": "State.U",
+      "relativeExecutionOrder": 40
+    },
+    {
+      "name": "REC_STATE_L",
+      "type": "safeRs",
+      "set": {
+        "signal": "REC_GATE_033.Out",
+        "inverted": false
+      },
+      "reset": {
+        "signal": "REC_GATE_033.Out",
+        "inverted": true
+      },
+      "output": "State.L",
+      "relativeExecutionOrder": 41
+    }
+  ],
+  "unresolved": [
+    "boundary producers and their global schedule",
+    "inclusive 500 ms chord encoding",
+    "explicit verified startup",
+    "safe-energy/access and emergency proof bindings",
+    "request-owner integration and qualified bindings",
+    "target capacity/build/CRC validation"
+  ]
+}

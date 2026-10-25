@@ -1,0 +1,240 @@
+# Программная приёмка v2 — обязательные требования
+
+2026-10-18. Это договор о полноте программной проверки, а не заявление о
+соответствии. Все 41 ID из SPEC §§19–20 обязательны; отсутствие теста не PASS.
+Аппаратная конфигурация и входы заданы. Hardware/native Verify/Build/CRC,
+проводка, аппаратные mappings, глобальные параметры группы, физические времена,
+загрузка и оборудование не являются gate текущей приёмки.
+
+Обычные программные переменные и связи можно менять по утверждённому плану;
+запрет глобальных параметров не запрещает программные globals. Заданные
+таймеры не менять, кроме явно разрешённого D-CHORD250 программного окна.
+SINGLE0.5/BOTH1 утверждены D-TIMING; последнее D-CHORD250 утверждает window250мс
+включительно. BOTH1с считать от второй кнопки, обе непрерывноON. Release2с
+не изменён. D-Q500 не разрешает chord500: после принятой single новой
+попытки/up из тех же нажатий нет. Тихое округление250мс недопустимо.
+
+Источники: последние явные решения пользователя для конкретного сценария →
+утверждённые намеренные изменения → read-only reference сохраняемой полной
+последовательности → предварительные/исторические материалы. Основа v2 —
+исходная последовательность с устойчивой остановкой/продолжением R&D.
+Наличие названия R&D в reference не требуется для сопоставления фаз.
+
+## Матрица обязательных проверок
+
+Latest2026-10-20: D-STARTINGRUN-NO-COAST closes remainingabort5squestion:
+STO→сразуDischarge→existinghold→C2OFF→C2FBKOFF, noSS1/no5s coast. Test
+actualorder/C2ON-OFF/no cancelledlaunch revival; HealthyLossRunSS1 full5s
+unchanged. Oldpendingabort5s snapshots superseded. LV_WORKING_TRANSFER_REVIEW
+finalACCEPT exactworkingLV254/boundedcanonical; olderreviewPENDING superseded.
+Whole41/BOOT/native and Run/StartingRun fullv2 still notaccepted. Completed295
+inputintegrity proof stayshistorical; subsequentstatusdocs expecteddoc-onlydeltas.
+
+### Actual working LV254 transfer — 2026-10-20
+
+Рабочие SHA: SAL b7096fa3cf7349ea0be08f347180deb071a0f6b75612c4e5c8a7f45cf0557161,
+SGVL4eb263924e8ca5d77a4017c7f82b0a13396d981d881158be8c8f2a169d393ee5;
+254blocks. FINAL_WORKING_EVIDENCE.json в lv-working-transfer: точные21files,
+whole-sourceaudit и13structuralPASS;295canonicalinputs unchanged before/after
+digest ccd7bd625a442c7cca585ca06fa486ec8c60ebc8747ac4a031d0086bd072de01.
+Actualcanonical189/189harness,75/75historical,436/438current;
+200casePASS/1STATEFAIL/7NV/0ERROR. ДваRunfailedchordFAIL сохранены.
+LVnormalSafecompletion и действительный freshSafe→RnD newcycle реализованы
+в bounded объёме; независимые LV16/Safe15/RnD69/earlySTO88/emergency40/SG3
+core evidence сохранены. Старые «LVimplementationpending» и72f42… source
+ниже — superseded исторические снимки. LV_WORKING_TRANSFER_REVIEW.md теперь
+фиксирует итог **ACCEPT bounded working LV** после независимой проверки
+фактического canonical прогона,295 входов,21 переноса и7 protected core.
+Это не whole41/BOOT/native приёмка. Run/StartingRun/fullstopv2 pending,
+один уточняющий выбор применимости5s приabort остаётся отдельным.
+
+Latest stop answers2026-10-20: existingHVdischargehold→C2OFF→C2FBKOFF sufficient,
+SS1timer2с/STOcoasttimer5с; StartingRunabort безSS1 STO→Discharge&delay→C2,
+relevant waits без energizingcancelledlaunch. Критерии USER_STOP_SEQUENCE_HANDOFF.md;
+соответствующие pending вопросы закрыты, actualsequence/timer start-hold-reset
+coverage EMG008–010/STP001–004/MOD002/004 остаётся обязательным. Это не PASS
+реализации и не HVtimeoutpolicy. LV bounded acceptance неpromotion/fullmigration.
+
+### Принят bounded A1/A2 пакет — 2026-10-20
+
+NEXT_EMERGENCY_EXECUTION_REVIEW.md: **ACCEPT,40PASS/0FAIL/0fixtureERROR**;
+working SAL72f42d…/SGVLde0fa… без изменения кода этим пакетом.
+Independent next-emergency-tests REPORT/RESULTS/VERIFIED_REPORT.json и
+PACKAGE_IDENTITY фиксируют actual native producers, Set/Reset consumers и
+непрерывные1мс traces. A1: Safe/RnD fresh-blue grant positive, heldblue при
+NC2/Mentee one/ten-scan fault и восстановлении без Restart; Unlock/EStopFALSE
+с первого fault до200мс после восстановления. A2: real pendingSet на Safe-Step12
+LV, RnD HV/STO1/STO2, original-start Step2 LV/HV; paired здоровые controls,
+fault/restore запрещают все новые nativeSet/выходные rises. Это расширяет
+EMG001/005/007/011,CVR001/002, но не закрывает целиком этиID или все41.
+InitialSafe/originalStep2 component boundary, семь inactiveN4cuts, noBOOT/group,
+A3/полная аварийная completion/destination остаются открытыми.
+
+Новый user-decision baseline: 8PASS/12FAIL/2NV/0ERROR, sourceunchanged;
+USER_DECISIONS_BASELINE_REVIEW принят как ограниченный RED пакет тестов,
+не как приёмка реализации. Frozen архивы сохраняются для сравнения кандидата.
+LV normalcompletion вопрос отвечен D-LV-OFF-COMPLETE, implementation pending;
+RunBOTH/StartingRun новые решения также не закрываются A1/A2PASS.
+
+### Новые нормативные решения 2026-10-20 — реализация ещё не принята
+
+SCENARIO_DECISIONS.md: D-LV-OFF-COMPLETE закрывает LV completion вопрос:
+после отключения LV при RnD→Safe достаточно LV_C1_FBK FALSE, новых таймеров
+не требуется. MOD005/STP005: проверить настоящий down→LV-off→feedbackOFF→Safe,
+feedbackON запрещает преждевременный Safe, отсутствует повторное включение.
+D-RUN-BOTH-IGNORE закрывает QR: полноценная новая BOTH в Run игнорируется;
+BTN005–008/MOD004: нет single/down/up, новая попытка лишь после полной очистки.
+D-STARTINGRUN-GREEN-DOWN закрывает QT в указанном контексте: после принятого
+запуска и STO released новая green500 после очистки прерывает запуск и
+выполняет Run→RnD. MOD002/004, STP001–004 и CVR005 проверяют реальный abort
+owner/нормальную остановку; не immediateRnD и не новый discharge oracle.
+Подробные позитивы/негативы и сохранившиеся границы:
+USER_DECISIONS_2026_10_20_HANDOFF.md. Исторические pending QR/QT/LV строки
+ниже заменены этими решениями в их точном контексте. QP/conflict/HV completion
+и остальные неопределённые transition contexts остаются отдельными.
+
+Актуально2026-10-20 после переноса и независимого post-working review:
+рабочий SAL72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e,
+SGVLde0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56.
+Safe qualification/no-autoenergy приняты только в заявленном компонентном
+объёме. Рабочий full:189/189 harness,75/75 historical,436/438 current;
+200PASS/1STATEFAIL/7NV/0ERROR. Два Run invalid-chord FAIL сохранены.
+Новый current-rnd-down-no-reenergy.test.js запускается штатным check:software:
+4 проверки actual phase writers/первый Step2/2500мс удержание без нового Set,
+исходный Step2 при обычном discharge FALSE/TRUE и fault-component clear/fresh
+reentry. Seven explicit inactive N4 boundaries/initial state ограничивают proof;
+это не нормальный RnD→Safe, полный BOOT или всё emergency/recovery покрытие.
+Независимые Safe15/RnD69/earlySTO88 и prior baseline RED сохранены.
+Снята только устаревшая проверка параметра выведенного Safe TON3;
+замещающий BOTH1с/полный интервал/сбросы проверяются. Все41ID остаются обязательны.
+Review: DOWN_EPISODE_OWNER_REVIEW.md; transfer/integrity — working-transfer/.
+
+Ниже сохранены предыдущие снимки до этого переноса, не актуальные counts/source.
+
+Новый отдельный RED этап2026-10-20, SAFE_RUN_GESTURE_TESTS_READY.md:
+15 targeted tests=8PASS/7FAIL/0ERROR;14 actualSAL component cases7PASS/7FAIL
+и1observer metaPASS. Source0fc39751… неизменён, demandedcone170blocks,
+typed Network3 cuts/Network4+group outside. Это7 условных componentFAIL,
+не7доказанных системных дефектов или fullreachability. Noqueue/And3-notready
+preservation controls PASS. Native255 proposal B1 скорректирован, B2/B3 HOLD;
+финальное независимое ревью ACCEPT как RED пакет (SAFE_RUN_GESTURE_TEST_REVIEW.md), исправление SAL не принято.
+Полный пакет не перезапускался, сохранённый201/1/7 отчёт ниже относится
+к accepted source ДО новых RED и не включает эти7FAIL. Все41ID обязательны.
+
+Актуализация2026-10-19 после принятого scoped earlySTO: SAL
+`0fc39751781cf9525765b223e08c909f31353b976ad4c796881268b39f0fa909`, SGVL
+`06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5`.
+Сохранённый отчёт после STOP редактора BOOT preflight A:
+193 harness/75 historical/413 current tests PASS;
+сценарии201PASS/1FAIL/7NV/0ERROR. Эти числа прочитаны из отчёта, а не новый
+запуск аналитика. Все41ID по-прежнему обязательны, весь проект не принят.
+
+BOOT preflight A — report-only capability diagnostic; final independent
+review ACCEPT, checkpoint96a9be9. Это не functional BOOT acceptance.
+Два новых NV: UNSUPPORTED_UNBOUND_PROGRAM_INPUT (Network4
+8unboundinputs/7usedphasewriters) и UNSUPPORTED_GROUP_LIFECYCLE (нет group
+lifecycle/error/memory engine). Functional BOOT PASS=0, прежние cases не
+изменены/не удалены. Это делает ограничения видимыми, не закрывает BOOT-001/002
+и не заменяет программную модель/проверку; SAL/SGVL/runtime не менялись.
+
+- [04 review](ITERATION_04_REVIEW.md), [05 review](ITERATION_05_REVIEW.md):
+  реальные LV/HV Set gates и девять текущих разрешений, actual producers и
+  first-fault/stale-positive controls; не полное покрытие всех повышений/STO.
+- [03C review](ITERATION_03C_REVIEW.md): исправлен observed clock стенда,
+  не логика кнопок установки. Clock PASS сам по себе не закрывает BTN.
+- [03B review](ITERATION_03B_REVIEW.md), [R3 review](03B_R3_REVIEW.md):
+  accepted actual physical R&D recognizer, native first-only WINDOW и effective
+  master-pair resolver всех четырёх EStop pairs.145-block branch,26 given inputs,
+  typed Network3 ownership cuts; actual timing/late/rearm/pulses проверены.
+  Safe/Run/fullgroup reachability/PLC handshake не закрыты; Error=hoststub
+  не доказательство native/group nofault. Все41 ID остаются обязательными.
+- [06 review](ITERATION_06_REVIEW.md): реальный R&D energy Door guard заменён
+  обоими InterLockNC, три соленоидных Door consumers сохранены. Прочие up
+  guards/полный внешний launch и жизненный цикл требуют дальнейшей проверки.
+- [07 review](ITERATION_07_REVIEW.md): конечный Unlock защищён EStopOK и
+  текущим PLCstop, первый fault scan и отсутствие reopen после raw restore
+  без reset проверены для Safe/R&D. NC2/Mentee/all transitions не закрыты.
+
+Принят scoped LV/HV PLC pulse follow-up: два existing SetPermit.AndIn4
+получают предыдущий FBAnd1 PLC producer, текущие raw проверки сохраняются.
+Исторический immutable baseline48=36PASS/12FAIL; unchanged48 checks теперь
+PASS. PLC_PULSE_CURRENT_RESULTS.json содержит44 непрерывных chain cases и4
+producer truth rows, ровно12 recoveryFAIL→PASS. См. PLC_PULSE_IMPLEMENTATION_REVIEW.md.
+Нет forceReset уже latched outputs; main EStop/SGVL/runtime/timers/orders
+не менялись. Это закрывает узкую pulse/recovery границу, не allEMG/fullBOOT/
+достижимость. [EarlySTO review](EARLY_STO_IMPLEMENTATION_REVIEW.md) принимает
+physical SU→actual torque permission N+2 без C2/HVHealthy ожидания: immutable88
+baseline32PASS/56FAIL→unchanged88PASS. Два новых per-drive all-producer
+4-input Set guards; исходный confirmation сохранён. Старые253 FB relativeorder,
+Reset paths и восемь полных waveform traces сохранены; теперь255FB, SGVL/runtime
+не менялись, default69 physical cases неизменны. Это не full accepted external
+launch/groupowner/reachability proof. Полная исходная последовательность ещё
+не завершена;
+PLC-only policy/conflict destination/transition-down/discharge вопросы остаются.
+
+«Частично» означает ограниченный исполняемый сценарий реального SAL либо
+структурную проверку; это не закрытие всего ID. Точные результаты запуска и
+SHA: SOFTWARE_CHECK_RESULTS.md/.json. Исторические fixture и отдельные модели
+проверяют стенд/происхождение, но не закрывают текущий SAL. Нужные проверки
+в таблице — backlog; эта таблица не утверждает, что они уже исполняются.
+
+| ID | Текущее покрытие фактического кода | Что требуется для закрытия |
+|---|---|---|
+| EMG-001 | Частично ACC-C01-E и PRIORITY по seeded фазам | Каждая допустимая фаза, вход EStop во время перехода, начало аварии, отсутствие нового повышения |
+| EMG-002 | Частично PRIORITY ExternalNC1/2 | Оба канала отдельно, в режимах и переходах, фиксация аварии |
+| EMG-003 | Нет полной positive/negative цепи | Safe: каждый connector отсутствует, up отклонён без fault; восстановление без нового жеста не запускает |
+| EMG-004 | Частично PRIORITY connectors | Потеря после Safe в каждой фазе, аварийное владение и запрет новых повышений |
+| EMG-005 | Частично ESTOP/ACC-C01-E | Возврат каждого защитного входа не отменяет начатую аварийную последовательность |
+| EMG-006 | Частично EStop component/reference | Полная ручная процедура после снятия энергии, только Safe, PLC не снимает аварийную память |
+| EMG-007 | 07r2 actual final gate: Safe/R&D NC1/PLC firstscan и latched no-reopen; ACC-C01-E два FAIL закрыты | Остальные NC2/Mentee/источники, все переходные фазы и завершение снятия опасной энергии; не считать 07 полным закрытием |
+| EMG-008 | Исторические трассы не закрывают candidate | Healthy loss во время SS1: непосредственный выбор STO без предварительного общего ожидания |
+| EMG-009 | Нет полной candidate проверки | Возврат Healthy после аварийного выбора не возвращает SS1 и не сокращает заданный coast wait |
+| EMG-010 | Исторические Run-down трассы | Разряд до C2 OFF, completion/отказная процедура и feedback до R&D; недостающий oracle через аналитика |
+| EMG-011 | Приняты02/04/05/PLC pulse LV/HV guards; earlySTO два all-producer per-drive4input guards, actual fault/restore controls | Полная emergency ownership/recovery, все фазовые/entry paths и остальные raises не закрыты; component guard не full41 proof |
+| EMG-012 | Частично STATE conflicting-set | Все недопустимые комбинации; запрет неоднозначного владения. Точный destination Q-FAULT-DESTINATION |
+| BTN-001 | Принята03B actual R&D release/rearm | Другие режимы/full lifecycle/owner handoffs |
+| BTN-002 | Принята03B R&D held-at-start/prematurepress | Полный group startup и другие режимы, cut не reachability |
+| BTN-003 | Принята03B R&D SINGLE500/однократность | Safe/Run и полный owner lifecycle |
+| BTN-004 | Принята03B R&D blue500/held gate | Safe qualification и полный lifecycle/доступ |
+| BTN-005 | Приняты03B/R3 R&D WINDOW250 inclusive, обе очередности, effective pair inputs | Другие режимы/entry/реальные owner paths |
+| BTN-006 | Принята03B R&D BOTH1000 от второй, continuity/reset | Другие режимы и cross-mode traces |
+| BTN-007 | Принята03B R&D failedchord/piano/swap | Другие режимы и полный lifecycle |
+| BTN-008 | Принята03B R&D late300/500/600/repeat/rearm в branch | Полный accepted-transition rollback/другие режимы; branch не весь ID |
+| CVR-001 | 01/07 и03B R&D qualification, actual writer/hold/green | Safe qualification и все emergency/transition/lifecycle контексты |
+| CVR-002 | 01 Safe/R&D hold/release;07 сохраняет legitimate positive grants и latched no-reopen | Все входы/entry/recovery режима и полная квалификация; mode сам не должен включать соленоид |
+| CVR-003 | Нет полной candidate проверки | Открыта неограниченно в Safe/R&D без fault/таймера закрытия; команды не запускают закрытие |
+| CVR-004 | Принята06: actual R&D producer Door independence и обаNC, real path/structural checks; старый startup negative остаётся recognizer gap | Полный внешний gesture/PLC acceptance и оба up маршрута; DoorFALSE+обаNCtrue positive при прочих разрешениях, каждыйNCfalse negative независимоDoor |
+| CVR-005 | ACC-C02-X, iteration01 gate | Unlock и фактическое повышение не сосуществуют; внутренний request не считать энергией |
+| CVR-006 | 06 сохранила три Door solenoid consumers,04/05 сохраняют обаNC в energy Set guards | Полная реакция на InterLock loss EMG-002/все фазы ещё не закрыта; Door только unlock, отдельный locked-loss не вводить |
+| MOD-001 | STATE Safe-RnD-Run ownership only | Сохранённая исходная LV последовательность, каждый feedback/прерывание, R&D лишь после подтверждений |
+| MOD-002 | Принят earlySTO: physical SU→actualSTO N+2 без C2/HVHealthy wait, старый Runconfirmation/Reset сохранены;88 checks | Полная достижимость acceptedlaunch/owner, feedback/failure во всех фазах и PLC-only policy не закрыты; N+2 не физическое нулевое время |
+| MOD-003 | Частично held commands; Q-PLC-REQUEST | Новый жест/handshake для каждого шага, удерживаемый PLC уровень не повторяет; самостоятельный новый PLC запрос без физического жеста требует решения |
+| MOD-004 | Нет полного candidate покрытия | Новые up в переходах отклонены; down поведение Q-TRANSITION-DOWN |
+| MOD-005 | Исторические RnD-Safe traces | Сопоставить исходную LV/battery/BMS последовательность и вставку R&D, завершение перед Safe |
+| MOD-006 | Частично STATE ownership | Основные режимы однозначны; промежуточные фазы не маскируются; reset/конфликты |
+| MOD-007 | Частично инъекция requests | Проверка внешних PLC requests через реальные permissions; одиночный бит не включает энергию напрямую |
+| MOD-008 | Частично Network12 | Каждый противоречивый/неподтверждённый feedback запрещает up, positive controls |
+| STP-001 | Историческая остановка, не candidate acceptance | Реальный Run-down сохраняет исходную последовательность SS1/STO, источник/C2 при SS1 |
+| STP-002 | Исторические selected chains | После заданного SS1/coast разряд до C2 OFF; альтернативные пути не обходят |
+| STP-003 | Пробел точной отказной политики | Заданный timeout: fault, нет автоматического продолжения; C2/discharge политика Q-COMPLETION |
+| STP-004 | Частично state mapping | До завершения разряда и C2 OFF R&D не объявляется; новый launch не обходит |
+| STP-005 | Частично state mapping | Safe не объявляется до feedback снятия LV по сохранённой последовательности |
+| BOOT-001 | EStop component, full lifecycle gap | Старт/рестарт из контекстов Run/transition не восстанавливает Run автоматически |
+| BOOT-002 | BUTTON held-at-start, branch only | Полный программный startup/entry с held buttons: новая попытка только после отпускания и фильтра |
+
+## Условия приёмки
+
+Для каждого ID нужны положительные и отрицательные сценарии, последовательность
+входов, ожидаемые состояния/выходы и источник oracle. Проверять current SAL,
+SHA/версию, scan semantics, начальное состояние и явные допущения. Seeded
+компоненты дополнять проверкой настоящих producers/consumers; не выдавать
+искусственную инъекцию Set за достижимость полного перехода.
+
+Ошибки стенда исправляются с объяснением; FAIL не скрываются. Неизвестное
+поведение спрашивать через аналитика, зависимое изменение удерживать, остальные
+продолжать. Coverage gap/открытый обязательный oracle не считается PASS.
+Все согласованные программные требования пройдены и существенные замечания
+независимого ревью закрыты — условие программного завершения. Ограничения
+адаптера (Network4/group lifecycle и прочие) фиксируются; если они закрывают
+обязательный сценарий от проверки, нужен другой программный способ доказательства,
+а не аппаратный/native gate и не замена прототипом.

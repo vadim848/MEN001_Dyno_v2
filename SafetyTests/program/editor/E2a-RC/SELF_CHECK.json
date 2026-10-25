@@ -1,0 +1,780 @@
+{
+ "generatedAt": "2026-10-22T01:25:14.921Z",
+ "note": "editor self-check, not a requirement PASS",
+ "sha": {
+  "source": {
+   "TwinSafeGroup1.sal": "5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b",
+   "GVL1.sgvl": "e60698840e556dbd6d838958eadb8545735a81aaff8efbfceabc3613a4e08010",
+   "TwinSafeGroup1.sal.diagram": "27d7f20d890d48fc175fbd25af21a5b0c874ce4cf248b37ac73df26fe0624785"
+  },
+  "staged": {
+   "TwinSafeGroup1.sal": "76303b53511fb566caa889fd3ff6d7a66c617f65755e67f70c1d12666f5d2e6e",
+   "GVL1.sgvl": "0de7986271d683fcd90a7359f8ca040a0b8a987f3a8fa53a1f111d89f697444c",
+   "TwinSafeGroup1.sal.diagram": "d1e57c440ad58063f5db394023ebef89fd58b8953b54a8ec0c3feccb6a990df7"
+  },
+  "native": {
+   "TwinSafeGroup1.sal": "5733552a150bfd33df4211da8f97a8fc993ff990ad52c90a8d7758d950660f3f",
+   "GVL1.sgvl": "253de7f39f2c4af83fa8642445a885d18ecfcdccec46fcbf96612d88a810b669",
+   "TwinSafeGroup1.sal.diagram": "5fa942384352033814f2d51bf8c4a847098d6a3322d4b733995de64b7b759bb2"
+  }
+ },
+ "checks": [
+  {
+   "id": "source-is-E2a-core-candidate",
+   "status": "PASS",
+   "detail": {
+    "TwinSafeGroup1.sal": "5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b",
+    "GVL1.sgvl": "e60698840e556dbd6d838958eadb8545735a81aaff8efbfceabc3613a4e08010",
+    "TwinSafeGroup1.sal.diagram": "27d7f20d890d48fc175fbd25af21a5b0c874ce4cf248b37ac73df26fe0624785"
+   }
+  },
+  {
+   "id": "native-equals-staged-semantics",
+   "status": "PASS",
+   "detail": "blocks/ports/attrs/order/wires/global refs/SAL usages/SGVL usages identical; only CRC/formatting differ"
+  },
+  {
+   "id": "native-structure-preflight",
+   "status": "PASS",
+   "detail": {
+    "status": "PASS",
+    "errors": [],
+    "counts": {
+     "networks": 14,
+     "blocks": 217,
+     "ports": 1836,
+     "variables": 75,
+     "wires": 277,
+     "crossNetworkWires": 0
+    }
+   }
+  },
+  {
+   "id": "binding-audit",
+   "status": "PASS",
+   "detail": {
+    "status": "PASS",
+    "errors": []
+   }
+  },
+  {
+   "id": "counts-217-1836-63-75-14",
+   "status": "PASS",
+   "detail": {
+    "source": {
+     "networks": 14,
+     "fb": 215,
+     "ports": 1832,
+     "symbols": 65,
+     "salVariables": 75,
+     "wires": 275,
+     "globalRefs": 168,
+     "sgvlUsages": 168,
+     "salFbUsages": 223,
+     "aliasUsages": 76,
+     "safeTon": 15
+    },
+    "native": {
+     "networks": 14,
+     "fb": 217,
+     "ports": 1836,
+     "symbols": 63,
+     "salVariables": 75,
+     "wires": 277,
+     "globalRefs": 167,
+     "sgvlUsages": 167,
+     "salFbUsages": 223,
+     "aliasUsages": 76,
+     "safeTon": 17
+    }
+   }
+  },
+  {
+   "id": "wire-delta-minus9-plus11",
+   "status": "PASS",
+   "detail": {
+    "source": 275,
+    "native": 277
+   }
+  },
+  {
+   "id": "global-refs-equal-sgvl-usages",
+   "status": "PASS",
+   "detail": {
+    "native": 167,
+    "sgvl": 167,
+    "source": 168,
+    "expected": "source -2 source refs (deleted symbols) -2 old target refs (N1/FBOr5, N1/FBOr1) +3 target refs"
+   }
+  },
+  {
+   "id": "sal-usage-counts-unchanged",
+   "status": "PASS",
+   "detail": {
+    "source": [
+     223,
+     76
+    ],
+    "native": [
+     223,
+     76
+    ]
+   }
+  },
+  {
+   "id": "no-dangling-references",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "id": "global-ref-sgvl-usage-pairing-1to1",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "id": "every-symbol-has-source-and-consumer",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "id": "every-symbol-single-source",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "id": "symbol-set-equals-source-minus-2-same-ids",
+   "status": "PASS",
+   "detail": [
+    "b_Reset_LV_Discharge_Req2",
+    "b_Reset_HV_Discharg_Req2"
+   ]
+  },
+  {
+   "id": "symbol-usages-planned",
+   "status": "PASS",
+   "detail": {
+    "b_Set_HV_C2_1": {
+     "Id": "d7cd36a4-f95a-4cdd-9e27-77023e5ea19c",
+     "source": [
+      "Network12/FBAnd4/AndOut"
+     ],
+     "target": [
+      "Network1/FBOr18/OrIn3",
+      "Network1/FBOr5/OrIn2"
+     ]
+    },
+    "b_Step12_Set": {
+     "Id": "5d99a568-c279-4845-89ef-64fae02b4d63",
+     "source": [
+      "Network2/FBOr1/OrOut"
+     ],
+     "target": [
+      "Network3/FBOr1/OrIn3",
+      "Network3/FBRs8/Set",
+      "Network1/FBOr1/OrIn2"
+     ]
+    },
+    "b_EStop_Ok": {
+     "Id": "98ab783a-9ee4-42cd-8375-54abc169e250",
+     "source": [
+      "Network1/FBEstop1/EStopOut"
+     ],
+     "target": [
+      "Network3/FBAnd1/AndIn2",
+      "Network1/FBAndLvCurrentPermit/AndIn8",
+      "Network1/FBAndUnlockHold/AndIn4",
+      "RndPhysicalCompact/GATE_001/AndIn3",
+      "Network2/FBAnd91/AndIn4"
+     ]
+    },
+    "deletedInSource": {
+     "b_Reset_HV_Discharg_Req2": {
+      "Id": "df721d60-da77-4622-9d30-b4438d8a2fcb",
+      "source": [
+       "Network12/FBAnd6/AndOut"
+      ],
+      "target": [
+       "Network1/FBOr5/OrIn2"
+      ]
+     },
+     "b_Reset_LV_Discharge_Req2": {
+      "Id": "90043567-ee40-4e8a-a8cb-8e13d6183f24",
+      "source": [
+       "Network11/FBAnd4/AndOut"
+      ],
+      "target": [
+       "Network1/FBOr1/OrIn2"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "single-source-per-input-and-unique-wire-pairs",
+   "status": "PASS",
+   "detail": {
+    "dupPairs": 0,
+    "multi": []
+   }
+  },
+  {
+   "id": "activated-inputs-have-source",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "id": "deactivated-inputs-have-no-source",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "id": "no-deleted-blocks",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "id": "new-blocks-equal-plan",
+   "status": "PASS",
+   "detail": [
+    "Network11/WIN_C1",
+    "Network12/WIN_C2"
+   ]
+  },
+  {
+   "id": "plan-input-sources-and-contacts",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "id": "planned-output-fanout-exact",
+   "status": "PASS",
+   "detail": [
+    {
+     "k": "Network12/WIN_C2/TonOut",
+     "wires": [
+      "Network12/FBAnd6/AndIn1"
+     ],
+     "globals": []
+    },
+    {
+     "k": "Network12/FBAnd4/AndOut",
+     "wires": [
+      "Network12/WIN_C2/TonIn"
+     ],
+     "globals": [
+      "b_Set_HV_C2_1"
+     ]
+    },
+    {
+     "k": "Network12/FBAnd6/AndOut",
+     "wires": [
+      "Network12/FBTon3/TonIn"
+     ],
+     "globals": []
+    },
+    {
+     "k": "Network12/FBTon3/TonOut",
+     "wires": [
+      "Network12/FBDecouple2/DecIn1",
+      "Network12/FBDecouple2/DecIn2",
+      "Network12/FBDecouple2/DecIn3",
+      "Network12/FBDecouple2/DecIn4"
+     ],
+     "globals": []
+    },
+    {
+     "k": "Network11/WIN_C1/TonOut",
+     "wires": [
+      "Network11/FBAnd4/AndIn1"
+     ],
+     "globals": []
+    },
+    {
+     "k": "Network11/FBAnd1/AndOut",
+     "wires": [
+      "Network11/WIN_C1/TonIn"
+     ],
+     "globals": [
+      "b_Set_LV_C1_1"
+     ]
+    },
+    {
+     "k": "Network11/FBAnd4/AndOut",
+     "wires": [
+      "Network11/FBTon1/TonIn"
+     ],
+     "globals": []
+    },
+    {
+     "k": "Network11/FBTon1/TonOut",
+     "wires": [
+      "Network11/FBAnd5/AndIn1"
+     ],
+     "globals": []
+    }
+   ]
+  },
+  {
+   "id": "new-blocks-native-safeTon-signature-timing-0.5",
+   "status": "PASS",
+   "detail": [
+    {
+     "nb": "Network12/WIN_C2",
+     "ok": true
+    },
+    {
+     "nb": "Network11/WIN_C1",
+     "ok": true
+    }
+   ]
+  },
+  {
+   "id": "instance-names-unique",
+   "status": "PASS",
+   "detail": 217
+  },
+  {
+   "id": "surviving-port-deltas-only-planned",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "id": "wire-delta-exact",
+   "status": "PASS",
+   "detail": {
+    "wRemoved": [
+     "Network11/FBAnd1/AndOut>Network11/FBTon1/TonIn",
+     "Network11/FBAnd4/AndOut>Network11/FBAnd5/AndIn1",
+     "Network11/FBTon1/TonOut>Network11/FBAnd4/AndIn1",
+     "Network12/FBAnd4/AndOut>Network12/FBTon3/TonIn",
+     "Network12/FBAnd6/AndOut>Network12/FBDecouple2/DecIn1",
+     "Network12/FBAnd6/AndOut>Network12/FBDecouple2/DecIn2",
+     "Network12/FBAnd6/AndOut>Network12/FBDecouple2/DecIn3",
+     "Network12/FBAnd6/AndOut>Network12/FBDecouple2/DecIn4",
+     "Network12/FBTon3/TonOut>Network12/FBAnd6/AndIn1"
+    ],
+    "wAdded": [
+     "Network11/FBAnd1/AndOut>Network11/WIN_C1/TonIn",
+     "Network11/FBAnd4/AndOut>Network11/FBTon1/TonIn",
+     "Network11/FBTon1/TonOut>Network11/FBAnd5/AndIn1",
+     "Network11/WIN_C1/TonOut>Network11/FBAnd4/AndIn1",
+     "Network12/FBAnd4/AndOut>Network12/WIN_C2/TonIn",
+     "Network12/FBAnd6/AndOut>Network12/FBTon3/TonIn",
+     "Network12/FBTon3/TonOut>Network12/FBDecouple2/DecIn1",
+     "Network12/FBTon3/TonOut>Network12/FBDecouple2/DecIn2",
+     "Network12/FBTon3/TonOut>Network12/FBDecouple2/DecIn3",
+     "Network12/FBTon3/TonOut>Network12/FBDecouple2/DecIn4",
+     "Network12/WIN_C2/TonOut>Network12/FBAnd6/AndIn1"
+    ]
+   }
+  },
+  {
+   "id": "sal-variables-unchanged",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "order-of-execution-per-plan",
+   "status": "PASS",
+   "detail": {
+    "contiguous": true,
+    "N12_FBAnd4_WIN_C2_FBAnd6_FBTon3_FBDecouple2": true,
+    "N11_FBAnd1_WIN_C1_FBAnd4_FBTon1_FBAnd5": true,
+    "relativeOrderOfOtherBlocksPreserved": true
+   }
+  },
+  {
+   "id": "existing-timer-and-parameter-ports-unchanged",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "safeTon-count-15-plus-2",
+   "status": "PASS",
+   "detail": {
+    "source": 15,
+    "native": 17
+   }
+  },
+  {
+   "id": "networks-unchanged-attrs",
+   "status": "PASS",
+   "detail": [
+    "Network1:49",
+    "Network2:21",
+    "Network3:18",
+    "Network4:0",
+    "Network5:0",
+    "Network6:38",
+    "Network7:11",
+    "Network8:7",
+    "Network9:0",
+    "Network10:2",
+    "Network11:6",
+    "Network12:19",
+    "RndPhysicalCompact:39",
+    "SafeResumption:7"
+   ]
+  },
+  {
+   "id": "staged-kept-source-crc-native-new-crc",
+   "status": "PASS",
+   "detail": {
+    "source": {
+     "sal": "522332563",
+     "sgvl": "99786432"
+    },
+    "staged": {
+     "sal": "522332563",
+     "sgvl": "99786432"
+    },
+    "native": {
+     "sal": "1618144730",
+     "sgvl": "1140635775"
+    }
+   }
+  },
+  {
+   "id": "diagram-shapes-match-model",
+   "status": "PASS",
+   "detail": {
+    "source": {
+     "fBAndShape": 102,
+     "fBOrShape": 47,
+     "fBRsShape": 27,
+     "fBTonShape": 15,
+     "fBDecoupleShape": 22,
+     "fBEstopShape": 2,
+     "inPortShape": 1459,
+     "outPortShape": 373,
+     "paramPortShape": 17,
+     "wiredLinkConnector": 275,
+     "networkSwimLane": 14
+    },
+    "native": {
+     "fBAndShape": 102,
+     "fBOrShape": 47,
+     "fBRsShape": 27,
+     "fBTonShape": 17,
+     "fBDecoupleShape": 22,
+     "fBEstopShape": 2,
+     "inPortShape": 1461,
+     "outPortShape": 375,
+     "paramPortShape": 19,
+     "wiredLinkConnector": 277,
+     "networkSwimLane": 14
+    }
+   }
+  },
+  {
+   "id": "diagram-connectors-resolve-one-per-wire",
+   "status": "PASS",
+   "detail": {
+    "badConn": [],
+    "connectors": 277,
+    "wires": 277
+   }
+  },
+  {
+   "id": "diagram-lane-membership",
+   "status": "PASS",
+   "detail": [
+    {
+     "b": "Network11/WIN_C1",
+     "lane": "Network11"
+    },
+    {
+     "b": "Network12/WIN_C2",
+     "lane": "Network12"
+    }
+   ]
+  }
+ ],
+ "sourcePreflight": {
+  "status": "PASS",
+  "errors": [],
+  "counts": {
+   "networks": 14,
+   "blocks": 215,
+   "ports": 1832,
+   "variables": 75,
+   "wires": 275,
+   "crossNetworkWires": 0
+  }
+ },
+ "counts": {
+  "source": {
+   "networks": 14,
+   "fb": 215,
+   "ports": 1832,
+   "symbols": 65,
+   "salVariables": 75,
+   "wires": 275,
+   "globalRefs": 168,
+   "sgvlUsages": 168,
+   "salFbUsages": 223,
+   "aliasUsages": 76,
+   "safeTon": 15
+  },
+  "native": {
+   "networks": 14,
+   "fb": 217,
+   "ports": 1836,
+   "symbols": 63,
+   "salVariables": 75,
+   "wires": 277,
+   "globalRefs": 167,
+   "sgvlUsages": 167,
+   "salFbUsages": 223,
+   "aliasUsages": 76,
+   "safeTon": 17
+  }
+ },
+ "order": [
+  "1:Network3/FBOr2",
+  "2:Network3/FBOr1",
+  "3:Network3/FBOr16",
+  "4:Network3/FBOr13",
+  "5:Network3/FBOr5",
+  "6:Network3/FBOr7",
+  "7:Network3/FBOr9",
+  "8:Network3/FBRs1",
+  "9:Network3/FBRs8",
+  "10:Network3/FBRs7",
+  "11:Network3/FBRs3",
+  "12:Network3/FBRs4",
+  "13:Network3/FBRs5",
+  "14:Network3/FBRs6",
+  "15:Network2/FBAnd1",
+  "16:Network1/FBAndLvCurrentPermit",
+  "17:Network1/FBAndLvSetPermit",
+  "18:Network1/FBRs1",
+  "19:Network1/FBAndHvSetPermit",
+  "20:Network1/FBRs2",
+  "21:Network2/FBTon1",
+  "22:Network2/FBAnd2",
+  "23:Network2/FBDecouple1",
+  "24:Network1/FBAndSto1SetPermit",
+  "25:Network1/FBRs3",
+  "26:Network1/FBAndSto2SetPermit",
+  "27:Network1/FBRs4",
+  "28:Network2/FBDecouple2",
+  "29:Network2/FBTon2",
+  "30:Network2/FBAnd3",
+  "31:Network1/FBEstop1",
+  "32:Network3/FBAnd2",
+  "33:Network3/FBAnd1",
+  "34:Network1/FBOr1",
+  "35:Network1/FBOr2",
+  "36:Network1/FBRs5",
+  "37:Network1/FBOr5",
+  "38:Network1/FBOr6",
+  "39:Network1/FBRs7",
+  "40:Network1/FBOr7",
+  "41:Network1/FBOr8",
+  "42:Network1/FBOr9",
+  "43:Network1/FBOr10",
+  "44:Network6/FBAnd1",
+  "45:Network3/FBDecouple1",
+  "46:Network6/FBAnd2",
+  "47:Network6/FBAnd3",
+  "48:Network6/FBAnd4",
+  "49:Network6/FBRs1",
+  "50:Network6/FBAnd5",
+  "51:Network6/FBAnd6",
+  "52:Network6/FBRs2",
+  "53:Network6/FBOr2",
+  "54:Network6/FBOr3",
+  "55:Network6/FBDecouple1",
+  "56:Network7/FBAnd1",
+  "57:Network7/FBDecouple1",
+  "58:Network1/FBOr11",
+  "59:Network7/FBAnd2",
+  "60:Network7/FBAnd3",
+  "61:Network7/FBOr1",
+  "62:Network7/FBOr2",
+  "63:Network7/FBAnd8",
+  "64:Network8/FBAnd1",
+  "65:Network8/FBDecouple1",
+  "66:Network8/FBTon1",
+  "67:Network8/FBAnd2",
+  "68:Network8/FBOr1",
+  "69:Network8/FBTon2",
+  "70:Network1/FBOr16",
+  "71:Network8/FBAnd3",
+  "72:Network6/FBAnd7",
+  "73:Network6/FBAnd8",
+  "74:Network6/HEALTHY_OK",
+  "75:Network6/HEALTH_GUARD",
+  "76:Network6/FBAnd9",
+  "77:Network12/FBAnd16",
+  "78:SafeResumption/CONNECTORS",
+  "79:SafeResumption/CONNECTOR_SCOPE",
+  "80:Network1/FBAnd1",
+  "81:Network2/FBAnd5",
+  "82:Network2/FBAnd6",
+  "83:Network2/FBDecouple3",
+  "84:Network2/FBAnd7",
+  "85:Network7/FBTon1",
+  "86:Network3/FBDecouple2",
+  "87:Network2/FBAnd8",
+  "88:Network1/FBDecouple1",
+  "89:Network7/FBTon2",
+  "90:Network7/FBTon3",
+  "91:Network7/FBDecouple3",
+  "92:Network1/FBOr12",
+  "93:Network1/FBOr13",
+  "94:Network1/FBDecouple2",
+  "95:Network2/FBAnd9",
+  "96:Network10/FBDecouple1",
+  "97:Network10/FBDecouple2",
+  "98:Network11/FBAnd1",
+  "99:Network11/WIN_C1",
+  "100:Network11/FBAnd4",
+  "101:Network11/FBTon1",
+  "102:Network11/FBAnd5",
+  "103:RndPhysicalCompact/SNAP_0",
+  "104:RndPhysicalCompact/SNAP_1",
+  "105:SafeResumption/MODE",
+  "106:RndPhysicalCompact/GATE_001",
+  "107:SafeResumption/RND_SCOPE",
+  "108:SafeResumption/SAFE_UP_SCOPE",
+  "109:RndPhysicalCompact/GATE_002",
+  "110:RndPhysicalCompact/GATE_003",
+  "111:RndPhysicalCompact/GATE_004",
+  "112:RndPhysicalCompact/GATE_005",
+  "113:RndPhysicalCompact/GATE_006",
+  "114:RndPhysicalCompact/GATE_007",
+  "115:RndPhysicalCompact/WINDOW",
+  "116:RndPhysicalCompact/GATE_008",
+  "117:RndPhysicalCompact/GATE_009",
+  "118:RndPhysicalCompact/GATE_010",
+  "119:RndPhysicalCompact/GATE_011",
+  "120:RndPhysicalCompact/GATE_012",
+  "121:RndPhysicalCompact/RELEASE",
+  "122:RndPhysicalCompact/GREEN",
+  "123:RndPhysicalCompact/BLUE",
+  "124:RndPhysicalCompact/BOTH",
+  "125:Network2/FBAnd4",
+  "126:SafeResumption/SAFE_ACCEPTED_UP",
+  "127:RndPhysicalCompact/GATE_013",
+  "128:RndPhysicalCompact/GATE_014",
+  "129:RndPhysicalCompact/GATE_015",
+  "130:RndPhysicalCompact/GATE_016",
+  "131:RndPhysicalCompact/GATE_020",
+  "132:RndPhysicalCompact/GATE_022",
+  "133:RndPhysicalCompact/GATE_023",
+  "134:RndPhysicalCompact/GATE_024",
+  "135:RndPhysicalCompact/GATE_025",
+  "136:RndPhysicalCompact/GATE_026",
+  "137:RndPhysicalCompact/GATE_029",
+  "138:RndPhysicalCompact/GATE_030",
+  "139:RndPhysicalCompact/GATE_031",
+  "140:RndPhysicalCompact/STATE_A",
+  "141:RndPhysicalCompact/STATE_T",
+  "142:RndPhysicalCompact/STATE_L",
+  "143:RndPhysicalCompact/STATE_C",
+  "144:SafeResumption/SG_OWNER_SET",
+  "145:RndPhysicalCompact/STATE_SG",
+  "146:RndPhysicalCompact/STATE_SU",
+  "147:RndPhysicalCompact/STATE_BA",
+  "148:Network12/FBAnd1",
+  "149:Network1/FBOr3",
+  "150:Network1/FBOr4",
+  "151:Network1/FBRs6",
+  "152:Network12/FBAnd2",
+  "153:Network12/FBAnd3",
+  "154:Network12/FBAnd4",
+  "155:Network12/WIN_C2",
+  "156:Network12/FBAnd6",
+  "157:Network12/FBTon3",
+  "158:Network12/FBDecouple2",
+  "159:Network6/FBOr1",
+  "160:Network6/FBAnd11",
+  "161:Network6/FBAnd12",
+  "162:Network6/FBAnd13",
+  "163:Network6/FBOr4",
+  "164:Network6/FBAnd14",
+  "165:Network12/FBOr1",
+  "166:Network12/FBAnd8",
+  "167:Network12/FBAnd9",
+  "168:Network12/FBAnd10",
+  "169:Network12/FBOr2",
+  "170:Network12/FBDecouple1",
+  "171:Network12/FBAnd15",
+  "172:Network6/FBAnd15",
+  "173:Network6/FBAnd16",
+  "174:Network6/FBAnd17",
+  "175:Network6/FBDecouple2",
+  "176:Network6/FBAnd18",
+  "177:Network6/FBTon1",
+  "178:Network1/FBAnd2",
+  "179:Network6/FBOr5",
+  "180:Network1/FBOr14",
+  "181:Network1/FBOr15",
+  "182:Network1/FBRs8",
+  "183:Network11/FBDecouple1",
+  "184:Network12/FBDecouple3",
+  "185:Network6/FBAnd19",
+  "186:Network1/FBAnd4",
+  "187:Network1/FBOr17",
+  "188:Network1/FBOr18",
+  "189:Network1/FBAnd5",
+  "190:Network1/FBAnd6",
+  "191:Network1/FBTon1",
+  "192:Network1/FBAnd7",
+  "193:Network1/FBAnd8",
+  "194:Network12/FBAnd11",
+  "195:Network1/FBAnd10",
+  "196:Network6/FBAnd20",
+  "197:Network1/FBAnd12",
+  "198:Network12/FBAnd17",
+  "199:Network6/FBAnd21",
+  "200:Network6/FBAnd22",
+  "201:Network2/FBOr1",
+  "202:Network2/FBAnd61",
+  "203:Network2/FBAnd81",
+  "204:Network2/FBAnd11",
+  "205:Network2/FBAnd91",
+  "206:Network2/FBDecouple5",
+  "207:Network6/FBAnd23",
+  "208:Network2/FBAnd12",
+  "209:Network1/FBRs9",
+  "210:Network1/FBAnd13",
+  "211:Network1/FBOr19",
+  "212:Network1/FBAnd14",
+  "213:Network6/FBAnd24",
+  "214:Network6/RUN_DOWN_RESET",
+  "215:Network6/RUN_DOWN_OWNER",
+  "216:Network6/FBDecouple3",
+  "217:Network1/FBAndUnlockHold"
+ ],
+ "diagramCounts": {
+  "source": {
+   "fBAndShape": 102,
+   "fBOrShape": 47,
+   "fBRsShape": 27,
+   "fBTonShape": 15,
+   "fBDecoupleShape": 22,
+   "fBEstopShape": 2,
+   "inPortShape": 1459,
+   "outPortShape": 373,
+   "paramPortShape": 17,
+   "wiredLinkConnector": 275,
+   "networkSwimLane": 14
+  },
+  "native": {
+   "fBAndShape": 102,
+   "fBOrShape": 47,
+   "fBRsShape": 27,
+   "fBTonShape": 17,
+   "fBDecoupleShape": 22,
+   "fBEstopShape": 2,
+   "inPortShape": 1461,
+   "outPortShape": 375,
+   "paramPortShape": 19,
+   "wiredLinkConnector": 277,
+   "networkSwimLane": 14
+  }
+ }
+}

@@ -1,0 +1,66 @@
+{
+  "version": "sal-mutation-plan-v1",
+  "planVersion": 4,
+  "status": "Architect guard-mutation plan v4 for slice E2d (PLAN.md v4, base R1 candidate ca841a01...). sourceSha256 filled at G2; runner exits 3 until then by design. modelKill = architect in-memory prototype (not native, not a test).",
+  "sourceSha256": "FILL_AT_G2",
+  "sourceSha256Note": "Fill at G2: SHA256 of the editor candidate TwinSafeGroup1.sal for this slice (base: R1 candidate). Then run scripts/sal-mutation-check.js --validate-only before G3.",
+  "testFiles": [
+    "current-e2a-status.test.js",
+    "current-e2a-emg-safe.test.js",
+    "current-e2a-emg-rnd.test.js",
+    "current-e2a-emg-run.test.js",
+    "current-e2a-emg-rundown.test.js",
+    "current-e2a-sweep-estop.test.js",
+    "current-e2b-sweep-connector.test.js",
+    "current-e2a-race.test.js",
+    "current-e2a-rnd-cover-healthy.test.js",
+    "current-e2a-run-conf.test.js",
+    "current-e2b-interlock-run.test.js",
+    "current-e2b-cover-transitions.test.js",
+    "current-e2b-connector-safe.test.js",
+    "current-e2c-stp-i.test.js",
+    "current-e2c-hlt03.test.js",
+    "current-e2d-release-permit.test.js",
+    "current-e2d-unlock-cover.test.js"
+  ],
+  "behaviouralTests": [
+    "^E2[a-d] "
+  ],
+  "structuralSoftwareCheckCases": [
+    "^BOOT:"
+  ],
+  "mutations": [
+    {
+      "id": "M-E2d-01",
+      "guard": "Bypass",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAnd4",
+      "port": "AndIn3",
+      "rationale": "NEW input: legacy Bypass ignores NC1",
+      "killingScenario": "R&D (or S12), NC1 FALSE, inPLC_BypassC1C2 TRUE: C2 ON (in Safe reset dominates - no kill there)",
+      "oracle": "CFG-02 (cover-open part); reviewer repro byp.out.txt"
+    },
+    {
+      "id": "M-E2d-02",
+      "guard": "Bypass",
+      "op": "deactivate-input",
+      "block": "//Network1/FBAnd4",
+      "port": "AndIn4",
+      "rationale": "NEW input: legacy Bypass ignores NC2",
+      "killingScenario": "R&D, NC2 FALSE, Bypass TRUE: C2 ON",
+      "oracle": "CFG-02 (cover-open part)"
+    },
+    {
+      "id": "M-E2d-03",
+      "guard": "ReleaseAfterPermit",
+      "op": "deactivate-input",
+      "block": "//SafeResumption/MODE",
+      "port": "OrIn4",
+      "rationale": "permit dips during Safe->R&D and restarts 2 s count",
+      "killingScenario": "Safe->R&D with both buttons released at acceptance; new BOTH at release+2050 ms (R&D reached at +100): accepted in base, rejected in mutant",
+      "oracle": "Q-REL-AFTER-PERMIT A",
+      "modelKill": "repro/t14.out.txt"
+    }
+  ],
+  "note": "Q-ARCH-10 A: IL_SCOPE, linkIlScope, GATE_010.AndIn3 removed; current-e2d-unlock-cover.test.js is regression (no mutation killer)."
+}

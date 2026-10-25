@@ -1,0 +1,56 @@
+VariableSerializer::ReadChildElements RVA 414384
+0000 br.s 108
+0002 ldarg.2 
+0003 callvirt get_LocalName
+0008 stloc.0 
+0009 ldloc.0 
+000A ldstr sourceUsages
+000F call op_Equality
+0014 brtrue.s 14
+0016 ldloc.0 
+0017 ldstr targetUsages
+001C call op_Equality
+0021 brtrue.s 39
+0023 ret 
+0024 ldarg.2 
+0025 callvirt get_IsEmptyElement
+002A brfalse.s 8
+002C ldarg.2 
+002D call Skip
+0032 br.s 58
+0034 ldarg.2 
+0035 call SkipToFirstChild
+003A ldarg.0 
+003B ldarg.1 
+003C ldarg.2 
+003D call ReadVariableHasSourceUsagesInstance
+0042 ldarg.2 
+0043 call Skip
+0048 br.s 36
+004A ldarg.2 
+004B callvirt get_IsEmptyElement
+0050 brfalse.s 8
+0052 ldarg.2 
+0053 call Skip
+0058 br.s 20
+005A ldarg.2 
+005B call SkipToFirstChild
+0060 ldarg.0 
+0061 ldarg.1 
+0062 ldarg.2 
+0063 call ReadVariableHasTargetUsagesInstance
+0068 ldarg.2 
+0069 call Skip
+006E ldarg.0 
+006F callvirt get_Result
+0074 callvirt get_Failed
+0079 brtrue.s 20
+007B ldarg.2 
+007C callvirt get_EOF
+0081 brtrue.s 12
+0083 ldarg.2 
+0084 callvirt get_NodeType
+0089 ldc.i4.1 
+008A beq -141
+008F ret 
+

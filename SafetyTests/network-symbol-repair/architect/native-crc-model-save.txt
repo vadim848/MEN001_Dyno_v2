@@ -1,0 +1,87 @@
+SafetyApplicationLanguageSerializationHelper::InternalSaveModelWithCrc RVA 225812
+0000 ldarg.1 
+0001 ldarg.s 4
+0003 callvirt set_Encoding
+0008 ldarg.0 
+0009 ldarg.2 
+000A callvirt get_Store
+000F callvirt GetDirectory
+0014 newobj .ctor
+0019 stloc.0 
+001A ldarg.3 
+001B ldarg.1 
+001C newobj .ctor
+0021 stloc.1 
+0022 ldarg.0 
+0023 ldarg.2 
+0024 callvirt get_Partition
+0029 ldloc.1 
+002A ldc.i4.0 
+002B callvirt InitializeSerializationContext
+0030 ldloc.1 
+0031 ldarg.s 5
+0033 callvirt set_WriteOptionalPropertiesWithDefaultValue
+0038 ldloc.0 
+0039 newobj .ctor
+003E stloc.2 
+003F ldloc.2 
+0040 callvirt get_CrcSettings
+0045 callvirt get_CrcDictionary
+004A callvirt get_Encoding
+004F callvirt get_WebName
+0054 ldarg.s 4
+0056 callvirt get_WebName
+005B call Compare
+0060 brtrue.s 11
+0062 ldarg.0 
+0063 ldloc.1 
+0064 ldarg.2 
+0065 ldloc.2 
+0066 callvirt WriteRootElement
+006B leave.s 105
+006D newobj .ctor
+0072 stloc.3 
+0073 ldloc.3 
+0074 ldc.i4.3 
+0075 callvirt set_Kind
+007A ldloc.3 
+007B ldc.i4.5 
+007C newarr String
+0081 dup 
+0082 ldc.i4.0 
+0083 call get_SafetyApplicationSerializationHelper_InternalSaveModelWithCrc1
+0088 stelem.ref 
+0089 dup 
+008A ldc.i4.1 
+008B ldstr  
+0090 stelem.ref 
+0091 dup 
+0092 ldc.i4.2 
+0093 ldloc.2 
+0094 callvirt get_CrcSettings
+0099 callvirt get_CrcDictionary
+009E callvirt get_Encoding
+00A3 callvirt get_WebName
+00A8 stelem.ref 
+00A9 dup 
+00AA ldc.i4.3 
+00AB ldstr  
+00B0 stelem.ref 
+00B1 dup 
+00B2 ldc.i4.4 
+00B3 call get_SafetyApplicationSerializationHelper_InternalSaveWithCrc
+00B8 stelem.ref 
+00B9 call Concat
+00BE callvirt set_Message
+00C3 ldarg.1 
+00C4 ldloc.3 
+00C5 callvirt AddMessage
+00CA leave.s 10
+00CC ldloc.2 
+00CD brfalse.s 6
+00CF ldloc.2 
+00D0 callvirt Dispose
+00D5 endfinally 
+00D6 ldloc.0 
+00D7 ret 
+

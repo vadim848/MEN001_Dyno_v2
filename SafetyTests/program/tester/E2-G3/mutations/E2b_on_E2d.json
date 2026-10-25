@@ -1,0 +1,175 @@
+{
+ "generatedAt": "2026-10-22T14:22:27.310Z",
+ "tool": "scratchpad/tools/mutkill.mjs (v2-tester E2-G3)",
+ "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2b_on_E2d.json",
+ "planSha256": "2bd085653dbfcea3983976622199b0c11ce94835cbfa40414bc1170cc01eddcd",
+ "sourceSha256": "2276d7739ad958c51ae43d6af74981cfbc9421c0e782df7afe119e6eff4c8b1b",
+ "killBase": {
+  "eligible": 714,
+  "excluded": [
+   "E2a DIS-HOLD-HV issue by STP-A Run->R&D; refused legacy PLC lift (1,1) 300 ms with the cover open (NC1 FALSE); then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+   "E2a DIS-HOLD-HV issue by STP-A Run->R&D; Emergency in R&D (in_ES_NC_1 FALSE) while legacy PLC (1,1) held 3000 ms, Restart -> Safe, Safe->R&D; then accepted R&D->Run -> request TRUE in [d, a-1] (not withdrawn by the event), FALSE from u+1",
+   "E2a DIS-HOLD-HV Emergency from steady Run while legacy PLC (1,1) is held (in_ES_NC_1 FALSE) -> the chain issues the HV discharge request before C2 OFF and keeps it TRUE (Q-V7-01 \"Г\": Discharge -> hold -> C2 OFF; C2 OFF without Discharge = FAIL)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)",
+   "E2b REL01-e2-LATE R&D NC2: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+0 for 100 ms -> refused without energy/fault/Emergency, or transition started <= s with Emergency; first lift or transition stage at >= s+1 (deferred through the permit loss) forbidden (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = Q+401 for 100 ms -> lift accepted before s (<= Q+400, TD-06), then Emergency (StartingRun -> Emergency, Q-RC-03(a)); no new lift after s (TD-07)",
+   "E2b REL01-e2-LATE R&D NC1+NC2: permit FALSE from s = l0+1 for 100 ms (l0 = first lift of the no-episode control X0) -> lift already issued: Emergency required; no lift / stage at >= s+1 (TD-07)",
+   "E2d FBK-10 (R) steady R&D, C2_FBK TRUE without command, legacy PLC (1,1) 1000 ms at f+500 while FBK ON -> no C2 command, STO not released, no Run, no Emergency",
+   "E2d FBK10-PLC-B R&D(HV) (HV discharge request TRUE), C2_FBK ON without command from f, legacy PLC (1,1) at f+1 held 1500 ms -> stage R&D, no SR/Run, out_HV_C2 and b_Set_HV_C2_1 FALSE, STO set, HV discharge request TRUE in every scan [t, t+1500], no Emergency",
+   "E2d FBK10-PLC-B R&D(HV) (HV discharge request TRUE), C2_FBK ON without command from f, legacy PLC (1,1) at f+100 held 1500 ms -> stage R&D, no SR/Run, out_HV_C2 and b_Set_HV_C2_1 FALSE, STO set, HV discharge request TRUE in every scan [t, t+1500], no Emergency",
+   "E2d FBK10-PLC-B R&D(HV) (HV discharge request TRUE), C2_FBK ON without command from f, legacy PLC (1,1) at f+3000 held 1500 ms -> stage R&D, no SR/Run, out_HV_C2 and b_Set_HV_C2_1 FALSE, STO set, HV discharge request TRUE in every scan [t, t+1500], no Emergency",
+   "E2d FBK10-PLC boundary R&D(HV), C2_FBK ON f..g-1 (g=f+3000), legacy PLC (1,1) pulse 50 ms ending in g-1 -> no lift in any scan until t+3000 (no held level after FBK OFF)",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+10, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+10, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+300, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+300, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+499, in_HV_C2_FBK never ON -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")",
+   "E2d FBK-05-CMD BLOCKED-E4 StartingRun: front CMD_RUN_TO_R&D at u+499, in_HV_C2_FBK ON u+1..u+199, then FALSE -> SafetyFault <= w+1, abort sequence equal to the abort with FBK ON, no Emergency (Q-V7-03 \"А\")"
+  ],
+  "excludeRegex": [
+   "/REL01-e2-LATE R&D/",
+   "/FBK-05/",
+   "/STP-I\\b/",
+   "/existing-PLC-levels/",
+   "/FBK10-PLC-B/",
+   "/FBK10-PLC-REG steady R&D, legacy PLC \\(1,1\\)/",
+   "/^(DIAG \\S+ )?KF-/",
+   "/\\(1,1\\)/"
+  ]
+ },
+ "behaviouralTests": [
+  "^E2[a-d] "
+ ],
+ "summary": {
+  "KILLED": 3,
+  "SURVIVED": 2,
+  "STRUCTURAL-ONLY": 0,
+  "INVALID": 0,
+  "NOT-RUN": 0
+ },
+ "results": [
+  {
+   "id": "M-E2b-46",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_SPOIL_R",
+   "port": "AndIn2",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_SPOIL_R/AndIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "2a32a378c8016223e4f5d41160a185bb1dac5408bf39cd9829325f3164f06072",
+   "killedBy": [
+    {
+     "name": "E2d IL-01 Safe, NC1 FALSE, Door true: no Emergency; BOTH Safe->R&D accepted with the cover open",
+     "file": "current-e2a-rnd-cover-healthy.test.js",
+     "message": "2 violated checks"
+    },
+    {
+     "name": "E2d IL-01 Safe, NC1 FALSE, Door false: no Emergency; BOTH Safe->R&D accepted with the cover open",
+     "file": "current-e2a-rnd-cover-healthy.test.js",
+     "message": "2 violated checks"
+    },
+    {
+     "name": "E2d IL-01 Safe, NC2 FALSE, Door true: no Emergency; BOTH Safe->R&D accepted with the cover open",
+     "file": "current-e2a-rnd-cover-healthy.test.js",
+     "message": "2 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 3,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2b-47",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_SPOIL_R",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_SPOIL_R/AndIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "4b75eaa38df791d8244bec1cc16d0fd4e0f924bb3e432aba85c05cee9d2f5238",
+   "killedBy": [
+    {
+     "name": "E2d UNL-04 R&D, cover NC1 open: blue held, green pressed 1000 ms later for 300 ms -> Unlock FALSE in every scan with green pressed",
+     "file": "current-e2d-unlock-cover.test.js",
+     "message": "1 violated checks"
+    },
+    {
+     "name": "E2d UNL-04 R&D (Q-ARCH-10 \"А\"), cover NC1 open, Door TRUE: blue held 3000 ms -> Unlock FALSE at s+499, TRUE from s+501 while held, FALSE after release",
+     "file": "current-e2d-unlock-cover.test.js",
+     "message": "1 violated checks"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 3,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2b-21",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_030",
+   "port": "OrIn5",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_030/OrIn5",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "aba03b4816657073c57722f06e42a69f541d73de9012659c4881b11ca9bc4860",
+   "killedBy": [
+    {
+     "name": "E2d FBK10-K4 (S1) BOTH-1 qualified while steady Safe, C1_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 \"Б\", E6-Q2, п.13)",
+     "file": "current-e2d-fbk-k3ack.test.js",
+     "message": "3 violated checks (p=5214, g=7214, r=9215)"
+    }
+   ],
+   "nonKill": [],
+   "verdict": "KILLED",
+   "ranCount": 27,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2b-49",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_SPOIL_S",
+   "port": "AndIn2",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_SPOIL_S/AndIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "e6c925e40c3fa2714acc17b203cad6118c1ce5b20f7b3ef02f7eec88102b07ae",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 714,
+   "eligible": 714
+  },
+  {
+   "id": "M-E2b-48",
+   "op": "deactivate-input",
+   "block": "//RndPhysicalCompact/GATE_SPOIL_S",
+   "port": "AndIn1",
+   "verification": {
+    "parsedDelta": "//RndPhysicalCompact/GATE_SPOIL_S/AndIn1",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "9aa739a74d8b99d1b6844ba26645bd1d9826892d22adca628e102c51f838b216",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 714,
+   "eligible": 714
+  }
+ ]
+}

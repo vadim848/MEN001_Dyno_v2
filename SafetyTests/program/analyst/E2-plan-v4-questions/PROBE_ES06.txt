@@ -1,0 +1,10 @@
+boot idle 300, Restart                                         outputs/status first diff: scan 302 base 000001|EMG mut 000001|SAFE | incl. stage first diff: scan 2 base 000000|EMG|none mut 000000|EMG|S1 | end base 000001|SAFE|S1 viol 0 0
+boot blue 700 (no Restart)                                     outputs/status first diff: none | incl. stage first diff: scan 2 base 000000|EMG|none mut 000000|EMG|S1 | end base 000000|EMG|none viol 0 0
+boot Bypass 300 (no Restart)                                   outputs/status first diff: none | incl. stage first diff: scan 2 base 000000|EMG|none mut 000000|EMG|S1 | end base 000000|EMG|none viol 0 0
+boot PLC RnD_Mode 300 (no Restart)                             outputs/status first diff: none | incl. stage first diff: scan 2 base 000000|EMG|none mut 000000|EMG|S1 | end base 000000|EMG|none viol 0 0
+boot ES pressed, Restart while pressed, release, no 2nd Restart outputs/status first diff: none | incl. stage first diff: scan 2 base 000000|EMG|none mut 000000|EMG|S1 | end base 000000|EMG|none viol 0 0
+boot ES pressed, release, Restart                              outputs/status first diff: scan 104 base 000001|EMG mut 000001|SAFE | incl. stage first diff: scan 2 base 000000|EMG|none mut 000000|EMG|S1 | end base 000001|SAFE|S1 viol 0 0
+boot Restart then blue 700 at +2100                            outputs/status first diff: scan 22 base 000001|EMG mut 000001|SAFE | incl. stage first diff: scan 2 base 000000|EMG|none mut 000000|EMG|S1 | end base 000001|SAFE|S1 viol 0 0
+boot Restart then BOTH 1100 at +2100                           outputs/status first diff: scan 22 base 000001|EMG mut 000001|SAFE | incl. stage first diff: scan 2 base 000000|EMG|none mut 000000|EMG|S1 | end base 100001|RND|S_RnD viol 0 0
+boot in_LV_C1_FBK held TRUE, Restart                           first diff: #0 base 000000|EMG|none mut 000000|EMG|S1 | end base 000001|SAFE|S1 mut 000001|SAFE|S1
+boot in_HV_C2_FBK held TRUE, Restart                           first diff: #0 base 000000|EMG|none mut 000000|EMG|S1 | end base 000001|SAFE|S1 mut 000001|SAFE|S1

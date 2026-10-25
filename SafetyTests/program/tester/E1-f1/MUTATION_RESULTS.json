@@ -1,0 +1,1449 @@
+{
+ "generatedAt": "2026-10-21T10:29:01.755Z",
+ "source": "F1 SAL 04b45456 (candidates/resumed-f1/native)",
+ "generator": "program/tester/E1-f1/make-mutants.mjs",
+ "battery": "program/tester/E1-f1/run-battery.sh (qualification16, Run20, lifecycle2, phase-exit3) + runners/f1-gaps.mjs (17) ; shared suites (8 non-SHA-pinned current-* files, 339 tests) for battery survivors and MU18",
+ "f1Baseline": "all runners PASS on unmutated F1: qualification 16/16, Run20 20/20, lifecycle 2/2, phase-exit 3/3, gaps 17/17, shared 339/339",
+ "structuralNegativeControls": "delta-check.mjs FAILS on all 26 mutants; native-check.ps1 CRC invalid on MU04 and MU14 (sampled)",
+ "mutants": [
+  {
+   "id": "MU01",
+   "label": "MODE.OrIn3 (b_Step3) deactivated: recognizer not enabled in Run",
+   "mutantSalSha256": "0baf4079a062881b6f8e8584909274056cfcf4197528a34ae123a1a15f9f1f2c",
+   "battery": {
+    "fails": 43,
+    "errors": 2
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-single-green499-500-shared-qualification-and-order",
+     "requirementLabels": [],
+     "internalLabels": [
+      "sharedGREEN qualifies at first+500"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-green-qualified-lateblue500-cannot-cancel",
+     "requirementLabels": [
+      "acceptedgreen survives lateblue by first+503",
+      "only one physical down rise"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-green-qualified-lateblue600-cannot-cancel",
+     "requirementLabels": [
+      "acceptedgreen survives lateblue by first+503",
+      "only one physical down rise"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-q+1",
+     "requirementLabels": [],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-after-acceptance",
+     "requirementLabels": [
+      "healthy accepted physical route positive"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-q+1",
+     "requirementLabels": [],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-after-acceptance",
+     "requirementLabels": [
+      "healthy accepted physical route positive"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-Run-neutral-complete2000-freshgreen",
+     "requirementLabels": [
+      "freshgreen permitted iff bothOFF complete2000"
+     ],
+     "internalLabels": [
+      "actual releaseenable is observed afterneutral"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "MU02",
+   "label": "MODE.OrIn3 inverted (NOT b_Step3)",
+   "mutantSalSha256": "457836e22358018e4e4ded92b7ceebfb61325c44b410ded507eeda5ec02a5a45",
+   "battery": {
+    "fails": 43,
+    "errors": 2
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-single-green499-500-shared-qualification-and-order",
+     "requirementLabels": [],
+     "internalLabels": [
+      "sharedGREEN qualifies at first+500"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-green-qualified-lateblue500-cannot-cancel",
+     "requirementLabels": [
+      "acceptedgreen survives lateblue by first+503",
+      "only one physical down rise"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-green-qualified-lateblue600-cannot-cancel",
+     "requirementLabels": [
+      "acceptedgreen survives lateblue by first+503",
+      "only one physical down rise"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-q+1",
+     "requirementLabels": [],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-after-acceptance",
+     "requirementLabels": [
+      "healthy accepted physical route positive"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-q+1",
+     "requirementLabels": [],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-after-acceptance",
+     "requirementLabels": [
+      "healthy accepted physical route positive"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-Run-neutral-complete2000-freshgreen",
+     "requirementLabels": [
+      "freshgreen permitted iff bothOFF complete2000"
+     ],
+     "internalLabels": [
+      "actual releaseenable is observed afterneutral"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "MU03",
+   "label": "And24.AndIn3 linkRndGreenQualified deactivated (no green requirement)",
+   "mutantSalSha256": "b2dfb6691ce4883040b50351cdee0f3bbefe55c35828f3058a2b8c64570ed5b1",
+   "battery": {
+    "fails": 46,
+    "errors": 0
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-single-green499-500-shared-qualification-and-order",
+     "requirementLabels": [
+      "no down before500"
+     ],
+     "internalLabels": [
+      "And23 first accepted source is q+1",
+      "owner first capture is q+1",
+      "OR5 reads actualowner on q+2"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-blue-qualified-lategreen500-cannot-become-down",
+     "requirementLabels": [
+      "Armedblueignored and lategreen cannot create secondcommand"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-blue-qualified-lategreen600-cannot-become-down",
+     "requirementLabels": [
+      "Armedblueignored and lategreen cannot create secondcommand"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-reset-priority-in_InterLock_NC_1",
+     "requirementLabels": [
+      "fault at qualification never permitsowner/down",
+      "rawrestore withoutRestart cannot reviveowner"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-reset-priority-in_Estop_PLC",
+     "requirementLabels": [
+      "fault at qualification never permitsowner/down"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-q+1",
+     "requirementLabels": [
+      "raw restoration cannot revive consumed owner"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-after-acceptance",
+     "requirementLabels": [
+      "raw restoration cannot revive consumed owner"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-Run-neutral-early1999-freshgreen",
+     "requirementLabels": [
+      "freshgreen permitted iff bothOFF complete2000",
+      "no request from initial ignoredBOTH"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU04",
+   "label": "And24.AndIn3 inverted (NOT green qualified)",
+   "mutantSalSha256": "345ddd55eb522ca53151dd8b7fbb9210b43200c83a4299219bb08dc9d6c3cd44",
+   "battery": {
+    "fails": 47,
+    "errors": 0
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-single-green499-500-shared-qualification-and-order",
+     "requirementLabels": [
+      "no down before500"
+     ],
+     "internalLabels": [
+      "And23 first accepted source is q+1",
+      "owner first capture is q+1",
+      "OR5 reads actualowner on q+2",
+      "owner consumed actual SetTRUE and ResetFALSE"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-blue-qualified-lategreen500-cannot-become-down",
+     "requirementLabels": [
+      "Armedblueignored and lategreen cannot create secondcommand"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-blue-qualified-lategreen600-cannot-become-down",
+     "requirementLabels": [
+      "Armedblueignored and lategreen cannot create secondcommand"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-reset-priority-in_InterLock_NC_1",
+     "requirementLabels": [
+      "fault at qualification never permitsowner/down",
+      "rawrestore withoutRestart cannot reviveowner"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-reset-priority-in_Estop_PLC",
+     "requirementLabels": [
+      "fault at qualification never permitsowner/down"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-q+1",
+     "requirementLabels": [
+      "raw restoration cannot revive consumed owner"
+     ],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-after-acceptance",
+     "requirementLabels": [
+      "raw restoration cannot revive consumed owner"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-q+1",
+     "requirementLabels": [],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "MU05",
+   "label": "And24.AndIn1 NOT ResetPB_Lock deactivated (lock ignored)",
+   "mutantSalSha256": "5771ba46764a5cc82d84431caa3ef2bd4854d786d7b1341cb117760179b987a4",
+   "battery": {
+    "fails": 1,
+    "errors": 0
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-real-lock-producer-rejects-green-and-doesnotqueue",
+     "requirementLabels": [
+      "qualifiedgreen while actuallockTRUE cannot own physicaldown",
+      "clearinglock never queues oldgreen authorization"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU06",
+   "label": "And24.AndIn2 NOT in_False deactivated",
+   "mutantSalSha256": "a10cdfdefdd6248551e3c3924e63ecfbc7e28ba37390bae638155bd994423ef5",
+   "battery": {
+    "fails": 0,
+    "errors": 0
+   },
+   "sharedSuites": {
+    "failed": 0,
+    "examples": []
+   },
+   "killedByRequirementTest": false,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": []
+  },
+  {
+   "id": "MU07",
+   "label": "Revert: And23.AndIn3 raw blue suppression restored (NOT in_Relase_Door_PB)",
+   "mutantSalSha256": "3d60771fe5214214a22184163cd60d1b144d2c5efd306b6ecf44194adac52905",
+   "battery": {
+    "fails": 1,
+    "errors": 0
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-green-qualified-lateblue500-cannot-cancel",
+     "requirementLabels": [
+      "acceptedgreen survives lateblue by first+503",
+      "only one physical down rise"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU08",
+   "label": "And23.AndIn2 Run qualifier deactivated",
+   "mutantSalSha256": "cef82210d06498a1bc7b7f432147153f8c2f4b8ee3433b555c8e85e2bc0264e5",
+   "battery": {
+    "fails": 1,
+    "errors": 0
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "gaps",
+     "id": "GAP-LIFECYCLE-RnD-green-does-not-raise-Run-down",
+     "requirementLabels": [
+      "no Run owner / Run normal-down request while in R&D",
+      "still no Run normal-down request while green held"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU09",
+   "label": "And23.AndIn1 previous And24 deactivated (capture without qualification)",
+   "mutantSalSha256": "575646d6d28f6379ff8e19addfadf01cf070b46029e245619cd6db81e8e76bba",
+   "battery": {
+    "fails": 46,
+    "errors": 0
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-single-green499-500-shared-qualification-and-order",
+     "requirementLabels": [
+      "no down before500"
+     ],
+     "internalLabels": [
+      "And23 first accepted source is q+1",
+      "owner first capture is q+1",
+      "OR5 reads actualowner on q+2"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-blue-qualified-lategreen500-cannot-become-down",
+     "requirementLabels": [
+      "Armedblueignored and lategreen cannot create secondcommand"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-blue-qualified-lategreen600-cannot-become-down",
+     "requirementLabels": [
+      "Armedblueignored and lategreen cannot create secondcommand"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-reset-priority-in_InterLock_NC_1",
+     "requirementLabels": [
+      "fault at qualification never permitsowner/down",
+      "rawrestore withoutRestart cannot reviveowner"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-reset-priority-in_Estop_PLC",
+     "requirementLabels": [
+      "fault at qualification never permitsowner/down"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-q+1",
+     "requirementLabels": [
+      "raw restoration cannot revive consumed owner"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-after-acceptance",
+     "requirementLabels": [
+      "raw restoration cannot revive consumed owner"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-Run-neutral-early1999-freshgreen",
+     "requirementLabels": [
+      "freshgreen permitted iff bothOFF complete2000",
+      "no request from initial ignoredBOTH"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU10",
+   "label": "RESET.OrIn1 b_Step_RnD_Set deactivated",
+   "mutantSalSha256": "3a19d13fa1b4039123bcb7ec9de4a998c71ada2d84020e5dc46c9d632f6ce071",
+   "battery": {
+    "fails": 0,
+    "errors": 0
+   },
+   "sharedSuites": {
+    "failed": 0,
+    "examples": []
+   },
+   "killedByRequirementTest": false,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": []
+  },
+  {
+   "id": "MU11",
+   "label": "RESET.OrIn2 b_Step4_Set deactivated",
+   "mutantSalSha256": "0e46fbc9d64c295b511ef881d88c4ef39a7ae838f6397e2a37c59da7dd03167d",
+   "battery": {
+    "fails": 1,
+    "errors": 0
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": false,
+   "killedOnlyByInternalOrPlanOracle": true,
+   "killers": [
+    {
+     "runner": "gaps",
+     "id": "PLAN-STEP4-protective-request-resets-owner",
+     "requirementLabels": [],
+     "internalLabels": [
+      "real b_Step4_Set producer observed TRUE",
+      "owner cleared by protective Step4 request"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "MU12",
+   "label": "RESET.OrIn3 NOT linkRndGatePermit deactivated (no protective owner reset)",
+   "mutantSalSha256": "80203d618c910455e2e66d82203cd9d8a438873115c79db5192ddf5824e0a979",
+   "battery": {
+    "fails": 8,
+    "errors": 0
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-q+1",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-after-acceptance",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-q+1",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-after-acceptance",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "phase-exit",
+     "id": "phase-exit offset1",
+     "requirementLabels": [
+      "pending qualification cannot own down outside actual Run"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-EMG-in_ES_NC_1-after-acceptance-clears-normal-owner",
+     "requirementLabels": [
+      "normal physical owner cleared by protective cause"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-EMG-in_InterLock_NC_2-after-acceptance-clears-normal-owner",
+     "requirementLabels": [
+      "normal physical owner cleared by protective cause"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-EMG-in_HV_Connector_Interlock-after-acceptance-clears-normal-owner",
+     "requirementLabels": [
+      "normal physical owner cleared by protective cause"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU13",
+   "label": "RESET.OrIn3 polarity flipped (linkRndGatePermit direct)",
+   "mutantSalSha256": "cf27f98ccb15876c3b0e461b8b266aa1e2b9d7f0669c2c765aa3d1ab02e96f31",
+   "battery": {
+    "fails": 43,
+    "errors": 2
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-single-green499-500-shared-qualification-and-order",
+     "requirementLabels": [],
+     "internalLabels": [
+      "owner first capture is q+1",
+      "OR5 reads actualowner on q+2",
+      "owner consumed actual SetTRUE and ResetFALSE"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-green-qualified-lateblue500-cannot-cancel",
+     "requirementLabels": [
+      "acceptedgreen survives lateblue by first+503",
+      "only one physical down rise"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-green-qualified-lateblue600-cannot-cancel",
+     "requirementLabels": [
+      "acceptedgreen survives lateblue by first+503",
+      "only one physical down rise"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-q+1",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-after-acceptance",
+     "requirementLabels": [
+      "healthy accepted physical route positive"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-q+1",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-after-acceptance",
+     "requirementLabels": [
+      "healthy accepted physical route positive"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-Run-neutral-complete2000-freshgreen",
+     "requirementLabels": [
+      "freshgreen permitted iff bothOFF complete2000"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU14",
+   "label": "Owner bypass: OR5.OrIn1 wired from And23 (non-latching P0 route)",
+   "mutantSalSha256": "52ddad28fa6fb19aafca36e9f71562310758b5280b5f8b3558c76bd8531151e8",
+   "battery": {
+    "fails": 42,
+    "errors": 2
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-single-green499-500-shared-qualification-and-order",
+     "requirementLabels": [],
+     "internalLabels": [
+      "physical accepted owner exists",
+      "owner consumed actual SetTRUE and ResetFALSE"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-green-qualified-lateblue500-cannot-cancel",
+     "requirementLabels": [
+      "lateblue doesnotresetacceptedowner"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-green-qualified-lateblue600-cannot-cancel",
+     "requirementLabels": [
+      "lateblue doesnotresetacceptedowner"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-q+1",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": [
+      "real owner Reset source was observedTRUE",
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-after-acceptance",
+     "requirementLabels": [
+      "healthy accepted physical route positive"
+     ],
+     "internalLabels": [
+      "real owner Reset source was observedTRUE"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-q+1",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": [
+      "real owner Reset source was observedTRUE",
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-after-acceptance",
+     "requirementLabels": [
+      "healthy accepted physical route positive"
+     ],
+     "internalLabels": [
+      "real owner Reset source was observedTRUE"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-real-lock-producer-rejects-green-and-doesnotqueue",
+     "requirementLabels": [
+      "fresh fullyclean green availability preserved"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU15",
+   "label": "Owner Set/Reset sources swapped",
+   "mutantSalSha256": "aab6e89d428896f29bf4dbbd6133be0e10ebb31692ea92606163a142ddcd2f9a",
+   "battery": {
+    "fails": 1,
+    "errors": 57
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "gaps",
+     "id": "GAP-LIFECYCLE-RnD-green-does-not-raise-Run-down",
+     "requirementLabels": [
+      "no Run owner / Run normal-down request while in R&D",
+      "still no Run normal-down request while green held"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU16",
+   "label": "Order: OWNER executes before And23 (swap orders)",
+   "mutantSalSha256": "1f857a9b7ba9ed492867ced74fb270c83847dc5cb2954503f09f13035e7a4ca0",
+   "battery": {
+    "fails": 11,
+    "errors": 0
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-single-green499-500-shared-qualification-and-order",
+     "requirementLabels": [],
+     "internalLabels": [
+      "And23 first accepted source is q+1"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-q+1",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-after-acceptance",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-q+1",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-after-acceptance",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "phase-exit",
+     "id": "phase-exit offset0",
+     "requirementLabels": [
+      "pending qualification cannot own down outside actual Run"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "phase-exit",
+     "id": "phase-exit offset1",
+     "requirementLabels": [
+      "pending qualification cannot own down outside actual Run"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-EMG-in_ES_NC_1-after-acceptance-clears-normal-owner",
+     "requirementLabels": [
+      "normal physical owner cleared by protective cause"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU17",
+   "label": "Order: RESET executes after OWNER (swap orders)",
+   "mutantSalSha256": "e1726297cfb4e16b64959c8589c7c54f0fe59a40071d1a10ea01c89526195d92",
+   "battery": {
+    "fails": 9,
+    "errors": 0
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-q+1",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-after-acceptance",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-q+1",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-after-acceptance",
+     "requirementLabels": [
+      "critical source clears physical owner immediately and holds"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "phase-exit",
+     "id": "phase-exit offset1",
+     "requirementLabels": [
+      "pending qualification cannot own down outside actual Run"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-EMG-in_ES_NC_1-after-acceptance-clears-normal-owner",
+     "requirementLabels": [
+      "normal physical owner cleared by protective cause"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-EMG-in_InterLock_NC_2-after-acceptance-clears-normal-owner",
+     "requirementLabels": [
+      "normal physical owner cleared by protective cause"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-EMG-in_HV_Connector_Interlock-after-acceptance-clears-normal-owner",
+     "requirementLabels": [
+      "normal physical owner cleared by protective cause"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU18",
+   "label": "OR5.OrIn1 owner route deactivated",
+   "mutantSalSha256": "a4ac3019e0b2c274bf43f7ae489880f8476892abee31d6b466ecfb999ae1094d",
+   "battery": {
+    "fails": 11,
+    "errors": 2
+   },
+   "sharedSuites": {
+    "failed": 5,
+    "examples": [
+     "SR-RG-QUAL actual Run green500 branch and fanout availability",
+     "SR-RG-INVALID-green-remain-green failed chord cannot degrade",
+     "SR-RG-INVALID-green-remain-blue failed chord cannot degrade",
+     "SR-RG-INVALID-blue-remain-green failed chord cannot degrade",
+     "SR-RG-INVALID-blue-remain-blue failed chord cannot degrade"
+    ]
+   },
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-single-green499-500-shared-qualification-and-order",
+     "requirementLabels": [],
+     "internalLabels": [
+      "OR5 reads actualowner on q+2"
+     ]
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-LATE499-green-first-invalid-attempt",
+     "requirementLabels": [
+      "fresh green500: physical owner and OR5 normal-down aggregate available"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-LATE499-blue-first-invalid-attempt",
+     "requirementLabels": [
+      "fresh green500: physical owner and OR5 normal-down aggregate available"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-BOTH249-green-first-ignored-in-Run",
+     "requirementLabels": [
+      "fresh green500: physical owner and OR5 normal-down aggregate available"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-BOTH249-blue-first-ignored-in-Run",
+     "requirementLabels": [
+      "fresh green500: physical owner and OR5 normal-down aggregate available"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-REPRESS-blue-without-neutral",
+     "requirementLabels": [
+      "fresh green500: physical owner and OR5 normal-down aggregate available"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-REPRESS-green-without-neutral",
+     "requirementLabels": [
+      "fresh green500: physical owner and OR5 normal-down aggregate available"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-HELD-ACROSS-in_InterLock_NC_1-restore-then-repress-1000ms-rejected",
+     "requirementLabels": [
+      "fresh green500: physical owner and OR5 normal-down aggregate available"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU19",
+   "label": "GREEN TON 0.5 -> 0.4 s",
+   "mutantSalSha256": "864fec32c8b11322cbbcc1ca8f3d88b5b7872720dfce9a1981a730e9f9ded2c5",
+   "battery": {
+    "fails": 34,
+    "errors": 0
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-single-green499-500-shared-qualification-and-order",
+     "requirementLabels": [
+      "no down before500"
+     ],
+     "internalLabels": [
+      "sharedGREEN qualifies at first+500"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-reset-priority-in_InterLock_NC_1",
+     "requirementLabels": [
+      "fault at qualification never permitsowner/down"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-reset-priority-in_Estop_PLC",
+     "requirementLabels": [
+      "fault at qualification never permitsowner/down"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-q+1",
+     "requirementLabels": [],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-q+1",
+     "requirementLabels": [],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "run20",
+     "id": "Run-BOTH-green-delta0-retaingreen",
+     "requirementLabels": [
+      "freshgreen no down before500"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "run20",
+     "id": "Run-BOTH-green-delta0-retainblue",
+     "requirementLabels": [
+      "freshgreen no down before500"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "run20",
+     "id": "Run-BOTH-green-delta250-retaingreen",
+     "requirementLabels": [
+      "freshgreen no down before500"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU20",
+   "label": "GREEN TON 0.5 -> 0.6 s",
+   "mutantSalSha256": "c73817e4698dd2a54caea655294325f7785ea36d58aef05be253da5e65081aba",
+   "battery": {
+    "fails": 45,
+    "errors": 0
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-single-green499-500-shared-qualification-and-order",
+     "requirementLabels": [],
+     "internalLabels": [
+      "sharedGREEN qualifies at first+500"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-green-qualified-lateblue500-cannot-cancel",
+     "requirementLabels": [
+      "acceptedgreen survives lateblue by first+503",
+      "only one physical down rise"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-q+1",
+     "requirementLabels": [],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_InterLock_NC_1-after-acceptance",
+     "requirementLabels": [
+      "healthy accepted physical route positive"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-q+1",
+     "requirementLabels": [],
+     "internalLabels": [
+      "Set+Reset coincidence records native reset dominance"
+     ]
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-owner-real-reset-in_Estop_PLC-after-acceptance",
+     "requirementLabels": [
+      "healthy accepted physical route positive"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-Run-neutral-complete2000-freshgreen",
+     "requirementLabels": [
+      "freshgreen permitted iff bothOFF complete2000"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-real-lock-producer-rejects-green-and-doesnotqueue",
+     "requirementLabels": [
+      "fresh fullyclean green availability preserved"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU21",
+   "label": "RELEASE TON 2 -> 1.5 s",
+   "mutantSalSha256": "0c4c6e6a8cf7d95ec5feb0af8f643bcdae222a518389e7914427c7b8a29f182d",
+   "battery": {
+    "fails": 3,
+    "errors": 0
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-Run-neutral-early1999-freshgreen",
+     "requirementLabels": [
+      "freshgreen permitted iff bothOFF complete2000"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-Run-neutral-complete2000-freshgreen",
+     "requirementLabels": [],
+     "internalLabels": [
+      "releaseTON isFALSE at rawneutral1999"
+     ]
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-LIFECYCLE-heldBOTH-release-then-green-after-1900ms-rejected",
+     "requirementLabels": [
+      "green with neutral < 2 s after initiating BOTH: no Run normal down"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU22",
+   "label": "GATE_005.AndIn2 NOT T removed (attempt owner T ignored)",
+   "mutantSalSha256": "30e588dc2fb9d3242c93a155d56491650cbdac5458a6dfaa537769c27f1586ab",
+   "battery": {
+    "fails": 0,
+    "errors": 9
+   },
+   "sharedSuites": {
+    "failed": 87,
+    "examples": [
+     "EARLYSTO physical green/HVHealthyfalse early N+2 fixed1",
+     "EARLYSTO physical green/HVHealthytrue early N+2 fixed1",
+     "EARLYSTO physical blue/HVHealthyfalse early N+2 fixed1",
+     "EARLYSTO physical blue/HVHealthytrue early N+2 fixed1",
+     "EARLYSTO physical green/HVHealthyfalse early N+2 fixed2",
+     "EARLYSTO physical green/HVHealthytrue early N+2 fixed2"
+    ]
+   },
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": []
+  },
+  {
+   "id": "MU23",
+   "label": "GATE_004.AndIn3 NOT C removed (consumed attempt ignored)",
+   "mutantSalSha256": "12768a49ab873f7e2dcfb39b53b244e3fb2af980657ba51c23427f981e8798f3",
+   "battery": {
+    "fails": 2,
+    "errors": 0
+   },
+   "sharedSuites": "not run (killed by battery)",
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "qualification",
+     "id": "F1-blue-qualified-lategreen500-cannot-become-down",
+     "requirementLabels": [
+      "Armedblueignored and lategreen cannot create secondcommand"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "qualification",
+     "id": "F1-blue-qualified-lategreen600-cannot-become-down",
+     "requirementLabels": [
+      "Armedblueignored and lategreen cannot create secondcommand"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU24",
+   "label": "GATE_016.AndIn4 RELEASE gating removed (rearm without 2 s)",
+   "mutantSalSha256": "281d4fb8c65d85faae3ca3ec8edc406623c1ff981a911c3c9675b7d603ff808c",
+   "battery": {
+    "fails": 2,
+    "errors": 0
+   },
+   "sharedSuites": {
+    "failed": 0,
+    "examples": []
+   },
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": [
+    {
+     "runner": "gaps",
+     "id": "GAP-HELD-ACROSS-in_InterLock_NC_1-restore-then-repress-1000ms-rejected",
+     "requirementLabels": [
+      "re-press after 1000 ms neutral is not a new attempt",
+      "fresh green: no down before 500"
+     ],
+     "internalLabels": []
+    },
+    {
+     "runner": "gaps",
+     "id": "GAP-HELD-ACROSS-in_Estop_PLC-restore-then-repress-1000ms-rejected",
+     "requirementLabels": [
+      "re-press after 1000 ms neutral is not a new attempt",
+      "fresh green: no down before 500"
+     ],
+     "internalLabels": []
+    }
+   ]
+  },
+  {
+   "id": "MU25",
+   "label": "BOTH TON 1 -> 0.9 s",
+   "mutantSalSha256": "86b049173543c9d992fda2b4cb53fe7582ecd4c23460bc4f06276f25c3fe07ba",
+   "battery": {
+    "fails": 0,
+    "errors": 0
+   },
+   "sharedSuites": {
+    "failed": 26,
+    "examples": [
+     "current SAL: healthy LV completion later-off reaches Safe and real fresh RnD without reenergization",
+     "current SAL: healthy LV completion already-off reaches Safe and real fresh RnD without reenergization",
+     "RNDPHYS green window249 fixed1",
+     "RNDPHYS green window250 fixed1",
+     "RNDPHYS green window248 fixed2",
+     "RNDPHYS green window250 fixed2"
+    ]
+   },
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": []
+  },
+  {
+   "id": "MU26",
+   "label": "WINDOW Delay Time (ms) 250 -> 300 (chord window widened)",
+   "mutantSalSha256": "8d0c3e35172d92dab19bcf5069ea43153389298985bb3a11fea7086c2f11d07a",
+   "battery": {
+    "fails": 0,
+    "errors": 0
+   },
+   "sharedSuites": {
+    "failed": 15,
+    "examples": [
+     "R3PAIR actual WINDOW master is exact first-only; remaining metadata is genuinely unbound",
+     "RNDPHYS green window251 fixed1",
+     "RNDPHYS green window252 fixed2",
+     "RNDPHYS green window255 fixed5",
+     "RNDPHYS green window260 fixed10",
+     "RNDPHYS green late300 fixed1"
+    ]
+   },
+   "killedByRequirementTest": true,
+   "killedOnlyByInternalOrPlanOracle": false,
+   "killers": []
+  }
+ ],
+ "summary": {
+  "total": 26,
+  "killedByRequirementTest": [
+   "MU01",
+   "MU02",
+   "MU03",
+   "MU04",
+   "MU05",
+   "MU07",
+   "MU08",
+   "MU09",
+   "MU12",
+   "MU13",
+   "MU14",
+   "MU15",
+   "MU16",
+   "MU17",
+   "MU18",
+   "MU19",
+   "MU20",
+   "MU21",
+   "MU22",
+   "MU23",
+   "MU24",
+   "MU25",
+   "MU26"
+  ],
+  "killedOnlyByInternalOrPlanOracle": [
+   "MU11"
+  ],
+  "survived": [
+   "MU06",
+   "MU10"
+  ]
+ }
+}

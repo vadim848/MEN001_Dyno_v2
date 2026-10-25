@@ -1,0 +1,54 @@
+{
+  "source": "49ae801d5f6ade77c310859f4efafba92946628a8a6fa7ed268c71b12dc162d5",
+  "sgvl": "b10bd9412aade7734aa9d8db1419f9ce3a5a848bb7855a406e8ddca5588f796d",
+  "summary": {
+    "PASS": 200,
+    "FAIL": 1,
+    "NOT VERIFIED": 7,
+    "ERROR": 0
+  },
+  "stages": [
+    {
+      "name": "harness",
+      "status": "ERROR",
+      "counts": {
+        "tests": 189,
+        "pass": 187,
+        "fail": 2,
+        "skipped": 0
+      },
+      "failedNames": [
+        "BOOT file mutation rejected: remove one actual state writer",
+        "BOOT file mutation rejected: alter full-source metadata revision"
+      ]
+    },
+    {
+      "name": "historical",
+      "status": "PASS",
+      "counts": {
+        "tests": 75,
+        "pass": 75,
+        "fail": 0,
+        "skipped": 0
+      },
+      "failedNames": []
+    },
+    {
+      "name": "current",
+      "status": "FAIL",
+      "counts": {
+        "tests": 442,
+        "pass": 438,
+        "fail": 4,
+        "skipped": 0
+      },
+      "failedNames": [
+        "MENTEE05 original Safe/Run protections, diagnostic alias and inactive main EStop port remain unchanged",
+        "NATIVE all10symbols and source/collection/usages reject unique empty duplicate containers",
+        "SR-RG-INVALID-green-remain-green failed chord cannot degrade",
+        "SR-RG-INVALID-blue-remain-green failed chord cannot degrade"
+      ]
+    }
+  ],
+  "reason": "Two prior BOOTmutation patterns inert after native format/CRC; one prior MENTEE literal oldCRC assertion; one newtestTDZ authoringbug. Original two gesture failures retained."
+}

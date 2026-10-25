@@ -1,0 +1,117 @@
+TAP version 13
+# Subtest: E2d FBK10-K4 (S1) BOTH-1 qualified while steady Safe, C1_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 "Б", E6-Q2, п.13)
+not ok 1 - E2d FBK10-K4 (S1) BOTH-1 qualified while steady Safe, C1_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 "Б", E6-Q2, п.13)
+  ---
+  duration_ms: 27166.114
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-k3ack.test.js:131:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    3 violated checks (p=5214, g=7214, r=9215)
+    + actual - expected
+    
+    + [
+    +   'BOTH-1 qualified while the cause is active is consumed: no lift during the hold through FBK OFF nor after the release; first lift t=7316 (from 5214)',
+    +   'state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=7315 b_Step12/STS_SAFE',
+    +   'energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@7316,out_LV_C1@7317,out_LV_C1@7318,out_LV_C1@7319'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'BOTH-1 qualified while the cause is active is consumed: no lift during the hold through FBK OFF nor after the release; first lift t=7316 (from 5214)'
+    1: 'state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=7315 b_Step12/STS_SAFE'
+    2: 'energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@7316,out_LV_C1@7317,out_LV_C1@7318,out_LV_C1@7319'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-k3ack.test.js:139:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: E2d FBK10-K4 (S2) BOTH-1 qualified while steady Safe, C2_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 "Б", E6-Q2, п.13)
+not ok 2 - E2d FBK10-K4 (S2) BOTH-1 qualified while steady Safe, C2_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 "Б", E6-Q2, п.13)
+  ---
+  duration_ms: 19393.9586
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-k3ack.test.js:131:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    3 violated checks (p=5214, g=7214, r=9215)
+    + actual - expected
+    
+    + [
+    +   'BOTH-1 qualified while the cause is active is consumed: no lift during the hold through FBK OFF nor after the release; first lift t=7316 (from 5214)',
+    +   'state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=7315 b_Step12/STS_SAFE',
+    +   'energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@7316,out_LV_C1@7317,out_LV_C1@7318,out_LV_C1@7319'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'BOTH-1 qualified while the cause is active is consumed: no lift during the hold through FBK OFF nor after the release; first lift t=7316 (from 5214)'
+    1: 'state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=7315 b_Step12/STS_SAFE'
+    2: 'energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@7316,out_LV_C1@7317,out_LV_C1@7318,out_LV_C1@7319'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-k3ack.test.js:139:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+  ...
+# Subtest: E2d FBK10-K4 (R) BOTH-1 qualified while steady R&D, C2_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 "Б", E6-Q2, п.13)
+not ok 3 - E2d FBK10-K4 (R) BOTH-1 qualified while steady R&D, C2_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 "Б", E6-Q2, п.13)
+  ---
+  duration_ms: 33458.807
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-k3ack.test.js:131:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    3 violated checks (p=9017, g=11017, r=13018)
+    + actual - expected
+    
+    + [
+    +   'BOTH-1 qualified while the cause is active is consumed: no lift during the hold through FBK OFF nor after the release; first lift t=11019 (from 9017)',
+    +   'state unchanged (b_Step_RnD/STS_RND) - no transition, no descent; first change t=11619 b_Step3/STS_RUN',
+    +   'energy / STO / SS1 / discharge outputs unchanged: out_HV_C2@11019,STO_DR1@11019,STO_DR2@11019,out_HV_C2@11020'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'BOTH-1 qualified while the cause is active is consumed: no lift during the hold through FBK OFF nor after the release; first lift t=11019 (from 9017)'
+    1: 'state unchanged (b_Step_RnD/STS_RND) - no transition, no descent; first change t=11619 b_Step3/STS_RUN'
+    2: 'energy / STO / SS1 / discharge outputs unchanged: out_HV_C2@11019,STO_DR1@11019,STO_DR2@11019,out_HV_C2@11020'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-k3ack.test.js:139:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    node:internal/test_runner/test:981:31
+    node:internal/process/task_queues:151:7
+    AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 0
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 81896.9034

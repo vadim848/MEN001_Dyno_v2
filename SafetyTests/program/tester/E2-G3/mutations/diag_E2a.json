@@ -1,0 +1,93 @@
+{
+ "generatedAt": "2026-10-22T12:34:59.907Z",
+ "tool": "scratchpad/tools/mutkill.mjs (v2-tester E2-G3)",
+ "plan": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\program\\tester\\E2-G3\\mutation-plans\\PLAN_E2a_on_E2a.json",
+ "planSha256": "54010eb2e39f80c033cca6477ef4fb2b95535078154375bb9986e0edbc056178",
+ "sourceSha256": "5648e31cec9fea6d82ed2392a4be21a26c599eb4872969f5adab2ef3b87fd40b",
+ "killBase": {
+  "eligible": 28,
+  "excluded": [],
+  "excludeRegex": [
+   "/^(DIAG \\S+ )?KF-/"
+  ]
+ },
+ "behaviouralTests": [
+  "^E2[a-d] "
+ ],
+ "summary": {
+  "KILLED": 0,
+  "SURVIVED": 3,
+  "STRUCTURAL-ONLY": 0,
+  "INVALID": 0,
+  "NOT-RUN": 0
+ },
+ "results": [
+  {
+   "id": "M-E2a-04",
+   "op": "deactivate-input",
+   "block": "//Network3/FBOr13",
+   "port": "OrIn2",
+   "verification": {
+    "parsedDelta": "//Network3/FBOr13/OrIn2",
+    "attribute": "channelInterface",
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "0c683d3942967cd623a19b034a18d60f8d88be3df2119865aede8a01411d1b28",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 28,
+   "eligible": 28
+  },
+  {
+   "id": "M-E2a-28",
+   "op": "swap-order",
+   "block": "//Network12/FBAnd16",
+   "port": "",
+   "value": {
+    "moveAfter": "//Network1/FBAnd1"
+   },
+   "verification": {
+    "parsedDelta": [
+     "//Network1/FBAnd1#block",
+     "//Network12/FBAnd16#block",
+     "//SafeResumption/CONNECTORS#block",
+     "//SafeResumption/CONNECTOR_SCOPE#block"
+    ],
+    "attribute": "orderOfExecution",
+    "movedBlocks": 4,
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "d943f124ce3a1845c33c8916ecb59cec325ca671eabdba54120d28ce761549ac",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 28,
+   "eligible": 28
+  },
+  {
+   "id": "M-E2a-29",
+   "op": "swap-order",
+   "block": "//SafeResumption/CONNECTOR_SCOPE",
+   "port": "",
+   "value": {
+    "moveAfter": "//Network1/FBAnd1"
+   },
+   "verification": {
+    "parsedDelta": [
+     "//Network1/FBAnd1#block",
+     "//SafeResumption/CONNECTOR_SCOPE#block"
+    ],
+    "attribute": "orderOfExecution",
+    "movedBlocks": 2,
+    "bindingValidation": "PASS"
+   },
+   "mutantSha256": "8604f351681a978e17ed6c91d6d476a42e6d82ce5258d1a6828c82d0253bcb33",
+   "killedBy": [],
+   "nonKill": [],
+   "verdict": "SURVIVED",
+   "ranCount": 28,
+   "eligible": 28
+  }
+ ]
+}

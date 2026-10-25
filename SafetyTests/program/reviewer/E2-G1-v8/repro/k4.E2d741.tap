@@ -1,0 +1,371 @@
+TAP version 13
+# Subtest: E2d FBK10-K4 (S1) blue 100 ms while steady Safe, C1_FBK is still ON (not an acknowledgement, Q-V7-04 "Б"), FBK OFF, BOTH-1 at g+1 -> acknowledgement only, no lift; BOTH-2 at r+2001 -> lift <= Q2+400 (TEAM-DEFAULT TD-06)
+not ok 1 - E2d FBK10-K4 (S1) blue 100 ms while steady Safe, C1_FBK is still ON (not an acknowledgement, Q-V7-04 "Б"), FBK OFF, BOTH-1 at g+1 -> acknowledgement only, no lift; BOTH-2 at r+2001 -> lift <= Q2+400 (TEAM-DEFAULT TD-06)
+  ---
+  duration_ms: 4919.5018
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-k3ack.test.js:104:27'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (press during FBK ON at 4714, g=7214, p=7215, p2=10317)
+    + actual - expected
+    
+    + [
+    +   'k4: the press during FBK ON is not counted - BOTH-1 after FBK OFF is the (new) acknowledgement, no lift; first lift t=8217 (from 4714)',
+    +   'until BOTH-2: state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=8216 b_Step12/STS_SAFE',
+    +   'until BOTH-2: energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@8217,out_LV_C1@8218,out_LV_C1@8219,out_LV_C1@8220',
+    +   'BOTH-2 at r+2001: lift moment not evaluable - already lifted at p-1 = 10316 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'k4: the press during FBK ON is not counted - BOTH-1 after FBK OFF is the (new) acknowledgement, no lift; first lift t=8217 (from 4714)'
+    1: 'until BOTH-2: state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=8216 b_Step12/STS_SAFE'
+    2: 'until BOTH-2: energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@8217,out_LV_C1@8218,out_LV_C1@8219,out_LV_C1@8220'
+    3: 'BOTH-2 at r+2001: lift moment not evaluable - already lifted at p-1 = 10316 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-k3ack.test.js:112:79)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: E2d FBK10-K4 (S1) blue 100 ms while steady Safe, C1_FBK is still ON (not an acknowledgement, Q-V7-04 "Б"), FBK OFF, BOTH-1 at g+3000 -> acknowledgement only, no lift; BOTH-2 at r+2001 -> lift <= Q2+400 (TEAM-DEFAULT TD-06)
+not ok 2 - E2d FBK10-K4 (S1) blue 100 ms while steady Safe, C1_FBK is still ON (not an acknowledgement, Q-V7-04 "Б"), FBK OFF, BOTH-1 at g+3000 -> acknowledgement only, no lift; BOTH-2 at r+2001 -> lift <= Q2+400 (TEAM-DEFAULT TD-06)
+  ---
+  duration_ms: 11268.1337
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-k3ack.test.js:104:27'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (press during FBK ON at 4714, g=7214, p=10214, p2=13316)
+    + actual - expected
+    
+    + [
+    +   'k4: the press during FBK ON is not counted - BOTH-1 after FBK OFF is the (new) acknowledgement, no lift; first lift t=11216 (from 4714)',
+    +   'until BOTH-2: state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=11215 b_Step12/STS_SAFE',
+    +   'until BOTH-2: energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@11216,out_LV_C1@11217,out_LV_C1@11218,out_LV_C1@11219',
+    +   'BOTH-2 at r+2001: lift moment not evaluable - already lifted at p-1 = 13315 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'k4: the press during FBK ON is not counted - BOTH-1 after FBK OFF is the (new) acknowledgement, no lift; first lift t=11216 (from 4714)'
+    1: 'until BOTH-2: state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=11215 b_Step12/STS_SAFE'
+    2: 'until BOTH-2: energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@11216,out_LV_C1@11217,out_LV_C1@11218,out_LV_C1@11219'
+    3: 'BOTH-2 at r+2001: lift moment not evaluable - already lifted at p-1 = 13315 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-k3ack.test.js:112:79)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: E2d FBK10-K4 (S1) BOTH-1 pressed at g-1 (steady Safe, C1_FBK still ON) held through FBK OFF -> no lift; BOTH-2 at r+2001 is the first press after FBK OFF = acknowledgement only; BOTH-3 at r2+2001 -> lift <= Q3+400 (TEAM-DEFAULT TD-06); SafetyFault TRUE [f+1, p2-1], FALSE from [p2, p2+1] (NV until the symbol)
+not ok 3 - E2d FBK10-K4 (S1) BOTH-1 pressed at g-1 (steady Safe, C1_FBK still ON) held through FBK OFF -> no lift; BOTH-2 at r+2001 is the first press after FBK OFF = acknowledgement only; BOTH-3 at r2+2001 -> lift <= Q3+400 (TEAM-DEFAULT TD-06); SafetyFault TRUE [f+1, p2-1], FALSE from [p2, p2+1] (NV until the symbol)
+  ---
+  duration_ms: 8970.7794
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-k3ack.test.js:113:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (p=7213, g=7214, r=8314, p2=10315, p3=13417)
+    + actual - expected
+    
+    + [
+    +   'k4: press at g-1 (cause active) not an acknowledgement and not a command; the next press (BOTH-2) after FBK OFF only acknowledges (Q-V7-04 "Б": new acknowledgement after FBK OFF; п.13: acknowledgement at the press scan); first lift t=8215 (from 7213)',
+    +   'until BOTH-3: state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=8214 b_Step12/STS_SAFE',
+    +   'until BOTH-3: energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@8215,out_LV_C1@8216,out_LV_C1@8217,out_LV_C1@8218',
+    +   'BOTH-3 at r2+2001: lift moment not evaluable - already lifted at p-1 = 13416 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'k4: press at g-1 (cause active) not an acknowledgement and not a command; the next press (BOTH-2) after FBK OFF only acknowledges (Q-V7-04 "Б": new acknowledgement after FBK OFF; п.13: acknowledgement at the press scan); first lift t=8215 (from 7213)'
+    1: 'until BOTH-3: state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=8214 b_Step12/STS_SAFE'
+    2: 'until BOTH-3: energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@8215,out_LV_C1@8216,out_LV_C1@8217,out_LV_C1@8218'
+    3: 'BOTH-3 at r2+2001: lift moment not evaluable - already lifted at p-1 = 13416 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-k3ack.test.js:125:52)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK10-K4 (S1) BOTH-1 qualified while steady Safe, C1_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 "Б", E6-Q2, п.13)
+ok 4 - E2d FBK10-K4 (S1) BOTH-1 qualified while steady Safe, C1_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 "Б", E6-Q2, п.13) # TODO NOT VERIFIED: SafetyFault TRUE [f+1, r+2099] (held BOTH-1 is no acknowledgement) - no SafetyFault symbol in the source (A8); observable checks PASSED
+  ---
+  duration_ms: 4647.0922
+  type: 'test'
+  ...
+# Subtest: E2d FBK10-K4 (S2) blue 100 ms while steady Safe, C2_FBK is still ON (not an acknowledgement, Q-V7-04 "Б"), FBK OFF, BOTH-1 at g+1 -> acknowledgement only, no lift; BOTH-2 at r+2001 -> lift <= Q2+400 (TEAM-DEFAULT TD-06)
+not ok 5 - E2d FBK10-K4 (S2) blue 100 ms while steady Safe, C2_FBK is still ON (not an acknowledgement, Q-V7-04 "Б"), FBK OFF, BOTH-1 at g+1 -> acknowledgement only, no lift; BOTH-2 at r+2001 -> lift <= Q2+400 (TEAM-DEFAULT TD-06)
+  ---
+  duration_ms: 6757.8483
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-k3ack.test.js:104:27'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (press during FBK ON at 4714, g=7214, p=7215, p2=10317)
+    + actual - expected
+    
+    + [
+    +   'k4: the press during FBK ON is not counted - BOTH-1 after FBK OFF is the (new) acknowledgement, no lift; first lift t=8217 (from 4714)',
+    +   'until BOTH-2: state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=8216 b_Step12/STS_SAFE',
+    +   'until BOTH-2: energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@8217,out_LV_C1@8218,out_LV_C1@8219,out_LV_C1@8220',
+    +   'BOTH-2 at r+2001: lift moment not evaluable - already lifted at p-1 = 10316 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'k4: the press during FBK ON is not counted - BOTH-1 after FBK OFF is the (new) acknowledgement, no lift; first lift t=8217 (from 4714)'
+    1: 'until BOTH-2: state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=8216 b_Step12/STS_SAFE'
+    2: 'until BOTH-2: energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@8217,out_LV_C1@8218,out_LV_C1@8219,out_LV_C1@8220'
+    3: 'BOTH-2 at r+2001: lift moment not evaluable - already lifted at p-1 = 10316 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-k3ack.test.js:112:79)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+  ...
+# Subtest: E2d FBK10-K4 (S2) blue 100 ms while steady Safe, C2_FBK is still ON (not an acknowledgement, Q-V7-04 "Б"), FBK OFF, BOTH-1 at g+3000 -> acknowledgement only, no lift; BOTH-2 at r+2001 -> lift <= Q2+400 (TEAM-DEFAULT TD-06)
+not ok 6 - E2d FBK10-K4 (S2) blue 100 ms while steady Safe, C2_FBK is still ON (not an acknowledgement, Q-V7-04 "Б"), FBK OFF, BOTH-1 at g+3000 -> acknowledgement only, no lift; BOTH-2 at r+2001 -> lift <= Q2+400 (TEAM-DEFAULT TD-06)
+  ---
+  duration_ms: 27537.6534
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-k3ack.test.js:104:27'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (press during FBK ON at 4714, g=7214, p=10214, p2=13316)
+    + actual - expected
+    
+    + [
+    +   'k4: the press during FBK ON is not counted - BOTH-1 after FBK OFF is the (new) acknowledgement, no lift; first lift t=11216 (from 4714)',
+    +   'until BOTH-2: state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=11215 b_Step12/STS_SAFE',
+    +   'until BOTH-2: energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@11216,out_LV_C1@11217,out_LV_C1@11218,out_LV_C1@11219',
+    +   'BOTH-2 at r+2001: lift moment not evaluable - already lifted at p-1 = 13315 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'k4: the press during FBK ON is not counted - BOTH-1 after FBK OFF is the (new) acknowledgement, no lift; first lift t=11216 (from 4714)'
+    1: 'until BOTH-2: state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=11215 b_Step12/STS_SAFE'
+    2: 'until BOTH-2: energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@11216,out_LV_C1@11217,out_LV_C1@11218,out_LV_C1@11219'
+    3: 'BOTH-2 at r+2001: lift moment not evaluable - already lifted at p-1 = 13315 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-k3ack.test.js:112:79)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK10-K4 (S2) BOTH-1 pressed at g-1 (steady Safe, C2_FBK still ON) held through FBK OFF -> no lift; BOTH-2 at r+2001 is the first press after FBK OFF = acknowledgement only; BOTH-3 at r2+2001 -> lift <= Q3+400 (TEAM-DEFAULT TD-06); SafetyFault TRUE [f+1, p2-1], FALSE from [p2, p2+1] (NV until the symbol)
+not ok 7 - E2d FBK10-K4 (S2) BOTH-1 pressed at g-1 (steady Safe, C2_FBK still ON) held through FBK OFF -> no lift; BOTH-2 at r+2001 is the first press after FBK OFF = acknowledgement only; BOTH-3 at r2+2001 -> lift <= Q3+400 (TEAM-DEFAULT TD-06); SafetyFault TRUE [f+1, p2-1], FALSE from [p2, p2+1] (NV until the symbol)
+  ---
+  duration_ms: 27985.9146
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-k3ack.test.js:113:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (p=7213, g=7214, r=8314, p2=10315, p3=13417)
+    + actual - expected
+    
+    + [
+    +   'k4: press at g-1 (cause active) not an acknowledgement and not a command; the next press (BOTH-2) after FBK OFF only acknowledges (Q-V7-04 "Б": new acknowledgement after FBK OFF; п.13: acknowledgement at the press scan); first lift t=8215 (from 7213)',
+    +   'until BOTH-3: state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=8214 b_Step12/STS_SAFE',
+    +   'until BOTH-3: energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@8215,out_LV_C1@8216,out_LV_C1@8217,out_LV_C1@8218',
+    +   'BOTH-3 at r2+2001: lift moment not evaluable - already lifted at p-1 = 13416 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'k4: press at g-1 (cause active) not an acknowledgement and not a command; the next press (BOTH-2) after FBK OFF only acknowledges (Q-V7-04 "Б": new acknowledgement after FBK OFF; п.13: acknowledgement at the press scan); first lift t=8215 (from 7213)'
+    1: 'until BOTH-3: state unchanged (b_Step1/STS_SAFE) - no transition, no descent; first change t=8214 b_Step12/STS_SAFE'
+    2: 'until BOTH-3: energy / STO / SS1 / discharge outputs unchanged: out_LV_C1@8215,out_LV_C1@8216,out_LV_C1@8217,out_LV_C1@8218'
+    3: 'BOTH-3 at r2+2001: lift moment not evaluable - already lifted at p-1 = 13416 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-k3ack.test.js:125:52)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK10-K4 (S2) BOTH-1 qualified while steady Safe, C2_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 "Б", E6-Q2, п.13)
+ok 8 - E2d FBK10-K4 (S2) BOTH-1 qualified while steady Safe, C2_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 "Б", E6-Q2, п.13) # TODO NOT VERIFIED: SafetyFault TRUE [f+1, r+2099] (held BOTH-1 is no acknowledgement) - no SafetyFault symbol in the source (A8); observable checks PASSED
+  ---
+  duration_ms: 20915.2735
+  type: 'test'
+  ...
+# Subtest: E2d FBK10-K4 (R) blue 100 ms while steady R&D, C2_FBK is still ON (not an acknowledgement, Q-V7-04 "Б"), FBK OFF, BOTH-1 at g+1 -> acknowledgement only, no lift; BOTH-2 at r+2001 -> lift <= Q2+400 (TEAM-DEFAULT TD-06)
+not ok 9 - E2d FBK10-K4 (R) blue 100 ms while steady R&D, C2_FBK is still ON (not an acknowledgement, Q-V7-04 "Б"), FBK OFF, BOTH-1 at g+1 -> acknowledgement only, no lift; BOTH-2 at r+2001 -> lift <= Q2+400 (TEAM-DEFAULT TD-06)
+  ---
+  duration_ms: 34152.4682
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-k3ack.test.js:104:27'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (press during FBK ON at 8517, g=11017, p=11018, p2=14120)
+    + actual - expected
+    
+    + [
+    +   'k4: the press during FBK ON is not counted - BOTH-1 after FBK OFF is the (new) acknowledgement, no lift; first lift t=12020 (from 8517)',
+    +   'until BOTH-2: state unchanged (b_Step_RnD/STS_RND) - no transition, no descent; first change t=12620 b_Step3/STS_RUN',
+    +   'until BOTH-2: energy / STO / SS1 / discharge outputs unchanged: out_HV_C2@12020,STO_DR1@12020,STO_DR2@12020,out_HV_C2@12021',
+    +   'BOTH-2 at r+2001: lift moment not evaluable - already lifted at p-1 = 14119 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'k4: the press during FBK ON is not counted - BOTH-1 after FBK OFF is the (new) acknowledgement, no lift; first lift t=12020 (from 8517)'
+    1: 'until BOTH-2: state unchanged (b_Step_RnD/STS_RND) - no transition, no descent; first change t=12620 b_Step3/STS_RUN'
+    2: 'until BOTH-2: energy / STO / SS1 / discharge outputs unchanged: out_HV_C2@12020,STO_DR1@12020,STO_DR2@12020,out_HV_C2@12021'
+    3: 'BOTH-2 at r+2001: lift moment not evaluable - already lifted at p-1 = 14119 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-k3ack.test.js:112:79)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+  ...
+# Subtest: E2d FBK10-K4 (R) blue 100 ms while steady R&D, C2_FBK is still ON (not an acknowledgement, Q-V7-04 "Б"), FBK OFF, BOTH-1 at g+3000 -> acknowledgement only, no lift; BOTH-2 at r+2001 -> lift <= Q2+400 (TEAM-DEFAULT TD-06)
+not ok 10 - E2d FBK10-K4 (R) blue 100 ms while steady R&D, C2_FBK is still ON (not an acknowledgement, Q-V7-04 "Б"), FBK OFF, BOTH-1 at g+3000 -> acknowledgement only, no lift; BOTH-2 at r+2001 -> lift <= Q2+400 (TEAM-DEFAULT TD-06)
+  ---
+  duration_ms: 26190.062
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-k3ack.test.js:104:27'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (press during FBK ON at 8517, g=11017, p=14017, p2=17119)
+    + actual - expected
+    
+    + [
+    +   'k4: the press during FBK ON is not counted - BOTH-1 after FBK OFF is the (new) acknowledgement, no lift; first lift t=15019 (from 8517)',
+    +   'until BOTH-2: state unchanged (b_Step_RnD/STS_RND) - no transition, no descent; first change t=15619 b_Step3/STS_RUN',
+    +   'until BOTH-2: energy / STO / SS1 / discharge outputs unchanged: out_HV_C2@15019,STO_DR1@15019,STO_DR2@15019,out_HV_C2@15020',
+    +   'BOTH-2 at r+2001: lift moment not evaluable - already lifted at p-1 = 17118 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'k4: the press during FBK ON is not counted - BOTH-1 after FBK OFF is the (new) acknowledgement, no lift; first lift t=15019 (from 8517)'
+    1: 'until BOTH-2: state unchanged (b_Step_RnD/STS_RND) - no transition, no descent; first change t=15619 b_Step3/STS_RUN'
+    2: 'until BOTH-2: energy / STO / SS1 / discharge outputs unchanged: out_HV_C2@15019,STO_DR1@15019,STO_DR2@15019,out_HV_C2@15020'
+    3: 'BOTH-2 at r+2001: lift moment not evaluable - already lifted at p-1 = 17118 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-k3ack.test.js:112:79)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK10-K4 (R) BOTH-1 pressed at g-1 (steady R&D, C2_FBK still ON) held through FBK OFF -> no lift; BOTH-2 at r+2001 is the first press after FBK OFF = acknowledgement only; BOTH-3 at r2+2001 -> lift <= Q3+400 (TEAM-DEFAULT TD-06); SafetyFault TRUE [f+1, p2-1], FALSE from [p2, p2+1] (NV until the symbol)
+not ok 11 - E2d FBK10-K4 (R) BOTH-1 pressed at g-1 (steady R&D, C2_FBK still ON) held through FBK OFF -> no lift; BOTH-2 at r+2001 is the first press after FBK OFF = acknowledgement only; BOTH-3 at r2+2001 -> lift <= Q3+400 (TEAM-DEFAULT TD-06); SafetyFault TRUE [f+1, p2-1], FALSE from [p2, p2+1] (NV until the symbol)
+  ---
+  duration_ms: 26671.7425
+  type: 'test'
+  location: 'C:\\Users\\user\\AppData\\Local\\Temp\\claude\\C--Users-user-source-repos-MEN001-Dyno-v2\\ccd06a82-39c5-4519-838f-df9bc38d59d9\\scratchpad\\v8snap\\test\\current-e2d-fbk-k3ack.test.js:113:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    4 violated checks (p=11016, g=11017, r=12117, p2=14118, p3=17220)
+    + actual - expected
+    
+    + [
+    +   'k4: press at g-1 (cause active) not an acknowledgement and not a command; the next press (BOTH-2) after FBK OFF only acknowledges (Q-V7-04 "Б": new acknowledgement after FBK OFF; п.13: acknowledgement at the press scan); first lift t=12018 (from 11016)',
+    +   'until BOTH-3: state unchanged (b_Step_RnD/STS_RND) - no transition, no descent; first change t=12618 b_Step3/STS_RUN',
+    +   'until BOTH-3: energy / STO / SS1 / discharge outputs unchanged: out_HV_C2@12018,STO_DR1@12018,STO_DR2@12018,out_HV_C2@12019',
+    +   'BOTH-3 at r2+2001: lift moment not evaluable - already lifted at p-1 = 17219 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'k4: press at g-1 (cause active) not an acknowledgement and not a command; the next press (BOTH-2) after FBK OFF only acknowledges (Q-V7-04 "Б": new acknowledgement after FBK OFF; п.13: acknowledgement at the press scan); first lift t=12018 (from 11016)'
+    1: 'until BOTH-3: state unchanged (b_Step_RnD/STS_RND) - no transition, no descent; first change t=12618 b_Step3/STS_RUN'
+    2: 'until BOTH-3: energy / STO / SS1 / discharge outputs unchanged: out_HV_C2@12018,STO_DR1@12018,STO_DR2@12018,out_HV_C2@12019'
+    3: 'BOTH-3 at r2+2001: lift moment not evaluable - already lifted at p-1 = 17219 (energy from an earlier gesture; that violation is reported by the no-lift check above)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/AppData/Local/Temp/claude/C--Users-user-source-repos-MEN001-Dyno-v2/ccd06a82-39c5-4519-838f-df9bc38d59d9/scratchpad/v8snap/test/current-e2d-fbk-k3ack.test.js:125:52)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d FBK10-K4 (R) BOTH-1 qualified while steady R&D, C2_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 "Б", E6-Q2, п.13)
+ok 12 - E2d FBK10-K4 (R) BOTH-1 qualified while steady R&D, C2_FBK is ON (p=g-2000, Q1=g-1000), held through FBK OFF until g+2000, released 2100 ms -> attempt consumed: no lift and no transition in any scan [p, r+2099] (Q-V7-04 "Б", E6-Q2, п.13) # TODO NOT VERIFIED: SafetyFault TRUE [f+1, r+2099] (held BOTH-1 is no acknowledgement) - no SafetyFault symbol in the source (A8); observable checks PASSED
+  ---
+  duration_ms: 16562.628
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 0
+# fail 9
+# cancelled 0
+# skipped 0
+# todo 3
+# duration_ms 216761.0512

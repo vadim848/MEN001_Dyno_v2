@@ -1,0 +1,319 @@
+{
+  "slice": "E2-plan-v7-TD",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "sources": {
+    "scenarioDecisionsBefore": "f7ae580f7e6ad15067b02b6481b1976d8eaff7deea505a8973c9c53c21c0835d",
+    "scenarioDecisionsAfter": "052956fe6c7897c87b469815666ca61f252b1e26f14bdfb54ecd39c6dfefc44d",
+    "planV7": "35225c3c7c144759c2568d16261abce2a91f75928718e750b5b26e507f10248c",
+    "planV7Json": "7422ab65a6e6081c56008372a3421973fbea8bca8ecdd3abd975458cbe5312fb",
+    "traceMatrix": "37cfba72e56d2f0452330abe55fed4fba3f77bc2cb069064e19d4f3ffbe7dd72",
+    "spec": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472",
+    "scope": "03facdcebc8b54763d5bbfa0fc634dba85a5ed6bb5070e1b82ca33e76f9e9537",
+    "referenceSal4495a1f": "c5f0c0cea479f65e3a11fbe9cf2520a2b54d2cbf85602fd7a2cbab8e27132153",
+    "head": "dbca5dd",
+    "referenceNote": "reference SAL has no inPLC_RnD_Mode* / N2/FBAnd91; legacy path is v2-only, reference gives no oracle"
+  },
+  "dTeamP4Check": {
+    "TD-05": {
+      "addsEnergy": false,
+      "removesProtection": false,
+      "changesPlcInterface": false,
+      "contradictsVadim": false
+    },
+    "FBK10-PLC": {
+      "addsEnergy": false,
+      "removesProtection": false,
+      "changesPlcInterface": false,
+      "contradictsVadim": false
+    },
+    "questionsToVadim": []
+  },
+  "teamDefaults": [
+    "TD-05"
+  ],
+  "criteria": [
+    {
+      "id": "TD5-EOK",
+      "status": "TEAM-DEFAULT TD-05",
+      "matrixIds": [
+        "MOD-001",
+        "MOD-005",
+        "EMG-011"
+      ],
+      "mutation": "M-E2a-35",
+      "sources": [
+        "TD-05",
+        "question 74 A (TD-01)",
+        "D-TEAM p.1",
+        "Q-RC-05(b) supporting"
+      ],
+      "initial": "stable Safe after R&D->Safe: out_Step1 TRUE, out_Step12 FALSE, out_LV_Discharge_Request TRUE, C1/C2 OFF, FBK OFF, STO set, cover closed, connectors ok, M=(0,0), buttons released, no SafetyFault",
+      "sequence": "Emergency source at e (in_ES_NC_1 FALSE | in_ES_NC_2 FALSE | in_Mentee_EStop); E = first scan b_EStop_Ok FALSE; M=(1,0) from t, held 3000 ms or 50 ms pulse",
+      "boundaries": {
+        "t>=E+1": "normative (TD-05)",
+        "t=E": "observation",
+        "t=E-1": "not normed here (EMG criteria)"
+      },
+      "expected": "every scan [t, t+3000] while Emergency: out_Step12 FALSE (no S12/SR), out_LV_Discharge_Request TRUE, out_LV_C1 FALSE, out_HV_C2 FALSE, STO set",
+      "forbidden": [
+        "S12 in any scan",
+        "LV discharge request FALSE in any scan",
+        "out_LV_C1 TRUE",
+        "Emergency cleared by PLC"
+      ],
+      "pulseThenRestart": "pulse inside Emergency, restart with M=(0,0): no raise after restart (READY-D, D-TEAM p.1)",
+      "positiveControl": {
+        "status": "READY (TD-01 / DIS-HOLD-LV)",
+        "expected": "without Emergency, edge (1,0): S12 accepted, LV request FALSE <= u1+1"
+      },
+      "notNormed": "M held through restart -> executes by level after EOk returns: known FAIL KF-3"
+    },
+    {
+      "id": "FBK10-PLC-A",
+      "status": "READY-D",
+      "matrixIds": [
+        "MOD-008",
+        "MOD-001",
+        "WDG-004"
+      ],
+      "sources": [
+        "Q-V4-02 B (ban on state, any source)",
+        "TRACE_MATRIX MOD-008 closure",
+        "Q-V7-04 B",
+        "lead decision PLAN v7 §13 (a)"
+      ],
+      "initial": "R-T5 without Emergency; from f C1_FBK ON | C2_FBK ON | both, no command; >=600 ms after last OFF command",
+      "sequence": "M=(1,0) edge at t in {f+1, f+100, f+3000}, held to t+1000, FBK ON to t+1500",
+      "expected": "every scan [t, t+1500]: out_Step12 FALSE, out_LV_C1 FALSE, LV request unchanged TRUE, STO set",
+      "forbidden": [
+        "S12",
+        "C1 ON",
+        "LV request cleared",
+        "Emergency due to FBK-10"
+      ]
+    },
+    {
+      "id": "FBK10-PLC-B",
+      "status": "READY-D",
+      "matrixIds": [
+        "MOD-008",
+        "MOD-002",
+        "WDG-004"
+      ],
+      "sources": [
+        "Q-V4-02 B",
+        "TRACE_MATRIX MOD-008 closure",
+        "DIS-HOLD-HV"
+      ],
+      "initial": "stable R&D: out_Step12 TRUE, C1 ON, C1_FBK ON, LV ok; from f C2_FBK ON without C2 command; cover closed; EOk; out_HV_Discharge_Request TRUE",
+      "sequence": "M=(1,1) from t in {f+1, f+100, f+3000}, held 1500 ms",
+      "expected": "every scan [t, t+1500]: stage R&D (no SR), out_HV_C2 FALSE, b_Set_HV_C2_1 FALSE, STO set, HV discharge request TRUE",
+      "forbidden": [
+        "SR/Run",
+        "C2 ON",
+        "STO released",
+        "HV request cleared",
+        "Emergency due to FBK-10"
+      ]
+    },
+    {
+      "id": "FBK10-PLC-G",
+      "status": "READY-D / observation / known FAIL",
+      "matrixIds": [
+        "MOD-008",
+        "WDG-004"
+      ],
+      "notation": {
+        "g": "first scan FBK FALSE"
+      },
+      "cases": [
+        {
+          "case": "50 ms pulse ending g-1",
+          "expected": "no raise until t+3000",
+          "status": "READY-D"
+        },
+        {
+          "case": "pulse ending g",
+          "expected": "observation",
+          "status": "q convention"
+        },
+        {
+          "case": "held to >= g+1 or new edge after g without button acknowledgement",
+          "expected": "no raise (Q-V7-04 B)",
+          "status": "known FAIL KF-1 until E5"
+        }
+      ]
+    },
+    {
+      "id": "FBK10-PLC-REG",
+      "status": "READY-D",
+      "matrixIds": [
+        "MOD-001",
+        "MOD-002"
+      ],
+      "sources": [
+        "lead decision (a) without PLC interface change",
+        "D-TEAM p.4 (disable = variant b, question to Vadim)",
+        "Q-V4-02 scope 'without ON command'"
+      ],
+      "scenarios": [
+        "R-T5 no Emergency, FBK OFF, edge (1,0) held; C1_FBK ON at u1+x, x in {1,250,499}; LV ok",
+        "stable R&D, C2_FBK OFF, cover closed, (1,1) held; C2_FBK ON at u+x, x in {1,250,499}; HV ok"
+      ],
+      "expected": "out_Step*, out_LV_C1, out_HV_C2, STO, discharge requests scan-equal to same candidate without the not-FBK gate; R&D per RND-CONF-T, Run per RUN-CONF-T",
+      "forbidden": [
+        "own FBK ON after issued command removes C1/C2",
+        "stage reverts",
+        "SafetyFault/Emergency",
+        "launch aborted"
+      ],
+      "offWindowSubcase": "Safe, FBK still ON <=500 ms after OFF command (E6-Q1): legacy raise is observation"
+    }
+  ],
+  "knownFail": [
+    {
+      "id": "KF-1",
+      "what": "legacy raise executes with active SafetyFault (FBK-10 after OFF w/o ack, window expiry Q-V7-03, others); PLC does not acknowledge",
+      "paths": [
+        "P1",
+        "P2"
+      ],
+      "requirements": [
+        "Q-V4-02 B",
+        "Q-V7-04 B",
+        "E6-Q2",
+        "WDG-004"
+      ],
+      "matrixIds": [
+        "WDG-004",
+        "MOD-008"
+      ],
+      "stage": "E5 (E4 for PLC)"
+    },
+    {
+      "id": "KF-2",
+      "what": "legacy command executes while a button is pressed",
+      "paths": [
+        "P1",
+        "P2"
+      ],
+      "requirements": [
+        "V14-Q14"
+      ],
+      "matrixIds": [
+        "PLC-004"
+      ],
+      "stage": "E4"
+    },
+    {
+      "id": "KF-3",
+      "what": "level not edge: held code executes deferred (after Emergency restart, after FBK OFF, after transition) and repeats",
+      "paths": [
+        "P1",
+        "P2"
+      ],
+      "requirements": [
+        "V14-Q11",
+        "MOD-003",
+        "D-TEAM p.1"
+      ],
+      "matrixIds": [
+        "MOD-003",
+        "PLC-001"
+      ],
+      "stage": "E4",
+      "example": {
+        "id": "KF-3-DESC",
+        "status": "READY-D, known FAIL until E4",
+        "source": "review plan v7.2 V2-1 heldThroughDescent (model proto v7.2; F1 canonical NV); same result with M-E2d-14 -> not the FBK-10 gate",
+        "initial": "steady Run reached via legacy (1,1) held; C2 ON, C2_FBK ON, HV ok, STO released, cover closed, EOk, buttons released >= 2000 ms",
+        "sequence": "qualified green 0.5 s -> Run->R&D accepted at t_a; M=(1,1) held to t_a+10000, then (0,0)",
+        "expected": "descent per STP-001/STP-004 (moments not normed here); after R&D reached, every scan to t_a+10000: stage R&D, no SR/Run, out_HV_C2 FALSE after its normal withdrawal, STO set, out_HV_Discharge_Request TRUE",
+        "forbidden": [
+          "re-entry SR/Run",
+          "C2 ON again",
+          "STO released",
+          "HV request withdrawn by held level"
+        ],
+        "positiveControl": "after (0,0) >= 600 ms and a new (1,1) edge -> R&D->Run accepted (FBK10-PLC-REG)",
+        "sources": [
+          "V14-Q11",
+          "PLC-001",
+          "MOD-003",
+          "D-TEAM p.1",
+          "Q-V7-01 G"
+        ],
+        "sideNote": "model: stage R&D at +106 while C2 still ON - check vs STP-004 on G3 with candidate facts; not declared a defect"
+      }
+    },
+    {
+      "id": "KF-4",
+      "what": "E3 abort does not see legacy launch; SU not set (StartingRun without latch)",
+      "paths": [
+        "P2"
+      ],
+      "requirements": [
+        "V14-Q12/Q13",
+        "D-STARTINGRUN-NO-COAST"
+      ],
+      "matrixIds": [
+        "STP-006",
+        "PLC-006",
+        "MOD-004"
+      ],
+      "stage": "E3/E4"
+    },
+    {
+      "id": "KF-5",
+      "what": "legacy (1,1) pulse shorter than window (~600 ms) -> R&D with C2 ON, no Run, no rollback; HV request withdrawn at acceptance (DIS-HOLD) and never reissued; green R&D->Safe not executed; exit only via Emergency. Root: KF-4 (no SU latch)",
+      "paths": [
+        "P2"
+      ],
+      "requirements": [
+        "SPEC line 527 / STP-004",
+        "Q-RC-12 A",
+        "Q-V7-01 G + question 73 A",
+        "E2-01 / MOD-006",
+        "MOD-005"
+      ],
+      "matrixIds": [
+        "MOD-002",
+        "STP-004",
+        "STP-006",
+        "MOD-005",
+        "MOD-006"
+      ],
+      "stage": "E3/E4",
+      "source": "review plan v7 §5 (N7-2), v7.2 V2-3; PLAN v7.2 addendum KF-5 (6557525a...); model x7/x7b/x10; F1 canonical NV",
+      "criterion": {
+        "status": "READY-D, known FAIL",
+        "initial": "steady R&D: C1 ON, C1_FBK ON, LV ok, C2 OFF, C2_FBK OFF, STO set, HV request TRUE (variant FALSE), cover closed, EOk, no SafetyFault, M=(0,0), buttons released >= 2000 ms",
+        "sequence": "M=(1,1) pulse w in {1,50,300} ms at t, then (0,0); C2_FBK follows C2 command +1 scan; observe to t+10000; green 0.5 s at t+10000; observe to t+25000",
+        "expected": "at t+10000 one of: (a) Run per RUN-CONF-T, or (b) R&D with out_HV_C2 FALSE, C2_FBK OFF, STO set, out_HV_Discharge_Request TRUE; which one not normed (legacy semantics E4, NV); green from (b): R&D->Safe per MOD-005, Safe with C1 OFF and C2 OFF",
+        "forbidden": [
+          "any scan >= t+10000 with stage R&D and out_HV_C2 TRUE",
+          "R&D with C2 ON and HV request FALSE outside a transition",
+          "no Safe with C2 OFF by t+25000 after green",
+          "exit only via Emergency"
+        ],
+        "notNormed": "moments inside the transition and time to (a)/(b); 10 s is a test horizon"
+      }
+    }
+  ],
+  "paths": {
+    "P1": "Network2/FBAnd91 -> g2 (Safe->R&D, M=(1,0))",
+    "P2": "Network12/FBAnd10 -> N12/FBOr1 -> N12/FBAnd4 (R&D->Run, M=(1,1))"
+  },
+  "blocked": [],
+  "limits": "SAL program model, 1 ms scan; not native/IDE/target/hardware; model not run by analyst; legacy PLC semantics from netlist (NV)",
+  "knownFailUpdate": {
+    "date": "2026-10-22",
+    "slice": "E2-G1-v6-q",
+    "changes": [
+      "KF-5 added",
+      "KF-3 example KF-3-DESC added"
+    ],
+    "vadimQuestionPending": "early disable of legacy R&D->Run (variant (b), N12/FBOr1.OrIn2) - with Vadim via lead"
+  }
+}

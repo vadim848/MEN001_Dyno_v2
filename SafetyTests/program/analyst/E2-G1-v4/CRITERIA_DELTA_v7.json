@@ -1,0 +1,157 @@
+{
+  "schema": "analyst-criteria-delta/v7",
+  "slice": "E2-G1-v4",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "priority": ["v7", "v6", "v5", "v4", "v3", "v2"],
+  "sources": {
+    "decisions": "SCENARIO_DECISIONS.md ddee45529a13dbb224bfc82637dcaa5a14e92eb243e55030601775a774829c07",
+    "review": "program/reviewer/E2-G1-v4/G1_REVIEW.md 651b3580f6d58197f0091bf649ddb4759d3126170f9e8e4289a88f48be1f296c",
+    "v5": "29f4288f926ab2459f239ffe3414bbf94f5990d947efc1037c8c12e02ae29b47",
+    "v6": "3d2d8fba7c162b601da39c6094fb35fff115264243a05c35526140f8b3030f02",
+    "runconf": "9607276bce6f1bcd70e94da3c6251290e718b183fe99376c77b60b7baa801897",
+    "reqConsolidation": "f2f11d77eba0d3b4441b42ff55666fbfc741bdd2867ebb763829328ad909eaa3",
+    "canonicalSAL": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "referenceSAL_4495a1f": "c5f0c0cea479f65e3a11fbe9cf2520a2b54d2cbf85602fd7a2cbab8e27132153",
+    "rdSweepTest": "36df7444f56ae36d79f68ca81abea63130ffcfad99c4bf0a8a212597518a608c",
+    "runConfTest": "abe7910b0e94d8faf61d2448780a36357278131fc88537ad30156a609d45b735"
+  },
+  "criteria": [
+    {
+      "id": "EMG-RD-L/STP-D-combo",
+      "reviewItem": "C1",
+      "status": "READY",
+      "matrixIds": ["EMG-001", "EMG-011", "EMG-008", "EMG-009", "STP-001"],
+      "initial": "STP-A after t_a: steady Run, green accepted at t_a, SS1 running, R0",
+      "inputs": "in_Estop_PLC (or L1 cause) TRUE at e; in_HV_Faulty_FBK (variant LV) TRUE at h; mandatory h=e=t_a+1000; boundaries h=e=t_a+1, t_a+1999; h=e=t_a observation",
+      "expected": {
+        "STO_DR1/2": "q_N=min(t_a+2000,h)=h; window [h,h+1] (p.2A); >=h+2 FAIL delayed; <h FAIL shortened",
+        "out_HV_Discharge_Request": "[t_s+5000, t_s+5001], t_s actual STO scan (p.2A)",
+        "out_HV_C2_OFF": "[t_d+1000, t_d+1001] (p.2A)",
+        "SS1": "already FALSE before e -> p.4",
+        "other": "C1/C3/BMS/LV discharge/Unlock/status per v5 p.3 and L4; latch, EMGREF(1)(2), Restart->Safe only; no STS_RUN",
+        "SafetyFault": "TRUE expected (Q-ARCH-05, 66a), moment observation, NV until symbol"
+      },
+      "forbidden": ["STO at t_a+2000 when h<t_a+2000", "STO at e+7006", "Discharge before t_s+5000", "SS1/STO lifted again"],
+      "derivedReadyD": ["h<e: STO already in target -> p.4", "e<h<t_a+2000: q_N(STO)=h (never-delay), p.1 if e+7006<=h"],
+      "lvVariant": "STP-H READY by Q-RC-15 B, same STO rule",
+      "sources": ["Q-T3-1 A", "STP-D (REQ-CONSOLIDATION)", "Q-RC-15 B", "Q-ARCH-05", "66(a)"],
+      "testerAction": "rd-sweep PLC_HV: qN(STO)=min(t_a+2000,h)",
+      "mutants": ["(xi) Emergency ignores immediate STO of STP-D/H", "(xii) STO only at e+7006"]
+    },
+    {
+      "id": "EMG-RD-L/done-left",
+      "reviewItem": "C2",
+      "status": "BLOCKED",
+      "blockedBy": "Q-V7-01",
+      "matrixIds": ["EMG-001", "EMG-002", "EMG-004", "EMG-011"],
+      "scope": "only out_HV_Discharge_Request after e when issued in W_N and dropped before e (sweep t_d+T_DIS-1, waiting C2_FBK OFF, pulse candidates)",
+      "readyPart": "Discharge TRUE at e-1 -> TRUE in every scan >= e until latch end (v5 p.4; matches reference); STO/C2 p.4 unchanged",
+      "untilAnswer": "diagnostic + t.todo('BLOCKED Q-V7-01'); not judged by L1/L2 base rule; ledger point 'done-left'",
+      "referenceFact": "4495a1f: b_Set_HV_Discharge_Request -> N1/FBOr6 -> FBRs7.Set; reset only via b_Reset_HV_Discharg_Req written in Network5 (removed by R1): level until next start; Emergency from Run TRUE +7008..latch end",
+      "sources": ["v5 §2 p.4", "Q-T3-1 A", "Q-ARCH-01", "reference 4495a1f", "reviewer repro/dis-latch-probe.out, done-before-e-note.out"]
+    },
+    {
+      "id": "RC-6/STO-invariant",
+      "reviewItem": "m-7",
+      "status": "READY",
+      "matrixIds": ["MOD-002", "WDG-003"],
+      "definition": "u=C2 ON command scan; s_i=first scan STO_DRi released; a=min(u,s_1,s_2); u,s_i in {a,a+1}",
+      "expected": "C2 ON in [u,Run-1]; STO_DRi released in [s_i,Run-1]",
+      "forbidden": ["s_i>=a+2", "STO re-raised or C2 OFF before Run without descent/rollback event", "SS1/Emergency/SafetyFault/abort on HV flicker"],
+      "sources": ["D-STO-LAUNCH", "v6 §4", "CRITERIA v2 §0 q+1"]
+    },
+    {
+      "id": "FBK-window",
+      "status": "READY",
+      "replaces": "v4 §0.2",
+      "definition": "w=t_on+500; inside [t_on,w-1] FBK dips are not alarms; FBK ON in w-1..w+1 -> confirmed; FBK FALSE in w-1..w+1 -> E6 rollback (start <= w+1), not Emergency; mixed -> observation (no reaction forbidden); loss l>=w+2 with command ON -> Emergency; l in {w,w+1} observation; t_f still starts 30 s Healthy",
+      "sources": ["Q-V4-01 B", "Q-RC-19", "Q-CA1-01 B", "66(b)"]
+    },
+    {
+      "id": "RUN-CONF-v7",
+      "status": "READY",
+      "matrixIds": ["MOD-002", "WDG-003"],
+      "definition": "u=C2 ON; w=u+500; k=start of final continuous C2_FBK ON & HV norm interval counting only scans>=w; K=max(k,w)",
+      "RC-1": "no Run < K",
+      "RC-2": "no Run <= u+599",
+      "RC-3": "Run at K+101 and later; K+100 observation",
+      "RC-4": "STO FBK pinned active: Run at K+101",
+      "RC-5": [
+        {"case": "i", "inputs": "C2_FBK ON from u+1", "noRunUpTo": "u+599", "runAt": "u+601"},
+        {"case": "ii", "inputs": "C2_FBK ON from u+30", "noRunUpTo": "u+599", "runAt": "u+601"},
+        {"case": "iii", "inputs": "C2_FBK ON from u+400", "noRunUpTo": "u+599", "runAt": "u+601"},
+        {"case": "iv", "inputs": "C2_FBK ON from u+1, HV Faulty until u+2999", "noRunUpTo": "u+3099", "runAt": "u+3101"},
+        {"case": "v", "inputs": "C2_FBK ON from u+499", "noRunUpTo": "u+599", "runAt": "u+601"},
+        {"case": "vi", "inputs": "C2_FBK ON u+1, OFF u+100..u+110, ON from u+111", "noRunUpTo": "u+599", "runAt": "u+601", "note": "no Emergency (was Emergency)"}
+      ],
+      "RC-6": [
+        {"variant": "1 scan after window", "hvFaulty": "u+550", "noRunUpTo": "u+650", "runAt": "u+652"},
+        {"variant": "20 ms after window", "hvFaulty": "u+550..u+569", "noRunUpTo": "u+669", "runAt": "u+671"},
+        {"variant": "boundary", "hvFaulty": "u+599", "noRunUpTo": "u+699", "runAt": "u+701"},
+        {"variant": "inside window", "hvFaulty": "u+51 (1 scan) / u+51..u+70", "noRunUpTo": "u+599", "runAt": "u+601"}
+      ],
+      "RC-7": {
+        "insideWindow": "C2_FBK FALSE 1 scan at t_f+1 (u+2) / t_f+50 (u+51): no Emergency, no rollback, Run at u+601; FALSE persisting to >=w+1 -> WDG-03 rollback + SafetyFault",
+        "afterWindow": "C2_FBK FALSE 1 scan at u+502/u+550/u+599 -> Emergency (EMGREF-RUN, L1 vs in_Estop_PLC in StartingRun), Run never, Restart->Safe only",
+        "observation": "l in {u+500,u+501}"
+      },
+      "sources": ["Q-V4-01 B", "68 B", "Q-RC-RUNCONF-01 V", "Q-RC-19"]
+    },
+    {
+      "id": "MOD1-01-v7",
+      "status": "READY",
+      "matrixIds": ["MOD-001", "WDG-001"],
+      "expected": "no R&D <= u1+499; with C1_FBK ON & LV norm steady from <= u1+499: R&D at u1+601 and later; C1_FBK dip in window not Emergency; FBK FALSE at w1-1..w1+1 -> WDG-01; loss >= w1+2 before R&D -> Emergency (FBK-01); LV not normal -> wait to t_f1+30000 then WDG-02",
+      "blockedPart": {"by": "Q-V7-02", "what": "exact R&D moment in [u1+500,u1+600]; LV dip after window before R&D"},
+      "sources": ["68 B", "Q-V4-01 B", "66(b)", "E6-Q1"]
+    },
+    {
+      "id": "FBK-01..09-v7",
+      "status": "READY / READY-D",
+      "matrixIds": ["EMG-011", "MOD-008", "CFG-005", "CFG-006"],
+      "changes": {
+        "FBK-01": "Emergency only l>=w1+2; dip in window -> outcome by window end",
+        "FBK-02": "unchanged",
+        "FBK-03": "C1 unchanged; C2 Emergency only l>=w+2 (incl. Run 100 ms count)",
+        "FBK-04": "unchanged",
+        "FBK-05": "abort while C2 window running: dip in window not Emergency; after w+1 before C2 OFF -> Emergency; SafetyFault on window expiry during abort BLOCKED Q-V7-03",
+        "FBK-06": "unchanged; abort Safe->R&D in C1 window as FBK-05 (Q-V7-03)",
+        "FBK-07/08": "window rule applies; Config confirmation moment E4 BLOCKED",
+        "FBK-09": "unchanged"
+      },
+      "boundaries": {"(1)": "replaced: inside window no Emergency; >=w+2 Emergency", "(2)": "decided by FBK state at window end", "(3)-(5)": "unchanged"}
+    },
+    {
+      "id": "FBK-10",
+      "status": "READY / READY-D",
+      "matrixIds": ["MOD-008", "WDG-004", "EMG-011"],
+      "initial": "S1 steady Safe (C1_FBK event) | S2 steady Safe (C2_FBK event) | R steady R&D (C2_FBK event); buttons released >=2000 ms; no SafetyFault/PLC error; R0",
+      "inputs": "FBK TRUE at f without ON command, held to f+3000 then FALSE; variant 1 scan",
+      "expected": "SafetyFault and common PLC Fault bit TRUE <= f+1 (NV until symbol); state/energy unchanged; no Emergency; rise (BOTH, CMD_SAFE_TO_R&D, CMD_R&D_TO_RUN, Config/Bypass) not executed while FBK ON and until acknowledgement; descent (green R&D->Safe) not blocked",
+      "acknowledgement": {"k1": "ack while FBK ON -> ban stays (READY)", "k2": "FBK OFF, ack, BOTH -> rise executed (READY)", "k3": "FBK OFF without ack -> rise forbidden (READY)", "k4": "ack while FBK ON then FBK OFF without new ack -> BLOCKED Q-V7-04"},
+      "boundaries": ["applies only after steady state declared; FBK ON within 500 ms of OFF command before declaration -> E6-Q1/WDG-05", "f = declaration scan -> observation", "BOTH qualified in f: rise in f observation, f+1 or later FAIL", "1 scan FBK ON -> SafetyFault (READY-D)"],
+      "emergencyCombos": ["+EStop -> Emergency by EStop, Restart requires FBK OFF", "+LV loss in R&D -> HLT-01 not blocked"],
+      "forbidden": ["Emergency due to FBK-10", "rise while FBK ON", "ack lifting ban while FBK ON", "energy/state change due to FBK-10"],
+      "outOfScope": "FBK ON without command in Run/Config/Emergency/transitions - observation",
+      "stages": {"riseBan": "E2d (release-permit) and E5", "SafetyFault": "E5 (NV until symbol)", "ack": "E6"},
+      "mutants": ["(xiii) drop FBK-OFF condition from rise permit", "(xiv) ack lifts ban while FBK ON", "(xv) FBK-10 -> Emergency"],
+      "note": "letters differ from original v4 question ((V)=Emergency there); criterion follows recorded answer text",
+      "sources": ["Q-V4-02 V", "E6-Q2", "Q-RC-07", "Q-RC-13", "WDG-06", "SPEC §12"]
+    }
+  ],
+  "testExpectationChanges": [
+    {"test": "RUN-CONF natural / RC-5(ii) / 400 ms", "was": "no Run <= k+99, Run at k+101", "now": "no Run <= u+599, Run at u+601"},
+    {"test": "RUN-CONF HV Faulty 3000 ms", "was": "k+101", "now": "unchanged (K=u+3000)"},
+    {"test": "RUN-CONF STO FBK pinned", "was": "k+101", "now": "u+601"},
+    {"test": "RC-6 k+50 / 20 ms / k+99", "was": "g from k=t_f", "now": "g from K=u+500; old g -> 'inside window: no effect, Run u+601'"},
+    {"test": "RC-6 invariant u..Run-1 STO released", "was": "from u", "now": "from s_i<=a+1"},
+    {"test": "RC-7 C2_FBK FALSE t_f+1 / t_f+50", "was": "Emergency, Run never", "now": "no Emergency, Run at u+601; new RC-7 at u+502/u+550/u+599 -> Emergency"},
+    {"test": "e2a-status R&D only after C1_FBK ON", "was": "after C1_FBK", "now": "also no R&D <= u1+499"},
+    {"test": "rd-sweep PLC_HV STP-D same scan", "was": "qN(STO)=t_a+2000", "now": "qN(STO)=h"},
+    {"test": "EMGRDL done->base", "was": "normative base rule", "now": "diagnostic + t.todo BLOCKED Q-V7-01"},
+    {"test": "FBK boundary (1)", "was": "Emergency at t_f+1", "now": "per FBK-window"}
+  ],
+  "questions": ["Q-V7-01", "Q-V7-02", "Q-V7-03", "Q-V7-04"],
+  "limits": "requirement criteria for SAL software model (1 ms, global orderOfExecution); reference reading is preserved-sequence reference, not oracle for C2; no native/target/hardware claims"
+}

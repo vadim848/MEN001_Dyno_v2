@@ -1,0 +1,14 @@
+D01              STO +2006 DIS +7005 C2off +8006 FBKoff +8027 RndEnd +8206 SS1low +5 C1off - SAFE - EMG - Unl - viol 0 end RND
+D03              STO +3 DIS +3 C2off +1003 FBKoff +1024 RndEnd +1024 SS1low +0 C1off - SAFE - EMG - Unl - viol 0 end RND SG? false
+D03_noHVF_green  green right after start (no clearance): STO - DIS - C2off - FBKoff - RndEnd - SS1low +0 C1off - SAFE - EMG - Unl - viol 0 end RUN
+D09              LV blip in SU then back: STO +3 DIS +3 C2off +1003 FBKoff +1024 RndEnd +1024 SS1low +0 C1off +1026 SAFE +1048 EMG - Unl - viol 0 end SAFE
+SU_blue          blue in SU: STO - DIS - C2off - FBKoff - RndEnd - SS1low +0 C1off - SAFE - EMG - Unl - viol 0 end RND
+SU_both          BOTH in SU after clearance: STO - DIS - C2off - FBKoff - RndEnd - SS1low +0 C1off - SAFE - EMG - Unl - viol 0 end RND
+ABORT_emg        EStop 200ms into abort: STO +3 DIS +3 C2off +1003 FBKoff +1024 RndEnd - SS1low +0 C1off +2255 SAFE - EMG +252 Unl - viol 0 end EMG
+PROT_emg         HVF in Run, EStop +3s: STO +3 DIS +5002 C2off +6003 FBKoff +6024 RndEnd - SS1low +3 C1off +5006 SAFE - EMG +3001 Unl - viol 0 end EMG
+PROT_green       HVF in Run, green +2.5s: STO +3 DIS +5002 C2off +6003 FBKoff +6024 RndEnd +6203 SS1low +3 C1off - SAFE - EMG - Unl - viol 0 end RND
+SS1_LV_cover     SS1 + LV loss, then NC1: STO +554 DIS - C2off - FBKoff - RndEnd - SS1low +5 C1off +2857 SAFE - EMG +853 Unl - viol 0 end EMG
+after_STO_cover  after STO LV blip, then NC1: STO +2006 DIS +7005 C2off +8006 FBKoff +8027 RndEnd +8206 SS1low +5 C1off +8208 SAFE +8230 EMG - Unl - viol 0 end SAFE
+legacy01         legacy (0,1) 300ms: STO +2004 DIS +7003 C2off +8004 FBKoff +8025 RndEnd +8204 SS1low +3 C1off - SAFE - EMG - Unl - viol 0 end RND
+cycle            after descent RND; new BOTH -> RUN STO true DIS false viol 0
+abort_then_up    abort then new BOTH -> RUN viol 0

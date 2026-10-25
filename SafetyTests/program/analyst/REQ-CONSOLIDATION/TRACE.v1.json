@@ -1,0 +1,379 @@
+{
+ "schema": "men001-v2-analyst-trace/1",
+ "slice": "REQ-CONSOLIDATION",
+ "date": "2026-10-21",
+ "source": {
+  "head": "ea6b52d9e27ad507483ad76337f9b372e4ac67fc",
+  "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+  "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+  "scenarioDecisions": "42aaf5dbd9c75aee42a99017162d816f8c9897f51d6e6b53fb87ca93ccf762e4",
+  "scope": "132e39ed4fe3f20fd8a642f7b10a3a3b9b94b3c42dc7280a57e3e2204d360dfb",
+  "spec": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472",
+  "traceMatrix": "4b9cf236082ca97fa7e7fb450fd45760948fde744166c17b27b3d9ec1bea6fa5",
+  "reference": "MEN001_Dyno 4495a1f6049f6a58ebfd436761faa84d17c8d643"
+ },
+ "codeFactNote": "V14-Q21(b) \"as now\": canonical N6/FBAnd9 -> b_Step4_Set; N7 Step4 resets LV C1 after 2 s (b_Reset_LV_C1_2 -> N1/FBOr11 -> FBRs1.Reset), C3/BMS reset, STO after 2+5 s; N9 Step6 exit disabled",
+ "trace": [
+  {
+   "decision": "V14-Q1",
+   "ids": [
+    "MOD-003",
+    "MOD-007",
+    "CVR-004",
+    "EMG-006"
+   ],
+   "status": "NEW",
+   "replaces": null,
+   "note": "v1.4 is a source only where confirmed by Vadim"
+  },
+  {
+   "decision": "V14-Q2 (revised)",
+   "ids": [
+    "MOD-007",
+    "BOOT-001",
+    "BOOT-002",
+    "PLC-*"
+   ],
+   "status": "REPLACES",
+   "replaces": "first V14-Q2 limits (standard PLC signals only, no mappings/group); AGENTS group/alias/mapping ban, for the v1.4 exchange only",
+   "note": "implementation boundary, not behaviour; no download/push"
+  },
+  {
+   "decision": "V14-Q3",
+   "ids": [
+    "STP-001",
+    "STP-002",
+    "STP-004",
+    "EMG-010"
+   ],
+   "status": "REFINES",
+   "replaces": null,
+   "note": "SS1 2s->STO->5s->discharge->C2 OFF satisfies zero speed/current; no new input"
+  },
+  {
+   "decision": "V14-Q4",
+   "ids": [
+    "MOD-003",
+    "MOD-007",
+    "EMG-006"
+   ],
+   "status": "NEW",
+   "replaces": "v1.4 §6 step 3 \"UP physical only\"",
+   "note": "PLC UP allowed after Emergency->Safe"
+  },
+  {
+   "decision": "V14-Q5",
+   "ids": [
+    "CVR-004",
+    "CVR-006",
+    "PLC-005"
+   ],
+   "status": "CONFIRMS+NEW",
+   "replaces": null,
+   "note": "closed+locked = NC1 AND NC2; STS_COVER_LOCKED"
+  },
+  {
+   "decision": "V14-Q7",
+   "ids": [
+    "CVR-004",
+    "MOD-001",
+    "EMG-011"
+   ],
+   "status": "REPLACES",
+   "replaces": "SPEC §5 p7/p11 and §6 precondition for Safe->R&D; SCENARIO_DECISIONS row \"cover open, new up -> no change\" for Safe->R&D; CVR-004 for Safe->R&D; E4-v14 C04(a)-(c)",
+   "note": "R&D->Run still requires NC1 AND NC2"
+  },
+  {
+   "decision": "V14-Q8",
+   "ids": [
+    "MOD-007",
+    "MOD-003",
+    "PLC-002"
+   ],
+   "status": "NEW",
+   "replaces": null,
+   "note": "simultaneity window open -> Q-RC-04"
+  },
+  {
+   "decision": "V14-Q9",
+   "ids": [
+    "EMG-001",
+    "EMG-011",
+    "PLC-003"
+   ],
+   "status": "CONFIRMS",
+   "replaces": null,
+   "note": "SPEC §13 p1 for CMD_TRIGGER_EMERGENCY"
+  },
+  {
+   "decision": "V14-Q10",
+   "ids": [
+    "PLC-002"
+   ],
+   "status": "NEW",
+   "replaces": null,
+   "note": "new 1 s timer approved"
+  },
+  {
+   "decision": "V14-Q11",
+   "ids": [
+    "MOD-003",
+    "MOD-004",
+    "PLC-001"
+   ],
+   "status": "REPLACES",
+   "replaces": "QP, fresh-event/no-repeat/no-queue, handshake/strobe, Q-PLC-REQUEST, SPEC §14 handshake; E4-v14 C01-C03 moved to edges",
+   "note": null
+  },
+  {
+   "decision": "V14-Q12",
+   "ids": [
+    "MOD-002",
+    "MOD-004",
+    "STP-004",
+    "PLC-006",
+    "STP-006"
+   ],
+   "status": "NEW",
+   "replaces": null,
+   "note": "exception to V14-Q11"
+  },
+  {
+   "decision": "V14-Q13",
+   "ids": [
+    "MOD-001",
+    "MOD-004",
+    "STP-005",
+    "BTN-003"
+   ],
+   "status": "NEW",
+   "replaces": "Q-TRANSITION-DOWN for the Safe->R&D phase",
+   "note": null
+  },
+  {
+   "decision": "V14-Q14",
+   "ids": [
+    "MOD-003",
+    "CVR-005",
+    "BTN-007",
+    "PLC-004"
+   ],
+   "status": "CONFIRMS",
+   "replaces": "closes Q-E4V14-04 / E4-v14 C11 ambiguity",
+   "note": null
+  },
+  {
+   "decision": "V14-Q15",
+   "ids": [
+    "MOD-001",
+    "MOD-005"
+   ],
+   "status": "REPLACES",
+   "replaces": "SPEC §6 p3 and v1.4 §4 for R&D entry (C3/BMS not automatic)",
+   "note": null
+  },
+  {
+   "decision": "V14-Q16",
+   "ids": [
+    "MOD-006",
+    "MOD-007",
+    "EMG-012",
+    "CVR-001",
+    "EMG-007",
+    "CFG-001..005"
+   ],
+   "status": "NEW",
+   "replaces": "SPEC §2/§14 one-hot list; E4-v14 C09 (Bypass) and C22",
+   "note": null
+  },
+  {
+   "decision": "V14-Q17",
+   "ids": [
+    "CFG-003"
+   ],
+   "status": "REPLACES",
+   "replaces": "canonical Network1/FBTon1 10 s auto-off",
+   "note": null
+  },
+  {
+   "decision": "V14-Q18",
+   "ids": [
+    "CFG-004"
+   ],
+   "status": "NEW",
+   "replaces": null,
+   "note": "variant A/B is an architect choice"
+  },
+  {
+   "decision": "V14-Q19",
+   "ids": [
+    "CFG-005",
+    "EMG-001",
+    "EMG-004"
+   ],
+   "status": "NEW",
+   "replaces": null,
+   "note": "Healthy ignored in Config"
+  },
+  {
+   "decision": "V14-Q20 (revised)",
+   "ids": [
+    "EMG-001",
+    "EMG-006",
+    "HB-001"
+   ],
+   "status": "REPLACES",
+   "replaces": "\"B - defer\" heartbeat",
+   "note": "startup before first pulse delegated to architect"
+  },
+  {
+   "decision": "V14-Q21(a)",
+   "ids": [
+    "EMG-002",
+    "CVR-006",
+    "CVR-004"
+   ],
+   "status": "REPLACES",
+   "replaces": "EMG-002 / SPEC §5.1 for InterLock in Safe/R&D",
+   "note": null
+  },
+  {
+   "decision": "V14-Q21(b)",
+   "ids": [
+    "EMG-002",
+    "CVR-006",
+    "STP-001..004"
+   ],
+   "status": "REPLACES+CONTRADICTS",
+   "replaces": "EMG-002 for Run",
+   "note": "\"as now\" contradicts canonical Step4 chain (LV off at +2 s, no R&D) -> Q-RC-01"
+  },
+  {
+   "decision": "V14-Q21(c)",
+   "ids": [
+    "CFG-005",
+    "EMG-002"
+   ],
+   "status": "NEW",
+   "replaces": null,
+   "note": null
+  },
+  {
+   "decision": "V14-Q6",
+   "ids": [
+    "EMG-006"
+   ],
+   "status": "REPLACES+CONFIRMS",
+   "replaces": "v1.4 engage/dis-engage E-Stop gesture",
+   "note": "confirms decision #12 and SPEC §12"
+  },
+  {
+   "decision": "E2",
+   "ids": [
+    "EMG-012",
+    "MOD-006"
+   ],
+   "status": "REPLACES",
+   "replaces": "\"Emergency or TransitionFault not chosen\" (Q-FAULT-DESTINATION) for double ownership",
+   "note": "none-active case -> Q-RC-10"
+  },
+  {
+   "decision": "E2-Q1",
+   "ids": [
+    "EMG-012",
+    "MOD-006",
+    "STP-004",
+    "EMG-008",
+    "STP-001",
+    "STP-002"
+   ],
+   "status": "NEW+REFINES",
+   "replaces": null,
+   "note": "single outcome R&D; discharge is a separate command; E3 defect in F1"
+  },
+  {
+   "decision": "E2-Q2",
+   "ids": [
+    "MOD-005",
+    "MOD-008",
+    "STP-005",
+    "HLT-001"
+   ],
+   "status": "NEW",
+   "replaces": "E4-v14 C13 PENDING -> READY",
+   "note": null
+  },
+  {
+   "decision": "E4 block",
+   "ids": [
+    "MOD-003",
+    "MOD-007"
+   ],
+   "status": "SUPERSEDED-IN-SUBSTANCE",
+   "replaces": "by V14-Q8..Q14",
+   "note": "unfreezing E4 is a lead decision"
+  },
+  {
+   "decision": "E6 definition",
+   "ids": [
+    "WDG-001..003",
+    "MOD-001",
+    "MOD-002",
+    "STP-004",
+    "STP-005"
+   ],
+   "status": "CONFIRMS",
+   "replaces": null,
+   "note": null
+  },
+  {
+   "decision": "E6-Q1",
+   "ids": [
+    "WDG-001..003",
+    "STP-003",
+    "EMG-010",
+    "MOD-001",
+    "MOD-002"
+   ],
+   "status": "NEW",
+   "replaces": "E6 \"reaction not set\"; Q-COMPLETION for stuck C2; SPEC §10 discharge-timeout TransitionFault inapplicable (no completion input)",
+   "note": null
+  },
+  {
+   "decision": "E6-Q2",
+   "ids": [
+    "WDG-004",
+    "BTN-001",
+    "BTN-007"
+   ],
+   "status": "CONFIRMS+EXTENDS",
+   "replaces": null,
+   "note": "item 13 extended to PLC"
+  },
+  {
+   "decision": "Q-MU06-01",
+   "ids": [
+    "EMG-001",
+    "EMG-005",
+    "BTN-003",
+    "BTN-007"
+   ],
+   "status": "REPLACES",
+   "replaces": "normative status of E1-f1-MU06 C01/C02 (in_False TRUE) -> out of scope",
+   "note": null
+  },
+  {
+   "decision": "Q-MU06-02",
+   "ids": [
+    "MOD-005",
+    "STP-005",
+    "BOOT-001",
+    "PLC-001"
+   ],
+   "status": "NEW",
+   "replaces": null,
+   "note": "N5/FBAnd7, N9/FBAnd1, N12/FBAnd14 intentionally disabled"
+  }
+ ]
+}

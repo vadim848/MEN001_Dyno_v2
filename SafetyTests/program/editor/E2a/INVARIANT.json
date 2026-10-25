@@ -1,0 +1,403 @@
+{
+ "note": "stand runtime model (unconnectedInput:false, 1 ms scan, plant: FBK follow outputs); self-check only",
+ "scenarios": {
+  "lifecycle Safe->R&D->Run": {
+   "R1": {
+    "result": "S1 -> S12 -> S12",
+    "scans": 9816,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "S1 -> SR -> S3",
+    "scans": 9816,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "Run -> green down -> R&D -> green -> Safe": {
+   "R1": {
+    "result": "S12 -> S12 -> S12 EOk=1 C1=1 C2=0 STO=0",
+    "scans": 35020,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "S3 -> SR -> S1 EOk=1 C1=0 C2=0 STO=0",
+    "scans": 35020,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t10#2 SU + in_Estop_PLC 3ms (B-1) + Restart": {
+   "R1": {
+    "result": "S12 -> restart S12 EOk=1 C1=1 C2=0 STO=0",
+    "scans": 19042,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "SR -> restart SR EOk=1 C1=1 C2=1 STO=1",
+    "scans": 19042,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t10#3 SU + LV connector lost + Restart": {
+   "R1": {
+    "result": "S12 -> restart S12",
+    "scans": 19040,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "SR -> restart SR",
+    "scans": 19040,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t10#4 R&D EStop +12s + Restart + BOTH": {
+   "R1": {
+    "result": "S12 -> S12 -> S12",
+    "scans": 23590,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "SR -> SR -> S3",
+    "scans": 23590,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t10#5 S12 (C1 FBK held off) EStop": {
+   "R1": {
+    "result": "S12 -> S12 EOk=0 C1=1 C2=0 STO=0",
+    "scans": 15245,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "S12 -> SR EOk=0 C1=1 C2=0 STO=0",
+    "scans": 15245,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t10#6 R&D HV connector lost + Restart": {
+   "R1": {
+    "result": "S12 -> S12 -> S12",
+    "scans": 18060,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "SR -> SR -> SR",
+    "scans": 18060,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t10#7 C-1 LV faulty 1 scan before BOTH": {
+   "R1": {
+    "result": "SR EOk=1 C1=1 C2=0 STO=0",
+    "scans": 11814,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "S4 EOk=1 C1=0 C2=1 STO=1",
+    "scans": 11814,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t10#8 C-2 BOTH held through LV faulty": {
+   "R1": {
+    "result": "SR EOk=1 C1=1 C2=0 STO=0",
+    "scans": 12316,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "S4 EOk=1 C1=0 C2=1 STO=1",
+    "scans": 12316,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t10#9a Safe cover open blue 700": {
+   "R1": {
+    "result": "S1 UL=0",
+    "scans": 2824,
+    "violations": 0,
+    "firstViolations": []
+   },
+   "E2a": {
+    "result": "S1 UL=0",
+    "scans": 2824,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t10#9b R&D cover open blue 700": {
+   "R1": {
+    "result": "S12 UL=0",
+    "scans": 6426,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "SR UL=0",
+    "scans": 6426,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t10#10 Q-REL cover 300ms then BOTH": {
+   "R1": {
+    "result": "S1",
+    "scans": 7716,
+    "violations": 0,
+    "firstViolations": []
+   },
+   "E2a": {
+    "result": "S1",
+    "scans": 7716,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t10#11 Run EStop, early Restart": {
+   "R1": {
+    "result": "S12 -> S12 -> S12",
+    "scans": 22262,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "S4 -> S6 -> S6",
+    "scans": 22262,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t11 earlyRestart Run EStop +12s": {
+   "R1": {
+    "result": "S12",
+    "scans": 22090,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "S6",
+    "scans": 22090,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t11 c1Stuck R&D EStop C1 FBK stuck": {
+   "R1": {
+    "result": "S12",
+    "scans": 17888,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "SR",
+    "scans": 17888,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t15 L1 R&D in_Estop_PLC": {
+   "R1": {
+    "result": "EOk falls e+1 S4 at e+never final S12",
+    "scans": 37716,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "EOk falls e+1 S4 at e+never final SR",
+    "scans": 37716,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t15 L1 R&D LV connector": {
+   "R1": {
+    "result": "EOk falls e+-2 S4 at e+never final S12",
+    "scans": 57714,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "EOk falls e+-2 S4 at e+never final SR",
+    "scans": 57714,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "t15 L1 R&D HV connector": {
+   "R1": {
+    "result": "EOk falls e+-2 S4 at e+never final S12",
+    "scans": 57714,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "EOk falls e+-2 S4 at e+never final SR",
+    "scans": 57714,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "Run + in_Estop_PLC (S3 emergency chain)": {
+   "R1": {
+    "result": "S4 at +-1 final S12 EOk=0 C1=1 C2=0 STO=0",
+    "scans": 44816,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "S4 at +4 final S6 EOk=0 C1=0 C2=0 STO=0",
+    "scans": 24820,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "Run + NC1 cover open": {
+   "R1": {
+    "result": "S4 at +-1 final S12 EOk=1 C1=1 C2=0 STO=0",
+    "scans": 44816,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "S4 at +3 final S6 EOk=1 C1=0 C2=0 STO=0",
+    "scans": 24819,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "Run + LV Faulty 1 scan (HEALTH_GUARD)": {
+   "R1": {
+    "result": "SR EOk=1 C1=1 C2=0 STO=0",
+    "scans": 14818,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "S4 EOk=1 C1=0 C2=1 STO=1",
+    "scans": 14818,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "Run + HV Faulty held": {
+   "R1": {
+    "result": "S12 EOk=1 C1=1 C2=0 STO=0",
+    "scans": 24817,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "S6 EOk=1 C1=0 C2=0 STO=0",
+    "scans": 24817,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "Run down (green) + LV Faulty during run-down": {
+   "R1": {
+    "result": "SR EOk=1 C1=1 C2=0 STO=0",
+    "scans": 22619,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "SR EOk=1 C1=1 C2=0 STO=0",
+    "scans": 22619,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "S12 LV completion with LV Faulty held (N11 polarity)": {
+   "R1": {
+    "result": "faulty: SR -> healthy: SR",
+    "scans": 13214,
+    "violations": 1,
+    "firstViolations": [
+     "3114:S1+S12:SAFE"
+    ]
+   },
+   "E2a": {
+    "result": "faulty: S12 -> healthy: SR",
+    "scans": 13214,
+    "violations": 0,
+    "firstViolations": []
+   }
+  },
+  "Safe EStop then Restart (no stage before Restart)": {
+   "R1": {
+    "result": "boot none -> after Restart S1",
+    "scans": 17,
+    "violations": 0,
+    "firstViolations": []
+   },
+   "E2a": {
+    "result": "boot none -> after Restart S1",
+    "scans": 17,
+    "violations": 0,
+    "firstViolations": []
+   }
+  }
+ },
+ "totals": {
+  "R1": 22,
+  "E2a": 0
+ }
+}

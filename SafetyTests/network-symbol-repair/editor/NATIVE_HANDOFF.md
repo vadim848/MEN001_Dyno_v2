@@ -1,0 +1,25 @@
+# Native serialization handoff
+
+2026-10-20. Canonical sources untouched by editor. Final frozen native-produced artifacts are in `native-reviewed-output/`:
+
+| Artifact | SHA256 |
+|---|---|
+| TwinSafeGroup1.sal | 49ae801d5f6ade77c310859f4efafba92946628a8a6fa7ed268c71b12dc162d5 |
+| GVL1.sgvl | b10bd9412aade7734aa9d8db1419f9ce3a5a848bb7855a406e8ddca5588f796d |
+| TwinSafeGroup1.sal.diagram | 2df1fd71d0d58c78101342550930edec122414ce55d21e45beca17417a413d81 |
+
+`convert-symbols.mjs` created the initial reviewed conversion candidate3e27/9a84 from the exact original ffd6/4eb2 baseline, preserving bytes outside connection fragments. Full existing typed binding audit passed. The initial software gate did not detect a preexisting native serialization cardinality problem.
+
+Native `SALDesigner.dll`1.4.16 load then exposed repeated singleton `variableHasTargetUsages` collections in ten preexisting aliases. It loaded only six aliases and warned about ignored subsequent relationships. Those early native-output files were diagnostics only and were superseded; none was copied to canonical. Architect independently proved the required singleton representation and exact reference control58variables/zero warnings. `consolidate-native-collections.mjs` moved23existing usage wrappers into their first native collection, retired exactly27redundant relationship plus27collection IDs (four empty collections), and retained all variable/actual usage/port IDs and mappings. Ledger: `NATIVE_COLLECTION_CONSOLIDATION.json`; full typed audit exactly unchanged. Consolidated input SAL SHA22f1b8864bd39092d158b9d18fc7094f22bc7ff1652516380a01d3b49d6e55ec.
+
+`native-roundtrip.ps1` uses the installed public native serialization APIs in a Framework4 STA host. It loads the model with a real ValidationController, generates a new native diagram through public FixUpDiagram for networks, FBs, ports and wires, saves through native SaveModelAndDiagram and native GlobalVariableList.SaveToMemoryStream. No CRC field was computed, injected, omitted or altered by the repair scripts. SGVL starts with native FileCrcMismatch=True and a new read of native-saved bytes returns False, with85variables retained (`NATIVE_DIAGNOSTIC_006.txt`).
+
+Initial diagram construction in file enumeration order changed eight networkOrderId attributes. This diagnostic output was rejected. Final generator snapshots and processes networks in their original networkOrderId order. Final output preserves all7023SAL IDs, all292SGVL IDs and every attribute except native-generated root Crc. Native SAL serializer also omits two preexisting empty targetFunctionBlockPorts containers, on Network1/FBRs3/Set and Network12/FBDecouple1/DecOut3; these contain no edges. No block/port defaults, execution orders, contacts, filters, timers or hardware parameters changed. `NATIVE_SERIALIZATION_DELTA.json` records native attribute differences; its leafTextsEqual=False for SAL reflects those empty collection omissions, not changed scalar data.
+
+Native read-only decorator inspection on the fresh loaded final model also checked every converted input's actual InPortShape.AssignedVariableDecorator: all24labels equal the exact expected symbol name and both native decorator/field visibility getters return True. Evidence: `NATIVE_SYMBOL_LABELS.json` and `NATIVE_RELOAD_003.txt`. Symbols are native dynamic port decorators and do not require separate variable-label XML shapes. This is native rendering-model evidence; no final IDE screenshot was captured.
+
+Fresh independent-process native reload observed model+diagram CRC=True, calculated model CRC83968247, no serialization warnings,75variables,14networks,254FBs and2172input/outputports. Diagram has14lanes,254FB shapes,2194port shapes including22parameter ports, and319local wire connectors. Log: `NATIVE_RELOAD_002.txt`. Native validation with every declared validation category returned False with0errors and81warnings; exact warnings are retained and concern previous-update-cycle dependencies. This is a valid stored-file CRC observation and bounded SDK validation, not a full IDE Verify/Build/compiler PASS.
+
+Windows UI attempts used computer-use skill/@oai/sky only. list_apps/list_windows/get_window succeeded; two get_window_state captures stalled despite explicit15second REPL timeout and were interrupted after250.9and370.9seconds. No UI click/key/type/save/Verify action occurred. No equipment, settings, controller, download, deployment or push action occurred. Visual rendering of the final diagram in the IDE remains unobserved. Native SDK model/diagram creation and reload do not imply hardware validation.
+
+Reproduction from repository root, without changing execution policy: invoke the owned PowerShell helper in Windows PowerShell5STA with `-Command` and ScriptBlock.Create(ReadAllText(helperPath)); pass `-Mode Reload` for read-only reload. Default mode writes only editor/native-output and editor native-solution inputs are isolated. Final `native-reviewed-output` is frozen and must not be overwritten while independent tests/review run.

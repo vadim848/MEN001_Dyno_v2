@@ -1,0 +1,154 @@
+{
+  "kind": "isolated conceptual recognizer + native-style owner; not candidate SAL acceptance",
+  "sampleMs": 10,
+  "assumptions": "Host timers/initialization, external proof/guards/modes; no physical output or safe-energy validation",
+  "trace": [
+    {
+      "label": "neutral qualification",
+      "timeMs": 10,
+      "state": "W",
+      "requests": [],
+      "accepted": [],
+      "completed": [],
+      "emergency": false,
+      "unlock": false,
+      "recoveryTarget": null,
+      "interruptedContext": null
+    },
+    {
+      "label": "neutral qualification",
+      "timeMs": 2000,
+      "state": "A",
+      "requests": [],
+      "accepted": [],
+      "completed": [],
+      "emergency": false,
+      "unlock": false,
+      "recoveryTarget": null,
+      "interruptedContext": null
+    },
+    {
+      "label": "qualified down command",
+      "timeMs": 2010,
+      "state": "G",
+      "requests": [],
+      "accepted": [],
+      "completed": [],
+      "emergency": false,
+      "unlock": false,
+      "recoveryTarget": null,
+      "interruptedContext": null
+    },
+    {
+      "label": "qualified down command",
+      "timeMs": 3000,
+      "state": "L",
+      "requests": [
+        "RnDToSafe"
+      ],
+      "accepted": [
+        "RnDToSafe"
+      ],
+      "completed": [],
+      "emergency": false,
+      "unlock": false,
+      "recoveryTarget": null,
+      "interruptedContext": null
+    },
+    {
+      "label": "blue held during accepted transition",
+      "timeMs": 3010,
+      "state": "W",
+      "requests": [
+        "RnDToSafe"
+      ],
+      "accepted": [],
+      "completed": [],
+      "emergency": false,
+      "unlock": false,
+      "recoveryTarget": null,
+      "interruptedContext": null
+    },
+    {
+      "label": "fault during transition",
+      "timeMs": 4210,
+      "state": "W",
+      "requests": [],
+      "accepted": [],
+      "completed": [],
+      "emergency": true,
+      "unlock": false,
+      "recoveryTarget": null,
+      "interruptedContext": {
+        "timeMs": 4210,
+        "sourceMode": "R&D",
+        "routes": [
+          "RnDToSafe"
+        ],
+        "energyContext": {
+          "energySafe": false
+        }
+      }
+    },
+    {
+      "label": "manual recovery after supplied proof",
+      "timeMs": 4420,
+      "state": "W",
+      "requests": [],
+      "accepted": [],
+      "completed": [],
+      "emergency": false,
+      "unlock": false,
+      "recoveryTarget": "Safe",
+      "interruptedContext": null
+    },
+    {
+      "label": "held blue after Safe recovery",
+      "timeMs": 4430,
+      "state": "W",
+      "requests": [],
+      "accepted": [],
+      "completed": [],
+      "emergency": false,
+      "unlock": false,
+      "recoveryTarget": null,
+      "interruptedContext": null
+    },
+    {
+      "label": "new neutral interval",
+      "timeMs": 7620,
+      "state": "A",
+      "requests": [],
+      "accepted": [],
+      "completed": [],
+      "emergency": false,
+      "unlock": false,
+      "recoveryTarget": null,
+      "interruptedContext": null
+    },
+    {
+      "label": "fresh permitted blue",
+      "timeMs": 7640,
+      "state": "B",
+      "requests": [],
+      "accepted": [],
+      "completed": [],
+      "emergency": false,
+      "unlock": false,
+      "recoveryTarget": null,
+      "interruptedContext": null
+    },
+    {
+      "label": "fresh permitted blue",
+      "timeMs": 8630,
+      "state": "U",
+      "requests": [],
+      "accepted": [],
+      "completed": [],
+      "emergency": false,
+      "unlock": true,
+      "recoveryTarget": null,
+      "interruptedContext": null
+    }
+  ]
+}

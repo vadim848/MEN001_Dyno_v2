@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <POU Name="FB_HighRateRecorder" Id="{e7b3d6a1-9c44-4f02-bd58-3a1e6c2f7b80}" SpecialFunc="None">
+    <Declaration><![CDATA[// High-rate recorder. Called once per task cycle AFTER the snapshot is assembled.
+// While GVL_Recording.bEnable is TRUE it appends one frame to the active chunk of
+// GVL_Recording.aChunks (SoA). When a chunk fills it bumps nChunkSeq and advances
+// to the next ring slot; the app bulk-reads completed chunks over ADS.
+//
+// Each frame stores the bus-rate channels (one value) plus the Mentee oversample
+// burst (REC_OVERSAMPLE samples). nSampleCount tells the app how many of the
+// REC_OVERSAMPLE slots are fresh this frame — the rest are stale (the app keeps
+// only the fresh ones and de-dups across frames by sample_idx).
+FUNCTION_BLOCK FB_HighRateRecorder
+VAR_IN_OUT
+    stSnap : ST_SyncSnapshot;   // freshly-assembled snapshot (read only)
+END_VAR
+VAR
+    rEnable : R_TRIG;
+    fEnable : F_TRIG;
+    nChunk  : UDINT;            // active ring slot (0..REC_RING-1)
+    nFill   : UDINT;            // frame index within the active chunk
+    nBase   : UDINT;            // Mentee array base = nFill * REC_OVERSAMPLE
+    i       : UDINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[rEnable(CLK := GVL_Recording.bEnable);
+fEnable(CLK := GVL_Recording.bEnable);
+
+// Rising edge: start a fresh session (clear ring counters, begin at slot 0).
+IF rEnable.Q THEN
+    nChunk := 0;
+    nFill  := 0;
+    GVL_Recording.nChunkSeq := 0;
+    GVL_Recording.nReadyIdx := 0;
+    GVL_Recording.nDropped  := 0;
+    GVL_Recording.nAckSeq   := 0;
+    GVL_Recording.aChunks[0].nCount := 0;
+    GVL_Recording.bRunning  := TRUE;
+END_IF
+
+// Falling edge: flush the partial chunk in progress so the app can capture the
+// last (< REC_CHUNK) frames instead of losing them. Publish nFill as nCount and
+// bump the sequence exactly like a full chunk; the app honours nCount.
+IF fEnable.Q THEN
+    GVL_Recording.bRunning := FALSE;
+    IF nFill > 0 THEN
+        GVL_Recording.aChunks[nChunk].nCount := nFill;
+        GVL_Recording.nReadyIdx := TO_BYTE(nChunk);
+        GVL_Recording.nChunkSeq := GVL_Recording.nChunkSeq + 1;
+        nChunk := (nChunk + 1) MOD GVL_Recording.REC_RING;
+        nFill  := 0;
+    END_IF
+END_IF
+
+IF NOT GVL_Recording.bEnable THEN
+    RETURN;
+END_IF
+
+// ── append one frame to the active chunk ──
+nBase := nFill * GVL_Recording.REC_OVERSAMPLE;
+
+GVL_Recording.aChunks[nChunk].aDcTs[nFill]    := stSnap.nDcTimestamp;
+GVL_Recording.aChunks[nChunk].aM1Pos[nFill]   := stSnap.stMotor1Status.fActPosition;
+GVL_Recording.aChunks[nChunk].aM1Vel[nFill]   := stSnap.stMotor1Status.fActVelocity;
+GVL_Recording.aChunks[nChunk].aM1Trq[nFill]   := stSnap.stMotor1Status.fActTorque;
+GVL_Recording.aChunks[nChunk].aM2Pos[nFill]   := stSnap.stMotor2Status.fActPosition;
+GVL_Recording.aChunks[nChunk].aM2Vel[nFill]   := stSnap.stMotor2Status.fActVelocity;
+GVL_Recording.aChunks[nChunk].aM2Trq[nFill]   := stSnap.stMotor2Status.fActTorque;
+GVL_Recording.aChunks[nChunk].aEnc1Cnt[nFill] := stSnap.stEncoder1.nCounterValue;
+GVL_Recording.aChunks[nChunk].aEnc1Frq[nFill] := stSnap.stEncoder1.nFrequencyValue;
+GVL_Recording.aChunks[nChunk].aEnc2Cnt[nFill] := stSnap.stEncoder2.nCounterValue;
+GVL_Recording.aChunks[nChunk].aEnc2Frq[nFill] := stSnap.stEncoder2.nFrequencyValue;
+GVL_Recording.aChunks[nChunk].aAin1V[nFill]   := stSnap.stAnalogIn1.fCh1_Voltage;
+GVL_Recording.aChunks[nChunk].aAin2V[nFill]   := stSnap.stAnalogIn2.fCh1_Voltage;
+GVL_Recording.aChunks[nChunk].aMnSW[nFill]    := stSnap.stMotorV32_OS.nStatusWord;
+GVL_Recording.aChunks[nChunk].aMnCnt[nFill]   := stSnap.stMotorV32_OS.nSampleCount;
+
+FOR i := 0 TO GVL_Recording.REC_OVERSAMPLE - 1 DO
+    GVL_Recording.aChunks[nChunk].aMnIdx[nBase + i] := stSnap.stMotorV32_OS.aSamples[i].sample_idx;
+    GVL_Recording.aChunks[nChunk].aMnW0[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w0;
+    GVL_Recording.aChunks[nChunk].aMnW1[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w1;
+    GVL_Recording.aChunks[nChunk].aMnW2[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w2;
+    // extended lanes 3..9 (ELF-picked debug vars): same slot i, same snapshot,
+    // same nBase -> element-aligned with aMnIdx/aMnW0..2 by construction
+    GVL_Recording.aChunks[nChunk].aMnW3[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w3;
+    GVL_Recording.aChunks[nChunk].aMnW4[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w4;
+    GVL_Recording.aChunks[nChunk].aMnW5[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w5;
+    GVL_Recording.aChunks[nChunk].aMnW6[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w6;
+    GVL_Recording.aChunks[nChunk].aMnW7[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w7;
+    GVL_Recording.aChunks[nChunk].aMnW8[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w8;
+    GVL_Recording.aChunks[nChunk].aMnW9[nBase + i]  := stSnap.stMotorV32_OS.aSamples[i].w9;
+END_FOR
+
+// Futek analog oversamples (EL3702 x5) — raw INT -> V using the same scale as the
+// averaged fCh1_Voltage, so the 5 kHz trace is consistent with the 1 kHz average.
+FOR i := 1 TO GVL_Recording.REC_FUTEK_OS DO
+    GVL_Recording.aChunks[nChunk].aFut1V[nFill * GVL_Recording.REC_FUTEK_OS + (i - 1)] :=
+        INT_TO_LREAL(stSnap.stAnalogIn1.nCh1_Sample[i]) / 32767.0 * stSnap.stAnalogIn1.fFullScale;
+    GVL_Recording.aChunks[nChunk].aFut2V[nFill * GVL_Recording.REC_FUTEK_OS + (i - 1)] :=
+        INT_TO_LREAL(stSnap.stAnalogIn2.nCh1_Sample[i]) / 32767.0 * stSnap.stAnalogIn2.fFullScale;
+END_FOR
+
+nFill := nFill + 1;
+
+// ── chunk complete → publish + advance ──
+IF nFill >= GVL_Recording.REC_CHUNK THEN
+    GVL_Recording.aChunks[nChunk].nCount := GVL_Recording.REC_CHUNK;
+    GVL_Recording.nReadyIdx := TO_BYTE(nChunk);
+    GVL_Recording.nChunkSeq := GVL_Recording.nChunkSeq + 1;
+
+    // Overflow: the slot we are about to reuse still holds data the app hasn't
+    // acked (it is REC_RING-1 chunks behind) — we will overwrite unread data.
+    IF (GVL_Recording.nChunkSeq - GVL_Recording.nAckSeq) >= GVL_Recording.REC_RING THEN
+        GVL_Recording.nDropped := GVL_Recording.nDropped + GVL_Recording.REC_CHUNK;
+    END_IF
+
+    nChunk := (nChunk + 1) MOD GVL_Recording.REC_RING;
+    nFill  := 0;
+    GVL_Recording.aChunks[nChunk].nCount := 0;   // mark next chunk as "filling"
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,16 @@
+lifecycle closed cover                     | identical                                | base S1 | v76 S1
+Run LV Faulty held (protective)            | identical                                | base none | v76 none
+Run LV Faulty 200 ms                       | identical                                | base none | v76 none
+StartingRun LV Faulty (Q-ARCH-03)          | identical                                | base S_RnD | v76 S_RnD
+Run->R&D descent, LV Faulty at +1000       | identical                                | base S1 | v76 S1
+R&D->Safe descent, LV Faulty at +100       | identical                                | base S1 | v76 S1
+R&D LV Faulty then BOTH (HLT-01)           | identical                                | base S1 | v76 S1
+R&D BOTH, LV Faulty at p+500               | identical                                | base S1 | v76 S1
+Safe LV Faulty, blue Unlock                | DIFF@2614: out_Door_Unlock_Solonoeid     | base S1 | v76 S1
+Safe LV Faulty, PLC (1,0)                  | identical                                | base S12 | v76 S12
+Safe LV Faulty, BOTH (K-2)                 | DIFF@3314: b_Step1,b_Step12              | base S1 | v76 S12
+Safe LV Faulty + LV connector lost, BOTH   | identical                                | base S1 | v76 S1
+Run in_Estop_PLC                           | identical                                | base none | v76 none
+R&D cover open: green; blue                | identical                                | base S1 | v76 S1
+
+[exited with code 0]

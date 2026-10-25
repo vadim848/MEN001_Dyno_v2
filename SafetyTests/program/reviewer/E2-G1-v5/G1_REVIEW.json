@@ -1,0 +1,96 @@
+{
+ "review": "E2-G1-v5",
+ "role": "v2-reviewer",
+ "date": "2026-10-22",
+ "verdict": "G1 PASS WITH CONDITIONS",
+ "runConfRenames": "OK",
+ "source": {
+  "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "head": "a8f6de7",
+  "scenarioDecisions": "0fcb4f33d252bf0e91f4f0c7f3bea091bbb3fdb47c6cc4d14ed46ba9f5fbf2e0",
+  "criteriaV7": "378a9f935e63c5e05d6bbd404a0d810386c5f125687f04e9f88943f1b41f8459",
+  "planV4Criteria": "5d6bcc1a13e3bc7e8ee78e4d7d2855c6374a0f1af5f7e4f23df98b34c3d7120b"
+ },
+ "rerun": {
+  "e2": {
+   "tests": 484,
+   "normative": {
+    "PASS": 41,
+    "FAIL": 410,
+    "NV": 12
+   },
+   "diagStand": 21,
+   "diffVsBaselineV5": 0
+  },
+  "nonE2": {
+   "tests": 479,
+   "notOk": 0,
+   "files": 23
+  }
+ },
+ "closed": [
+  "C1",
+  "C2 (per v7 §2; superseded by Q-V7-01 Г -> N1)",
+  "C3",
+  "C4 (G1 level)",
+  "m-7",
+  "m-8"
+ ],
+ "conditions": [
+  {
+   "id": "N1",
+   "to": "analyst->tester",
+   "text": "Q-V7-01 Г: done-left -> FAIL; ledger Discharge only p.4; invert anchor self-test; new level-hold criterion/tests until accepted HV lift"
+  },
+  {
+   "id": "N2",
+   "to": "analyst->tester",
+   "text": "Q-V7-03 А: FBK-05/06 SafetyFault on window expiry during abort (NV until symbol)"
+  },
+  {
+   "id": "N3",
+   "to": "tester/architect",
+   "text": "Q-V7-04 Б k4 READY; K3-ACK additions: p in {g,g+1}, long hold, green-first, (R) green-first no descent, BOTH-2 r+1999/r+2001, PLC edge without/after ack, SafetyFault FALSE [p,p+1] NV, EStop combo; mutant (xvi)"
+  },
+  {
+   "id": "N4",
+   "to": "analyst",
+   "text": "record Q-V7-02 closure (R&D not <= u1+599, at u1+601) in criteria"
+  },
+  {
+   "id": "N5",
+   "to": "lead/analyst",
+   "text": "reconcile RC-UB (<= u+602) with v7 (u+601)"
+  },
+  {
+   "id": "N6",
+   "to": "tester",
+   "text": "explicit stimulus-onset preconditions RC-5 (ii)/(iii)/(v)/(vi)"
+  },
+  {
+   "id": "N7",
+   "to": "tester",
+   "text": "write B43-01, B43-02, ES06-01, REL01-e2"
+  },
+  {
+   "id": "N8",
+   "to": "tester",
+   "text": "FBK-10: f+BOTH boundary, +LV loss in R&D, Restart with FBK ON"
+  },
+  {
+   "id": "N9",
+   "to": "analyst/lead/tester",
+   "text": "D-TEAM-DEFAULTS А: 'Решено командой' empty, no TEAM-DEFAULT in tests; MOD1-01 u1+601 (lead closure of Q-V7-02) and READY-D derivations must be either analyst READY with source chain or a TEAM-DEFAULT record referenced by tests; N5 choice via the same section"
+  },
+  {
+   "id": "C5",
+   "to": "architect/lead G3",
+   "text": "mutants (i)-(xvi), RC window mutants, testFiles=21; G3 ledger/executed-assertion collection, real-trace branch A PASS"
+  }
+ ],
+ "minor": [
+  "m-9 k3 comment / split-mode statement",
+  "m-10 approve expected-deltas fragment"
+ ],
+ "limits": "software SAL model only; Run/R&D paths not executed on canonical; no mutation run; no native/target/hardware claims"
+}

@@ -1,0 +1,17 @@
+harness: PASS {"tests":255,"pass":255,"fail":0,"skipped":0}
+historical: PASS {"tests":75,"pass":75,"fail":0,"skipped":0}
+current: FAIL {"tests":942,"pass":533,"fail":399,"skipped":0}
+current SAL: {"PASS":199,"FAIL":1,"NOT VERIFIED":7,"ERROR":0,"NOT APPLICABLE":0}
+case IDs vs baseline: {"baseline":207,"current":207,"missing":0,"added":0,"statusChanged":0,"duplicates":0}
+tests harness vs baseline: {"baseline":228,"current":255,"missing":1,"added":28,"statusChanged":0}
+tests historical vs baseline: {"baseline":75,"current":75,"missing":0,"added":0,"statusChanged":0}
+tests current vs baseline: {"baseline":845,"current":942,"missing":6,"added":103,"statusChanged":1}
+expected deltas: C:\Users\user\AppData\Local\Temp\claude\C--Users-user-source-repos-MEN001-Dyno-v2\ccd06a82-39c5-4519-838f-df9bc38d59d9\scratchpad\ops\after\SafetyTests\fixtures\case-baselines\expected-deltas\04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3.json {"deltas":7,"explained":1,"unexplained":6,"stale":0} approval APPROVED
+  UNEXPLAINED test-missing [current] E2a RUN-CONF natural: C2_FBK ON one scan after the command, HV healthy: no Run <= u+99, Run at k+101, not at k+99
+  UNEXPLAINED test-missing [current] E2a RUN-CONF C2_FBK delayed 400 ms (HV healthy): no Run while C2_FBK OFF; then Run at k+101, not at k+99
+  UNEXPLAINED test-missing [current] E2a RUN-CONF drives STO FBK pinned to "STO active" (in_STO_DRx_FBK TRUE): Run still confirmed at k+101 (RC-4: STO FBK not required)
+  UNEXPLAINED test-missing [current] E2a RUN-CONF RC-6 HV Faulty TRUE for 1 scan at k+50 (before Run): count restarts - no Run <= (k+51)+99, Run at (k+51)+101, no Emergency (Q-RC-RUNCONF-01 "В")
+  UNEXPLAINED test-missing [current] E2a RUN-CONF RC-7 (FBK-03) C2_FBK FALSE 1 scan at t_f+1 with the C2 command kept, before Run: Emergency (rule L1 vs in_Estop_PLC), Run never, Restart -> only Safe
+  UNEXPLAINED test-missing [current] E2a RUN-CONF RC-7 (FBK-03) C2_FBK FALSE 1 scan at t_f+50 with the C2 command kept, before Run: Emergency (rule L1 vs in_Estop_PLC), Run never, Restart -> only Safe
+Reports: SOFTWARE_CHECK_RESULTS.md / .json
+exit 4

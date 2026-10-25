@@ -1,0 +1,153 @@
+{
+ "generatedAt": "2026-10-21T10:18:22.858Z",
+ "method": "Isolated scratch clones of v2@ab3d558 (git clone, core.longpaths) + reference clone Prodoction@4495a1f6 as sibling ../../MEN001_Dyno; canonical copy unchanged; F1 copy: 3 native files replaced by candidates/resumed-f1/native, then only STRUCTURAL_MIGRATION items applied. npm run check:software in each copy.",
+ "canonical": {
+  "sal": "34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b",
+  "sgvl": "517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635",
+  "stages": [
+   {
+    "name": "harness",
+    "status": "PASS",
+    "counts": {
+     "tests": 189,
+     "pass": 189,
+     "fail": 0,
+     "skipped": 0
+    }
+   },
+   {
+    "name": "historical",
+    "status": "PASS",
+    "counts": {
+     "tests": 75,
+     "pass": 75,
+     "fail": 0,
+     "skipped": 0
+    }
+   },
+   {
+    "name": "current",
+    "status": "FAIL",
+    "counts": {
+     "tests": 445,
+     "pass": 443,
+     "fail": 2,
+     "skipped": 0
+    }
+   }
+  ],
+  "summary": {
+   "PASS": 200,
+   "FAIL": 1,
+   "NOT VERIFIED": 7,
+   "ERROR": 0
+  },
+  "notOk": [
+   "current | not ok 398 - SR-RG-INVALID-green-remain-green failed chord cannot degrade",
+   "current | not ok 400 - SR-RG-INVALID-blue-remain-green failed chord cannot degrade"
+  ]
+ },
+ "f1Unmigrated": {
+  "stages": [
+   {
+    "name": "harness",
+    "status": "ERROR",
+    "counts": {
+     "tests": 185,
+     "pass": 179,
+     "fail": 6
+    }
+   },
+   {
+    "name": "historical",
+    "status": "PASS",
+    "counts": {
+     "tests": 75,
+     "pass": 75,
+     "fail": 0
+    }
+   },
+   {
+    "name": "current",
+    "status": "FAIL",
+    "counts": {
+     "tests": 369,
+     "pass": 339,
+     "fail": 30
+    }
+   }
+  ],
+  "summary": {
+   "PASS": 199,
+   "FAIL": 1,
+   "NOT VERIFIED": 5,
+   "ERROR": 1
+  },
+  "note": "All 30 current + 6 harness failures are structural pins (P0 SHA/CRC/counts/FBTon2 diagnostic path/BOOT manifest); 8 current files abort at import (v2-structural SHA pin) hiding their subtests. See STRUCTURAL_MIGRATION.json."
+ },
+ "f1Migrated": {
+  "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+  "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+  "stages": [
+   {
+    "name": "harness",
+    "status": "PASS",
+    "counts": {
+     "tests": 185,
+     "pass": 185,
+     "fail": 0,
+     "skipped": 0
+    }
+   },
+   {
+    "name": "historical",
+    "status": "PASS",
+    "counts": {
+     "tests": 75,
+     "pass": 75,
+     "fail": 0,
+     "skipped": 0
+    }
+   },
+   {
+    "name": "current",
+    "status": "PASS",
+    "counts": {
+     "tests": 445,
+     "pass": 445,
+     "fail": 0,
+     "skipped": 0
+    }
+   }
+  ],
+  "summary": {
+   "PASS": 199,
+   "FAIL": 1,
+   "NOT VERIFIED": 7,
+   "ERROR": 0
+  },
+  "notOk": []
+ },
+ "scenarioStatusDiff": [
+  {
+   "id": "TIMER://Network6/FBTon2",
+   "canonical": "PASS",
+   "f1": null
+  }
+ ],
+ "harnessNameDiff": "4 removed: OBS-TON //Network6/FBTon2 fixed1/2/5/10 (retired TON); 0 added; 0 status changes (harness-canon.txt vs harness-f1.txt)",
+ "runGestureCanonicalFails": [
+  "not ok 398 - SR-RG-INVALID-green-remain-green failed chord cannot degrade",
+  "not ok 400 - SR-RG-INVALID-blue-remain-green failed chord cannot degrade"
+ ],
+ "runGestureF1": "15/15 ok in test/current-safe-run-gestures.test.js (incl. SR-RG-INVALID-green-remain-green and SR-RG-INVALID-blue-remain-green)",
+ "stateConflictCase": "STATE:conflicting-set-requests FAIL identical in canonical and F1 (case object identical excluding timestamps)",
+ "sideEffect": "Each check:software run rewrites SafetyTests/resumed-development-2026-10-21/tester/p0/source-pair-results.json (frozen prior tester evidence) via test/helpers/v2-structural.js -> check-source-pair.mjs; observed in both isolated copies. Stand issue for E0/lead, not an F1 defect.",
+ "logs": {
+  "canonical-p0-check-software.log": "e434f97a2eac18b14837a51a1d60d0df4c605860822cfbcd4a60db2f3a4118c6",
+  "f1-unmigrated-check-software.log": "3dea7c472c52a8cd0b872e3a3853ac6997b3f3ec4dfe2e0f496e94d0fd6bb0ef",
+  "f1-migrated-check-software.log": "baa9112f4e027862d9895a3584a93cb28fa79fc7a587303ff9f3f5f7ff20a331",
+  "harness-canon.txt": "b9885b85c50975da3ed15bcfc0cac4ad4b1c9c01978d46fe0796268fb77bd0b3",
+  "harness-f1.txt": "64b9515da0f2eac68b294298731499802aec775c91a320e66bbc92b5022819c0"
+ }
+}

@@ -1,0 +1,280 @@
+TYPE Public, BeforeFieldInit Microsoft.VisualStudio.Modeling.Diagrams.CoreDesignSurfaceDomainModel
+Family, Final, Virtual, HideBySig System.Type[] GetCustomDomainModelTypes() 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(Microsoft.VisualStudio.Modeling.Store) 1:store 
+Private, HideBySig Void InitializeSerialization(Microsoft.VisualStudio.Modeling.Store) 1:store 
+Family, Final, Virtual, HideBySig System.Type[] GetGeneratedDomainModelTypes() 
+Family, Final, Virtual, HideBySig .DomainMemberInfo[] GetGeneratedDomainProperties() 
+Family, Final, Virtual, HideBySig .DomainRolePlayerInfo[] GetGeneratedDomainRoles() 
+Public, Final, Virtual, HideBySig Microsoft.VisualStudio.Modeling.ModelElement CreateElement(Microsoft.VisualStudio.Modeling.Partition,System.Type,Microsoft.VisualStudio.Modeling.PropertyAssignment[]) 1:partition 2:elementType 3:propertyAssignments 
+Public, Final, Virtual, HideBySig Microsoft.VisualStudio.Modeling.ElementLink CreateElementLink(Microsoft.VisualStudio.Modeling.Partition,System.Type,Microsoft.VisualStudio.Modeling.RoleAssignment[],Microsoft.VisualStudio.Modeling.PropertyAssignment[]) 1:partition 2:elementLinkType 3:roleAssignments 4:propertyAssignments 
+Public, Virtual, HideBySig, SpecialName System.Resources.ResourceManager get_ResourceManager() 
+Public, Static, HideBySig, SpecialName System.Resources.ResourceManager get_SingletonResourceManager() 
+Public, Virtual, HideBySig Microsoft.VisualStudio.Modeling.IElementVisitorFilter GetClosureFilter(Microsoft.VisualStudio.Modeling.ClosureType,System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>) 1:type 2:rootElements 
+Private, Static, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.IElementVisitorFilter get_CopyClosure() 
+Private, Static, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.IElementVisitorFilter get_DeleteClosure() 
+Private, Static, HideBySig, SpecialName, RTSpecialName Void .cctor() 
+TYPE Public, Abstract, BeforeFieldInit Microsoft.VisualStudio.Modeling.Diagrams.Diagram
+Family, HideBySig, SpecialName, RTSpecialName Void .ctor(Microsoft.VisualStudio.Modeling.Partition,Microsoft.VisualStudio.Modeling.PropertyAssignment[]) 1:partition 2:propertyAssignments 
+Public, HideBySig, SpecialName Boolean get_IsCompleteView() 
+Public, HideBySig, SpecialName Void set_IsCompleteView(Boolean) 1:value 
+Public, HideBySig, SpecialName String get_DiagramId() 
+Public, HideBySig, SpecialName Void set_DiagramId(String) 1:value 
+Public, HideBySig, SpecialName String get_Name() 
+Public, HideBySig, SpecialName Void set_Name(String) 1:value 
+Public, HideBySig, SpecialName String get_BaseFontName() 
+Public, HideBySig, SpecialName Void set_BaseFontName(String) 1:value 
+Public, HideBySig, SpecialName Double get_BaseFontSize() 
+Public, HideBySig, SpecialName Void set_BaseFontSize(Double) 1:value 
+Assembly, HideBySig, SpecialName Boolean get_DoLineRouting() 
+Assembly, HideBySig, SpecialName Void set_DoLineRouting(Boolean) 1:value 
+Assembly, HideBySig, SpecialName Boolean get_PlaceUnplacedShapes() 
+Assembly, HideBySig, SpecialName Void set_PlaceUnplacedShapes(Boolean) 1:value 
+Assembly, HideBySig, SpecialName Boolean get_DoResizeParent() 
+Assembly, HideBySig, SpecialName Void set_DoResizeParent(Boolean) 1:value 
+Assembly, HideBySig, SpecialName Boolean get_DoShapeAnchoring() 
+Assembly, HideBySig, SpecialName Void set_DoShapeAnchoring(Boolean) 1:value 
+Assembly, HideBySig, SpecialName Boolean get_DoViewFixup() 
+Assembly, HideBySig, SpecialName Void set_DoViewFixup(Boolean) 1:value 
+Assembly, HideBySig, SpecialName System.Collections.Generic.List`1<Microsoft.VisualStudio.Modeling.Diagrams.ViewFixupData> get_ViewFixupDataList() 
+Private, HideBySig Void SubscribeToEvents() 
+Private, HideBySig Void UnsubscribeFromEvents() 
+Private, HideBySig Void ClearShapeFieldPropertyAssocations() 
+Public, HideBySig, SpecialName Void add_DiagramAdded(System.EventHandler`1<Microsoft.VisualStudio.Modeling.ElementAddedEventArgs>) 1:value 
+Public, HideBySig, SpecialName Void remove_DiagramAdded(System.EventHandler`1<Microsoft.VisualStudio.Modeling.ElementAddedEventArgs>) 1:value 
+Public, HideBySig, SpecialName Void add_DiagramRemoved(System.EventHandler`1<Microsoft.VisualStudio.Modeling.ElementDeletedEventArgs>) 1:value 
+Public, HideBySig, SpecialName Void remove_DiagramRemoved(System.EventHandler`1<Microsoft.VisualStudio.Modeling.ElementDeletedEventArgs>) 1:value 
+Assembly, HideBySig, SpecialName System.EventHandler`1<Microsoft.VisualStudio.Modeling.ElementDeletedEventArgs> get_OnDiagramRemovedHandler() 
+Assembly, HideBySig, SpecialName Void set_OnDiagramRemovedHandler(System.EventHandler`1<Microsoft.VisualStudio.Modeling.ElementDeletedEventArgs>) 1:value 
+Assembly, HideBySig, SpecialName System.EventHandler`1<Microsoft.VisualStudio.Modeling.ElementAddedEventArgs> get_OnDiagramAddedHandler() 
+Assembly, HideBySig, SpecialName Void set_OnDiagramAddedHandler(System.EventHandler`1<Microsoft.VisualStudio.Modeling.ElementAddedEventArgs>) 1:value 
+Assembly, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.ShapeEventRouter get_ShapeEventRouter() 
+Assembly, HideBySig, SpecialName Void set_ShapeEventRouter(Microsoft.VisualStudio.Modeling.Diagrams.ShapeEventRouter) 1:value 
+Public, Virtual, HideBySig Void OnInitialize() 
+Family, Virtual, HideBySig Void Finalize() 
+Private, HideBySig, SpecialName Boolean get_Disposed() 
+Private, HideBySig, SpecialName Void set_Disposed(Boolean) 1:value 
+Public, Final, Virtual, HideBySig, VtableLayoutMask Void Dispose() 
+Family, Virtual, HideBySig, VtableLayoutMask Void Dispose(Boolean) 1:disposing 
+Private, HideBySig Void DisassociateFromDesignSurfaces() 
+Assembly, Static, HideBySig, SpecialName System.Collections.Specialized.HybridDictionary get_StoreDiagramsMapping() 
+Family, Virtual, HideBySig, VtableLayoutMask, SpecialName System.Drawing.Font get_BaseFontFromEnvironment() 
+Private, HideBySig Void InitializeZoom() 
+Private, HideBySig Void EstablishBaseFont() 
+Assembly, HideBySig, SpecialName Single get_AutoZoomFactor() 
+Assembly, HideBySig, SpecialName Void set_AutoZoomFactor(Single) 1:value 
+Private, Static, HideBySig, SpecialName Single get_MaximumBaseFontSize() 
+Assembly, HideBySig Void ApplyDiagramDefaultFonts(Microsoft.VisualStudio.Modeling.Diagrams.StyleSet) 1:styleSet 
+Assembly, HideBySig Void ApplyDiagramDefaultFont(Microsoft.VisualStudio.Modeling.Diagrams.StyleSet,Microsoft.VisualStudio.Modeling.Diagrams.StyleSetResourceId) 1:styleSet 2:id 
+Assembly, HideBySig Single ScaleToDiagramDefaultFontSize(Single) 1:fontSize 
+Public, Virtual, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.SizeD get_DefaultSize() 
+Public, Virtual, HideBySig, SpecialName Boolean get_HasOutline() 
+Public, Virtual, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.SizeD get_MinimumSize() 
+Public, Virtual, HideBySig, SpecialName Boolean get_AllowsChildrenToResizeParent() 
+Public, Virtual, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.ShapeGeometry get_ShapeGeometry() 
+Public, Virtual, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.StyleSetResourceId get_OutlinePenId() 
+Public, Virtual, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.StyleSetResourceId get_BackgroundBrushId() 
+Public, Virtual, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.SizeD get_NestedShapesMargin() 
+Public, Virtual, HideBySig, SpecialName Boolean get_HasShadow() 
+FamORAssem, Virtual, HideBySig, VtableLayoutMask Void OnChildAssociatedPropertyChanged(Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement,Microsoft.VisualStudio.Modeling.Diagrams.PropertyChangedEventArgs) 1:shape 2:e 
+Public, Virtual, HideBySig, SpecialName .EnsureVisiblePreferences get_EnsureVisiblePreference() 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName Boolean get_HasSwimlanes() 
+Public, Virtual, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.SizeD get_DefaultContainerMargin() 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.DomainClassInfo> get_CreatableSwimLaneSubjects() 
+Public, Virtual, HideBySig, VtableLayoutMask Void HandleNewSwimLaneInsertion(Microsoft.VisualStudio.Modeling.Diagrams.DiagramClientView,Microsoft.VisualStudio.Modeling.DomainClassInfo,Microsoft.VisualStudio.Modeling.Diagrams.SwimlaneShape,Boolean) 1:view 2:selectedDomainClass 3:selectedSwimLane 4:insertAfter 
+Public, Static, HideBySig, SpecialName String get_CopyOrigin() 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName String get_WatermarkText() 
+Family, Virtual, HideBySig, VtableLayoutMask, SpecialName Boolean get_RequiresWatermark() 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName Boolean get_IsWatermarkNeeded() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.SelectAction get_SelectAction() 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.SelectAction CreateSelectAction() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.InvokeEditorAction get_InvokeEditorAction() 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.InvokeEditorAction CreateInvokeEditorAction() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.DragDropPendingAction get_DragDropPendingAction() 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.DragDropPendingAction CreateDragDropPendingAction() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.LassoAction get_LassoAction() 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.LassoAction CreateLassoAction() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.PanZoomAction get_PanZoomAction() 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.PanZoomAction CreatePanZoomAction() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.ResizeAction get_ResizeAction() 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.ResizeAction CreateResizeAction() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.ManualRouteAction get_ManualRouteAction() 
+Public, Virtual, HideBySig, VtableLayoutMask Microsoft.VisualStudio.Modeling.Diagrams.ManualRouteAction CreateManualRouteAction() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.ToolboxAction get_ToolboxAction() 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.ToolboxAction CreateToolboxAction() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.AnchorPointAction get_AnchorPointAction() 
+Assembly, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.AnchorPointAction CreateAnchorPointAction() 
+Public, Virtual, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.MouseAction GetPotentialMouseAction(System.Windows.Forms.MouseButtons,Microsoft.VisualStudio.Modeling.Diagrams.PointD,Microsoft.VisualStudio.Modeling.Diagrams.DiagramHitTestInfo) 1:mouseButtons 2:point 3:hitTestInfo 
+Assembly, Static, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement GetAppropriateRolePlayer(Microsoft.VisualStudio.Modeling.ModelElement) 1:element 
+Public, HideBySig, SpecialName System.Drawing.Color get_GridColor() 
+Public, HideBySig, SpecialName Void set_GridColor(System.Drawing.Color) 1:value 
+Public, Virtual, HideBySig, SpecialName Double get_GridSize() 
+Public, Virtual, HideBySig, SpecialName Void set_GridSize(Double) 1:value 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName Double get_DefaultGridSize() 
+Public, HideBySig, SpecialName Boolean get_SnapToGrid() 
+Public, HideBySig, SpecialName Void set_SnapToGrid(Boolean) 1:value 
+Public, HideBySig, SpecialName Boolean get_ShowGrid() 
+Public, HideBySig, SpecialName Void set_ShowGrid(Boolean) 1:value 
+Assembly, HideBySig Void DrawShadowBitmap(System.Drawing.Graphics,System.Drawing.Rectangle,Microsoft.VisualStudio.Modeling.Diagrams.PointD,Single,Microsoft.VisualStudio.Modeling.Diagrams.DiagramClientView) 1:g 2:clipRectangle 3:sourceLocation 4:scale 5:view 
+Private, Static, HideBySig Void ConfigureGraphicsSettings(System.Drawing.Graphics,Microsoft.VisualStudio.Modeling.Diagrams.PointD,Single) 1:g 2:sourceLocation 3:scale 
+Public, HideBySig Void Print(System.Drawing.Graphics,System.Drawing.Rectangle,Microsoft.VisualStudio.Modeling.Diagrams.PointD,Single) 1:graphics 2:clipRectangle 3:sourceLocation 4:scale 
+Public, HideBySig System.Collections.ICollection HitTest(Microsoft.VisualStudio.Modeling.Diagrams.RectangleD,Boolean) 1:clipRectangle 2:requireCompleteContainment 
+Private, HideBySig System.Collections.ArrayList GetHitShapesList(System.Drawing.Graphics,System.Drawing.Rectangle) 1:g 2:clipRectangle 
+Private, HideBySig Void DrawDiagramShapes(System.Drawing.Graphics,System.Drawing.Rectangle,Microsoft.VisualStudio.Modeling.Diagrams.DiagramClientView,System.Collections.ArrayList,Boolean) 1:g 2:clipRectangle 3:view 4:shapeList 5:paintDiagram 
+Private, HideBySig Void DrawDiagramSelection(System.Drawing.Graphics,System.Drawing.Rectangle,Microsoft.VisualStudio.Modeling.Diagrams.DiagramClientView,System.Collections.ArrayList) 1:g 2:clipRectangle 3:view 4:shapeList 
+Assembly, HideBySig Void DrawDiagram(System.Drawing.Graphics,System.Drawing.Rectangle,Microsoft.VisualStudio.Modeling.Diagrams.PointD,Single,Microsoft.VisualStudio.Modeling.Diagrams.DiagramClientView) 1:g 2:clipRectangle 3:sourceLocation 4:scale 5:view 
+Assembly, HideBySig Void DrawGrid(Microsoft.VisualStudio.Modeling.Diagrams.DiagramPaintEventArgs) 1:e 
+Public, Virtual, HideBySig Void OnPaintShape(Microsoft.VisualStudio.Modeling.Diagrams.DiagramPaintEventArgs) 1:e 
+Public, Virtual, HideBySig, VtableLayoutMask Void OnViewMouseEnter(Microsoft.VisualStudio.Modeling.Diagrams.DiagramPointEventArgs) 1:pointArgs 
+Public, Virtual, HideBySig, VtableLayoutMask Void OnViewMouseLeave(Microsoft.VisualStudio.Modeling.Diagrams.DiagramPointEventArgs) 1:pointArgs 
+Public, Virtual, HideBySig, VtableLayoutMask Void OnViewMouseHover(Microsoft.VisualStudio.Modeling.Diagrams.DiagramPointEventArgs) 1:pointArgs 
+Public, Virtual, HideBySig Void OnKeyDown(Microsoft.VisualStudio.Modeling.Diagrams.DiagramKeyEventArgs) 1:e 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement get_NavigationRoot() 
+Private, HideBySig, SpecialName Double get_NextZOrder() 
+Private, HideBySig, SpecialName Void set_NextZOrder(Double) 1:value 
+Public, HideBySig, SpecialName Boolean get_NeedsRenumber() 
+Public, HideBySig, SpecialName Void set_NeedsRenumber(Boolean) 1:value 
+Public, HideBySig Void Renumber() 
+Private, HideBySig Void RenumberChildren(Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement) 1:shape 
+Private, HideBySig Void RenumberSwimlanes(Microsoft.VisualStudio.Modeling.Diagrams.Diagram) 1:diagram 
+Public, Virtual, HideBySig Boolean DoHitTest(Microsoft.VisualStudio.Modeling.Diagrams.PointD,Microsoft.VisualStudio.Modeling.Diagrams.DiagramHitTestInfo,Boolean) 1:point 2:hitTestInfo 3:includeTolerance 
+Public, Virtual, HideBySig, VtableLayoutMask Boolean DoHitTest(Microsoft.VisualStudio.Modeling.Diagrams.DiagramClientView,Microsoft.VisualStudio.Modeling.Diagrams.PointD,System.Collections.Generic.List`1<Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement>,Boolean) 1:view 2:point 3:shapesHit 4:includeTolerance 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName Boolean get_SupportsPorts() 
+Private, HideBySig Boolean DoHitTest(System.Collections.ArrayList,Microsoft.VisualStudio.Modeling.Diagrams.PointD,Microsoft.VisualStudio.Modeling.Diagrams.DiagramHitTestInfo,Boolean) 1:shapeList 2:point 3:hitTestInfo 4:includeTolerance 
+Assembly, HideBySig Void DoDragDrop(Microsoft.VisualStudio.Modeling.Diagrams.DiagramClientView,Microsoft.VisualStudio.Modeling.Diagrams.PointD) 1:diagramClientView 2:dragStartingPoint 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.DesignSurfaceElementOperations get_ElementOperations() 
+Assembly, HideBySig, SpecialName Int32 get_MaxBitmapCopyPixels() 
+Public, HideBySig System.Drawing.Bitmap CreateBitmap(System.Collections.ICollection,.CreateBitmapPreference) 1:selectedElements 2:creationPreference 
+Private, HideBySig System.Drawing.Bitmap CreateBitmap(System.Collections.ArrayList,Microsoft.VisualStudio.Modeling.Diagrams.PointD,System.Drawing.Rectangle,Single) 1:shapeList 2:sourceLocation 3:destinationRectangle 4:scale 
+Private, Static, HideBySig System.Drawing.Rectangle CalculateDestinationRectangleForBitmap(Microsoft.VisualStudio.Modeling.Diagrams.RectangleD) 1:sourceRectangle 
+Private, HideBySig Void CalculateScalingInfoForBitmap(Microsoft.VisualStudio.Modeling.Diagrams.RectangleD,System.Drawing.Rectangle&,Single&) 1:sourceRectangle 2:destinationRectangle 3:scalingFactor 
+Public, HideBySig System.Drawing.Imaging.Metafile CreateMetafile(System.Collections.ICollection) 1:selectedShapesToDraw 
+Public, HideBySig System.Drawing.Imaging.Metafile CreateMetafile(System.Collections.ICollection,String) 1:selectedShapesToDraw 2:fileName 
+Public, HideBySig System.Drawing.Imaging.Metafile CreateMetafile(System.Collections.ICollection,String,Boolean) 1:selectedShapesToDraw 2:fileName 3:paintDiagram 
+Private, HideBySig System.Collections.ArrayList GetShapesToDraw(System.Collections.ICollection,Microsoft.VisualStudio.Modeling.Diagrams.RectangleD&) 1:topLevelShapes 2:boundingBoxForShapes 
+Private, HideBySig Boolean CollectShapeAndDescendants(Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement,System.Collections.Generic.Dictionary`2<Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement,Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement>,Microsoft.VisualStudio.Modeling.Diagrams.RectangleD&) 1:shape 2:shapesToDraw 3:absoluteBounds 
+Public, Static, HideBySig Void RunInShapeFixupContextForMetafileCreation(System.Collections.ICollection,System.Action) 1:collection 2:creationLogic 
+Public, HideBySig Boolean CopyImageToClipboard(System.Collections.ICollection) 1:selectedShapes 
+Private, Static, HideBySig IntPtr GetCompatibleBitmap(System.Drawing.Bitmap) 1:bm 
+Private, Static, HideBySig Boolean DeleteDC(IntPtr) 1:hDC 
+Private, Static, HideBySig Boolean ReleaseDC(IntPtr) 1:hDC 
+Public, Virtual, HideBySig, VtableLayoutMask Void AddImageFormat(System.Windows.Forms.IDataObject,System.Collections.ICollection) 1:data 2:selectedElements 
+Private, HideBySig Void EndDragDrop(System.Windows.Forms.DataObject,System.Collections.Generic.ICollection`1<Microsoft.VisualStudio.Modeling.ModelElement>,System.Windows.Forms.DragDropEffects) 1:data 2:selectedElements 3:dragDropEffect 
+Public, Virtual, HideBySig, VtableLayoutMask Void OnGiveFeedback(System.Windows.Forms.GiveFeedbackEventArgs) 1:e 
+Public, Virtual, HideBySig, SpecialName Boolean get_CanMove() 
+Public, HideBySig Void RepositionShapes(Microsoft.VisualStudio.Modeling.Diagrams.DiagramItemCollection,Microsoft.VisualStudio.Modeling.Diagrams.PointD,Microsoft.VisualStudio.Modeling.Diagrams.GhostShapeCollection,Microsoft.VisualStudio.Modeling.Diagrams.DiagramItem) 1:topLevelItems 2:moveDelta 3:ghostShapes 4:hitDiagramItem 
+Private, HideBySig System.Collections.Generic.IEnumerable`1<Microsoft.VisualStudio.Modeling.Diagrams.NodeShape> GetFilteredTopLevelItemsForRepositioning(Microsoft.VisualStudio.Modeling.Diagrams.DiagramItemCollection) 1:topLevelItems 
+Private, HideBySig System.Collections.Generic.HashSet`1<Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement> GetAncestors(Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement) 1:shape 
+Family, Virtual, HideBySig, VtableLayoutMask Void ReparentSwimlaneChild(Microsoft.VisualStudio.Modeling.Diagrams.NodeShape,Microsoft.VisualStudio.Modeling.Diagrams.SwimlaneShape,Microsoft.VisualStudio.Modeling.Diagrams.GhostShapeCollection,Microsoft.VisualStudio.Modeling.Diagrams.GhostShape,Microsoft.VisualStudio.Modeling.Diagrams.PointD) 1:child 2:newParent 3:ghostShapes 4:ghostShape 5:proposedLocationDelta 
+Assembly, HideBySig Boolean CanReparentShape(Microsoft.VisualStudio.Modeling.Diagrams.SwimlaneShape,Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement) 1:proposedParent 2:child 
+Private, HideBySig Boolean CanMergeChildShape(Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement,Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement) 1:proposedParent 2:child 
+Public, HideBySig Void DisconnectNestedChild(Microsoft.VisualStudio.Modeling.Diagrams.NodeShape) 1:child 
+Public, HideBySig Void ConnectNestedChild(Microsoft.VisualStudio.Modeling.Diagrams.NodeShape,Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement) 1:child 2:linksContainer 
+Public, Virtual, HideBySig, VtableLayoutMask Void GetCompliantGroupBounds(Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement,Microsoft.VisualStudio.Modeling.Diagrams.GhostShapeCollection,Microsoft.VisualStudio.Modeling.Diagrams.PointD) 1:targetShape 2:ghostShapes 3:proposedLocationDelta 
+Public, Virtual, HideBySig, VtableLayoutMask Void OnTransactionBeginning(Microsoft.VisualStudio.Modeling.TransactionBeginningEventArgs) 1:e 
+Public, Virtual, HideBySig, VtableLayoutMask Void OnTransactionCommitting(Microsoft.VisualStudio.Modeling.TransactionCommitEventArgs) 1:e 
+Public, Virtual, HideBySig, VtableLayoutMask Void OnTransactionRollingBack(Microsoft.VisualStudio.Modeling.TransactionRollbackEventArgs) 1:e 
+Public, Virtual, HideBySig, VtableLayoutMask Void OnTransactionRolledBack(Microsoft.VisualStudio.Modeling.TransactionRollbackEventArgs) 1:e 
+Assembly, HideBySig Void OnTransactionRolledBackInternal(Microsoft.VisualStudio.Modeling.TransactionRollbackEventArgs,Microsoft.VisualStudio.Modeling.Diagrams.StoreDiagramMappingData) 1:e 2:storeDiagramMap 
+Private, HideBySig Void CollectChildLinkShapes(Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement,System.Collections.Generic.List`1<Microsoft.VisualStudio.Modeling.Diagrams.LinkShape>) 1:parentShape 2:collectedLinkShapes 
+Private, Static, HideBySig Void RollBackShapeList(System.Collections.ArrayList) 1:list 
+Private, HideBySig Void EnsureGraphLayoutObjectsExist() 
+Public, Virtual, HideBySig, VtableLayoutMask Void OnElementEventsEnding(Microsoft.VisualStudio.Modeling.ElementEventsEndedEventArgs) 1:e 
+Public, Virtual, HideBySig, VtableLayoutMask Void OnElementEventsEnded(Microsoft.VisualStudio.Modeling.ElementEventsEndedEventArgs) 1:e 
+Private, HideBySig Void OnStoreDisposing(Object,System.EventArgs) 1:source 2:args 
+Assembly, Static, HideBySig Void RemoveDiagramFromStoreMapping(Microsoft.VisualStudio.Modeling.Diagrams.Diagram) 1:diagram 
+Assembly, HideBySig Void OnDiagramRemoved(Object,Microsoft.VisualStudio.Modeling.ElementDeletedEventArgs) 1:sender 2:e 
+Assembly, HideBySig Void OnDiagramAdded(Object,Microsoft.VisualStudio.Modeling.ElementAddedEventArgs) 1:sender 2:e 
+Assembly, Static, HideBySig, SpecialName Boolean get_DeserializationComplete() 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName Boolean get_CanDeserializationReroute() 
+Private, HideBySig Void OnDeserializationBeginning(Object,System.EventArgs) 1:sender 2:e 
+Private, HideBySig Void OnDeserializationEnding(Object,Microsoft.VisualStudio.Modeling.DeserializationEndingEventArgs) 1:sender 2:e 
+Public, Virtual, HideBySig, VtableLayoutMask Void PostDeserialization(Boolean) 1:succeeded 
+Public, HideBySig, SpecialName System.Collections.IList get_ClientViews() 
+Public, HideBySig Object GetService(System.Type) 1:serviceType 
+Public, HideBySig Void Associate(Microsoft.VisualStudio.Modeling.Diagrams.DiagramView) 1:diagramView 
+Public, HideBySig Void Disassociate(Microsoft.VisualStudio.Modeling.Diagrams.DiagramView) 1:diagramView 
+FamORAssem, Virtual, HideBySig, VtableLayoutMask Void OnAssociated(Microsoft.VisualStudio.Modeling.Diagrams.DiagramAssociationEventArgs) 1:e 
+FamORAssem, Virtual, HideBySig, VtableLayoutMask Void OnDisassociated(Microsoft.VisualStudio.Modeling.Diagrams.DiagramAssociationEventArgs) 1:e 
+Public, HideBySig, SpecialName Boolean get_HasAssociatedViews() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.DiagramView get_FocusedDiagramView() 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.DiagramView get_ActiveDiagramView() 
+Assembly, HideBySig Void SetActiveDiagramView(Microsoft.VisualStudio.Modeling.Diagrams.DiagramView) 1:diagramView 
+Public, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.DiagramItemCollection LassoSelect(Microsoft.VisualStudio.Modeling.Diagrams.RectangleD,Boolean) 1:rectangle 2:requireCompleteContainment 
+Private, HideBySig Void LassoSelectHelper(Microsoft.VisualStudio.Modeling.Diagrams.RectangleD,Boolean,Microsoft.VisualStudio.Modeling.Diagrams.GraphWrapper,Microsoft.VisualStudio.Modeling.Diagrams.DiagramItemCollection) 1:rectangle 2:requireCompleteContainment 3:graphWrapper 4:diagramItems 
+Public, HideBySig Boolean IsSelected(Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement) 1:shape 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.DiagramSelectionRules get_SelectionRules() 
+Public, Virtual, HideBySig Void Invalidate() 
+Public, HideBySig Void InvalidateRectangle(Microsoft.VisualStudio.Modeling.Diagrams.RectangleD) 1:rectangle 
+Assembly, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.InvalidatedArea get_InvalidatedArea() 
+Public, Virtual, HideBySig, VtableLayoutMask Boolean ShouldExcludeFromInvalidationTracking(Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement) 1:shape 
+Public, Virtual, HideBySig, VtableLayoutMask Void OnGridPropertyChanged() 
+Assembly, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.GraphWrapper get_Graph() 
+Assembly, Virtual, HideBySig, CheckAccessOnOverride, SpecialName, HasSecurity Microsoft.VisualStudio.Modeling.Diagrams.GraphWrapper get_GraphWrapper() 
+Assembly, Virtual, HideBySig, CheckAccessOnOverride, SpecialName, HasSecurity Microsoft.VisualStudio.Modeling.Diagrams.GraphWrapper get_SubGraphWrapper() 
+Assembly, Virtual, HideBySig, CheckAccessOnOverride, SpecialName, HasSecurity Void set_SubGraphWrapper(Microsoft.VisualStudio.Modeling.Diagrams.GraphWrapper) 1:value 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.GraphObject.VGRoutingStyle get_RoutingStyle() 
+Public, HideBySig, SpecialName Void set_RoutingStyle(Microsoft.VisualStudio.Modeling.Diagrams.GraphObject.VGRoutingStyle) 1:value 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.GraphObject.VGPageLineJumpCode get_RouteJumpType() 
+Public, HideBySig, SpecialName Void set_RouteJumpType(Microsoft.VisualStudio.Modeling.Diagrams.GraphObject.VGPageLineJumpCode) 1:value 
+Public, HideBySig Void AutoLayoutShapeElements(System.Collections.ICollection) 1:shapeElementCollection 
+Public, HideBySig Void AutoLayoutShapeElements(System.Collections.ICollection,Microsoft.VisualStudio.Modeling.Diagrams.GraphObject.VGRoutingStyle,Microsoft.VisualStudio.Modeling.Diagrams.GraphObject.PlacementValueStyle,Boolean) 1:shapeElementCollection 2:routingStyle 3:placementStyle 4:route 
+Public, Static, HideBySig Void FixUpDiagram(Microsoft.VisualStudio.Modeling.ModelElement,Microsoft.VisualStudio.Modeling.ModelElement) 1:existingParent 2:newChild 
+Public, Virtual, HideBySig, VtableLayoutMask System.Collections.IList FixUpDiagramSelection(Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement) 1:newChildShape 
+Public, Virtual, HideBySig, VtableLayoutMask Boolean IsConnectorMappedToLink(Microsoft.VisualStudio.Modeling.Diagrams.BinaryLinkShape) 1:connector 
+Public, Virtual, HideBySig, VtableLayoutMask Boolean IsOrphaned(Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement) 1:shapeElement 
+FamORAssem, Virtual, HideBySig, VtableLayoutMask Microsoft.VisualStudio.Modeling.ModelElement GetSourceRolePlayerForLinkMappedByConnector(Microsoft.VisualStudio.Modeling.Diagrams.BinaryLinkShape) 1:connector 
+FamORAssem, Virtual, HideBySig, VtableLayoutMask Microsoft.VisualStudio.Modeling.ModelElement GetTargetRolePlayerForLinkMappedByConnector(Microsoft.VisualStudio.Modeling.Diagrams.BinaryLinkShape) 1:connector 
+Assembly, Static, HideBySig Void ResetSelectionClearedList() 
+Family, Virtual, HideBySig Void SetAbsoluteBoundsValue(Microsoft.VisualStudio.Modeling.Diagrams.RectangleD) 1:newValue 
+Public, Virtual, HideBySig, VtableLayoutMask Boolean CanShapeContainConnectors(Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement) 1:parentCandidate 
+Public, Virtual, HideBySig, VtableLayoutMask Void OnToolboxSelectionChanged(Microsoft.VisualStudio.Modeling.Design.ModelingToolboxItem) 1:toolboxItem 
+Public, Virtual, HideBySig, VtableLayoutMask Boolean OnToolboxItemSelected(Microsoft.VisualStudio.Modeling.Design.ModelingToolboxItem) 1:toolboxItem 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName String get_ConnectActionFilterString() 
+Public, Virtual, HideBySig, SpecialName System.Collections.ICollection get_TargetToolboxItemFilterAttributes() 
+Public, HideBySig Void PerformLineRoutingRule() 
+Public, Virtual, HideBySig, VtableLayoutMask Void OnBeforeReroute() 
+Public, HideBySig Void Reroute() 
+Assembly, HideBySig Void HandleLineRouting() 
+Public, Virtual, HideBySig, SpecialName String get_AccessibleName() 
+Public, Virtual, HideBySig, SpecialName String get_AccessibleDescription() 
+Public, Virtual, HideBySig, VtableLayoutMask Boolean UnhandledException(System.Exception) 1:ex 
+Public, Virtual, HideBySig, VtableLayoutMask Boolean ShouldReportException(System.Exception) 1:ex 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.GroupBoundsRules get_GroupBoundsRules() 
+Family, Virtual, HideBySig Void OnChildConfiguring(Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement,Boolean) 1:child 2:createdDuringViewFixup 
+Family, Virtual, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement CreateChildShape(Microsoft.VisualStudio.Modeling.ModelElement) 1:element 
+Family, Virtual, HideBySig Boolean ShouldAddShapeForElement(Microsoft.VisualStudio.Modeling.ModelElement) 1:element 
+Public, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.ShapeElement FindShape(Microsoft.VisualStudio.Modeling.ModelElement) 1:element 
+Public, HideBySig, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.ExtensionEnablement.IGestureExtensionController get_GestureExtensionController() 
+Family, Virtual, HideBySig, VtableLayoutMask Microsoft.VisualStudio.Modeling.Diagrams.ExtensionEnablement.IGestureExtensionController CreateGestureExtensionController() 
+Private, Static, HideBySig, SpecialName, RTSpecialName Void .cctor() 
+TYPE Public, BeforeFieldInit Microsoft.VisualStudio.Modeling.Diagrams.PresentationViewsSubject
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(Microsoft.VisualStudio.Modeling.Diagrams.PresentationElement,Microsoft.VisualStudio.Modeling.ModelElement) 1:source 2:target 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(Microsoft.VisualStudio.Modeling.Store,Microsoft.VisualStudio.Modeling.RoleAssignment[]) 1:store 2:roleAssignments 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(Microsoft.VisualStudio.Modeling.Store,Microsoft.VisualStudio.Modeling.RoleAssignment[],Microsoft.VisualStudio.Modeling.PropertyAssignment[]) 1:store 2:roleAssignments 3:propertyAssignments 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(Microsoft.VisualStudio.Modeling.Partition,Microsoft.VisualStudio.Modeling.RoleAssignment[]) 1:partition 2:roleAssignments 
+Public, HideBySig, SpecialName, RTSpecialName Void .ctor(Microsoft.VisualStudio.Modeling.Partition,Microsoft.VisualStudio.Modeling.RoleAssignment[],Microsoft.VisualStudio.Modeling.PropertyAssignment[]) 1:partition 2:roleAssignments 3:propertyAssignments 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName Microsoft.VisualStudio.Modeling.Diagrams.PresentationElement get_Presentation() 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName Void set_Presentation(Microsoft.VisualStudio.Modeling.Diagrams.PresentationElement) 1:value 
+Public, Static, HideBySig Microsoft.VisualStudio.Modeling.LinkedElementCollection`1<Microsoft.VisualStudio.Modeling.Diagrams.PresentationElement> GetPresentation(Microsoft.VisualStudio.Modeling.ModelElement) 1:element 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName Microsoft.VisualStudio.Modeling.ModelElement get_Subject() 
+Public, Virtual, HideBySig, VtableLayoutMask, SpecialName Void set_Subject(Microsoft.VisualStudio.Modeling.ModelElement) 1:value 
+Public, Static, HideBySig Microsoft.VisualStudio.Modeling.ModelElement GetSubject(Microsoft.VisualStudio.Modeling.Diagrams.PresentationElement) 1:element 
+Public, Static, HideBySig Void SetSubject(Microsoft.VisualStudio.Modeling.Diagrams.PresentationElement,Microsoft.VisualStudio.Modeling.ModelElement) 1:element 2:newSubject 
+Public, Static, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.PresentationViewsSubject GetLinkToSubject(Microsoft.VisualStudio.Modeling.Diagrams.PresentationElement) 1:presentationInstance 
+Public, Static, HideBySig System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.Diagrams.PresentationViewsSubject> GetLinksToPresentation(Microsoft.VisualStudio.Modeling.ModelElement) 1:subjectInstance 
+Public, Static, HideBySig System.Collections.ObjectModel.ReadOnlyCollection`1<Microsoft.VisualStudio.Modeling.Diagrams.PresentationViewsSubject> GetLinks(Microsoft.VisualStudio.Modeling.Diagrams.PresentationElement,Microsoft.VisualStudio.Modeling.ModelElement) 1:source 2:target 
+Public, Static, HideBySig Microsoft.VisualStudio.Modeling.Diagrams.PresentationViewsSubject GetLink(Microsoft.VisualStudio.Modeling.Diagrams.PresentationElement,Microsoft.VisualStudio.Modeling.ModelElement) 1:source 2:target 
+Private, Static, HideBySig, SpecialName, RTSpecialName Void .cctor() 
+ASSEMBLY REFERENCES
+mscorlib 4.0.0.0
+System.Windows.Forms 4.0.0.0
+Microsoft.VisualStudio.Modeling.Sdk 17.0.0.0
+System.Drawing 4.0.0.0
+System 4.0.0.0
+Microsoft.VisualStudio.Modeling.Sdk.Diagrams.GraphObject 17.0.0.0
+System.Core 4.0.0.0
+System.ComponentModel.Composition 4.0.0.0
+Accessibility 4.0.0.0
+System.Design 4.0.0.0
+System.Xml 4.0.0.0
+

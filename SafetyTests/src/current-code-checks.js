@@ -1,6 +1,7 @@
 import { physicalRndSource } from "./physical-rnd-source.js";
 import { SalRuntime } from "./sal-runtime.js";
-import { phaseNames, emergencyEvents, runPhaseCase } from "./emergency-phase-matrix.js";
+import { emergencyEvents, runPhaseCase, resolvePhaseObservers, activePhases, phaseNames, PhaseNotApplicable } from "./emergency-phase-matrix.js";
+import { withActualNames } from "./signal-names.js";
 
 // These checks execute blocks parsed from the working SAL, not the prototypes.
 // Component checks deliberately cut upstream producers; scope is recorded.
@@ -14,13 +15,39 @@ export function currentCodeChecks(model) {
       const violations = observations.filter(o => o.actual !== o.expected);
       rows.push({ id, scope, status: violations.length ? "FAIL" : "PASS", observations, ...evidence });
     } catch (error) {
-      rows.push({ id, scope, status: "ERROR", error: error.message });
+      // E2-R1-stand-2: a structurally removed phase is NOT APPLICABLE, never PASS and never silent.
+      if (error instanceof PhaseNotApplicable) rows.push({ id, scope, status: "NOT APPLICABLE", reason: error.message, phase: error.phase, anchor: error.anchor });
+      else rows.push({ id, scope, status: "ERROR", error: error.message });
     }
   }
   function isolate(network, names) {
     const n = model.networks.find(n => n.name === network);
     if (!n || names.some(name => !n.blocks.some(b => b.name === name))) throw new Error(`Missing binding: ${network}/${names}`);
     return { ...model, networks: [{ ...n, blocks: n.blocks.filter(b => names.includes(b.name)) }] };
+  }
+  // E2-R1 S14: a case that injects a Symbol nobody reads, or observes a Symbol
+  // nobody writes, would otherwise run silently (setInputs accepts any name,
+  // get() of an unwritten name is FALSE) and can yield a false PASS/FAIL.
+  // Such a case is reported as ERROR with the missing binding, never evaluated.
+  const symbolName = g => g.resolvedName ?? g.lastKnownPath?.split(".").at(-1);
+  const isActive = p => !["Deactivated", "Both Deactivated"].includes(p.channelInterface);
+  function consumers(networks, name) {
+    const variable = model.variables.find(v => v.name === name);
+    return networks.flatMap(n => n.blocks.flatMap(b => b.inputs.filter(p => isActive(p) &&
+      (p.globals.some(g => symbolName(g) === name) || variable?.targetPorts.includes(p.path))).map(p => p.path)));
+  }
+  function producers(networks, name) {
+    const variable = model.variables.find(v => v.name === name);
+    return networks.flatMap(n => n.blocks.flatMap(b => b.outputs.filter(p =>
+      p.globals.some(g => symbolName(g) === name) || variable?.sourcePorts.includes(p.path)).map(p => p.path)));
+  }
+  function requireBindings(scopeLabel, networks, { injected = [], observed = [] }) {
+    const missingInjection = injected.filter(name => !consumers(networks, name).length);
+    const missingObservation = observed.filter(name => !producers(networks, name).length);
+    if (missingInjection.length || missingObservation.length) throw new Error(`INJECTION_POINT_MISSING in ${scopeLabel}: ` +
+      [missingInjection.length ? `no active consumer for injected ${missingInjection.join(", ")}` : "",
+       missingObservation.length ? `no producer for observed ${missingObservation.join(", ")}` : ""].filter(Boolean).join("; ") +
+      ". The case premise does not exist in this source; it is not evaluated (no PASS/FAIL).");
   }
   const blocks = model.networks.flatMap(n => n.blocks);
   for (const block of blocks.filter(b => b.functionName === "safeTon")) {
@@ -58,7 +85,7 @@ export function currentCodeChecks(model) {
   const paths = [
     ["Safe-RnD-Run", [["b_Step1_Set", "b_Step1"], ["b_Step12_Set", "b_Step12"], ["b_Step_RnD_Set", "b_Step_RnD"], ["b_Step3_Set_2", "b_Step3"]]],
     ["Run-RnD", [["b_Step3_Set_2", "b_Step3"], ["b_Step12_Set_2", "b_Step12"], ["b_Step_RnD_Set", "b_Step_RnD"]]],
-    ["RnD-Safe", [["b_Step_RnD_Set", "b_Step_RnD"], ["b_Step2_Set_2", "b_Step2"], ["b_Step1_Set_3", "b_Step1"]]],
+    ["RnD-Safe", [["b_Step_RnD_Set", "b_Step_RnD"], ["b_Step2_Set_2", "b_Step1"]]],
     ["Emergency-removal", [["b_Step3_Set_3", "b_Step3"], ["b_Step4_Set", "b_Step4"], ["b_Step5_Set", "b_Step5"], ["b_Step6_Set", "b_Step6"], ["b_Step1_Set_2", "b_Step1"]]]
   ];
   for (const [name, inputs, expectedUp, expectedUnlock] of [
@@ -70,10 +97,10 @@ export function currentCodeChecks(model) {
     if (!n) throw new Error("Missing Network12");
     const integrated=model.networks.some(n=>n.name==="RndPhysicalCompact");
     const actual=integrated?physicalRndSource(model,10,{entryButtons:inputs}):null;
-    const r = actual?.r ?? new SalRuntime({ ...model, networks: [n] }).setInputs({ b_Step_RnD: true, b_ResetPB_Lock: false,
+    const r = actual?.r ?? new SalRuntime({ ...model, networks: [n] }).setInputs(withActualNames(model, { b_Step_RnD: true, b_ResetPB_Lock: false,
       in_False_SI2_CH8: false, inPLC_RnD_Mode: false, inPLC_RnD_Mode_2: false,
       in_InterLock_NC_1:true,in_InterLock_NC_2:true,
-      in_HV_C2_FBK: false, in_HV_Healthy_FBK: true, ...inputs });
+      in_HV_C2_FBK: false, in_HV_Faulty_FBK: false /* R0 nominal (lead 2026-10-22, D-ARCH-POL): raw Faulty FALSE = PS healthy; on F1/R1 mapped to in_HV_Healthy_FBK with the same raw FALSE */, ...inputs }));
     r.runFor(2500);
     e("no up without a new released/armed attempt; DoorMonitor is not an energy guard", r.get("b_Set_Transition_3"), expectedUp);
     e("no unlock without valid release attempt", r.get("b_Set_Door_Unlock_1"), expectedUnlock);
@@ -82,21 +109,31 @@ export function currentCodeChecks(model) {
   for (const [name, commands] of paths) check(`STATE:${name}`, "Network3 state ownership only; internal set requests injected, not upstream permission acceptance", e => {
     const n = model.networks.find(n => n.name === "Network3");
     if (!n) throw new Error("Missing Network3");
+    // Phases are observed at their state RS outputs (lead decision 1), not via Symbols.
+    const phases = resolvePhaseObservers(model, [n]);
+    for (const [, state] of commands) {
+      const removed = phases.notApplicable.find(x => x.phase === state.slice(2));
+      if (removed) throw new PhaseNotApplicable(removed.phase, removed.anchor);
+    }
+    requireBindings("Network3", [n], { injected: commands.map(c => c[0]) });
     const r = new SalRuntime({ ...model, networks: [n] }).setInputs({ in_Safety_Run: false, b_EStop_Ok: false, in_False_SI2_CH8: false });
     for (const [command, state] of commands) {
       r.runFor(50, { [command]: true }); r.runFor(50, { [command]: false });
-      e(command, phaseNames.filter(p => r.get(`b_${p}`)).join(","), state.slice(2));
+      e(command, activePhases(r, phases).join(","), state.slice(2));
     }
+    return phases.notApplicable.length ? { phasesNotApplicable: phases.notApplicable } : undefined;
   });
   check("STATE:conflicting-set-requests", "Network3 internal conflicting requests; tests latch boundary only", e => {
     const n = model.networks.find(n => n.name === "Network3");
     if (!n) throw new Error("Missing Network3");
+    const phases = resolvePhaseObservers(model, [n]);
+    requireBindings("Network3", [n], { injected: ["b_Step1_Set", "b_Step3_Set_2"] });
     const r = new SalRuntime({ ...model, networks: [n] }).setInputs({ in_Safety_Run: false, b_EStop_Ok: false,
       in_False_SI2_CH8: false, b_Step1_Set: true, b_Step3_Set_2: true });
     r.runFor(50);
-    const active = phaseNames.filter(p => r.get(`b_${p}`));
+    const active = activePhases(r, phases);
     e("conflicting requests cannot report simultaneous Safe and Run", active.includes("Step1") && active.includes("Step3"), false);
-    return { active, note: "A pass does not prove every conflicting request reaches Emergency; fault destination needs separate binding" };
+    return { active, ...(phases.notApplicable.length ? { phasesNotApplicable: phases.notApplicable } : {}), note: "A pass does not prove every conflicting request reaches Emergency; fault destination needs separate binding" };
   });
   check("ESTOP:restart-fault-recovery", "Working Network1 FBAnd1 + FBEstop1, no EDM/group lifecycle", e => {
     const r = new SalRuntime(isolate("Network1", ["FBAnd1", "FBEstop1"]));
@@ -114,6 +151,14 @@ export function currentCodeChecks(model) {
     if (phase === "Step1" && event[0].endsWith("Connector")) continue; // Safe connector loss is a permission, not emergency.
     for (const assumption of [false, true]) check(`PRIORITY:${phase}:${event[0]}:fallback=${assumption}`,
       "Working SAL except Network4; seeded state and fixed feedback; first 100ms sampled", e => {
+        // Same selection as runPhaseCase; the phase is seeded through its state RS block
+        // (resolvePhaseObservers): removed phase -> NOT APPLICABLE, inconsistent anchor -> ERROR.
+        const selected = model.networks.filter(n => n.name !== "Network4");
+        const phases = resolvePhaseObservers(model, selected);
+        const removed = phases.notApplicable.find(x => x.phase === phase);
+        if (removed) throw new PhaseNotApplicable(removed.phase, removed.anchor);
+        requireBindings("working SAL except Network4", selected, { injected: [event[1]],
+          observed: ["out_HV_C2", "out_LV_C1", "out_Door_Unlock_Solonoeid", ...(["NC1", "PLC"].includes(event[0]) ? ["b_EStop_Ok"] : [])] });
         const trace = runPhaseCase(model, phase, event, assumption);
         e("no new HV command during fault", trace.observed.hvRiseDuringFault, false);
         e("no new LV command during fault", trace.observed.lvRiseDuringFault, false);

@@ -1,0 +1,12 @@
+== Safe->R&D both (E2d): A1 1101, u1 1102, N11/FBAnd1 1101, b_Step12_Set 1100, FBOr17 1101, LvSetPermit 1102, C1_FBK 1103, WIN_C1 out 1601, R(SR) 1702, outPLC_RnD 1702 -> R-u1 = 600
+    0:S12=0,n11And1=0,or17=0,lvCur=1,n1And1=1,lvSet=0,C1=0 | 1101:S12=1,n11And1=1,or17=1,lvCur=1,n1And1=1,lvSet=0,C1=0 | 1102:S12=1,n11And1=1,or17=1,lvCur=1,n1And1=1,lvSet=1,C1=1
+== Safe->R&D legacy (E2d): A1 2, u1 4, N11/FBAnd1 2, b_Step12_Set 1, FBOr17 2, LvSetPermit 3, C1_FBK 5, WIN_C1 out 502, R(SR) 603, outPLC_RnD 603 -> R-u1 = 599
+    0:S12=0,n11And1=0,or17=0,lvCur=1,n1And1=1,lvSet=0,C1=0 | 2:S12=1,n11And1=1,or17=1,lvCur=1,n1And1=1,lvSet=0,C1=0 | 3:S12=1,n11And1=1,or17=1,lvCur=1,n1And1=1,lvSet=1,C1=0 | 4:S12=1,n11And1=1,or17=1,lvCur=1,n1And1=1,lvSet=1,C1=1
+== STP-I (E2d): A(SU) 1100, LV Faulty from A+50
+    A+-1:S1=0,S12=0,SR=1,S3=0,S4=0,S5=0,S6=0,SU=0,SG=0,C1=1,C2=0,PLC_RnD=1,EOk=1
+    A+0:S1=0,S12=0,SR=1,S3=0,S4=0,S5=0,S6=0,SU=1,SG=0,C1=1,C2=0,PLC_RnD=1,EOk=1
+    A+2:S1=0,S12=0,SR=1,S3=0,S4=0,S5=0,S6=0,SU=1,SG=0,C1=1,C2=1,PLC_RnD=1,EOk=1
+    A+602:S1=0,S12=0,SR=0,S3=1,S4=0,S5=0,S6=0,SU=0,SG=0,C1=1,C2=1,PLC_RnD=0,EOk=1
+    A+603:S1=0,S12=0,SR=0,S3=0,S4=1,S5=0,S6=0,SU=0,SG=0,C1=1,C2=1,PLC_RnD=0,EOk=1
+    A+2605:S1=0,S12=0,SR=0,S3=0,S4=1,S5=0,S6=0,SU=0,SG=0,C1=0,C2=1,PLC_RnD=0,EOk=1
+    A+7609:S1=0,S12=0,SR=0,S3=0,S4=0,S5=1,S6=0,SU=0,SG=0,C1=0,C2=1,PLC_RnD=0,EOk=1

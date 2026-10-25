@@ -1,0 +1,137 @@
+{
+  "slice": "E2-plan-v5-questions",
+  "role": "v2-analyst",
+  "date": "2026-10-22",
+  "sources": {
+    "scenarioDecisionsBefore": "71ad3f94e8a348a8e787f29b44bd6a68f4cc8ffad9bb01ddaff2787fe90473d2",
+    "scenarioDecisionsAfter": "be839c37a0c05b48ad3586b147af88c0c873a1a6e61276efb85c4410179a4bf4",
+    "spec": "c065c7d2437b42a1ce5e2982309f17fc086d35a2ef6a0870b9ecc7957b3b2472",
+    "scope": "03facdcebc8b54763d5bbfa0fc634dba85a5ed6bb5070e1b82ca33e76f9e9537",
+    "traceMatrix": "da32f8205ef6777242c9f262630a9b597c9c3307aa65dd0644127cd92fa04808",
+    "planReviewV5": "c77e95ab59b6b1488edd029ab9206a8a6b925eabacb65efc42ef82066fd21b04",
+    "g1ReviewV5": "ff04f332f96dffc02507f0d079042351abc11b18b65d1c4c0e52baf929e1e020",
+    "planV5": "b90eff7c4045a638a6822bbff022459565f552b2e2b39ea295c6693bc640b4fd",
+    "canonicalSal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "referenceSal4495a1f": "c5f0c0cea479f65e3a11fbe9cf2520a2b54d2cbf85602fd7a2cbab8e27132153",
+    "head": "dbca5dd"
+  },
+  "teamDefaults": ["TD-01", "TD-02", "TD-03", "TD-04"],
+  "criteria": [
+    {
+      "id": "DIS-HOLD-HV",
+      "status": "READY",
+      "matrixIds": ["EMG-010", "STP-002", "MOD-002", "EMG-001", "EMG-011"],
+      "notation": {
+        "d": "first scan out_HV_Discharge_Request TRUE issued by a descent",
+        "a": "acceptance scan of R&D->Run (first of: STATE_SU set, out_HV_C2 TRUE, STO released)",
+        "u": "first scan out_HV_C2 TRUE"
+      },
+      "hold": "TRUE in every scan [d, a-1] across R&D, R&D->Safe, Safe, Safe->R&D (incl. abort/rollback), Emergency, Restart and every rejected lift attempt",
+      "release": {
+        "normative": "TRUE at a-1; FALSE at u+1 and after until re-issued by a descent",
+        "observation": "[a, u]"
+      },
+      "afterRelease": "if Run is not confirmed, abort/rollback/emergency re-issues the request per its own order (STP-006, Q-RC-12, Q-T3-1)",
+      "emergency": {
+        "e<=a-1": "TRUE continuously",
+        "e in {a,a+1}": "observation: stays TRUE, or released and re-issued by the chain not later than its moment",
+        "e>=a+2": "released per norm, re-issued by the chain"
+      },
+      "forbidden": [
+        "FALSE in any scan of [d, a-1] (done-left / pulse)",
+        "TRUE at >= u+1 without re-issue (v5 u+600 is FAIL)",
+        "release by rejected attempt, Restart, entry to Safe, Safe->R&D"
+      ],
+      "sources": ["Q-V7-01 G", "Question 73 A", "SPEC 7", "SPEC 10", "D-STO-LAUNCH", "reference Network5/FBDecouple2"]
+    },
+    {
+      "id": "DIS-HOLD-LV",
+      "status": "TEAM-DEFAULT TD-01",
+      "matrixIds": ["MOD-001", "MOD-005", "EMG-011"],
+      "rule": "as DIS-HOLD-HV with Safe->R&D acceptance a1 and u1 = first scan out_LV_C1 TRUE: TRUE in [d, a1-1] (incl. R&D->Run and Run), FALSE at u1+1, [a1, u1] observation",
+      "sources": ["TD-01 (analogy Q-V7-01 G + question 73 A)", "reference Network5/FBDecouple2 DecOut3"]
+    },
+    {
+      "id": "RUN-CONF-T",
+      "status": "READY lower bound / TD-02 upper bound",
+      "matrixIds": ["MOD-002", "WDG-003"],
+      "rule": "K = max(k, u+500): no Run in any scan <= K+99; K+100 observation (any internal counting start, incl. window from u-1); Run at K+101; no Run at >= K+102 is FAIL",
+      "replaces": ["v7 4.1 forbidden clause about counting from k < w", "RC-UB q_total+2 (E2-plan-v4-questions 3)"],
+      "sources": ["Question 68 B", "Q-RC-RUNCONF-01", "CRITERIA v2 0", "TD-02"]
+    },
+    {
+      "id": "RND-CONF-T",
+      "status": "READY (Q-V7-02 closed by question 68 B) / TD-02 tolerance",
+      "matrixIds": ["MOD-001", "WDG-001"],
+      "rule": "K1 = max(k1, u1+500): no R&D <= K1+99; K1+100 observation; R&D at K1+101. FBK and LV norm from <= u1+499: no R&D <= u1+599, R&D at u1+601. LV-only dip after window restarts the count; C1_FBK dip after window -> Emergency",
+      "sources": ["Question 68 B (same for C1 and R&D)", "Q-RC-19", "FBK-01", "TD-02"]
+    },
+    {
+      "id": "EMG6-01-BOOT",
+      "status": "READY-D",
+      "matrixIds": ["EMG-006", "BOOT-001", "EMG-012", "MOD-006", "MOD-008"],
+      "initial": "group start per R0, ES OK, buttons released, all commands OFF; in_LV_C1_FBK and/or in_HV_C2_FBK TRUE from the first scan",
+      "events": "Restart: green pressed p_r, released r (100 ms); FBK FALSE from g in {<= p_r-1, [p_r, r], r+1, r+2000, never}; wait 3000 ms; new Restart",
+      "expected": {
+        "FBK TRUE over [p_r, r]": "Emergency in every scan until a new Restart after g",
+        "g >= r+1": "no Safe without a new Restart",
+        "new Restart after g": "Safe (EMG6-01)",
+        "g <= p_r-1": "Safe",
+        "g in [p_r, r]": "observation; Safe with FBK TRUE in the same scan forbidden"
+      },
+      "forbidden": ["status Safe while any FBK TRUE", "Safe without a new Restart after g", "SAFE/EMG flicker", "energy or Unlock before Safe"],
+      "sources": ["SPEC 12 pp.3-5", "EMG-006", "EMG6-01", "Q-RC-10", "E2-04"]
+    },
+    {
+      "id": "B51-01",
+      "status": "READY",
+      "matrixIds": ["CFG-001", "EMG-011", "MOD-006"],
+      "rule": "legacy Bypass outside stable Safe with closed cover (R&D, StartingRun, Run, Run->R&D phases, Safe->R&D, R&D->Safe, Emergency/S6, Safe with cover open): outputs and status identical scan-by-scan to the trace without Bypass; no fault",
+      "note": "intentional change per Vadim V14-Q16 / Q-RC-05(a), not a team decision",
+      "sources": ["V14-Q16", "Q-RC-05(a)", "EMG-011"]
+    },
+    {
+      "id": "SAFE-NOENERGY",
+      "status": "READY",
+      "matrixIds": ["MOD-006", "EMG-012", "CFG-001"],
+      "rule": "every scan with status Safe: out_LV_C1 = out_HV_C2 = FALSE (variants: stable Safe + Bypass 300 ms / 1 scan / 5000 ms; B43-02 delta set)",
+      "modelFact": "reviewer x2: stable Safe + Bypass gives 0 energy scans in base and in (A)",
+      "sources": ["SPEC 2", "E2 single-status requirement", "V14-Q16"]
+    },
+    {
+      "id": "FBK-05/06",
+      "status": "READY (E6) - SUPERSEDED 2026-10-22 by E2-G1-v7-q (FBK-05/06-CMD BLOCKED-E4, -W, -NEG, -POS): button abort needs full 2 s clearing from rb, button points u+10/300/499 unreachable",
+      "matrixIds": ["WDG-001", "WDG-003", "MOD-008"],
+      "rule": "abort accepted before window end, FBK FALSE in w-1..w+1 with command ON at w: SafetyFault TRUE not later than w+1 (NV until symbol); abort sequence scan-identical to the same abort with FBK ON; no Emergency",
+      "observation": ["mixed FBK in [w-1, w+1]", "command OFF before w"],
+      "sources": ["Q-V7-03 A", "Q-V4-01 B"]
+    },
+    {
+      "id": "FBK10-K4",
+      "status": "READY; p = g TEAM-DEFAULT TD-04",
+      "matrixIds": ["MOD-008", "WDG-004"],
+      "rule": "press while FBK ON not counted; after FBK OFF the first gesture only acknowledges; lift only by a new gesture after release >= 2001 ms; p = g: SafetyFault state observation, no lift in that gesture",
+      "knownFailE2d": "FBK OFF -> BOTH without acknowledgement -> lift executes until E5/E6",
+      "sources": ["Q-V7-04 B", "Q-V4-02 V", "E6-Q2", "TD-04"]
+    },
+    {
+      "id": "EMG-RD-L h>e",
+      "status": "TEAM-DEFAULT TD-03",
+      "matrixIds": ["EMG-001", "EMG-011", "EMG-008", "EMG-009", "STP-001"],
+      "rule": "Healthy lost at h, e < h < t_a+2000, before chain STO: STO in [h, h+1]",
+      "sources": ["Q-T3-1 A", "STP-D", "Q-RC-15 B", "TD-03"]
+    }
+  ],
+  "n9Classification": {
+    "MOD1-01 u1+601": "READY (question 68 B)",
+    "v7 h>e": "TD-03",
+    "K3-ACK p=g": "TD-04",
+    "FBK-10 Config = lift": "READY-D (Q-RC-05b, Q-RC-07b, Q-V7-04 B)",
+    "N5 u+601 vs u+602": "TD-02 (u+601)",
+    "B43-01/02": "READY-D",
+    "ES06-01": "READY-D",
+    "REL01-e2": "READY-D"
+  },
+  "blocked": [],
+  "questionsForVadim": []
+}

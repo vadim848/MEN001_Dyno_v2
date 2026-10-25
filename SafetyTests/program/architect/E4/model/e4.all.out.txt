@@ -1,0 +1,89 @@
+PASS K-01 E2 
+PASS K-02 E2 
+PASS K-03 E2 
+PASS K-04 E2 
+PASS K-05 E2 
+PASS K-06 E2 
+PASS K-07 E2 
+PASS K-08 E2 
+PASS K-09 E2 
+PASS K-10 E2 
+PASS K-11 E2 
+PASS C-01 E2 
+PASS C-02 E2 
+PASS C-03 E2 
+PASS C-04 E2 
+PASS C-05 E2 
+PASS C-06 E3 
+PASS C-07 E3 
+PASS C-08 E2 
+PASS C-09 E2 
+PASS C-10 E2 
+PASS E-01 E2 
+PASS E-02 E2 
+PASS E-03 E2 
+PASS E-04 E2 
+PASS E-05 E2 
+PASS E-06 E2 
+PASS E-07 E3 
+PASS E-08 E2 (NV: reaction "two/none main states -> Emergency" cannot be provoked through real inputs (catalog rule 1); covered only by th)
+FAIL E-09 E6 | confirmed C2_FBK lost in Run [Q-RC-19, Q-V4-01]: Emergency within 50 ms; got none
+FAIL E-10 E6 | Emergency at C2 OFF+none, expected 500+-50 [E6-Q1]
+PASS U-01 E2 
+PASS U-02 E2 
+PASS U-03 E2 
+PASS U-04 E2 
+PASS U-05 E2 
+PASS U-06 E2 
+PASS U-07 E2 
+PASS U-08 E2 
+PASS U-09 E2 
+PASS D-01 E3 
+PASS D-02 E3 
+PASS D-03 E3 
+PASS D-04 E2 
+PASS D-05 E3 
+PASS D-06 E2 
+PASS D-07 E3 
+PASS D-08 E2 
+PASS D-09 E3 
+PASS H-01 E2 
+FAIL H-02 E3 | SafetyFault HealthyLost [Q-ARCH-05]: SafetyFault expected true, observed false
+FAIL H-03 E3 | SafetyFault HealthyLost [Q-ARCH-05]: SafetyFault expected true, observed false
+PASS H-04 E2 
+FAIL H-05 E2 | SafetyFault HealthyLost [Q-RC-11]: SafetyFault expected true, observed false
+FAIL H-06 E3 | SafetyFault HealthyLost [Q-RC-15]: SafetyFault expected true, observed false
+FAIL H-07 E3 | SafetyFault HealthyLost [Q-E2Q-02]: SafetyFault expected true, observed false
+FAIL W-01 E6 | C1 OFF at C1 ON+none, expected 500+-50 [E6-Q1] || SafetyFault [E6-Q1]: SafetyFault expected true, observed false
+FAIL W-02 E6 | abort (STO active) at u+none, expected 500+-50 [Q-RC-12] || abort ends in R&D, C2 OFF; status=RND || SafetyFault [Q-RC-12]: SafetyFault expected true, observed false
+FAIL W-03 E6 | PRECONDITION/STAND: C2_FBK ON
+FAIL W-04 E6 | PRECONDITION/STAND: C1_FBK ON
+FAIL W-05 E6 | SafetyFault after window expiry during abort [Q-V7-03]: SafetyFault expected true, observed false
+FAIL W-06 E5 | PRECONDITION/STAND: Safe after failed Safe->R&D (W-01 rollback)
+FAIL W-07 E5 | PRECONDITION/STAND: R&D after failed R&D->Run (W-02 rollback)
+FAIL W-08 E5 | PRECONDITION/STAND: R&D after failed R&D->Run (W-02 rollback)
+FAIL W-09 E5 | SafetyFault on C1_FBK ON without command (by 1000 ms, bound A10) [Q-V4-02]: SafetyFault expected true, observed false || press while FBK ON did not acknowledge [Q-V7-04]: SafetyFault expected true, observed false || first BOTH after FBK OFF only acknowledges [Q-V7-04, E6-Q2]
+FAIL W-10 E5 | PRECONDITION/STAND: Safe after failed Safe->R&D (W-01 rollback)
+PASS P-01 E4 
+PASS P-02 E4 
+PASS P-03 E4 
+PASS P-04 E4 
+PASS P-05 E4 
+PASS P-06 E4 
+PASS P-07 E4 
+PASS P-08 E4 
+PASS P-09 E4 
+PASS P-10 E4 
+FAIL P-11 E4 | Safe: not before 3 s (+2779)
+PASS P-12 E4 
+PASS G-01 E4 
+PASS G-02 E4 
+PASS G-03 E4 
+PASS G-04 E4 
+PASS G-05 E4 
+PASS G-06 E4 
+FAIL G-07 E6 | rollback at C2 ON+none, expected 500+-50 [Q-RC-06] || rollback to Safe, not Emergency || SafetyFault [Q-RC-06]: SafetyFault expected true, observed false
+PASS B-01 E7 
+PASS B-02 E7 
+PASS B-03 E7 
+blocks 297 pass 69 fail 19

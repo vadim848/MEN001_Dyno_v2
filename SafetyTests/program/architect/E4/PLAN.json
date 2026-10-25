@@ -1,0 +1,793 @@
+{
+ "slice": "E4 (S4) PLC interface v1.4, Config, heartbeat, legacy removal",
+ "author": "v2-architect",
+ "date": "2026-10-24",
+ "source": {
+  "sal": "MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal",
+  "salSha256": "9ee66e7868547d7d42fb9ed4faf9f69030a2b4e6a5c64b1b0db2787176714d1e",
+  "sgvl": "MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl",
+  "sgvlSha256": "72eade07b554a7b463676d5bb0d7b52bdebf734b875e293b6a84a3ac608d85b2",
+  "fb": 260
+ },
+ "target": {
+  "dir": "candidates/E4/native",
+  "fb": 297,
+  "limit": 512,
+  "variables": [
+   81,
+   99
+  ],
+  "modelPorts": [
+   2166,
+   2264
+  ]
+ },
+ "orderRule": "new blocks placed by insertAfterCanonical in listed order; Network3 DEC_* last in the scan; renumber contiguous 1..N",
+ "addBlocks": [
+  {
+   "path": "//Network3/CFG_RST",
+   "fn": "safeOr",
+   "in": {
+    "OrIn1": "V:linkCfgDone",
+    "OrIn2": "G:b_Step4_Set"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network3/FBRs6"
+  },
+  {
+   "path": "//Network3/STATE_CFG",
+   "fn": "safeRs",
+   "in": {
+    "Reset": "W://Network3/CFG_RST/OrOut",
+    "Set": "V:linkCfgAccept"
+   },
+   "out": {
+    "RsOut": "V:linkCfgActive"
+   },
+   "insertAfterCanonical": "//Network3/FBRs6"
+  },
+  {
+   "path": "//Network1/HB_LO",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "!V:in_PLC_Heartbeat"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/EXIT_FBK_OK"
+  },
+  {
+   "path": "//Network1/HB_T_HI",
+   "fn": "safeTon",
+   "timing_s": 3,
+   "in": {
+    "TonIn": "V:in_PLC_Heartbeat"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/EXIT_FBK_OK"
+  },
+  {
+   "path": "//Network1/HB_T_LO",
+   "fn": "safeTon",
+   "timing_s": 3,
+   "in": {
+    "TonIn": "W://Network1/HB_LO/AndOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/EXIT_FBK_OK"
+  },
+  {
+   "path": "//Network1/HB_OK",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "!W://Network1/HB_T_HI/TonOut",
+    "AndIn2": "!W://Network1/HB_T_LO/TonOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/EXIT_FBK_OK"
+  },
+  {
+   "path": "//Network1/PS_SAFE",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "G:b_Step1",
+    "AndIn2": "G:b_EStop_Ok"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PS_RND",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "V:linkSafeRndScope",
+    "AndIn2": "G:b_EStop_Ok",
+    "AndIn3": "!G:recRndC_SU",
+    "AndIn4": "!V:linkAbortActive",
+    "AndIn5": "!G:recRndC_SG"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PS_RUN",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "G:b_Step3",
+    "AndIn2": "G:b_EStop_Ok",
+    "AndIn3": "!V:linkDescActive"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PS_ANY",
+   "fn": "safeOr",
+   "in": {
+    "OrIn1": "W://Network1/PS_SAFE/AndOut",
+    "OrIn2": "W://Network1/PS_RND/AndOut",
+    "OrIn3": "W://Network1/PS_RUN/AndOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PC_O2",
+   "fn": "safeOr",
+   "in": {
+    "OrIn1": "V:CMD_SAFE_TO_RND",
+    "OrIn2": "V:CMD_RND_TO_RUN"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PC_A2",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "V:CMD_SAFE_TO_RND",
+    "AndIn2": "V:CMD_RND_TO_RUN"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PC_A3",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "V:CMD_RUN_TO_RND",
+    "AndIn2": "W://Network1/PC_O2/OrOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PC_O3",
+   "fn": "safeOr",
+   "in": {
+    "OrIn1": "W://Network1/PC_O2/OrOut",
+    "OrIn2": "V:CMD_RUN_TO_RND"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PC_A4",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "V:CMD_RND_TO_SAFE",
+    "AndIn2": "W://Network1/PC_O3/OrOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PC_O4",
+   "fn": "safeOr",
+   "in": {
+    "OrIn1": "W://Network1/PC_O3/OrOut",
+    "OrIn2": "V:CMD_RND_TO_SAFE"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PC_A5",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "V:inPLC_BypassC1C2",
+    "AndIn2": "W://Network1/PC_O4/OrOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PC_TWO",
+   "fn": "safeOr",
+   "in": {
+    "OrIn1": "W://Network1/PC_A2/AndOut",
+    "OrIn2": "W://Network1/PC_A3/AndOut",
+    "OrIn3": "W://Network1/PC_A4/AndOut",
+    "OrIn4": "W://Network1/PC_A5/AndOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PE_SET",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "W://Network1/PC_TWO/OrOut",
+    "AndIn2": "W://Network1/PS_ANY/OrOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PE_ALLF",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "!V:CMD_SAFE_TO_RND",
+    "AndIn2": "!V:CMD_RND_TO_RUN",
+    "AndIn3": "!V:CMD_RUN_TO_RND",
+    "AndIn4": "!V:CMD_RND_TO_SAFE",
+    "AndIn5": "!V:inPLC_BypassC1C2"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PE_T_CLR",
+   "fn": "safeTon",
+   "timing_s": 1,
+   "in": {
+    "TonIn": "W://Network1/PE_ALLF/AndOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PE_ERR",
+   "fn": "safeRs",
+   "in": {
+    "Reset": "W://Network1/PE_T_CLR/TonOut",
+    "Set": "W://Network1/PE_SET/AndOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PK_OK",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "!V:in_Reset_PB",
+    "AndIn2": "!V:in_Relase_Door_PB",
+    "AndIn3": "!W://Network1/PE_ERR/RsOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PA_S2R",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "V:CMD_SAFE_TO_RND",
+    "AndIn2": "!W://Network1/PK_PREV/DecOut1",
+    "AndIn3": "W://Network1/PS_SAFE/AndOut",
+    "AndIn4": "W://Network1/PK_OK/AndOut"
+   },
+   "out": {
+    "AndOut": "V:linkPlcAccS2R"
+   },
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PA_R2RUN",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "V:CMD_RND_TO_RUN",
+    "AndIn2": "!W://Network1/PK_PREV/DecOut2",
+    "AndIn3": "W://Network1/PS_RND/AndOut",
+    "AndIn4": "W://Network1/PK_OK/AndOut",
+    "AndIn5": "V:linkCoverClosed",
+    "AndIn6": "!V:in_HV_C2_FBK"
+   },
+   "out": {
+    "AndOut": "V:linkPlcAccR2Run"
+   },
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PA_RUN2R_T",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "V:CMD_RUN_TO_RND",
+    "AndIn2": "!W://Network1/PK_PREV/DecOut3",
+    "AndIn3": "W://Network1/PK_OK/AndOut"
+   },
+   "out": {
+    "AndOut": "V:linkPlcAbortSu"
+   },
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PA_RUN2R",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "W://Network1/PA_RUN2R_T/AndOut",
+    "AndIn2": "W://Network1/PS_RUN/AndOut"
+   },
+   "out": {
+    "AndOut": "V:linkPlcAccRun2R"
+   },
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PA_R2S_ST",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "V:CMD_RND_TO_SAFE",
+    "AndIn2": "!W://Network1/PK_PREV/DecOut4",
+    "AndIn3": "W://Network1/PS_RND/AndOut",
+    "AndIn4": "W://Network1/PK_OK/AndOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PA_R2S_AB",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "V:CMD_RND_TO_SAFE",
+    "AndIn2": "!W://Network1/PK_PREV/DecOut4",
+    "AndIn3": "G:b_Step12",
+    "AndIn4": "W://Network1/PK_OK/AndOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PA_R2S",
+   "fn": "safeOr",
+   "in": {
+    "OrIn1": "W://Network1/PA_R2S_ST/AndOut",
+    "OrIn2": "W://Network1/PA_R2S_AB/AndOut"
+   },
+   "out": {
+    "OrOut": "V:linkPlcAccR2S"
+   },
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PA_CFG",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "V:inPLC_BypassC1C2",
+    "AndIn2": "!W://Network1/PK_PREV/DecOut5",
+    "AndIn3": "W://Network1/PS_SAFE/AndOut",
+    "AndIn4": "W://Network1/PK_OK/AndOut",
+    "AndIn5": "V:linkSafeUpScope",
+    "AndIn6": "V:linkCoverClosed",
+    "AndIn7": "V:out_ReadyForStep2"
+   },
+   "out": {
+    "AndOut": "V:linkCfgAccept"
+   },
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PF_OR",
+   "fn": "safeOr",
+   "in": {
+    "OrIn1": "W://Network1/PE_ERR/RsOut",
+    "OrIn2": "Deactivated"
+   },
+   "out": {
+    "OrOut": "V:STS_FAULT"
+   },
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/CFG_EX_SET",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "V:linkCfgActive",
+    "AndIn2": "!V:inPLC_BypassC1C2"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/CFG_EX",
+   "fn": "safeRs",
+   "in": {
+    "Reset": "!V:linkCfgActive",
+    "Set": "W://Network1/CFG_EX_SET/AndOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/CFG_T_HOLD",
+   "fn": "safeTon",
+   "timing_s": 1,
+   "in": {
+    "TonIn": "W://Network1/CFG_EX/RsOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/CFG_OFF",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "W://Network1/CFG_EX/RsOut",
+    "AndIn2": "W://Network1/CFG_T_HOLD/TonOut"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/CFG_DONE",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "W://Network1/CFG_OFF/AndOut",
+    "AndIn2": "!V:out_LV_C1",
+    "AndIn3": "!V:out_HV_C2",
+    "AndIn4": "!V:in_LV_C1_FBK",
+    "AndIn5": "!V:in_HV_C2_FBK"
+   },
+   "out": {
+    "AndOut": "V:linkCfgDone"
+   },
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network1/PK_PREV",
+   "fn": "safeDecouple",
+   "in": {
+    "DecIn1": "V:CMD_SAFE_TO_RND",
+    "DecIn2": "V:CMD_RND_TO_RUN",
+    "DecIn3": "V:CMD_RUN_TO_RND",
+    "DecIn4": "V:CMD_RND_TO_SAFE",
+    "DecIn5": "V:inPLC_BypassC1C2"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBDecouple2"
+  },
+  {
+   "path": "//Network2/S2R_REQ",
+   "fn": "safeOr",
+   "in": {
+    "OrIn1": "V:linkRndBothQualified",
+    "OrIn2": "V:linkPlcAccS2R"
+   },
+   "out": {},
+   "insertAfterCanonical": "//RndPhysicalCompact/BOTH"
+  },
+  {
+   "path": "//RndPhysicalCompact/SU_SET",
+   "fn": "safeOr",
+   "in": {
+    "OrIn1": "W://RndPhysicalCompact/GATE_020/AndOut",
+    "OrIn2": "V:linkPlcAccR2Run"
+   },
+   "out": {},
+   "insertAfterCanonical": "//RndPhysicalCompact/SU_RESET"
+  },
+  {
+   "path": "//Network6/RUN_DOWN_REQ",
+   "fn": "safeOr",
+   "in": {
+    "OrIn1": "W://Network6/FBAnd24/AndOut",
+    "OrIn2": "V:linkPlcAccRun2R"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network2/FBDecouple5"
+  },
+  {
+   "path": "//Network3/DEC_S",
+   "fn": "safeOr",
+   "in": {
+    "OrIn1": "G:b_Step1",
+    "OrIn2": "G:b_Step12"
+   },
+   "out": {},
+   "insertAfterCanonical": "//Network1/FBAndUnlockHold"
+  },
+  {
+   "path": "//Network3/DEC_SAFE",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "W://Network3/DEC_S/OrOut",
+    "AndIn2": "G:b_EStop_Ok"
+   },
+   "out": {
+    "AndOut": "V:STS_SAFE"
+   },
+   "insertAfterCanonical": "//Network1/FBAndUnlockHold"
+  },
+  {
+   "path": "//Network3/DEC_RND",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "G:b_Step_RnD",
+    "AndIn2": "G:b_EStop_Ok"
+   },
+   "out": {
+    "AndOut": "V:STS_RND"
+   },
+   "insertAfterCanonical": "//Network1/FBAndUnlockHold"
+  },
+  {
+   "path": "//Network3/DEC_RUN",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "G:b_Step3",
+    "AndIn2": "G:b_EStop_Ok"
+   },
+   "out": {
+    "AndOut": "V:STS_RUN"
+   },
+   "insertAfterCanonical": "//Network1/FBAndUnlockHold"
+  },
+  {
+   "path": "//Network3/DEC_CFG",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "W://Network3/STATE_CFG/RsOut",
+    "AndIn2": "G:b_EStop_Ok"
+   },
+   "out": {
+    "AndOut": "V:STS_CFG"
+   },
+   "insertAfterCanonical": "//Network1/FBAndUnlockHold"
+  },
+  {
+   "path": "//Network3/DEC_EMG",
+   "fn": "safeAnd",
+   "in": {
+    "AndIn1": "!W://Network3/DEC_SAFE/AndOut",
+    "AndIn2": "!W://Network3/DEC_RND/AndOut",
+    "AndIn3": "!W://Network3/DEC_RUN/AndOut",
+    "AndIn4": "!W://Network3/DEC_CFG/AndOut"
+   },
+   "out": {
+    "AndOut": "V:STS_EMG"
+   },
+   "insertAfterCanonical": "//Network1/FBAndUnlockHold"
+  }
+ ],
+ "deleteBlocks": [
+  "//Network1/FBTon1",
+  "//Network1/FBAnd10",
+  "//Network1/FBAnd12",
+  "//Network2/FBAnd61",
+  "//Network2/FBAnd81",
+  "//Network2/FBAnd91",
+  "//Network2/FBAnd11",
+  "//Network6/FBAnd15",
+  "//Network6/FBAnd16",
+  "//Network6/FBAnd17"
+ ],
+ "changes": [
+  {
+   "port": "//Network1/FBEstop1/EStopIn7",
+   "before": "Deactivated",
+   "after": "W://Network1/HB_OK/AndOut",
+   "channelInterface": [
+    "Both Deactivated",
+    "Single-Channel 1 Activated"
+   ]
+  },
+  {
+   "port": "//Network1/FBOr1/OrIn1",
+   "before": "Deactivated",
+   "after": "V:linkCfgAccept",
+   "channelInterface": [
+    "Deactivated",
+    "Activated"
+   ]
+  },
+  {
+   "port": "//Network1/FBOr2/OrIn3",
+   "before": "Deactivated",
+   "after": "W://Network1/CFG_OFF/AndOut",
+   "channelInterface": [
+    "Deactivated",
+    "Activated"
+   ]
+  },
+  {
+   "port": "//Network1/FBOr5/OrIn1",
+   "before": "Deactivated",
+   "after": "V:linkCfgAccept",
+   "channelInterface": [
+    "Deactivated",
+    "Activated"
+   ]
+  },
+  {
+   "port": "//Network1/FBOr6/OrIn2",
+   "before": "Deactivated",
+   "after": "W://Network1/CFG_EX/RsOut",
+   "channelInterface": [
+    "Deactivated",
+    "Activated"
+   ]
+  },
+  {
+   "port": "//Network1/FBAnd2/AndIn2",
+   "before": "W://Network1/FBAnd12/AndOut",
+   "after": "Deactivated",
+   "channelInterface": [
+    "Activated",
+    "Deactivated"
+   ]
+  },
+  {
+   "port": "//Network1/FBAnd2/AndIn3",
+   "before": "W://Network1/FBAnd10/AndOut",
+   "after": "Deactivated",
+   "channelInterface": [
+    "Activated",
+    "Deactivated"
+   ]
+  },
+  {
+   "port": "//Network1/FBAnd4/AndIn1",
+   "before": "V:inPLC_BypassC1C2",
+   "after": "V:linkCfgActive"
+  },
+  {
+   "port": "//Network1/FBAnd4/AndIn5",
+   "before": "G:b_Step1",
+   "after": "!W://Network1/CFG_EX/RsOut"
+  },
+  {
+   "port": "//Network1/FBAnd7/AndIn1",
+   "before": "W://Network1/FBTon1/TonOut",
+   "after": "W://Network1/CFG_OFF/AndOut"
+  },
+  {
+   "port": "//Network1/FBAnd8/AndIn1",
+   "before": "W://Network1/FBTon1/TonOut",
+   "after": "W://Network1/CFG_OFF/AndOut"
+  },
+  {
+   "port": "//Network1/FBAndNotRunSu/AndIn4",
+   "before": "Deactivated",
+   "after": "!V:linkCfgActive",
+   "channelInterface": [
+    "Deactivated",
+    "Activated"
+   ]
+  },
+  {
+   "port": "//Network2/FBAnd4/AndIn1",
+   "before": "V:linkRndBothQualified",
+   "after": "W://Network2/S2R_REQ/OrOut"
+  },
+  {
+   "port": "//Network2/FBOr1/OrIn2",
+   "before": "W://Network2/FBAnd91/AndOut",
+   "after": "Deactivated",
+   "channelInterface": [
+    "Activated",
+    "Deactivated"
+   ]
+  },
+  {
+   "port": "//Network3/FBOr1/OrIn1",
+   "before": "Deactivated",
+   "after": "V:linkCfgAccept",
+   "channelInterface": [
+    "Deactivated",
+    "Activated"
+   ]
+  },
+  {
+   "port": "//Network3/FBOr2/OrIn1",
+   "before": "Deactivated",
+   "after": "V:linkCfgDone",
+   "channelInterface": [
+    "Deactivated",
+    "Activated"
+   ]
+  },
+  {
+   "port": "//Network3/FBAnd2/AndIn5",
+   "before": "Deactivated",
+   "after": "!W://Network3/STATE_CFG/RsOut",
+   "channelInterface": [
+    "Deactivated",
+    "Activated"
+   ]
+  },
+  {
+   "port": "//Network6/FBOr5/OrIn2",
+   "before": "W://Network6/FBAnd17/AndOut",
+   "after": "Deactivated",
+   "channelInterface": [
+    "Activated",
+    "Deactivated"
+   ]
+  },
+  {
+   "port": "//Network6/FBAnd23/AndIn1",
+   "before": "W://Network6/FBAnd24/AndOut",
+   "after": "W://Network6/RUN_DOWN_REQ/OrOut"
+  },
+  {
+   "port": "//Network6/STAGE_LVON/OrIn3",
+   "before": "Deactivated",
+   "after": "V:linkCfgActive",
+   "channelInterface": [
+    "Deactivated",
+    "Activated"
+   ]
+  },
+  {
+   "port": "//Network6/SU_ABORT_CAUSE/OrIn3",
+   "before": "Deactivated",
+   "after": "V:linkPlcAbortSu",
+   "channelInterface": [
+    "Deactivated",
+    "Activated"
+   ]
+  },
+  {
+   "port": "//Network10/FBDecouple2/DecIn5",
+   "before": "-",
+   "after": "V:linkCoverClosed",
+   "channelInterface": [
+    null,
+    "Activated"
+   ]
+  },
+  {
+   "port": "//RndPhysicalCompact/STATE_SU/Set",
+   "before": "W://RndPhysicalCompact/GATE_020/AndOut",
+   "after": "W://RndPhysicalCompact/SU_SET/OrOut"
+  },
+  {
+   "port": "//RndPhysicalCompact/GATE_SG_SET/OrIn3",
+   "before": "Deactivated",
+   "after": "V:linkPlcAccR2S",
+   "channelInterface": [
+    "Deactivated",
+    "Activated"
+   ]
+  },
+  {
+   "port": "//Network10/FBDecouple2/DecOut5",
+   "before": "none",
+   "after": "V:STS_COVER_LOCKED"
+  }
+ ],
+ "addVariables": [
+  "in_PLC_Heartbeat",
+  "CMD_SAFE_TO_RND",
+  "CMD_RND_TO_RUN",
+  "CMD_RUN_TO_RND",
+  "CMD_RND_TO_SAFE",
+  "linkPlcAccS2R",
+  "linkPlcAccR2Run",
+  "linkPlcAbortSu",
+  "linkPlcAccRun2R",
+  "linkPlcAccR2S",
+  "linkCfgAccept",
+  "STS_FAULT",
+  "linkCfgActive",
+  "linkCfgDone",
+  "STS_SAFE",
+  "STS_RND",
+  "STS_RUN",
+  "STS_CFG",
+  "STS_EMG",
+  "STS_COVER_LOCKED"
+ ],
+ "removeVariables": [
+  "inPLC_RnD_Mode",
+  "inPLC_RnD_Mode_2"
+ ]
+}

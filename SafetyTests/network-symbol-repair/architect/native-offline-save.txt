@@ -1,0 +1,117 @@
+SafetyApplicationLanguageSerializationHelper::SaveModelAndDiagram RVA 225252
+0000 ldarg.1 
+0001 brtrue.s 11
+0003 ldstr serializationResult
+0008 newobj .ctor
+000D throw 
+000E ldarg.3 
+000F call IsNullOrEmpty
+0014 brfalse.s 11
+0016 ldstr modelFileName
+001B newobj .ctor
+0020 throw 
+0021 ldarg.s 4
+0023 brtrue.s 11
+0025 ldstr diagram
+002A newobj .ctor
+002F throw 
+0030 ldarg.s 5
+0032 call IsNullOrEmpty
+0037 brfalse.s 11
+0039 ldstr diagramFileName
+003E newobj .ctor
+0043 throw 
+0044 ldarg.1 
+0045 callvirt get_Failed
+004A brfalse.s 1
+004C ret 
+004D ldarg.0 
+004E ldarg.1 
+004F ldarg.2 
+0050 ldarg.3 
+0051 ldarg.s 6
+0053 ldarg.s 7
+0055 call InternalSaveModelWithCrc
+005A stloc.0 
+005B ldarg.1 
+005C callvirt get_Failed
+0061 brfalse.s 5
+0063 leave 167
+0068 ldarg.0 
+0069 ldarg.1 
+006A ldarg.s 4
+006C ldarg.s 5
+006E ldarg.s 6
+0070 ldarg.s 7
+0072 call InternalSaveDiagramWithCrc
+0077 stloc.1 
+0078 ldarg.1 
+0079 callvirt get_Failed
+007E brtrue.s 121
+0080 ldloc.0 
+0081 brfalse.s 53
+0083 ldarg.3 
+0084 ldc.i4.2 
+0085 ldc.i4.2 
+0086 ldc.i4.0 
+0087 newobj .ctor
+008C stloc.2 
+008D ldloc.2 
+008E ldarg.s 6
+0090 newobj .ctor
+0095 stloc.3 
+0096 ldloc.3 
+0097 ldloc.0 
+0098 callvirt ToArray
+009D callvirt Write
+00A2 leave.s 20
+00A4 ldloc.3 
+00A5 brfalse.s 6
+00A7 ldloc.3 
+00A8 callvirt Dispose
+00AD endfinally 
+00AE ldloc.2 
+00AF brfalse.s 6
+00B1 ldloc.2 
+00B2 callvirt Dispose
+00B7 endfinally 
+00B8 ldloc.1 
+00B9 brfalse.s 62
+00BB ldarg.s 5
+00BD ldc.i4.2 
+00BE ldc.i4.2 
+00BF ldc.i4.0 
+00C0 newobj .ctor
+00C5 stloc.s 4
+00C7 ldloc.s 4
+00C9 ldarg.s 6
+00CB newobj .ctor
+00D0 stloc.s 5
+00D2 ldloc.s 5
+00D4 ldloc.1 
+00D5 callvirt ToArray
+00DA callvirt Write
+00DF leave.s 46
+00E1 ldloc.s 5
+00E3 brfalse.s 7
+00E5 ldloc.s 5
+00E7 callvirt Dispose
+00EC endfinally 
+00ED ldloc.s 4
+00EF brfalse.s 7
+00F1 ldloc.s 4
+00F3 callvirt Dispose
+00F8 endfinally 
+00F9 leave.s 20
+00FB ldloc.1 
+00FC brfalse.s 6
+00FE ldloc.1 
+00FF callvirt Dispose
+0104 endfinally 
+0105 ldloc.0 
+0106 brfalse.s 6
+0108 ldloc.0 
+0109 callvirt Dispose
+010E endfinally 
+010F ret 
+

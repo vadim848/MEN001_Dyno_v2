@@ -1,0 +1,73 @@
+VerifierHSafetyPLC::VerifyPortHasOnlySafeIoMappings RVA 2149764
+0000 ldc.i4.3 
+0001 stloc.0 
+0002 ldarg.2 
+0003 ldarg.0 
+0004 ldfld VerifierHSafetyPLC::mIoUsageResolver
+0009 ldarg.0 
+000A ldfld VerifierHSafetyPLC::mGlobalVariableReferenceResolver
+000F call GetConnectedIAliasDeviceIOs
+0014 ldsfld <>c::<>9__49_0
+0019 dup 
+001A brtrue.s 23
+001C pop 
+001D ldsfld <>c::<>9
+0022 ldftn <VerifyPortHasOnlySafeIoMappings>b__49_0
+0028 newobj TypeSpecification::.ctor
+002D dup 
+002E stsfld <>c::<>9__49_0
+0033 call MethodSpecification
+0038 brfalse 130
+003D ldarg.1 
+003E box VerificationLevel
+0043 ldc.i4.1 
+0044 conv.i8 
+0045 box VerificationLevel
+004A call Enum::HasFlag
+004F brfalse.s 57
+0051 call Resources::get_ProjectConfigVerification_SafeInPortIsAssignedByStandardSignal_Error
+0056 ldarg.2 
+0057 callvirt FunctionBlockPort::get_PortName
+005C ldarg.2 
+005D callvirt FunctionBlockPort::get_FbBase
+0062 callvirt FunctionBlockBase::get_InstanceName
+0067 call String::Format
+006C stloc.1 
+006D ldarg.0 
+006E ldloc.1 
+006F ldstr SingleFBVerificationInPortSafetyLevel
+0074 ldarg.s 4
+0076 ldarg.3 
+0077 ldc.i4.1 
+0078 newarr ModelElement
+007D dup 
+007E ldc.i4.0 
+007F ldarg.2 
+0080 stelem.ref 
+0081 call AddFunctionBlockError
+0086 ldc.i4.0 
+0087 stloc.0 
+0088 br.s 53
+008A call Resources::get_ProjectConfigVerification_SafeInPortIsAssignedByStandardSignal_Warning
+008F ldarg.2 
+0090 callvirt FunctionBlockPort::get_PortName
+0095 ldarg.2 
+0096 callvirt FunctionBlockPort::get_FbBase
+009B callvirt FunctionBlockBase::get_InstanceName
+00A0 call String::Format
+00A5 stloc.2 
+00A6 ldarg.0 
+00A7 ldloc.2 
+00A8 ldstr SingleFBVerificationInPortSafetyLevel
+00AD ldarg.s 4
+00AF ldarg.3 
+00B0 ldc.i4.1 
+00B1 newarr ModelElement
+00B6 dup 
+00B7 ldc.i4.0 
+00B8 ldarg.2 
+00B9 stelem.ref 
+00BA call AddFunctionBlockWarning
+00BF ldloc.0 
+00C0 ret 
+

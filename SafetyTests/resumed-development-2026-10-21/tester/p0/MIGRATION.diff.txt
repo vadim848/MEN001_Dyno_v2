@@ -1,0 +1,826 @@
+FILE test/helpers/v2-structural.js
+REASON Explicit old accepted baseline controls plus independently proved exact P0 delta; actual candidate model and mutation negatives retained.
+BEFORE
+import {slotLayer,expectedTarget,expectedContact,expectedInputs,composeNetworkExpected}from './safe-input-slot-layer.js';
+import {assertNetworkSymbolLayer,resolveSymbolSources} from './network-symbol-layer.js';
+import fs from 'node:fs';import assert from 'node:assert/strict';import crypto from 'node:crypto';import {parseSalFile}from'../../src/sal-parser.js';import{readBindingXml}from'../../src/sal-binding-validator.js';
+const root=new URL('../../',import.meta.url),sal=new URL('../../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',import.meta.url),gvl=new URL('../../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl',import.meta.url),base=new URL('../../fixtures/migration-baseline/MEN001_Dyno/Safety_Dyno/',import.meta.url);
+const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+assert.equal(hash(sal),'59bf4ec1fe83d49f50b32ea89a230f42a1f18cb20122649cf5c4de435d552c33');assert.equal(hash(gvl),'c31e129072e2837234e376e51038ff988a92373cbfea97b383fbf23536c7946b');assert.equal(hash(new URL('TwinSafeGroup1/TwinSafeGroup1.sal',base)),'0fc39751781cf9525765b223e08c909f31353b976ad4c796881268b39f0fa909');assert.equal(hash(new URL('GVLs/GVL1.sgvl',base)),'06010caf8e8b8acf82a24f092a54a175573d55e91deaaf6f98f4678ec1c65af5');
+export const old=parseSalFile(new URL('TwinSafeGroup1/TwinSafeGroup1.sal',base),{bindingMode:'current',sgvlPath:new URL('GVLs/GVL1.sgvl',base)}),now=parseSalFile(sal,{bindingMode:'current',sgvlPath:gvl}),spec=JSON.parse(fs.readFileSync(new URL('STRUCTURAL_V2_SPEC.json',root))),plan=JSON.parse(fs.readFileSync(new URL('SAFE_RUN_GESTURE_COUNTED_PLAN.json',root))).downEpisodeOwnerCandidateV2;
+
+// EXPECTED-only composition: immutable0fc baseline -> accepted72 layer -> reviewedLV254.
+// now above is ALWAYS actual fresh b7096/4eb26 copied source; never archived72.
+const lvLayer=JSON.parse(fs.readFileSync(new URL('LV_COMPLETION_LAYER_SPEC.json',root))),lvPlanFile=new URL('LV_COMPLETION_COUNTED_PLAN.json',root),lvPlan=JSON.parse(fs.readFileSync(lvPlanFile));assert.equal(hash(lvPlanFile),lvLayer.authority.planSha256);assert.equal(lvPlan.version,lvLayer.authority.planVersion);
+spec.edges.push(...lvLayer.edges);spec.aliases.push(...lvLayer.aliases);spec.sgvl.push(...lvLayer.sgvl);spec.newIds=spec.newIds.filter(r=>!lvLayer.retire.some(p=>p.path===r[0]));plan.retire.push(...lvLayer.retire);plan.newBlocks=plan.newBlocks.filter(b=>!lvLayer.retire.some(r=>r.path==='//SafeResumption/'+b.symbol));plan.ordering.manifest=lvPlan.ordering.manifest;
+
+const networkLayer=composeNetworkExpected(JSON.parse(fs.readFileSync(new URL('NETWORK_SYMBOL_REPAIR_LAYER.json',root))));spec.aliases.push(...networkLayer.aliasAdditions);spec.sgvl.push(...networkLayer.globalAdditions);for(const[a,z,id1,id2]of slotLayer.pairs){spec.aliases.push(['in_Estop_PLC','REMOVE',z],['in_Estop_PLC','ADD',a]);if(a.includes('LvCurrentPermit'))spec.sgvl.push(['b_EStop_Ok','REMOVE',a,id1],['b_EStop_Ok','ADD',z,id2]);}
+const blocks=m=>m.networks.flatMap(n=>n.blocks),before=blocks(old),after=blocks(now),get=p=>after.find(b=>b.path===p),retired=new Set(plan.retire.map(r=>r.path)),sorted=x=>[...x].sort(),strip=p=>Object.fromEntries(Object.entries(p).filter(([k])=>!['sources','targets','globals'].includes(k)));
+export function orders(){assert.equal(now.bindingAudit.status,'PASS');assert.equal(after.length,254);assert.deepEqual(sorted(after.map(b=>b.orderOfExecution)),sorted(Array.from({length:254},(_,i)=>i+1)));for(const r of plan.ordering.manifest)assert.equal(get(r.kind==='new'?'//SafeResumption/'+r.path:r.path)?.orderOfExecution,r.order);for(const r of plan.retire)assert.equal(get(r.path),undefined);const kept=before.filter(b=>!retired.has(b.path)&&b.path!=='//Network2/FBAnd4'&&b.path!=='//Network12/FBAnd15');assert.equal(kept.length,245);assert.deepEqual(kept.toSorted((a,b)=>a.orderOfExecution-b.orderOfExecution).map(b=>b.path),kept.toSorted((a,b)=>get(a.path).orderOfExecution-get(b.path).orderOfExecution).map(b=>b.path));}
+export function wires(){const expected=new Set(old.bindingAudit.edges.map(e=>e.from+'->'+e.to));for(const [op,from,to]of spec.edges){const key=from+'->'+to;if(op==='REMOVE'){assert.ok(expected.delete(key),key);}else{assert.ok(!expected.has(key),key);expected.add(key);}}assert.equal(spec.edges.filter(r=>r[0]==='REMOVE').length,23);assert.equal(spec.edges.filter(r=>r[0]==='ADD').length,28);for(const e of networkLayer.removedWires)assert.ok(expected.delete(e.from+'->'+e.to),'approved exact cross-wire removal');assert.equal(expected.size,319);const finalExpected=new Set([...expected].map(e=>{const[f,t]=e.split('->');return f+'->'+expectedTarget(t);}));assert.deepEqual(sorted(now.bindingAudit.edges.map(e=>e.from+'->'+e.to)),sorted(finalExpected));assertNetworkSymbolLayer(now,networkLayer);}
+export function aliases(){for(const v of old.variables){const n=now.variables.find(x=>x.id===v.id);assert.ok(n,v.name);assert.equal(n.name,v.name);assert.deepEqual(n.alias,v.alias);assert.deepEqual(n.sourcePorts,v.sourcePorts);const expected=new Set(v.targetPorts);for(const[name,op,path]of spec.aliases.filter(r=>r[0]===v.name)){if(op==='REMOVE')assert.ok(expected.delete(path));else{assert.ok(!expected.has(path));expected.add(path);}}assert.deepEqual(sorted(n.targetPorts),sorted(expected),v.name);}}
+const walk=n=>[n,...n.children.flatMap(walk)];
+function globals(file){const nodes=walk(readBindingXml(fs.readFileSync(file,'utf8')));return nodes.filter(n=>n.tag==='Variable').map(v=>({attributes:v.attr,name:v.children.find(c=>c.tag==='Name')?.text,other:v.children.filter(c=>!['SourceUsages','TargetUsages'].includes(c.tag)).map(c=>({tag:c.tag,attr:c.attr,text:c.text,children:c.children})),source:walk(v.children.find(c=>c.tag==='SourceUsages')).filter(n=>n.tag==='ModelElementId').map(n=>n.text.trim()),target:walk(v.children.find(c=>c.tag==='TargetUsages')).filter(n=>n.tag==='ModelElementId').map(n=>n.text.trim())}));}
+export function sgvl(){const a=globals(new URL('GVLs/GVL1.sgvl',base)),b=globals(gvl);assert.equal(a.length,85);assert.equal(b.length,85);for(const v of a){const n=b.find(n=>n.attributes.Id===v.attributes.Id),expected=new Set(v.target);for(const[name,op,path,id]of spec.sgvl.filter(r=>r[0]===v.name)){if(op==='REMOVE')assert.ok(expected.delete(id),path);else{assert.ok(!expected.has(id),path);expected.add(id);}}assert.deepEqual({...n,target:undefined},{...v,target:undefined},v.name);assert.deepEqual(sorted(n.target),sorted(expected),v.name);}}
+const activated=['//Network2/FBAnd4/AndIn3','//Network5/FBAnd1/AndIn4','//RndPhysicalCompact/GATE_001/AndIn5','//RndPhysicalCompact/GATE_001/AndIn6','//RndPhysicalCompact/GATE_001/AndIn7','//RndPhysicalCompact/GATE_020/AndIn5','//RndPhysicalCompact/GATE_023/AndIn5','//RndPhysicalCompact/GATE_030/OrIn4'];
+const loadRepair=JSON.parse(fs.readFileSync(new URL('PROJECT_LOAD_REPAIR_LAYER.json',root)));assert.equal(loadRepair.exactRemovals.length,143);let retainedRemovalChecks=0;function repairExpected(p){for(const r of loadRepair.exactRemovals.filter(r=>r.portId===p.Id)){assert.equal(p[r.attribute],r.value,p.Id+'/'+r.attribute+' exact expected old value');delete p[r.attribute];retainedRemovalChecks++;}return p;}
+export function ports(){retainedRemovalChecks=0;addedNative();for(const b of before.filter(b=>!retired.has(b.path))){const n=get(b.path);assert.equal(n.functionName,b.functionName);assert.equal(n.type,b.type);for(const role of ['inputs','outputs']){assert.equal(n[role].length,b[role].length);for(const p of b[role]){const q=n[role].find(x=>x.Id===p.Id),expected=strip(p);if(activated.includes(p.path)){expected.channelInterface='Activated';expected.deactivate1=p.path==='//Network5/FBAnd1/AndIn4'?'Make Contact (NO)':'Break Contact (NC)';}if(p.path==='//RndPhysicalCompact/GATE_023/AndIn5')expected.deactivate1='Make Contact (NO)';const lvBinding=lvLayer.portBindings.find(b=>b.target===p.path),lvOff=lvLayer.deactivate.find(b=>b.target===p.path);if(lvBinding){assert.equal(q.Id,lvBinding.targetId);expected.channelInterface=lvBinding.channelInterface;expected.deactivate1=lvBinding.deactivate1;}if(lvOff){assert.equal(q.Id,lvOff.targetId);expected.channelInterface=lvOff.channelInterface;assert.deepEqual(q.sources,[]);assert.deepEqual(q.globals,[]);}if(slotLayer.pairs.some(([a,z])=>a===p.path||z===p.path))expected.deactivate1=expectedContact({...expected,path:p.path});assert.deepEqual(strip(q),repairExpected(expected),p.path);}}}assert.equal(retainedRemovalChecks,118,'all retained expected-only attribute removals');const nodes=p=>walk(readBindingXml(fs.readFileSync(p,'utf8')));const native=nodes(sal).filter(n=>n.attr?.functionName),prior=nodes(new URL('TwinSafeGroup1/TwinSafeGroup1.sal',base)).filter(n=>n.attr?.functionName);for(const n of prior){if(plan.retire.some(r=>r.id===n.attr.Id))assert.ok(!native.some(x=>x.attr.Id===n.attr.Id));else {const actual=native.find(x=>x.attr.Id===n.attr.Id);assert.ok(actual,n.attr.Id);assert.deepEqual({...actual.attr,orderOfExecution:undefined},{...n.attr,orderOfExecution:undefined},n.attr.Id+' all retained FB attributes');}}for(const[path,id,order]of spec.newIds)assert.ok(native.some(n=>n.attr.Id===id&&n.attr.name===path.split('/').at(-1)&&Number(n.attr.orderOfExecution)===Number(order)),path);}
+export function timers(){for(const b of before.filter(b=>!retired.has(b.path)))assert.deepEqual(get(b.path).parameters,b.parameters,b.path);assert.deepEqual(before.filter(b=>retired.has(b.path)&&b.parameters.length).map(b=>b.path),['//Network2/FBTon3']);assert.equal(after.filter(b=>b.functionName==='safeTon').length,20);assert.equal(after.flatMap(b=>b.parameters).length,22);}
+export function early(){for(const drive of[1,2]){const gate=get('//Network1/FBAndSto'+drive+'SetPermit'),rs=get('//Network1/FBRs'+(drive+2)),or=get('//Network1/FBOr'+(drive===1?8:10));assert.equal(gate.orderOfExecution,drive===1?10:12);assert.equal(rs.orderOfExecution,drive===1?11:13);assert.deepEqual(rs.inputs.find(p=>p.name==='Set').sources,[gate.outputs[0].path]);assert.deepEqual(or.inputs[2].sources,[]);assert.deepEqual(resolveSymbolSources(now,or.inputs[2]),['//RndPhysicalCompact/STATE_SU/RsOut']);assert.deepEqual(gate.inputs.slice(0,4).map(p=>p.deactivate1),['Break Contact (NC)','Break Contact (NC)','Make Contact (NO)','Break Contact (NC)']);}}
+export function energy(domain){const lv=domain==='LV',gate=get('//Network1/FBAnd'+(lv?'Lv':'Hv')+'SetPermit'),rs=get('//Network1/FBRs'+(lv?1:2)),aggregate=get('//Network1/FBOr'+(lv?17:18));assert.deepEqual(rs.inputs.find(p=>p.name==='Set').sources,[gate.outputs[0].path]);assert.deepEqual(gate.inputs[0].sources,[aggregate.outputs[0].path]);assert.equal(aggregate.orderOfExecution,lv?222:223);const prior=before.find(b=>b.path===aggregate.path);assert.deepEqual(aggregate.inputs,prior.inputs);}
+export function final(){const expectedRoot={...readBindingXml(fs.readFileSync(new URL('TwinSafeGroup1/TwinSafeGroup1.sal',base),'utf8')).children[0].attr};assert.equal(expectedRoot.Crc,networkLayer.nativeRoundtrip.beforeSalCrc,'exact old recorded CRC');assert.equal(networkLayer.nativeRoundtrip.afterSalCrc,'83968247','exact independently native-reloaded CRC');expectedRoot.Crc=slotLayer.nativeSalCrc;assert.deepEqual(readBindingXml(fs.readFileSync(sal,'utf8')).children[0].attr,expectedRoot,'exact native-produced CRC delta; every other root attribute unchanged');const gate=get('//Network1/FBAndUnlockHold');assert.equal(gate.orderOfExecution,254);assert.deepEqual(now.variables.find(v=>v.name==='out_Door_Unlock_Solonoeid').sourcePorts,[gate.outputs[0].path]);assert.deepEqual(gate.inputs,expectedInputs(before.find(b=>b.path===gate.path)));}
+export function plc(){assert.equal(get('//Network1/FBAnd1').orderOfExecution,96);assert.deepEqual(get('//Network1/FBAnd1').inputs,before.find(b=>b.path==='//Network1/FBAnd1').inputs);wires();}
+export function door(){for(const path of ['//Network2/FBAnd8','//Network12/FBAnd11','//Network12/FBAnd17']){const b=before.find(b=>b.path===path),n=get(path);assert.ok(b&&n,path);assert.deepEqual(n.inputs,b.inputs,path);assert.deepEqual(n.parameters,b.parameters,path);}}
+
+
+
+export const baselineXml=fs.readFileSync(new URL('TwinSafeGroup1/TwinSafeGroup1.sal',base),'utf8'),baselineGvl=fs.readFileSync(new URL('GVLs/GVL1.sgvl',base),'utf8');
+
+export function addedNative(){for(const planned of plan.newBlocks){const n=get('//SafeResumption/'+planned.symbol),template=before.find(b=>b.path===planned.template);assert.equal(n.functionName,planned.type);assert.equal(n.inputs.length,template.inputs.length);assert.equal(n.outputs.length,template.outputs.length);assert.deepEqual(n.parameters,[]);for(const role of ['inputs','outputs'])for(let i=0;i<n[role].length;i++){const a=n[role][i],t=template[role][i];for(const key of ['name','portName','portNum','objectIndex','varId','filter','portDataType','maxDeviation','resetTime'])assert.equal(a[key],t[key],n.path+'/'+key);if(role==='outputs')assert.deepEqual(a.globals,[]);if(role==='inputs'&&planned.type!=='safeRs'){const active=i<planned.inputs.length;assert.equal(a.channelInterface,active?'Activated':'Deactivated');if(active)assert.equal(a.deactivate1,planned.inputs[i].startsWith('!')?'Make Contact (NO)':'Break Contact (NC)');}if(role==='inputs'&&planned.type==='safeRs')assert.equal(a.deactivate1,(i===0?planned.Reset:planned.Set).startsWith('!')?'Make Contact (NO)':'Break Contact (NC)');}}}
+
+
+
+AFTER
+// Reviewed composition: original0fc→59bf accepted baseline controls + exact59bf→P0 native delta.
+// now is the fresh ACTUAL candidate. No candidate source/parsed graph is masked or substituted.
+import * as baseline from './p0-accepted-baseline-controls.js';
+import fs from 'node:fs';import assert from 'node:assert/strict';import crypto from 'node:crypto';import {spawnSync} from 'node:child_process';import {fileURLToPath} from 'node:url';
+import {parseSalFile} from '../../src/sal-parser.js';
+const sal=new URL('../../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',import.meta.url),gvl=new URL('../../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl',import.meta.url),f=new URL('../../fixtures/p0-repaired-baseline/',import.meta.url);
+const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+assert.equal(sha(sal),'34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b');assert.equal(sha(gvl),'517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635');
+const proof=spawnSync(process.execPath,["C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\resumed-development-2026-10-21\\tester\\p0\\check-source-pair.mjs",...['TwinSafeGroup1.sal','GVL1.sgvl'].map(x=>fileURLToPath(new URL(x,f))),fileURLToPath(sal),fileURLToPath(gvl),fileURLToPath(new URL('TwinSafeGroup1.sal.diagram',f)),fileURLToPath(new URL('../../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal.diagram',import.meta.url))],{encoding:'utf8'});
+assert.equal(proof.status,0,'Exact candidate P0 native delta proof: '+proof.stdout+proof.stderr);
+export const now=parseSalFile(sal,{bindingMode:'current',sgvlPath:gvl});
+const digest=()=>crypto.createHash('sha256').update(JSON.stringify(now)).digest('hex'),verifiedParsedDigest=digest();
+function actualCandidate(){assert.equal(sha(sal),'34b5b8504e0c21ed75e8bc2c3646cd99e34adbe5fc36426f110f68e0497f0b0b');assert.equal(sha(gvl),'517fdadd913007aa2690f1402676583ad16141c9ae64cb986554c87c10f22635');assert.equal(digest(),verifiedParsedDigest,'Actual candidate model mutation must be rejected');}
+export const baselineXml=baseline.baselineXml,baselineGvl=baseline.baselineGvl;
+export function orders(...args){actualCandidate();return baseline.orders(...args);}
+export function wires(...args){actualCandidate();return baseline.wires(...args);}
+export function aliases(...args){actualCandidate();return baseline.aliases(...args);}
+export function sgvl(...args){actualCandidate();return baseline.sgvl(...args);}
+export function ports(...args){actualCandidate();return baseline.ports(...args);}
+export function timers(...args){actualCandidate();return baseline.timers(...args);}
+export function early(...args){actualCandidate();return baseline.early(...args);}
+export function energy(...args){actualCandidate();return baseline.energy(...args);}
+export function final(...args){actualCandidate();return baseline.final(...args);}
+export function plc(...args){actualCandidate();return baseline.plc(...args);}
+export function door(...args){actualCandidate();return baseline.door(...args);}
+export function addedNative(...args){actualCandidate();return baseline.addedNative(...args);}
+
+
+FILE test/current-door-interlock.test.js
+REASON Only actual native FB count254→241 under exact retirement ledger; functional predicates unchanged.
+BEFORE
+import * as V2 from './helpers/v2-structural.js';
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import { spawnSync } from "node:child_process";
+import { parseSalFile } from "../src/sal-parser.js";
+import { SalRuntime } from "../src/sal-runtime.js";
+const file=new URL("../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal",import.meta.url),model=parseSalFile(file);
+const all=model.networks.flatMap(n=>n.blocks),get=p=>all.find(b=>b.path===p),and16=get("//Network12/FBAnd16");
+const healthy={b_EStop_Ok:true,in_ES_NC_1:true,in_ES_NC_2:true,in_InterLock_NC_1:true,in_InterLock_NC_2:true,
+  in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,in_Estop_PLC:false};
+const make=blocks=>new SalRuntime({...model,networks:[{blocks}]},{scanMs:1,unconnectedInput:false});
+
+test("DOOR06 exact alias targets separate solenoid consumers from energy InterLocks",()=>{
+  const targets=name=>model.variables.find(v=>v.name===name).targetPorts;
+  assert.deepEqual([...targets("in_Door_Monitor")].sort(),[
+    "//Network2/FBAnd8/AndIn1","//Network12/FBAnd11/AndIn1","//Network12/FBAnd17/AndIn1"].sort());
+  assert.ok(targets("in_InterLock_NC_1").includes("//Network12/FBAnd16/AndIn1"));
+  assert.ok(targets("in_InterLock_NC_2").includes("//Network12/FBAnd16/AndIn3"));
+  assert.ok(targets("in_False_SI2_CH8").includes("//Network12/FBAnd16/AndIn2"));
+  assert.deepEqual(and16.inputs.slice(0,3).map(p=>[p.channelInterface,p.deactivate1]),[
+    ["Activated","Break Contact (NC)"],["Activated","Make Contact (NO)"],["Activated","Break Contact (NC)"]]);
+  assert.equal(all.length,254);
+});
+
+for(const door of [false,true])for(const nc1 of [false,true])for(const nc2 of [false,true])for(const inhibit of [false,true])
+  test(`DOOR06 component Door${door}/NC1${nc1}/NC2${nc2}/False${inhibit}`,()=>{
+    const r=make([and16]).setInputs({in_Door_Monitor:door,in_InterLock_NC_1:nc1,in_InterLock_NC_2:nc2,in_False_SI2_CH8:inhibit}).scan();
+    assert.equal(r.get(and16.outputs[0].path),nc1&&nc2&&!inhibit,"energy producer guard must use both InterLock NC, independently of DoorMonitor");
+  });
+
+function runEnergy(route,door,nc1,nc2,extra={}) {
+  const r=make([...model.networks.find(n=>n.name==="Network12").blocks,...model.networks.filter(n=>["RndPhysicalCompact","SafeResumption"].includes(n.name)).flatMap(n=>n.blocks),...[
+    "//Network1/FBAndLvCurrentPermit","//Network1/FBAndHvSetPermit","//Network1/FBRs2","//Network1/FBOr18"].map(get)]);
+  r.values.set("//Network1/FBAnd1/AndOut",true); // Explicit healthy excluded PLCproducer boundary.
+  const rs=get("//Network1/FBRs2");for(const source of rs.inputs.find(p=>p.name==="Reset").sources)r.values.set(source,false);
+  r.setInputs({...healthy,b_Step_RnD:true,b_ResetPB_Lock:false,in_False_SI2_CH8:false,
+    in_Door_Monitor:door,in_InterLock_NC_1:nc1,in_InterLock_NC_2:nc2,
+    inPLC_RnD_Mode:false,inPLC_RnD_Mode_2:false,in_Reset_PB:false,in_Relase_Door_PB:false,...extra});
+  r.runFor(2100);
+  r.setInputs(route==="physical"?{in_Reset_PB:true,in_Relase_Door_PB:true}:{inPLC_RnD_Mode:true,inPLC_RnD_Mode_2:true}).scan();
+  r.runFor(1100);
+  return {hv:r.get("out_HV_C2"),request:r.get("b_Set_HV_C2_1"),r};
+}
+for(const route of ["physical","existing-PLC-levels"])for(const door of [false,true])for(const nc1 of [false,true])for(const nc2 of [false,true])
+  test(`DOOR06 actual HV chain ${route}/Door${door}/NC1${nc1}/NC2${nc2}`,()=>{
+    const result=runEnergy(route,door,nc1,nc2);
+    assert.equal(result.hv,nc1&&nc2,"real producer→And4→OR18→permission→RS must not depend on Door");
+    assert.equal(result.request,nc1&&nc2,"upstream producer must also enforce both NC; downstream guard alone is insufficient");
+  });
+
+test("DOOR06 existing emergency/connector/False guards still prevent new HV",()=>{
+  for(const route of ["physical","existing-PLC-levels"])for(const fault of ["in_ES_NC_1","in_ES_NC_2","in_LV_Connector_Interlock","in_HV_Connector_Interlock","in_Estop_PLC","b_EStop_Ok","in_False_SI2_CH8"]){
+    const failed=Object.hasOwn(healthy,fault)?!healthy[fault]:true;
+    assert.equal(runEnergy(route,true,true,true,{[fault]:failed}).hv,false,`${route}/${fault}`);
+  }
+});
+
+test("DOOR06 preserve all three original unlock consumers and their component truth tables",()=>{
+  const baseline=spawnSync("git",["show","0e4ab09:MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal"],{encoding:"utf8",maxBuffer:4*1024*1024});assert.equal(baseline.status,0);
+  const xml=fs.readFileSync(file,"utf8");
+  const blockText=(source,network,name)=>source.match(new RegExp('<Network\\b[^>]*name="'+network+'"[\\s\\S]*?</Network>'))[0]
+    .match(new RegExp('<fBAnd\\b[^>]*name="'+name+'"[\\s\\S]*?</fBAnd>'))[0].replaceAll("\r\n","\n").replace(/orderOfExecution="\d+"/,'orderOfExecution="ORDER"');
+  for(const [network,name]of [["Network2","FBAnd8"],["Network12","FBAnd11"],["Network12","FBAnd17"]]) {
+    V2.door(); // Parsed native semantic preservation; original truth table below unchanged.
+    const block=get(`//${network}/${name}`);
+    for(const door of [false,true])for(const qualifier of [false,true]) {
+      const r=make([block]).setInputs({in_Door_Monitor:door,in_False_SI2_CH8:qualifier});
+      if(network==="Network2")r.values.set("//Network2/FBDecouple3/DecOut1",qualifier);
+      r.scan();assert.equal(r.get(block.outputs[0].path),network==="Network2"?!door&&qualifier:door&&!qualifier);
+    }
+  }
+});
+
+test("DOOR06 Safe entry source has no hidden Door energy dependency",()=>{
+  const r=make([get("//Network2/FBAnd6")]).setInputs({in_ES_NC_1:true,in_ES_NC_2:true,in_Door_Monitor:false});
+  r.scan();assert.equal(r.get("//Network2/FBAnd6/AndOut"),true);
+  r.setInputs({in_Door_Monitor:true}).scan();assert.equal(r.get("//Network2/FBAnd6/AndOut"),true);
+  assert.equal(model.bindingAudit.status,"PASS");
+});
+
+AFTER
+import * as V2 from './helpers/v2-structural.js';
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import { spawnSync } from "node:child_process";
+import { parseSalFile } from "../src/sal-parser.js";
+import { SalRuntime } from "../src/sal-runtime.js";
+const file=new URL("../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal",import.meta.url),model=parseSalFile(file);
+const all=model.networks.flatMap(n=>n.blocks),get=p=>all.find(b=>b.path===p),and16=get("//Network12/FBAnd16");
+const healthy={b_EStop_Ok:true,in_ES_NC_1:true,in_ES_NC_2:true,in_InterLock_NC_1:true,in_InterLock_NC_2:true,
+  in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,in_Estop_PLC:false};
+const make=blocks=>new SalRuntime({...model,networks:[{blocks}]},{scanMs:1,unconnectedInput:false});
+
+test("DOOR06 exact alias targets separate solenoid consumers from energy InterLocks",()=>{
+  const targets=name=>model.variables.find(v=>v.name===name).targetPorts;
+  assert.deepEqual([...targets("in_Door_Monitor")].sort(),[
+    "//Network2/FBAnd8/AndIn1","//Network12/FBAnd11/AndIn1","//Network12/FBAnd17/AndIn1"].sort());
+  assert.ok(targets("in_InterLock_NC_1").includes("//Network12/FBAnd16/AndIn1"));
+  assert.ok(targets("in_InterLock_NC_2").includes("//Network12/FBAnd16/AndIn3"));
+  assert.ok(targets("in_False_SI2_CH8").includes("//Network12/FBAnd16/AndIn2"));
+  assert.deepEqual(and16.inputs.slice(0,3).map(p=>[p.channelInterface,p.deactivate1]),[
+    ["Activated","Break Contact (NC)"],["Activated","Make Contact (NO)"],["Activated","Break Contact (NC)"]]);
+  assert.equal(all.length,241);
+});
+
+for(const door of [false,true])for(const nc1 of [false,true])for(const nc2 of [false,true])for(const inhibit of [false,true])
+  test(`DOOR06 component Door${door}/NC1${nc1}/NC2${nc2}/False${inhibit}`,()=>{
+    const r=make([and16]).setInputs({in_Door_Monitor:door,in_InterLock_NC_1:nc1,in_InterLock_NC_2:nc2,in_False_SI2_CH8:inhibit}).scan();
+    assert.equal(r.get(and16.outputs[0].path),nc1&&nc2&&!inhibit,"energy producer guard must use both InterLock NC, independently of DoorMonitor");
+  });
+
+function runEnergy(route,door,nc1,nc2,extra={}) {
+  const r=make([...model.networks.find(n=>n.name==="Network12").blocks,...model.networks.filter(n=>["RndPhysicalCompact","SafeResumption"].includes(n.name)).flatMap(n=>n.blocks),...[
+    "//Network1/FBAndLvCurrentPermit","//Network1/FBAndHvSetPermit","//Network1/FBRs2","//Network1/FBOr18"].map(get)]);
+  r.values.set("//Network1/FBAnd1/AndOut",true); // Explicit healthy excluded PLCproducer boundary.
+  const rs=get("//Network1/FBRs2");for(const source of rs.inputs.find(p=>p.name==="Reset").sources)r.values.set(source,false);
+  r.setInputs({...healthy,b_Step_RnD:true,b_ResetPB_Lock:false,in_False_SI2_CH8:false,
+    in_Door_Monitor:door,in_InterLock_NC_1:nc1,in_InterLock_NC_2:nc2,
+    inPLC_RnD_Mode:false,inPLC_RnD_Mode_2:false,in_Reset_PB:false,in_Relase_Door_PB:false,...extra});
+  r.runFor(2100);
+  r.setInputs(route==="physical"?{in_Reset_PB:true,in_Relase_Door_PB:true}:{inPLC_RnD_Mode:true,inPLC_RnD_Mode_2:true}).scan();
+  r.runFor(1100);
+  return {hv:r.get("out_HV_C2"),request:r.get("b_Set_HV_C2_1"),r};
+}
+for(const route of ["physical","existing-PLC-levels"])for(const door of [false,true])for(const nc1 of [false,true])for(const nc2 of [false,true])
+  test(`DOOR06 actual HV chain ${route}/Door${door}/NC1${nc1}/NC2${nc2}`,()=>{
+    const result=runEnergy(route,door,nc1,nc2);
+    assert.equal(result.hv,nc1&&nc2,"real producer→And4→OR18→permission→RS must not depend on Door");
+    assert.equal(result.request,nc1&&nc2,"upstream producer must also enforce both NC; downstream guard alone is insufficient");
+  });
+
+test("DOOR06 existing emergency/connector/False guards still prevent new HV",()=>{
+  for(const route of ["physical","existing-PLC-levels"])for(const fault of ["in_ES_NC_1","in_ES_NC_2","in_LV_Connector_Interlock","in_HV_Connector_Interlock","in_Estop_PLC","b_EStop_Ok","in_False_SI2_CH8"]){
+    const failed=Object.hasOwn(healthy,fault)?!healthy[fault]:true;
+    assert.equal(runEnergy(route,true,true,true,{[fault]:failed}).hv,false,`${route}/${fault}`);
+  }
+});
+
+test("DOOR06 preserve all three original unlock consumers and their component truth tables",()=>{
+  const baseline=spawnSync("git",["show","0e4ab09:MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal"],{encoding:"utf8",maxBuffer:4*1024*1024});assert.equal(baseline.status,0);
+  const xml=fs.readFileSync(file,"utf8");
+  const blockText=(source,network,name)=>source.match(new RegExp('<Network\\b[^>]*name="'+network+'"[\\s\\S]*?</Network>'))[0]
+    .match(new RegExp('<fBAnd\\b[^>]*name="'+name+'"[\\s\\S]*?</fBAnd>'))[0].replaceAll("\r\n","\n").replace(/orderOfExecution="\d+"/,'orderOfExecution="ORDER"');
+  for(const [network,name]of [["Network2","FBAnd8"],["Network12","FBAnd11"],["Network12","FBAnd17"]]) {
+    V2.door(); // Parsed native semantic preservation; original truth table below unchanged.
+    const block=get(`//${network}/${name}`);
+    for(const door of [false,true])for(const qualifier of [false,true]) {
+      const r=make([block]).setInputs({in_Door_Monitor:door,in_False_SI2_CH8:qualifier});
+      if(network==="Network2")r.values.set("//Network2/FBDecouple3/DecOut1",qualifier);
+      r.scan();assert.equal(r.get(block.outputs[0].path),network==="Network2"?!door&&qualifier:door&&!qualifier);
+    }
+  }
+});
+
+test("DOOR06 Safe entry source has no hidden Door energy dependency",()=>{
+  const r=make([get("//Network2/FBAnd6")]).setInputs({in_ES_NC_1:true,in_ES_NC_2:true,in_Door_Monitor:false});
+  r.scan();assert.equal(r.get("//Network2/FBAnd6/AndOut"),true);
+  r.setInputs({in_Door_Monitor:true}).scan();assert.equal(r.get("//Network2/FBAnd6/AndOut"),true);
+  assert.equal(model.bindingAudit.status,"PASS");
+});
+
+
+FILE test/current-mentee-set-permit.test.js
+REASON Only actual native FB count254→241 under exact retirement ledger; functional predicates unchanged.
+BEFORE
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import { parseSalFile } from "../src/sal-parser.js";
+import { SalRuntime } from "../src/sal-runtime.js";
+const file=new URL("../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal",import.meta.url),model=parseSalFile(file);
+const all=model.networks.flatMap(n=>n.blocks),get=p=>all.find(b=>b.path===p),permit=get("//Network1/FBAndLvCurrentPermit");
+const healthy={b_EStop_Ok:true,in_ES_NC_1:true,in_ES_NC_2:true,in_InterLock_NC_1:true,in_InterLock_NC_2:true,
+  in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,in_Estop_PLC:false};
+function make(domain,extra=[]) {
+  const hv=domain==="HV",rs=get(`//Network1/FBRs${hv?2:1}`),gate=get(`//Network1/FBAnd${hv?'Hv':'Lv'}SetPermit`),aggregate=get(`//Network1/FBOr${hv?18:17}`);
+  const r=new SalRuntime({...model,networks:[{blocks:[permit,gate,rs,aggregate,...extra,...(extra.some(b=>b.path.startsWith("//Network12/"))?model.networks.filter(n=>["RndPhysicalCompact","SafeResumption"].includes(n.name)).flatMap(n=>n.blocks):[])]}]},{scanMs:1,unconnectedInput:false}).setInputs({...healthy,in_Mentee_EStop:false});
+  r.values.set("//Network1/FBAnd1/AndOut",true); // Explicit healthy excluded PLCproducer boundary.
+  for(const source of rs.inputs.find(p=>p.name==="Reset").sources)r.values.set(source,false);
+  return {r,rs,gate,aggregate,output:hv?"out_HV_C2":"out_LV_C1"};
+}
+
+for(const [domain,route]of [["LV","legacy-Network5"],["LV","Step12"],["HV","legacy-Network5"],["HV","RnD-Network12"]])for(const mentee of [false,true])
+  test(`MENTEE05 paired ${domain}/${route}/Mentee${mentee}: first scan after stale request`,()=>{
+    const extra=route==="Step12"?[get("//Network11/FBAnd1")]:model.networks.find(n=>n.name===(route==="RnD-Network12"?"Network12":"Network5")).blocks;
+    const {r,aggregate,output}=make(domain,extra);
+    r.setInputs({b_Step2:route==="legacy-Network5",b_Step12:route==="Step12",b_Step_RnD:route==="RnD-Network12",
+      b_ResetPB_Lock:false,in_False_SI2_CH8:false,in_Door_Monitor:true,inPLC_RnD_Mode:false,inPLC_RnD_Mode_2:false,
+      in_Reset_PB:false,in_Relase_Door_PB:false});
+    if(route==="RnD-Network12"){r.runFor(2100);r.setInputs({in_Reset_PB:true,in_Relase_Door_PB:true});}
+    for(let i=0;i<1500&&!r.get(aggregate.outputs[0].path);i++)r.scan();
+    assert.equal(r.get(aggregate.outputs[0].path),true,"real upstream producer must form aggregate");
+    assert.equal(r.get(output),false,"positive aggregate not yet consumed by early latch");
+    r.setInputs({in_Mentee_EStop:mentee}).scan();
+    assert.equal(r.get(output),!mentee,"current Mentee must prevent new Set on this first scan, not via later reset");
+  });
+
+for(const domain of ["LV","HV"]) {
+  test(`MENTEE05 ${domain}: already latched output is preserved without Reset`,()=>{
+    const {r,rs,output}=make(domain);r.memory.set(rs.path,{value:true});r.write(rs.outputs[0],true);
+    r.setInputs({in_Mentee_EStop:true}).scan();assert.equal(r.get(output),true);
+  });
+  test(`MENTEE05 ${domain}: all previous eight permission controls remain effective`,()=>{
+    for(const fault of Object.keys(healthy)) {
+      const {r,aggregate,output}=make(domain);r.values.set(aggregate.outputs[0].path,true);
+      r.setInputs({[fault]:!healthy[fault],in_Mentee_EStop:false}).scan();assert.equal(r.get(output),false,fault);
+    }
+  });
+  test(`MENTEE05 ${domain}: third gate input has typed native alias binding and inverted contact`,()=>{
+    const {gate}=make(domain),port=gate.inputs.find(p=>p.name==="AndIn3");
+    assert.equal(port.channelInterface,"Activated");assert.equal(port.deactivate1,"Make Contact (NO)");
+    const alias=model.variables.find(v=>v.name==="in_Mentee_EStop");
+    assert.equal(alias.targetPorts.filter(p=>p===port.path).length,1);
+    assert.deepEqual(port.globals,[],"SAL alias cannot masquerade as GVL1 global");
+  });
+}
+
+test("MENTEE05 original Safe/Run protections, diagnostic alias and inactive main EStop port remain unchanged",()=>{
+  const original=parseSalFile(new URL("../fixtures/v2-4bb8703/TwinSafeGroup1.sal",import.meta.url));
+  const old=original.variables.find(v=>v.name==="in_Mentee_EStop"),current=model.variables.find(v=>v.name===old.name);
+  assert.equal(current.id,old.id);assert.deepEqual(current.alias,old.alias);assert.deepEqual(current.sourcePorts,old.sourcePorts);
+  for(const p of old.targetPorts)assert.ok(current.targetPorts.includes(p));
+  const estop=get("//Network1/FBEstop1");assert.equal(estop.inputs.find(p=>p.name==="EStopIn4").channelInterface,"Both Deactivated");
+  for(const path of ["//Network2/FBAnd5","//Network6/FBAnd10"]) {
+    const block=get(path),previous=original.networks.flatMap(n=>n.blocks).find(b=>b.path===path);
+    assert.deepEqual(block.inputs.map(p=>[p.Id,p.channelInterface,p.deactivate1]),previous.inputs.map(p=>[p.Id,p.channelInterface,p.deactivate1]));
+    for(const mentee of [false,true]) {
+      const r=new SalRuntime({...model,networks:[{blocks:[block]}]},{unconnectedInput:false}).setInputs({...healthy,in_Mentee_EStop:mentee});
+      r.scan();assert.equal(r.get(block.outputs[0].path),!mentee);
+    }
+  }
+  assert.equal(model.bindingAudit.status,"PASS");assert.equal(all.length,254);
+  const nativeCrc=JSON.parse(fs.readFileSync(new URL('../NETWORK_SYMBOL_REPAIR_LAYER.json',import.meta.url))).nativeRoundtrip;
+  assert.equal(nativeCrc.beforeSalCrc,'872783435');assert.equal(nativeCrc.afterSalCrc,'83968247');const slot=JSON.parse(fs.readFileSync(new URL('../SAFE_INPUT_SLOT_REPAIR_LAYER.json',import.meta.url)));assert.equal(slot.predecessorNativeSalCrc,nativeCrc.afterSalCrc,'current native CRC chain starts at immutable prior layer');assert.equal(slot.nativeSalCrc,'3035115343');assert.equal(model.crc,slot.nativeSalCrc,'exact independently native-verified current slot-repair CRC revision');
+});
+
+AFTER
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import { parseSalFile } from "../src/sal-parser.js";
+import { SalRuntime } from "../src/sal-runtime.js";
+const file=new URL("../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal",import.meta.url),model=parseSalFile(file);
+const all=model.networks.flatMap(n=>n.blocks),get=p=>all.find(b=>b.path===p),permit=get("//Network1/FBAndLvCurrentPermit");
+const healthy={b_EStop_Ok:true,in_ES_NC_1:true,in_ES_NC_2:true,in_InterLock_NC_1:true,in_InterLock_NC_2:true,
+  in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,in_Estop_PLC:false};
+function make(domain,extra=[]) {
+  const hv=domain==="HV",rs=get(`//Network1/FBRs${hv?2:1}`),gate=get(`//Network1/FBAnd${hv?'Hv':'Lv'}SetPermit`),aggregate=get(`//Network1/FBOr${hv?18:17}`);
+  const r=new SalRuntime({...model,networks:[{blocks:[permit,gate,rs,aggregate,...extra,...(extra.some(b=>b.path.startsWith("//Network12/"))?model.networks.filter(n=>["RndPhysicalCompact","SafeResumption"].includes(n.name)).flatMap(n=>n.blocks):[])]}]},{scanMs:1,unconnectedInput:false}).setInputs({...healthy,in_Mentee_EStop:false});
+  r.values.set("//Network1/FBAnd1/AndOut",true); // Explicit healthy excluded PLCproducer boundary.
+  for(const source of rs.inputs.find(p=>p.name==="Reset").sources)r.values.set(source,false);
+  return {r,rs,gate,aggregate,output:hv?"out_HV_C2":"out_LV_C1"};
+}
+
+for(const [domain,route]of [["LV","legacy-Network5"],["LV","Step12"],["HV","legacy-Network5"],["HV","RnD-Network12"]])for(const mentee of [false,true])
+  test(`MENTEE05 paired ${domain}/${route}/Mentee${mentee}: first scan after stale request`,()=>{
+    const extra=route==="Step12"?[get("//Network11/FBAnd1")]:model.networks.find(n=>n.name===(route==="RnD-Network12"?"Network12":"Network5")).blocks;
+    const {r,aggregate,output}=make(domain,extra);
+    r.setInputs({b_Step2:route==="legacy-Network5",b_Step12:route==="Step12",b_Step_RnD:route==="RnD-Network12",
+      b_ResetPB_Lock:false,in_False_SI2_CH8:false,in_Door_Monitor:true,inPLC_RnD_Mode:false,inPLC_RnD_Mode_2:false,
+      in_Reset_PB:false,in_Relase_Door_PB:false});
+    if(route==="RnD-Network12"){r.runFor(2100);r.setInputs({in_Reset_PB:true,in_Relase_Door_PB:true});}
+    for(let i=0;i<1500&&!r.get(aggregate.outputs[0].path);i++)r.scan();
+    assert.equal(r.get(aggregate.outputs[0].path),true,"real upstream producer must form aggregate");
+    assert.equal(r.get(output),false,"positive aggregate not yet consumed by early latch");
+    r.setInputs({in_Mentee_EStop:mentee}).scan();
+    assert.equal(r.get(output),!mentee,"current Mentee must prevent new Set on this first scan, not via later reset");
+  });
+
+for(const domain of ["LV","HV"]) {
+  test(`MENTEE05 ${domain}: already latched output is preserved without Reset`,()=>{
+    const {r,rs,output}=make(domain);r.memory.set(rs.path,{value:true});r.write(rs.outputs[0],true);
+    r.setInputs({in_Mentee_EStop:true}).scan();assert.equal(r.get(output),true);
+  });
+  test(`MENTEE05 ${domain}: all previous eight permission controls remain effective`,()=>{
+    for(const fault of Object.keys(healthy)) {
+      const {r,aggregate,output}=make(domain);r.values.set(aggregate.outputs[0].path,true);
+      r.setInputs({[fault]:!healthy[fault],in_Mentee_EStop:false}).scan();assert.equal(r.get(output),false,fault);
+    }
+  });
+  test(`MENTEE05 ${domain}: third gate input has typed native alias binding and inverted contact`,()=>{
+    const {gate}=make(domain),port=gate.inputs.find(p=>p.name==="AndIn3");
+    assert.equal(port.channelInterface,"Activated");assert.equal(port.deactivate1,"Make Contact (NO)");
+    const alias=model.variables.find(v=>v.name==="in_Mentee_EStop");
+    assert.equal(alias.targetPorts.filter(p=>p===port.path).length,1);
+    assert.deepEqual(port.globals,[],"SAL alias cannot masquerade as GVL1 global");
+  });
+}
+
+test("MENTEE05 original Safe/Run protections, diagnostic alias and inactive main EStop port remain unchanged",()=>{
+  const original=parseSalFile(new URL("../fixtures/v2-4bb8703/TwinSafeGroup1.sal",import.meta.url));
+  const old=original.variables.find(v=>v.name==="in_Mentee_EStop"),current=model.variables.find(v=>v.name===old.name);
+  assert.equal(current.id,old.id);assert.deepEqual(current.alias,old.alias);assert.deepEqual(current.sourcePorts,old.sourcePorts);
+  for(const p of old.targetPorts)assert.ok(current.targetPorts.includes(p));
+  const estop=get("//Network1/FBEstop1");assert.equal(estop.inputs.find(p=>p.name==="EStopIn4").channelInterface,"Both Deactivated");
+  for(const path of ["//Network2/FBAnd5","//Network6/FBAnd10"]) {
+    const block=get(path),previous=original.networks.flatMap(n=>n.blocks).find(b=>b.path===path);
+    assert.deepEqual(block.inputs.map(p=>[p.Id,p.channelInterface,p.deactivate1]),previous.inputs.map(p=>[p.Id,p.channelInterface,p.deactivate1]));
+    for(const mentee of [false,true]) {
+      const r=new SalRuntime({...model,networks:[{blocks:[block]}]},{unconnectedInput:false}).setInputs({...healthy,in_Mentee_EStop:mentee});
+      r.scan();assert.equal(r.get(block.outputs[0].path),!mentee);
+    }
+  }
+  assert.equal(model.bindingAudit.status,"PASS");assert.equal(all.length,241);
+  const nativeCrc=JSON.parse(fs.readFileSync(new URL('../NETWORK_SYMBOL_REPAIR_LAYER.json',import.meta.url))).nativeRoundtrip;
+  assert.equal(nativeCrc.beforeSalCrc,'872783435');assert.equal(nativeCrc.afterSalCrc,'83968247');const slot=JSON.parse(fs.readFileSync(new URL('../SAFE_INPUT_SLOT_REPAIR_LAYER.json',import.meta.url)));assert.equal(slot.predecessorNativeSalCrc,nativeCrc.afterSalCrc,'current native CRC chain starts at immutable prior layer');assert.equal(slot.nativeSalCrc,'3035115343');assert.equal(model.crc,slot.nativeSalCrc,'exact independently native-verified current slot-repair CRC revision');
+});
+
+
+FILE test/current-unlock-estop-permit.test.js
+REASON Only actual native FB count254→241 under exact retirement ledger; functional predicates unchanged.
+BEFORE
+import {createSafeRunFixture} from './helpers/safe-run-source.js';
+import { physicalRndSource } from "../src/physical-rnd-source.js";
+import test from "node:test";
+import assert from "node:assert/strict";
+import { parseSalFile } from "../src/sal-parser.js";
+import { SalRuntime } from "../src/sal-runtime.js";
+const model=parseSalFile(new URL("../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal",import.meta.url));
+const all=model.networks.flatMap(n=>n.blocks),get=p=>all.find(b=>b.path===p),gate=get("//Network1/FBAndUnlockHold");
+const final="out_Door_Unlock_Solonoeid",latch="//Network1/FBRs6/RsOut";
+function prepared(mode) {
+if(mode==='Safe'){const x=createSafeRunFixture('Safe');x.sample({in_Relase_Door_PB:true});x.advance(600);assert.equal(x.get('unlock'),true,'audited actual closure healthy positive');return x.r;}
+
+  if(mode==="R&D"){const x=physicalRndSource(model,1);x.sample({in_Relase_Door_PB:true});x.advance(600);assert.equal(x.get("unlock"),true,"actual integrated R&D grant positive");return x.r;}
+  const common=["FBAnd1","FBEstop1","FBOr3","FBOr4","FBRs6","FBAndUnlockHold"].map(n=>get(`//Network1/${n}`));
+  const grant=mode==="Safe"?["FBDecouple3","FBAnd7","FBAnd8"].map(n=>get(`//Network2/${n}`)):
+    ["FBAnd1","FBAnd2","FBAnd3","FBTon2","FBAnd11","FBAnd17"].map(n=>get(`//Network12/${n}`));
+  const r=new SalRuntime({...model,networks:[{blocks:[...common,...grant]}]},{scanMs:1,unconnectedInput:false});
+  r.setInputs({b_Step1:mode==="Safe",b_Step_RnD:mode==="R&D",in_ES_NC_1:true,in_ES_NC_2:true,in_Mentee_EStop:false,in_Estop_PLC:false,
+    in_False_SI2_CH8:false,in_Door_Monitor:true,in_Reset_PB:false,in_Relase_Door_PB:false});
+  r.runFor(10);r.setInputs({in_Reset_PB:true}).scan();r.setInputs({in_Reset_PB:false}).scan();
+  assert.equal(r.get("b_EStop_Ok"),true,"actual main EStop manually prepared");
+  r.setInputs({in_Relase_Door_PB:true}).scan().runFor(600);
+  assert.equal(r.get(final),true,"actual producer + grant latch + sole output healthy positive");
+  assert.equal(r.get("//Network1/FBAnd1/AndOut"),true,"PLC producer starts healthy before first fault scan");
+  return r;
+}
+for(const mode of ["Safe","R&D"]) {
+  test(`UNLOCK07 ${mode}: healthy actual grant producer remains available`,()=>{assert.equal(prepared(mode).get(final),true);});
+  for(const event of ["NC1-held","PLC-held","PLC-single-sample"])test(`UNLOCK07 ${mode}/${event}: fault then raw recovery without Restart`,()=>{
+    const r=prepared(mode),input=event==="NC1-held"?"in_ES_NC_1":"in_Estop_PLC",failed=input==="in_Estop_PLC";
+    const observations=[];r.setInputs({[input]:failed}).scan();
+    observations.push({phase:"first fault sample",unlock:r.get(final),estop:r.get("b_EStop_Ok")});
+    if(event!=="PLC-single-sample")r.runFor(10);
+    r.setInputs({[input]:!failed}).scan();observations.push({phase:"first restored raw sample",unlock:r.get(final),estop:r.get("b_EStop_Ok")});
+    r.runFor(10);observations.push({phase:"restored without manual Restart",unlock:r.get(final),estop:r.get("b_EStop_Ok")});
+    assert.deepEqual(observations.map(o=>o.estop),[event==="NC1-held"?false:true,false,false],"NC1 immediate / PLC stale producer ordering must actually be exercised");
+    assert.deepEqual(observations.map(o=>o.unlock),[false,false,false],JSON.stringify(observations));
+  });
+}
+
+for(const blue of [false,true])for(const green of [false,true])for(const enabled of [false,true])for(const plc of [false,true])
+  test(`UNLOCK07 component blue${blue}/green${green}/EStop${enabled}/PLC${plc}`,()=>{
+    const r=new SalRuntime({...model,networks:[{blocks:[gate]}]},{unconnectedInput:false});r.values.set(latch,true);
+    r.setInputs({in_Relase_Door_PB:blue,in_Reset_PB:green,b_EStop_Ok:enabled,in_Estop_PLC:plc}).scan();
+    assert.equal(r.get(final),blue&&!green&&enabled&&!plc);
+  });
+
+test("UNLOCK07 final component does not acquire an energy connector/InterLock access ban",()=>{
+  const r=new SalRuntime({...model,networks:[{blocks:[gate]}]},{unconnectedInput:false});r.values.set(latch,true);
+  r.setInputs({in_Relase_Door_PB:true,in_Reset_PB:false,b_EStop_Ok:true,in_Estop_PLC:false,
+    in_LV_Connector_Interlock:false,in_HV_Connector_Interlock:false,in_InterLock_NC_1:false,in_InterLock_NC_2:false}).scan();
+  assert.equal(r.get(final),true,"component access grant is not the common energy permit");
+});
+test("UNLOCK07 existing Door solenoid consumers and EStop configuration are preserved",()=>{
+  assert.deepEqual([...model.variables.find(v=>v.name==="in_Door_Monitor").targetPorts].sort(),[
+    "//Network2/FBAnd8/AndIn1","//Network12/FBAnd11/AndIn1","//Network12/FBAnd17/AndIn1"].sort());
+  for(const name of ["EStopIn2","EStopIn4"])assert.equal(get("//Network1/FBEstop1").inputs.find(p=>p.name===name).channelInterface,"Both Deactivated");
+  assert.equal(all.length,254);assert.equal(model.bindingAudit.status,"PASS");
+});
+test("UNLOCK07 global permission is a resolved SGVL reference with usage index",()=>{
+  assert.deepEqual(gate.inputs.map(p=>p.channelInterface),[...Array(5).fill("Activated"),...Array(3).fill("Deactivated")]);
+  const p=gate.inputs[3];assert.equal(p.channelInterface,"Activated");assert.equal(p.deactivate1,"Break Contact (NC)");
+  assert.equal(p.globals[0]?.variableId,"98ab783a-9ee4-42cd-8375-54abc169e250");assert.equal(p.globals[0]?.resolvedName,"b_EStop_Ok");
+  assert.equal(model.bindingAudit.globalRefs.filter(r=>r.portId===p.Id&&r.name==="b_EStop_Ok").length,1);
+});
+test("UNLOCK07 current PLC stop uses native inverted alias usage, not a fake global",()=>{
+  const p=gate.inputs[0];assert.equal(p.name,"AndIn1");assert.equal(p.objectIndex,"8");assert.equal(p.channelInterface,"Activated");assert.equal(p.deactivate1,"Make Contact (NO)");
+  assert.deepEqual(p.globals,[]);assert.equal(model.variables.find(v=>v.name==="in_Estop_PLC").targetPorts.filter(path=>path===p.path).length,1);
+});
+
+AFTER
+import {createSafeRunFixture} from './helpers/safe-run-source.js';
+import { physicalRndSource } from "../src/physical-rnd-source.js";
+import test from "node:test";
+import assert from "node:assert/strict";
+import { parseSalFile } from "../src/sal-parser.js";
+import { SalRuntime } from "../src/sal-runtime.js";
+const model=parseSalFile(new URL("../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal",import.meta.url));
+const all=model.networks.flatMap(n=>n.blocks),get=p=>all.find(b=>b.path===p),gate=get("//Network1/FBAndUnlockHold");
+const final="out_Door_Unlock_Solonoeid",latch="//Network1/FBRs6/RsOut";
+function prepared(mode) {
+if(mode==='Safe'){const x=createSafeRunFixture('Safe');x.sample({in_Relase_Door_PB:true});x.advance(600);assert.equal(x.get('unlock'),true,'audited actual closure healthy positive');return x.r;}
+
+  if(mode==="R&D"){const x=physicalRndSource(model,1);x.sample({in_Relase_Door_PB:true});x.advance(600);assert.equal(x.get("unlock"),true,"actual integrated R&D grant positive");return x.r;}
+  const common=["FBAnd1","FBEstop1","FBOr3","FBOr4","FBRs6","FBAndUnlockHold"].map(n=>get(`//Network1/${n}`));
+  const grant=mode==="Safe"?["FBDecouple3","FBAnd7","FBAnd8"].map(n=>get(`//Network2/${n}`)):
+    ["FBAnd1","FBAnd2","FBAnd3","FBTon2","FBAnd11","FBAnd17"].map(n=>get(`//Network12/${n}`));
+  const r=new SalRuntime({...model,networks:[{blocks:[...common,...grant]}]},{scanMs:1,unconnectedInput:false});
+  r.setInputs({b_Step1:mode==="Safe",b_Step_RnD:mode==="R&D",in_ES_NC_1:true,in_ES_NC_2:true,in_Mentee_EStop:false,in_Estop_PLC:false,
+    in_False_SI2_CH8:false,in_Door_Monitor:true,in_Reset_PB:false,in_Relase_Door_PB:false});
+  r.runFor(10);r.setInputs({in_Reset_PB:true}).scan();r.setInputs({in_Reset_PB:false}).scan();
+  assert.equal(r.get("b_EStop_Ok"),true,"actual main EStop manually prepared");
+  r.setInputs({in_Relase_Door_PB:true}).scan().runFor(600);
+  assert.equal(r.get(final),true,"actual producer + grant latch + sole output healthy positive");
+  assert.equal(r.get("//Network1/FBAnd1/AndOut"),true,"PLC producer starts healthy before first fault scan");
+  return r;
+}
+for(const mode of ["Safe","R&D"]) {
+  test(`UNLOCK07 ${mode}: healthy actual grant producer remains available`,()=>{assert.equal(prepared(mode).get(final),true);});
+  for(const event of ["NC1-held","PLC-held","PLC-single-sample"])test(`UNLOCK07 ${mode}/${event}: fault then raw recovery without Restart`,()=>{
+    const r=prepared(mode),input=event==="NC1-held"?"in_ES_NC_1":"in_Estop_PLC",failed=input==="in_Estop_PLC";
+    const observations=[];r.setInputs({[input]:failed}).scan();
+    observations.push({phase:"first fault sample",unlock:r.get(final),estop:r.get("b_EStop_Ok")});
+    if(event!=="PLC-single-sample")r.runFor(10);
+    r.setInputs({[input]:!failed}).scan();observations.push({phase:"first restored raw sample",unlock:r.get(final),estop:r.get("b_EStop_Ok")});
+    r.runFor(10);observations.push({phase:"restored without manual Restart",unlock:r.get(final),estop:r.get("b_EStop_Ok")});
+    assert.deepEqual(observations.map(o=>o.estop),[event==="NC1-held"?false:true,false,false],"NC1 immediate / PLC stale producer ordering must actually be exercised");
+    assert.deepEqual(observations.map(o=>o.unlock),[false,false,false],JSON.stringify(observations));
+  });
+}
+
+for(const blue of [false,true])for(const green of [false,true])for(const enabled of [false,true])for(const plc of [false,true])
+  test(`UNLOCK07 component blue${blue}/green${green}/EStop${enabled}/PLC${plc}`,()=>{
+    const r=new SalRuntime({...model,networks:[{blocks:[gate]}]},{unconnectedInput:false});r.values.set(latch,true);
+    r.setInputs({in_Relase_Door_PB:blue,in_Reset_PB:green,b_EStop_Ok:enabled,in_Estop_PLC:plc}).scan();
+    assert.equal(r.get(final),blue&&!green&&enabled&&!plc);
+  });
+
+test("UNLOCK07 final component does not acquire an energy connector/InterLock access ban",()=>{
+  const r=new SalRuntime({...model,networks:[{blocks:[gate]}]},{unconnectedInput:false});r.values.set(latch,true);
+  r.setInputs({in_Relase_Door_PB:true,in_Reset_PB:false,b_EStop_Ok:true,in_Estop_PLC:false,
+    in_LV_Connector_Interlock:false,in_HV_Connector_Interlock:false,in_InterLock_NC_1:false,in_InterLock_NC_2:false}).scan();
+  assert.equal(r.get(final),true,"component access grant is not the common energy permit");
+});
+test("UNLOCK07 existing Door solenoid consumers and EStop configuration are preserved",()=>{
+  assert.deepEqual([...model.variables.find(v=>v.name==="in_Door_Monitor").targetPorts].sort(),[
+    "//Network2/FBAnd8/AndIn1","//Network12/FBAnd11/AndIn1","//Network12/FBAnd17/AndIn1"].sort());
+  for(const name of ["EStopIn2","EStopIn4"])assert.equal(get("//Network1/FBEstop1").inputs.find(p=>p.name===name).channelInterface,"Both Deactivated");
+  assert.equal(all.length,241);assert.equal(model.bindingAudit.status,"PASS");
+});
+test("UNLOCK07 global permission is a resolved SGVL reference with usage index",()=>{
+  assert.deepEqual(gate.inputs.map(p=>p.channelInterface),[...Array(5).fill("Activated"),...Array(3).fill("Deactivated")]);
+  const p=gate.inputs[3];assert.equal(p.channelInterface,"Activated");assert.equal(p.deactivate1,"Break Contact (NC)");
+  assert.equal(p.globals[0]?.variableId,"98ab783a-9ee4-42cd-8375-54abc169e250");assert.equal(p.globals[0]?.resolvedName,"b_EStop_Ok");
+  assert.equal(model.bindingAudit.globalRefs.filter(r=>r.portId===p.Id&&r.name==="b_EStop_Ok").length,1);
+});
+test("UNLOCK07 current PLC stop uses native inverted alias usage, not a fake global",()=>{
+  const p=gate.inputs[0];assert.equal(p.name,"AndIn1");assert.equal(p.objectIndex,"8");assert.equal(p.channelInterface,"Activated");assert.equal(p.deactivate1,"Make Contact (NO)");
+  assert.deepEqual(p.globals,[]);assert.equal(model.variables.find(v=>v.name==="in_Estop_PLC").targetPorts.filter(path=>path===p.path).length,1);
+});
+
+
+FILE test/current-native-structure.test.js
+REASON Exact reviewed native counts; preserve75Symbols/zero-cross/wrapper assertions.
+BEFORE
+import crypto from 'node:crypto';import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import{inspectNativeSalStructure,assertNativeSalStructure}from'../src/sal-native-structure.js';import{readBindingXml,validateSalBindings}from'../src/sal-binding-validator.js';
+const gvl=fs.readFileSync(new URL('../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl',import.meta.url),'utf8');
+const source=fs.readFileSync(new URL('../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',import.meta.url),'utf8'),layer=JSON.parse(fs.readFileSync(new URL('../NETWORK_SYMBOL_REPAIR_LAYER.json',import.meta.url))).nativeSingletonConsolidation,walk=n=>[n,...n.children.flatMap(walk)];
+const escape=s=>s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+function serialize(n){if(n.tag==='#document')return n.children.map(serialize).join('');return '<'+n.tag+Object.entries(n.attr).map(([k,v])=>' '+k+'="'+escape(v)+'"').join('')+'>'+n.text+n.children.map(serialize).join('')+'</'+n.tag+'>';}
+test('NATIVE source whole singleton grammar and zero cross-network graphical wires',()=>{const result=assertNativeSalStructure(source);assert.deepEqual(result.counts,{networks:14,blocks:254,ports:2172,variables:75,wires:319,crossNetworkWires:0});});
+test('NATIVE exact10singleton repairs retire only54container IDs preserving usage identities',()=>{const nodes=walk(readBindingXml(source)),ids=new Set(nodes.filter(n=>n.attr?.Id).map(n=>n.attr.Id));assert.equal(layer.version,'native-singleton-10-v1');assert.equal(layer.ledger.length,10);assert.equal(layer.ledger.flatMap(r=>r.retiredContainerIds).length,54);for(const r of layer.ledger){assert.ok(ids.has(r.variableId));assert.ok(ids.has(r.retainedRelationshipId));assert.ok(ids.has(r.retainedCollectionId));for(const id of r.retiredContainerIds)assert.equal(ids.has(id),false,'retired redundant container '+id);for(const id of r.preservedUsageIds)assert.ok(ids.has(id),'preserved usage '+id);}});
+test('NATIVE all10symbols and source/collection/usages reject unique empty duplicate containers',()=>{
+ const baseAudit=validateSalBindings(source,gvl);assert.equal(baseAudit.status,'PASS');const node=(tag,children=[])=>({tag,attr:['variableHasSourceUsages','variableHasTargetUsages','variableUsages'].includes(tag)?{Id:crypto.randomUUID()}:{},children,text:''});
+ const emptyRel=tag=>node(tag,[node('variableUsages',[node('usages')])]);
+ const verify=(doc,expected)=>{const xml=serialize(doc);assert.deepEqual(validateSalBindings(xml,gvl),baseAudit,'typed audit still PASS and unchanged; only native singleton grammar catches mutant');const monikers=doc=>walk(doc).filter(n=>n.tag.endsWith('Moniker')).map(n=>[n.tag,n.attr]);assert.deepEqual(monikers(readBindingXml(xml)),monikers(readBindingXml(source)),'all original symbol/wire semantics unchanged');const result=inspectNativeSalStructure(xml);assert.equal(result.status,'ERROR');assert.ok(result.errors.some(e=>e.includes(expected)),expected);assert.throws(()=>assertNativeSalStructure(xml),/preflight failed before execution/);};
+ for(const r of layer.ledger){const doc=readBindingXml(source),v=walk(doc).find(n=>n.attr?.Id===r.variableId),container=v.children.find(n=>n.tag===r.role);container.children.push(emptyRel('variableHasTargetUsages'));verify(doc,v.attr.name+': targetUsages requires one variableHasTargetUsages');}
+ for(const kind of ['source-relationship','collection','usages','source-container']){const doc=readBindingXml(source),v=walk(doc).find(n=>n.tag==='variable'),sourceContainer=v.children.find(n=>n.tag==='sourceUsages'),relationship=sourceContainer.children[0],collection=relationship.children[0];let expected;
+  if(kind==='source-relationship'){sourceContainer.children.push(emptyRel('variableHasSourceUsages'));expected='sourceUsages requires one variableHasSourceUsages';}
+  if(kind==='collection'){relationship.children.push(node('variableUsages',[node('usages')]));expected='variableHasSourceUsages requires one variableUsages';}
+  if(kind==='usages'){collection.children.push(node('usages'));expected='variableUsages requires one usages';}
+  if(kind==='source-container'){v.children.push(node('sourceUsages',[emptyRel('variableHasSourceUsages')]));expected='variable requires one sourceUsages';}
+  verify(doc,expected);
+ }
+});
+test('NATIVE full-network scan rejects a reintroduced cross-network wire',()=>{const doc=readBindingXml(source),nodes=walk(doc),sourcePort=nodes.find(n=>n.tag==='outPort'),container=sourcePort.children.find(n=>n.tag==='targetFunctionBlockPorts')??{tag:'targetFunctionBlockPorts',attr:{},children:[],text:''};if(!sourcePort.children.includes(container))sourcePort.children.push(container);container.children.push({tag:'wiredLink',attr:{Id:'60dc9abb-cab1-4a81-b1ad-492c24b960ec'},text:'',children:[{tag:'inPortMoniker',attr:{name:'//Network12/FBAnd15/AndIn3'},text:'',children:[]}]});const result=inspectNativeSalStructure(serialize(doc));assert.equal(result.status,'ERROR');assert.ok(result.counts.crossNetworkWires>0);assert.throws(()=>assertNativeSalStructure(serialize(doc)),/Graphical wire crosses networks/);});
+
+AFTER
+import crypto from 'node:crypto';import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import{inspectNativeSalStructure,assertNativeSalStructure}from'../src/sal-native-structure.js';import{readBindingXml,validateSalBindings}from'../src/sal-binding-validator.js';
+const gvl=fs.readFileSync(new URL('../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl',import.meta.url),'utf8');
+const source=fs.readFileSync(new URL('../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',import.meta.url),'utf8'),layer=JSON.parse(fs.readFileSync(new URL('../NETWORK_SYMBOL_REPAIR_LAYER.json',import.meta.url))).nativeSingletonConsolidation,walk=n=>[n,...n.children.flatMap(walk)];
+const escape=s=>s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+function serialize(n){if(n.tag==='#document')return n.children.map(serialize).join('');return '<'+n.tag+Object.entries(n.attr).map(([k,v])=>' '+k+'="'+escape(v)+'"').join('')+'>'+n.text+n.children.map(serialize).join('')+'</'+n.tag+'>';}
+test('NATIVE source whole singleton grammar and zero cross-network graphical wires',()=>{const result=assertNativeSalStructure(source);assert.deepEqual(result.counts,{networks:14,blocks:241,ports:2066,variables:75,wires:306,crossNetworkWires:0});});
+test('NATIVE exact10singleton repairs retire only54container IDs preserving usage identities',()=>{const nodes=walk(readBindingXml(source)),ids=new Set(nodes.filter(n=>n.attr?.Id).map(n=>n.attr.Id));assert.equal(layer.version,'native-singleton-10-v1');assert.equal(layer.ledger.length,10);assert.equal(layer.ledger.flatMap(r=>r.retiredContainerIds).length,54);for(const r of layer.ledger){assert.ok(ids.has(r.variableId));assert.ok(ids.has(r.retainedRelationshipId));assert.ok(ids.has(r.retainedCollectionId));for(const id of r.retiredContainerIds)assert.equal(ids.has(id),false,'retired redundant container '+id);for(const id of r.preservedUsageIds)assert.ok(ids.has(id),'preserved usage '+id);}});
+test('NATIVE all10symbols and source/collection/usages reject unique empty duplicate containers',()=>{
+ const baseAudit=validateSalBindings(source,gvl);assert.equal(baseAudit.status,'PASS');const node=(tag,children=[])=>({tag,attr:['variableHasSourceUsages','variableHasTargetUsages','variableUsages'].includes(tag)?{Id:crypto.randomUUID()}:{},children,text:''});
+ const emptyRel=tag=>node(tag,[node('variableUsages',[node('usages')])]);
+ const verify=(doc,expected)=>{const xml=serialize(doc);assert.deepEqual(validateSalBindings(xml,gvl),baseAudit,'typed audit still PASS and unchanged; only native singleton grammar catches mutant');const monikers=doc=>walk(doc).filter(n=>n.tag.endsWith('Moniker')).map(n=>[n.tag,n.attr]);assert.deepEqual(monikers(readBindingXml(xml)),monikers(readBindingXml(source)),'all original symbol/wire semantics unchanged');const result=inspectNativeSalStructure(xml);assert.equal(result.status,'ERROR');assert.ok(result.errors.some(e=>e.includes(expected)),expected);assert.throws(()=>assertNativeSalStructure(xml),/preflight failed before execution/);};
+ for(const r of layer.ledger){const doc=readBindingXml(source),v=walk(doc).find(n=>n.attr?.Id===r.variableId),container=v.children.find(n=>n.tag===r.role);container.children.push(emptyRel('variableHasTargetUsages'));verify(doc,v.attr.name+': targetUsages requires one variableHasTargetUsages');}
+ for(const kind of ['source-relationship','collection','usages','source-container']){const doc=readBindingXml(source),v=walk(doc).find(n=>n.tag==='variable'),sourceContainer=v.children.find(n=>n.tag==='sourceUsages'),relationship=sourceContainer.children[0],collection=relationship.children[0];let expected;
+  if(kind==='source-relationship'){sourceContainer.children.push(emptyRel('variableHasSourceUsages'));expected='sourceUsages requires one variableHasSourceUsages';}
+  if(kind==='collection'){relationship.children.push(node('variableUsages',[node('usages')]));expected='variableHasSourceUsages requires one variableUsages';}
+  if(kind==='usages'){collection.children.push(node('usages'));expected='variableUsages requires one usages';}
+  if(kind==='source-container'){v.children.push(node('sourceUsages',[emptyRel('variableHasSourceUsages')]));expected='variable requires one sourceUsages';}
+  verify(doc,expected);
+ }
+});
+test('NATIVE full-network scan rejects a reintroduced cross-network wire',()=>{const doc=readBindingXml(source),nodes=walk(doc),sourcePort=nodes.find(n=>n.tag==='outPort'),container=sourcePort.children.find(n=>n.tag==='targetFunctionBlockPorts')??{tag:'targetFunctionBlockPorts',attr:{},children:[],text:''};if(!sourcePort.children.includes(container))sourcePort.children.push(container);container.children.push({tag:'wiredLink',attr:{Id:'60dc9abb-cab1-4a81-b1ad-492c24b960ec'},text:'',children:[{tag:'inPortMoniker',attr:{name:'//Network12/FBAnd15/AndIn3'},text:'',children:[]}]});const result=inspectNativeSalStructure(serialize(doc));assert.equal(result.status,'ERROR');assert.ok(result.counts.crossNetworkWires>0);assert.throws(()=>assertNativeSalStructure(serialize(doc)),/Graphical wire crosses networks/);});
+
+
+FILE src/physical-rnd-source.js
+REASON Map diagnostic recP publisher by approved P0b ledger; actual SNAP consumer and all behavioral predicates unchanged.
+BEFORE
+import { effectiveEstopInputs } from "./estop-native-pairs.js";
+import { SalRuntime,SAL_CLOCK_CONTRACT } from "./sal-runtime.js";
+import { ObservedSamples } from "./observed-samples.js";
+
+export const PHYSICAL_SIGNALS={up:"b_Set_Transition_3",down:"b_Set_Transition_2",blue:"b_Set_Door_Unlock_1",
+  hvRequest:"b_Set_HV_C2_1",hv:"out_HV_C2",lv:"out_LV_C1",unlock:"out_Door_Unlock_Solonoeid"};
+const phaseNames=["b_Step1","b_Step2","b_Step3","b_Step4","b_Step5","b_Step6","b_Step12","b_Step_RnD"];
+const external={in_ES_NC_1:true,in_ES_NC_2:true,in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,
+  in_InterLock_NC_1:true,in_InterLock_NC_2:true,in_Mentee_EStop:false,in_LV_C1_FBK:true,in_HV_C2_FBK:false,
+  in_STO_DR1_FBK:false,in_STO_DR2_FBK:false,in_Reset_PB:false,in_Safety_Run:false,in_LV_Healthy_FBK:true,
+  in_HV_Healthy_FBK:true,in_C3_Manual_Set:false,in_C3_Manual_Reset:false,in_RBM_Manual_Set:false,in_RBM_Manual_Reset:false,
+  in_Relase_Door_PB:false,in_Door_Monitor:true,in_False_SI2_CH8:false,in_Estop_PLC:false,
+  inPLC_RnD_Mode:false,inPLC_RnD_Mode_2:false,inPLC_BypassC1C2:false};
+
+export function physicalRndSource(model,stepMs=1,{entryButtons={},observedSignals={}}={}) {
+  for(const [key,value] of Object.entries(observedSignals))if(Object.hasOwn(PHYSICAL_SIGNALS,key)&&PHYSICAL_SIGNALS[key]!==value)throw Error('Cannot rebind physical observation '+key);
+  const signals={...PHYSICAL_SIGNALS,...observedSignals};
+  if(model.bindingAudit?.status!=="PASS")throw Error("Full actual-source binding audit required before selection");
+  const all=model.networks.flatMap(n=>n.blocks),ports=new Map(),owners=new Map(),writers=new Map(),aliasTargets=new Map(),cuts=[],unknown=[];
+  const addWriter=(name,port)=>{if(!writers.has(name))writers.set(name,[]);writers.get(name).push(port);};
+  for(const block of all)for(const p of [...block.inputs,...block.outputs]){ports.set(p.path,p);owners.set(p.path,block);}
+  for(const v of model.variables){for(const p of v.sourcePorts)addWriter(v.name,p);for(const p of v.targetPorts)aliasTargets.set(p,v);}
+  for(const block of all)for(const p of block.outputs)for(const g of p.globals)addWriter(g.resolvedName??g.lastKnownPath.split(".").at(-1),p.path);
+  const demanded=new Set(),demandedInputs=new Set(),selected=new Set(),pending=[];
+  function variable(name,consumer) {
+    if(phaseNames.includes(name)){
+      const g=all.flatMap(b=>b.outputs.flatMap(p=>p.globals)).find(g=>(g.resolvedName??g.lastKnownPath.split(".").at(-1))===name);
+      cuts.push({name,id:g?.variableId,source:writers.get(name),consumer,reason:"Network3 state owner intentionally excluded; explicit phase boundary, not reachability"});return;}
+    const producers=writers.get(name);
+    if(producers?.length)pending.push(...producers);
+    else {
+      const v=model.variables.find(v=>v.name===name);
+      if(!v?.alias||!Object.hasOwn(external,name))throw Error(`Undeclared typed input boundary ${name}`);
+      cuts.push({name,id:v.id,alias:v.alias,initialValue:external[name],consumer,reason:"Explicit given program input; initial PLC request levels fixed FALSE, no handshake policy inferred"});
+    }
+  }
+  for(const signal of Object.values(signals))variable(signal,"observed actual output");
+  while(pending.length) {
+    const output=pending.pop();if(demanded.has(output))continue;demanded.add(output);
+    const block=owners.get(output);if(!block)throw Error(`Output writer missing ${output}`);
+    if(block.path.startsWith("//Network3/"))throw Error("Uncut state owner entered branch dependency closure");
+    selected.add(block);
+    const inputs=block.functionName==="safeEstop"?
+      [block.inputs.find(p=>p.name==="Restart"),...effectiveEstopInputs(block,{isBound:p=>p.sources.length>0||p.globals.length>0||aliasTargets.has(p.path)}).map(({port})=>port)]:
+      block.functionName==="safeDecouple"?[block.inputs[block.outputs.findIndex(p=>p.path===output)]]:
+      block.inputs.filter(p=>!["Deactivated","Both Deactivated"].includes(p.channelInterface)&&!p.name.startsWith("EDM"));
+    for(const p of inputs) {
+      demandedInputs.add(p.path);
+      if(p.sources.length)pending.push(...p.sources);
+      else if(p.globals.length)for(const g of p.globals)variable(g.resolvedName??g.lastKnownPath.split(".").at(-1),p.path);
+      else if(aliasTargets.has(p.path))variable(aliasTargets.get(p.path).name,p.path);
+      else unknown.push(p.path);
+    }
+  }
+  if(unknown.length)throw Error(`Command dependency requires unbound input: ${[...new Set(unknown)].join(",")}`);
+  const scope={clockContract:SAL_CLOCK_CONTRACT,stepMs,selectedBlocks:[...selected].map(b=>b.path).sort(),
+    demandedInputs:[...demandedInputs].sort(),
+    boundaries:[...new Map(cuts.map(c=>[`${c.name}:${c.consumer}`,c])).values()],
+    limit:"Actual physical R&D branch with typed input/Network3 ownership boundary; not full lifecycle/PLC handshake/reachability"};
+  const r=new SalRuntime({...model,networks:model.networks.map(n=>({...n,blocks:n.blocks.filter(b=>selected.has(b))})).filter(n=>n.blocks.length)},
+    {scanMs:stepMs,unconnectedInput:false});
+  r.setInputs({...external,...Object.fromEntries(phaseNames.map(n=>[n,false]))});
+  const clock=new ObservedSamples(r,stepMs),transitions=[],frames=[],rises=Object.fromEntries(Object.keys(signals).map(k=>[k,0]));
+  let observedMs=-stepMs;
+  let previous=Object.fromEntries(Object.keys(signals).map(k=>[k,false])),capture=true;
+  const nativeScan=r.scan.bind(r);r.scan=(dt=stepMs)=>{nativeScan(dt);observedMs+=dt;if(capture){
+    const current=Object.fromEntries(Object.entries(signals).map(([k,v])=>[k,r.get(v)]));
+    for(const k of Object.keys(current))if(current[k]&&!previous[k])rises[k]++;
+    const raw={...Object.fromEntries(Object.keys(external).map(name=>[name,r.get(name)])),b_Step_RnD:r.get("b_Step_RnD")};
+    if(Object.keys(current).some(k=>current[k]!==previous[k]))transitions.push({timeMs:observedMs,signals:current,raw});
+    const internal=model.networks.some(n=>n.name==="RndPhysicalCompact")?Object.fromEntries(Object.entries({finishUp:"GATE_020/AndOut",finishGreen:"GREEN/TonOut",finishBlue:"BLUE/TonOut",windowError:"WINDOW/Error",restart:"GATE_007/AndOut",ready:"WINDOW/EStopOut",delayed:"WINDOW/EStopDelOut",release:"RELEASE/TonOut",P:"STATE_P/RsOut",A:"STATE_A/RsOut",C:"STATE_C/RsOut",L:"STATE_L/RsOut",T:"STATE_T/RsOut"}).map(([key,path])=>[key,r.get("//RndPhysicalCompact/"+path)])):undefined;
+    frames.push({timeMs:observedMs,signals:current,raw,internal});previous=current;
+  }return r;};
+  // Real manual restart; state boundary deliberately not R&D until setup ends.
+  clock.sample();clock.advance(10*stepMs);clock.sample({in_Reset_PB:true});clock.sample({in_Reset_PB:false});
+  if(!r.get("b_EStop_Ok"))throw Error("Actual main EStop manual preparation did not enable");
+  // Raise LV through its real Step12 producer/OR/SetPermit/RS, not an injected output.
+  clock.sample({b_Step12:true});for(let i=0;i<100&&!r.get("out_LV_C1");i++)clock.sample();
+  if(!r.get("out_LV_C1"))throw Error("Real LV setup positive control failed");
+  // Keep observer continuous through each scenario; setup trace is separate.
+  const setupTransitions=transitions.splice(0);frames.length=0;for(const k of Object.keys(rises))rises[k]=0;
+  previous=Object.fromEntries(Object.entries(signals).map(([k,v])=>[k,r.get(v)]));
+  clock.sample({b_Step12:false,b_Step_RnD:true,...entryButtons});clock.advance(2100);
+  return {r,clock,scope,frames,transitions,rises,setupTransitions,
+    get:k=>r.get(signals[k]),sample:inputs=>clock.sample(inputs),advance:ms=>clock.advance(ms),
+    edgeAfter:(first,delta,inputs)=>clock.observeAfter(first,delta,inputs),
+    clearFrames(){frames.length=0;},
+    any:k=>frames.some(f=>f.signals[k]),
+    observed(){return {scope,transitions,rises,assumptions:[...r.assumedUnconnectedPorts],
+      commandConeUnconnected:[...r.assumedUnconnectedPorts].filter(p=>demandedInputs.has(p)),
+      interpretation:"Rises count actual existing request/output transitions, not invented accepted-launch events"};}};
+}
+
+AFTER
+import { effectiveEstopInputs } from "./estop-native-pairs.js";
+import { SalRuntime,SAL_CLOCK_CONTRACT } from "./sal-runtime.js";
+import { ObservedSamples } from "./observed-samples.js";
+
+export const PHYSICAL_SIGNALS={up:"b_Set_Transition_3",down:"b_Set_Transition_2",blue:"b_Set_Door_Unlock_1",
+  hvRequest:"b_Set_HV_C2_1",hv:"out_HV_C2",lv:"out_LV_C1",unlock:"out_Door_Unlock_Solonoeid"};
+const phaseNames=["b_Step1","b_Step2","b_Step3","b_Step4","b_Step5","b_Step6","b_Step12","b_Step_RnD"];
+const external={in_ES_NC_1:true,in_ES_NC_2:true,in_LV_Connector_Interlock:true,in_HV_Connector_Interlock:true,
+  in_InterLock_NC_1:true,in_InterLock_NC_2:true,in_Mentee_EStop:false,in_LV_C1_FBK:true,in_HV_C2_FBK:false,
+  in_STO_DR1_FBK:false,in_STO_DR2_FBK:false,in_Reset_PB:false,in_Safety_Run:false,in_LV_Healthy_FBK:true,
+  in_HV_Healthy_FBK:true,in_C3_Manual_Set:false,in_C3_Manual_Reset:false,in_RBM_Manual_Set:false,in_RBM_Manual_Reset:false,
+  in_Relase_Door_PB:false,in_Door_Monitor:true,in_False_SI2_CH8:false,in_Estop_PLC:false,
+  inPLC_RnD_Mode:false,inPLC_RnD_Mode_2:false,inPLC_BypassC1C2:false};
+
+export function physicalRndSource(model,stepMs=1,{entryButtons={},observedSignals={}}={}) {
+  for(const [key,value] of Object.entries(observedSignals))if(Object.hasOwn(PHYSICAL_SIGNALS,key)&&PHYSICAL_SIGNALS[key]!==value)throw Error('Cannot rebind physical observation '+key);
+  const signals={...PHYSICAL_SIGNALS,...observedSignals};
+  if(model.bindingAudit?.status!=="PASS")throw Error("Full actual-source binding audit required before selection");
+  const all=model.networks.flatMap(n=>n.blocks),ports=new Map(),owners=new Map(),writers=new Map(),aliasTargets=new Map(),cuts=[],unknown=[];
+  const addWriter=(name,port)=>{if(!writers.has(name))writers.set(name,[]);writers.get(name).push(port);};
+  for(const block of all)for(const p of [...block.inputs,...block.outputs]){ports.set(p.path,p);owners.set(p.path,block);}
+  for(const v of model.variables){for(const p of v.sourcePorts)addWriter(v.name,p);for(const p of v.targetPorts)aliasTargets.set(p,v);}
+  for(const block of all)for(const p of block.outputs)for(const g of p.globals)addWriter(g.resolvedName??g.lastKnownPath.split(".").at(-1),p.path);
+  const demanded=new Set(),demandedInputs=new Set(),selected=new Set(),pending=[];
+  function variable(name,consumer) {
+    if(phaseNames.includes(name)){
+      const g=all.flatMap(b=>b.outputs.flatMap(p=>p.globals)).find(g=>(g.resolvedName??g.lastKnownPath.split(".").at(-1))===name);
+      cuts.push({name,id:g?.variableId,source:writers.get(name),consumer,reason:"Network3 state owner intentionally excluded; explicit phase boundary, not reachability"});return;}
+    const producers=writers.get(name);
+    if(producers?.length)pending.push(...producers);
+    else {
+      const v=model.variables.find(v=>v.name===name);
+      if(!v?.alias||!Object.hasOwn(external,name))throw Error(`Undeclared typed input boundary ${name}`);
+      cuts.push({name,id:v.id,alias:v.alias,initialValue:external[name],consumer,reason:"Explicit given program input; initial PLC request levels fixed FALSE, no handshake policy inferred"});
+    }
+  }
+  for(const signal of Object.values(signals))variable(signal,"observed actual output");
+  while(pending.length) {
+    const output=pending.pop();if(demanded.has(output))continue;demanded.add(output);
+    const block=owners.get(output);if(!block)throw Error(`Output writer missing ${output}`);
+    if(block.path.startsWith("//Network3/"))throw Error("Uncut state owner entered branch dependency closure");
+    selected.add(block);
+    const inputs=block.functionName==="safeEstop"?
+      [block.inputs.find(p=>p.name==="Restart"),...effectiveEstopInputs(block,{isBound:p=>p.sources.length>0||p.globals.length>0||aliasTargets.has(p.path)}).map(({port})=>port)]:
+      block.functionName==="safeDecouple"?[block.inputs[block.outputs.findIndex(p=>p.path===output)]]:
+      block.inputs.filter(p=>!["Deactivated","Both Deactivated"].includes(p.channelInterface)&&!p.name.startsWith("EDM"));
+    for(const p of inputs) {
+      demandedInputs.add(p.path);
+      if(p.sources.length)pending.push(...p.sources);
+      else if(p.globals.length)for(const g of p.globals)variable(g.resolvedName??g.lastKnownPath.split(".").at(-1),p.path);
+      else if(aliasTargets.has(p.path))variable(aliasTargets.get(p.path).name,p.path);
+      else unknown.push(p.path);
+    }
+  }
+  if(unknown.length)throw Error(`Command dependency requires unbound input: ${[...new Set(unknown)].join(",")}`);
+  const scope={clockContract:SAL_CLOCK_CONTRACT,stepMs,selectedBlocks:[...selected].map(b=>b.path).sort(),
+    demandedInputs:[...demandedInputs].sort(),
+    boundaries:[...new Map(cuts.map(c=>[`${c.name}:${c.consumer}`,c])).values()],
+    limit:"Actual physical R&D branch with typed input/Network3 ownership boundary; not full lifecycle/PLC handshake/reachability"};
+  const r=new SalRuntime({...model,networks:model.networks.map(n=>({...n,blocks:n.blocks.filter(b=>selected.has(b))})).filter(n=>n.blocks.length)},
+    {scanMs:stepMs,unconnectedInput:false});
+  r.setInputs({...external,...Object.fromEntries(phaseNames.map(n=>[n,false]))});
+  const clock=new ObservedSamples(r,stepMs),transitions=[],frames=[],rises=Object.fromEntries(Object.keys(signals).map(k=>[k,0]));
+  let observedMs=-stepMs;
+  let previous=Object.fromEntries(Object.keys(signals).map(k=>[k,false])),capture=true;
+  const nativeScan=r.scan.bind(r);r.scan=(dt=stepMs)=>{nativeScan(dt);observedMs+=dt;if(capture){
+    const current=Object.fromEntries(Object.entries(signals).map(([k,v])=>[k,r.get(v)]));
+    for(const k of Object.keys(current))if(current[k]&&!previous[k])rises[k]++;
+    const raw={...Object.fromEntries(Object.keys(external).map(name=>[name,r.get(name)])),b_Step_RnD:r.get("b_Step_RnD")};
+    if(Object.keys(current).some(k=>current[k]!==previous[k]))transitions.push({timeMs:observedMs,signals:current,raw});
+    const internal=model.networks.some(n=>n.name==="RndPhysicalCompact")?Object.fromEntries(Object.entries({finishUp:"GATE_020/AndOut",finishGreen:"GREEN/TonOut",finishBlue:"BLUE/TonOut",windowError:"WINDOW/Error",restart:"GATE_007/AndOut",ready:"WINDOW/EStopOut",delayed:"WINDOW/EStopDelOut",release:"RELEASE/TonOut",P:"GATE_008/AndOut",A:"STATE_A/RsOut",C:"STATE_C/RsOut",L:"STATE_L/RsOut",T:"STATE_T/RsOut"}).map(([key,path])=>[key,r.get("//RndPhysicalCompact/"+path)])):undefined;
+    frames.push({timeMs:observedMs,signals:current,raw,internal});previous=current;
+  }return r;};
+  // Real manual restart; state boundary deliberately not R&D until setup ends.
+  clock.sample();clock.advance(10*stepMs);clock.sample({in_Reset_PB:true});clock.sample({in_Reset_PB:false});
+  if(!r.get("b_EStop_Ok"))throw Error("Actual main EStop manual preparation did not enable");
+  // Raise LV through its real Step12 producer/OR/SetPermit/RS, not an injected output.
+  clock.sample({b_Step12:true});for(let i=0;i<100&&!r.get("out_LV_C1");i++)clock.sample();
+  if(!r.get("out_LV_C1"))throw Error("Real LV setup positive control failed");
+  // Keep observer continuous through each scenario; setup trace is separate.
+  const setupTransitions=transitions.splice(0);frames.length=0;for(const k of Object.keys(rises))rises[k]=0;
+  previous=Object.fromEntries(Object.entries(signals).map(([k,v])=>[k,r.get(v)]));
+  clock.sample({b_Step12:false,b_Step_RnD:true,...entryButtons});clock.advance(2100);
+  return {r,clock,scope,frames,transitions,rises,setupTransitions,
+    get:k=>r.get(signals[k]),sample:inputs=>clock.sample(inputs),advance:ms=>clock.advance(ms),
+    edgeAfter:(first,delta,inputs)=>clock.observeAfter(first,delta,inputs),
+    clearFrames(){frames.length=0;},
+    any:k=>frames.some(f=>f.signals[k]),
+    observed(){return {scope,transitions,rises,assumptions:[...r.assumedUnconnectedPorts],
+      commandConeUnconnected:[...r.assumedUnconnectedPorts].filter(p=>demandedInputs.has(p)),
+      interpretation:"Rises count actual existing request/output transitions, not invented accepted-launch events"};}};
+}
+
+NATIVE SINGLETON EXPECTATION EXTENSION
+BEFORE
+import crypto from 'node:crypto';import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import{inspectNativeSalStructure,assertNativeSalStructure}from'../src/sal-native-structure.js';import{readBindingXml,validateSalBindings}from'../src/sal-binding-validator.js';
+const gvl=fs.readFileSync(new URL('../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl',import.meta.url),'utf8');
+const source=fs.readFileSync(new URL('../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',import.meta.url),'utf8'),layer=JSON.parse(fs.readFileSync(new URL('../NETWORK_SYMBOL_REPAIR_LAYER.json',import.meta.url))).nativeSingletonConsolidation,walk=n=>[n,...n.children.flatMap(walk)];
+const escape=s=>s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+function serialize(n){if(n.tag==='#document')return n.children.map(serialize).join('');return '<'+n.tag+Object.entries(n.attr).map(([k,v])=>' '+k+'="'+escape(v)+'"').join('')+'>'+n.text+n.children.map(serialize).join('')+'</'+n.tag+'>';}
+test('NATIVE source whole singleton grammar and zero cross-network graphical wires',()=>{const result=assertNativeSalStructure(source);assert.deepEqual(result.counts,{networks:14,blocks:241,ports:2066,variables:75,wires:306,crossNetworkWires:0});});
+test('NATIVE exact10singleton repairs retire only54container IDs preserving usage identities',()=>{const nodes=walk(readBindingXml(source)),ids=new Set(nodes.filter(n=>n.attr?.Id).map(n=>n.attr.Id));assert.equal(layer.version,'native-singleton-10-v1');assert.equal(layer.ledger.length,10);assert.equal(layer.ledger.flatMap(r=>r.retiredContainerIds).length,54);for(const r of layer.ledger){assert.ok(ids.has(r.variableId));assert.ok(ids.has(r.retainedRelationshipId));assert.ok(ids.has(r.retainedCollectionId));for(const id of r.retiredContainerIds)assert.equal(ids.has(id),false,'retired redundant container '+id);for(const id of r.preservedUsageIds)assert.ok(ids.has(id),'preserved usage '+id);}});
+test('NATIVE all10symbols and source/collection/usages reject unique empty duplicate containers',()=>{
+ const baseAudit=validateSalBindings(source,gvl);assert.equal(baseAudit.status,'PASS');const node=(tag,children=[])=>({tag,attr:['variableHasSourceUsages','variableHasTargetUsages','variableUsages'].includes(tag)?{Id:crypto.randomUUID()}:{},children,text:''});
+ const emptyRel=tag=>node(tag,[node('variableUsages',[node('usages')])]);
+ const verify=(doc,expected)=>{const xml=serialize(doc);assert.deepEqual(validateSalBindings(xml,gvl),baseAudit,'typed audit still PASS and unchanged; only native singleton grammar catches mutant');const monikers=doc=>walk(doc).filter(n=>n.tag.endsWith('Moniker')).map(n=>[n.tag,n.attr]);assert.deepEqual(monikers(readBindingXml(xml)),monikers(readBindingXml(source)),'all original symbol/wire semantics unchanged');const result=inspectNativeSalStructure(xml);assert.equal(result.status,'ERROR');assert.ok(result.errors.some(e=>e.includes(expected)),expected);assert.throws(()=>assertNativeSalStructure(xml),/preflight failed before execution/);};
+ for(const r of layer.ledger){const doc=readBindingXml(source),v=walk(doc).find(n=>n.attr?.Id===r.variableId),container=v.children.find(n=>n.tag===r.role);container.children.push(emptyRel('variableHasTargetUsages'));verify(doc,v.attr.name+': targetUsages requires one variableHasTargetUsages');}
+ for(const kind of ['source-relationship','collection','usages','source-container']){const doc=readBindingXml(source),v=walk(doc).find(n=>n.tag==='variable'),sourceContainer=v.children.find(n=>n.tag==='sourceUsages'),relationship=sourceContainer.children[0],collection=relationship.children[0];let expected;
+  if(kind==='source-relationship'){sourceContainer.children.push(emptyRel('variableHasSourceUsages'));expected='sourceUsages requires one variableHasSourceUsages';}
+  if(kind==='collection'){relationship.children.push(node('variableUsages',[node('usages')]));expected='variableHasSourceUsages requires one variableUsages';}
+  if(kind==='usages'){collection.children.push(node('usages'));expected='variableUsages requires one usages';}
+  if(kind==='source-container'){v.children.push(node('sourceUsages',[emptyRel('variableHasSourceUsages')]));expected='variable requires one sourceUsages';}
+  verify(doc,expected);
+ }
+});
+test('NATIVE full-network scan rejects a reintroduced cross-network wire',()=>{const doc=readBindingXml(source),nodes=walk(doc),sourcePort=nodes.find(n=>n.tag==='outPort'),container=sourcePort.children.find(n=>n.tag==='targetFunctionBlockPorts')??{tag:'targetFunctionBlockPorts',attr:{},children:[],text:''};if(!sourcePort.children.includes(container))sourcePort.children.push(container);container.children.push({tag:'wiredLink',attr:{Id:'60dc9abb-cab1-4a81-b1ad-492c24b960ec'},text:'',children:[{tag:'inPortMoniker',attr:{name:'//Network12/FBAnd15/AndIn3'},text:'',children:[]}]});const result=inspectNativeSalStructure(serialize(doc));assert.equal(result.status,'ERROR');assert.ok(result.counts.crossNetworkWires>0);assert.throws(()=>assertNativeSalStructure(serialize(doc)),/Graphical wire crosses networks/);});
+
+AFTER
+const p0RetiredUsageIds=new Set(["75c1aadc-f40e-4733-9665-f84f651b8818","dbfc275a-be07-4cef-a780-9858f2b5c332","9fd7707a-7faf-4ac6-a47a-974e69b1a441","d8937929-52e1-4627-95af-7ebca1f4692a","4a326aa6-0f35-4479-a964-fd2c9f6875b1","197c75c7-440c-4511-8ba6-6a58853be6da"]); // Only two retired complementary Prev Reset records and their wrappers, approved P0c.
+import crypto from 'node:crypto';import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import{inspectNativeSalStructure,assertNativeSalStructure}from'../src/sal-native-structure.js';import{readBindingXml,validateSalBindings}from'../src/sal-binding-validator.js';
+const gvl=fs.readFileSync(new URL('../../MEN001_Dyno/Safety_Dyno/GVLs/GVL1.sgvl',import.meta.url),'utf8');
+const source=fs.readFileSync(new URL('../../MEN001_Dyno/Safety_Dyno/TwinSafeGroup1/TwinSafeGroup1.sal',import.meta.url),'utf8'),layer=JSON.parse(fs.readFileSync(new URL('../NETWORK_SYMBOL_REPAIR_LAYER.json',import.meta.url))).nativeSingletonConsolidation,walk=n=>[n,...n.children.flatMap(walk)];
+const escape=s=>s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+function serialize(n){if(n.tag==='#document')return n.children.map(serialize).join('');return '<'+n.tag+Object.entries(n.attr).map(([k,v])=>' '+k+'="'+escape(v)+'"').join('')+'>'+n.text+n.children.map(serialize).join('')+'</'+n.tag+'>';}
+test('NATIVE source whole singleton grammar and zero cross-network graphical wires',()=>{const result=assertNativeSalStructure(source);assert.deepEqual(result.counts,{networks:14,blocks:241,ports:2066,variables:75,wires:306,crossNetworkWires:0});});
+test('NATIVE exact10singleton repairs retire only54container IDs preserving usage identities',()=>{const nodes=walk(readBindingXml(source)),ids=new Set(nodes.filter(n=>n.attr?.Id).map(n=>n.attr.Id));assert.equal(layer.version,'native-singleton-10-v1');assert.equal(layer.ledger.length,10);assert.equal(layer.ledger.flatMap(r=>r.retiredContainerIds).length,54);for(const r of layer.ledger){assert.ok(ids.has(r.variableId));assert.ok(ids.has(r.retainedRelationshipId));assert.ok(ids.has(r.retainedCollectionId));for(const id of r.retiredContainerIds)assert.equal(ids.has(id),false,'retired redundant container '+id);for(const id of r.preservedUsageIds)assert.equal(ids.has(id),!p0RetiredUsageIds.has(id),'preserved or exactly retired P0 usage '+id);}});
+test('NATIVE all10symbols and source/collection/usages reject unique empty duplicate containers',()=>{
+ const baseAudit=validateSalBindings(source,gvl);assert.equal(baseAudit.status,'PASS');const node=(tag,children=[])=>({tag,attr:['variableHasSourceUsages','variableHasTargetUsages','variableUsages'].includes(tag)?{Id:crypto.randomUUID()}:{},children,text:''});
+ const emptyRel=tag=>node(tag,[node('variableUsages',[node('usages')])]);
+ const verify=(doc,expected)=>{const xml=serialize(doc);assert.deepEqual(validateSalBindings(xml,gvl),baseAudit,'typed audit still PASS and unchanged; only native singleton grammar catches mutant');const monikers=doc=>walk(doc).filter(n=>n.tag.endsWith('Moniker')).map(n=>[n.tag,n.attr]);assert.deepEqual(monikers(readBindingXml(xml)),monikers(readBindingXml(source)),'all original symbol/wire semantics unchanged');const result=inspectNativeSalStructure(xml);assert.equal(result.status,'ERROR');assert.ok(result.errors.some(e=>e.includes(expected)),expected);assert.throws(()=>assertNativeSalStructure(xml),/preflight failed before execution/);};
+ for(const r of layer.ledger){const doc=readBindingXml(source),v=walk(doc).find(n=>n.attr?.Id===r.variableId),container=v.children.find(n=>n.tag===r.role);container.children.push(emptyRel('variableHasTargetUsages'));verify(doc,v.attr.name+': targetUsages requires one variableHasTargetUsages');}
+ for(const kind of ['source-relationship','collection','usages','source-container']){const doc=readBindingXml(source),v=walk(doc).find(n=>n.tag==='variable'),sourceContainer=v.children.find(n=>n.tag==='sourceUsages'),relationship=sourceContainer.children[0],collection=relationship.children[0];let expected;
+  if(kind==='source-relationship'){sourceContainer.children.push(emptyRel('variableHasSourceUsages'));expected='sourceUsages requires one variableHasSourceUsages';}
+  if(kind==='collection'){relationship.children.push(node('variableUsages',[node('usages')]));expected='variableHasSourceUsages requires one variableUsages';}
+  if(kind==='usages'){collection.children.push(node('usages'));expected='variableUsages requires one usages';}
+  if(kind==='source-container'){v.children.push(node('sourceUsages',[emptyRel('variableHasSourceUsages')]));expected='variable requires one sourceUsages';}
+  verify(doc,expected);
+ }
+});
+test('NATIVE full-network scan rejects a reintroduced cross-network wire',()=>{const doc=readBindingXml(source),nodes=walk(doc),sourcePort=nodes.find(n=>n.tag==='outPort'),container=sourcePort.children.find(n=>n.tag==='targetFunctionBlockPorts')??{tag:'targetFunctionBlockPorts',attr:{},children:[],text:''};if(!sourcePort.children.includes(container))sourcePort.children.push(container);container.children.push({tag:'wiredLink',attr:{Id:'60dc9abb-cab1-4a81-b1ad-492c24b960ec'},text:'',children:[{tag:'inPortMoniker',attr:{name:'//Network12/FBAnd15/AndIn3'},text:'',children:[]}]});const result=inspectNativeSalStructure(serialize(doc));assert.equal(result.status,'ERROR');assert.ok(result.counts.crossNetworkWires>0);assert.throws(()=>assertNativeSalStructure(serialize(doc)),/Graphical wire crosses networks/);});
+
+MENTEE EXACT NATIVE CRC REVISION
+{
+  "file": "test/current-mentee-set-permit.test.js",
+  "reason": "Reviewed native-generated CRC revision of exact34b5 P0; historic native chain and every functional test unchanged",
+  "from": "assert.equal(model.crc,slot.nativeSalCrc,'exact independently native-verified current slot-repair CRC revision');",
+  "to": "assert.equal(model.crc,'1997263000','exact independently native-verified P0 revision after unchanged slot-repair CRC chain');",
+  "beforeSha256": "a926cb4660518534718369538e8ad3ad5ee718fd0858f9e2b04ffd660c6b8519",
+  "afterSha256": "876f8cd6f6ef17e64b3002243e3248fcd5c8353b4a2edbd84d90f8d8ed83c882"
+}

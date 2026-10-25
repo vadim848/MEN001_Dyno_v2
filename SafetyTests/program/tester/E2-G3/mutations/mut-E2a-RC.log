@@ -1,0 +1,19 @@
+source 5733552a150b eligible kill base 343 (excluded 29)
+KILLED          M-E2a-19 deactivate-input //Network12/FBAnd6/AndIn3 <- E2a RUN-CONF HV Faulty TRUE for 3000 ms after C2_FBK ON: no Run meanwhile; HV healthy -> Run at k+101, not at k+99 (ran 4/343)
+KILLED          M-E2a-20 deactivate-input //Network12/FBAnd6/AndIn1 <- E2a RUN-CONF RC-5 (ii) C2_FBK delayed 30 ms (ON from u+30): no Run <= u+599, Run at u+601 (Q-V4-01 "Б", question 68 "Б") (ran 4/343)
+KILLED          M-E2a-21 swap-order //Network12/FBAnd6/ <- E2a RUN-CONF HV Faulty TRUE for 3000 ms after C2_FBK ON: no Run meanwhile; HV healthy -> Run at k+101, not at k+99 (ran 4/343)
+KILLED          M-E2a-22 set-parameter //Network12/WIN_C2/Delay Time (s) <- E2a RUN-CONF RC-5 (ii) C2_FBK delayed 30 ms (ON from u+30): no Run <= u+599, Run at u+601 (Q-V4-01 "Б", question 68 "Б") (ran 4/343)
+KILLED          M-E2a-23 deactivate-input //Network11/FBAnd4/AndIn1 <- E2a MOD1-01 (v7 §4.2) Safe->R&D natural: no R&D <= u1+599, R&D at u1+601 and later (question 68 "Б": C1 window 500 ms +  (ran 4/343)
+KILLED          M-E2a-24 deactivate-input //Network11/FBAnd4/AndIn2 <- E2d FBK10-PLC-REG (1) R-T5 Safe, FBK OFF, legacy PLC (1,0) front held, C1_FBK ON from u1+499 (after the own C1 command)  (ran 20/343)
+KILLED          M-E2a-25 set-parameter //Network11/WIN_C1/Delay Time (s) <- E2a MOD1-01 (v7 §4.2) Safe->R&D natural: no R&D <= u1+599, R&D at u1+601 and later (question 68 "Б": C1 window 500 ms +  (ran 4/343)
+NOT-RUN M-E2a-26
+KILLED          M-E2a-30 deactivate-input //Network1/FBOr5/OrIn2 <- E2a DIS-HOLD-HV issue by STP-A Run->R&D (green 600 ms); accepted R&D->Run -> HV discharge request TRUE in [d, a-1], FALS (ran 4/343)
+KILLED          M-E2a-31 deactivate-input //Network1/FBOr1/OrIn2 <- E2a DIS-HOLD-LV issue by R&D->Safe (green 600 ms in steady R&D); no event; accepted Safe->R&D -> LV discharge request TR (ran 4/343)
+INVALID         M-E2a-32 rebind-global //Network1/FBOr5/OrIn2 rebind-global: Symbol linkRndBothQualified not found in SGVL (creating a Symbol is a manual procedure) (ran 0/0)
+INVALID         M-E2a-33 rebind-global //Network1/FBOr5/OrIn2 rebind-global needs value.global = name of an existing GVL Symbol (ran 0/0)
+INVALID         M-E2a-34 rebind-global //Network1/FBOr5/OrIn2 rebind-global needs value.global = name of an existing GVL Symbol (ran 0/0)
+KILLED          M-E2a-35 deactivate-input //Network2/FBAnd91/AndIn4 <- E2a TD5-EOK (TEAM-DEFAULT TD-05) R-T5 Safe, Emergency by in_ES_NC_1 FALSE, legacy PLC (1,0) held 3000 ms at E+1 -> no S1 (ran 4/343)
+SURVIVED        M-E2a-18 deactivate-input //Network12/FBAnd6/AndIn2  (ran 343/343)
+SURVIVED        M-E2a-36 deactivate-input //Network12/FBAnd4/AndIn2  (ran 343/343)
+{"KILLED":10,"SURVIVED":2,"STRUCTURAL-ONLY":0,"INVALID":3,"NOT-RUN":1}
+exit=0

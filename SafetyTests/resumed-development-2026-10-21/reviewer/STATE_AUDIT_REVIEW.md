@@ -1,0 +1,21 @@
+# Независимое ревью исходного Safe/Armed audit — 2026-10-21
+
+**Приняты узкие выводы exploratory audit; полнота mutual-exclusion доказательства не установлена.** Это review фактов/области root FINDINGS/SOURCE_TRACE/COMPONENT_PATHS, не независимое exhaustive execution и не новый выбор recovery.
+
+Canonical59bf4ec1…/c31e1290… — та же полная пара, по которой reviewer ранее повторил native-structure/typed-binding preflight. Тексты scripts и сохранённые JSON перечитаны. Сигналы Safe=`b_Step1` и Armed=`b_Step3` действительно являются разными state memories FBRs1/FBRs3. Во время последних независимых P0 проверок reviewer напрямую просмотрел реальные Network3 RS/Set/reset consumers; отдельные reset-dominant RS сами по себе не образуют эксклюзивный enum.
+
+Существующий STATE FAIL принуждает два внутренних Set при вырезанных upstream producers. Сохранённые пять сканов показывают одновременноTRUE обеих memories/публикаций, но legal external-input достижимость из этого не следует. Тест не следует удалять: он остаётся условным robustness свидетельством. Требование EMG012 об обработке действительно недопустимого ownership остаётся; отсутствие доказанной operational trace не выбирает его destination/reset автоматически.
+
+Три source-producer traces содержат15014/12409/16513 кадров и не показывают overlap в наблюдаемых FBRs1/FBRs3 writer publications или end-scan states. Script после начала protocol пишет raw inputs; начальная Safe явно seeded, семь Network4 writers удерживаютсяFALSE как компонентная граница. Таким образом, это полезные условные отрицательные наблюдения, а не BOOT/startup reachability, индукция по всем входным историям или доказательство недостижимости overlap. Все экспортные выходы на каждом промежуточном читателе этими наблюдениями также не покрыты.
+
+Техническое замечание о SOURCE_TRACE.network[].id закрыто: исходное `b.Id` не экспортировалось parser и оставляло block IDs пустыми. Ведущий добавил lookup по native XML и повторил audit. Reviewer перечитал исправленный script/JSON: все21 reference и28 canonical rows теперь содержат native block GUID; порты остаются со своими GUID. Conditional выводы не изменены; разрешение только по basename не применяется.
+
+Продолжать фактические полные producer cones, законную инициализацию/group semantics, allowed phase-gap модель и ordered consumer/permission наблюдения. Не подменять неизвестные Network4/default inputs константами ради proof. Ни Emergency, ни TransitionFault, ни новая state архитектура этим review не выбраны; аппаратные настройки/исходники/recovery не менялись. Reviewer записал только этот отчёт.
+
+## Последующее material evidence: bypass family
+
+После первоначальных трёх no-overlap traces ведущий добавил `bypass-family.mjs/BYPASS_FAMILY.json` на canonical P0. Reviewer прочитал фактический script и JSON: первая Safe — явная component seed, затем только raw-input protocol и настоящие writers, семь Network4 cuts сохраняются. После принятой physical green-down при удерживаемой зелёной приходит PLC11; existing bypass10s и последующие Healthy/C2/LV feedback изменения приводят к Safe+Run на end-scan16338 в bypassTRUE варианте. FALSE контроль этого overlap не показывает. Недостающих demanded inputs не записано.
+
+Это materially сильнее старого injected-Set STATE теста: возникает **условная достижимость внутри реальных producer chains при объявленной начальной компонентной границе**, а не прямое принуждение двух Set. Предыдущие no-overlap traces остаются историческими узкими наблюдениями; они не опровергают новый witness. Программа обязана корректно обрабатывать недопустимое сочетание PLC/physical requests по уже согласованному noqueue/buttonsOFF контракту — пришедший PLC запрос во время нажатой кнопки нельзя автоматически считать запрещённой тестовой средой.
+
+Тем не менее это пока exploratory coordinator execution, не reviewer rerun и не independent tester acceptance. Native/group startup, фактическая достижимость начальной Safe из питания и все Network4 значения не доказаны. Нужны независимое воспроизведение exact protocol/hash, раздельные initiating causes и frozen first-divergence/phase-read evidence. Destination Emergency/TransitionFault/reset новым witness не выбраны. Этот функциональный дефект исходного поведения не отменяет bounded P0 equivalence: ресурсный пакет не заявлял исправление PLC/state ownership.

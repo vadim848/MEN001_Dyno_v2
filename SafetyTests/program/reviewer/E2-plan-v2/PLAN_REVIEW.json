@@ -1,0 +1,160 @@
+{
+  "schema": "plan-review-v1",
+  "role": "v2-reviewer",
+  "date": "2026-10-21",
+  "subject": "program/architect/E2-status PLAN v2",
+  "source": {
+    "sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3",
+    "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104",
+    "diagram": "de02bbffee8d707453e6a049bed5ce460efdfb2baebe36bbb21cf30a7185a603",
+    "decisionsReadByPlan": "c1e7fe6cf7aa1adbf7fcc33452c393bddd6f2cc4dfc02140ab55e621c0fd7bdf",
+    "decisionsAtVerdict": "bdf55216dab6e4aa3e3a1c01ae51f9441d2a3664c5ec8fd93955379bbbdb86fe",
+    "reference": "4495a1f (git show only)"
+  },
+  "evidenceKind": "model (sal-runtime + architect prototype), not native, not hardware",
+  "verdicts": {
+    "R1": "CONFIRMED with conditions C-R1-1..5",
+    "E2a": "READY FOR G1 (E2-01, E2-02, E2-03 structural, E2-04, POL-01a) with A-1..A-3",
+    "E2b": "NEEDS CHANGES (B-1..B-5)",
+    "E2c": "NEEDS CHANGES (C-1..C-3)",
+    "E2d": "NEEDS CHANGES (D-1..D-3)"
+  },
+  "r1": {
+    "unusedProof": "accepted; N4 DecIn1..8 identical config and Ids in reference; ref DecOut7 unassigned; reference-working argument DERIVED; DEC-3 NV",
+    "consumersOfDeletedSymbols": "only non-inverted OR inputs or Network5 itself; N3/FBAnd1.AndIn3 inverted Step2 -> deactivated AND input TRUE (equivalent)",
+    "accounting": "215 FB, 66 Symbols, no dangling wires (repro/r1sym.out.txt)",
+    "referenceTraceGaps": "5 s settle and STO FBK before Run now accepted by Q-ARCH-09=V",
+    "conditions": [
+      "C-R1-1 DEC-3 premise recorded as DERIVED",
+      "C-R1-2 b_Step6 becomes Symbol without consumer after R1: remove binding (65 Symbols) or declare NV for G2",
+      "C-R1-3 full regression before/after (R1-01b)",
+      "C-R1-4 G2 SGVL usage check; N4/FBDecouple1.DecOut4 carries 6 fbPortGlobalVariableReferences in canonical, all must vanish",
+      "C-R1-5 declared delta vs native save/CRC (NV for G2)"
+    ],
+    "modelDifferential": "repro/r1life.out.txt: 376 cases (15 events x 25 phases + base), 0 diffs on 37 alias outputs + stage memories, S3 and S4..S6 reached; model only, R1-01(b) still required"
+  },
+  "findings": [
+    {
+      "id": "B-1",
+      "slice": "E2b",
+      "severity": "major",
+      "text": "in_Estop_PLC (and connector) in StartingRun: GATE_001 raw input resets SU in scan k, b_EStop_Ok drops k+1, FBAndSuEmg never fires; after 12 s SR, STO released, C1/C2 ON, status EMG",
+      "repro": "repro/su_plc.out.txt",
+      "returnTo": "architect"
+    },
+    {
+      "id": "B-2",
+      "slice": "E2b",
+      "severity": "major",
+      "text": "E2b without E2d: cover in StartingRun does not remove energy (GATE_001 still has cover); E2b/E2d mutually dependent: merge, move GATE_001 deactivation, or declare IL-05a only on E2d candidate",
+      "repro": "repro/su_plc.out.txt",
+      "returnTo": "architect"
+    },
+    {
+      "id": "B-3",
+      "slice": "E2b",
+      "severity": "major",
+      "text": "EMG-004 now confirmed by Q-RC-14=A but requires Q-ARCH-01 chain and exit to Safe only; E2b in R&D/S12 gives EMG status with LV ON indefinitely and returns to R&D after Restart",
+      "repro": "repro/e2d.out.txt m",
+      "returnTo": "architect, analyst"
+    },
+    {
+      "id": "B-4",
+      "slice": "E2b",
+      "severity": "minor",
+      "text": "PLAN.json E2b.criteria uses stale IL-03a/IL-03b; use IL-03, IL-05a, IL-05b, EMG4-02, EMG4-03",
+      "returnTo": "architect"
+    },
+    {
+      "id": "B-5",
+      "slice": "E2b",
+      "severity": "minor",
+      "text": "M-E2b-10 killed only by stage-memory invariant (S4+S6, single status EMG); tester must check stage memories or plan must give output-level kill",
+      "returnTo": "architect, tester"
+    },
+    {
+      "id": "C-1",
+      "slice": "E2c",
+      "severity": "major",
+      "text": "LV Faulty one scan before BOTH qualification: SU and SG both set, C1 OFF, C2 ON, STO released, Run confirmed with LV off, then S4; HLT_LV reads previous-scan SU, GATE_020 lacks !SG (RP-1 does not cover HLT-originated SG)",
+      "repro": "repro/hlt_both.out.txt +999",
+      "returnTo": "architect"
+    },
+    {
+      "id": "C-2",
+      "slice": "E2c",
+      "severity": "major",
+      "text": "BOTH held across HLT descent qualifies in Safe: Safe->R&D re-energises C1 with LV Faulty; violates Q-ARCH-05/Q-RC-11=A (HealthyLost fault, ack before any UP)",
+      "repro": "repro/hlt_both.out.txt +0..+950",
+      "returnTo": "architect, analyst"
+    },
+    {
+      "id": "C-3",
+      "slice": "E2c",
+      "severity": "minor",
+      "text": "HLT_LV.AndIn2 isolation for Q-ARCH-03 now answered B (abort StartingRun then R&D->Safe)",
+      "returnTo": "architect"
+    },
+    {
+      "id": "D-1",
+      "slice": "E2d",
+      "severity": "major",
+      "text": "Q-ARCH-04=A: Unlock in Safe with cover open allowed; new GATE_010.AndIn3/4 NC1/NC2 contradict; R&D case needs question if changed",
+      "returnTo": "architect"
+    },
+    {
+      "id": "D-2",
+      "slice": "E2d",
+      "severity": "minor",
+      "text": "M-E2d-03/04 kill scenario wrong: legacy Bypass never energises in Safe (F1, E2, mutant); kill only in R&D/S12 with cover open; legacy Bypass in R&D with cover closed energises C2 in F1 and E2 (pre-existing CFG-02 FAIL, E4)",
+      "repro": "repro/byp.out.txt",
+      "returnTo": "architect, tester"
+    },
+    {
+      "id": "A-1",
+      "slice": "E2a",
+      "severity": "minor",
+      "text": "tests reading reference/pinned SAL with old names need explicit name mapping",
+      "returnTo": "stand-engineer, tester"
+    },
+    {
+      "id": "A-2",
+      "slice": "E2a",
+      "severity": "minor",
+      "text": "Healthy loss in steady Run still Step4 in E2a; Q-RC-02 not an E2a oracle",
+      "returnTo": "tester"
+    },
+    {
+      "id": "A-3",
+      "slice": "E2a",
+      "severity": "minor",
+      "text": "EStop at C2_FBK OFF -1/0 during run-down ends in SR with LV ON (t9); under Q-ARCH-01=A this is a known FAIL until EX/v3",
+      "returnTo": "lead, tester"
+    }
+  ],
+  "mu11": "equivalence proof accepted for E2a..E2d (DERIVED GRP-2); re-evaluate after v3",
+  "budget": "R1 215, E2a-E2d 221 verified; E4/E6 open item honest; v3 additions require recount; R2 still not permitted",
+  "requiredV3": [
+    "Q-ARCH-01=A emergency chain in R&D/R&D->Safe/Safe->R&D, exit to Safe only, stop raising in Safe->R&D (+ S6->Safe)",
+    "Q-ARCH-03=B abort StartingRun on LV loss then chained R&D->Safe; fix C-1",
+    "Q-ARCH-05/Q-RC-11=A SafetyFault HealthyLost in Run/SS1/StartingRun/R&D(LV), ack per E6-Q2; affects E2c (C-2)",
+    "Q-ARCH-09=V record as basis for R1 trace gaps; no code change",
+    "Q-RC-14=A connector after Safe -> Emergency via Q-ARCH-01 chain everywhere; requires B-1, B-3",
+    "Rename outPLC_LV_Healthy/outPLC_HV_Healthy -> outPLC_LV_Faulty/outPLC_HV_Faulty in E2 (PLC links within V14-Q2)",
+    "Q-ARCH-04=A remove Unlock-with-open-cover prohibition in Safe (D-1)",
+    "Q-ARCH-08=B in E4 sketch",
+    "Q-ARCH-04=A: Unlock in Safe with cover open allowed -> drop new GATE_010 NC inputs",
+    "Q-ARCH-08=B: BOTH wins over Bypass edge (E4)",
+    "Q-RC-12=A: failed R&D->Run rollback = abort StartingRun -> R&D + SafetyFault",
+    "Q-E2Q-01=A: emergency in Safe->R&D -> C1 OFF after 2 s",
+    "Q-E2Q-02=A: HealthyLost fault on LV loss in normal stop",
+    "Q-RC-15=B: LV loss in SS1 -> immediate STO, then R&D->Safe + SafetyFault",
+    "Q-RC-16=A: LV-initiated descent continues to Safe after R&D even if LV returns (cause memory)",
+    "Q-RC-17=B: cover loss in abort StartingRun / R&D->Run rollback / Healthy protective descent / Config entry rollback -> Emergency; contradicts E3 sketch linkRunStopActive exemption",
+    "Q-RC-18: (a) Bypass is a transition command; (b) PLC command error does not block physical BOTH/green",
+    "Q-RC-19=V: confirmed FBK lost while ON commanded -> Emergency everywhere",
+    "Q-RC-13=B: one common Fault bit for PLC"
+  ],
+  "budgetEstimatesSufficient": false,
+  "budgetNote": "Only option (b) has a number (-4). (a) R2 and (c) HL_FAULT have no estimate; (c) changed meaning after Q-ARCH-05=A/Q-RC-13=B and may touch the Q-ARCH-06 merge ban (lead to clarify); (d) undefined; E3..E6 not recounted for new answers. Architect must give per-option dFB, affected slices, behaviour risk, recounted totals."
+}

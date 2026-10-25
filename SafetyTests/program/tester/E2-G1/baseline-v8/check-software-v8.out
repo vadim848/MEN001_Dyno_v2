@@ -1,0 +1,25 @@
+
+> check:software
+> node scripts/software-check.js
+
+signal names: legacy (in_LV_Healthy_FBK, in_HV_Healthy_FBK, outPLC_LV_Healthy, outPLC_HV_Healthy)
+harness: PASS {"tests":284,"pass":284,"fail":0,"skipped":0}
+historical: PASS {"tests":75,"pass":75,"fail":0,"skipped":0}
+current: FAIL {"tests":1484,"pass":597,"fail":839,"skipped":0}
+current SAL: {"PASS":199,"FAIL":1,"NOT VERIFIED":7,"ERROR":0,"NOT APPLICABLE":0}
+case IDs vs baseline: {"baseline":207,"current":207,"missing":0,"added":0,"statusChanged":0,"duplicates":0}
+tests harness vs baseline: {"baseline":228,"current":284,"missing":1,"added":57,"statusChanged":0}
+tests historical vs baseline: {"baseline":75,"current":75,"missing":0,"added":0,"statusChanged":0}
+tests current vs baseline: {"baseline":845,"current":1484,"missing":33,"added":672,"statusChanged":4}
+expected deltas: C:\Users\user\source\repos\MEN001_Dyno_v2\SafetyTests\fixtures\case-baselines\expected-deltas\04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3.json {"deltas":34,"explained":26,"unexplained":8,"stale":0} approval APPROVED
+Declared replacements: none for this SAL.
+  UNEXPLAINED test-missing [current] E2b EMG4-03 boundary: LV connector FALSE in u-1 (one scan before Safe->R&D acceptance) -> EMG-003: UP rejected, no Emergency
+  UNEXPLAINED test-missing [current] E2b EMG4-03 boundary: HV connector FALSE in u-1 (one scan before Safe->R&D acceptance) -> EMG-003: UP rejected, no Emergency
+  UNEXPLAINED test-missing [current] E2d IL-02 boundary NC1 FALSE in N=u-1 (UP qualifies in N+1): UP rejected - no C2 ON / STO release, R&D and LV kept, no Emergency; not executed after the cover closes
+  UNEXPLAINED test-missing [current] E2d IL-02/IL-05a boundary N=c=u (NC1 FALSE in the UP acceptance scan): normative disjunction - (i) UP rejected, R&D, no Emergency, or (ii) Emergency by rule L with EMGREF-RUN; never Run
+  UNEXPLAINED test-missing [current] E2d IL-02/IL-05a boundary N=c=u (both FALSE in the UP acceptance scan): normative disjunction - (i) UP rejected, R&D, no Emergency, or (ii) Emergency by rule L with EMGREF-RUN; never Run
+  UNEXPLAINED test-missing [current] E2b IL-05b boundary: NC1 FALSE in t_a-1 (before the down is accepted) -> IL-03 Emergency (rule L vs in_Estop_PLC), no normal R&D, Restart -> only Safe
+  UNEXPLAINED test-missing [current] E2b IL-05d(1) StartingRun (HV Faulty TRUE holds it) aborted by green 600 ms, NC1 FALSE 100 ms after the abort -> Emergency (rule L vs in_Estop_PLC in the same phase), Restart -> only Safe
+  UNEXPLAINED test-missing [current] E2c STP-I green 600 ms pressed during the abort (c=u+50, press c+10): not executed - C1 not dropped before C2_FBK OFF
+Reports: SOFTWARE_CHECK_RESULTS.md / .json
+exit 4

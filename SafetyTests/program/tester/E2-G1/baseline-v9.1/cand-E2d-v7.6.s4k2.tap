@@ -1,0 +1,183 @@
+TAP version 13
+# Subtest: E2d S4 (a) steady Safe, Safe->R&D by BOTH -> outPLC_RnD FALSE in every scan [A1, K1+99] (K1 = u1+500), TRUE not later than tau_R+1 and in every scan of steady R&D to +3000 (question 78 "А", RND-CONF-T)
+ok 1 - E2d S4 (a) steady Safe, Safe->R&D by BOTH -> outPLC_RnD FALSE in every scan [A1, K1+99] (K1 = u1+500), TRUE not later than tau_R+1 and in every scan of steady R&D to +3000 (question 78 "А", RND-CONF-T)
+  ---
+  duration_ms: 2555.2023
+  type: 'test'
+  ...
+# A1=3215, u1=3216, K1=3716, tau_R=3816, first TRUE 3816
+# Subtest: E2d S4 (a) steady Safe, Safe->R&D by legacy (1,0) -> outPLC_RnD FALSE in every scan [A1, K1+99] (K1 = u1+500), TRUE not later than tau_R+1 and in every scan of steady R&D to +3000 (question 78 "А", RND-CONF-T)
+not ok 2 - E2d S4 (a) steady Safe, Safe->R&D by legacy (1,0) -> outPLC_RnD FALSE in every scan [A1, K1+99] (K1 = u1+500), TRUE not later than tau_R+1 and in every scan of steady R&D to +3000 (question 78 "А", RND-CONF-T)
+  ---
+  duration_ms: 1396.6481
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-fbk-window-abort.test.js:243:42'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (p=2214)
+    + actual - expected
+    
+    + [
+    +   'FALSE in every scan [A1, K1+99]; first TRUE A1+601'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'FALSE in every scan [A1, K1+99]; first TRUE A1+601'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-fbk-window-abort.test.js:252:4)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# A1=2216, u1=2218, K1=2718, tau_R=2817, first TRUE 2817
+# Subtest: E2d S4 (b) steady R&D, in_HV_Faulty_FBK TRUE holds StartingRun, BOTH -> outPLC_RnD TRUE in every scan [A-1, A+5000] (question 78 "А"; no FALSE pulse)
+ok 3 - E2d S4 (b) steady R&D, in_HV_Faulty_FBK TRUE holds StartingRun, BOTH -> outPLC_RnD TRUE in every scan [A-1, A+5000] (question 78 "А"; no FALSE pulse)
+  ---
+  duration_ms: 5129.0458
+  type: 'test'
+  ...
+# Subtest: E2d S4 (b) StartingRun abort by LV Healthy lost at u+50 (STP-I abort) -> outPLC_RnD TRUE in every scan [A-1, R_end] (the chained R&D->Safe after R_end is NV) (question 78 "А"; R_end by TD-14 §1.3)
+not ok 4 - E2d S4 (b) StartingRun abort by LV Healthy lost at u+50 (STP-I abort) -> outPLC_RnD TRUE in every scan [A-1, R_end] (the chained R&D->Safe after R_end is NV) (question 78 "А"; R_end by TD-14 §1.3)
+  ---
+  duration_ms: 4939.5209
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-fbk-window-abort.test.js:258:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (A=7017, R_end=15629)
+    + actual - expected
+    
+    + [
+    +   'TRUE in every scan [A-1, R_end]; first FALSE 7619'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'TRUE in every scan [A-1, R_end]; first FALSE 7619'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-fbk-window-abort.test.js:266:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d S4 (b) StartingRun abort by valid green 600 ms after a 2100 ms clearing (STP-E abort, E3) -> outPLC_RnD TRUE in every scan [A-1, R_end+3000] (question 78 "А"; R_end by TD-14 §1.3)
+not ok 5 - E2d S4 (b) StartingRun abort by valid green 600 ms after a 2100 ms clearing (STP-E abort, E3) -> outPLC_RnD TRUE in every scan [A-1, R_end+3000] (question 78 "А"; R_end by TD-14 §1.3)
+  ---
+  duration_ms: 4618.5585
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\current-e2d-fbk-window-abort.test.js:258:2'
+  failureType: 'testCodeFailure'
+  error: |-
+    1 violated checks (A=7117, R_end=undefined)
+    + actual - expected
+    
+    + [
+    +   'precondition: StartingRun accepted (A=7117) and its abort completed (R_end=undefined; abort by green = STP-E, E3)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'precondition: StartingRun accepted (A=7117) and its abort completed (R_end=undefined; abort by green = STP-E, E3)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    c.done (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:201:43)
+    c.finish (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/e2-lifecycle.js:202:48)
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/current-e2d-fbk-window-abort.test.js:266:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2d S4 (c) steady R&D, BOTH -> StartingRun -> Run (plant, HV norm): outPLC_RnD TRUE in every scan [A-1, K+99] (K = u+500), FALSE not later than tau_Run+1 and in every scan of steady Run to +3000; TRUE in a main-state Run scan only at tau_Run (question 78 "А", RUN-CONF-T)
+ok 6 - E2d S4 (c) steady R&D, BOTH -> StartingRun -> Run (plant, HV norm): outPLC_RnD TRUE in every scan [A-1, K+99] (K = u+500), FALSE not later than tau_Run+1 and in every scan of steady Run to +3000; TRUE in a main-state Run scan only at tau_Run (question 78 "А", RUN-CONF-T)
+  ---
+  duration_ms: 2085.7712
+  type: 'test'
+  ...
+# Subtest: E2d S4 outPLC_RnD in R&D->Safe, Run->R&D, WDG-03 rollback and Emergency
+ok 7 - E2d S4 outPLC_RnD in R&D->Safe, Run->R&D, WDG-03 rollback and Emergency # TODO NOT VERIFIED: not covered by Vadim's answer to question 78 (analyst E2-G1-v8-r §1.4b / §5) - not executed, not PASS
+  ---
+  duration_ms: 0.1562
+  type: 'test'
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p-200, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+ok 8 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p-200, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+  ---
+  duration_ms: 15784.6161
+  type: 'test'
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p-200, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> no R&D in [t_f, t_f+30000] (the 30 s rollback + SafetyFault at t_f+30001 is E6: NV), no Emergency
+ok 9 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p-200, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> no R&D in [t_f, t_f+30000] (the 30 s rollback + SafetyFault at t_f+30001 is E6: NV), no Emergency # TODO NOT VERIFIED: E6 (WDG-02 30 s window): rollback to Safe + SafetyFault at t_f+30001 not judged here; observed {"C1":true,"st":["STS_SAFE"],"SF":"no symbol"}
+  ---
+  duration_ms: 16007.6187
+  type: 'test'
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p+900, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+ok 10 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p+900, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+  ---
+  duration_ms: 15128.6563
+  type: 'test'
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p+900, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> no R&D in [t_f, t_f+30000] (the 30 s rollback + SafetyFault at t_f+30001 is E6: NV), no Emergency
+ok 11 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from p+900, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> no R&D in [t_f, t_f+30000] (the 30 s rollback + SafetyFault at t_f+30001 is E6: NV), no Emergency # TODO NOT VERIFIED: E6 (WDG-02 30 s window): rollback to Safe + SafetyFault at t_f+30001 not judged here; observed {"C1":true,"st":["STS_SAFE"],"SF":"no symbol"}
+  ---
+  duration_ms: 15507.3685
+  type: 'test'
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+ok 12 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+  ---
+  duration_ms: 15870.7402
+  type: 'test'
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> no R&D in [t_f, t_f+30000] (the 30 s rollback + SafetyFault at t_f+30001 is E6: NV), no Emergency
+ok 13 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> no R&D in [t_f, t_f+30000] (the 30 s rollback + SafetyFault at t_f+30001 is E6: NV), no Emergency # TODO NOT VERIFIED: E6 (WDG-02 30 s window): rollback to Safe + SafetyFault at t_f+30001 not judged here; observed {"C1":true,"st":["STS_SAFE"],"SF":"no symbol"}
+  ---
+  duration_ms: 15831.1547
+  type: 'test'
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A+1, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+ok 14 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A+1, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty FALSE at t_f+29999 -> R&D, no Emergency
+  ---
+  duration_ms: 15854.3818
+  type: 'test'
+  ...
+# Subtest: E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A+1, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> no R&D in [t_f, t_f+30000] (the 30 s rollback + SafetyFault at t_f+30001 is E6: NV), no Emergency
+ok 15 - E2d K-2 WDG-02 steady Safe, in_LV_Faulty_FBK TRUE from A+1, BOTH -> C1 ON as without Faulty (no refusal, WDG-02 / question 66(b)); Faulty held -> no R&D in [t_f, t_f+30000] (the 30 s rollback + SafetyFault at t_f+30001 is E6: NV), no Emergency # TODO NOT VERIFIED: E6 (WDG-02 30 s window): rollback to Safe + SafetyFault at t_f+30001 not judged here; observed {"C1":true,"st":["STS_SAFE"],"SF":"no symbol"}
+  ---
+  duration_ms: 15146.8517
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 7
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 5
+# duration_ms 145966.7286

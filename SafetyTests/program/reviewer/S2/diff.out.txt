@@ -1,0 +1,30 @@
+blocks E2d=230 E2e=239
+ADDED //Network1/FBK_OFF safeAnd
+ADDED //Network1/EXIT_FBK_OK safeOr
+ADDED //Network8/FBOrS5 safeOr
+ADDED //Network11/WIN_C1_IN safeAnd
+ADDED //RndPhysicalCompact/SG_S12_SCOPE safeAnd
+ADDED //RndPhysicalCompact/SG_SCOPE safeOr
+ADDED //SafeResumption/HLT_DESC_SET safeAnd
+ADDED //SafeResumption/HLT_MEM safeRs
+ADDED //SafeResumption/HLT_LV_SRC safeOr
+PORT //Network1/FBEstop1/EStopIn5
+   {"ci":"Both Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Single-Channel 1 Activated","d1":"Break Contact (NC)","src":["//Network1/EXIT_FBK_OK/OrOut"],"g":[],"v":[]}
+PORT //Network3/FBOrS12Reset/OrIn3
+   {"ci":"Deactivated","src":[],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":["b_Step2_Set_2"],"v":[]}
+PORT //Network8/FBAnd1/AndIn1
+   {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":["b_Step5"],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network8/FBOrS5/OrOut"],"g":[],"v":[]}
+PORT //Network11/WIN_C1/TonIn
+   {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network11/FBAnd1/AndOut"],"g":[],"v":[]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//Network11/WIN_C1_IN/AndOut"],"g":[],"v":[]}
+PORT //RndPhysicalCompact/STATE_SG/Reset
+   {"ci":"Activated","d1":"Make Contact (NO)","src":[],"g":[],"v":["V:linkSafeRndScope"]}
+ -> {"ci":"Activated","d1":"Make Contact (NO)","src":["//RndPhysicalCompact/SG_SCOPE/OrOut"],"g":[],"v":[]}
+PORT //SafeResumption/HLT_LV/AndIn1
+   {"ci":"Activated","d1":"Break Contact (NC)","src":[],"g":[],"v":["V:in_LV_Faulty_FBK"]}
+ -> {"ci":"Activated","d1":"Break Contact (NC)","src":["//SafeResumption/HLT_LV_SRC/OrOut"],"g":[],"v":[]}
+vars 79 -> 79; names equal: true
+keys sample block: type,name,instanceName,functionName,orderOfExecution,path,inputs,outputs,parameters

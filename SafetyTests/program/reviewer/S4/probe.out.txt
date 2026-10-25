@@ -1,0 +1,14 @@
+P1 SU blue pressed + abort edge: STO after edge none status RND viol 0
+P2 held S2R: after edge RND after green SAFE end SAFE C1 false viol 0
+P3 SU + R2S edge: STO after none C2off none status RND
+P4 Safe Bypass+S2R same scan: status SAFE C1 on none fault true
+   after all FALSE 1.1 s fault false
+P5 status CFG
+   Config + 2 cmds: fault false status CFG
+   exit with cmds TRUE: status SAFE fault true
+   end SAFE C1 false
+P6 exit, C1_FBK stuck: status CFG C1 false C2 false
+P7 R2S held + Bypass: status SAFE fault true C1on none
+P8 BOTH + Bypass edge: status RND fault false viol 0
+P9 Config EStop: EMG after restart EMG C1 false C2 true
+P10 Run hb stop: EMG at + 2672 STO true

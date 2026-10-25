@@ -1,0 +1,31 @@
+KILLED //RndPhysicalCompact/GATE_SG_SET/OrIn4 W-01 C1 OFF at C1 ON+none, expected 500+-50 [E6-Q1]
+KILLED //Network6/SU_ABORT_CAUSE/OrIn4 W-02 abort (STO active) at u+none, expected 500+-50 [Q-RC-12] | abort ends in R&D, C2 OFF; status=RND
+KILLED //Network1/CFG_EX_OR/OrIn2 G-07 rollback at C2 ON+none, expected 500+-50 [Q-RC-06] | rollback to Safe, not Emergency
+KILLED //Network1/FBAnd1/AndIn5 E-09 confirmed C2_FBK lost in Run [Q-RC-19, Q-V4-01]: Emergency within 50 ms; got none
+KILLED //RndPhysicalCompact/WD_EMG/OrIn2 E-09 confirmed C2_FBK lost in Run [Q-RC-19, Q-V4-01]: Emergency within 50 ms; got none
+KILLED //RndPhysicalCompact/WD_EMG/OrIn4 E-10 Emergency at C2 OFF+none, expected 500+-50 [E6-Q1]
+SURVIVED //RndPhysicalCompact/WD_EMG/OrIn1 E-09 
+SURVIVED //RndPhysicalCompact/WD_EMG/OrIn3 E-10 
+SURVIVED //RndPhysicalCompact/WDC2_FAIL_SET/AndIn3 E-09 
+SURVIVED //RndPhysicalCompact/WDC2_OK_SET/AndIn3 W-02 
+SURVIVED //RndPhysicalCompact/WDC2_SEEN_SET/AndIn1 E-10 
+KILLED //RndPhysicalCompact/SF_SET/OrIn5 H-02 SafetyFault HealthyLost [Q-ARCH-05]: SafetyFault expected true, observed false
+KILLED //RndPhysicalCompact/SF_SET/OrIn7 H-05 SafetyFault HealthyLost [Q-RC-11]: SafetyFault expected true, observed false
+SURVIVED //RndPhysicalCompact/SF_SET/OrIn6 D-09 
+KILLED //RndPhysicalCompact/SF_SET/OrIn3 W-09 SafetyFault on C1_FBK ON without command (by 1000 ms, bound A10) [Q-V4-02]: SafetyFault expected true, observed false | press while FBK ON did not acknowledge [
+SURVIVED //RndPhysicalCompact/SF_SET/OrIn4 W-09 
+SURVIVED //RndPhysicalCompact/SF_ACK/AndIn3 W-09 
+KILLED //RndPhysicalCompact/SF_ACK/AndIn4 K-01 green-first: Safe->R&D must start (C1 ON) [D-TIMING, D-CHORD250] | blue-first: Safe->R&D must start (C1 ON) [D-TIMING, D-CHORD250]
+SURVIVED //RndPhysicalCompact/SF_ACK/AndIn2 W-06 
+KILLED //RndPhysicalCompact/SF_ACKC/Set W-06 first BOTH: no step up (acknowledge only) [E6-Q2]
+KILLED //Network2/FBAnd4/AndIn4 W-06 first BOTH: no step up (acknowledge only) [E6-Q2]
+KILLED //RndPhysicalCompact/SU_SET_G/AndIn2 W-08 CMD_R&D_TO_RUN: no step up while SafetyFault [E6-Q2]
+SURVIVED //Network1/PA_CFG/AndIn8 G-01 
+KILLED //Network1/PF_OR/OrIn2 W-10 Fault bit TRUE with SafetyFault [Q-RC-13]
+SURVIVED //RndPhysicalCompact/WDC1_SPONT/AndIn4 E-06 
+SURVIVED //RndPhysicalCompact/WDC2_SPONT/AndIn4 W-09 
+KILLED T://RndPhysicalCompact/WDC1_WIN=0.6 W-01 C1 OFF at C1 ON+602, expected 500+-50 [E6-Q1]
+KILLED T://RndPhysicalCompact/WDC2_WIN=0.6 W-02 abort (STO active) at u+602, expected 500+-50 [Q-RC-12]
+KILLED T://RndPhysicalCompact/WDC2_OFF=0.6 E-10 Emergency at C2 OFF+602, expected 500+-50 [E6-Q1]
+KILLED T://RndPhysicalCompact/WDH1_T=29 W-04 PRECONDITION/STAND: C1_FBK ON
+KILLED T://RndPhysicalCompact/WDH2_T=29 W-03 PRECONDITION/STAND: C2_FBK ON

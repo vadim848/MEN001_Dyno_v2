@@ -1,0 +1,1012 @@
+{
+  "status": "PASS",
+  "phase": "Independent bounded A1/A2 execution; acceptance requires reviewer",
+  "identities": {
+    "fixture.mjs": "b8c5c1b7e1419c8d0ac18ccae0e6280a48db72c12ba76b02ff44ab73fc73ad0a",
+    "../src/sal-runtime.js": "14d50f182e42c7aea814eb0c221fbeadbc9becf20f7ac575d263b8cb4f14698e",
+    "../src/sal-parser.js": "fbf239e4960243e383619834a658bee23df543fdba9fc9f0e5bfd9e0e0aa195c",
+    "../src/sal-binding-validator.js": "65b133d787077c857bceb1dfcb2ba6574745395c7830e50625807bff5fa62bb8",
+    "../src/estop-native-pairs.js": "18bcb570739e5a20abd45fc831deae612e52d74d2590191fe4eeda3eed5d6ec8",
+    "../src/observed-samples.js": "b6c731053ab99f89cc92d8fac43c0884aff246ef18cf81690cf3645129444053",
+    "run.mjs": "a4d382f18db5436dff552cabf3f923b78e9c528dae09f6f1356a2545b8d5d361"
+  },
+  "counts": {
+    "PASS": 40,
+    "FAIL": 0,
+    "FIXTURE ERROR": 0
+  },
+  "rows": [
+    {
+      "name": "A1-Safe-healthy",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG007",
+          "CVR001",
+          "CVR002"
+        ],
+        "control": true,
+        "mode": "Safe"
+      },
+      "evidence": "A1-Safe-healthy.json.gz",
+      "rawSha256": "43f2ca7b74c0f85670258d68be6c2a8b26bd40d5317ce35a38ca266e36baba42",
+      "compressedSha256": "303f0a9fdbf88d144306ba108b5acc286756801c49bb3c18a8a404194fc849f9",
+      "compressedBytes": 91654,
+      "rawBytes": 6188709,
+      "scans": 2836,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A1-Safe-NC2-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG007",
+          "CVR001",
+          "CVR002"
+        ],
+        "mode": "Safe",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 1,
+        "control": "A1-Safe-healthy"
+      },
+      "evidence": "A1-Safe-NC2-1scan.json.gz",
+      "rawSha256": "78e4799c4d7e5402b6d7d5365803a6e6fcb281d190679898d1cf0cbecc9f0662",
+      "compressedSha256": "d304612e834d4d5ac2038d6e1d8c28b50c2ad5d41ac3641cf5e96b734946a0a2",
+      "compressedBytes": 91253,
+      "rawBytes": 6151651,
+      "scans": 2818,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A1-Safe-NC2-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG007",
+          "CVR001",
+          "CVR002"
+        ],
+        "mode": "Safe",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 10,
+        "control": "A1-Safe-healthy"
+      },
+      "evidence": "A1-Safe-NC2-10scan.json.gz",
+      "rawSha256": "d65e9e1f0e6c972f3a058a236e1757880a0b8ee90694f17db93eafd859f8d2bb",
+      "compressedSha256": "b7bc5ddac3695d9438e948a8b8c3a3f6d972e181b6cd1a6f9102d1b03f0b1fa9",
+      "compressedBytes": 91521,
+      "rawBytes": 6171264,
+      "scans": 2827,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A1-Safe-Mentee-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG007",
+          "CVR001",
+          "CVR002"
+        ],
+        "mode": "Safe",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 1,
+        "control": "A1-Safe-healthy"
+      },
+      "evidence": "A1-Safe-Mentee-1scan.json.gz",
+      "rawSha256": "d9d1ac6923fa1063bb9612728bfacb7706f2d9f1946f1b4f5db0c02c38413ca2",
+      "compressedSha256": "ff059d91bc58051f2a2bc67bb842454ec463daa578269152558ca2d42b8a7dc1",
+      "compressedBytes": 91251,
+      "rawBytes": 6151666,
+      "scans": 2818,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A1-Safe-Mentee-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG007",
+          "CVR001",
+          "CVR002"
+        ],
+        "mode": "Safe",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 10,
+        "control": "A1-Safe-healthy"
+      },
+      "evidence": "A1-Safe-Mentee-10scan.json.gz",
+      "rawSha256": "1af89ff7f3d3b8c2d49bc85dbbbba00065d379f79b974dc9ce9a42373b7c0454",
+      "compressedSha256": "9991e4fe4123a2dccb1f86764ca02e3dbcaec9f4e2c2bde0c3ede59d3ad5f0e8",
+      "compressedBytes": 91518,
+      "rawBytes": 6171261,
+      "scans": 2827,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A1-RnD-healthy",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG007",
+          "CVR001",
+          "CVR002"
+        ],
+        "control": true,
+        "mode": "RnD"
+      },
+      "evidence": "A1-RnD-healthy.json.gz",
+      "rawSha256": "8377940951f3855ca4f282ebb8ef6c01f0fb2cf4a3bfc941767c0c329b7547f4",
+      "compressedSha256": "643b0d5f617e8680bef8cb6313b1d19fc0961ebddbcbd85d4cfc5bf31e33608d",
+      "compressedBytes": 182276,
+      "rawBytes": 13152799,
+      "scans": 6040,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A1-RnD-NC2-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG007",
+          "CVR001",
+          "CVR002"
+        ],
+        "mode": "RnD",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 1,
+        "control": "A1-RnD-healthy"
+      },
+      "evidence": "A1-RnD-NC2-1scan.json.gz",
+      "rawSha256": "53fbe7c34b542e7693e6606d6e529271abb1f776b0b4d093b6c0781c4b1f67d1",
+      "compressedSha256": "729c4ae292ed5a3c1c6ab65747acb3149a558d96c0885aa2ff7a8b940c63de60",
+      "compressedBytes": 181891,
+      "rawBytes": 13115520,
+      "scans": 6022,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A1-RnD-NC2-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG007",
+          "CVR001",
+          "CVR002"
+        ],
+        "mode": "RnD",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 10,
+        "control": "A1-RnD-healthy"
+      },
+      "evidence": "A1-RnD-NC2-10scan.json.gz",
+      "rawSha256": "dca3ec143b85d2463eb34436c01fc8ed9939f214a8998f1ea646215e24dd8f7b",
+      "compressedSha256": "66bf2952f1732c6dd40c9c0bf6a0b4053b11d9db1a42a03488ed4277204cd7ca",
+      "compressedBytes": 182146,
+      "rawBytes": 13135124,
+      "scans": 6031,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A1-RnD-Mentee-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG007",
+          "CVR001",
+          "CVR002"
+        ],
+        "mode": "RnD",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 1,
+        "control": "A1-RnD-healthy"
+      },
+      "evidence": "A1-RnD-Mentee-1scan.json.gz",
+      "rawSha256": "622533078715caa0876dedf6ef0f435d892a4d005f9a5b2a5b870652a4fd27ca",
+      "compressedSha256": "0e4c8e9f1d1599dd6212125b214f065b9b68a7b80d2e8a5926bb14ef9e67bd0e",
+      "compressedBytes": 181892,
+      "rawBytes": 13115535,
+      "scans": 6022,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A1-RnD-Mentee-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG007",
+          "CVR001",
+          "CVR002"
+        ],
+        "mode": "RnD",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 10,
+        "control": "A1-RnD-healthy"
+      },
+      "evidence": "A1-RnD-Mentee-10scan.json.gz",
+      "rawSha256": "751e43639aa79b0113c572f7b11bce7cfd05f7ca957f61b814c305314d91ad50",
+      "compressedSha256": "a4bf6385271db42eb3aeda89cc0a088e5c55920491925e995d7b326cc9f71060",
+      "compressedBytes": 182147,
+      "rawBytes": 13135121,
+      "scans": 6031,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Safe-LV-healthy",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Safe",
+        "domain": "LV",
+        "control": true
+      },
+      "evidence": "A2-Safe-LV-healthy.json.gz",
+      "rawSha256": "dbbbb9904a5f677458dbcc3723c9ce98f7ff219c3ff904f70a7420c59edff869",
+      "compressedSha256": "f39ec8d1382a2d86d37da7b9efe9bf4994875827fed0ed66e25cb256f28a0e00",
+      "compressedBytes": 99682,
+      "rawBytes": 6801183,
+      "scans": 3118,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Safe-LV-NC2-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Safe",
+        "domain": "LV",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 1,
+        "control": "A2-Safe-LV-healthy"
+      },
+      "evidence": "A2-Safe-LV-NC2-1scan.json.gz",
+      "rawSha256": "5c871dfca73e34eb6018df147f3715dea02015e11dce340f27efcc70fc4ba2e8",
+      "compressedSha256": "d81c605d2073e41757a18e96b22f823900bb36808c349f27b1a9dfc7f2ecef77",
+      "compressedBytes": 104896,
+      "rawBytes": 7239695,
+      "scans": 3319,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Safe-LV-NC2-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Safe",
+        "domain": "LV",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 10,
+        "control": "A2-Safe-LV-healthy"
+      },
+      "evidence": "A2-Safe-LV-NC2-10scan.json.gz",
+      "rawSha256": "7d16910168c35d6218a70cf3108e6c144e2795b658c097f0e98367a3ccc962dc",
+      "compressedSha256": "8a0b53ee08c9fc200e7ff13aff37765c0b46a45c49a882e4571e2cd085b88710",
+      "compressedBytes": 105143,
+      "rawBytes": 7259335,
+      "scans": 3328,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Safe-LV-Mentee-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Safe",
+        "domain": "LV",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 1,
+        "control": "A2-Safe-LV-healthy"
+      },
+      "evidence": "A2-Safe-LV-Mentee-1scan.json.gz",
+      "rawSha256": "d2e7c2853d9b8d85aeb8db4bf71727ee8081cd28683874b8f7ee4f7c0c08be49",
+      "compressedSha256": "e0d96daddf656af4331cd5c68c1f5fa70cc7dded41acca79cc5313b367f45851",
+      "compressedBytes": 104890,
+      "rawBytes": 7239710,
+      "scans": 3319,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Safe-LV-Mentee-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Safe",
+        "domain": "LV",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 10,
+        "control": "A2-Safe-LV-healthy"
+      },
+      "evidence": "A2-Safe-LV-Mentee-10scan.json.gz",
+      "rawSha256": "ef47db16170a4b004c140a702cea911ee266e0e3b0f06a68d7f5b6296b33c3b5",
+      "compressedSha256": "562904185e678dd51037f2d6f601fc2b3692bd923432e384e0a4efaf955819a1",
+      "compressedBytes": 105141,
+      "rawBytes": 7259332,
+      "scans": 3328,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-HV-healthy",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "HV",
+        "control": true
+      },
+      "evidence": "A2-RnD-HV-healthy.json.gz",
+      "rawSha256": "9e044b972376c26d8e825aac11e896479ed6de53e30804237b02f4079f1b2815",
+      "compressedSha256": "6b5c6a1fbc603a182f55d315a95610520f7714a39d09e5debcbd06cece89b7ab",
+      "compressedBytes": 190037,
+      "rawBytes": 13761359,
+      "scans": 6321,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-HV-NC2-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "HV",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 1,
+        "control": "A2-RnD-HV-healthy"
+      },
+      "evidence": "A2-RnD-HV-NC2-1scan.json.gz",
+      "rawSha256": "a0c4cb5cc19a9e8d80d960359f60c8f52aac373be7e0c49d6b17f0820501140c",
+      "compressedSha256": "cd92e9cd2c2c4c00ac906de5e3f8a98dcf6f8c1238d2c21f3566f0f4134f11bd",
+      "compressedBytes": 194510,
+      "rawBytes": 14199280,
+      "scans": 6522,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-HV-NC2-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "HV",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 10,
+        "control": "A2-RnD-HV-healthy"
+      },
+      "evidence": "A2-RnD-HV-NC2-10scan.json.gz",
+      "rawSha256": "c39241d09a0cfe6f8676dfde876ccffd7d1f5c56d85770ffefe0bc9d4906ccf4",
+      "compressedSha256": "93f04cf5aa080ae6956aecd0d1583792a2271f804fc4cef69510397c641fc13f",
+      "compressedBytes": 194756,
+      "rawBytes": 14218893,
+      "scans": 6531,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-HV-Mentee-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "HV",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 1,
+        "control": "A2-RnD-HV-healthy"
+      },
+      "evidence": "A2-RnD-HV-Mentee-1scan.json.gz",
+      "rawSha256": "e10cd6e4cf4af670f41ec6cdc50e4337c4582d43b7d75710863b07e0f44c1f02",
+      "compressedSha256": "0440203dd504519ca2d8a70b6204d47104eca4ed9c6f3d948591a39380f5aa15",
+      "compressedBytes": 194508,
+      "rawBytes": 14199295,
+      "scans": 6522,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-HV-Mentee-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "HV",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 10,
+        "control": "A2-RnD-HV-healthy"
+      },
+      "evidence": "A2-RnD-HV-Mentee-10scan.json.gz",
+      "rawSha256": "452eb7cf471dc137290de1f47d2bd686005459d1c3e24500115757c98fdcbeae",
+      "compressedSha256": "1f80a3c402526425dabf963de48d89dfd632cf1466fa46616b48f4918a1a6cd3",
+      "compressedBytes": 194754,
+      "rawBytes": 14218890,
+      "scans": 6531,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-STO1-healthy",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "STO1",
+        "control": true
+      },
+      "evidence": "A2-RnD-STO1-healthy.json.gz",
+      "rawSha256": "5f25c9474ce54b56f79d36b257b8e60fe180b36db2f50c4c2f09f63a6456c7a4",
+      "compressedSha256": "8369552b86763f5071183adc902c748da4becb44ac5df5c4851de5506e689ec7",
+      "compressedBytes": 190038,
+      "rawBytes": 13761363,
+      "scans": 6321,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-STO1-NC2-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "STO1",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 1,
+        "control": "A2-RnD-STO1-healthy"
+      },
+      "evidence": "A2-RnD-STO1-NC2-1scan.json.gz",
+      "rawSha256": "64a3219191638ab0c25c44e4a985146c7b5e8efdc8adcd4c718d7bfd22f17920",
+      "compressedSha256": "9b208b521bc8939e18ed06747f842856f754f19b6854ae53f714bcb64b83c389",
+      "compressedBytes": 194510,
+      "rawBytes": 14199286,
+      "scans": 6522,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-STO1-NC2-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "STO1",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 10,
+        "control": "A2-RnD-STO1-healthy"
+      },
+      "evidence": "A2-RnD-STO1-NC2-10scan.json.gz",
+      "rawSha256": "5e90ef52d11044fec34b79583f0cca846a44ee9c70e539594e09d443e26a1c5f",
+      "compressedSha256": "f20e621f0aa67ba4b21663607f25fd2f6485da5f2519b76206d54ee358521dc6",
+      "compressedBytes": 194755,
+      "rawBytes": 14218899,
+      "scans": 6531,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-STO1-Mentee-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "STO1",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 1,
+        "control": "A2-RnD-STO1-healthy"
+      },
+      "evidence": "A2-RnD-STO1-Mentee-1scan.json.gz",
+      "rawSha256": "dfabdc049a97d8fd7ad100308fb8b51d771af9b5d0b332c74fd65a9ae1ee601f",
+      "compressedSha256": "9d5292bdbdd2ec987acdd4f06ca3fe2426712b9bc48809c6151c9a0809316014",
+      "compressedBytes": 194509,
+      "rawBytes": 14199301,
+      "scans": 6522,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-STO1-Mentee-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "STO1",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 10,
+        "control": "A2-RnD-STO1-healthy"
+      },
+      "evidence": "A2-RnD-STO1-Mentee-10scan.json.gz",
+      "rawSha256": "d885e8a8388307fc724a9ea2e93c73e10109d339aa29387af5a4d5332128e7e7",
+      "compressedSha256": "d17a6bab9d61dd244eab2f92a88cc0ecf6effd7ba877113b3f7fef952abbd3c7",
+      "compressedBytes": 194755,
+      "rawBytes": 14218896,
+      "scans": 6531,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-STO2-healthy",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "STO2",
+        "control": true
+      },
+      "evidence": "A2-RnD-STO2-healthy.json.gz",
+      "rawSha256": "8ecf24bd9a852535859d03d85173b58c898c2ebbd228c3f462646e6b0d7bc672",
+      "compressedSha256": "f1d7edb09c766208302135189e23c6b26540eca8457ec9f2735a8868b5a5ad61",
+      "compressedBytes": 190038,
+      "rawBytes": 13761363,
+      "scans": 6321,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-STO2-NC2-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "STO2",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 1,
+        "control": "A2-RnD-STO2-healthy"
+      },
+      "evidence": "A2-RnD-STO2-NC2-1scan.json.gz",
+      "rawSha256": "124ebf1658de5a5e74a910a8ec02a38a675a05987ed4af6ffe1b8f62e83b3089",
+      "compressedSha256": "7d8634b3de9238b0b57d1c8f1e6c856ed2ddd41f5cb02aa06b6efde6ecfc6be4",
+      "compressedBytes": 194509,
+      "rawBytes": 14199286,
+      "scans": 6522,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-STO2-NC2-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "STO2",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 10,
+        "control": "A2-RnD-STO2-healthy"
+      },
+      "evidence": "A2-RnD-STO2-NC2-10scan.json.gz",
+      "rawSha256": "238048c103cad2cc074cbfa343acbff67ffac1556fdb15ce8fe4444078add99f",
+      "compressedSha256": "793262e154db239637de45f1fb73ce4ba22154c52947f03c49226545fb8e3966",
+      "compressedBytes": 194755,
+      "rawBytes": 14218899,
+      "scans": 6531,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-STO2-Mentee-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "STO2",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 1,
+        "control": "A2-RnD-STO2-healthy"
+      },
+      "evidence": "A2-RnD-STO2-Mentee-1scan.json.gz",
+      "rawSha256": "bc43f39e7a98ae4216c951b33c895fd0b3989743a94cdc0573e4d03574a86783",
+      "compressedSha256": "a5f1a232110185f012c47d240c74f60024c80d9c146479190a6decb4a31299fe",
+      "compressedBytes": 194509,
+      "rawBytes": 14199301,
+      "scans": 6522,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-RnD-STO2-Mentee-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "RnD",
+        "domain": "STO2",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 10,
+        "control": "A2-RnD-STO2-healthy"
+      },
+      "evidence": "A2-RnD-STO2-Mentee-10scan.json.gz",
+      "rawSha256": "7d1db98a51c85629d2a9adc969d0261a20845717395d4663289c215c63d15008",
+      "compressedSha256": "7e25707ec1bb01568e0e5a5e534d53e9f77e371c5349471b32d141248472a7ed",
+      "compressedBytes": 194755,
+      "rawBytes": 14218896,
+      "scans": 6531,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Step2-LV-healthy",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Step2",
+        "domain": "LV",
+        "control": true
+      },
+      "evidence": "A2-Step2-LV-healthy.json.gz",
+      "rawSha256": "4369dd8d379a5abe4296b0a43b697d8e9a1b0e46f88baf7e2058ed0bd35fed8d",
+      "compressedSha256": "0edeadf31268f0b23042012974102927c9aacc1416ca76681ad9b9057f0a2840",
+      "compressedBytes": 7520,
+      "rawBytes": 66583,
+      "scans": 15,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Step2-LV-NC2-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Step2",
+        "domain": "LV",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 1,
+        "control": "A2-Step2-LV-healthy"
+      },
+      "evidence": "A2-Step2-LV-NC2-1scan.json.gz",
+      "rawSha256": "096d2572afc885dad17c97ea4cfb212e400b37978eeb4ee7fc9d828a7d42dbe2",
+      "compressedSha256": "b1618f8e5754abef8f755b6308226795d371e2d3ab724cd9fcf2452ff0ffc81c",
+      "compressedBytes": 14940,
+      "rawBytes": 503301,
+      "scans": 216,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Step2-LV-NC2-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Step2",
+        "domain": "LV",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 10,
+        "control": "A2-Step2-LV-healthy"
+      },
+      "evidence": "A2-Step2-LV-NC2-10scan.json.gz",
+      "rawSha256": "d1d5b591e4804dc3c8be8e06612910c6257c8b81195f36a94a803fdcd9c5de61",
+      "compressedSha256": "6b53088a878898589e7eb17eb5e372ddaae34e12b4672d73e2fee4c307155c1e",
+      "compressedBytes": 15252,
+      "rawBytes": 522887,
+      "scans": 225,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Step2-LV-Mentee-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Step2",
+        "domain": "LV",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 1,
+        "control": "A2-Step2-LV-healthy"
+      },
+      "evidence": "A2-Step2-LV-Mentee-1scan.json.gz",
+      "rawSha256": "62b54ace9d9f4b52e4fb6e24b122320d1372f5f6709dd562f393d51ea050316c",
+      "compressedSha256": "d5b0aa87bbe9ed735b5c0c6fe490f54ef89fbf32694db10dd72d30df2871c4d4",
+      "compressedBytes": 14946,
+      "rawBytes": 503316,
+      "scans": 216,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Step2-LV-Mentee-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Step2",
+        "domain": "LV",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 10,
+        "control": "A2-Step2-LV-healthy"
+      },
+      "evidence": "A2-Step2-LV-Mentee-10scan.json.gz",
+      "rawSha256": "d99d05e02f0a8b8cc4e20cb48d140338dff92bc9dc26d6780b5f5d1fb95f10e8",
+      "compressedSha256": "fd596bab7aba52f9ba7b292b6e0ff0c3766348bd59c1c6564e5a09f47c629d53",
+      "compressedBytes": 15257,
+      "rawBytes": 522884,
+      "scans": 225,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Step2-HV-healthy",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Step2",
+        "domain": "HV",
+        "control": true
+      },
+      "evidence": "A2-Step2-HV-healthy.json.gz",
+      "rawSha256": "c30dc5ecc101fe3c772a69231027ce0aa8bcae5f2e503decc26f407ed7b589ea",
+      "compressedSha256": "273c98517b4962220b3914d730d90b8f6f0e72a31ac520e49dfaaa2124c150b8",
+      "compressedBytes": 7520,
+      "rawBytes": 66583,
+      "scans": 15,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Step2-HV-NC2-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Step2",
+        "domain": "HV",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 1,
+        "control": "A2-Step2-HV-healthy"
+      },
+      "evidence": "A2-Step2-HV-NC2-1scan.json.gz",
+      "rawSha256": "cae6c3ae276e6df06122fad11d121c4a344e47d86913844d05e482947e2e8db7",
+      "compressedSha256": "9dd9fca6687c4e8bec36731577aae1d4d43e73fe324bae470e4f8a07b5a1c9f8",
+      "compressedBytes": 14940,
+      "rawBytes": 503301,
+      "scans": 216,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Step2-HV-NC2-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Step2",
+        "domain": "HV",
+        "input": "in_ES_NC_2",
+        "bad": false,
+        "hold": 10,
+        "control": "A2-Step2-HV-healthy"
+      },
+      "evidence": "A2-Step2-HV-NC2-10scan.json.gz",
+      "rawSha256": "431159d95830d0fb64d659ac0c3fc50b0ee1a6c62aca552f04ac91d32bf0539b",
+      "compressedSha256": "e8729d4ecb56e238be236fac51d4bdc2857c7f6764c545f0b7900c13737e2b08",
+      "compressedBytes": 15252,
+      "rawBytes": 522887,
+      "scans": 225,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Step2-HV-Mentee-1scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Step2",
+        "domain": "HV",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 1,
+        "control": "A2-Step2-HV-healthy"
+      },
+      "evidence": "A2-Step2-HV-Mentee-1scan.json.gz",
+      "rawSha256": "9dab14255ecebaf66b14adec324972ac1b218e4f5a0c5a3d3fb8eac9c92f0e37",
+      "compressedSha256": "7577e71225c0f27588d8b22163859fc776ad014e1967a947b58a3482ec9c605c",
+      "compressedBytes": 14946,
+      "rawBytes": 503316,
+      "scans": 216,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    },
+    {
+      "name": "A2-Step2-HV-Mentee-10scan",
+      "status": "PASS",
+      "metadata": {
+        "requirements": [
+          "EMG001",
+          "EMG005",
+          "EMG011"
+        ],
+        "route": "Step2",
+        "domain": "HV",
+        "input": "in_Mentee_EStop",
+        "bad": true,
+        "hold": 10,
+        "control": "A2-Step2-HV-healthy"
+      },
+      "evidence": "A2-Step2-HV-Mentee-10scan.json.gz",
+      "rawSha256": "bac887665c631e5df24c089eac7a2e0f84d10fcaec70f915bee9ff237c1d8931",
+      "compressedSha256": "c59c66b7566637b62cb81fe8237950e1242608f98b98ba4646e490de18506fe1",
+      "compressedBytes": 15257,
+      "rawBytes": 522884,
+      "scans": 225,
+      "sourceSha256": "72f42daf9c9c53abb13194e175e7569f1fac21dc37a29c009a9eef6eb2a5853e",
+      "sgvlSha256": "de0fa993b87c3f444430f16f6c56b3184b03a0539dbc5b109f8e5dd053bdea56"
+    }
+  ],
+  "limits": [
+    "No A3 external-interlock test",
+    "No emergency completion/destination oracle",
+    "ActualN3 producers with declared initial component and seven inactiveN4 cuts",
+    "No native/hardware/BOOT validation"
+  ]
+}

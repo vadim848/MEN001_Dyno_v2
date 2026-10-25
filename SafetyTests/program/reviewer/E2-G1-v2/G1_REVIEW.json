@@ -1,0 +1,29 @@
+{
+  "gate": "G1", "slice": "E2", "iteration": "v2", "role": "v2-reviewer", "date": "2026-10-21",
+  "verdict": "PASS WITH CONDITIONS",
+  "source": {"sal": "04b45456ae1c64fcea61e96e351f8035f9f409aec9e3b19f16d84fa8c60d28a3", "sgvl": "dc103abed49fd1c3ec1c031595d2c7482e41032890ac3370c86ef559d60a9104", "head": "b580920",
+    "decisions": "bdf55216dab6e4aa3e3a1c01ae51f9441d2a3664c5ec8fd93955379bbbdb86fe", "criteria": "f2f11d77eba03…", "criteriaDelta": "a017cbde326bf…", "criteriaDeltaJson": "7e94b53bc3cf2…", "questions": "cb959dd37dbe9…",
+    "testShasMatchHandoffV2": true},
+  "reviewerRun": {"command": "node --test --test-reporter=tap test/current-e2a-status.test.js test/current-e2d-release-permit.test.js", "tests": 19, "pass": 4, "fail": 15, "todo": 0, "matchesBaseline": true},
+  "baselineCheck": {"current": {"tests": 784, "pass": 483, "fail": 299, "todo": 2}, "nonE2Ok": 461, "nonE2NotOk": 0, "nonE2NameSetEqualsV1": true,
+    "e2": {"normativePass": 21, "fail": 299, "nv": 2, "diagPass": 1},
+    "failCauses": {"polarityPrecondition": 275, "emgrefLvSafeToRnD_C1notRemoved": 8, "IL01_V14Q7": 6, "REL_PERMIT": 4, "EMG4_03_uPlus1": 2, "IL05b2_polarityInEffect": 2, "POL01b": 1, "POL01c": 1}},
+  "previousConditions": {"C1": "closed", "C2": "closed (gap M-a)", "C3_stand": "closed (sal-mutation-plan.js rejects globs/missing files)", "C3_architect": "OPEN: MUTATION_PLAN_E2a..d testFiles still 'current-e2X-*.test.js (v2-tester, G1)', behaviouralTests ^E2X ", "C4": "closed (SafetyFault parts NV)", "M1": "closed", "M2": "closed", "M3": "closed (N=u to analyst)", "M4": "closed", "M5": "closed", "M6": "closed"},
+  "oracleTraceability": "requirement-derived for EMGREF-LV, EMGREF-RUN, STP-I/I(4), EMG4-03, RUN-CONF, IL-05a/b/d, POL-01(b)(c), REL-PERMIT, HLT-01..03; no assertion derived from canonical behaviour found",
+  "A10": {"assessment": "bounded relaxation of literal EMGREF(3): whole-sequence lead of exactly 1 scan allowed, no lag, no partial mix; safety-directional and consistent with EMGREF(1) <= e+1; needs analyst confirmation", "dependentPass": 8, "inconsistency": "IL-03/IL-05a/IL-05d compare NC vs in_Estop_PLC with d=0 only"},
+  "conditions": [
+    {"id": "N1", "to": ["tester", "analyst", "architect"], "blocks": "G3 for Q-REL-AFTER-PERMIT / MU24", "text": "REL-PERMIT models permit loss only by the cover; after V14-Q7/IL-01 the cover is no longer a Safe->R&D permit, so the 'accepted' tests pass vacuously on a candidate and the MU24 kill forecast (GATE_001 contains the cover) no longer holds. Add a variant with a permit surviving E2 (LV/HV connector FALSE 300 ms in Safe, EMG-003) incl. 1999/2000 boundary; analyst confirms Safe->R&D permit list after E2; architect re-derives MU24 killer."},
+    {"id": "N2", "to": ["analyst", "tester"], "blocks": "G3 acceptance of EMGREF(3) results", "text": "Decide A10 (lead <= 1 scan of physical causes vs in_Estop_PLC); apply the same rule to IL-03/IL-05a/IL-05d (now exact) and ES/Mentee/connector (lead allowed)."},
+    {"id": "C3", "to": ["architect"], "blocks": "G3 mutation run", "text": "Replace template testFiles by the 16 exact current-e2*.test.js names and behaviouralTests by ^E2[a-d]  in MUTATION_PLAN_E2a..d (runner now rejects the plans)."}
+  ],
+  "minors": [
+    {"id": "M-a", "to": "tester", "text": "EMG6-01 'Restart before C1_FBK OFF with cause already removed -> stays Emergency' not tested (no refused Restart for 1-scan causes)."},
+    {"id": "m-b", "to": "tester", "text": "STP-I tc = first C2_FBK OFF from c; may be vacuous at c=u+1 if a candidate releases STO before C2 ON; take tc after the C2 OFF command."},
+    {"id": "m-c", "to": "tester", "text": "summarize.mjs labels 'ok # TODO' as status PASS in the jsonl (24 PASS = 21 + 1 DIAG + 2 NV); emit NV/TODO."},
+    {"id": "m-d", "to": "tester", "text": "Partial STS_* publication silently falls back to D2-A; statusMissing never set."},
+    {"id": "m-e", "to": "architect", "text": "Pin the SafetyFault symbol name (A8); regex first match is ambiguous with a general Fault bit (Q-RC-13)."},
+    {"id": "m-f", "to": "lead", "text": "DIAG test is counted in check:software current pass 483; report separately."}
+  ],
+  "repro": "program/reviewer/E2-G1-v2/repro/stpi-u-probe.mjs (split diagnostic: u = C2 ON = STO release, C2_FBK u+1, Run u+100 = k+99)",
+  "limits": "Model-level software tests; no native CRC/Verify, Target or hardware safety claims; mutation killability not verified (no candidate, plans not executable); full E2 suite not re-run by reviewer (2 files + TAP analysis)."
+}

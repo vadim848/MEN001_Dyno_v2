@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.18">
+  <DUT Name="ST_MotorCommand" Id="{c57c534f-8d2e-4752-8005-b6f46384c45b}">
+    <Declaration><![CDATA[TYPE ST_MotorCommand :
+STRUCT
+    //------------------------------------------------------------------
+    // Control
+    //------------------------------------------------------------------
+    bEnable             : BOOL;         // TRUE = enable drive power
+    bResetError         : BOOL;         // Rising edge = reset active fault (sequenced:
+                                        // SoE drive reset -> 250 ms settle -> NC reset)
+    bSoeReset           : BOOL;         // Rising edge = SoE drive reset ONLY (S-0-0099,
+                                        // diagnostic; runs in background from any state)
+    bNcReset            : BOOL;         // Rising edge = NC axis reset ONLY (MC_Reset,
+                                        // diagnostic; runs in background from any state)
+    bHome               : BOOL;         // Rising edge = start homing sequence
+    bStop               : BOOL;         // Rising edge = decelerate to standstill
+    bZeroPosition       : BOOL;         // Rising edge = set current position to 0
+    eControlMode        : E_ControlMode;
+
+    //------------------------------------------------------------------
+    // Position mode  (eControlMode = POSITION)
+    //------------------------------------------------------------------
+    fTargetPosition     : LREAL;        // Target position [units]
+    fDirection          : LREAL := 1.0; // Move direction for relative moves
+    bRelative           : BOOL;         // TRUE = relative, FALSE = absolute
+    bExecuteMove        : BOOL;         // Rising edge = execute move
+
+    //------------------------------------------------------------------
+    // Velocity mode  (eControlMode = VELOCITY)
+    //------------------------------------------------------------------
+    fTargetVelocity     : LREAL;        // Target velocity [units/s] sign = direction
+
+    //------------------------------------------------------------------
+    // Torque mode  (FB_TorqueControl)
+    //------------------------------------------------------------------
+    bTorqueExecute      : BOOL;         // Hold TRUE = torque active, FALSE = stop
+    fTargetTorque       : LREAL;        // Target torque [% of rated, -100 to 100]
+    fTorqueRamp         : LREAL := 100.0; // Torque ramp [% / s]
+    fTorqueVelLimitHigh : LREAL := 859.437;  // Velocity safety limit [deg/s] = 15 rad/s
+    fTorqueVelLimitLow  : LREAL := -859.437; // = -15 rad/s
+
+    //------------------------------------------------------------------
+    // Motion profile (shared across position and velocity modes)
+    //------------------------------------------------------------------
+    fAcceleration       : LREAL := 500.0;
+    fDeceleration       : LREAL := 500.0;
+    fJerk               : LREAL := 0.0;
+    fMaxVelocity        : LREAL := 100.0;
+
+    //------------------------------------------------------------------
+    // Drive current/torque limit -> AX5000 SoE S-0-0092 (applies in all modes,
+    // incl. position mode S-0-0032 = 11). Scaled to the PDO in PRG_Motion.
+    //------------------------------------------------------------------
+    fCurrentLimit_pct   : LREAL := 100.0; // [%] 0..100 of motor peak (P-0-0092)
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
