@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SAL trainer (model)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="banner" class="banner">This is a program model, not Verify/TwinCAT and not hardware. The feedback (FBK) model is simplified.</div>
+<nav id="tabs">
+  <button data-tab="prog" class="on">Program</button>
+  <button data-tab="map">Name mapping</button>
+  <button data-tab="exam">Exam</button>
+  <button data-tab="man">Manual mode</button>
+</nav>
+
+<section id="prog" class="tab">
+  <h2>Program</h2>
+  <p>The canonical program or uploaded files are checked. Files are only parsed, not executed as code.</p>
+  <div><label><input type="radio" name="src" value="canonical" checked> Canonical program (from the repository)</label></div>
+  <div><label><input type="radio" name="src" value="upload"> Upload files:</label></div>
+  <div class="box">
+    <label>SAL (.sal) and SGVL (.sgvl), optionally .sal.diagram and Alias Devices (*.sds): <input id="files" type="file" multiple></label><br>
+    <label>Alias Devices folder (optional): <input id="aliasdir" type="file" webkitdirectory multiple></label><br>
+    <button id="upload">Upload</button>
+  </div>
+  <div id="progInfo" class="info"></div>
+</section>
+
+<section id="map" class="tab" hidden>
+  <h2>Name mapping</h2>
+  <p>Left: names used by the catalog; right: signal of the loaded program. Matching names are filled in automatically. Polarity inversion is not supported. Scenarios touching unmapped signals get the status NOT CHECKED.</p>
+  <button id="mapReload">Refresh</button>
+  <button id="mapSave">Save table</button>
+  <label class="btn">Load table <input id="mapLoad" type="file" accept=".json" hidden></label>
+  <span id="mapInfo" class="info"></span>
+  <table id="mapTable"><thead><tr><th>Our name</th><th>Kind</th><th>Signal of the loaded program</th><th></th></tr></thead><tbody></tbody></table>
+</section>
+
+<section id="exam" class="tab" hidden>
+  <h2>Exam</h2>
+  <p>Part 1 - structure check of the file as is. Part 2 - all catalog scenarios (tolerance +-50 ms); runs even if the structure FAILs. Does not replace Verify in TwinCAT.</p>
+  <button id="examStart">Run exam</button>
+  <a id="examReport" class="btn" hidden>Save report</a>
+  <div id="examProgress" class="info"></div>
+  <h3>Part 1. Structure</h3><div id="examStruct"></div>
+  <h3>Part 2. Scenario catalog</h3><div id="examTotals" class="info"></div>
+  <table id="examTable" hidden><thead><tr><th>ID</th><th>Stage</th><th>Title</th><th>Status</th></tr></thead><tbody></tbody></table>
+</section>
+
+<section id="man" class="tab" hidden>
+  <h2>Manual mode</h2>
+  <div class="ctl">
+    <button id="mStart">Start session</button>
+    <label><input type="checkbox" id="mPlant" checked> FBK model</label>
+    <button id="mRun" disabled>Run</button><button id="mPause" disabled>Pause</button><button id="mStep" disabled>Step (1 scan)</button>
+    <label>Advance by <input id="mMs" type="number" value="100" min="1" max="120000" style="width:80px"> ms</label><button id="mAdv" disabled>Advance</button>
+    <label>Speed <select id="mSpeed"><option>0.1</option><option>0.2</option><option>0.5</option><option selected>1</option><option>2</option><option>5</option><option>10</option></select></label>
+    <label>Window <select id="mWin"><option value="5000">5 s</option><option value="10000">10 s</option><option value="30000" selected>30 s</option><option value="60000">60 s</option><option value="120000">120 s</option></select></label>
+  </div>
+  <div id="mInfo" class="info"></div>
+  <div class="cols">
+    <div><h3>Buttons</h3><div id="mPairs" class="pairs"></div><div id="mFilter"></div><h3>Inputs (one by one)</h3><div id="mInputs"></div></div>
+    <div><h3>State</h3><div id="mOut"></div><h3>Timers</h3><div id="mTimers"></div></div>
+  </div>
+  <h3>Timeline</h3><div id="mTimeline"></div>
+</section>
+<script type="module" src="app.js"></script>
+</body>
+</html>

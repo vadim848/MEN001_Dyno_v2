@@ -108,5 +108,66 @@ def('E-10','E6','Run->R&D: C2_FBK ON > 500 ms after C2 OFF command -> Emergency'
   const o=y.first(s=>!s.out_HV_C2,y.t-10000);const e3=o===undefined?undefined:y.first(emg,o);
   c(e3!==undefined&&Math.abs(e3-(o+500))<=TOL,`Config exit, C2_FBK stuck ON: Emergency at C2 OFF+${e3===undefined?'none':e3-o}, expected 500+-${TOL} [E6-Q1, S4-F3a]`);}
 },{source:'E6-Q1, S4-F3a'});
-export const E=['E-01','E-02','E-03','E-04','E-05','E-06','E-07','E-08','E-09','E-10'];
+// E-11 (EMG-OFF-Q1, Vadim 2026-10-27): Emergency caused by an OFF failure (C1/C2 FBK ON > 500 ms after the OFF command) ->
+// the common emergency chain as with EStop (E-01/E-02 timings): C3/BMS OFF + LV discharge at once, C1 OFF after 2 s, STO held,
+// then the HV discharge/C2 OFF branch; the stuck FBK must not delay the chain.
+// Assumption (test-set input): the FBK of the failed contactor is pinned ON by the test (plant model override) for the whole window.
+function offFailureChain(x,c,off,fb,label,{hvBranch=true}={}){
+ x.wait(15000);// observation window; FBK stays pinned ON throughout
+ c(x.hold[fb]===true,`${label}: ${fb} pinned ON for the whole window (test setup)`);
+ const ev=x.first(emg,off);
+ c(ev!==undefined&&Math.abs(ev-(off+500))<=TOL,`${label}: Emergency at OFF+${ev===undefined?'none':ev-off}, expected 500+-${TOL} [E6-Q1]`);
+ if(ev===undefined)return;
+ c(!x.never(s=>!emg(s),ev),`${label}: exactly one main state (Emergency) from entry to end of window [EMG-OFF-Q1, rule 5]`);
+ const c3=x.first(s=>!s.out_C3_BatRelay&&!s.out_RBM_Bat,ev-1);c(c3!==undefined&&c3<=ev+TOL,`${label}: C3/BMS OFF at once (<=${TOL} ms after Emergency); got ${c3===undefined?'none':'+'+(c3-ev)} [EMG-OFF-Q1, Q-ARCH-01]`);
+ c(!x.never(s=>s.out_C3_BatRelay||s.out_RBM_Bat,ev+TOL),`${label}: C3/BMS stay OFF [EMG-OFF-Q1]`);
+ const lvd=x.first(s=>s.out_LV_Discharge_Request,ev-1);c(lvd!==undefined&&lvd<=ev+TOL,`${label}: LV discharge request at once (<=${TOL} ms after Emergency); got ${lvd===undefined?'none':'+'+(lvd-ev)} [EMG-OFF-Q1, Q-ARCH-01]`);
+ const at=x.log.find(s=>s.t>=ev);
+ if(at?.out_LV_C1){const c1=x.fall('out_LV_C1',ev);c(c1!==undefined&&c1>ev+2000-TOL&&c1<=ev+2000+TOL,`${label}: C1 OFF at Emergency+${c1===undefined?'none':c1-ev}, expected 2000+-${TOL} [EMG-OFF-Q1, Q-ARCH-01]`);}
+ else c(!x.never(s=>s.out_LV_C1,ev),`${label}: C1 already OFF at Emergency entry and never re-commanded ON [EMG-OFF-Q1]`);
+ c(!x.never(s=>!s.STO,ev),`${label}: STO held (active) throughout the chain [EMG-OFF-Q1]`);
+ c(!x.never(s=>s.out_HV_C2,ev),`${label}: C2 never commanded ON after Emergency [EMG-OFF-Q1]`);
+ if(hvBranch){const hvd=x.first(s=>s.out_HV_Discharge_Request,ev-1);c(hvd!==undefined,`${label}: HV discharge branch requested within the window (timing not specified) [EMG-OFF-Q1]`);}
+}
+def('E-11a','E6','OFF failure Run->R&D, C2_FBK stuck ON: Emergency -> common emergency chain, FBK does not delay it',(P,c)=>{
+ const x=P.runC3();pre(x.log.at(-1).out_C3_BatRelay&&x.log.at(-1).out_RBM_Bat,'precondition: C3/BMS ON in Run (manual set in R&D, V14-Q15)');x.hold.in_HV_C2_FBK=true;x.green(550);const off=x.until(s=>!s.out_HV_C2,20000,'C2 OFF command during Run->R&D');
+ offFailureChain(x,c,off,'in_HV_C2_FBK','Run->R&D, C2_FBK stuck');
+},{source:'EMG-OFF-Q1, E6-Q1, Q-ARCH-01'});
+def('E-11b','E6','OFF failure R&D->Safe, C1_FBK stuck ON: Emergency -> common emergency chain, FBK does not delay it',(P,c)=>{
+ const x=P.rndC3();pre(x.log.at(-1).out_C3_BatRelay,'precondition: C3 ON in R&D');x.hold.in_LV_C1_FBK=true;x.green(550);const off=x.until(s=>!s.out_LV_C1,5000,'C1 OFF command in R&D->Safe');
+ offFailureChain(x,c,off,'in_LV_C1_FBK','R&D->Safe, C1_FBK stuck',{hvBranch:false});
+},{source:'EMG-OFF-Q1, E6-Q1, Q-ARCH-01'});
+def('E-11c','E6','OFF failure on exit from Config, C2_FBK stuck ON: Emergency -> common emergency chain, FBK does not delay it',(P,c)=>{
+ const x=P.safe();x.step({inPLC_BypassC1C2:true},1000);pre(x.is('CFG'),'Config entered (Bypass edge in Safe)');x.hold.in_HV_C2_FBK=true;
+ x.step({inPLC_BypassC1C2:false});const off=x.until(s=>!s.out_HV_C2,15000,'C2 OFF command on Config exit');
+ offFailureChain(x,c,off,'in_HV_C2_FBK','Config exit, C2_FBK stuck');
+},{source:'EMG-OFF-Q1, E6-Q1, V14-Q18, S4-F3a'});
+// E-12 (Q-EMGOFF-A1 = B, Vadim 2026-10-27): any WD_EMG in steady Run (here: C1/C2 FBK lost while commanded ON, E-09) starts the
+// common emergency chain: C3/BMS OFF + LV discharge at once, C1 OFF after 2 s, STO active and held, C2 OFF by the chain.
+// Emergency moment per E-09 (<= loss+TOL after the 500 ms window). Assumption: lost FBK pinned OFF by the test for the whole window.
+// STO/C2 timing inside the chain is not specified here (only occurrence and hold are checked).
+function runFbkLossChain(x,c,fb,label){
+ pre(x.is('RUN')&&x.log.at(-1).out_HV_C2&&x.log.at(-1).out_LV_C1&&x.log.at(-1).out_C3_BatRelay&&x.log.at(-1).out_RBM_Bat,'precondition: steady Run, C1+C2 ON, C3/BMS ON (manual set in R&D, V14-Q15)');
+ x.wait(500);const loss=x.t;x.hold[fb]=false;x.wait(15000);
+ c(x.hold[fb]===false,`${label}: ${fb} pinned OFF for the whole window (test setup)`);
+ const ev=x.first(emg,loss);c(ev!==undefined&&ev<=loss+TOL,`${label}: Emergency within ${TOL} ms; got ${ev===undefined?'none':'+'+(ev-loss)} [Q-RC-19, E-09]`);
+ if(ev===undefined)return;
+ c(!x.never(s=>!emg(s),ev),`${label}: exactly one main state (Emergency) from entry to end of window [Q-EMGOFF-A1, rule 5]`);
+ const c3=x.first(s=>!s.out_C3_BatRelay&&!s.out_RBM_Bat,ev-1);c(c3!==undefined&&c3<=ev+TOL,`${label}: C3/BMS OFF at once (<=${TOL} ms after Emergency); got ${c3===undefined?'none':'+'+(c3-ev)} [Q-EMGOFF-A1, Q-ARCH-01]`);
+ c(!x.never(s=>s.out_C3_BatRelay||s.out_RBM_Bat,ev+TOL),`${label}: C3/BMS stay OFF [Q-EMGOFF-A1]`);
+ const lvd=x.first(s=>s.out_LV_Discharge_Request,ev-1);c(lvd!==undefined&&lvd<=ev+TOL,`${label}: LV discharge request at once (<=${TOL} ms after Emergency); got ${lvd===undefined?'none':'+'+(lvd-ev)} [Q-EMGOFF-A1, Q-ARCH-01]`);
+ const c1=x.fall('out_LV_C1',ev-1);c(c1!==undefined&&c1>ev+2000-TOL&&c1<=ev+2000+TOL,`${label}: C1 OFF at Emergency+${c1===undefined?'none':c1-ev}, expected 2000+-${TOL} [Q-EMGOFF-A1, Q-ARCH-01]`);
+ c(c1===undefined||!x.never(s=>s.out_LV_C1,c1),`${label}: C1 stays OFF after the chain drop [Q-EMGOFF-A1]`);
+ const sto=x.first(s=>s.STO,ev-1);c(sto!==undefined,`${label}: STO activated by the chain [Q-EMGOFF-A1, EMG-001]`);
+ c(sto===undefined||!x.never(s=>!s.STO,sto),`${label}: STO held once active [Q-EMGOFF-A1]`);
+ const c2=x.first(s=>!s.out_HV_C2,ev-1);c(c2!==undefined,`${label}: C2 OFF by the emergency chain within the window [Q-EMGOFF-A1]`);
+ c(c2===undefined||!x.never(s=>s.out_HV_C2,c2),`${label}: C2 stays OFF [Q-EMGOFF-A1]`);
+}
+def('E-12a','E6','steady Run, C2_FBK lost with C2 commanded ON: Emergency -> common emergency chain',(P,c)=>{
+ runFbkLossChain(P.runC3(),c,'in_HV_C2_FBK','Run, C2_FBK lost');
+},{source:'Q-EMGOFF-A1, Q-RC-19, Q-ARCH-01'});
+def('E-12b','E6','steady Run, C1_FBK lost with C1 commanded ON: Emergency -> common emergency chain',(P,c)=>{
+ runFbkLossChain(P.runC3(),c,'in_LV_C1_FBK','Run, C1_FBK lost');
+},{source:'Q-EMGOFF-A1, Q-RC-19, Q-ARCH-01'});
+export const E=['E-01','E-02','E-03','E-04','E-05','E-06','E-07','E-08','E-09','E-10','E-11a','E-11b','E-11c','E-12a','E-12b'];
 void boot;void pre;void toStartingRun;

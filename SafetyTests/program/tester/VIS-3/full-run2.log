@@ -1,0 +1,72 @@
+TAP version 13
+# Subtest: VIS-2 buttons (manual mode API)
+    # Subtest: pair in_ES_NC_1+in_ES_NC_2: both lines change in the same scan; paused -> next scan
+    ok 1 - pair in_ES_NC_1+in_ES_NC_2: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 262.7235
+      type: 'test'
+      ...
+    # Subtest: pair in_InterLock_NC_1+in_InterLock_NC_2: both lines change in the same scan; paused -> next scan
+    ok 2 - pair in_InterLock_NC_1+in_InterLock_NC_2: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 340.6937
+      type: 'test'
+      ...
+    # Subtest: pair in_STO_DR1_FBK+in_STO_DR2_FBK: both lines change in the same scan; paused -> next scan
+    ok 3 - pair in_STO_DR1_FBK+in_STO_DR2_FBK: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 319.8866
+      type: 'test'
+      ...
+    # Subtest: pair in_Reset_PB+in_Relase_Door_PB: both lines change in the same scan; paused -> next scan
+    ok 4 - pair in_Reset_PB+in_Relase_Door_PB: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 404.5558
+      type: 'test'
+      ...
+    # Subtest: momentary Reset: held across advance N, released on release
+    ok 5 - momentary Reset: held across advance N, released on release
+      ---
+      duration_ms: 1175.386
+      type: 'test'
+      ...
+    # Subtest: invalid name in a multi-signal request -> nothing applied
+    ok 6 - invalid name in a multi-signal request -> nothing applied
+      ---
+      duration_ms: 162.6929
+      type: 'test'
+      ...
+    # Subtest: b_EStop_Ok not writable (inputs / hold)
+    ok 7 - b_EStop_Ok not writable (inputs / hold)
+      ---
+      duration_ms: 4.3391
+      type: 'test'
+      ...
+    1..7
+ok 1 - VIS-2 buttons (manual mode API)
+  ---
+  duration_ms: 7418.6181
+  type: 'test'
+  ...
+# Subtest: VIS-2 static: buttons and the pair "split" mark on the page (English per VIS-3-Q2)
+ok 2 - VIS-2 static: buttons and the pair "split" mark on the page (English per VIS-3-Q2)
+  ---
+  duration_ms: 1.4836
+  type: 'test'
+  ...
+# Subtest: VIS-1/5 canonical exam equals check:catalog/check:structure; report standalone
+not ok 3 - VIS-1/5 canonical exam equals check:catalog/check:structure; report standalone
+  ---
+  duration_ms: 27586.324
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-exam-canonical.test.js:17:1'
+  failureType: 'testCodeFailure'
+  error: 'exam error: worker process exited with code 1073807364'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    runExam (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/_lib.mjs:57:41)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-exam-canonical.test.js:24:16)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...

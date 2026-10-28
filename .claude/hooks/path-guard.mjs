@@ -26,9 +26,13 @@ const POLICY = {
   "v2-stand-engineer": ["SafetyTests/src/**", "SafetyTests/scripts/**", "SafetyTests/package.json",
     "SafetyTests/test/stand-*.test.js", "SafetyTests/test/sal-semantics.test.js",
     "SafetyTests/test/sal-runtime.test.js", "SafetyTests/test/archive/**", "SafetyTests/program/stand/**"],
-  "v2-editor": ["MEN001_Dyno/Safety_Dyno/**", "SafetyTests/candidates/**", "SafetyTests/program/editor/**"],
+  // VIS stage (Vadim, 2026-10-26): visualizer paths for editor/tester.
+  "v2-editor": ["MEN001_Dyno/Safety_Dyno/**", "SafetyTests/candidates/**", "SafetyTests/program/editor/**",
+    "SafetyTests/visualizer/app/**", "SafetyTests/visualizer/*.js", "SafetyTests/visualizer/*.md",
+    "SafetyTests/package.json"],
   "v2-tester": ["SafetyTests/test/current-*.test.js", "SafetyTests/test/helpers/**",
-    "SafetyTests/test/independent/**", "SafetyTests/test/catalog/**", "SafetyTests/program/tester/**"],
+    "SafetyTests/test/independent/**", "SafetyTests/test/catalog/**", "SafetyTests/program/tester/**",
+    "SafetyTests/visualizer/test/**"],
   "v2-reviewer": ["SafetyTests/program/reviewer/**"],
   "v2-runner": ["SafetyTests/program/runs/**"]
 };
