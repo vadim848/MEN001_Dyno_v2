@@ -1,7 +1,8 @@
 // Catalog section P - PLC commands (E4, v1.4 §8). Command inputs are resolved by name (A7); absent = NOT IMPLEMENTED (FAIL).
 import {def,stIs,emg,toSafeToRnd,toStartingRun,pre} from '../../helpers/catalog-program.js';
 import {cmdName,edge} from './w.js';
-import {downTrace,checkOrder} from './d.js';
+import {downTrace,checkOrder,holdCheck} from './d.js';
+import {T_SS1,T_COAST} from './timers.js';
 const TOL=50;
 const upRnd=(x,from)=>x.first(s=>s.out_HV_C2||!s.STO,from);
 
@@ -15,12 +16,12 @@ def('P-02','E4','R&D, cover open: edge CMD_R&D_TO_RUN -> not executed',(P,c)=>{
 },{source:'V14-Q5'});
 def('P-03','E4','Run: edge CMD_RUN_TO_R&D -> as green (D-01)',(P,c)=>{
  const x=P.run();const a=edge(x,'RUN_TO_RND');x.wait(20000);const t=downTrace(x,a);
- c(t.STO!==undefined&&Math.abs(t.STO-(a+2000))<=TOL,`STO at a+2000+-${TOL}; got ${t.STO===undefined?'none':'a+'+(t.STO-a)} [V14-Q3]`);
- c(t.DIS!==undefined&&Math.abs(t.DIS-(a+7000))<=TOL,`Discharge at a+7000+-${TOL}; got ${t.DIS===undefined?'none':'a+'+(t.DIS-a)}`);checkOrder(c,t,a,'PLC Run->R&D');
+ c(t.STO!==undefined&&Math.abs(t.STO-(a+T_SS1))<=TOL,`STO at a+${T_SS1}+-${TOL}; got ${t.STO===undefined?'none':'a+'+(t.STO-a)} [V14-Q3]`);
+ c(t.DIS!==undefined&&Math.abs(t.DIS-(a+T_SS1+T_COAST))<=TOL,`Discharge at a+${T_SS1+T_COAST}+-${TOL}; got ${t.DIS===undefined?'none':'a+'+(t.DIS-a)} [TMR-1-Q1]`);holdCheck(c,t,a,'PLC Run->R&D');checkOrder(c,t,a,'PLC Run->R&D');
 },{source:'v1.4 §8, V14-Q3'});
 def('P-04','E4','StartingRun: edge CMD_RUN_TO_R&D -> abort (as D-03)',(P,c)=>{
  const x=P.rnd();toStartingRun(x,{holdHvFaulty:true});x.wait(100);const a=edge(x,'RUN_TO_RND');x.wait(10000);const t=downTrace(x,a);
- c(t.STO!==undefined&&t.STO<=a+TOL,`STO at once; got ${t.STO===undefined?'none':'a+'+(t.STO-a)} [V14-Q12]`);c(t.DIS!==undefined&&t.DIS<=a+TOL,'Discharge at once [V14-Q12]');
+ c(t.STO!==undefined&&t.STO<=a+TOL,`STO at once; got ${t.STO===undefined?'none':'a+'+(t.STO-a)} [V14-Q12]`);c(t.DIS!==undefined&&t.DIS<=a+TOL,'Discharge at once [V14-Q12]');holdCheck(c,t,a,'PLC StartingRun abort');
  c(x.is('RND')&&!x.never(s=>stIs(s,'RUN'),a),`abort to R&D, no Run; status=${x.status()}`);
  // Q-E4-2 A (REC-ACCEPTED, architect): abort edge executed with another command TRUE; ignored while the PLC error is active.
  {const y=P.rnd();const o=cmdName(y,'RND_TO_SAFE');toStartingRun(y,{holdHvFaulty:true});y.step({[o]:true},100);const a2=edge(y,'RUN_TO_RND');y.wait(500);

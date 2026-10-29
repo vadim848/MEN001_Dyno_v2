@@ -1,0 +1,601 @@
+TAP version 13
+# Subtest: VIS-2 buttons (manual mode API)
+    # Subtest: pair in_ES_NC_1+in_ES_NC_2: both lines change in the same scan; paused -> next scan
+    ok 1 - pair in_ES_NC_1+in_ES_NC_2: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 347.0286
+      type: 'test'
+      ...
+    # Subtest: pair in_InterLock_NC_1+in_InterLock_NC_2: both lines change in the same scan; paused -> next scan
+    ok 2 - pair in_InterLock_NC_1+in_InterLock_NC_2: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 353.5585
+      type: 'test'
+      ...
+    # Subtest: pair in_STO_DR1_FBK+in_STO_DR2_FBK: both lines change in the same scan; paused -> next scan
+    ok 3 - pair in_STO_DR1_FBK+in_STO_DR2_FBK: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 252.6124
+      type: 'test'
+      ...
+    # Subtest: pair in_Reset_PB+in_Relase_Door_PB: both lines change in the same scan; paused -> next scan
+    ok 4 - pair in_Reset_PB+in_Relase_Door_PB: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 273.1464
+      type: 'test'
+      ...
+    # Subtest: momentary Reset: held across advance N, released on release
+    ok 5 - momentary Reset: held across advance N, released on release
+      ---
+      duration_ms: 1354.1967
+      type: 'test'
+      ...
+    # Subtest: invalid name in a multi-signal request -> nothing applied
+    ok 6 - invalid name in a multi-signal request -> nothing applied
+      ---
+      duration_ms: 138.5097
+      type: 'test'
+      ...
+    # Subtest: b_EStop_Ok not writable (inputs / hold)
+    ok 7 - b_EStop_Ok not writable (inputs / hold)
+      ---
+      duration_ms: 4.6067
+      type: 'test'
+      ...
+    1..7
+ok 1 - VIS-2 buttons (manual mode API)
+  ---
+  duration_ms: 8336.5658
+  type: 'test'
+  ...
+# Subtest: VIS-2 static: buttons and the pair "split" mark on the page (English per VIS-3-Q2)
+ok 2 - VIS-2 static: buttons and the pair "split" mark on the page (English per VIS-3-Q2)
+  ---
+  duration_ms: 2.2518
+  type: 'test'
+  ...
+# Subtest: VIS-1/5 canonical exam equals check:catalog/check:structure; report standalone
+    # Subtest: structure part == check:structure (PASS, same check list)
+    ok 1 - structure part == check:structure (PASS, same check list)
+      ---
+      duration_ms: 1.7402
+      type: 'test'
+      ...
+    # Subtest: catalog part: per-ID status == TAP; no section M / HDR; same ID set
+    ok 2 - catalog part: per-ID status == TAP; no section M / HDR; same ID set
+      ---
+      duration_ms: 0.4574
+      type: 'test'
+      ...
+    # Subtest: report.html: standalone, SHA256 SAL+SGVL, date, catalog version, totals, mapping table
+    ok 3 - report.html: standalone, SHA256 SAL+SGVL, date, catalog version, totals, mapping table
+      ---
+      duration_ms: 11.3324
+      type: 'test'
+      ...
+    1..3
+ok 3 - VIS-1/5 canonical exam equals check:catalog/check:structure; report standalone
+  ---
+  duration_ms: 2227528.4658
+  type: 'test'
+  ...
+# Subtest: VIS-3/5 mutated copies
+    # Subtest: S1 structural (graphical inter-network wiredLink): structure FAIL, catalog still run, parts separate
+    ok 1 - S1 structural (graphical inter-network wiredLink): structure FAIL, catalog still run, parts separate
+      ---
+      duration_ms: 8013.4407
+      type: 'test'
+      ...
+    # Subtest: M1 behavioural (BLUE 0.5 s -> 0.8 s): K-11 FAIL with divergence + diagram; report
+    ok 2 - M1 behavioural (BLUE 0.5 s -> 0.8 s): K-11 FAIL with divergence + diagram; report
+      ---
+      duration_ms: 1436817.4533
+      type: 'test'
+      ...
+    1..2
+ok 4 - VIS-3/5 mutated copies
+  ---
+  duration_ms: 1444976.63
+  type: 'test'
+  ...
+# M1 structure=FAIL; FAIL=B-02,D-01,D-03,D-05,H-02,H-03,H-06,H-07,K-08,K-09,K-11,P-03,P-04,W-02,W-06
+# Subtest: VIS-3 filter readiness (manual mode API)
+    # Subtest: 1 Safe: green 100 ms -> ready at release+P9 (1000) +-1; SAL flag same; never diverged
+    not ok 1 - 1 Safe: green 100 ms -> ready at release+P9 (1000) +-1; SAL flag same; never diverged
+      ---
+      duration_ms: 22188.3874
+      type: 'test'
+      location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:87:13'
+      failureType: 'testCodeFailure'
+      error: 'green: model ready at release+-2712, expected 1000 +-1 scan [VIS-3-Q1, p.9]'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: true
+      actual: false
+      operator: '=='
+      stack: |-
+        checkEdge (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:63:10)
+        TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:96:7)
+        process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:87:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: 1b blue alone also restarts the countdown (p.9: BOTH buttons released), mid-countdown press
+    not ok 2 - 1b blue alone also restarts the countdown (p.9: BOTH buttons released), mid-countdown press
+      ---
+      duration_ms: 19597.867
+      type: 'test'
+      location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:101:13'
+      failureType: 'testCodeFailure'
+      error: 'blue: model ready at release+-3513, expected 1000 +-1 scan [VIS-3-Q1, p.9]'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: true
+      actual: false
+      operator: '=='
+      stack: |-
+        checkEdge (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:63:10)
+        TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:109:45)
+        process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:101:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: 2 BOTH Safe->R&D and R&D->Run: same timing; compared only in SAFE/RND; no divergence
+    not ok 3 - 2 BOTH Safe->R&D and R&D->Run: same timing; compared only in SAFE/RND; no divergence
+      ---
+      duration_ms: 20541.7042
+      type: 'test'
+      location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:113:13'
+      failureType: 'testCodeFailure'
+      error: 'BOTH Safe->R&D: model ready at release+-3812, expected 1000 +-1 scan [VIS-3-Q1, p.9]'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: true
+      actual: false
+      operator: '=='
+      stack: |-
+        checkEdge (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:63:10)
+        TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:118:45)
+        process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:113:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: 3 K-08 early press at release+P9-500 via raw input: accepted by API, rejected by SAL, countdown restarts
+    not ok 4 - 3 K-08 early press at release+P9-500 via raw input: accepted by API, rejected by SAL, countdown restarts
+      ---
+      duration_ms: 21671.5629
+      type: 'test'
+      location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:129:13'
+      failureType: 'testCodeFailure'
+      error: 'after early press: model ready at release+-4412, expected 1000 +-1 scan [VIS-3-Q1, p.9]'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: true
+      actual: false
+      operator: '=='
+      stack: |-
+        checkEdge (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:63:10)
+        TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:141:44)
+        process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:129:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: 3b VIS-3-Q3: green / blue / Both pressed during the countdown are accepted (reach the SAL input) and every release restarts from zero
+    not ok 5 - 3b VIS-3-Q3: green / blue / Both pressed during the countdown are accepted (reach the SAL input) and every release restarts from zero
+      ---
+      duration_ms: 27278.5556
+      type: 'test'
+      location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:148:13'
+      failureType: 'testCodeFailure'
+      error: 'after repeated presses: model ready at release+-5516, expected 1000 +-1 scan [VIS-3-Q1, p.9]'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: true
+      actual: false
+      operator: '=='
+      stack: |-
+        checkEdge (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:63:10)
+        TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:163:45)
+        process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:148:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: 4b countdown length P9 ms model time while running at speed > 1 (VIS-3-Q3 'not 3 s')
+    not ok 6 - 4b countdown length P9 ms model time while running at speed > 1 (VIS-3-Q3 'not 3 s')
+      ---
+      duration_ms: 101665.5926
+      type: 'test'
+      location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:167:13'
+      failureType: 'testCodeFailure'
+      error: |-
+        x10: at release+1930 ready must be true
+        
+        false !== true
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: true
+      actual: false
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:178:18)
+        process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:167:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: 4 countdown is model time: frozen while paused, independent of speed
+    not ok 7 - 4 countdown is model time: frozen while paused, independent of speed
+      ---
+      duration_ms: 20455.6001
+      type: 'test'
+      location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:188:13'
+      failureType: 'testCodeFailure'
+      error: |-
+        x10: ready iff scans >= P9
+        
+        false !== true
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: true
+      actual: false
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:196:100)
+        process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:188:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: 5 EMG: not compared, never diverged; Restart to SAFE: no divergence beyond 1 scan
+    not ok 8 - 5 EMG: not compared, never diverged; Restart to SAFE: no divergence beyond 1 scan
+      ---
+      duration_ms: 24224.6596
+      type: 'test'
+      location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:209:13'
+      failureType: 'testCodeFailure'
+      error: 'after Restart: model ready at release+-3312, expected 1000 +-1 scan [VIS-3-Q1, p.9]'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: true
+      actual: false
+      operator: '=='
+      stack: |-
+        checkEdge (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:63:10)
+        TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:228:7)
+        process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:209:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: 5b group start (boot EMG -> Restart -> SAFE): countdown scan by scan, no divergence beyond 1 scan
+    not ok 9 - 5b group start (boot EMG -> Restart -> SAFE): countdown scan by scan, no divergence beyond 1 scan
+      ---
+      duration_ms: 12224.5986
+      type: 'test'
+      location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:231:13'
+      failureType: 'testCodeFailure'
+      error: 'boot: model ready at release+-111, expected 1000 +-1 scan [VIS-3-Q1, p.9]'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: true
+      actual: false
+      operator: '=='
+      stack: |-
+        checkEdge (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:63:10)
+        TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:243:7)
+        process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:231:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: 6 mutant A (RELEASE preset -> 1.5 s): SAL later than p.9 (1 s): diverged true in SAFE, lastDivergedT sticky until next press
+    not ok 10 - 6 mutant A (RELEASE preset -> 1.5 s): SAL later than p.9 (1 s): diverged true in SAFE, lastDivergedT sticky until next press
+      ---
+      duration_ms: 20795.7172
+      type: 'test'
+      location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:246:13'
+      failureType: 'testCodeFailure'
+      error: |-
+        model countdown stays p.9 = 1 s (requirement), not the mutated SAL preset [VIS-3-Q1, TMR-1-Q1]
+        
+        1500 !== 1000
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 1000
+      actual: 1500
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:258:14)
+        process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:246:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: 7 mutant B (RELEASE block renamed): SAL flag NOT CHECKED, never diverged, countdown still shown
+    ok 11 - 7 mutant B (RELEASE block renamed): SAL flag NOT CHECKED, never diverged, countdown still shown
+      ---
+      duration_ms: 17980.2549
+      type: 'test'
+      ...
+    # Subtest: 8 mapping: in_Reset_PB / in_Relase_Door_PB unmapped -> filter unavailable, not checked; mapped -> available
+    ok 12 - 8 mapping: in_Reset_PB / in_Relase_Door_PB unmapped -> filter unavailable, not checked; mapped -> available
+      ---
+      duration_ms: 50211.6504
+      type: 'test'
+      ...
+    # Subtest: 9 canonical SAL untouched by mutants
+    ok 13 - 9 canonical SAL untouched by mutants
+      ---
+      duration_ms: 6.6452
+      type: 'test'
+      ...
+    1..13
+not ok 5 - VIS-3 filter readiness (manual mode API)
+  ---
+  duration_ms: 358990.4661
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:75:1'
+  failureType: 'subtestsFailed'
+  error: '10 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# filter SAL: canonical sha256 53e9a6d8220c3407002a2ade8d9292d9c11e13270b9307f0cbb3e0d65a6b8fbb sgvl canonical
+# x2: 3 observations, 0 in [P9,P9+1000) after release
+# x2: window check by observations NOT possible under load
+# EMG->SAFE: compared scans 1300, max consecutive mismatch 0
+# boot: mismatching compared scans 0, max consecutive 0
+# base RELEASE timing=2 s (requirement TMR-1-Q1: 1 s)
+# Subtest: VIS-3-Q2 English: page/app/server messages without Cyrillic; NOT CHECKED token; filter UI present
+ok 6 - VIS-3-Q2 English: page/app/server messages without Cyrillic; NOT CHECKED token; filter UI present
+  ---
+  duration_ms: 1353.5968
+  type: 'test'
+  ...
+# VIS-3-Q3 'buttons never blocked' checked statically (heuristic) + via the API (subtest 3b); DOM behaviour in a browser NOT VERIFIED
+# POST /api/manual/cmd: manual session not started
+# POST /api/manual/start: unknown target: no-such-target
+# GET /api/exam/no-such: no such method
+# GET /api/no-such: no such method
+# POST /api/target: both .sal and .sgvl files are required
+# POST /api/manual/cmd: speed 0.1..10
+# POST /api/manual/cmd: ms: 1...120000
+# POST /api/manual/cmd: unknown command: bogus
+# POST /api/manual/inputs: unknown input: NO_SUCH
+# POST /api/manual/inputs: input "in_Safety_Run" is a stand constant
+# POST /api/manual/hold: cannot hold: b_EStop_Ok
+# PUT /api/mapping: signal "!in_Reset_PB" is not in the loaded program (for in_Reset_PB)
+# Subtest: VIS-3 display-only (a): canonical exam completes and == stand TAP while a manual session is running
+ok 7 - VIS-3 display-only (a): canonical exam completes and == stand TAP while a manual session is running
+  ---
+  duration_ms: 1907677.097
+  type: 'test'
+  ...
+# Subtest: VIS-3 display-only (b): canonical exam per-ID statuses == stand TAP after manual activity; report chrome English
+ok 8 - VIS-3 display-only (b): canonical exam per-ID statuses == stand TAP after manual activity; report chrome English
+  ---
+  duration_ms: 1130402.938
+  type: 'test'
+  ...
+# stand-provided Cyrillic strings removed: 1
+# Subtest: VIS-6 manual mode
+    # Subtest: step = +1 scan (1 ms), advance N = +N ms, pause kept
+    ok 1 - step = +1 scan (1 ms), advance N = +N ms, pause kept
+      ---
+      duration_ms: 285.6694
+      type: 'test'
+      ...
+    # Subtest: input set on pause is queued; applied from the next scan only
+    ok 2 - input set on pause is queued; applied from the next scan only
+      ---
+      duration_ms: 13761.4388
+      type: 'test'
+      ...
+    # Subtest: single blue 0.5 s: Unlock at press+500 (+-50 catalog), TON preset 500 expires at +500 +-1 scan
+    ok 3 - single blue 0.5 s: Unlock at press+500 (+-50 catalog), TON preset 500 expires at +500 +-1 scan
+      ---
+      duration_ms: 2973.2445
+      type: 'test'
+      ...
+    # Subtest: speed limits 0.1..10 enforced; real-time run advances ~ wall*speed
+    ok 4 - speed limits 0.1..10 enforced; real-time run advances ~ wall*speed
+      ---
+      duration_ms: 36642.8019
+      type: 'test'
+      ...
+    # Subtest: constant inputs cannot be driven
+    ok 5 - constant inputs cannot be driven
+      ---
+      duration_ms: 4.0917
+      type: 'test'
+      ...
+    # Subtest: server bound to 127.0.0.1 only
+    ok 6 - server bound to 127.0.0.1 only
+      ---
+      duration_ms: 2222.2343
+      type: 'test'
+      ...
+    1..6
+ok 9 - VIS-6 manual mode
+  ---
+  duration_ms: 60819.5295
+  type: 'test'
+  ...
+# Unlock at press+501 ms
+# x10: advanced 7870 ms virtual in 34968 ms wall (ratio 0.23), lag=true
+# Subtest: VIS-4b pattern-resolved / output signals renamed; kind check; Host/Origin
+    # Subtest: CMD_SAFE_TO_RND -> X_CMD_S2R
+    ok 1 - CMD_SAFE_TO_RND -> X_CMD_S2R
+      ---
+      duration_ms: 586447.7414
+      type: 'test'
+      ...
+    # Subtest: in_PLC_Heartbeat -> X_HB
+    ok 2 - in_PLC_Heartbeat -> X_HB
+      ---
+      duration_ms: 303699.9614
+      type: 'test'
+      ...
+    # Subtest: linkSafetyFault -> X_SF
+    ok 3 - linkSafetyFault -> X_SF
+      ---
+      duration_ms: 261885.6405
+      type: 'test'
+      ...
+    # Subtest: out_LV_C1 -> X_C1
+    ok 4 - out_LV_C1 -> X_C1
+      ---
+      duration_ms: 69042.8734
+      type: 'test'
+      ...
+    # Subtest: kind mismatch (input <-> output) rejected
+    ok 5 - kind mismatch (input <-> output) rejected
+      ---
+      duration_ms: 707.3686
+      type: 'test'
+      ...
+    # Subtest: foreign Host / Origin -> 403; local accepted
+    ok 6 - foreign Host / Origin -> 403; local accepted
+      ---
+      duration_ms: 78.9036
+      type: 'test'
+      ...
+    1..6
+ok 10 - VIS-4b pattern-resolved / output signals renamed; kind check; Host/Origin
+  ---
+  duration_ms: 1517560.1229
+  type: 'test'
+  ...
+# Subtest: VIS-4 renamed signals and mapping
+    # Subtest: R1 in_C3_Manual_Set -> X_C3_Set: unmapped scenarios NOT CHECKED, rest == canonical; mapped == canonical
+    ok 1 - R1 in_C3_Manual_Set -> X_C3_Set: unmapped scenarios NOT CHECKED, rest == canonical; mapped == canonical
+      ---
+      duration_ms: 577579.5794
+      type: 'test'
+      ...
+    # Subtest: R2 in_Reset_PB -> X_Green: never FAIL while unmapped; mapped == canonical
+    ok 2 - R2 in_Reset_PB -> X_Green: never FAIL while unmapped; mapped == canonical
+      ---
+      duration_ms: 266128.848
+      type: 'test'
+      ...
+    # Subtest: mapping rejects polarity / non-1:1 / unknown entries
+    ok 3 - mapping rejects polarity / non-1:1 / unknown entries
+      ---
+      duration_ms: 471.2261
+      type: 'test'
+      ...
+    # Subtest: R3 inverted polarity (X_Blue_NC, contact type flipped) mapped by name => honest FAIL, not NOT CHECKED
+    ok 4 - R3 inverted polarity (X_Blue_NC, contact type flipped) mapped by name => honest FAIL, not NOT CHECKED
+      ---
+      duration_ms: 91351.5366
+      type: 'test'
+      ...
+    1..4
+ok 11 - VIS-4 renamed signals and mapping
+  ---
+  duration_ms: 1229037.3472
+  type: 'test'
+  ...
+# Subtest: VIS-2 canonical SAL and stand paths unchanged (git)
+not ok 12 - VIS-2 canonical SAL and stand paths unchanged (git)
+  ---
+  duration_ms: 60.073
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-regress.test.js:12:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    stand/canonical paths have working-tree changes:
+     M SafetyTests/test/catalog/lib/d.js
+     M SafetyTests/test/catalog/lib/g.js
+     M SafetyTests/test/catalog/lib/h.js
+     M SafetyTests/test/catalog/lib/k.js
+     M SafetyTests/test/catalog/lib/p.js
+     M SafetyTests/test/catalog/lib/w.js
+    ?? SafetyTests/test/catalog/lib/timers.js
+    
+    + actual - expected
+    
+    + 'M SafetyTests/test/catalog/lib/d.js\n' +
+    +   ' M SafetyTests/test/catalog/lib/g.js\n' +
+    +   ' M SafetyTests/test/catalog/lib/h.js\n' +
+    +   ' M SafetyTests/test/catalog/lib/k.js\n' +
+    +   ' M SafetyTests/test/catalog/lib/p.js\n' +
+    +   ' M SafetyTests/test/catalog/lib/w.js\n' +
+    +   '?? SafetyTests/test/catalog/lib/timers.js'
+    - ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ''
+  actual: |-
+    M SafetyTests/test/catalog/lib/d.js
+     M SafetyTests/test/catalog/lib/g.js
+     M SafetyTests/test/catalog/lib/h.js
+     M SafetyTests/test/catalog/lib/k.js
+     M SafetyTests/test/catalog/lib/p.js
+     M SafetyTests/test/catalog/lib/w.js
+    ?? SafetyTests/test/catalog/lib/timers.js
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-regress.test.js:16:42)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: VIS-2 npm run check:software result == baseline
+not ok 13 - VIS-2 npm run check:software result == baseline
+  ---
+  duration_ms: 2238304.4407
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-regress.test.js:21:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    exit code 0 as baseline
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-regress.test.js:26:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# SUMMARY catalog=FAIL structure=PASS self=PASS
+# Subtest: VIS-7 static page text and binding
+ok 14 - VIS-7 static page text and binding
+  ---
+  duration_ms: 217.6698
+  type: 'test'
+  ...
+1..14
+# tests 55
+# suites 0
+# pass 42
+# fail 13
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3398562.9266

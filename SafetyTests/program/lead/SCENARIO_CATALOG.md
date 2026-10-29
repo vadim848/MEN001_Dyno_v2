@@ -8,7 +8,7 @@
 1. **Один сценарий = одна проверка требования** на полной программе SAL, только через
    реальные входы (без подстановки внутренних сигналов и стадий).
 2. **Старт всегда штатный:** запуск группы → Emergency → зелёная (Restart) → Safe.
-3. **Время с допуском ±50 мс** (таймеры 0,1…5 с); для кнопок 0,5/1/2 с и окна 250 мс —
+3. **Время с допуском ±50 мс** (таймеры 0,1…5 с); для кнопок 0,5/1 с, фильтра 1 с (TMR-1) и окна 250 мс —
    проверка «до границы −50 мс нет / после +50 мс есть». Скан в скан не проверяем.
 4. **Наблюдаем выходы и статус:** C1, C2, C3/BMS, STO1/2, Discharge LV/HV, Unlock,
    статусы для PLC (Safe/R&D/Run/Emergency/Config, Fault, Faulty, STS_COVER_LOCKED).
@@ -34,8 +34,8 @@ E4 (PLC/Config/heartbeat), E5/E6 (SafetyFault/watchdog), E7 (BOOT).
 | K-05 | R&D | зелёная, синяя ровно через 500 мс | только down, без подъёма | E2 | D-Q500 |
 | K-06 | R&D | зелёная, синяя через 300 мс (до принятия) | ничего, без fault | E2 | D-LATE-SECOND |
 | K-07 | R&D | BOTH → Run; не отпуская, повтор | ровно одна ступень вверх | E2 | п.4–5 |
-| K-08 | Safe | BOTH, отпустить; новый BOTH через 1,5 с / 2,5 с | 1,5 — нет; 2,5 — да | E2 | п.9 |
-| K-09 | Safe | крышка 300 мс открыта при отпущенных кнопках, BOTH через 2,1 с после отпускания | подъём принимается | E2 | Q-REL-AFTER-PERMIT |
+| K-08 | Safe | BOTH, отпустить; новый BOTH через 0,9 с / 1,1 с | 0,9 — нет; 1,1 — да | E2 | п.9, TMR-1-Q1 |
+| K-09 | Safe | крышка 300 мс открыта при отпущенных кнопках, BOTH через 1,1 с после отпускания | подъём принимается | E2 | Q-REL-AFTER-PERMIT |
 | K-10 | Run | BOTH | игнорируется | E2 | D-RUN-BOTH-IGNORE |
 | K-11 | Safe/R&D | синяя 0,6 с (крышка закрыта, затем открыта) | Unlock в обоих случаях; в Run/Config/Emergency — нет | E2 | Q-ARCH-04/10 |
 
@@ -89,7 +89,7 @@ E4 (PLC/Config/heartbeat), E5/E6 (SafetyFault/watchdog), E7 (BOOT).
 
 | ID | Исходно | События | Ожидается | Этап | Источник |
 |---|---|---|---|---|---|
-| D-01 | Run | зелёная 0,5 с | STO в 2 с; команда HV Discharge в 7 с; выдержка; C2 OFF; R&D после C2_FBK OFF | E3 | D-RUN-STOP-WAITS, E2-Q1 |
+| D-01 | Run | зелёная 0,5 с | STO в 2 с; команда HV Discharge в 4 с (выбег 2 с); выдержка 5 с; C2 OFF; R&D после C2_FBK OFF | E3 | D-RUN-STOP-WAITS, E2-Q1, TMR-1-Q1 |
 | D-02 | Run→R&D | — | порядок строго: STO < Discharge < C2 OFF; ничего не одновременно | E3 | E2-Q1 |
 | D-03 | StartingRun | зелёная 0,5 с | abort: сразу STO + Discharge, выдержка, C2 OFF, R&D; без SS1 и выбега | E3 | V14-Q12 |
 | D-04 | Safe→R&D (C1 ON) | зелёная 0,5 с | abort в Safe: C1 OFF, C1_FBK OFF | E2 | V14-Q13 |
@@ -104,7 +104,7 @@ E4 (PLC/Config/heartbeat), E5/E6 (SafetyFault/watchdog), E7 (BOOT).
 | ID | Исходно | События | Ожидается | Этап | Источник |
 |---|---|---|---|---|---|
 | H-01 | любое | сырое `in_LV_Faulty_FBK` FALSE / TRUE | FALSE = норма, TRUE = потеря (везде одинаково) | E2 | D-ARCH-POL |
-| H-02 | Run | HV Faulty TRUE | немедленный STO, выбег 5 с, Discharge, C2 OFF, R&D; SafetyFault | E3 | Q-RC-02, Q-ARCH-05 |
+| H-02 | Run | HV Faulty TRUE | немедленный STO, выбег 2 с, Discharge, выдержка 5 с, C2 OFF, R&D; SafetyFault | E3 | Q-RC-02, Q-ARCH-05, TMR-1-Q1 |
 | H-03 | Run | LV Faulty TRUE | как H-02, затем R&D→Safe; SafetyFault | E3 | Q-RC-02 |
 | H-04 | R&D | HV Faulty TRUE / FALSE | игнорируется | E2 | E2-Q2b |
 | H-05 | R&D | LV Faulty TRUE | R&D→Safe; SafetyFault | E2 | E2-Q2a, Q-RC-11 |
@@ -120,7 +120,7 @@ E4 (PLC/Config/heartbeat), E5/E6 (SafetyFault/watchdog), E7 (BOOT).
 | W-03 | StartingRun | HV норма не подтверждена 30 с (мигает) | на 30 с откат в R&D; SafetyFault | E6 | Q-CA1-01 |
 | W-04 | Safe→R&D | LV норма не подтверждена 30 с | откат в Safe; SafetyFault | E6 | 66(b) |
 | W-05 | StartingRun | зелёная (abort), затем окно 500 мс истекло без FBK | SafetyFault всё равно | E6 | Q-V7-03 |
-| W-06 | Safe, SafetyFault | BOTH | только квитирует; подъёма нет; новый BOTH после 2 с — подъём | E5 | E6-Q2 |
+| W-06 | Safe, SafetyFault | BOTH | только квитирует; подъёма нет; новый BOTH после 1 с — подъём | E5 | E6-Q2, TMR-1-Q1 |
 | W-07 | R&D, SafetyFault | зелёная 0,5 с | квитирует и спускает в Safe | E5 | Q-RC-07 |
 | W-08 | R&D, SafetyFault | PLC-команда | не квитирует | E5 | E6-Q2 |
 | W-09 | Safe | C1_FBK ON без команды | SafetyFault; подъём запрещён до FBK OFF; кнопка при FBK ON не квитирует | E5 | Q-V4-02, Q-V7-04 |
@@ -160,7 +160,7 @@ E4 (PLC/Config/heartbeat), E5/E6 (SafetyFault/watchdog), E7 (BOOT).
 | ID | Исходно | События | Ожидается | Этап | Источник |
 |---|---|---|---|---|---|
 | B-01 | запуск группы | — | Emergency; энергии нет | E7 | Q-RC-10, SPEC §4 |
-| B-02 | запуск при нажатых кнопках | отпускание, затем BOTH | подъём только после 2 с паузы | E7 | BOOT-002 |
+| B-02 | запуск при нажатых кнопках | отпускание, затем BOTH | подъём только после 1 с паузы | E7 | BOOT-002, TMR-1-Q1 |
 | B-03 | рестарт из Run/перехода | Restart | только Safe, Run не восстанавливается | E7 | BOOT-001 |
 
 ## M. Мутации (12 критичных защит)

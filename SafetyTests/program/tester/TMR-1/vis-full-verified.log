@@ -1,0 +1,397 @@
+TAP version 13
+# Subtest: VIS-2 buttons (manual mode API)
+    # Subtest: pair in_ES_NC_1+in_ES_NC_2: both lines change in the same scan; paused -> next scan
+    ok 1 - pair in_ES_NC_1+in_ES_NC_2: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 452.4043
+      type: 'test'
+      ...
+    # Subtest: pair in_InterLock_NC_1+in_InterLock_NC_2: both lines change in the same scan; paused -> next scan
+    ok 2 - pair in_InterLock_NC_1+in_InterLock_NC_2: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 502.2329
+      type: 'test'
+      ...
+    # Subtest: pair in_STO_DR1_FBK+in_STO_DR2_FBK: both lines change in the same scan; paused -> next scan
+    ok 3 - pair in_STO_DR1_FBK+in_STO_DR2_FBK: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 362.5354
+      type: 'test'
+      ...
+    # Subtest: pair in_Reset_PB+in_Relase_Door_PB: both lines change in the same scan; paused -> next scan
+    ok 4 - pair in_Reset_PB+in_Relase_Door_PB: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 223.4138
+      type: 'test'
+      ...
+    # Subtest: momentary Reset: held across advance N, released on release
+    ok 5 - momentary Reset: held across advance N, released on release
+      ---
+      duration_ms: 975.1313
+      type: 'test'
+      ...
+    # Subtest: invalid name in a multi-signal request -> nothing applied
+    ok 6 - invalid name in a multi-signal request -> nothing applied
+      ---
+      duration_ms: 23.0463
+      type: 'test'
+      ...
+    # Subtest: b_EStop_Ok not writable (inputs / hold)
+    ok 7 - b_EStop_Ok not writable (inputs / hold)
+      ---
+      duration_ms: 4.0706
+      type: 'test'
+      ...
+    1..7
+ok 1 - VIS-2 buttons (manual mode API)
+  ---
+  duration_ms: 10463.8563
+  type: 'test'
+  ...
+# Subtest: VIS-2 static: buttons and the pair "split" mark on the page (English per VIS-3-Q2)
+ok 2 - VIS-2 static: buttons and the pair "split" mark on the page (English per VIS-3-Q2)
+  ---
+  duration_ms: 93.3535
+  type: 'test'
+  ...
+# Subtest: VIS-1/5 canonical exam equals check:catalog/check:structure; report standalone
+not ok 3 - VIS-1/5 canonical exam equals check:catalog/check:structure; report standalone
+  ---
+  duration_ms: 2400003.1223
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-exam-canonical.test.js:17:1'
+  failureType: 'testTimeoutFailure'
+  error: 'test timed out after 2400000ms'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: structure part == check:structure (PASS, same check list)
+not ok 4 - structure part == check:structure (PASS, same check list)
+  ---
+  duration_ms: 1.2216
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-exam-canonical.test.js:30:13'
+  failureType: 'parentAlreadyFinished'
+  error: 'test could not be started because its parent finished'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-exam-canonical.test.js:30:13)
+  ...
+# Subtest: catalog part: per-ID status == TAP; no section M / HDR; same ID set
+not ok 5 - catalog part: per-ID status == TAP; no section M / HDR; same ID set
+  ---
+  duration_ms: 0.5696
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-exam-canonical.test.js:36:13'
+  failureType: 'parentAlreadyFinished'
+  error: 'test could not be started because its parent finished'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-exam-canonical.test.js:36:13)
+  ...
+# Subtest: report.html: standalone, SHA256 SAL+SGVL, date, catalog version, totals, mapping table
+not ok 6 - report.html: standalone, SHA256 SAL+SGVL, date, catalog version, totals, mapping table
+  ---
+  duration_ms: 14.8647
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-exam-canonical.test.js:54:13'
+  failureType: 'parentAlreadyFinished'
+  error: 'test could not be started because its parent finished'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-exam-canonical.test.js:54:13)
+  ...
+# Subtest: VIS-3/5 mutated copies
+    # Subtest: S1 structural (graphical inter-network wiredLink): structure FAIL, catalog still run, parts separate
+    ok 1 - S1 structural (graphical inter-network wiredLink): structure FAIL, catalog still run, parts separate
+      ---
+      duration_ms: 7926.2374
+      type: 'test'
+      ...
+    # Subtest: M1 behavioural (BLUE 0.5 s -> 0.8 s): K-11 FAIL with divergence + diagram; report
+    ok 2 - M1 behavioural (BLUE 0.5 s -> 0.8 s): K-11 FAIL with divergence + diagram; report
+      ---
+      duration_ms: 976177.9406
+      type: 'test'
+      ...
+    1..2
+ok 7 - VIS-3/5 mutated copies
+  ---
+  duration_ms: 984201.428
+  type: 'test'
+  ...
+# M1 structure=FAIL; FAIL=K-11
+# Subtest: VIS-3 filter readiness (manual mode API)
+    # Subtest: 1 Safe: green 100 ms -> ready at release+P9 (1000) +-1; SAL flag same; never diverged
+    ok 1 - 1 Safe: green 100 ms -> ready at release+P9 (1000) +-1; SAL flag same; never diverged
+      ---
+      duration_ms: 20628.2235
+      type: 'test'
+      ...
+    # Subtest: 1b blue alone also restarts the countdown (p.9: BOTH buttons released), mid-countdown press
+    ok 2 - 1b blue alone also restarts the countdown (p.9: BOTH buttons released), mid-countdown press
+      ---
+      duration_ms: 21185.0604
+      type: 'test'
+      ...
+    # Subtest: 2 BOTH Safe->R&D and R&D->Run: same timing; compared only in SAFE/RND; no divergence
+    ok 3 - 2 BOTH Safe->R&D and R&D->Run: same timing; compared only in SAFE/RND; no divergence
+      ---
+      duration_ms: 26804.9649
+      type: 'test'
+      ...
+    # Subtest: 3 K-08 early press at release+P9-500 via raw input: accepted by API, rejected by SAL, countdown restarts
+    ok 4 - 3 K-08 early press at release+P9-500 via raw input: accepted by API, rejected by SAL, countdown restarts
+      ---
+      duration_ms: 30527.8893
+      type: 'test'
+      ...
+    # Subtest: 3b VIS-3-Q3: green / blue / Both pressed during the countdown are accepted (reach the SAL input) and every release restarts from zero
+    ok 5 - 3b VIS-3-Q3: green / blue / Both pressed during the countdown are accepted (reach the SAL input) and every release restarts from zero
+      ---
+      duration_ms: 39209.8657
+      type: 'test'
+      ...
+    # Subtest: 4b countdown length P9 ms model time while running at speed > 1 (VIS-3-Q3 'not 3 s')
+    ok 6 - 4b countdown length P9 ms model time while running at speed > 1 (VIS-3-Q3 'not 3 s')
+      ---
+      duration_ms: 80242.7395
+      type: 'test'
+      ...
+    # Subtest: 4 countdown is model time: frozen while paused, independent of speed
+    ok 7 - 4 countdown is model time: frozen while paused, independent of speed
+      ---
+      duration_ms: 31407.4227
+      type: 'test'
+      ...
+    # Subtest: 5 EMG: not compared, never diverged; Restart to SAFE: no divergence beyond 1 scan
+    ok 8 - 5 EMG: not compared, never diverged; Restart to SAFE: no divergence beyond 1 scan
+      ---
+      duration_ms: 26401.7421
+      type: 'test'
+      ...
+    # Subtest: 5b group start (boot EMG -> Restart -> SAFE): countdown scan by scan, no divergence beyond 1 scan
+    ok 9 - 5b group start (boot EMG -> Restart -> SAFE): countdown scan by scan, no divergence beyond 1 scan
+      ---
+      duration_ms: 13256.7944
+      type: 'test'
+      ...
+    # Subtest: 6 mutant A (RELEASE preset -> 1.5 s): SAL later than p.9 (1 s): diverged true in SAFE, lastDivergedT sticky until next press
+    ok 10 - 6 mutant A (RELEASE preset -> 1.5 s): SAL later than p.9 (1 s): diverged true in SAFE, lastDivergedT sticky until next press
+      ---
+      duration_ms: 20119.1095
+      type: 'test'
+      ...
+    # Subtest: 7 mutant B (RELEASE block renamed): SAL flag NOT CHECKED, never diverged, countdown still shown
+    ok 11 - 7 mutant B (RELEASE block renamed): SAL flag NOT CHECKED, never diverged, countdown still shown
+      ---
+      duration_ms: 17810.732
+      type: 'test'
+      ...
+    # Subtest: 8 mapping: in_Reset_PB / in_Relase_Door_PB unmapped -> filter unavailable, not checked; mapped -> available
+    ok 12 - 8 mapping: in_Reset_PB / in_Relase_Door_PB unmapped -> filter unavailable, not checked; mapped -> available
+      ---
+      duration_ms: 42437.6639
+      type: 'test'
+      ...
+    # Subtest: 9 canonical SAL untouched by mutants
+    ok 13 - 9 canonical SAL untouched by mutants
+      ---
+      duration_ms: 6.0866
+      type: 'test'
+      ...
+    1..13
+ok 8 - VIS-3 filter readiness (manual mode API)
+  ---
+  duration_ms: 370189.8093
+  type: 'test'
+  ...
+# filter SAL: canonical sha256 f81b1a5e565dc5d9c5893dff9b2f7c25f27712c45be442905e3f6835706544f4 sgvl canonical
+# x2: 3 observations, 0 in [P9,P9+1000) after release
+# x2: window check by observations NOT possible under load
+# x10: 3 observations, 0 in [P9,P9+1000) after release
+# x10: window check by observations NOT possible under load
+# run segments reached release+2473 (load): edge-after-speed check skipped; invariants above asserted
+# EMG->SAFE: compared scans 1300, max consecutive mismatch 0
+# boot: mismatching compared scans 1, max consecutive 1
+# base RELEASE timing=1 s (requirement TMR-1-Q1: 1 s)
+# Subtest: VIS-3-Q2 English: page/app/server messages without Cyrillic; NOT CHECKED token; filter UI present
+ok 9 - VIS-3-Q2 English: page/app/server messages without Cyrillic; NOT CHECKED token; filter UI present
+  ---
+  duration_ms: 2036.0106
+  type: 'test'
+  ...
+# VIS-3-Q3 'buttons never blocked' checked statically (heuristic) + via the API (subtest 3b); DOM behaviour in a browser NOT VERIFIED
+# POST /api/manual/cmd: manual session not started
+# POST /api/manual/start: unknown target: no-such-target
+# GET /api/exam/no-such: no such method
+# GET /api/no-such: no such method
+# POST /api/target: both .sal and .sgvl files are required
+# POST /api/manual/cmd: speed 0.1..10
+# POST /api/manual/cmd: ms: 1...120000
+# POST /api/manual/cmd: unknown command: bogus
+# POST /api/manual/inputs: unknown input: NO_SUCH
+# POST /api/manual/inputs: input "in_Safety_Run" is a stand constant
+# POST /api/manual/hold: cannot hold: b_EStop_Ok
+# PUT /api/mapping: signal "!in_Reset_PB" is not in the loaded program (for in_Reset_PB)
+# Subtest: VIS-3 display-only (a): canonical exam completes and == stand TAP while a manual session is running
+ok 10 - VIS-3 display-only (a): canonical exam completes and == stand TAP while a manual session is running
+  ---
+  duration_ms: 2100736.5853
+  type: 'test'
+  ...
+# Subtest: VIS-3 display-only (b): canonical exam per-ID statuses == stand TAP after manual activity; report chrome English
+ok 11 - VIS-3 display-only (b): canonical exam per-ID statuses == stand TAP after manual activity; report chrome English
+  ---
+  duration_ms: 1326199.9489
+  type: 'test'
+  ...
+# stand-provided Cyrillic strings removed: 1
+# Subtest: VIS-6 manual mode
+    # Subtest: step = +1 scan (1 ms), advance N = +N ms, pause kept
+    ok 1 - step = +1 scan (1 ms), advance N = +N ms, pause kept
+      ---
+      duration_ms: 331.1877
+      type: 'test'
+      ...
+    # Subtest: input set on pause is queued; applied from the next scan only
+    ok 2 - input set on pause is queued; applied from the next scan only
+      ---
+      duration_ms: 15260.9734
+      type: 'test'
+      ...
+    # Subtest: single blue 0.5 s: Unlock at press+500 (+-50 catalog), TON preset 500 expires at +500 +-1 scan
+    ok 3 - single blue 0.5 s: Unlock at press+500 (+-50 catalog), TON preset 500 expires at +500 +-1 scan
+      ---
+      duration_ms: 4278.3631
+      type: 'test'
+      ...
+    # Subtest: speed limits 0.1..10 enforced; real-time run advances ~ wall*speed
+    ok 4 - speed limits 0.1..10 enforced; real-time run advances ~ wall*speed
+      ---
+      duration_ms: 11605.2208
+      type: 'test'
+      ...
+    # Subtest: constant inputs cannot be driven
+    ok 5 - constant inputs cannot be driven
+      ---
+      duration_ms: 2.2901
+      type: 'test'
+      ...
+    # Subtest: server bound to 127.0.0.1 only
+    ok 6 - server bound to 127.0.0.1 only
+      ---
+      duration_ms: 2038.6782
+      type: 'test'
+      ...
+    1..6
+ok 12 - VIS-6 manual mode
+  ---
+  duration_ms: 39919.7224
+  type: 'test'
+  ...
+# Unlock at press+501 ms
+# x10: advanced 2490 ms virtual in 10219 ms wall (ratio 0.24), lag=true
+# Subtest: VIS-4b pattern-resolved / output signals renamed; kind check; Host/Origin
+    # Subtest: CMD_SAFE_TO_RND -> X_CMD_S2R
+    ok 1 - CMD_SAFE_TO_RND -> X_CMD_S2R
+      ---
+      duration_ms: 532850.2158
+      type: 'test'
+      ...
+    # Subtest: in_PLC_Heartbeat -> X_HB
+    ok 2 - in_PLC_Heartbeat -> X_HB
+      ---
+      duration_ms: 143380.3215
+      type: 'test'
+      ...
+    # Subtest: linkSafetyFault -> X_SF
+    ok 3 - linkSafetyFault -> X_SF
+      ---
+      duration_ms: 139735.7186
+      type: 'test'
+      ...
+    # Subtest: out_LV_C1 -> X_C1
+    ok 4 - out_LV_C1 -> X_C1
+      ---
+      duration_ms: 69006.9375
+      type: 'test'
+      ...
+    # Subtest: kind mismatch (input <-> output) rejected
+    ok 5 - kind mismatch (input <-> output) rejected
+      ---
+      duration_ms: 870.3752
+      type: 'test'
+      ...
+    # Subtest: foreign Host / Origin -> 403; local accepted
+    ok 6 - foreign Host / Origin -> 403; local accepted
+      ---
+      duration_ms: 76.9516
+      type: 'test'
+      ...
+    1..6
+ok 13 - VIS-4b pattern-resolved / output signals renamed; kind check; Host/Origin
+  ---
+  duration_ms: 1192524.4188
+  type: 'test'
+  ...
+# Subtest: VIS-4 renamed signals and mapping
+    # Subtest: R1 in_C3_Manual_Set -> X_C3_Set: unmapped scenarios NOT CHECKED, rest == canonical; mapped == canonical
+    ok 1 - R1 in_C3_Manual_Set -> X_C3_Set: unmapped scenarios NOT CHECKED, rest == canonical; mapped == canonical
+      ---
+      duration_ms: 548836.6567
+      type: 'test'
+      ...
+    # Subtest: R2 in_Reset_PB -> X_Green: never FAIL while unmapped; mapped == canonical
+    ok 2 - R2 in_Reset_PB -> X_Green: never FAIL while unmapped; mapped == canonical
+      ---
+      duration_ms: 123978.4849
+      type: 'test'
+      ...
+    # Subtest: mapping rejects polarity / non-1:1 / unknown entries
+    ok 3 - mapping rejects polarity / non-1:1 / unknown entries
+      ---
+      duration_ms: 132.8825
+      type: 'test'
+      ...
+    # Subtest: R3 inverted polarity (X_Blue_NC, contact type flipped) mapped by name => honest FAIL, not NOT CHECKED
+    ok 4 - R3 inverted polarity (X_Blue_NC, contact type flipped) mapped by name => honest FAIL, not NOT CHECKED
+      ---
+      duration_ms: 39335.3764
+      type: 'test'
+      ...
+    1..4
+ok 14 - VIS-4 renamed signals and mapping
+  ---
+  duration_ms: 1000630.9064
+  type: 'test'
+  ...
+# Subtest: VIS-2 canonical SAL and stand paths unchanged (git)
+ok 15 - VIS-2 canonical SAL and stand paths unchanged (git)
+  ---
+  duration_ms: 84.3444
+  type: 'test'
+  ...
+# Subtest: VIS-2 npm run check:software result == baseline
+ok 16 - VIS-2 npm run check:software result == baseline
+  ---
+  duration_ms: 2227989.5159
+  type: 'test'
+  ...
+# SUMMARY catalog=PASS structure=PASS self=PASS
+# catalog: PASS {"tests":138,"pass":137,"fail":0,"skipped":0,"todo":1}
+# stand self-checks (6 files): PASS {"tests":53,"pass":53,"fail":0,"skipped":0}
+# Subtest: VIS-7 static page text and binding
+ok 17 - VIS-7 static page text and binding
+  ---
+  duration_ms: 221.6532
+  type: 'test'
+  ...
+1..17
+# tests 55
+# suites 0
+# pass 51
+# fail 3
+# cancelled 1
+# skipped 0
+# todo 0
+# duration_ms 3799289.6651

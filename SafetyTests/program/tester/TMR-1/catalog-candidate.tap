@@ -1,0 +1,1028 @@
+TAP version 13
+# Subtest: [E7] B-01 group start -> Emergency; no energy
+ok 1 - [E7] B-01 group start -> Emergency; no energy
+  ---
+  duration_ms: 2621.2313
+  type: 'test'
+  ...
+# Subtest: [E7] B-02 start with buttons pressed: release, then BOTH -> step up only after 1 s pause
+ok 2 - [E7] B-02 start with buttons pressed: release, then BOTH -> step up only after 1 s pause
+  ---
+  duration_ms: 13613.0319
+  type: 'test'
+  ...
+# Subtest: [E7] B-03 restart from Run / transition: Restart -> only Safe, Run not restored
+ok 3 - [E7] B-03 restart from Run / transition: Restart -> only Safe, Run not restored
+  ---
+  duration_ms: 38304.5003
+  type: 'test'
+  ...
+# Subtest: [E2] C-01 Safe, cover open: BOTH -> Safe->R&D executes
+ok 4 - [E2] C-01 Safe, cover open: BOTH -> Safe->R&D executes
+  ---
+  duration_ms: 6812.2311
+  type: 'test'
+  ...
+# Subtest: [E2] C-02 R&D, cover open: BOTH -> no R&D->Run, no fault
+ok 5 - [E2] C-02 R&D, cover open: BOTH -> no R&D->Run, no fault
+  ---
+  duration_ms: 6859.1888
+  type: 'test'
+  ...
+# Subtest: [E2] C-03 Safe / R&D: NC1 FALSE -> not Emergency; R&D->Run forbidden
+ok 6 - [E2] C-03 Safe / R&D: NC1 FALSE -> not Emergency; R&D->Run forbidden
+  ---
+  duration_ms: 6358.8386
+  type: 'test'
+  ...
+# Subtest: [E2] C-04 Run: NC2 FALSE -> Emergency
+ok 7 - [E2] C-04 Run: NC2 FALSE -> Emergency
+  ---
+  duration_ms: 9378.0944
+  type: 'test'
+  ...
+# Subtest: [E2] C-05 StartingRun: NC1 FALSE -> Emergency
+ok 8 - [E2] C-05 StartingRun: NC1 FALSE -> Emergency
+  ---
+  duration_ms: 1340.5702
+  type: 'test'
+  ...
+# Subtest: [E3] C-06 normal Run->R&D (in SS1): NC1 FALSE -> descent continues to R&D
+ok 9 - [E3] C-06 normal Run->R&D (in SS1): NC1 FALSE -> descent continues to R&D
+  ---
+  duration_ms: 20770.9958
+  type: 'test'
+  ...
+# Subtest: [E3] C-07 abort StartingRun / protective descent: NC1 FALSE -> Emergency
+ok 10 - [E3] C-07 abort StartingRun / protective descent: NC1 FALSE -> Emergency
+  ---
+  duration_ms: 6175.5766
+  type: 'test'
+  ...
+# Subtest: [E2] C-08 Safe: LV connector FALSE, then BOTH -> no step up, no fault
+ok 11 - [E2] C-08 Safe: LV connector FALSE, then BOTH -> no step up, no fault
+  ---
+  duration_ms: 3966.4293
+  type: 'test'
+  ...
+# Subtest: [E2] C-09 R&D / Run: HV connector FALSE -> Emergency
+ok 12 - [E2] C-09 R&D / Run: HV connector FALSE -> Emergency
+  ---
+  duration_ms: 843.7349
+  type: 'test'
+  ...
+# Subtest: [E2] C-10 Safe: Door_Monitor FALSE, blue 0.6 s -> no Unlock
+ok 13 - [E2] C-10 Safe: Door_Monitor FALSE, blue 0.6 s -> no Unlock
+  ---
+  duration_ms: 777.2133
+  type: 'test'
+  ...
+# Subtest: [E3] D-01 Run: green 0.5 s -> STO at 2 s; HV discharge command at 4 s; hold 5 s; C2 OFF at 9 s; R&D after C2_FBK OFF
+ok 14 - [E3] D-01 Run: green 0.5 s -> STO at 2 s; HV discharge command at 4 s; hold 5 s; C2 OFF at 9 s; R&D after C2_FBK OFF
+  ---
+  duration_ms: 27136.8703
+  type: 'test'
+  ...
+# Subtest: [E3] D-02 Run->R&D: strict order STO < Discharge < C2 OFF, nothing simultaneous
+ok 15 - [E3] D-02 Run->R&D: strict order STO < Discharge < C2 OFF, nothing simultaneous
+  ---
+  duration_ms: 17014.2826
+  type: 'test'
+  ...
+# Subtest: [E3] D-03 StartingRun: green 0.5 s -> abort: STO + Discharge at once, hold, C2 OFF, R&D; no SS1/coast
+ok 16 - [E3] D-03 StartingRun: green 0.5 s -> abort: STO + Discharge at once, hold, C2 OFF, R&D; no SS1/coast
+  ---
+  duration_ms: 14441.4034
+  type: 'test'
+  ...
+# Subtest: [E2] D-04 Safe->R&D (C1 ON): green 0.5 s -> abort to Safe: C1 OFF, C1_FBK OFF
+ok 17 - [E2] D-04 Safe->R&D (C1 ON): green 0.5 s -> abort to Safe: C1 OFF, C1_FBK OFF
+  ---
+  duration_ms: 4944.705
+  type: 'test'
+  ...
+# Subtest: [E3] D-05 Run->R&D in SS1: green again -> ignored
+ok 18 - [E3] D-05 Run->R&D in SS1: green again -> ignored
+  ---
+  duration_ms: 12561.4716
+  type: 'test'
+  ...
+# Subtest: [E2] D-06 R&D: green 0.5 s -> C1 OFF; Safe after C1_FBK OFF
+ok 19 - [E2] D-06 R&D: green 0.5 s -> C1 OFF; Safe after C1_FBK OFF
+  ---
+  duration_ms: 1347.7504
+  type: 'test'
+  ...
+# Subtest: [E3] D-07 Run->R&D: HV discharge held as a level until the next accepted HV step up
+ok 20 - [E3] D-07 Run->R&D: HV discharge held as a level until the next accepted HV step up
+  ---
+  duration_ms: 7321.242
+  type: 'test'
+  ...
+# Subtest: [E2] D-08 Run->R&D waiting C2 OFF: LV lost, C2_FBK OFF 2 scans later -> exactly R&D, then chained R&D->Safe
+ok 21 - [E2] D-08 Run->R&D waiting C2 OFF: LV lost, C2_FBK OFF 2 scans later -> exactly R&D, then chained R&D->Safe
+  ---
+  duration_ms: 14879.1963
+  type: 'test'
+  ...
+# Subtest: [E3] D-09 StartingRun: LV Healthy lost -> abort to R&D, then R&D->Safe
+ok 22 - [E3] D-09 StartingRun: LV Healthy lost -> abort to R&D, then R&D->Safe
+  ---
+  duration_ms: 7531.5538
+  type: 'test'
+  ...
+# Subtest: [E2] E-01 Run: EStop NC1 -> Emergency; STO, C2 OFF, C1 OFF by the emergency chain
+ok 23 - [E2] E-01 Run: EStop NC1 -> Emergency; STO, C2 OFF, C1 OFF by the emergency chain
+  ---
+  duration_ms: 24031.311
+  type: 'test'
+  ...
+# Subtest: [E2] E-02 R&D: in_Estop_PLC -> Emergency; C3/BMS OFF + LV discharge at once, C1 OFF after 2 s
+ok 24 - [E2] E-02 R&D: in_Estop_PLC -> Emergency; C3/BMS OFF + LV discharge at once, C1 OFF after 2 s
+  ---
+  duration_ms: 2789.8188
+  type: 'test'
+  ...
+# Subtest: [E2] E-03 Safe->R&D (C1 ON, not confirmed): Mentee -> Emergency; lift stopped, C1 OFF after 2 s
+ok 25 - [E2] E-03 Safe->R&D (C1 ON, not confirmed): Mentee -> Emergency; lift stopped, C1 OFF after 2 s
+  ---
+  duration_ms: 3418.0991
+  type: 'test'
+  ...
+# Subtest: [E2] E-04 Emergency by PLC: cause removed, green -> only Safe
+ok 26 - [E2] E-04 Emergency by PLC: cause removed, green -> only Safe
+  ---
+  duration_ms: 29395.9379
+  type: 'test'
+  ...
+# Subtest: [E2] E-05 Emergency, cause still active, green -> stays Emergency
+ok 27 - [E2] E-05 Emergency, cause still active, green -> stays Emergency
+  ---
+  duration_ms: 77189.904
+  type: 'test'
+  ...
+# Subtest: [E2] E-06 group start with C1_FBK ON: Restart -> not Safe
+ok 28 - [E2] E-06 group start with C1_FBK ON: Restart -> not Safe
+  ---
+  duration_ms: 1342.287
+  type: 'test'
+  ...
+# Subtest: [E3] E-07 normal Run->R&D, EStop at t+1 s: each step (STO, Discharge, C2 OFF) not later than normal
+ok 29 - [E3] E-07 normal Run->R&D, EStop at t+1 s: each step (STO, Discharge, C2 OFF) not later than normal
+  ---
+  duration_ms: 29974.1995
+  type: 'test'
+  ...
+# Subtest: [E2] E-08 no two main states at once / none -> Emergency (invariant over a full lifecycle)
+ok 30 - [E2] E-08 no two main states at once / none -> Emergency (invariant over a full lifecycle) # TODO NOT VERIFIED: reaction "two/none main states -> Emergency" cannot be provoked through real inputs (catalog rule 1); covered only by the per-scan invariant
+  ---
+  duration_ms: 16104.7254
+  type: 'test'
+  ...
+# Subtest: [E6] E-09 Run: C2_FBK lost after the 500 ms window with command ON -> Emergency
+ok 31 - [E6] E-09 Run: C2_FBK lost after the 500 ms window with command ON -> Emergency
+  ---
+  duration_ms: 430.6361
+  type: 'test'
+  ...
+# Subtest: [E6] E-10 Run->R&D: C2_FBK ON > 500 ms after C2 OFF command -> Emergency
+ok 32 - [E6] E-10 Run->R&D: C2_FBK ON > 500 ms after C2 OFF command -> Emergency
+  ---
+  duration_ms: 10973.1273
+  type: 'test'
+  ...
+# Subtest: [E6] E-11a OFF failure Run->R&D, C2_FBK stuck ON: Emergency -> common emergency chain, FBK does not delay it
+ok 33 - [E6] E-11a OFF failure Run->R&D, C2_FBK stuck ON: Emergency -> common emergency chain, FBK does not delay it
+  ---
+  duration_ms: 12486.037
+  type: 'test'
+  ...
+# Subtest: [E6] E-11b OFF failure R&D->Safe, C1_FBK stuck ON: Emergency -> common emergency chain, FBK does not delay it
+ok 34 - [E6] E-11b OFF failure R&D->Safe, C1_FBK stuck ON: Emergency -> common emergency chain, FBK does not delay it
+  ---
+  duration_ms: 6659.5046
+  type: 'test'
+  ...
+# Subtest: [E6] E-11c OFF failure on exit from Config, C2_FBK stuck ON: Emergency -> common emergency chain, FBK does not delay it
+ok 35 - [E6] E-11c OFF failure on exit from Config, C2_FBK stuck ON: Emergency -> common emergency chain, FBK does not delay it
+  ---
+  duration_ms: 7382.7553
+  type: 'test'
+  ...
+# Subtest: [E6] E-12a steady Run, C2_FBK lost with C2 commanded ON: Emergency -> common emergency chain
+ok 36 - [E6] E-12a steady Run, C2_FBK lost with C2 commanded ON: Emergency -> common emergency chain
+  ---
+  duration_ms: 6697.9833
+  type: 'test'
+  ...
+# Subtest: [E6] E-12b steady Run, C1_FBK lost with C1 commanded ON: Emergency -> common emergency chain
+ok 37 - [E6] E-12b steady Run, C1_FBK lost with C1 commanded ON: Emergency -> common emergency chain
+  ---
+  duration_ms: 6655.2304
+  type: 'test'
+  ...
+# Subtest: [E4] G-01 Safe, cover closed: Bypass edge -> Config: C1+C2 ON, STO held, Unlock forbidden
+ok 38 - [E4] G-01 Safe, cover closed: Bypass edge -> Config: C1+C2 ON, STO held, Unlock forbidden
+  ---
+  duration_ms: 11201.9833
+  type: 'test'
+  ...
+# Subtest: [E4] G-02 R&D / Safe with open cover / Bypass held from before -> Bypass ignored
+ok 39 - [E4] G-02 R&D / Safe with open cover / Bypass held from before -> Bypass ignored
+  ---
+  duration_ms: 8911.2807
+  type: 'test'
+  ...
+# Subtest: [E4] G-03 Config: any buttons / PLC commands ignored; no 10 s timer
+ok 40 - [E4] G-03 Config: any buttons / PLC commands ignored; no 10 s timer
+  ---
+  duration_ms: 19335.8833
+  type: 'test'
+  ...
+# Subtest: [E4] G-04 Config: Bypass removed -> Discharge -> hold -> C1/C2 OFF -> Safe
+ok 41 - [E4] G-04 Config: Bypass removed -> Discharge -> hold -> C1/C2 OFF -> Safe
+  ---
+  duration_ms: 9013.8359
+  type: 'test'
+  ...
+# Subtest: [E4] G-05 Config / Config exit: NC1 / EStop / connector -> Emergency
+ok 42 - [E4] G-05 Config / Config exit: NC1 / EStop / connector -> Emergency
+  ---
+  duration_ms: 18385.23
+  type: 'test'
+  ...
+# Subtest: [E4] G-06 Config: Healthy lost -> ignored
+ok 43 - [E4] G-06 Config: Healthy lost -> ignored
+  ---
+  duration_ms: 2206.4625
+  type: 'test'
+  ...
+# Subtest: [E6] G-07 entering Config: C2_FBK not ON within 500 ms -> rollback to Safe; SafetyFault
+ok 44 - [E6] G-07 entering Config: C2_FBK not ON within 500 ms -> rollback to Safe; SafetyFault
+  ---
+  duration_ms: 3489.1377
+  type: 'test'
+  ...
+# Subtest: [E2] H-01 raw in_LV_Faulty_FBK FALSE = normal, TRUE = loss (same everywhere)
+ok 45 - [E2] H-01 raw in_LV_Faulty_FBK FALSE = normal, TRUE = loss (same everywhere)
+  ---
+  duration_ms: 16155.9297
+  type: 'test'
+  ...
+# Subtest: [E3] H-02 Run: HV Faulty TRUE -> immediate STO, coast 2 s, Discharge, hold 5 s, C2 OFF, R&D; SafetyFault
+ok 46 - [E3] H-02 Run: HV Faulty TRUE -> immediate STO, coast 2 s, Discharge, hold 5 s, C2 OFF, R&D; SafetyFault
+  ---
+  duration_ms: 23611.0013
+  type: 'test'
+  ...
+# Subtest: [E3] H-03 Run: LV Faulty TRUE -> as H-02, then R&D->Safe; SafetyFault
+ok 47 - [E3] H-03 Run: LV Faulty TRUE -> as H-02, then R&D->Safe; SafetyFault
+  ---
+  duration_ms: 31994.5552
+  type: 'test'
+  ...
+# Subtest: [E2] H-04 R&D: HV Faulty TRUE / FALSE -> ignored
+ok 48 - [E2] H-04 R&D: HV Faulty TRUE / FALSE -> ignored
+  ---
+  duration_ms: 2410.9592
+  type: 'test'
+  ...
+# Subtest: [E2] H-05 R&D: LV Faulty TRUE -> R&D->Safe; SafetyFault
+ok 49 - [E2] H-05 R&D: LV Faulty TRUE -> R&D->Safe; SafetyFault
+  ---
+  duration_ms: 1555.7942
+  type: 'test'
+  ...
+# Subtest: [E3] H-06 Run->R&D in SS1: LV Faulty TRUE -> immediate STO; then R&D->Safe; SafetyFault
+ok 50 - [E3] H-06 Run->R&D in SS1: LV Faulty TRUE -> immediate STO; then R&D->Safe; SafetyFault
+  ---
+  duration_ms: 12917.5551
+  type: 'test'
+  ...
+# Subtest: [E3] H-07 Run->R&D after STO: LV Faulty TRUE then back -> stop unchanged; R&D->Safe anyway
+ok 51 - [E3] H-07 Run->R&D after STO: LV Faulty TRUE then back -> stop unchanged; R&D->Safe anyway
+  ---
+  duration_ms: 24333.3946
+  type: 'test'
+  ...
+# Subtest: [HDR] catalog target identity
+ok 52 - [HDR] catalog target identity
+  ---
+  duration_ms: 755.3896
+  type: 'test'
+  ...
+# CATALOG target C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\TMR-1\\native
+# SAL C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\TMR-1\\native\\TwinSafeGroup1.sal sha256=3511b31b12f8770fa67b41267412f7241b1ba033c744e293a91effe2311e1743
+# SGVL C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\TMR-1\\native\\GVL1.sgvl sha256=8a3d452c3d671bae6e003896543aaa2378c4da7a9ec1285ff8479d118a632ff9
+# blocks=346 status=published STS_* stages=Step1,Step_RnD,Step12,Step3,Step4,Step5,Step6 CATALOG_STAGES=(all)
+# Subtest: [E2] K-01 Safe: BOTH (second after 200 ms), hold 1 s -> Safe->R&D starts
+ok 53 - [E2] K-01 Safe: BOTH (second after 200 ms), hold 1 s -> Safe->R&D starts
+  ---
+  duration_ms: 7652.0852
+  type: 'test'
+  ...
+# Subtest: [E2] K-02 Safe: second button after 300 ms -> no step up, no fault
+ok 54 - [E2] K-02 Safe: second button after 300 ms -> no step up, no fault
+  ---
+  duration_ms: 6505.1927
+  type: 'test'
+  ...
+# Subtest: [E2] K-03 Safe: BOTH, release one after 0.8 s -> nothing (no single, no step up)
+ok 55 - [E2] K-03 Safe: BOTH, release one after 0.8 s -> nothing (no single, no step up)
+  ---
+  duration_ms: 6496.1946
+  type: 'test'
+  ...
+# Subtest: [E2] K-04 R&D: green 0.4 s -> nothing; green 0.6 s -> R&D->Safe
+ok 56 - [E2] K-04 R&D: green 0.4 s -> nothing; green 0.6 s -> R&D->Safe
+  ---
+  duration_ms: 7245.3873
+  type: 'test'
+  ...
+# Subtest: [E2] K-05 R&D: green, blue exactly 500 ms later -> only down, no step up
+ok 57 - [E2] K-05 R&D: green, blue exactly 500 ms later -> only down, no step up
+  ---
+  duration_ms: 3714.0011
+  type: 'test'
+  ...
+# Subtest: [E2] K-06 R&D: green, blue 300 ms later (before acceptance) -> nothing, no fault
+ok 58 - [E2] K-06 R&D: green, blue 300 ms later (before acceptance) -> nothing, no fault
+  ---
+  duration_ms: 6311.3897
+  type: 'test'
+  ...
+# Subtest: [E2] K-07 BOTH held without release -> exactly one step up
+ok 59 - [E2] K-07 BOTH held without release -> exactly one step up
+  ---
+  duration_ms: 10344.6667
+  type: 'test'
+  ...
+# Subtest: [E2] K-08 Safe: BOTH, release; new BOTH 0.5/0.9 s (no) and 1.1/1.5 s (yes) after release (filter 1 s)
+not ok 60 - [E2] K-08 Safe: BOTH, release; new BOTH 0.5/0.9 s (no) and 1.1/1.5 s (yes) after release (filter 1 s)
+  ---
+  duration_ms: 14815.7031
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    K-08: 1 violated check(s) [source p.9]
+    + actual - expected
+    
+    + [
+    +   'pause 500: first BOTH reached R&D before the second attempt; status=SAFE'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'pause 500: first BOTH reached R&D before the second attempt; status=SAFE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: [E2] K-09 Safe: permit lost 300 ms with buttons released, BOTH 1.1 s after release -> accepted
+ok 61 - [E2] K-09 Safe: permit lost 300 ms with buttons released, BOTH 1.1 s after release -> accepted
+  ---
+  duration_ms: 4002.9516
+  type: 'test'
+  ...
+# Subtest: [E2] K-10 Run: BOTH -> ignored
+ok 62 - [E2] K-10 Run: BOTH -> ignored
+  ---
+  duration_ms: 4716.8412
+  type: 'test'
+  ...
+# Subtest: [E2] K-11 blue 0.6 s: Unlock in Safe and R&D (cover closed / open); not in Run/Config/Emergency
+ok 63 - [E2] K-11 blue 0.6 s: Unlock in Safe and R&D (cover closed / open); not in Run/Config/Emergency
+  ---
+  duration_ms: 4498.2595
+  type: 'test'
+  ...
+# Subtest: [M] M-01 EStop NC1/NC2 condition removed (all consumers read OK) (killing scenario E-01)
+ok 64 - [M] M-01 EStop NC1/NC2 condition removed (all consumers read OK) (killing scenario E-01)
+  ---
+  duration_ms: 51722.8635
+  type: 'test'
+  ...
+# M-01 applied: in_ES_NC_1: 7 consumer(s) pinned true; in_ES_NC_2: 5 consumer(s) pinned true
+# M-01 killed by: EStop NC1 in Run [EMG-001]: Emergency within 50 ms; got none | STO active, C2 OFF, C1 OFF reached by the emergency chain within 30 s [EMG-001; bound A10]
+# Subtest: [M] M-02 in_Estop_PLC condition removed (all consumers read FALSE) (killing scenario E-02)
+ok 65 - [M] M-02 in_Estop_PLC condition removed (all consumers read FALSE) (killing scenario E-02)
+  ---
+  duration_ms: 8738.0563
+  type: 'test'
+  ...
+# M-02 applied: in_Estop_PLC: 5 consumer(s) pinned false
+# M-02 killed by: in_Estop_PLC in R&D [Q-ARCH-01]: Emergency within 50 ms; got none | C3/BMS OFF at once (<=50 ms); got none
+# Subtest: [M] M-03 NC1&NC2 removed from the HV step up (recognizer, spoil, C2/STO set permits) (killing scenario C-02)
+ok 66 - [M] M-03 NC1&NC2 removed from the HV step up (recognizer, spoil, C2/STO set permits) (killing scenario C-02)
+  ---
+  duration_ms: 8750.1546
+  type: 'test'
+  ...
+# M-03 applied: //RndPhysicalCompact/GATE_020/AndIn6; //Network12/FBAnd4/AndIn2; //Network1/FBAndHvSetPermit/AndIn5; //Network1/FBAndHvSetPermit/AndIn6; //Network1/FBAndSto1SetPermit/AndIn5; //Network1/FBAndSto1SetPermit/AndIn6; //Network1/FBAndSto2SetPermit/AndIn5; //Network1/FBAndSto2SetPermit/AndIn6; //RndPhysicalCompact/GATE_PF_SET/OrIn1
+# M-03 killed by: stays R&D; status=EMG | no Emergency/fault
+# Subtest: [M] M-04 cover (NC) removed from the Run guards (emergency and Run hold) (killing scenario C-04)
+ok 67 - [M] M-04 cover (NC) removed from the Run guards (emergency and Run hold) (killing scenario C-04)
+  ---
+  duration_ms: 24241.8464
+  type: 'test'
+  ...
+# M-04 applied: //Network1/FBAnd1/AndIn3; //Network6/HEALTHY_OK/AndIn3; //Network6/HEALTHY_OK/AndIn4
+# M-04 killed by: Run NC2 loss [Q-RC-01]: Emergency within 50 ms of the event; got none | Run NC2 loss: all energy removed by the emergency chain (C1, C2, C3/BMS OFF, STO active, FBK OFF) within 30000 ms [assumption A10 bound]
+# Subtest: [M] M-05 LV/HV connector condition removed (all consumers read OK) (killing scenario C-09)
+ok 68 - [M] M-05 LV/HV connector condition removed (all consumers read OK) (killing scenario C-09)
+  ---
+  duration_ms: 5673.2075
+  type: 'test'
+  ...
+# M-05 applied: in_HV_Connector_Interlock: 5 consumer(s) pinned true; in_LV_Connector_Interlock: 5 consumer(s) pinned true
+# M-05 killed by: R&D HV connector loss [Q-RC-14]: Emergency within 50 ms of the event; got none | Run HV connector loss [Q-RC-14]: Emergency within 50 ms of the event; got none
+# Subtest: [M] M-06 STO released without an accepted step up (lift term removed from STO set) (killing scenario U-03)
+ok 69 - [M] M-06 STO released without an accepted step up (lift term removed from STO set) (killing scenario U-03)
+  ---
+  duration_ms: 16384.4158
+  type: 'test'
+  ...
+# M-06 applied: //Network1/FBAndSto1SetPermit/AndIn1; //Network1/FBAndSto2SetPermit/AndIn1
+# M-06 killed by: acceptance at second+-99, expected 1000+-50 | C2 ON at acceptance (+1102) [D-STO-LAUNCH]
+# Subtest: [M] M-07 C2 ON without an accepted step up (lift term removed from C2 set) (killing scenario U-03)
+ok 70 - [M] M-07 C2 ON without an accepted step up (lift term removed from C2 set) (killing scenario U-03)
+  ---
+  duration_ms: 2694.8163
+  type: 'test'
+  ...
+# M-07 applied: //Network1/FBAndHvSetPermit/AndIn1
+# M-07 killed by: PRECONDITION/STAND: R&D after BOTH from Safe not reached within 3000 ms (t=6373 status=SAFE stages=Step1)
+# Subtest: [M] M-08 Unlock stage term removed (Unlock no longer restricted to Safe/R&D) (killing scenario K-11)
+ok 71 - [M] M-08 Unlock stage term removed (Unlock no longer restricted to Safe/R&D) (killing scenario K-11)
+  ---
+  duration_ms: 10893.6228
+  type: 'test'
+  ...
+# M-08 applied: //Network12/FBAnd2/AndIn1; //Network2/FBAnd7/AndIn1
+# M-08 killed by: Run: no Unlock [Q-ARCH-10]
+# Subtest: [M] M-09 emergency no longer clears Run / R&D (Restart not only into Safe) (killing scenario E-04)
+ok 72 - [M] M-09 emergency no longer clears Run / R&D (Restart not only into Safe) (killing scenario E-04)
+  ---
+  duration_ms: 34519.9766
+  type: 'test'
+  ...
+# M-09 applied: //Network3/FBOr5/OrIn2; //Network3/FBOr13/OrIn2
+# M-09 killed by: R&D: after Restart never R&D/Run/Config/Safe->R&D and no energy (EMG6-01); first t=21938 RND Step_RnD+Step4+Step6 | R&D: Restart -> Safe within 2000 ms [V14-Q6, EMG6-01]; status=SAFE,RND
+# Subtest: [M] M-10 Run confirmation without the C2 window and C2_FBK (killing scenario U-04)
+ok 73 - [M] M-10 Run confirmation without the C2 window and C2_FBK (killing scenario U-04)
+  ---
+  duration_ms: 1620.9871
+  type: 'test'
+  ...
+# M-10 applied: //Network12/FBAnd6/AndIn1; //Network12/FBAnd6/AndIn2
+# M-10 killed by: PRECONDITION/STAND: Safe after Restart not reached within 1000 ms (t=1121 status=RUN stages=Step3)
+# Subtest: [M] M-11 LV Faulty polarity inverted at every guard consumer (killing scenario H-01)
+ok 74 - [M] M-11 LV Faulty polarity inverted at every guard consumer (killing scenario H-01)
+  ---
+  duration_ms: 9702.1616
+  type: 'test'
+  ...
+# M-11 applied: in_LV_Faulty_FBK: 6 guard consumer(s) inverted
+# M-11 killed by: raw FALSE: Safe->R&D is confirmed (LV normal) [D-ARCH-POL] | raw TRUE: Safe->R&D is not confirmed (LV lost) [D-ARCH-POL]
+# Subtest: [M] M-B1 HLT memory removed (HLT_LV_SRC fed by Faulty only) (killing scenario D-08)
+ok 75 - [M] M-B1 HLT memory removed (HLT_LV_SRC fed by Faulty only) (killing scenario D-08)
+  ---
+  duration_ms: 30435.6538
+  type: 'test'
+  ...
+# M-B1 applied: //SafeResumption/HLT_LV_SRC/OrIn2
+# M-B1 killed by: B1: chained R&D->Safe although LV returned (loss remembered) [Q-RC-16] | B1: ends Safe, C1 OFF; status=RND
+# Subtest: [M] M-B2 FBK_OFF unlinked from C1/C2_FBK (Emergency exit not gated by feedback) (killing scenario E-05)
+ok 76 - [M] M-B2 FBK_OFF unlinked from C1/C2_FBK (Emergency exit not gated by feedback) (killing scenario E-05)
+  ---
+  duration_ms: 135203.9666
+  type: 'test'
+  ...
+# M-B2 applied: 2 port(s) under //Network1/FBK_OFF/ unlinked
+# M-B2 killed by: Emergency from Safe, in_LV_C1_FBK ON at Restart: stays Emergency (status never Safe) [SPEC §12, EMG6-01] | in_LV_C1_FBK ON while green held, released with FBK ON: stays Emergency [SPEC §12, EMG6-01]
+# Subtest: [M] M-T1 SS1 not requested at descent start (killing scenario D-01)
+ok 77 - [M] M-T1 SS1 not requested at descent start (killing scenario D-01)
+  ---
+  duration_ms: 21232.168
+  type: 'test'
+  ...
+# M-T1 applied: //Network1/FBAnd2/AndIn4
+# M-T1 killed by: T1: SS1 requested at descent start (a+9207, expected a+-50, before STO) [E2-Q1, D-RUN-STOP-WAITS]
+# Subtest: [M] M-T2 LV memory in the protective descent fed by linkRunDownOwner (killing scenario H-03)
+ok 78 - [M] M-T2 LV memory in the protective descent fed by linkRunDownOwner (killing scenario H-03)
+  ---
+  duration_ms: 41917.1637
+  type: 'test'
+  ...
+# M-T2 applied: //SafeResumption/HLT_DESC_SET/AndIn2: linkDescActive -> linkRunDownOwner
+# M-T2 killed by: T2: LV lost 200 ms in Run -> protective descent, then Safe although LV returned [Q-RC-16]; status=RND
+# Subtest: [M] M-T3 normal descent turned protective keeps the NC tolerance (killing scenario C-07)
+ok 79 - [M] M-T3 normal descent turned protective keeps the NC tolerance (killing scenario C-07)
+  ---
+  duration_ms: 11280.9466
+  type: 'test'
+  ...
+# M-T3 applied: //Network6/RUN_DOWN_RESET/OrIn4
+# M-T3 killed by: T3: LV lost in SS1, then NC1 [Q-RC-15, Q-RC-17(3)]: Emergency within 50 ms of the event; got none
+# Subtest: [M] M-T4 Healthy loss after STO makes the descent protective (killing scenario H-07)
+ok 80 - [M] M-T4 Healthy loss after STO makes the descent protective (killing scenario H-07)
+  ---
+  duration_ms: 49019.2406
+  type: 'test'
+  ...
+# M-T4 applied: //Network6/RD_PROT_SET/AndIn3
+# M-T4 killed by: T4: NC1 lost in the normal stop after an LV blip after STO: no Emergency [Q-RC-09, Q-RC-03 b1] | T4: ends in Safe [Q-RC-16]; status=EMG
+# Subtest: [M] M-T5 descent sequencer not reset at Safe (killing scenario E-07)
+ok 81 - [M] M-T5 descent sequencer not reset at Safe (killing scenario E-07)
+  ---
+  duration_ms: 64076.3227
+  type: 'test'
+  ...
+# M-T5 applied: //Network6/RD_RESET/OrIn2
+# M-T5 killed by: T5: BOTH -> Run again (descent sequencer reset) [EMG6-01, V14-Q6]; status=RND
+# Subtest: [M] M-P1 PLC Config entry without button check (killing scenario G-02)
+ok 82 - [M] M-P1 PLC Config entry without button check (killing scenario G-02)
+  ---
+  duration_ms: 11546.1105
+  type: 'test'
+  ...
+# M-P1 applied: //Network1/PA_CFG/AndIn4
+# M-P1 killed by: Bypass edge while green pressed: ignored, not deferred [Q-RC-05 b, V14-Q14] | Bypass edge while blue pressed: ignored, not deferred [Q-RC-05 b, V14-Q14]
+# Subtest: [M] M-P4 CMD_SAFE_TO_R&D without edge (killing scenario P-06)
+ok 83 - [M] M-P4 CMD_SAFE_TO_R&D without edge (killing scenario P-06)
+  ---
+  duration_ms: 27697.8337
+  type: 'test'
+  ...
+# M-P4 applied: //Network1/PA_S2R/AndIn2
+# M-P4 killed by: CMD_SAFE_TO_R&D held from R&D: Safe reached | held CMD_SAFE_TO_R&D not executed in Safe [V14-Q11]
+# Subtest: [M] M-P5 CMD_SAFE_TO_R&D without button check (killing scenario P-09)
+ok 84 - [M] M-P5 CMD_SAFE_TO_R&D without button check (killing scenario P-09)
+  ---
+  duration_ms: 17765.3427
+  type: 'test'
+  ...
+# M-P5 applied: //Network1/PA_S2R/AndIn4
+# M-P5 killed by: Safe, blue pressed: CMD_SAFE_TO_R&D ignored [V14-Q14]
+# Subtest: [M] M-P6 CMD_RUN_TO_R&D abort without edge (killing scenario P-06)
+ok 85 - [M] M-P6 CMD_RUN_TO_R&D abort without edge (killing scenario P-06)
+  ---
+  duration_ms: 14947.4581
+  type: 'test'
+  ...
+# M-P6 applied: //Network1/PA_RUN2R_T/AndIn2
+# M-P6 killed by: held CMD_RUN_TO_R&D: no StartingRun abort, no Run->R&D [V14-Q11]; status=RND
+# Subtest: [M] M-P7 CMD_R&D_TO_SAFE step without edge (killing scenario P-06)
+ok 86 - [M] M-P7 CMD_R&D_TO_SAFE step without edge (killing scenario P-06)
+  ---
+  duration_ms: 14937.6052
+  type: 'test'
+  ...
+# M-P7 applied: //Network1/PA_R2S_ST/AndIn2
+# M-P7 killed by: held CMD_R&D_TO_SAFE: neither Safe->R&D abort nor R&D->Safe [V14-Q11]; status=SAFE
+# Subtest: [M] M-P8 CMD_R&D_TO_SAFE abort without edge (killing scenario P-06)
+ok 87 - [M] M-P8 CMD_R&D_TO_SAFE abort without edge (killing scenario P-06)
+  ---
+  duration_ms: 14899.7911
+  type: 'test'
+  ...
+# M-P8 applied: //Network1/PA_R2S_AB/AndIn2
+# M-P8 killed by: held CMD_R&D_TO_SAFE: neither Safe->R&D abort nor R&D->Safe [V14-Q11]; status=SAFE
+# Subtest: [M] M-P9 CMD_R&D_TO_SAFE abort without Step12 scope (killing scenario P-05)
+ok 88 - [M] M-P9 CMD_R&D_TO_SAFE abort without Step12 scope (killing scenario P-05)
+  ---
+  duration_ms: 9007.0636
+  type: 'test'
+  ...
+# M-P9 applied: //Network1/PA_R2S_AB/AndIn3
+# M-P9 killed by: StartingRun: CMD_R&D_TO_SAFE ignored (C1, C2 ON, STO released) [Q-RC-08 2]
+# Subtest: [M] M-P10 PLC commands not blocked by the blue button (killing scenario P-09)
+ok 89 - [M] M-P10 PLC commands not blocked by the blue button (killing scenario P-09)
+  ---
+  duration_ms: 10858.7569
+  type: 'test'
+  ...
+# M-P10 applied: //Network1/PK_OK/AndIn2
+# M-P10 killed by: Safe, blue pressed: CMD_SAFE_TO_R&D ignored [V14-Q14] | R&D, blue pressed: CMD_R&D_TO_SAFE ignored [V14-Q14]
+# Subtest: [M] M-P11 PLC error clear ignores Bypass (killing scenario P-07)
+ok 90 - [M] M-P11 PLC error clear ignores Bypass (killing scenario P-07)
+  ---
+  duration_ms: 10618.574
+  type: 'test'
+  ...
+# M-P11 applied: //Network1/PE_ALLF/AndIn5
+# M-P11 killed by: error stays while Bypass is still TRUE [Q-RC-18a, V14-Q10]
+# Subtest: [M] M-P12 Config not in the LV emergency scope (killing scenario G-05)
+ok 91 - [M] M-P12 Config not in the LV emergency scope (killing scenario G-05)
+  ---
+  duration_ms: 29874.4658
+  type: 'test'
+  ...
+# M-P12 applied: //Network6/STAGE_LVON/OrIn3
+# M-P12 killed by: Config + EStop: LV discharge at once (+none) [Q-ARCH-01] | Config + EStop: C1 OFF at +none, expected 2000+-50 [Q-ARCH-01]
+# Subtest: [M] M-P13 Config not reset by Emergency (killing scenario G-05)
+ok 92 - [M] M-P13 Config not reset by Emergency (killing scenario G-05)
+  ---
+  duration_ms: 12236.0349
+  type: 'test'
+  ...
+# M-P13 applied: //Network3/CFG_RST/OrIn2
+# M-P13 killed by: after Config Emergency: after Restart never R&D/Run/Config/Safe->R&D and no energy (EMG6-01); first t=18634 CFG Step4+Step6 | after Config Emergency: Restart -> Safe within 2000 ms [V14-Q6, EMG6-01]; status=SAFE,CFG
+# Subtest: [M] M-S1 C1 confirmed-FBK loss not an Emergency (killing scenario E-09)
+ok 93 - [M] M-S1 C1 confirmed-FBK loss not an Emergency (killing scenario E-09)
+  ---
+  duration_ms: 5014.3093
+  type: 'test'
+  ...
+# M-S1 applied: //RndPhysicalCompact/WD_EMG/OrIn1
+# M-S1 killed by: confirmed C1_FBK lost in R&D [Q-RC-19]: Emergency within 50 ms; got none
+# Subtest: [M] M-S2 C1 OFF failure not an Emergency (killing scenario E-10)
+ok 94 - [M] M-S2 C1 OFF failure not an Emergency (killing scenario E-10)
+  ---
+  duration_ms: 25655.8322
+  type: 'test'
+  ...
+# M-S2 applied: //RndPhysicalCompact/WD_EMG/OrIn3
+# M-S2 killed by: R&D->Safe, C1_FBK stuck ON: Emergency at C1 OFF+none, expected 500+-50 [E6-Q1]
+# Subtest: [M] M-S3 spontaneous C2_FBK not a SafetyFault (killing scenario W-09)
+ok 95 - [M] M-S3 spontaneous C2_FBK not a SafetyFault (killing scenario W-09)
+  ---
+  duration_ms: 12533.5191
+  type: 'test'
+  ...
+# M-S3 applied: //RndPhysicalCompact/SF_SET/OrIn4
+# M-S3 killed by: steady R&D, C2_FBK ON without command: SafetyFault [Q-V4-02, TD-E5-4]: SafetyFault expected true, observed false
+# Subtest: [M] M-S4 LV loss in StartingRun not a SafetyFault (killing scenario D-09)
+ok 96 - [M] M-S4 LV loss in StartingRun not a SafetyFault (killing scenario D-09)
+  ---
+  duration_ms: 16630.9849
+  type: 'test'
+  ...
+# M-S4 applied: //RndPhysicalCompact/SF_SET/OrIn6
+# M-S4 killed by: SafetyFault HealthyLost set by the StartingRun loss, before the abort reaches R&D [Q-ARCH-05]: SafetyFault expected true, observed false
+# Subtest: [M] M-S5 Config entry with SafetyFault (killing scenario W-06)
+ok 97 - [M] M-S5 Config entry with SafetyFault (killing scenario W-06)
+  ---
+  duration_ms: 41112.4898
+  type: 'test'
+  ...
+# M-S5 applied: //Network1/PA_CFG/AndIn8
+# M-S5 killed by: Config entry refused while SafetyFault [Q-RC-05 b, Q-RC-07 b]
+# Subtest: [M] M-S6 acknowledge without the 2 s release (killing scenario W-06)
+ok 98 - [M] M-S6 acknowledge without the 2 s release (killing scenario W-06)
+  ---
+  duration_ms: 20845.4574
+  type: 'test'
+  ...
+# M-S6 applied: //RndPhysicalCompact/SF_ACK/AndIn2
+# M-S6 killed by: press ~0.7 s (< filter 1 s) after the last release does not acknowledge [TD-E5-2, TMR-1-Q1]: SafetyFault expected true, observed false | Restart in Emergency does not acknowledge; SafetyFault survives Emergency->Safe [TD-E5-3]: SafetyFault expected true, observed false
+# Subtest: [M] M-S7 Config C1 watchdog failure not a rollback (killing scenario G-07)
+ok 99 - [M] M-S7 Config C1 watchdog failure not a rollback (killing scenario G-07)
+  ---
+  duration_ms: 6062.0178
+  type: 'test'
+  ...
+# M-S7 applied: //RndPhysicalCompact/WD_FAIL_ANY/OrIn1
+# M-S7 killed by: C1 case: rollback starts (HV discharge) at C1 ON+none, expected 500+-50 [Q-RC-06, TD-E5-6] | C1 case: rollback to Safe, not Emergency; status=CFG
+# Subtest: [M] M-G1 S6 gate of CMD_R&D_TO_RUN removed (killing scenario W-08)
+ok 100 - [M] M-G1 S6 gate of CMD_R&D_TO_RUN removed (killing scenario W-08) # TODO NOT ASSESSABLE: killing scenario W-08 FAILs on the unmutated target (1 check(s))
+  ---
+  duration_ms: 2709.727
+  type: 'test'
+  ...
+# Subtest: [M] M-G6 heartbeat-low branch dead (HB_LO.AndIn2 inverted) (killing scenario P-11)
+ok 101 - [M] M-G6 heartbeat-low branch dead (HB_LO.AndIn2 inverted) (killing scenario P-11)
+  ---
+  duration_ms: 8915.491
+  type: 'test'
+  ...
+# M-G6 applied: //Network1/HB_LO/AndIn2 inverted
+# M-G6 killed by: Safe: Emergency at last level change+none, expected 3000+-50 [V14-Q20, Q-E4-4 A] | R&D: Emergency at last level change+none, expected 3000+-50 [V14-Q20, Q-E4-4 A]
+# Subtest: [M] M-G7 duplicate cover term inverted (HEALTHY_OK.AndIn4) (killing scenario P-03)
+ok 102 - [M] M-G7 duplicate cover term inverted (HEALTHY_OK.AndIn4) (killing scenario P-03)
+  ---
+  duration_ms: 13001.3068
+  type: 'test'
+  ...
+# M-G7 applied: //Network6/HEALTHY_OK/AndIn4 inverted
+# M-G7 killed by: PRECONDITION/STAND: steady Run (C1, C2 ON, STO released); status=EMG
+# Subtest: [M] M-Q2 Q62_RST BLK input removed (killing scenario E-05)
+ok 103 - [M] M-Q2 Q62_RST BLK input removed (killing scenario E-05)
+  ---
+  duration_ms: 68891.609
+  type: 'test'
+  ...
+# M-Q2 applied: //Network1/Q62_RST/AndIn2
+# M-Q2 killed by: EStop NC1: green pressed before Emergency, released after: no exit, stays Emergency [Q-S6-2 A] | in_Estop_PLC: green pressed before Emergency, released after: no exit, stays Emergency [Q-S6-2 A]
+# Subtest: [M] M-Q3 Q62_RST BLK input not inverted (killing scenario E-05)
+ok 104 - [M] M-Q3 Q62_RST BLK input not inverted (killing scenario E-05)
+  ---
+  duration_ms: 521.3233
+  type: 'test'
+  ...
+# M-Q3 applied: //Network1/Q62_RST/AndIn2 inverted
+# M-Q3 killed by: PRECONDITION/STAND: Safe after Restart not reached within 1000 ms (t=1121 status=EMG stages=)
+# Subtest: [M] M-Q4 Q62_BLK set polarity inverted (killing scenario E-05)
+ok 105 - [M] M-Q4 Q62_BLK set polarity inverted (killing scenario E-05)
+  ---
+  duration_ms: 71143.9641
+  type: 'test'
+  ...
+# M-Q4 applied: //Network1/Q62_BLK/Set inverted
+# M-Q4 killed by: in_LV_C1_FBK ON while green held, released with FBK ON: stays Emergency [SPEC §12, EMG6-01] | in_LV_C1_FBK OFF afterwards without a new green press: no deferred exit, stays Emergency [REC-ACCEPTED (тестировщик, S1-Q7)]
+# Subtest: [M] M-Q5 Q62_BLK reset polarity inverted (killing scenario E-05)
+ok 106 - [M] M-Q5 Q62_BLK reset polarity inverted (killing scenario E-05)
+  ---
+  duration_ms: 68120.7216
+  type: 'test'
+  ...
+# M-Q5 applied: //Network1/Q62_BLK/Reset inverted
+# M-Q5 killed by: EStop NC1: green pressed before Emergency, released after: no exit, stays Emergency [Q-S6-2 A] | in_Estop_PLC: green pressed before Emergency, released after: no exit, stays Emergency [Q-S6-2 A]
+# Subtest: [M] M-12 DOWN order STO<Discharge<C2 OFF removed (killing scenario D-02)
+ok 107 - [M] M-12 DOWN order STO<Discharge<C2 OFF removed (killing scenario D-02)
+  ---
+  duration_ms: 22306.6402
+  type: 'test'
+  ...
+# M-12 applied: //Network6/RD_DIS/AndIn2; //Network6/DN_C2/AndIn2
+# M-12 killed by: Run->R&D: STO, Discharge and C2 OFF all occur (STO none, DIS a+5, C2 a+6) | Run->R&D: Discharge strictly before C2 OFF (discharge hold) [E2-Q1]; DIS a+5 C2 a+6
+# Subtest: [E4] P-01 Safe: edge CMD_SAFE_TO_R&D -> as BOTH (cover may be open)
+ok 108 - [E4] P-01 Safe: edge CMD_SAFE_TO_R&D -> as BOTH (cover may be open)
+  ---
+  duration_ms: 8134.9997
+  type: 'test'
+  ...
+# Subtest: [E4] P-02 R&D, cover open: edge CMD_R&D_TO_RUN -> not executed
+ok 109 - [E4] P-02 R&D, cover open: edge CMD_R&D_TO_RUN -> not executed
+  ---
+  duration_ms: 6132.753
+  type: 'test'
+  ...
+# Subtest: [E4] P-03 Run: edge CMD_RUN_TO_R&D -> as green (D-01)
+ok 110 - [E4] P-03 Run: edge CMD_RUN_TO_R&D -> as green (D-01)
+  ---
+  duration_ms: 19886.3739
+  type: 'test'
+  ...
+# Subtest: [E4] P-04 StartingRun: edge CMD_RUN_TO_R&D -> abort (as D-03)
+ok 111 - [E4] P-04 StartingRun: edge CMD_RUN_TO_R&D -> abort (as D-03)
+  ---
+  duration_ms: 15440.8354
+  type: 'test'
+  ...
+# Subtest: [E4] P-05 Safe->R&D: edge CMD_R&D_TO_SAFE -> abort to Safe
+ok 112 - [E4] P-05 Safe->R&D: edge CMD_R&D_TO_SAFE -> abort to Safe
+  ---
+  duration_ms: 6246.2693
+  type: 'test'
+  ...
+# Subtest: [E4] P-06 Safe->R&D: CMD_R&D_TO_RUN held until R&D -> not executed (new edge needed)
+ok 113 - [E4] P-06 Safe->R&D: CMD_R&D_TO_RUN held until R&D -> not executed (new edge needed)
+  ---
+  duration_ms: 18863.4851
+  type: 'test'
+  ...
+# Subtest: [E4] P-07 R&D: two commands TRUE (incl. different edges) -> error, none executed; cleared after all FALSE 1 s
+ok 114 - [E4] P-07 R&D: two commands TRUE (incl. different edges) -> error, none executed; cleared after all FALSE 1 s
+  ---
+  duration_ms: 4815.0085
+  type: 'test'
+  ...
+# Subtest: [E4] P-08 any state with PLC error: CMD_TRIGGER_EMERGENCY -> Emergency
+ok 115 - [E4] P-08 any state with PLC error: CMD_TRIGGER_EMERGENCY -> Emergency
+  ---
+  duration_ms: 195.7157
+  type: 'test'
+  ...
+# Subtest: [E4] P-09 R&D, green pressed 200 ms: command edge -> ignored and not deferred
+ok 116 - [E4] P-09 R&D, green pressed 200 ms: command edge -> ignored and not deferred
+  ---
+  duration_ms: 7867.2018
+  type: 'test'
+  ...
+# Subtest: [E4] P-10 PLC error active: BOTH by buttons -> executed
+ok 117 - [E4] P-10 PLC error active: BOTH by buttons -> executed
+  ---
+  duration_ms: 2564.2739
+  type: 'test'
+  ...
+# Subtest: [E4] P-11 any state: heartbeat stopped 3 s -> Emergency
+ok 118 - [E4] P-11 any state: heartbeat stopped 3 s -> Emergency
+  ---
+  duration_ms: 3733.072
+  type: 'test'
+  ...
+# Subtest: [E4] P-12 STS_COVER_LOCKED = NC1&NC2; outPLC_RnD TRUE in StartingRun/abort, FALSE in Safe->R&D
+ok 119 - [E4] P-12 STS_COVER_LOCKED = NC1&NC2; outPLC_RnD TRUE in StartingRun/abort, FALSE in Safe->R&D
+  ---
+  duration_ms: 2881.7802
+  type: 'test'
+  ...
+# Subtest: [E2] U-01 Safe: BOTH; C1_FBK after 50 ms -> R&D not before C1 command + 500 + 100 ms
+ok 120 - [E2] U-01 Safe: BOTH; C1_FBK after 50 ms -> R&D not before C1 command + 500 + 100 ms
+  ---
+  duration_ms: 5505.2719
+  type: 'test'
+  ...
+# Subtest: [E2] U-02 Safe: BOTH -> LV discharge removed at acceptance
+ok 121 - [E2] U-02 Safe: BOTH -> LV discharge removed at acceptance
+  ---
+  duration_ms: 7293.1686
+  type: 'test'
+  ...
+# Subtest: [E2] U-03 R&D: BOTH -> at acceptance C2 ON, STO released, HV discharge removed
+ok 122 - [E2] U-03 R&D: BOTH -> at acceptance C2 ON, STO released, HV discharge removed
+  ---
+  duration_ms: 14497.242
+  type: 'test'
+  ...
+# Subtest: [E2] U-04 StartingRun: C2_FBK + HV normal -> Run not before command + 600 ms
+ok 123 - [E2] U-04 StartingRun: C2_FBK + HV normal -> Run not before command + 600 ms
+  ---
+  duration_ms: 2168.2995
+  type: 'test'
+  ...
+# Subtest: [E2] U-05 StartingRun: HV normal drops 30 ms after the window -> 100 ms count restarts, no emergency
+ok 124 - [E2] U-05 StartingRun: HV normal drops 30 ms after the window -> 100 ms count restarts, no emergency
+  ---
+  duration_ms: 2456.9039
+  type: 'test'
+  ...
+# Subtest: [E2] U-06 Safe: LV Faulty before the gesture, BOTH -> Safe->R&D starts
+ok 125 - [E2] U-06 Safe: LV Faulty before the gesture, BOTH -> Safe->R&D starts
+  ---
+  duration_ms: 3406.7105
+  type: 'test'
+  ...
+# Subtest: [E2] U-07 BOTH started during Safe->R&D / StartingRun is not executed after arrival
+ok 126 - [E2] U-07 BOTH started during Safe->R&D / StartingRun is not executed after arrival
+  ---
+  duration_ms: 18528.6265
+  type: 'test'
+  ...
+# Subtest: [E2] U-08 R&D: legacy PLC (1,1) -> no R&D->Run
+ok 127 - [E2] U-08 R&D: legacy PLC (1,1) -> no R&D->Run
+  ---
+  duration_ms: 2567.5799
+  type: 'test'
+  ...
+# Subtest: [E2] U-09 Safe: connector lost between first and second button -> gesture rejected
+ok 128 - [E2] U-09 Safe: connector lost between first and second button -> gesture rejected
+  ---
+  duration_ms: 5913.2023
+  type: 'test'
+  ...
+# Subtest: [E6] W-01 Safe->R&D: C1_FBK not ON within 500 ms -> rollback to Safe; SafetyFault
+ok 129 - [E6] W-01 Safe->R&D: C1_FBK not ON within 500 ms -> rollback to Safe; SafetyFault
+  ---
+  duration_ms: 6002.1318
+  type: 'test'
+  ...
+# Subtest: [E6] W-02 StartingRun: C2_FBK not ON within 500 ms -> abort to R&D; SafetyFault
+not ok 130 - [E6] W-02 StartingRun: C2_FBK not ON within 500 ms -> abort to R&D; SafetyFault
+  ---
+  duration_ms: 8113.4953
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    W-02: 1 violated check(s) [source Q-RC-12]
+    + actual - expected
+    
+    + [
+    +   'abort ends in R&D, C2 OFF; status=RND'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'abort ends in R&D, C2 OFF; status=RND'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: [E6] W-03 StartingRun: HV normal not confirmed for 30 s (blinking) -> rollback to R&D at 30 s; SafetyFault
+ok 131 - [E6] W-03 StartingRun: HV normal not confirmed for 30 s (blinking) -> rollback to R&D at 30 s; SafetyFault
+  ---
+  duration_ms: 30318.2962
+  type: 'test'
+  ...
+# Subtest: [E6] W-04 Safe->R&D: LV normal not confirmed for 30 s -> rollback to Safe; SafetyFault
+ok 132 - [E6] W-04 Safe->R&D: LV normal not confirmed for 30 s -> rollback to Safe; SafetyFault
+  ---
+  duration_ms: 23031.1971
+  type: 'test'
+  ...
+# Subtest: [E6] W-05 StartingRun: abort, then the 500 ms window expires without FBK -> SafetyFault anyway
+ok 133 - [E6] W-05 StartingRun: abort, then the 500 ms window expires without FBK -> SafetyFault anyway
+  ---
+  duration_ms: 4497.6017
+  type: 'test'
+  ...
+# Subtest: [E5] W-06 Safe with SafetyFault: BOTH only acknowledges; new BOTH after the 1 s release filter -> step up
+ok 134 - [E5] W-06 Safe with SafetyFault: BOTH only acknowledges; new BOTH after the 1 s release filter -> step up
+  ---
+  duration_ms: 23663.7117
+  type: 'test'
+  ...
+# Subtest: [E5] W-07 R&D with SafetyFault: green 0.5 s -> acknowledges and descends to Safe
+not ok 135 - [E5] W-07 R&D with SafetyFault: green 0.5 s -> acknowledges and descends to Safe
+  ---
+  duration_ms: 2958.7218
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    W-07: 1 violated check(s) [source Q-RC-07]
+    + actual - expected
+    
+    + [
+    +   'PRECONDITION/STAND: R&D after failed R&D->Run (W-02 rollback)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'PRECONDITION/STAND: R&D after failed R&D->Run (W-02 rollback)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: [E5] W-08 R&D with SafetyFault: PLC command -> does not acknowledge
+not ok 136 - [E5] W-08 R&D with SafetyFault: PLC command -> does not acknowledge
+  ---
+  duration_ms: 2842.4953
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    W-08: 1 violated check(s) [source E6-Q2, Q-RC-07]
+    + actual - expected
+    
+    + [
+    +   'PRECONDITION/STAND: R&D after failed R&D->Run (W-02 rollback)'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'PRECONDITION/STAND: R&D after failed R&D->Run (W-02 rollback)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: [E5] W-09 Safe: C1_FBK ON without command -> SafetyFault; step up forbidden until FBK OFF; press while FBK ON does not acknowledge
+ok 137 - [E5] W-09 Safe: C1_FBK ON without command -> SafetyFault; step up forbidden until FBK OFF; press while FBK ON does not acknowledge
+  ---
+  duration_ms: 5498.6723
+  type: 'test'
+  ...
+# Subtest: [E5] W-10 any error -> one PLC Fault bit = PLC command error OR SafetyFault
+ok 138 - [E5] W-10 any error -> one PLC Fault bit = PLC command error OR SafetyFault
+  ---
+  duration_ms: 2775.4117
+  type: 'test'
+  ...
+1..138
+# tests 138
+# suites 0
+# pass 132
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 2
+# duration_ms 1086255.8282

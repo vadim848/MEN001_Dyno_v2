@@ -1,6 +1,7 @@
 // Catalog sections G (Config, E4/E6) and B (start/restart, E7).
 import {def,stIs,emg,energyOff,boot,pre} from '../../helpers/catalog-program.js';
 import {cmdName,edge} from './w.js';
+import {T_REL} from './timers.js';
 import {drainEnergy,restartOnlySafe} from './e.js';
 const TOL=50,UNL='out_Door_Unlock_Solonoeid',BY='inPLC_BypassC1C2';
 const isCfg=s=>stIs(s,'CFG');
@@ -71,11 +72,11 @@ def('B-01','E7','group start -> Emergency; no energy',(P,c)=>{
  const x=P.create();x.wait(2000);c(!x.never(s=>!emg(s),0),'Emergency from the first scan until Restart [Q-RC-10, SPEC §4]');
  c(!x.never(s=>!energyOff(s),0),'no energy at group start (C1, C2, C3/BMS OFF, STO active)');
 },{source:'Q-RC-10, SPEC §4'});
-def('B-02','E7','start with buttons pressed: release, then BOTH -> step up only after 2 s pause',(P,c)=>{
- for(const pause of [1500,2500]){const x=P.create();x.step({in_Reset_PB:true,in_Relase_Door_PB:true},1000);const rel=x.t;x.step({in_Reset_PB:false,in_Relase_Door_PB:false});
-  let ok=x.until(s=>stIs(s,'SAFE'),1000,'Safe after releasing the buttons (FBEstop Restart, p.12)');void ok;x.wait(Math.max(0,rel+pause-x.t));
+def('B-02','E7','start with buttons pressed: release, then BOTH -> step up only after 1 s pause',(P,c)=>{
+ for(const pause of [T_REL-500,T_REL-100,T_REL+100,T_REL+500]){const x=P.create();x.step({in_Reset_PB:true,in_Relase_Door_PB:true},1000);const rel=x.t;x.step({in_Reset_PB:false,in_Relase_Door_PB:false});
+  let ok=x.until(s=>stIs(s,'SAFE'),1000,'Safe after releasing the buttons (FBEstop Restart, p.12)');void ok;pre(x.t<=rel+pause,`Safe reached by release+${pause} ms (else the BOTH would be late; Safe at release+${x.t-rel})`);x.wait(Math.max(0,rel+pause-x.t));
   const g=x.both();x.wait(1000);const u=x.first(s=>s.out_LV_C1,g.p1);
-  if(pause===1500)c(u===undefined,'BOTH 1.5 s after the boot release: rejected [BOOT-002]');else c(u!==undefined,'BOTH 2.5 s after the boot release: accepted [BOOT-002]');}
+  if(pause<T_REL)c(u===undefined,`BOTH ${pause} ms after the boot release: rejected [BOOT-002, TMR-1-Q1]`);else c(u!==undefined,`BOTH ${pause} ms after the boot release: accepted [BOOT-002, TMR-1-Q1]`);}
 },{source:'BOOT-002'});
 def('B-03','E7','restart from Run / transition: Restart -> only Safe, Run not restored',(P,c)=>{
  {const x=P.run();x.step({in_ES_NC_1:false},300);x.step({in_ES_NC_1:true});c(drainEnergy(x),'Run: energy removed');x.wait(500);restartOnlySafe(x,c,'from Run');x.wait(3000);c(x.is('SAFE'),'Run not restored');}

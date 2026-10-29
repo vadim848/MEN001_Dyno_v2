@@ -6,7 +6,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { spawn } from "node:child_process";
-import { startServer, runExam, catalogTap, parseTap, sha, CANON_SAL, CANON_SGVL, ST, SCRATCH } from "./_lib.mjs";
+import { startServer, runExam, catalogTap, parseTap, sha, CANON_SAL, CANON_SGVL, ST, SCRATCH, CANON_SAL_SHA } from "./_lib.mjs";
 
 function structureRef() {
   const out = path.join(SCRATCH, "structure-canon.json");
@@ -21,6 +21,7 @@ test("VIS-1/5 canonical exam equals check:catalog/check:structure; report standa
     const tg = await srv.call("POST", "/api/target/canonical");
     assert.equal(tg.status, 200);
     assert.equal(tg.json.salSha256, sha(fs.readFileSync(CANON_SAL)), "canonical SAL SHA256");
+    assert.equal(tg.json.salSha256, CANON_SAL_SHA, "canonical SAL = baseline after TMR-1 Verify (1912ad8)");
     const ex = await runExam(srv.call, tg.json.targetId);
     const [tap, sref] = await Promise.all([tapP, strP]);
     fs.writeFileSync(path.join(SCRATCH, "exam-canon.json"), JSON.stringify(ex.result, null, 1));

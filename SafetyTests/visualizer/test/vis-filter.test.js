@@ -1,11 +1,14 @@
 // VIS-3: button-filter readiness indicator (display only) + English UI.
 // Oracle sources (NOT the implementation):
-//  - SCENARIO_DECISIONS "## VIS-3": VIS-3-Q1 = В (after each press: countdown per catalog p.9 "both released continuously 2 s",
+//  - SCENARIO_DECISIONS "## VIS-3": VIS-3-Q1 = В (after each press: countdown per catalog p.9 "both released continuously" - 1 s since TMR-1-Q1 (was 2 s),
 //    button inactive, then "ready"; next to it the SAL's own readiness flag if found/mapped, else "not checked"; mark "diverged" on
 //    mismatch; display only, no influence on SAL/exam). VIS-3-Q2 (UI + HTML report in English; SAL signal names not translated).
-//  - Catalog K-08 (Safe: BOTH, release; new BOTH after 1.5 s -> not accepted, 2.5 s -> accepted; source p.9).
+//  - Catalog K-08 (Safe: BOTH, release; new BOTH before the filter -> not accepted, after -> accepted; source p.9).
+//  - TMR-1-Q1 (Vadim 2026-10-28): RELEASE filter 2 s -> 1 s. P9 below is the REQUIREMENT value, not read from the SAL.
+//    Env VIS_FILTER_SAL_DIR=<dir with TwinSafeGroup1.sal [+ GVL1.sgvl or ../GVLs/GVL1.sgvl]>: run subtests 1-8 on that SAL
+//    (uploaded as a target) instead of "canonical". Canonical before transfer has RELEASE 2 s -> expected RED.
 //  - VIS3_PLAN §2/§3/§5 for the API surface and the comparison scope: compared only in status SAFE / RND; tolerance 1 scan
-//    (A-VIS3-2, lead assumption); RELEASE block //RndPhysicalCompact/RELEASE (safeTon) = SAL flag; constant 2000 ms = p.9.
+//    (A-VIS3-2, lead assumption); RELEASE block //RndPhysicalCompact/RELEASE (safeTon) = SAL flag; constant P9 = p.9 (1000 ms, TMR-1-Q1).
 // Assumptions (recorded, see program/tester/VIS3_TEST_REPORT.md):
 //  - T1: a scan = 1 ms virtual; "release" = first scan on which both in_Reset_PB and in_Relase_Door_PB are FALSE.
 //  - T2: inputs set while paused apply from the next scan (VIS-Q3); a press of N ms = N scans with the input TRUE.
@@ -17,10 +20,10 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { startServer, filesOf, canonText, runExam, catalogTap, parseTap, sha, CANON_SAL, VIS, SCRATCH } from "./_lib.mjs";
+import { startServer, filesOf, canonText, runExam, catalogTap, parseTap, sha, CANON_SAL, VIS, SCRATCH, CANON_SAL_SHA } from "./_lib.mjs";
 
-const G = "in_Reset_PB", B = "in_Relase_Door_PB", P9 = 2000, CYR = /\p{Script=Cyrillic}/u;
-const CANON_SHA = "53e9a6d8220c3407002a2ade8d9292d9c11e13270b9307f0cbb3e0d65a6b8fbb";
+const G = "in_Reset_PB", B = "in_Relase_Door_PB", P9 = 1000, CYR = /\p{Script=Cyrillic}/u;
+const CANON_SHA = CANON_SAL_SHA;   // baseline after TMR-1 Verify 1912ad8 (was 53e9a6d8...8fbb, then 3511b31b...1743)
 
 function api(c) {
   const cmd = async b => { const r = await c("POST", "/api/manual/cmd", b); assert.equal(r.status, 200, r.text); return r.json; };
@@ -54,12 +57,12 @@ function api(c) {
 }
 const firstTrue = (xs, f) => xs.find(f)?.t ?? null;
 
-// Edge check per p.9: ready exactly at release+2000 (+-1 scan), not before; consistency elapsed = t - relT; progress.
+// Edge check per p.9: ready exactly at release+P9 (+-1 scan), not before; consistency elapsed = t - relT; progress.
 function checkEdge(samples, r, { sal = true, label }) {
   const em = firstTrue(samples, s => s.filter.modelReady), es = firstTrue(samples, s => s.filter.sal?.value === true);
   assert.ok(em !== null && Math.abs(em - (r + P9)) <= 1, `${label}: model ready at release+${em - r}, expected ${P9} +-1 scan [VIS-3-Q1, p.9]`);
   for (const s of samples) {
-    assert.equal(s.filter.presetMs, P9, `${label}: countdown length is 2000 ms (p.9; VIS-3-Q3 "not 3 s")`);
+    assert.equal(s.filter.presetMs, P9, `${label}: countdown length is P9 ms (p.9, TMR-1-Q1; VIS-3-Q3 "not 3 s")`);
     if (s.t < r + P9 - 1) assert.equal(s.filter.modelReady, false, `${label}: not ready at release+${s.t - r}`);
     if (s.t > r + P9 + 1) assert.equal(s.filter.modelReady, true, `${label}: ready at release+${s.t - r}`);
     assert.equal(s.filter.elapsed, s.t - s.filter.relT, `${label}: elapsed = t - relT (model time)`);
@@ -71,16 +74,24 @@ function checkEdge(samples, r, { sal = true, label }) {
 
 test("VIS-3 filter readiness (manual mode API)", { timeout: 20 * 60 * 1000 }, async t => {
   const srv = await startServer(); const c = srv.call; const A = api(c);
-  const { sal, sgvl } = canonText();
+  const canon = canonText(); const SD = process.env.VIS_FILTER_SAL_DIR;
+  const sdSgvl = SD && [path.join(SD, "GVL1.sgvl"), path.join(SD, "..", "GVLs", "GVL1.sgvl")].find(p => fs.existsSync(p));
+  const sal = SD ? fs.readFileSync(path.join(SD, "TwinSafeGroup1.sal"), "utf8") : canon.sal, sgvl = SD && sdSgvl ? fs.readFileSync(sdSgvl, "utf8") : canon.sgvl;
+  let TGT = null; const startT = () => TGT ? A.start(TGT.id, TGT.auto) : A.start("canonical");
+  t.diagnostic(`filter SAL: ${SD ? path.join(SD, "TwinSafeGroup1.sal") : "canonical"} sha256 ${sha(Buffer.from(sal))} sgvl ${SD ? (sdSgvl ?? "canonical") : "canonical"}`);
   try {
-    await t.test("1 canonical Safe: green 100 ms -> ready at release+2000 +-1; SAL flag same; never diverged", async () => {
-      await A.start("canonical"); await A.boot();
+    const upload = async s => { const r = await c("POST", "/api/target", { files: filesOf({ sal: s, sgvl }) }); assert.equal(r.status, 200, r.text);
+      assert.equal(r.json.parseError ?? null, null, "copy parses"); const mp = await c("GET", "/api/mapping?target=" + r.json.targetId);
+      return { id: r.json.targetId, auto: Object.fromEntries(mp.json.rows.filter(x => x.loaded).map(x => [x.our, x.loaded])) }; };
+    if (SD) TGT = await upload(sal);
+    await t.test("1 Safe: green 100 ms -> ready at release+P9 (1000) +-1; SAL flag same; never diverged", async () => {
+      await startT(); await A.boot();
       const pr = await A.press([G], 100);
       assert.equal(pr.held.filter.pressed, true, "pressed shown while held"); assert.equal(pr.held.filter.modelReady, false, "not ready while held");
       assert.equal(pr.last.filter.modelReady, false, "not ready at end of hold");
       assert.equal(pr.rel.filter.pressed, false); assert.equal(pr.rel.filter.relT, pr.r, "countdown starts at the first released scan");
-      const mid = await A.cmd({ cmd: "advance", ms: 1500 });
-      assert.equal(mid.filter.modelReady, false, "release+1500: not ready [K-08]"); assert.equal(mid.filter.compared, true, "SAFE: compared");
+      const mid = await A.cmd({ cmd: "advance", ms: P9 - 500 });
+      assert.equal(mid.filter.modelReady, false, `release+${P9 - 500}: not ready [K-08]`); assert.equal(mid.filter.compared, true, "SAFE: compared");
       const sm = await A.around(pr.r + P9);
       checkEdge(sm, pr.r, { label: "green" });
       for (const s of [mid, ...sm]) { assert.equal(s.filter.diverged, false, "never diverged on canonical"); assert.equal(s.filter.lastDivergedT, null, "no divergence recorded (sticky witness)"); }
@@ -88,8 +99,8 @@ test("VIS-3 filter readiness (manual mode API)", { timeout: 20 * 60 * 1000 }, as
     });
 
     await t.test("1b blue alone also restarts the countdown (p.9: BOTH buttons released), mid-countdown press", async () => {
-      await A.start("canonical"); await A.boot();
-      const p1 = await A.press([G], 100); await A.cmd({ cmd: "advance", ms: 999 });
+      await startT(); await A.boot();
+      const p1 = await A.press([G], 100); await A.cmd({ cmd: "advance", ms: P9 / 2 });
       const p2 = await A.press([B], 300);
       assert.equal(p2.held.filter.pressed, true, "blue counts as pressed"); assert.equal(p2.held.filter.modelReady, false);
       assert.equal(p2.rel.filter.relT, p2.r, "countdown restarted at blue release");
@@ -100,7 +111,7 @@ test("VIS-3 filter readiness (manual mode API)", { timeout: 20 * 60 * 1000 }, as
     });
 
     await t.test("2 BOTH Safe->R&D and R&D->Run: same timing; compared only in SAFE/RND; no divergence", async () => {
-      await A.start("canonical"); await A.boot();
+      await startT(); await A.boot();
       const p1 = await A.press([G, B], 1200);
       const s1 = await A.cmd({ cmd: "advance", ms: 1000 }); assert.deepEqual(s1.status, ["RND"], "BOTH in Safe -> R&D (reference flow)");
       assert.equal(s1.filter.compared, true, "RND: compared"); assert.equal(s1.filter.notComparedReason, null);
@@ -115,31 +126,31 @@ test("VIS-3 filter readiness (manual mode API)", { timeout: 20 * 60 * 1000 }, as
       assert.ok(a2.every(s => !s.filter.compared && !s.filter.diverged), "RUN: not compared, not diverged");
     });
 
-    await t.test("3 K-08 early press at release+1500 via raw input: accepted by API, rejected by SAL, countdown restarts", async () => {
-      await A.start("canonical"); await A.boot();
+    await t.test("3 K-08 early press at release+P9-500 via raw input: accepted by API, rejected by SAL, countdown restarts", async () => {
+      await startT(); await A.boot();
       const p1 = await A.press([G], 100);
-      const m = await A.cmd({ cmd: "advance", ms: 1499 }); assert.equal(m.t, p1.r + 1499); assert.equal(m.filter.modelReady, false);
+      const m = await A.cmd({ cmd: "advance", ms: P9 - 501 }); assert.equal(m.t, p1.r + P9 - 501); assert.equal(m.filter.modelReady, false);
       // press during the countdown: accepted (VIS-3-Q3: buttons never blocked)
       const p2 = await A.press([G, B], 1200);
       assert.equal(p2.held.filter.pressed, true); assert.equal(p2.held.filter.modelReady, false);
       assert.equal(p2.rel.filter.relT, p2.r, "countdown restarted at the new release");
       assert.equal(p2.rel.filter.elapsed, 0, "elapsed restarts from 0");
       const s = await A.cmd({ cmd: "advance", ms: 600 });
-      assert.deepEqual(s.status, ["SAFE"], "K-08: BOTH 1.5 s after release is not accepted (stays SAFE)");
+      assert.deepEqual(s.status, ["SAFE"], "K-08: BOTH 0.5 s after release is not accepted (stays SAFE) [p.9, TMR-1-Q1]");
       assert.equal(s.filter.modelReady, false, "not ready 600 ms after the new release (old countdown would have expired)");
       const a = await A.around(p2.r + P9); checkEdge(a, p2.r, { label: "after early press" });
       assert.ok(a.every(x => !x.filter.diverged) && a.at(-1).filter.lastDivergedT === null, "SAL agrees with the restarted countdown");
-      await A.cmd({ cmd: "advance", ms: 500 - 3 });   // now release+2500
+      await A.cmd({ cmd: "advance", ms: 500 - 3 });   // now release+P9+500
       await A.press([G, B], 1200); const s3 = await A.cmd({ cmd: "advance", ms: 500 });
-      assert.deepEqual(s3.status, ["RND"], "K-08: BOTH 2.5 s after release is accepted");
+      assert.deepEqual(s3.status, ["RND"], "K-08: BOTH P9+500 ms after release is accepted [p.9, TMR-1-Q1]");
     });
 
     await t.test("3b VIS-3-Q3: green / blue / Both pressed during the countdown are accepted (reach the SAL input) and every release restarts from zero", async () => {
-      await A.start("canonical"); await A.boot();
+      await startT(); await A.boot();
       const inp = (s, n) => s.inputs.find(x => x.name === n)?.value;
       let pr = await A.press([G], 100);
       for (const names of [[G], [B], [G, B], [G]]) {
-        await A.cmd({ cmd: "advance", ms: 1000 });   // mid-countdown
+        await A.cmd({ cmd: "advance", ms: P9 / 2 });   // mid-countdown
         const before = await A.st(); assert.equal(before.filter.modelReady, false, "countdown running");
         const q = await A.press(names, 200);
         for (const n of names) assert.equal(inp(q.held, n), true, `${names}: ${n} applied to the SAL input during the countdown`);
@@ -147,42 +158,42 @@ test("VIS-3 filter readiness (manual mode API)", { timeout: 20 * 60 * 1000 }, as
         assert.equal(q.held.filter.pressed, true); assert.equal(q.held.filter.modelReady, false, "not ready while pressed");
         assert.equal(q.rel.filter.relT, q.r, `${names}: release restarts the countdown`); assert.equal(q.rel.filter.elapsed, 0, "from zero");
         assert.equal(q.rel.filter.progress, 0);
-        assert.ok(q.r > pr.r + 1000, "new release later than the previous one"); pr = q;
+        assert.ok(q.r > pr.r + P9 / 2, "new release later than the previous one"); pr = q;
       }
       const sm = await A.around(pr.r + P9); checkEdge(sm, pr.r, { label: "after repeated presses" });
       assert.ok(sm.every(s => !s.filter.diverged && s.filter.lastDivergedT === null), "SAL agrees (its own pause also restarted)");
     });
 
-    await t.test("4b countdown length 2000 ms model time while running at speed > 1 (VIS-3-Q3 'not 3 s')", async () => {
-      await A.start("canonical"); await A.boot();
+    await t.test("4b countdown length P9 ms model time while running at speed > 1 (VIS-3-Q3 'not 3 s')", async () => {
+      await startT(); await A.boot();
       for (const sp of [2, 10]) {
         const q = await A.press([G], 100);
         await A.cmd({ cmd: "speed", speed: sp }); await A.cmd({ cmd: "run" });
         const obs = []; const w0 = Date.now();
-        while (Date.now() - w0 < 8000) { const s = (await c("GET", "/api/manual/state?since=999999999")).json; obs.push(s); if (s.t - q.r > 3500) break; await new Promise(r => setTimeout(r, 10)); }
+        while (Date.now() - w0 < 8000) { const s = (await c("GET", "/api/manual/state?since=999999999")).json; obs.push(s); if (s.t - q.r > P9 + 1500) break; await new Promise(r => setTimeout(r, 10)); }
         const end = await A.cmd({ cmd: "pause" }); obs.push(end); await A.cmd({ cmd: "speed", speed: 1 });
         for (const s of obs) {
           if (s.filter.relT !== q.r) continue;   // only observations of this countdown
           assert.equal(s.filter.elapsed, s.t - q.r, `x${sp}: elapsed = model scans since release`);
           assert.equal(s.filter.modelReady, s.t - q.r >= P9, `x${sp}: at release+${s.t - q.r} ready must be ${s.t - q.r >= P9}`);
         }
-        const win = obs.filter(s => s.filter.relT === q.r && s.t - q.r >= P9 && s.t - q.r < 3000);
-        t.diagnostic(`x${sp}: ${obs.length} observations, ${win.length} in [2000,3000) after release`);
+        const win = obs.filter(s => s.filter.relT === q.r && s.t - q.r >= P9 && s.t - q.r < P9 + 1000);
+        t.diagnostic(`x${sp}: ${obs.length} observations, ${win.length} in [P9,P9+1000) after release`);
         if (!win.length) { // load: no poll landed in the window -> check the window on pause
           assert.ok(end.t - q.r >= P9, "ran past the countdown"); t.diagnostic(`x${sp}: window check by observations NOT possible under load`);
-        } else assert.ok(win.every(s => s.filter.modelReady), `x${sp}: ready within [2000,3000) ms (not a 3 s countdown)`);
+        } else assert.ok(win.every(s => s.filter.modelReady), `x${sp}: ready within [P9,P9+1000) ms (not a longer countdown)`);
       }
     });
 
     await t.test("4 countdown is model time: frozen while paused, independent of speed", async () => {
-      await A.start("canonical"); await A.boot();
+      await startT(); await A.boot();
       const p = await A.press([G], 100);
       const a = await A.st(); await new Promise(r => setTimeout(r, 400)); const b = await A.st();
       assert.equal(b.t, a.t, "paused: t frozen"); assert.equal(b.filter.elapsed, a.filter.elapsed, "paused: elapsed frozen"); assert.equal(b.filter.modelReady, false);
       for (const sp of [10, 0.1]) {
         await A.cmd({ cmd: "speed", speed: sp }); await A.cmd({ cmd: "run" }); await new Promise(r => setTimeout(r, sp === 10 ? 80 : 400));
         const x = await A.cmd({ cmd: "pause" });
-        assert.equal(x.filter.elapsed, x.t - p.r, `x${sp}: elapsed = scans since release`); assert.equal(x.filter.modelReady, x.t - p.r >= P9, `x${sp}: ready iff scans >= 2000`);
+        assert.equal(x.filter.elapsed, x.t - p.r, `x${sp}: elapsed = scans since release`); assert.equal(x.filter.modelReady, x.t - p.r >= P9, `x${sp}: ready iff scans >= P9`);
         assert.equal(x.filter.pressed, false);
       }
       await A.cmd({ cmd: "speed", speed: 1 });
@@ -190,13 +201,13 @@ test("VIS-3 filter readiness (manual mode API)", { timeout: 20 * 60 * 1000 }, as
       const now = (await A.st()).t;
       if (now < p.r + P9 - 5) { const sm = await A.around(p.r + P9); checkEdge(sm, p.r, { label: "after speed changes" }); }
       else t.diagnostic(`run segments reached release+${now - p.r} (load): edge-after-speed check skipped; invariants above asserted`);
-      // advance 2000 from a fresh release -> ready
+      // advance P9 from a fresh release -> ready
       const q = await A.press([G], 50); const y = await A.cmd({ cmd: "advance", ms: P9 });
-      assert.equal(y.t, q.r + P9); assert.equal(y.filter.modelReady, true, "advance 2000 -> ready");
+      assert.equal(y.t, q.r + P9); assert.equal(y.filter.modelReady, true, "advance P9 -> ready");
     });
 
     await t.test("5 EMG: not compared, never diverged; Restart to SAFE: no divergence beyond 1 scan", async () => {
-      await A.start("canonical"); await A.boot();
+      await startT(); await A.boot();
       await A.set({ in_ES_NC_1: false, in_ES_NC_2: false });
       const e = await A.cmd({ cmd: "advance", ms: 300 });
       assert.ok(e.status.includes("EMG"), "EStop pair -> EMG: " + e.status);
@@ -218,7 +229,7 @@ test("VIS-3 filter readiness (manual mode API)", { timeout: 20 * 60 * 1000 }, as
     });
 
     await t.test("5b group start (boot EMG -> Restart -> SAFE): countdown scan by scan, no divergence beyond 1 scan", async () => {
-      await A.start("canonical"); await A.cmd({ cmd: "advance", ms: 10 });
+      await startT(); await A.cmd({ cmd: "advance", ms: 10 });
       const pr = await A.press([G], 100);
       let run = 0, maxRun = 0, mism = 0; const samples = [];
       for (let k = 0; k < P9 + 200; k++) {
@@ -232,25 +243,24 @@ test("VIS-3 filter readiness (manual mode API)", { timeout: 20 * 60 * 1000 }, as
       checkEdge(samples.filter(s => Math.abs(s.t - (pr.r + P9)) <= 3), pr.r, { label: "boot" });
     });
 
-    const upload = async s => { const r = await c("POST", "/api/target", { files: filesOf({ sal: s, sgvl }) }); assert.equal(r.status, 200, r.text);
-      assert.equal(r.json.parseError ?? null, null, "copy parses"); const mp = await c("GET", "/api/mapping?target=" + r.json.targetId);
-      return { id: r.json.targetId, auto: Object.fromEntries(mp.json.rows.filter(x => x.loaded).map(x => [x.our, x.loaded])) }; };
-
-    await t.test("6 mutant A (RELEASE preset 2 s -> 1.5 s): diverged true in SAFE, lastDivergedT sticky until next press", async () => {
-      const i = sal.indexOf('name="RELEASE" instanceName="RELEASE"'); const end = sal.indexOf("</fBTon>", i); const j = sal.indexOf('timing="2"', i);
-      assert.ok(i > 0 && j > i && j < end, "RELEASE Delay Time 2 s inside its block");
-      const T = await upload(sal.slice(0, j) + 'timing="1.5"' + sal.slice(j + 'timing="2"'.length));
+    await t.test("6 mutant A (RELEASE preset -> 1.5 s): SAL later than p.9 (1 s): diverged true in SAFE, lastDivergedT sticky until next press", async () => {
+      const i = sal.indexOf('name="RELEASE" instanceName="RELEASE"'); const end = sal.indexOf("</fBTon>", i);
+      const m0 = /timing="([0-9.]+)"/.exec(sal.slice(i, end)); assert.ok(i > 0 && m0, "RELEASE Delay Time inside its block");
+      t.diagnostic(`base RELEASE timing=${m0[1]} s (requirement TMR-1-Q1: 1 s)`);
+      const j = i + m0.index;
+      const T = await upload(sal.slice(0, j) + 'timing="1.5"' + sal.slice(j + m0[0].length));
       await A.start(T.id, T.auto); await A.boot();
       const pr = await A.press([G], 100);
       assert.equal(pr.held.filter.lastDivergedT, null, "lastDivergedT cleared on the next press");
       assert.equal(pr.held.filter.sal.found, true); assert.equal(pr.held.filter.sal.presetMs, 1500, "preset of the loaded SAL shown");
-      const d = await A.cmd({ cmd: "advance", ms: 1600 });
+      const d = await A.cmd({ cmd: "advance", ms: P9 + 200 });
       assert.deepEqual(d.status, ["SAFE"]); assert.equal(d.filter.compared, true);
-      assert.equal(d.filter.sal.value, true, "SAL flag ready at release+1600"); assert.equal(d.filter.modelReady, false, "p.9 not ready");
+      assert.equal(d.filter.presetMs, P9, "model countdown stays p.9 = 1 s (requirement), not the mutated SAL preset [VIS-3-Q1, TMR-1-Q1]");
+      assert.equal(d.filter.modelReady, true, `p.9 ready at release+${P9 + 200}`); assert.equal(d.filter.sal.value, false, "mutated SAL flag (1.5 s) not yet ready");
       assert.equal(d.filter.diverged, true, "diverged [VIS-3-Q1]"); assert.ok(d.filter.lastDivergedT !== null && d.filter.lastDivergedT > pr.r, "lastDivergedT set");
-      const e = await A.cmd({ cmd: "advance", ms: 600 });
-      assert.equal(e.filter.modelReady, true); assert.equal(e.filter.diverged, false, "agreement again after release+2000");
-      assert.ok(e.filter.lastDivergedT !== null && e.filter.lastDivergedT >= d.filter.lastDivergedT && e.filter.lastDivergedT <= pr.r + P9 + 1, "lastDivergedT sticky: " + e.filter.lastDivergedT);
+      const e = await A.cmd({ cmd: "advance", ms: 400 });
+      assert.equal(e.filter.sal.value, true, "SAL flag ready at release+1600"); assert.equal(e.filter.diverged, false, "agreement again after release+1500");
+      assert.ok(e.filter.lastDivergedT !== null && e.filter.lastDivergedT >= d.filter.lastDivergedT && e.filter.lastDivergedT <= pr.r + 1500 + 1, "lastDivergedT sticky: " + e.filter.lastDivergedT);
       const n = await A.press([G], 20);
       assert.equal(n.held.filter.lastDivergedT, null, "sticky mark cleared by the next press");
     });

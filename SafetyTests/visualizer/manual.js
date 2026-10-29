@@ -6,8 +6,8 @@ import { OUT } from "../test/helpers/catalog-program.js";
 export const FBK = ["in_LV_C1_FBK", "in_HV_C2_FBK", "in_STO_DR1_FBK", "in_STO_DR2_FBK"];
 export const CONSTANT_INPUTS = ["in_Safety_Run", "in_False_SI2_CH8"];
 const RING_MS = 120000, MAX_PER_TICK = 2000, MAX_ADVANCE = 120000;
-// VIS-3: button-filter readiness (p.9: both buttons released continuously 2000 ms of model time); SAL flag = RELEASE safeTon TonOut
-export const FILTER_MS = 2000, FILTER_BTNS = ["in_Reset_PB", "in_Relase_Door_PB"], SAL_FLAG_PATH = "//RndPhysicalCompact/RELEASE";
+// VIS-3: button-filter readiness (p.9: both buttons released continuously 1000 ms of model time, requirement constant per TMR-1, NOT taken from the SAL); SAL flag = RELEASE safeTon TonOut
+export const FILTER_MS = 1000, FILTER_BTNS = ["in_Reset_PB", "in_Relase_Door_PB"], SAL_FLAG_PATH = "//RndPhysicalCompact/RELEASE";
 const DERIVED = ["STO", "fault", "plcFault", "cover"];
 let session = null;
 
@@ -21,6 +21,7 @@ class Session {
     this.timers = P.blocks.filter(b => b.functionName === "safeTon").map(b => ({ path: b.path, preset: Number(b.parameters.find(p => p.timing)?.timing ?? 0) * 1000 }));
     const rb = P.blocks.find(b => b.path === SAL_FLAG_PATH && b.functionName === "safeTon");
     this.flagBlk = rb ? { path: rb.path, presetMs: Number(rb.parameters.find(p => p.timing)?.timing ?? 0) * 1000 } : null;
+    this.filterMs = FILTER_MS; // requirement constant (p.9 / TMR-1); SAL preset is shown separately in sal.presetMs
     this.fAvail = FILTER_BTNS.every(n => this.inputNames.includes(n));
     this.fRelT = this.x.t + 1; this.fPressed = false; this.fStreak = 0; this.fDiv = false; this.fLastDivT = null; this.fReady = false; this.fSal = null; this.fCompared = false;
     this.setPlant(plant); this.record(true);
@@ -50,7 +51,7 @@ class Session {
     if (pressed) { this.fRelT = null; this.fLastDivT = null; this.fStreak = 0; this.fDiv = false; }
     else if (this.fRelT === null) this.fRelT = t;
     this.fPressed = pressed;
-    this.fReady = !pressed && this.fRelT !== null && t - this.fRelT >= FILTER_MS;
+    this.fReady = !pressed && this.fRelT !== null && t - this.fRelT >= this.filterMs;
     this.fSal = this.flagBlk ? !!x.r.get(this.flagBlk.path + "/TonOut") : null;
     const st = x.status(); this.fCompared = this.fSal !== null && st.length === 1 && (st[0] === "SAFE" || st[0] === "RND");
     if (this.fCompared && this.fReady !== this.fSal) { this.fStreak++; } else this.fStreak = 0;
@@ -58,12 +59,12 @@ class Session {
   }
   filterState() {
     const x = this.x, t = x.t;
-    if (!this.fAvail) return { available: false, reason: "in_Reset_PB / in_Relase_Door_PB not mapped: not checked", presetMs: FILTER_MS, relT: null, elapsed: 0, progress: 0, modelReady: false, pressed: false, sal: null, compared: false, diverged: false, lastDivergedT: null };
+    if (!this.fAvail) return { available: false, reason: "in_Reset_PB / in_Relase_Door_PB not mapped: not checked", presetMs: this.filterMs, relT: null, elapsed: 0, progress: 0, modelReady: false, pressed: false, sal: null, compared: false, diverged: false, lastDivergedT: null };
     const elapsed = this.fRelT === null ? 0 : Math.max(0, t - this.fRelT), st = x.status().join("+");
     const m = this.flagBlk ? x.r.memory.get(this.flagBlk.path) : null;
     const sal = this.flagBlk ? { found: true, path: this.flagBlk.path, presetMs: this.flagBlk.presetMs, value: !!this.fSal, elapsed: m?.elapsedMs ?? 0 }
       : { found: false, path: SAL_FLAG_PATH, presetMs: null, value: null, elapsed: 0, reason: "NOT CHECKED: block " + SAL_FLAG_PATH + " (safeTon) not found in the loaded SAL" };
-    return { available: true, reason: null, presetMs: FILTER_MS, relT: this.fRelT, elapsed, progress: Math.min(1, elapsed / FILTER_MS), modelReady: this.fReady, pressed: this.fPressed, sal,
+    return { available: true, reason: null, presetMs: this.filterMs, relT: this.fRelT, elapsed, progress: Math.min(1, elapsed / this.filterMs), modelReady: this.fReady, pressed: this.fPressed, sal,
       compared: this.fCompared, notComparedReason: this.fCompared ? null : (this.flagBlk ? "not compared (status " + st + ")" : "SAL flag not checked"), diverged: this.fDiv, lastDivergedT: this.fLastDivT };
   }
   advance(n) { for (let i = 0; i < n; i++) this.scan1(); this.trim(); }

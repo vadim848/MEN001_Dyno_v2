@@ -1,0 +1,18 @@
+catalog target: C:\Users\user\source\repos\MEN001_Dyno_v2\MEN001_Dyno\Safety_Dyno\TwinSafeGroup1
+catalog SAL SHA256: 53e9a6d8220c3407002a2ade8d9292d9c11e13270b9307f0cbb3e0d65a6b8fbb
+catalog stages: all
+catalog: FAIL {"tests":138,"pass":117,"fail":14,"skipped":0,"todo":7} (skipped = other stages / not run, not pass)
+  FAIL [E7] B-02 start with buttons pressed: release, then BOTH -> step up only after 1 s pause
+  FAIL [E3] D-01 Run: green 0.5 s -> STO at 2 s; HV discharge command at 4 s; hold 5 s; C2 OFF at 9 s; R&D after C2_FBK OFF
+  FAIL [E3] D-03 StartingRun: green 0.5 s -> abort: STO + Discharge at once, hold, C2 OFF, R&D; no SS1/coast
+  FAIL [E3] D-05 Run->R&D in SS1: green again -> ignored
+  FAIL [E3] H-02 Run: HV Faulty TRUE -> immediate STO, coast 2 s, Discharge, hold 5 s, C2 OFF, R&D; SafetyFault
+  FAIL [E3] H-03 Run: LV Faulty TRUE -> as H-02, then R&D->Safe; SafetyFault
+  FAIL [E3] H-06 Run->R&D in SS1: LV Faulty TRUE -> immediate STO; then R&D->Safe; SafetyFault
+  FAIL [E3] H-07 Run->R&D after STO: LV Faulty TRUE then back -> stop unchanged; R&D->Safe anyway
+  FAIL [E2] K-08 Safe: BOTH, release; new BOTH 0.9 s (no) and 1.1/1.5 s (yes) after release (filter 1 s)
+  FAIL [E2] K-09 Safe: permit lost 300 ms with buttons released, BOTH 1.1 s after release -> accepted
+  FAIL [E4] P-03 Run: edge CMD_RUN_TO_R&D -> as green (D-01)
+  FAIL [E4] P-04 StartingRun: edge CMD_RUN_TO_R&D -> abort (as D-03)
+  FAIL [E6] W-02 StartingRun: C2_FBK not ON within 500 ms -> abort to R&D; SafetyFault
+  FAIL [E5] W-06 Safe with SafetyFault: BOTH only acknowledges; new BOTH after the 1 s release filter -> step up

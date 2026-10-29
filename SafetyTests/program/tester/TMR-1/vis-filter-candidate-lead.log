@@ -1,0 +1,102 @@
+TAP version 13
+# Subtest: VIS-3 filter readiness (manual mode API)
+    # Subtest: 1 Safe: green 100 ms -> ready at release+P9 (1000) +-1; SAL flag same; never diverged
+    ok 1 - 1 Safe: green 100 ms -> ready at release+P9 (1000) +-1; SAL flag same; never diverged
+      ---
+      duration_ms: 2120.3647
+      type: 'test'
+      ...
+    # Subtest: 1b blue alone also restarts the countdown (p.9: BOTH buttons released), mid-countdown press
+    ok 2 - 1b blue alone also restarts the countdown (p.9: BOTH buttons released), mid-countdown press
+      ---
+      duration_ms: 2433.4534
+      type: 'test'
+      ...
+    # Subtest: 2 BOTH Safe->R&D and R&D->Run: same timing; compared only in SAFE/RND; no divergence
+    ok 3 - 2 BOTH Safe->R&D and R&D->Run: same timing; compared only in SAFE/RND; no divergence
+      ---
+      duration_ms: 3738.6915
+      type: 'test'
+      ...
+    # Subtest: 3 K-08 early press at release+P9-500 via raw input: accepted by API, rejected by SAL, countdown restarts
+    ok 4 - 3 K-08 early press at release+P9-500 via raw input: accepted by API, rejected by SAL, countdown restarts
+      ---
+      duration_ms: 3749.389
+      type: 'test'
+      ...
+    # Subtest: 3b VIS-3-Q3: green / blue / Both pressed during the countdown are accepted (reach the SAL input) and every release restarts from zero
+    ok 5 - 3b VIS-3-Q3: green / blue / Both pressed during the countdown are accepted (reach the SAL input) and every release restarts from zero
+      ---
+      duration_ms: 3346.8202
+      type: 'test'
+      ...
+    # Subtest: 4b countdown length P9 ms model time while running at speed > 1 (VIS-3-Q3 'not 3 s')
+    ok 6 - 4b countdown length P9 ms model time while running at speed > 1 (VIS-3-Q3 'not 3 s')
+      ---
+      duration_ms: 6330.9464
+      type: 'test'
+      ...
+    # Subtest: 4 countdown is model time: frozen while paused, independent of speed
+    ok 7 - 4 countdown is model time: frozen while paused, independent of speed
+      ---
+      duration_ms: 3399.0282
+      type: 'test'
+      ...
+    # Subtest: 5 EMG: not compared, never diverged; Restart to SAFE: no divergence beyond 1 scan
+    ok 8 - 5 EMG: not compared, never diverged; Restart to SAFE: no divergence beyond 1 scan
+      ---
+      duration_ms: 3398.7505
+      type: 'test'
+      ...
+    # Subtest: 5b group start (boot EMG -> Restart -> SAFE): countdown scan by scan, no divergence beyond 1 scan
+    ok 9 - 5b group start (boot EMG -> Restart -> SAFE): countdown scan by scan, no divergence beyond 1 scan
+      ---
+      duration_ms: 1684.0241
+      type: 'test'
+      ...
+    # Subtest: 6 mutant A (RELEASE preset -> 1.5 s): SAL later than p.9 (1 s): diverged true in SAFE, lastDivergedT sticky until next press
+    ok 10 - 6 mutant A (RELEASE preset -> 1.5 s): SAL later than p.9 (1 s): diverged true in SAFE, lastDivergedT sticky until next press
+      ---
+      duration_ms: 2538.5762
+      type: 'test'
+      ...
+    # Subtest: 7 mutant B (RELEASE block renamed): SAL flag NOT CHECKED, never diverged, countdown still shown
+    ok 11 - 7 mutant B (RELEASE block renamed): SAL flag NOT CHECKED, never diverged, countdown still shown
+      ---
+      duration_ms: 2275.0524
+      type: 'test'
+      ...
+    # Subtest: 8 mapping: in_Reset_PB / in_Relase_Door_PB unmapped -> filter unavailable, not checked; mapped -> available
+    ok 12 - 8 mapping: in_Reset_PB / in_Relase_Door_PB unmapped -> filter unavailable, not checked; mapped -> available
+      ---
+      duration_ms: 6152.5336
+      type: 'test'
+      ...
+    # Subtest: 9 canonical SAL untouched by mutants
+    ok 13 - 9 canonical SAL untouched by mutants
+      ---
+      duration_ms: 3.6824
+      type: 'test'
+      ...
+    1..13
+ok 1 - VIS-3 filter readiness (manual mode API)
+  ---
+  duration_ms: 41834.9334
+  type: 'test'
+  ...
+# filter SAL: candidates\\TMR-1\\native\\TwinSafeGroup1.sal sha256 3511b31b12f8770fa67b41267412f7241b1ba033c744e293a91effe2311e1743 sgvl candidates\\TMR-1\\native\\GVL1.sgvl
+# x2: 36 observations, 13 in [P9,P9+1000) after release
+# x10: 5 observations, 1 in [P9,P9+1000) after release
+# run segments reached release+1249 (load): edge-after-speed check skipped; invariants above asserted
+# EMG->SAFE: compared scans 1300, max consecutive mismatch 0
+# boot: mismatching compared scans 1, max consecutive 1
+# base RELEASE timing=1 s (requirement TMR-1-Q1: 1 s)
+1..1
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 41961.3792

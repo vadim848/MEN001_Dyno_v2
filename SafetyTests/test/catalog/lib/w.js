@@ -1,13 +1,15 @@
 // Catalog section W - watchdog and SafetyFault (E5/E6).
 import {def,stIs,emg,toSafeToRnd,toStartingRun,pre} from '../../helpers/catalog-program.js';
 const TOL=50;
+import {T_REL,T_HOLD} from './timers.js';
+import {downTrace} from './d.js';
 export const cmdName=(x,kind)=>{const n=x.P.sym(kind);pre(n,`NOT IMPLEMENTED on target: PLC input ${kind} (E4, v1.4 §8) not declared`);return n;};
 export const edge=(x,kind,ms=200)=>{const n=cmdName(x,kind);const t=x.t;x.step({[n]:true},ms);x.step({[n]:false});return t;};
 // SafetyFault in Safe via a failed Safe->R&D (C1_FBK never ON) - W-01 path.
 export function safeWithFault(P){const x=P.safe();x.hold.in_LV_C1_FBK=false;const {u1}=toSafeToRnd(x);x.wait(1500);delete x.hold.in_LV_C1_FBK;x.wait(2100);
  pre(x.is('SAFE')&&!x.r.get('out_LV_C1'),'Safe after failed Safe->R&D (W-01 rollback)');pre(x.faultName&&x.r.get(x.faultName),'SafetyFault active after the rollback (W-01)');return {x,u1};}
 // SafetyFault in R&D via a failed R&D->Run (C2_FBK never ON) - W-02 path.
-export function rndWithFault(P){const x=P.rnd();x.hold.in_HV_C2_FBK=false;toStartingRun(x);x.wait(3000);delete x.hold.in_HV_C2_FBK;x.wait(2100);
+export function rndWithFault(P){const x=P.rnd();x.hold.in_HV_C2_FBK=false;toStartingRun(x);x.wait(500+T_HOLD+1000);delete x.hold.in_HV_C2_FBK;x.wait(2100);// abort at u+500 + DN_T_HOLD 5 s (TMR-1-Q1)
  pre(x.is('RND')&&!x.r.get('out_HV_C2'),'R&D after failed R&D->Run (W-02 rollback)');pre(x.faultName&&x.r.get(x.faultName),'SafetyFault active after the rollback (W-02)');return x;}
 
 def('W-01','E6','Safe->R&D: C1_FBK not ON within 500 ms -> rollback to Safe; SafetyFault',(P,c)=>{
@@ -17,7 +19,8 @@ def('W-01','E6','Safe->R&D: C1_FBK not ON within 500 ms -> rollback to Safe; Saf
 },{source:'E6-Q1'});
 
 def('W-02','E6','StartingRun: C2_FBK not ON within 500 ms -> abort to R&D; SafetyFault',(P,c)=>{
- const x=P.rnd();x.hold.in_HV_C2_FBK=false;const {u}=toStartingRun(x);x.wait(5000);
+ const x=P.rnd();x.hold.in_HV_C2_FBK=false;const {u}=toStartingRun(x);x.wait(500+T_HOLD+1500);
+ const tr=downTrace(x,u+1);c(tr.DIS!==undefined&&tr.C2!==undefined&&Math.abs(tr.C2-(tr.DIS+T_HOLD))<=TOL,`abort: C2 OFF at Discharge+${tr.DIS===undefined||tr.C2===undefined?'none':tr.C2-tr.DIS}, expected ${T_HOLD}+-${TOL} (DN_T_HOLD shared with StartingRun abort) [TMR-1-Q1]`);
  const sto=x.first(s=>s.STO,u);c(sto!==undefined&&sto>u+500-TOL&&sto<=u+500+TOL,`abort (STO active) at u+${sto===undefined?'none':sto-u}, expected 500+-${TOL} [Q-RC-12]`);
  c(x.is('RND')&&!x.r.get('out_HV_C2'),`abort ends in R&D, C2 OFF; status=${x.status()}`);c(!x.never(s=>emg(s)||stIs(s,'RUN'),u),'no Emergency, no Run');c.fault(x,true,'SafetyFault [Q-RC-12]');
 },{source:'Q-RC-12'});
@@ -43,13 +46,13 @@ def('W-05','E6','StartingRun: abort, then the 500 ms window expires without FBK 
   c.fault(y,false,'abort Safe->R&D before the window expired (command removed): no SafetyFault [TD-E5-1]');c(y.is('SAFE'),`abort ends in Safe; status=${y.status()}`);}
 },{source:'Q-V7-03, TD-E5-1, S1-Q1 A (D-S2-ACCEPT)'});
 
-def('W-06','E5','Safe with SafetyFault: BOTH only acknowledges; new BOTH after 2 s -> step up',(P,c)=>{
+def('W-06','E5','Safe with SafetyFault: BOTH only acknowledges; new BOTH after the 1 s release filter -> step up',(P,c)=>{
  const {x}=safeWithFault(P);const g=x.both();x.wait(1000);c(x.first(s=>s.out_LV_C1,g.p1)===undefined,'first BOTH: no step up (acknowledge only) [E6-Q2]');
  c.fault(x,false,'first BOTH acknowledges SafetyFault [E6-Q2]');x.wait(1100);const h=x.both();x.wait(1000);
- c(x.first(s=>s.out_LV_C1,h.p1)!==undefined,'new BOTH after 2 s release: Safe->R&D starts [E6-Q2]');
+ c(x.first(s=>s.out_LV_C1,h.p1)!==undefined,'new BOTH 2.1 s after release (> filter 1 s): Safe->R&D starts [E6-Q2]');
  {const {x:y}=safeWithFault(P);const b=y.blue(600);y.wait(300);c(y.never(s=>s.out_Door_Unlock_Solonoeid,b.p)===undefined,'blue with SafetyFault: no Unlock [Q-E5-1]');c.fault(y,false,'blue acknowledges [Q-E5-1, E6-Q2]');}
- {const y=P.safe();y.hold.in_LV_C1_FBK=false;const {u1}=toSafeToRnd(y);y.wait(Math.max(0,u1+1000-y.t));delete y.hold.in_LV_C1_FBK;pre(y.faultName&&y.r.get(y.faultName),'SafetyFault after the W-01 rollback');
-  y.green(100);y.wait(200);c.fault(y,true,'press < 2 s after the last release does not acknowledge [TD-E5-2]');y.wait(1900);y.green(100);y.wait(200);c.fault(y,false,'first press after both released 2 s acknowledges [TD-E5-2]');}
+ {const y=P.safe();y.hold.in_LV_C1_FBK=false;const {u1}=toSafeToRnd(y);y.wait(Math.max(0,u1+T_REL-300-y.t));delete y.hold.in_LV_C1_FBK;pre(y.faultName&&y.r.get(y.faultName),'SafetyFault after the W-01 rollback (by C1 ON+700 ms)');
+  y.green(100);y.wait(200);c.fault(y,true,'press ~0.7 s (< filter 1 s) after the last release does not acknowledge [TD-E5-2, TMR-1-Q1]');y.wait(T_REL-100);y.green(100);y.wait(200);c.fault(y,false,'first press after both released 1.1 s (> filter 1 s) acknowledges [TD-E5-2, TMR-1-Q1]');}
  {const {x:y}=safeWithFault(P);y.step({in_Estop_PLC:true},300);y.step({in_Estop_PLC:false},15000);y.restart();y.wait(2000);c(y.is('SAFE'),'Restart -> Safe');
   c.fault(y,true,'Restart in Emergency does not acknowledge; SafetyFault survives Emergency->Safe [TD-E5-3]');}
  {const {x:y}=safeWithFault(P);const t=y.t;y.step({inPLC_BypassC1C2:true},1000);c(!y.never(s=>!stIs(s,'SAFE')||s.out_LV_C1||s.out_HV_C2,t),'Config entry refused while SafetyFault [Q-RC-05 b, Q-RC-07 b]');y.step({inPLC_BypassC1C2:false});}
@@ -71,7 +74,7 @@ def('W-09','E5','Safe: C1_FBK ON without command -> SafetyFault; step up forbidd
  delete x.hold.in_LV_C1_FBK;x.wait(2100);c.fault(x,true,'press while FBK ON did not acknowledge [Q-V7-04]');
  {const y=P.rnd();y.hold.in_HV_C2_FBK=true;y.wait(1000);c.fault(y,true,'steady R&D, C2_FBK ON without command: SafetyFault [Q-V4-02, TD-E5-4]');c(!y.never(emg,y.t-1000),'R&D: not Emergency [Q-V4-02]');}
  const h=x.both();x.wait(1000);c(x.first(s=>s.out_LV_C1,h.p1)===undefined,'first BOTH after FBK OFF only acknowledges [Q-V7-04, E6-Q2]');c.fault(x,false,'acknowledged after FBK OFF');
- x.wait(1100);const k=x.both();x.wait(1000);c(x.first(s=>s.out_LV_C1,k.p1)!==undefined,'next BOTH after 2 s: step up');void ev;
+ x.wait(1100);const k=x.both();x.wait(1000);c(x.first(s=>s.out_LV_C1,k.p1)!==undefined,'next BOTH 2.1 s after release (> filter 1 s): step up');void ev;
 },{source:'Q-V4-02, Q-V7-04'});
 
 def('W-10','E5','any error -> one PLC Fault bit = PLC command error OR SafetyFault',(P,c)=>{

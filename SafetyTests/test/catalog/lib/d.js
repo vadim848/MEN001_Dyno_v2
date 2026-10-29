@@ -1,10 +1,13 @@
 // Catalog section D - step down.
 import {def,stIs,emg,toSafeToRnd,toStartingRun} from '../../helpers/catalog-program.js';
+import {T_SS1,T_COAST,T_HOLD,T_REL} from './timers.js';
 const TOL=50;
 // Run->R&D trace after the down event at `a`: moments of STO active, HV discharge command, C2 OFF command, C2_FBK OFF, R&D.
 export function downTrace(x,a){return {STO:x.first(s=>s.STO,a-1),DIS:x.first(s=>s.out_HV_Discharge_Request,a-1),C2:x.first(s=>!s.out_HV_C2,a-1),
  FBK:x.first(s=>!s.c2f,a-1),RND:x.first(s=>stIs(s,'RND'),a-1)};}
 const rel=(v,a)=>v===undefined?'none':'a+'+(v-a);
+// TMR-1-Q1: C2 OFF command exactly T_HOLD (5 s) after the HV discharge command (DN_T_HOLD, shared normal descent / StartingRun abort).
+export function holdCheck(c,t,a,label){c(t.DIS!==undefined&&t.C2!==undefined&&Math.abs(t.C2-(t.DIS+T_HOLD))<=TOL,`${label}: C2 OFF at Discharge+${t.DIS===undefined||t.C2===undefined?'none':t.C2-t.DIS}, expected ${T_HOLD}+-${TOL} (discharge hold 5 s) [TMR-1-Q1]`);}
 export function checkOrder(c,t,a,label){
  c(t.STO!==undefined&&t.DIS!==undefined&&t.C2!==undefined,`${label}: STO, Discharge and C2 OFF all occur (STO ${rel(t.STO,a)}, DIS ${rel(t.DIS,a)}, C2 ${rel(t.C2,a)})`);
  if(t.STO!==undefined&&t.DIS!==undefined)c(t.DIS>=t.STO+TOL,`${label}: STO strictly before Discharge (not simultaneous) [E2-Q1]; STO ${rel(t.STO,a)} DIS ${rel(t.DIS,a)}`);
@@ -13,10 +16,11 @@ export function checkOrder(c,t,a,label){
  c(t.RND!==undefined,`${label}: R&D reached`);
 }
 
-def('D-01','E3','Run: green 0.5 s -> STO at 2 s; HV discharge command at 7 s; hold; C2 OFF; R&D after C2_FBK OFF',(P,c)=>{
+def('D-01','E3','Run: green 0.5 s -> STO at 2 s; HV discharge command at 4 s; hold 5 s; C2 OFF at 9 s; R&D after C2_FBK OFF',(P,c)=>{
  const x=P.run();const g=x.green(550);const a=g.p+500;x.wait(20000);const t=downTrace(x,a);
- c(t.STO!==undefined&&Math.abs(t.STO-(a+2000))<=TOL,`STO at ${rel(t.STO,a)}, expected a+2000+-${TOL} (SS1 2 s) [D-RUN-STOP-WAITS]`);
- c(t.DIS!==undefined&&Math.abs(t.DIS-(a+7000))<=TOL,`HV discharge command at ${rel(t.DIS,a)}, expected a+7000+-${TOL} (SS1 2 s + coast 5 s) [E2-Q1]`);
+ c(t.STO!==undefined&&Math.abs(t.STO-(a+T_SS1))<=TOL,`STO at ${rel(t.STO,a)}, expected a+${T_SS1}+-${TOL} (SS1 2 s) [D-RUN-STOP-WAITS, TMR-1-Q1]`);
+ c(t.DIS!==undefined&&Math.abs(t.DIS-(a+T_SS1+T_COAST))<=TOL,`HV discharge command at ${rel(t.DIS,a)}, expected a+${T_SS1+T_COAST}+-${TOL} (SS1 2 s + coast 2 s) [E2-Q1, TMR-1-Q1]`);
+ holdCheck(c,t,a,'Run->R&D');
  checkOrder(c,t,a,'Run->R&D');c(!x.never(emg,a),'no Emergency');
  // T1 (S3 review): SS1 requested at descent start (A12: out_SS1_DRx FALSE = SS1 requested, as STO_DRx FALSE = STO active).
  const ss1=x.first(s=>!s.out_SS1_DR1&&!s.out_SS1_DR2,a-1-TOL);c(ss1!==undefined&&Math.abs(ss1-a)<=TOL&&(t.STO===undefined||ss1<t.STO),`T1: SS1 requested at descent start (${rel(ss1,a)}, expected a+-${TOL}, before STO) [E2-Q1, D-RUN-STOP-WAITS]`);
@@ -31,16 +35,17 @@ def('D-03','E3','StartingRun: green 0.5 s -> abort: STO + Discharge at once, hol
  const b=x.blue(600);x.wait(300);c(x.never(s=>s.out_Door_Unlock_Solonoeid,b.p)===undefined,'blue 0.6 s in StartingRun: no Unlock [Q-E3-1 REC-ACCEPTED]');x.wait(1800);
  const y=x.fork();const g=x.green(550);const a=g.p+500;x.wait(10000);const t=downTrace(x,a);
  c(t.STO!==undefined&&t.STO<=a+TOL&&t.STO>a-TOL,`STO at once (${rel(t.STO,a)}, expected a+-${TOL}) - no SS1 [V14-Q12]`);
- c(t.DIS!==undefined&&t.DIS<=a+TOL,`Discharge at once (${rel(t.DIS,a)}) - no coast [V14-Q12]`);
+ c(t.DIS!==undefined&&t.DIS<=a+TOL,`Discharge at once (${rel(t.DIS,a)}) - no coast [V14-Q12]`);holdCheck(c,t,a,'StartingRun abort');
  if(t.DIS!==undefined&&t.C2!==undefined)c(t.C2>=t.DIS+TOL,`C2 OFF after the discharge hold; DIS ${rel(t.DIS,a)} C2 ${rel(t.C2,a)}`);
  // TD-14: StartingRun is already main R&D; abort end R_end = C2 OFF & C2_FBK OFF & STO active (REC-ACCEPTED D-03 oracle).
  const rEnd=x.first(s=>!s.out_HV_C2&&!s.c2f&&s.STO,a-1);c(rEnd!==undefined,'abort ends (C2 OFF, C2_FBK OFF, STO active) [TD-14]');
  c(x.is('RND')&&x.r.get('out_LV_C1'),`abort ends in R&D with C1 ON, not Safe [V14-Q12]; status=${x.status()}`);
  c(!x.never(s=>!stIs(s,'RND'),g.p),'main state R&D throughout the abort (no Safe/Emergency/Run) [TD-14, V14-Q12]');
- // Unlock during the abort (Q-E3-1): reachable by buttons only if the abort outlasts the 2 s release pause + 0.6 s.
- {const h=y.green(550);y.wait(2100);const live=s=>s.out_HV_C2||s.c2f||!s.STO;
+ // Unlock during the abort (Q-E3-1): with hold 5 s and release filter 1 s (TMR-1-Q1) the abort outlasts release pause + 0.6 s.
+ {const h=y.green(550);y.wait(T_REL+100);const live=s=>s.out_HV_C2||s.c2f||!s.STO;
+  c(live(y.log.at(-1)),`abort still in progress at green release+${T_REL+100} ms (hold 5 s > filter 1 s) [TMR-1-Q1]`);
   if(live(y.log.at(-1))){const b2=y.blue(600);y.wait(300);c(y.never(s=>s.out_Door_Unlock_Solonoeid,b2.p)===undefined,'blue 0.6 s during the abort: no Unlock [Q-E3-1]');}
-  /* else: abort shorter than the 2 s release pause - not reachable by buttons on this target (RESULTS.md) */ void h;}c(!x.never(s=>stIs(s,'RUN'),g.p),'cancelled start does not resume (no Run)');
+  void h;}c(!x.never(s=>stIs(s,'RUN'),g.p),'cancelled start does not resume (no Run)');
 },{source:'V14-Q12, D-STARTINGRUN-ABORT, TD-14, Q-E3-1'});
 
 def('D-04','E2','Safe->R&D (C1 ON): green 0.5 s -> abort to Safe: C1 OFF, C1_FBK OFF',(P,c)=>{
@@ -52,8 +57,8 @@ def('D-04','E2','Safe->R&D (C1 ON): green 0.5 s -> abort to Safe: C1 OFF, C1_FBK
 
 def('D-05','E3','Run->R&D in SS1: green again -> ignored',(P,c)=>{
  const x=P.run();const g=x.green(550);const a=g.p+500;x.wait(Math.max(0,a+1000-x.t));x.green(600);x.wait(20000);const t=downTrace(x,a);
- c(t.STO!==undefined&&Math.abs(t.STO-(a+2000))<=TOL,`second green ignored: STO still at a+2000+-${TOL}; got ${rel(t.STO,a)} [Q-RC-08]`);
- c(t.DIS!==undefined&&Math.abs(t.DIS-(a+7000))<=TOL,`second green ignored: discharge still at a+7000+-${TOL}; got ${rel(t.DIS,a)}`);
+ c(t.STO!==undefined&&Math.abs(t.STO-(a+T_SS1))<=TOL,`second green ignored: STO still at a+${T_SS1}+-${TOL}; got ${rel(t.STO,a)} [Q-RC-08]`);
+ c(t.DIS!==undefined&&Math.abs(t.DIS-(a+T_SS1+T_COAST))<=TOL,`second green ignored: discharge still at a+${T_SS1+T_COAST}+-${TOL}; got ${rel(t.DIS,a)} [TMR-1-Q1]`);
  c(x.is('RND'),`ends in R&D (no deferred R&D->Safe); status=${x.status()}`);
 },{source:'Q-RC-08'});
 

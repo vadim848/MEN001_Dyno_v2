@@ -1,17 +1,19 @@
 // VIS item 2: the visualizer does not change the stand / catalog / canonical program (VIS-Q1: "стенд и каталог не менять").
-// Oracle: lead baseline before stage VIS-3 (after EMG-OFF commit edbe4f9) — check:software SUMMARY catalog=PASS {138 tests,
-// 137 pass, 0 fail, 1 todo} structure=PASS self=PASS {53 tests, 53 pass}, exit 0; canonical SAL SHA256 53e9a6d8...8fbb (full value below).
-// (Superseded VIS/VIS-2 baseline: 133/132/1, SAL 9e5bfb15...762d.) git: no working-tree change under stand / canonical paths.
+// Oracle: lead baseline after TMR-1 + Vadim's IDE Verify (commit 1912ad8, 2026-10-29): canonical SAL SHA256 f81b1a5e...44f4
+// (full value in _lib.mjs CANON_SAL_SHA); check:software SUMMARY catalog=PASS {138 tests, 137 pass, 0 fail, 1 todo}
+// structure=PASS (native CRC included) self=PASS {53 tests, 53 pass}, exit 0. A stale native CRC must FAIL this test.
+// (Superseded: TMR-1 transfer 3511b31b...1743 with stale CRC; VIS-3 baseline 53e9a6d8...8fbb; VIS/VIS-2 133/132/1, 9e5bfb15...762d.)
+// git: no working-tree change under stand / canonical paths.
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { sh, sha, CANON_SAL, REPO, ST } from "./_lib.mjs";
+import { sh, sha, CANON_SAL, REPO, ST, CANON_SAL_SHA } from "./_lib.mjs";
 
 const STAND = ["MEN001_Dyno", "SafetyTests/src", "SafetyTests/scripts", "SafetyTests/test", "SafetyTests/SCENARIO_CATALOG.md"];
 
 test("VIS-2 canonical SAL and stand paths unchanged (git)", async () => {
   const s = sha(fs.readFileSync(CANON_SAL));
-  assert.equal(s, "53e9a6d8220c3407002a2ade8d9292d9c11e13270b9307f0cbb3e0d65a6b8fbb", "canonical SAL SHA256 = baseline");
+  assert.equal(s, CANON_SAL_SHA, "canonical SAL SHA256 = baseline");
   const g = await sh("git", ["status", "--porcelain", "--", ...STAND], { cwd: REPO });
   assert.equal(g.code, 0, g.out); assert.equal(g.out.trim(), "", "stand/canonical paths have working-tree changes:\n" + g.out);
   const d = await sh("git", ["diff", "--stat", "HEAD", "--", ...STAND], { cwd: REPO });

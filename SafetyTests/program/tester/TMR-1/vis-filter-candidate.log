@@ -1,0 +1,154 @@
+TAP version 13
+# Subtest: VIS-3 filter readiness (manual mode API)
+    # Subtest: 1 Safe: green 100 ms -> ready at release+P9 (1000) +-1; SAL flag same; never diverged
+    ok 1 - 1 Safe: green 100 ms -> ready at release+P9 (1000) +-1; SAL flag same; never diverged
+      ---
+      duration_ms: 2068.5845
+      type: 'test'
+      ...
+    # Subtest: 1b blue alone also restarts the countdown (p.9: BOTH buttons released), mid-countdown press
+    ok 2 - 1b blue alone also restarts the countdown (p.9: BOTH buttons released), mid-countdown press
+      ---
+      duration_ms: 2349.1481
+      type: 'test'
+      ...
+    # Subtest: 2 BOTH Safe->R&D and R&D->Run: same timing; compared only in SAFE/RND; no divergence
+    ok 3 - 2 BOTH Safe->R&D and R&D->Run: same timing; compared only in SAFE/RND; no divergence
+      ---
+      duration_ms: 7286.1922
+      type: 'test'
+      ...
+    # Subtest: 3 K-08 early press at release+P9-500 via raw input: accepted by API, rejected by SAL, countdown restarts
+    ok 4 - 3 K-08 early press at release+P9-500 via raw input: accepted by API, rejected by SAL, countdown restarts
+      ---
+      duration_ms: 7027.1554
+      type: 'test'
+      ...
+    # Subtest: 3b VIS-3-Q3: green / blue / Both pressed during the countdown are accepted (reach the SAL input) and every release restarts from zero
+    ok 5 - 3b VIS-3-Q3: green / blue / Both pressed during the countdown are accepted (reach the SAL input) and every release restarts from zero
+      ---
+      duration_ms: 7035.4519
+      type: 'test'
+      ...
+    # Subtest: 4b countdown length P9 ms model time while running at speed > 1 (VIS-3-Q3 'not 3 s')
+    ok 6 - 4b countdown length P9 ms model time while running at speed > 1 (VIS-3-Q3 'not 3 s')
+      ---
+      duration_ms: 24446.1452
+      type: 'test'
+      ...
+    # Subtest: 4 countdown is model time: frozen while paused, independent of speed
+    ok 7 - 4 countdown is model time: frozen while paused, independent of speed
+      ---
+      duration_ms: 6978.4049
+      type: 'test'
+      ...
+    # Subtest: 5 EMG: not compared, never diverged; Restart to SAFE: no divergence beyond 1 scan
+    ok 8 - 5 EMG: not compared, never diverged; Restart to SAFE: no divergence beyond 1 scan
+      ---
+      duration_ms: 7257.5108
+      type: 'test'
+      ...
+    # Subtest: 5b group start (boot EMG -> Restart -> SAFE): countdown scan by scan, no divergence beyond 1 scan
+    ok 9 - 5b group start (boot EMG -> Restart -> SAFE): countdown scan by scan, no divergence beyond 1 scan
+      ---
+      duration_ms: 3959.209
+      type: 'test'
+      ...
+    # Subtest: 6 mutant A (RELEASE preset -> 1.5 s): SAL later than p.9 (1 s): diverged true in SAFE, lastDivergedT sticky until next press
+    not ok 10 - 6 mutant A (RELEASE preset -> 1.5 s): SAL later than p.9 (1 s): diverged true in SAFE, lastDivergedT sticky until next press
+      ---
+      duration_ms: 3755.871
+      type: 'test'
+      location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:246:13'
+      failureType: 'testCodeFailure'
+      error: |-
+        model countdown stays p.9 = 1 s (requirement), not the mutated SAL preset [VIS-3-Q1, TMR-1-Q1]
+        
+        1500 !== 1000
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 1000
+      actual: 1500
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:258:14)
+        process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:246:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: 7 mutant B (RELEASE block renamed): SAL flag NOT CHECKED, never diverged, countdown still shown
+    ok 11 - 7 mutant B (RELEASE block renamed): SAL flag NOT CHECKED, never diverged, countdown still shown
+      ---
+      duration_ms: 3271.7656
+      type: 'test'
+      ...
+    # Subtest: 8 mapping: in_Reset_PB / in_Relase_Door_PB unmapped -> filter unavailable, not checked; mapped -> available
+    ok 12 - 8 mapping: in_Reset_PB / in_Relase_Door_PB unmapped -> filter unavailable, not checked; mapped -> available
+      ---
+      duration_ms: 8876.652
+      type: 'test'
+      ...
+    # Subtest: 9 canonical SAL untouched by mutants
+    ok 13 - 9 canonical SAL untouched by mutants
+      ---
+      duration_ms: 5.6783
+      type: 'test'
+      ...
+    1..13
+not ok 1 - VIS-3 filter readiness (manual mode API)
+  ---
+  duration_ms: 84976.0935
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:75:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# filter SAL: candidates\\TMR-1\\native\\TwinSafeGroup1.sal sha256 3511b31b12f8770fa67b41267412f7241b1ba033c744e293a91effe2311e1743 sgvl candidates\\TMR-1\\native\\GVL1.sgvl
+# x2: 6 observations, 0 in [P9,P9+1000) after release
+# x2: window check by observations NOT possible under load
+# x10: 4 observations, 0 in [P9,P9+1000) after release
+# x10: window check by observations NOT possible under load
+# run segments reached release+2228 (load): edge-after-speed check skipped; invariants above asserted
+# EMG->SAFE: compared scans 1300, max consecutive mismatch 0
+# boot: mismatching compared scans 1, max consecutive 1
+# base RELEASE timing=1 s (requirement TMR-1-Q1: 1 s)
+# Subtest: VIS-3-Q2 English: page/app/server messages without Cyrillic; NOT CHECKED token; filter UI present
+ok 2 - VIS-3-Q2 English: page/app/server messages without Cyrillic; NOT CHECKED token; filter UI present
+  ---
+  duration_ms: 652.7398
+  type: 'test'
+  ...
+# VIS-3-Q3 'buttons never blocked' checked statically (heuristic) + via the API (subtest 3b); DOM behaviour in a browser NOT VERIFIED
+# POST /api/manual/cmd: manual session not started
+# POST /api/manual/start: unknown target: no-such-target
+# GET /api/exam/no-such: no such method
+# GET /api/no-such: no such method
+# POST /api/target: both .sal and .sgvl files are required
+# POST /api/manual/cmd: speed 0.1..10
+# POST /api/manual/cmd: ms: 1...120000
+# POST /api/manual/cmd: unknown command: bogus
+# POST /api/manual/inputs: unknown input: NO_SUCH
+# POST /api/manual/inputs: input "in_Safety_Run" is a stand constant
+# POST /api/manual/hold: cannot hold: b_EStop_Ok
+# PUT /api/mapping: signal "!in_Reset_PB" is not in the loaded program (for in_Reset_PB)
+# Subtest: VIS-3 display-only (b): canonical exam per-ID statuses == stand TAP after manual activity; report chrome English
+ok 3 - VIS-3 display-only (b): canonical exam per-ID statuses == stand TAP after manual activity; report chrome English
+  ---
+  duration_ms: 1602873.9563
+  type: 'test'
+  ...
+# exam-canon.json absent: comparison to the no-activity exam is via the same stand TAP only
+# stand-provided Cyrillic strings removed: 1
+1..3
+# tests 16
+# suites 0
+# pass 14
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1689025.6088

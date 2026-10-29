@@ -27,6 +27,6 @@ Notes
 - Uploaded files are parsed only; temp dir `os.tmpdir()/men001-vis/<id>`; request limit ~20 MB.
 
 ## VIS-3 (button-filter readiness, English UI)
-Manual mode shows, under Reset / Unlock / Both, a model countdown of p.9 (both buttons released continuously 2000 ms of model time)
+Manual mode shows, under Reset / Unlock / Both, a model countdown of p.9 (both buttons released continuously 1000 ms of model time, requirement constant per p.9 / TMR-1; the SAL RELEASE preset is shown separately so a wrong RELEASE timer shows as DIVERGED)
 and the SAL flag `//RndPhysicalCompact/RELEASE/TonOut` (found by block path + `safeTon`; "NOT CHECKED" if absent or if the button inputs are unmapped).
 API: `state.filter` (see `SafetyTests/program/editor/VIS-3/NOTES.md`). Display only. UI, report and server messages are in English.

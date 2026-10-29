@@ -1,0 +1,21 @@
+
+> check:catalog
+> node scripts/catalog-check.js
+
+catalog target: C:\Users\user\source\repos\MEN001_Dyno_v2\SafetyTests\candidates\TMR-1\native
+catalog SAL SHA256: 3511b31b12f8770fa67b41267412f7241b1ba033c744e293a91effe2311e1743
+catalog stages: all
+catalog: FAIL {"tests":138,"pass":120,"fail":12,"skipped":0,"todo":6} (skipped = other stages / not run, not pass)
+  FAIL [E7] B-02 start with buttons pressed: release, then BOTH -> step up only after 2 s pause
+  FAIL [E3] D-01 Run: green 0.5 s -> STO at 2 s; HV discharge command at 7 s; hold; C2 OFF; R&D after C2_FBK OFF
+  FAIL [E3] D-05 Run->R&D in SS1: green again -> ignored
+  FAIL [E3] H-02 Run: HV Faulty TRUE -> immediate STO, coast 5 s, Discharge, C2 OFF, R&D; SafetyFault
+  FAIL [E3] H-03 Run: LV Faulty TRUE -> as H-02, then R&D->Safe; SafetyFault
+  FAIL [E3] H-06 Run->R&D in SS1: LV Faulty TRUE -> immediate STO; then R&D->Safe; SafetyFault
+  FAIL [E3] H-07 Run->R&D after STO: LV Faulty TRUE then back -> stop unchanged; R&D->Safe anyway
+  FAIL [E2] K-08 Safe: BOTH, release; new BOTH 1.5 s / 2.5 s after release -> 1.5 no, 2.5 yes
+  FAIL [E4] P-03 Run: edge CMD_RUN_TO_R&D -> as green (D-01)
+  FAIL [E6] W-02 StartingRun: C2_FBK not ON within 500 ms -> abort to R&D; SafetyFault
+  FAIL [E5] W-07 R&D with SafetyFault: green 0.5 s -> acknowledges and descends to Safe
+  FAIL [E5] W-08 R&D with SafetyFault: PLC command -> does not acknowledge
+exit 1

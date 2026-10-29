@@ -1,5 +1,6 @@
 // Catalog section K - buttons and gestures (SCENARIO_CATALOG.md). Oracle: catalog row + Vadim's decisions (source column).
 import {def,stIs,emg} from '../../helpers/catalog-program.js';
+import {T_REL} from './timers.js';
 const TOL=50;
 const UNL='out_Door_Unlock_Solonoeid';
 // Up-step acceptance marker: first scan with C1 ON (Safe->R&D) or C2 ON / STO released (R&D->Run).
@@ -63,20 +64,21 @@ def('K-07','E2','BOTH held without release -> exactly one step up',(P,c)=>{
   const dn=x.never(s=>!stIs(s,'RUN')&&!stIs(s,'RND'),g.p1);c(!dn,`R&D, BOTH held: no other state during the attempt (t=${dn?.t} ${dn?.st})`);}
 },{source:'p.4-5'});
 
-def('K-08','E2','Safe: BOTH, release; new BOTH 1.5 s / 2.5 s after release -> 1.5 no, 2.5 yes',(P,c)=>{
- for(const pause of [1500,2500]){const x=P.safe();const g=x.both();x.wait(pause-1);
+def('K-08','E2','Safe: BOTH, release; new BOTH 0.9 s (no) and 1.1/1.5 s (yes) after release (filter 1 s)',(P,c)=>{
+ // TMR-1: q-500 (0.5 s) not usable: first BOTH's R&D not yet confirmed at release+0.5 s (precondition); q-100 is the tighter negative.
+ for(const pause of [T_REL-100,T_REL+100,T_REL+500]){const x=P.safe();const g=x.both();x.wait(pause-1);
   c(x.is('RND'),`pause ${pause}: first BOTH reached R&D before the second attempt; status=${x.status()}`);
   const h=x.both();x.wait(1500);const u=upRnd(x,h.p1);
-  if(pause===1500)c(u===undefined,'new BOTH 1.5 s after release: rejected (2 s release pause) [p.9]');
-  else c(u!==undefined&&u>h.p2+1000-TOL&&u<=h.p2+1000+TOL,`new BOTH 2.5 s after release: R&D->Run accepted at second+${u===undefined?'none':u-h.p2}, expected 1000+-${TOL} [p.9]`);}
+  if(pause<T_REL)c(u===undefined,`new BOTH ${pause} ms after release: rejected (1 s release pause) [p.9, TMR-1-Q1]`);
+  else c(u!==undefined&&u>h.p2+1000-TOL&&u<=h.p2+1000+TOL,`new BOTH ${pause} ms after release: R&D->Run accepted at second+${u===undefined?'none':u-h.p2}, expected 1000+-${TOL} [p.9, TMR-1-Q1]`);}
 },{source:'p.9'});
 
-def('K-09','E2','Safe: permit lost 300 ms with buttons released, BOTH 2.1 s after release -> accepted',(P,c)=>{
+def('K-09','E2','Safe: permit lost 300 ms with buttons released, BOTH 1.1 s after release -> accepted',(P,c)=>{
  const cases={cover:{in_InterLock_NC_1:false,in_InterLock_NC_2:false},connectorLV:{in_LV_Connector_Interlock:false}};
  for(const [k,loss] of Object.entries(cases)){const x=P.safe();const g=x.green(100);const rel=g.rel;x.wait(500);
-  x.step(loss,300);x.step(Object.fromEntries(Object.keys(loss).map(n=>[n,true])));x.wait(rel+2100-x.t);
+  x.step(loss,300);x.step(Object.fromEntries(Object.keys(loss).map(n=>[n,true])));x.wait(rel+T_REL+100-x.t);
   const h=x.both();x.wait(1000);const u=upSafe(x,h.p1);
-  c(u!==undefined,`${k} 300 ms during the pause: BOTH at release+2.1 s accepted (pause counted by buttons only) [Q-REL-AFTER-PERMIT]`);}
+  c(u!==undefined,`${k} 300 ms during the pause: BOTH at release+${T_REL+100} ms accepted (pause counted by buttons only; restart at permit return would need +1.8 s) [Q-REL-AFTER-PERMIT, TMR-1-Q1]`);}
 },{source:'Q-REL-AFTER-PERMIT'});
 
 def('K-10','E2','Run: BOTH -> ignored',(P,c)=>{
