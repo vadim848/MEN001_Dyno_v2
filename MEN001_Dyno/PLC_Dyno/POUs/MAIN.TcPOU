@@ -12,6 +12,11 @@ VAR
 	bPulse	:	BOOL	;
 	
 	t_BlinkTime : TIME	;
+
+	//STS_FAULT indication (Q-LED-2): green/blue alternate every 200 ms
+	FaultPulse_On_TON: TON;
+	FaultPulse_Off_TON: TON;
+	bFaultPulse	:	BOOL	;
 	
 	//TwinSAFE heartbeat (interface v1.4): level toggles every 0.5 s
 	HB_On_TON: TON;
@@ -103,26 +108,26 @@ IF GVL_Safety.stTwinSAFE_IN.EStop_Ok AND GVL_Safety.stTwinSAFE_IN.EStop_Status T
 ELSIF GVL_Safety.stTwinSAFE_IN.EStop_Ok=FALSE AND GVL_Safety.stTwinSAFE_IN.EStop_Status  THEN
 	//Red Blink 
 	GVL_IO.RedLED:=bPulse;
-ELSIF GVL_Safety.stTwinSAFE_IN.EStop_Ok=FALSE AND GVL_Safety.stTwinSAFE_IN.EStop_Status=FALSE THEN
+ELSE
 	//Red On
 	GVL_IO.RedLED:= TRUE;
 END_IF
 
-//Blue
-IF (GVL_Safety.stTwinSAFE_OUT.DoorMonitor AND GVL_Safety.stTwinSAFE_IN.Speps.step1) 
-OR (GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE AND GVL_Safety.stTwinSAFE_IN.Speps.stepRnD) THEN
-	//Blue Blink
-	GVL_IO.BlueLED:=bPulse;
-ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor AND GVL_Safety.stTwinSAFE_OUT.SolenoedMonitor=FALSE AND NOT GVL_Safety.stTwinSAFE_IN.Speps.stepRnD THEN
+//Blue: Unlock indication (Q-LED-3). Off in Run/Config/Emergency, in Safe->R&D transition and without Safe/R&D status
+IF GVL_Safety.stTwinSAFE_IN.STS_RUN OR GVL_Safety.stTwinSAFE_IN.STS_CFG OR GVL_Safety.stTwinSAFE_IN.STS_EMG
+OR NOT ((GVL_Safety.stTwinSAFE_IN.STS_SAFE AND GVL_Safety.stTwinSAFE_IN.Speps.step1) OR GVL_Safety.stTwinSAFE_IN.STS_RND) THEN
 	//Blue Off
 	GVL_IO.BlueLED:=FALSE;
-ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE OR (GVL_Safety.stTwinSAFE_IN.Speps.stepRnD AND GVL_Safety.stTwinSAFE_OUT.DoorMonitor) THEN
-	//Blue On
+ELSIF GVL_Safety.stTwinSAFE_OUT.DoorMonitor=FALSE OR GVL_Safety.stTwinSAFE_OUT.SolenoedMonitor THEN
+	//Blue On (lid open or solenoid on)
 	GVL_IO.BlueLED:=TRUE;
+ELSE
+	//Blue Blink (lid closed, may be opened)
+	GVL_IO.BlueLED:=bPulse;
 END_IF
 
 //Green
-IF (GVL_Safety.stTwinSAFE_IN.Speps.step1 AND GVL_Safety.stTwinSAFE_IN.EStop_Ok AND GVL_Safety.stTwinSAFE_OUT.DoorMonitor=TRUE) OR GVL_Safety.stTwinSAFE_IN.TransitionStep THEN
+IF (GVL_Safety.stTwinSAFE_IN.Speps.step1 AND GVL_Safety.stTwinSAFE_IN.EStop_Ok AND GVL_Safety.stTwinSAFE_OUT.DoorMonitor=TRUE) OR (GVL_Safety.stTwinSAFE_IN.TransitionStep AND NOT GVL_Safety.stTwinSAFE_IN.Speps.step1) THEN
 	//Green Blink
 	GVL_IO.GreenLED:=bPulse;
 ELSIF GVL_Safety.stTwinSAFE_IN.Safety_Armed OR (GVL_Safety.stTwinSAFE_IN.Speps.stepRnD) OR GVL_Safety.stTwinSAFE_IN.Speps.step2 THEN
@@ -134,7 +139,7 @@ OR GVL_Safety.stTwinSAFE_IN.Speps.step6 OR GVL_Safety.stTwinSAFE_OUT.DoorMonitor
 	GVL_IO.GreenLED:=FALSE;
 END_IF
 
-IF GVL_Safety.stTwinSAFE_IN.Speps.step2 OR GVL_Safety.stTwinSAFE_IN.TransitionStep THEN
+IF GVL_Safety.stTwinSAFE_IN.Speps.step2 OR (GVL_Safety.stTwinSAFE_IN.TransitionStep AND NOT GVL_Safety.stTwinSAFE_IN.Speps.step1) THEN
 	t_BlinkTime:=T#0.5S;
 ELSE
 	t_BlinkTime:=T#1.5S;
@@ -144,6 +149,16 @@ Pulse_On_TON(IN:=NOT bPulse , PT:=t_BlinkTime , Q=> , ET=> );
 Pulse_Off_TON(IN:=bPulse , PT:=t_BlinkTime , Q=> , ET=> );
 IF Pulse_On_TON.Q AND NOT bPulse THEN bPulse:=TRUE; END_IF;
 IF Pulse_Off_TON.Q AND bPulse THEN bPulse:=FALSE; END_IF;
+
+//STS_FAULT (Q-LED-2): green/blue alternate 200 ms, overrides green/blue in all states; red unchanged
+FaultPulse_On_TON(IN:=NOT bFaultPulse , PT:=T#200MS , Q=> , ET=> );
+FaultPulse_Off_TON(IN:=bFaultPulse , PT:=T#200MS , Q=> , ET=> );
+IF FaultPulse_On_TON.Q AND NOT bFaultPulse THEN bFaultPulse:=TRUE; END_IF;
+IF FaultPulse_Off_TON.Q AND bFaultPulse THEN bFaultPulse:=FALSE; END_IF;
+IF GVL_Safety.stTwinSAFE_IN.STS_FAULT THEN
+	GVL_IO.GreenLED:=bFaultPulse;
+	GVL_IO.BlueLED:=NOT bFaultPulse;
+END_IF
 
 
 GVL_Safety.stTwinSAFE_IN.HV_Healthy:=NOT GVL_Safety.stTwinSAFE_IN.HV_Faulty;
