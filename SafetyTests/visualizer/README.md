@@ -30,3 +30,6 @@ Notes
 Manual mode shows, under Reset / Unlock / Both, a model countdown of p.9 (both buttons released continuously 1000 ms of model time, requirement constant per p.9 / TMR-1; the SAL RELEASE preset is shown separately so a wrong RELEASE timer shows as DIVERGED)
 and the SAL flag `//RndPhysicalCompact/RELEASE/TonOut` (found by block path + `safeTon`; "NOT CHECKED" if absent or if the button inputs are unmapped).
 API: `state.filter` (see `SafetyTests/program/editor/VIS-3/NOTES.md`). Display only. UI, report and server messages are in English.
+
+## VIS-LED (display only)
+Manual mode shows the Red/Green/Blue dashboard LEDs (off / on / blink slow 1.5 s / blink fast 0.5 s / fault-alternate 200 ms) from `led.js`: a JS replica of PLC act_LED_Control (`test/independent/act-led-control.mjs`, variant `new`), fed after each SAL scan (dt 1 ms). Not PLC execution. SolenoedMonitor = constant FALSE (legacy, Q-LED-5). `state.led` in the manual API. Unmapped LED inputs read FALSE and are listed in the panel.

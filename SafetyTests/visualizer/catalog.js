@@ -10,15 +10,15 @@ import * as trace from "./trace.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 let loaded = false;
-// Registration order of the test files (b,c,d,e,g,h,k,p,u,w): the ids exported by the lib modules.
+// Registration order of the test files (b,c,d,e,g,h,k,n,p,u,w; n = n-c3bms, sorts between k-buttons and p-plc): the ids exported by the lib modules.
 export async function loadCatalog() {
   if (loaded) return catalogList();
-  const L = {}; for (const f of ["k", "c", "e", "u", "d", "h", "w", "p", "g"]) L[f] = await import(`../test/catalog/lib/${f}.js`);
+  const L = {}; for (const f of ["k", "c", "e", "u", "d", "h", "w", "p", "g", "n"]) L[f] = await import(`../test/catalog/lib/${f}.js`);
   loaded = true; return catalogList(L);
 }
 let ORDER = null;
 function catalogList(L) {
-  if (L) ORDER = [...L.g.B, ...L.c.C, ...L.d.D, ...L.e.E, ...L.g.G, ...L.h.H, ...L.k.K, ...L.p.PP, ...L.u.U, ...L.w.W];
+  if (L) ORDER = [...L.g.B, ...L.c.C, ...L.d.D, ...L.e.E, ...L.g.G, ...L.h.H, ...L.k.K, ...L.n.N, ...L.p.PP, ...L.u.U, ...L.w.W];
   return ORDER.map(id => { const s = SCENARIOS.get(id); return { id, stage: s.stage, title: s.title }; });
 }
 export function catalogVersion() {

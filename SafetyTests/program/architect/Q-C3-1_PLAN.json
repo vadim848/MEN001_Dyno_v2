@@ -1,0 +1,32 @@
+{
+  "slice": "Q-C3-1",
+  "canonicalSalSha256": "f81b1a5e565dc5d9c5893dff9b2f7c25f27712c45be442905e3f6835706544f4",
+  "candidateDir": "SafetyTests/candidates/NIV-SAL/native/",
+  "fbBefore": 346, "fbAfter": 354, "fbLimit": 512,
+  "network": "Network6",
+  "addBlocks": [
+    {"ooe":347,"name":"C3_ARM_SET","type":"safeAnd","in":{"AndIn1":["FBOr1.OrOut","NC"],"AndIn2":["FBAnd8.AndOut","NO"]},"out":["C3_ARM.Set"]},
+    {"ooe":348,"name":"C3_ARM_CONS","type":"safeAnd","in":{"AndIn1":["FBAnd8.AndOut","NC"],"AndIn2":["FBAnd7.AndOut","NC"]},"out":["C3_ARM_RST.OrIn3"]},
+    {"ooe":349,"name":"C3_ARM_RST","type":"safeOr","in":{"OrIn1":["FBOr1.OrOut","NO"],"OrIn2":["sym:GVL1.b_C3_BetReset","NC"],"OrIn3":["C3_ARM_CONS.AndOut","NC"],"OrIn4":["sym:GVL1.b_C3_BetReset_2","NC"]},"out":["C3_ARM.Reset"]},
+    {"ooe":350,"name":"C3_ARM","type":"safeRs","in":{"Set":["C3_ARM_SET.AndOut","NC"],"Reset":["C3_ARM_RST.OrOut","NC"]},"out":["FBAnd4.AndIn3"]},
+    {"ooe":351,"name":"BMS_ARM_SET","type":"safeAnd","in":{"AndIn1":["FBOr1.OrOut","NC"],"AndIn2":["FBAnd21.AndOut","NO"]},"out":["BMS_ARM.Set"]},
+    {"ooe":352,"name":"BMS_ARM_CONS","type":"safeAnd","in":{"AndIn1":["FBAnd21.AndOut","NC"],"AndIn2":["FBAnd22.AndOut","NC"]},"out":["BMS_ARM_RST.OrIn3"]},
+    {"ooe":353,"name":"BMS_ARM_RST","type":"safeOr","in":{"OrIn1":["FBOr1.OrOut","NO"],"OrIn2":["sym:GVL1.b_RBN_Bat_Reset","NC"],"OrIn3":["BMS_ARM_CONS.AndOut","NC"],"OrIn4":["sym:GVL1.b_RBN_Bat_Reset_2","NC"]},"out":["BMS_ARM.Reset"]},
+    {"ooe":354,"name":"BMS_ARM","type":"safeRs","in":{"Set":["BMS_ARM_SET.AndOut","NC"],"Reset":["BMS_ARM_RST.OrOut","NC"]},"out":["FBAnd6.AndIn3","FBAnd14.AndIn4"]}
+  ],
+  "activatePorts": [
+    {"port":"FBAnd4.AndIn3","contact":"NC","source":"C3_ARM.RsOut"},
+    {"port":"FBAnd6.AndIn3","contact":"NC","source":"BMS_ARM.RsOut"},
+    {"port":"FBAnd14.AndIn4","contact":"NC","source":"BMS_ARM.RsOut"}
+  ],
+  "newWiredLinks": 19,
+  "symbolConsumerRefs": [
+    {"var":"b_C3_BetReset","variableId":"d9e0fc7a-6da0-4421-8c02-f441b4362549","port":"C3_ARM_RST.OrIn2"},
+    {"var":"b_C3_BetReset_2","variableId":"97b9d7ee-f6f0-4b79-9499-47abe82e23e3","port":"C3_ARM_RST.OrIn4"},
+    {"var":"b_RBN_Bat_Reset","variableId":"e0f34103-fb8a-48f8-ba48-3e8b312d0370","port":"BMS_ARM_RST.OrIn2"},
+    {"var":"b_RBN_Bat_Reset_2","variableId":"8f098b42-8a6c-4651-8bcb-c852274ce765","port":"BMS_ARM_RST.OrIn4"}
+  ],
+  "newSgvlVariables": 0,
+  "unchanged": ["existing ooe 1..346","existing contacts/wires/Symbols","FBRs1/FBRs2 reset paths","alias/hardware mappings","timers","group/target","tsproj/xti","PLC MAIN.TcPOU"],
+  "mutations": ["MQ1 FBAnd4.AndIn3 off","MQ2 FBAnd14.AndIn4 off","MQ3 FBAnd6.AndIn3 off","MQ4 ARM_SET.AndIn2 NO->NC","MQ5 ARM_RST.OrIn1 removed (maybe equivalent)","MQ6 ARM_RST.OrIn3 removed","MQ7 ARM_RST.OrIn4 removed (maybe equivalent)","MQ8 ARM reset = FBOr3/FBOr2","MQ9 ooe swap 347/350 (expected equivalent)","MQ10 cross-channel ARM","MQ11-13 BMS variants of MQ4/6/7"]
+}

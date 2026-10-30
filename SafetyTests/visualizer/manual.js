@@ -2,6 +2,7 @@
 // run/pause, 1-scan step, advance N ms, speed x0.1..x10; inputs are queued and applied at the start of the next scan.
 // Timeline = change-encoded ring buffer of the last 120 s of virtual time. No session recording.
 import { OUT } from "../test/helpers/catalog-program.js";
+import { LedPanel } from "./led.js";
 
 export const FBK = ["in_LV_C1_FBK", "in_HV_C2_FBK", "in_STO_DR1_FBK", "in_STO_DR2_FBK"];
 export const CONSTANT_INPUTS = ["in_Safety_Run", "in_False_SI2_CH8"];
@@ -24,6 +25,7 @@ class Session {
     this.filterMs = FILTER_MS; // requirement constant (p.9 / TMR-1); SAL preset is shown separately in sal.presetMs
     this.fAvail = FILTER_BTNS.every(n => this.inputNames.includes(n));
     this.fRelT = this.x.t + 1; this.fPressed = false; this.fStreak = 0; this.fDiv = false; this.fLastDivT = null; this.fReady = false; this.fSal = null; this.fCompared = false;
+    this.led = new LedPanel(P); // VIS-LED: display only, replica reset = new session
     this.setPlant(plant); this.record(true);
     this.lastWall = Date.now(); this.iv = setInterval(() => this.tick(), 20);
   }
@@ -42,7 +44,7 @@ class Session {
   scan1() {
     const q = this.queue; this.queue = {};
     if (Object.keys(q).length) { try { this.x.set(q); } catch (e) { this.err = String(e.message); } }
-    this.x.step({}, 1); this.filterScan(); this.record();
+    this.x.step({}, 1); this.led.scan(this.x.r); this.filterScan(); this.record();
   }
   // per scan, from the inputs the SAL actually used (applied values), in model time x.t
   filterScan() {
@@ -85,7 +87,7 @@ class Session {
     const outputs = {}; for (const k of OUT) outputs[k] = !!x.r.get(k);
     return { t: x.t, running: this.running, speed: this.speed, lag: this.lag, plant: this.plant, error: this.err, status: x.status(), stages: x.stages(),
       fault: x.faultName ? x.r.get(x.faultName) : null, plcFault: x.plcFaultName ? x.r.get(x.plcFaultName) : null, cover: x.coverName ? x.r.get(x.coverName) : null,
-      sto: s.STO ?? null, filter: this.filterState(), outputs, inputs: rows, pending: { ...this.queue }, timers,
+      sto: s.STO ?? null, filter: this.filterState(), led: this.led.state(), outputs, inputs: rows, pending: { ...this.queue }, timers,
       since, ringMs: RING_MS, base: since < 0 ? Object.fromEntries(this.base) : undefined, changes: this.changes.filter(c => c.t > since) };
   }
   stop() { clearInterval(this.iv); }

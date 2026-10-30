@@ -171,7 +171,17 @@ function renderManual(s) {
   $("mOut").innerHTML = `<div>State: <b>${esc(s.status.join("+"))}</b> · stages: <b>${esc(s.stages.join("+") || "—")}</b></div>` +
     led("SafetyFault", s.fault) + led("Fault (PLC)", s.plcFault) + led("Cover locked", s.cover) + led("STO active", s.sto) +
     Object.entries(s.outputs).map(([k, v]) => led(k, v)).join("");
+  renderLeds(s.led);
   $("mTimers").innerHTML = s.timers.length ? s.timers.map(t => `<div>${esc(t.path)}: ${t.elapsed}/${t.preset} ms</div>`).join("") : "<span class=dim>none active</span>";
+}
+// VIS-LED: dashboard LEDs (display only; replica of act_LED_Control)
+const LEDMODE = { off: "off", on: "on", "blink-slow": "blink slow (1.5 s)", "blink-fast": "blink fast (0.5 s)", fault: "fault alternate (200 ms)" };
+function renderLeds(l) {
+  const box = $("mLeds"); if (!box || !l) return;
+  const cell = (n, c) => `<div class="in"><span class="led${c.on ? " on" : ""}" style="${c.on ? "background:" + n.toLowerCase() : ""}"></span>${n}: <b>${c.on ? "ON" : "OFF"}</b> · ${esc(LEDMODE[c.mode])}</div>`;
+  box.innerHTML = cell("Red", l.leds.red) + cell("Green", l.leds.green) + cell("Blue", l.leds.blue) +
+    `<div class="dim">${esc(l.caption)}</div><div class="dim">${esc(l.solenoid)}</div>` +
+    (l.notMapped.length ? `<div class="dim">LED inputs not mapped: ${esc(l.notMapped.join(", "))}</div>` : "");
 }
 function renderTimeline() {
   if (!M.on) return; const w1 = M.t, w0 = Math.max(0, w1 - Number($("mWin").value)); const ser = {};

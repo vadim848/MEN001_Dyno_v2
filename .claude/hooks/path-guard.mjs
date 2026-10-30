@@ -68,7 +68,14 @@ const tool = input.tool_name;
 
 if (tool === "Bash" || tool === "PowerShell") {
   const cmd = String(input.tool_input?.command ?? "");
-  if (/\bgit\b[^\n;|&]*\bpush\b/i.test(cmd)) deny("git push is not permitted (AGENTS.md)");
+  // Push (Vadim, 2026-10-30, D-PUSH-COORD): only the coordinator (main session, no subagent role),
+  // any branch, after Vadim's message in chat (AGENTS.md); one plain branch to origin, no
+  // force/delete/mirror/all.
+  if (/\bgit\b[^\n;|&]*\bpush\b/i.test(cmd)) {
+    if (role !== "lead") deny("git push is coordinator-only (AGENTS.md)");
+    const m = cmd.match(/^\s*git\s+push\s+origin\s+([A-Za-z0-9][A-Za-z0-9._\/-]*)\s*$/);
+    if (!m) deny("git push allowed only as: git push origin <branch> (no force/delete; AGENTS.md)");
+  }
   if (/source[\\/]+repos[\\/]+MEN001_Dyno(?![_\w])/i.test(cmd) &&
       /\bgit\b[^\n;|&]*\b(checkout|switch|reset|commit|merge|rebase|stash|clean|pull|branch\s+-[dDmM])\b/i.test(cmd))
     deny("reference repository is read-only");

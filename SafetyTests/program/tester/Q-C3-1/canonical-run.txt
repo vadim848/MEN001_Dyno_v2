@@ -1,0 +1,423 @@
+TAP version 13
+# Subtest: [Q-C3-1] C3-01 R&D, C3+BMS ON: EStop (PLC / NC1) -> Emergency; C3/BMS OFF <=50 ms; LV discharge at once; C1 OFF after 2 s
+ok 1 - [Q-C3-1] C3-01 R&D, C3+BMS ON: EStop (PLC / NC1) -> Emergency; C3/BMS OFF <=50 ms; LV discharge at once; C1 OFF after 2 s
+  ---
+  duration_ms: 5568.482
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-02 after Emergency, cmd C3/BMS held ON: Restart -> Safe -> BOTH -> R&D: C3/BMS stay OFF >=3 s (no ON at R&D confirm)
+not ok 2 - [Q-C3-1] C3-02 after Emergency, cmd C3/BMS held ON: Restart -> Safe -> BOTH -> R&D: C3/BMS stay OFF >=3 s (no ON at R&D confirm)
+  ---
+  duration_ms: 9965.4806
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    C3-02: 2 violated check(s) [source Niv #1 item 2, Q-C3-1, CR-2]
+    + actual - expected
+    
+    + [
+    +   'held from before Emergency, through Safe and R&D +3 s: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=25895 status=RND',
+    +   'held from before Emergency, through Safe and R&D +3 s: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=25895 status=RND'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'held from before Emergency, through Safe and R&D +3 s: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=25895 status=RND'
+    1: 'held from before Emergency, through Safe and R&D +3 s: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=25895 status=RND'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: [Q-C3-1] C3-03 R&D, C3+BMS ON: green 0.6 s -> R&D->Safe (cmd held): OFF <=50 ms after down accepted; OFF in Safe; OFF >=3 s after R&D
+not ok 3 - [Q-C3-1] C3-03 R&D, C3+BMS ON: green 0.6 s -> R&D->Safe (cmd held): OFF <=50 ms after down accepted; OFF in Safe; OFF >=3 s after R&D
+  ---
+  duration_ms: 3278.0187
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    C3-03: 2 violated check(s) [source Niv #1 item 3, Q-C3-1, CR-2, CR-5]
+    + actual - expected
+    
+    + [
+    +   'held through R&D->Safe, Safe, Safe->R&D and R&D +3 s: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=10583 status=RND',
+    +   'held through R&D->Safe, Safe, Safe->R&D and R&D +3 s: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=10583 status=RND'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'held through R&D->Safe, Safe, Safe->R&D and R&D +3 s: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=10583 status=RND'
+    1: 'held through R&D->Safe, Safe, Safe->R&D and R&D +3 s: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=10583 status=RND'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: [Q-C3-1] C3-04 end of C3-02 (R&D, held, OFF): cmd OFF 200 ms then cmd ON -> ON <=50 ms after the new edge
+not ok 4 - [Q-C3-1] C3-04 end of C3-02 (R&D, held, OFF): cmd OFF 200 ms then cmd ON -> ON <=50 ms after the new edge
+  ---
+  duration_ms: 9065.6105
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    C3-04: 2 violated check(s) [source Niv #1 item 4, Q-C3-1, CR-1]
+    + actual - expected
+    
+    + [
+    +   'before the new edge: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=25895 status=RND',
+    +   'before the new edge: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=25895 status=RND'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'before the new edge: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=25895 status=RND'
+    1: 'before the new edge: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=25895 status=RND'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: [Q-C3-1] C3-05 R&D, C3+BMS ON: BOTH -> Run, 2 s, green -> Run->R&D -> R&D: C3/BMS ON continuously
+ok 5 - [Q-C3-1] C3-05 R&D, C3+BMS ON: BOTH -> Run, 2 s, green -> Run->R&D -> R&D: C3/BMS ON continuously
+  ---
+  duration_ms: 7642.4026
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-06 Safe, cmd OFF: cmd ON in Safe held 3 s -> C3/BMS OFF
+ok 6 - [Q-C3-1] C3-06 Safe, cmd OFF: cmd ON in Safe held 3 s -> C3/BMS OFF
+  ---
+  duration_ms: 1367.6381
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-07 cmd ON given in Safe, held: BOTH -> R&D: OFF >=3 s; then cmd OFF 200 ms -> ON: ON <=50 ms
+not ok 7 - [Q-C3-1] C3-07 cmd ON given in Safe, held: BOTH -> R&D: OFF >=3 s; then cmd OFF 200 ms -> ON: ON <=50 ms
+  ---
+  duration_ms: 3644.9502
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    C3-07: 2 violated check(s) [source Q-C3-1 «данной в R&D/Run», CR-2]
+    + actual - expected
+    
+    + [
+    +   'edge given in Safe, held into R&D +3 s: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=7028 status=RND',
+    +   'edge given in Safe, held into R&D +3 s: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=7028 status=RND'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'edge given in Safe, held into R&D +3 s: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=7028 status=RND'
+    1: 'edge given in Safe, held into R&D +3 s: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=7028 status=RND'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: [Q-C3-1] C3-08 Run (stable), cmd OFF, C3/BMS OFF: cmd ON -> ON <=50 ms
+ok 8 - [Q-C3-1] C3-08 Run (stable), cmd OFF, C3/BMS OFF: cmd ON -> ON <=50 ms
+  ---
+  duration_ms: 1873.6313
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-09 end of C3-02: BOTH -> StartingRun -> Run with cmd held: OFF throughout and >=3 s in Run; new edge in Run -> ON <=50 ms
+not ok 9 - [Q-C3-1] C3-09 end of C3-02: BOTH -> StartingRun -> Run with cmd held: OFF throughout and >=3 s in Run; new edge in Run -> ON <=50 ms
+  ---
+  duration_ms: 11905.4092
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    C3-09: 2 violated check(s) [source Q-C3-1, CR-2]
+    + actual - expected
+    
+    + [
+    +   'held through R&D, StartingRun and Run +3 s: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=25895 status=RND',
+    +   'held through R&D, StartingRun and Run +3 s: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=25895 status=RND'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'held through R&D, StartingRun and Run +3 s: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=25895 status=RND'
+    1: 'held through R&D, StartingRun and Run +3 s: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=25895 status=RND'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: [Q-C3-1] C3-10 Safe->R&D: cmd ON (a) 100 ms after rise accepted, (b) R&D status -50 ms, held -> OFF >=3 s after R&D status
+not ok 10 - [Q-C3-1] C3-10 Safe->R&D: cmd ON (a) 100 ms after rise accepted, (b) R&D status -50 ms, held -> OFF >=3 s after R&D status
+  ---
+  duration_ms: 5544.496
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    C3-10: 4 violated check(s) [source Q-C3-1 «данной в R&D/Run», CR-2]
+    + actual - expected
+    
+    + [
+    +   '(a) rise accepted +100 ms, edge not in R&D: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=4028 status=RND',
+    +   '(a) rise accepted +100 ms, edge not in R&D: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=4028 status=RND',
+    +   '(b) R&D status -50 ms, edge not in R&D: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=4028 status=RND',
+    +   '(b) R&D status -50 ms, edge not in R&D: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=4028 status=RND'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: '(a) rise accepted +100 ms, edge not in R&D: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=4028 status=RND'
+    1: '(a) rise accepted +100 ms, edge not in R&D: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=4028 status=RND'
+    2: '(b) R&D status -50 ms, edge not in R&D: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=4028 status=RND'
+    3: '(b) R&D status -50 ms, edge not in R&D: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=4028 status=RND'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: [Q-C3-1] C3-11 Safe->R&D: cmd ON at R&D status +50 ms -> ON <=50 ms after the edge
+ok 11 - [Q-C3-1] C3-11 Safe->R&D: cmd ON at R&D status +50 ms -> ON <=50 ms after the edge
+  ---
+  duration_ms: 950.0683
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-12 R&D: C3 cmd ON only; +1 s BMS ON; +1 s C3 OFF -> channels independent
+ok 12 - [Q-C3-1] C3-12 R&D: C3 cmd ON only; +1 s BMS ON; +1 s C3 OFF -> channels independent
+  ---
+  duration_ms: 1408.7784
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-13 after Emergency: C3 held ON, BMS cmd OFF in Safe; BOTH -> R&D; BMS ON at R&D +1 s -> BMS ON, C3 stays OFF
+not ok 13 - [Q-C3-1] C3-13 after Emergency: C3 held ON, BMS cmd OFF in Safe; BOTH -> R&D; BMS ON at R&D +1 s -> BMS ON, C3 stays OFF
+  ---
+  duration_ms: 60107.0006
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    C3-13: 1 violated check(s) [source CR-2, CR-8]
+    + actual - expected
+    
+    + [
+    +   'C3 held from before Emergency (BMS edge does not affect C3) [CR-8]: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=25995 status=RND'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'C3 held from before Emergency (BMS edge does not affect C3) [CR-8]: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=25995 status=RND'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: [Q-C3-1] C3-14 R&D, ON: green 0.6 s; inside R&D->Safe cmd OFF 200 ms -> ON; Safe; BOTH -> R&D (held) -> OFF throughout
+not ok 14 - [Q-C3-1] C3-14 R&D, ON: green 0.6 s; inside R&D->Safe cmd OFF 200 ms -> ON; Safe; BOTH -> R&D (held) -> OFF throughout
+  ---
+  duration_ms: 37057.6557
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    C3-14: 2 violated check(s) [source CR-5 (reset-dominant, recRndC_SG), CR-2]
+    + actual - expected
+    
+    + [
+    +   'edge inside R&D->Safe (reset-dominant), then Safe and R&D +3 s [CR-5, CR-2]: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=10887 status=RND',
+    +   'edge inside R&D->Safe (reset-dominant), then Safe and R&D +3 s [CR-5, CR-2]: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=10887 status=RND'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'edge inside R&D->Safe (reset-dominant), then Safe and R&D +3 s [CR-5, CR-2]: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=10887 status=RND'
+    1: 'edge inside R&D->Safe (reset-dominant), then Safe and R&D +3 s [CR-5, CR-2]: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=10887 status=RND'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: [Q-C3-1] C3-15 Run, ON: ES_NC_1 FALSE; in the emergency chain cmd OFF 200 ms -> ON; Restart -> Safe -> R&D (held) -> OFF throughout
+not ok 15 - [Q-C3-1] C3-15 Run, ON: ES_NC_1 FALSE; in the emergency chain cmd OFF 200 ms -> ON; Restart -> Safe -> R&D (held) -> OFF throughout
+  ---
+  duration_ms: 120163.1064
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    C3-15: 2 violated check(s) [source Q-ARCH-01 (CR-4), CR-2]
+    + actual - expected
+    
+    + [
+    +   'edge inside Emergency, then Safe and R&D +3 s [CR-4, CR-2]: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=30297 status=RND',
+    +   'edge inside Emergency, then Safe and R&D +3 s [CR-4, CR-2]: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=30297 status=RND'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'edge inside Emergency, then Safe and R&D +3 s [CR-4, CR-2]: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=30297 status=RND'
+    1: 'edge inside Emergency, then Safe and R&D +3 s [CR-4, CR-2]: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=30297 status=RND'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: [Q-C3-1] C3-16 R&D / Run, C3+BMS ON: cmd OFF -> OFF <=50 ms
+ok 16 - [Q-C3-1] C3-16 R&D / Run, C3+BMS ON: cmd OFF -> OFF <=50 ms
+  ---
+  duration_ms: 20009.6057
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-17 group start with cmd ON from scan 0: Emergency -> Restart -> Safe -> BOTH -> R&D -> OFF >=3 s
+not ok 17 - [Q-C3-1] C3-17 group start with cmd ON from scan 0: Emergency -> Restart -> Safe -> BOTH -> R&D -> OFF >=3 s
+  ---
+  duration_ms: 25891.708
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    C3-17: 2 violated check(s) [source Q-C3-1, CR-2 (catalog rule 2)]
+    + actual - expected
+    
+    + [
+    +   'cmd ON since group start: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=3928 status=RND',
+    +   'cmd ON since group start: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=3928 status=RND'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'cmd ON since group start: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=3928 status=RND'
+    1: 'cmd ON since group start: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=3928 status=RND'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: [Q-C3-1] C3-18 after Emergency, cmd OFF in Safe before the rise; BOTH -> R&D; cmd ON at R&D +1 s -> OFF until the edge, ON <=50 ms after
+ok 18 - [Q-C3-1] C3-18 after Emergency, cmd OFF in Safe before the rise; BOTH -> R&D; cmd ON at R&D +1 s -> OFF until the edge, ON <=50 ms after
+  ---
+  duration_ms: 65849.6308
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-19 OPTIONAL (non-PLC combination): R&D, OFF; Set=TRUE while Reset=TRUE 200 ms, then Reset falls with Set held -> OFF >=3 s
+not ok 19 - [Q-C3-1] C3-19 OPTIONAL (non-PLC combination): R&D, OFF; Set=TRUE while Reset=TRUE 200 ms, then Reset falls with Set held -> OFF >=3 s
+  ---
+  duration_ms: 13057.7872
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\test\\helpers\\catalog-program.js:220:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    C3-19: 2 violated check(s) [source Q-C3-1 literal; optional (PLC never produces Set=Reset=TRUE)]
+    + actual - expected
+    
+    + [
+    +   'Set rose while Reset active; Reset fell with Set held (no ON at the Reset-fall scan) [Q-C3-1 literal, optional]: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=6330 status=RND',
+    +   'Set rose while Reset active; Reset fell with Set held (no ON at the Reset-fall scan) [Q-C3-1 literal, optional]: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=6330 status=RND'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'Set rose while Reset active; Reset fell with Set held (no ON at the Reset-fall scan) [Q-C3-1 literal, optional]: C3 stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=6330 status=RND'
+    1: 'Set rose while Reset active; Reset fell with Set held (no ON at the Reset-fall scan) [Q-C3-1 literal, optional]: BMS stays OFF (held command does not switch ON) [Q-C3-1, CR-2]; first ON t=6330 status=RND'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/test/helpers/catalog-program.js:221:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 8
+# fail 11
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 404529.1533

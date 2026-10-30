@@ -1,0 +1,124 @@
+TAP version 13
+# Subtest: [Q-C3-1] C3-01 R&D, C3+BMS ON: EStop (PLC / NC1) -> Emergency; C3/BMS OFF <=50 ms; LV discharge at once; C1 OFF after 2 s
+ok 1 - [Q-C3-1] C3-01 R&D, C3+BMS ON: EStop (PLC / NC1) -> Emergency; C3/BMS OFF <=50 ms; LV discharge at once; C1 OFF after 2 s
+  ---
+  duration_ms: 74060.3459
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-02 after Emergency, cmd C3/BMS held ON: Restart -> Safe -> BOTH -> R&D: C3/BMS stay OFF >=3 s (no ON at R&D confirm)
+ok 2 - [Q-C3-1] C3-02 after Emergency, cmd C3/BMS held ON: Restart -> Safe -> BOTH -> R&D: C3/BMS stay OFF >=3 s (no ON at R&D confirm)
+  ---
+  duration_ms: 163177.287
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-03 R&D, C3+BMS ON: green 0.6 s -> R&D->Safe (cmd held): OFF <=50 ms after down accepted; OFF in Safe; OFF >=3 s after R&D
+ok 3 - [Q-C3-1] C3-03 R&D, C3+BMS ON: green 0.6 s -> R&D->Safe (cmd held): OFF <=50 ms after down accepted; OFF in Safe; OFF >=3 s after R&D
+  ---
+  duration_ms: 60089.9445
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-04 end of C3-02 (R&D, held, OFF): cmd OFF 200 ms then cmd ON -> ON <=50 ms after the new edge
+ok 4 - [Q-C3-1] C3-04 end of C3-02 (R&D, held, OFF): cmd OFF 200 ms then cmd ON -> ON <=50 ms after the new edge
+  ---
+  duration_ms: 166945.2444
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-05 R&D, C3+BMS ON: BOTH -> Run, 2 s, green -> Run->R&D -> R&D: C3/BMS ON continuously
+ok 5 - [Q-C3-1] C3-05 R&D, C3+BMS ON: BOTH -> Run, 2 s, green -> Run->R&D -> R&D: C3/BMS ON continuously
+  ---
+  duration_ms: 125789.3407
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-06 Safe, cmd OFF: cmd ON in Safe held 3 s -> C3/BMS OFF
+ok 6 - [Q-C3-1] C3-06 Safe, cmd OFF: cmd ON in Safe held 3 s -> C3/BMS OFF
+  ---
+  duration_ms: 20652.0145
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-07 cmd ON given in Safe, held: BOTH -> R&D: OFF >=3 s; then cmd OFF 200 ms -> ON: ON <=50 ms
+ok 7 - [Q-C3-1] C3-07 cmd ON given in Safe, held: BOTH -> R&D: OFF >=3 s; then cmd OFF 200 ms -> ON: ON <=50 ms
+  ---
+  duration_ms: 55387.9182
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-08 Run (stable), cmd OFF, C3/BMS OFF: cmd ON -> ON <=50 ms
+ok 8 - [Q-C3-1] C3-08 Run (stable), cmd OFF, C3/BMS OFF: cmd ON -> ON <=50 ms
+  ---
+  duration_ms: 25643.6696
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-09 end of C3-02: BOTH -> StartingRun -> Run with cmd held: OFF throughout and >=3 s in Run; new edge in Run -> ON <=50 ms
+ok 9 - [Q-C3-1] C3-09 end of C3-02: BOTH -> StartingRun -> Run with cmd held: OFF throughout and >=3 s in Run; new edge in Run -> ON <=50 ms
+  ---
+  duration_ms: 141837.299
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-10 Safe->R&D: cmd ON (a) 100 ms after rise accepted, (b) R&D status -50 ms, held -> OFF >=3 s after R&D status
+ok 10 - [Q-C3-1] C3-10 Safe->R&D: cmd ON (a) 100 ms after rise accepted, (b) R&D status -50 ms, held -> OFF >=3 s after R&D status
+  ---
+  duration_ms: 65852.5918
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-11 Safe->R&D: cmd ON at R&D status +50 ms -> ON <=50 ms after the edge
+ok 11 - [Q-C3-1] C3-11 Safe->R&D: cmd ON at R&D status +50 ms -> ON <=50 ms after the edge
+  ---
+  duration_ms: 8919.467
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-12 R&D: C3 cmd ON only; +1 s BMS ON; +1 s C3 OFF -> channels independent
+ok 12 - [Q-C3-1] C3-12 R&D: C3 cmd ON only; +1 s BMS ON; +1 s C3 OFF -> channels independent
+  ---
+  duration_ms: 12352.2245
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-13 after Emergency: C3 held ON, BMS cmd OFF in Safe; BOTH -> R&D; BMS ON at R&D +1 s -> BMS ON, C3 stays OFF
+ok 13 - [Q-C3-1] C3-13 after Emergency: C3 held ON, BMS cmd OFF in Safe; BOTH -> R&D; BMS ON at R&D +1 s -> BMS ON, C3 stays OFF
+  ---
+  duration_ms: 122314.1185
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-14 R&D, ON: green 0.6 s; inside R&D->Safe cmd OFF 200 ms -> ON; Safe; BOTH -> R&D (held) -> OFF throughout
+ok 14 - [Q-C3-1] C3-14 R&D, ON: green 0.6 s; inside R&D->Safe cmd OFF 200 ms -> ON; Safe; BOTH -> R&D (held) -> OFF throughout
+  ---
+  duration_ms: 58121.4863
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-15 Run, ON: ES_NC_1 FALSE; in the emergency chain cmd OFF 200 ms -> ON; Restart -> Safe -> R&D (held) -> OFF throughout
+ok 15 - [Q-C3-1] C3-15 Run, ON: ES_NC_1 FALSE; in the emergency chain cmd OFF 200 ms -> ON; Restart -> Safe -> R&D (held) -> OFF throughout
+  ---
+  duration_ms: 203021.3555
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-16 R&D / Run, C3+BMS ON: cmd OFF -> OFF <=50 ms
+ok 16 - [Q-C3-1] C3-16 R&D / Run, C3+BMS ON: cmd OFF -> OFF <=50 ms
+  ---
+  duration_ms: 30502.8468
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-17 group start with cmd ON from scan 0: Emergency -> Restart -> Safe -> BOTH -> R&D -> OFF >=3 s
+ok 17 - [Q-C3-1] C3-17 group start with cmd ON from scan 0: Emergency -> Restart -> Safe -> BOTH -> R&D -> OFF >=3 s
+  ---
+  duration_ms: 44597.9678
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-18 after Emergency, cmd OFF in Safe before the rise; BOTH -> R&D; cmd ON at R&D +1 s -> OFF until the edge, ON <=50 ms after
+ok 18 - [Q-C3-1] C3-18 after Emergency, cmd OFF in Safe before the rise; BOTH -> R&D; cmd ON at R&D +1 s -> OFF until the edge, ON <=50 ms after
+  ---
+  duration_ms: 88791.9675
+  type: 'test'
+  ...
+# Subtest: [Q-C3-1] C3-19 OPTIONAL (non-PLC combination): R&D, OFF; Set=TRUE while Reset=TRUE 200 ms, then Reset falls with Set held -> OFF >=3 s
+ok 19 - [Q-C3-1] C3-19 OPTIONAL (non-PLC combination): R&D, OFF; Set=TRUE while Reset=TRUE 200 ms, then Reset falls with Set held -> OFF >=3 s
+  ---
+  duration_ms: 19433.1657
+  type: 'test'
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1490172.5596

@@ -163,6 +163,32 @@ E4 (PLC/Config/heartbeat), E5/E6 (SafetyFault/watchdog), E7 (BOOT).
 | B-02 | запуск при нажатых кнопках | отпускание, затем BOTH | подъём только после 1 с паузы | E7 | BOOT-002, TMR-1-Q1 |
 | B-03 | рестарт из Run/перехода | Restart | только Safe, Run не восстанавливается | E7 | BOOT-001 |
 
+## N. Реле аккумулятора C3/BMS — включение только по новой команде (19, Q-C3-1)
+
+Критерии: `SafetyTests/program/analyst/Q-C3-1_CRITERIA.md`. BMS проверяется так же, как C3 (кроме C3-12/13 — независимость). «cmd» = пара Set/Reset от PLC (`in_C3_Manual_Set`/`in_RBM_Manual_Set`). C3-10 (команда в переходе Safe→R&D → нет ON) и ON в StartingRun/Run→R&D — рекомендации команды (D-TEAM-DEFAULTS); C3-19 — необязательный (PLC такую комбинацию не даёт).
+
+| ID | Исходно | События | Ожидается | Этап | Источник |
+|---|---|---|---|---|---|
+| C3-01 | R&D, C3+BMS ON (cmd ON given in R&D) | in_Estop_PLC (variant: ES_NC_1 FALSE); cmd stays ON | Emergency; C3 and BMS OFF ≤50 ms; LV discharge at once, C1 OFF 2 s | Q-C3-1 | Niv #1 item 1, Q-ARCH-01 (E-02) |
+| C3-02 | after C3-01, cmd C3/BMS held ON | EStop OK, green Restart → Safe, BOTH → R&D | C3/BMS OFF ≥3 s after R&D status and stay OFF (no ON at R&D-confirm scan) | Q-C3-1 | Niv item 2, Q-C3-1 |
+| C3-03 | R&D, C3+BMS ON | green 0.6 s (R&D→Safe), cmd held ON; in Safe BOTH → R&D | OFF ≤50 ms after down accepted; OFF in Safe; OFF ≥3 s after R&D status | Q-C3-1 | Niv item 3, Q-C3-1 |
+| C3-04 | end of C3-02 (R&D, held ON, outputs OFF) | cmd OFF 200 ms, then cmd ON (both channels) | ON ≤50 ms after the new edge; before the edge OFF | Q-C3-1 | Niv item 4, Q-C3-1 |
+| C3-05 | R&D, C3+BMS ON | BOTH → Run (confirmed), stay 2 s, green → Run→R&D → R&D | C3/BMS ON continuously, no OFF scan | Q-C3-1 | Niv item 4 (unchanged), Q-C3-1 |
+| C3-06 | Safe, cmd OFF | cmd ON in Safe, hold 3 s | C3/BMS OFF ≥3 s | Q-C3-1 | Niv item 5 (unchanged) |
+| C3-07 | end of C3-06 (Safe, cmd ON given in Safe, held) | BOTH → R&D; after 3 s cmd OFF 200 ms → cmd ON | OFF ≥3 s after R&D status; ON ≤50 ms after new edge | Q-C3-1 | Q-C3-1 «данной в R&D/Run» |
+| C3-08 | Run (stable), cmd OFF, C3/BMS OFF | cmd ON | ON ≤50 ms | Q-C3-1 | Q-C3-1 «в R&D/Run» |
+| C3-09 | end of C3-02 (R&D, held ON, outputs OFF) | BOTH → StartingRun → Run, cmd still held; after 3 s in Run cmd OFF 200 ms → cmd ON | OFF through StartingRun and ≥3 s in Run; ON ≤50 ms after new edge in Run | Q-C3-1 | Q-C3-1 (CR-2) |
+| C3-10 | Safe, cmd OFF | BOTH → Safe→R&D; cmd ON at (a) 100 ms after rise accepted, (b) R&D status −50 ms; held | OFF ≥3 s after R&D status (edge was not in R&D) | Q-C3-1 | Q-C3-1 «данной в R&D/Run»; status still Safe (Q-LED-3a context) |
+| C3-11 | Safe, cmd OFF | BOTH → R&D; cmd ON at R&D status +50 ms | ON ≤50 ms after edge | Q-C3-1 | Q-C3-1 (boundary pair with C3-10b) |
+| C3-12 | R&D, cmd OFF both | C3 cmd ON only; after 1 s BMS cmd ON; after 1 s C3 cmd OFF | C3 ON, BMS OFF; then both ON; then C3 OFF, BMS stays ON | Q-C3-1 | CR-7, CR-8 |
+| C3-13 | after C3-01: C3 cmd held ON, BMS cmd OFF in Safe | BOTH → R&D; BMS cmd ON at R&D +1 s | C3 OFF ≥3 s (held); BMS ON ≤50 ms after its edge; C3 unaffected | Q-C3-1 | CR-2, CR-8 |
+| C3-14 | R&D, C3+BMS ON | green 0.6 s (R&D→Safe); during R&D→Safe cmd OFF 200 ms → cmd ON; reach Safe; BOTH → R&D (held) | OFF from down acceptance, OFF in Safe, OFF ≥3 s in R&D | Q-C3-1 | CR-5 (reset-dominant, recRndC_SG), CR-2 |
+| C3-15 | Run, C3+BMS ON | ES_NC_1 FALSE; in Emergency chain cmd OFF 200 ms → cmd ON; EStop OK, Restart → Safe → BOTH → R&D (held) | OFF ≤50 ms; OFF in Emergency; OFF ≥3 s in R&D | Q-C3-1 | Q-ARCH-01 (CR-4), CR-2 |
+| C3-16 | R&D, C3+BMS ON (variant: Run) | cmd OFF | OFF ≤50 ms | Q-C3-1 | reference FBAnd12/FBAnd3 (unchanged manual off) |
+| C3-17 | group start with cmd ON from scan 0 | Emergency → Restart → Safe → BOTH → R&D | OFF ≥3 s after R&D status | Q-C3-1 | Q-C3-1 (held through Emergency; catalog rule 2) |
+| C3-18 | end of C3-02 path but cmd OFF in Safe before rise | BOTH → R&D (cmd OFF); cmd ON at R&D +1 s | OFF until edge; ON ≤50 ms after edge | Q-C3-1 | Q-C3-1 |
+| C3-19 | R&D, C3 OFF; non-PLC combination | Set=T while Reset=T (200 ms), then Reset=F with Set held | OFF throughout and ≥3 s after Reset falls | Q-C3-1 | Q-C3-1 literal (Set fires only on Set FALSE→TRUE); TD-safety; optional (PLC never produces) |
+
 ## M. Мутации (12 критичных защит)
 
 Для каждой — мутация «условие убрано/инвертировано» и убивающий сценарий:
@@ -173,7 +199,7 @@ FBK-подтверждение Run → U-04; LV полярность → H-01; D
 
 ## Итого
 
-**90 сценариев** (K11+C10+E12+U9+D9+H7+W10+P12+G7+B3; прежняя цифра «100» — ошибка подсчёта) + 1 структурная проверка + 12 мутаций.
+**109 сценариев** (K11+C10+E12+U9+D9+H7+W10+P12+G7+B3+N19; прежняя цифра «100» — ошибка подсчёта) + 1 структурная проверка + 12 мутаций.
 По этапам: E2 ≈ 45, E3 ≈ 14, E4 ≈ 20, E5/E6 ≈ 15, E7 = 3 (часть сценариев — в нескольких этапах).
 
 ## Что уходит в архив (не удаляется из git)

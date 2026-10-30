@@ -21,7 +21,7 @@ test("VIS-1/5 canonical exam equals check:catalog/check:structure; report standa
     const tg = await srv.call("POST", "/api/target/canonical");
     assert.equal(tg.status, 200);
     assert.equal(tg.json.salSha256, sha(fs.readFileSync(CANON_SAL)), "canonical SAL SHA256");
-    assert.equal(tg.json.salSha256, CANON_SAL_SHA, "canonical SAL = baseline after TMR-1 Verify (1912ad8)");
+    assert.equal(tg.json.salSha256, CANON_SAL_SHA, "canonical SAL = baseline Q-C3-1 Verify (a505e73)");
     const ex = await runExam(srv.call, tg.json.targetId);
     const [tap, sref] = await Promise.all([tapP, strP]);
     fs.writeFileSync(path.join(SCRATCH, "exam-canon.json"), JSON.stringify(ex.result, null, 1));

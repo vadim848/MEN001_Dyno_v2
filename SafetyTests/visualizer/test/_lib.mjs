@@ -97,6 +97,7 @@ export function sh(cmd, args, opts = {}) {
     let o = ""; p.stdout.on("data", d => o += d); p.stderr.on("data", d => o += d); p.on("exit", code => resolve({ code, out: o })); });
 }
 
-// Canonical baseline after TMR-1 + Vadim IDE Verify (commit 1912ad8, 2026-10-29): SAL with recomputed native CRC.
+// Canonical baseline Q-C3-1 after Vadim IDE Verify (commit a505e73, SAL Crc 1391782965): SAL with recomputed native CRC.
+// (Superseded: TMR-1 Verify 1912ad8 f81b1a5e...44f4.)
 // Structure must be full PASS (native CRC included); no stale-CRC allowance.
-export const CANON_SAL_SHA = "f81b1a5e565dc5d9c5893dff9b2f7c25f27712c45be442905e3f6835706544f4";
+export const CANON_SAL_SHA = "1d046f4319253bf905b84f70d850d8bb05f7099f0bf580f33209cbf29cba525d";

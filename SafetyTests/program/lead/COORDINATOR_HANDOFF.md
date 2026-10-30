@@ -114,7 +114,7 @@ S1–S7 закрыты (см. выше и WORK_STATUS_AND_PLAN.md). Работа
   (`program/lead/S6/CODEX_TASK_*.md`; разрешение Вадим даёт в задании Codex; при невидимых файлах
   solution — перезапуск TcXaeShell или Open with из Проводника).
 - Сессия-ведущий не пишет canonical по пересланному разрешению — перенос делает координатор.
-- Push агентам запрещён; ветки для облака/клиента — squash по схеме «Ветки (2026-10-25)».
+- Push: только координатор, после сообщения Вадима в чате, любая ветка origin, без force/удаления и без доп. подтверждения в приложении (AGENTS.md, 2026-10-30); ветки — squash по схеме «Ветки (2026-10-25)».
 - Квота: Max 5x без доплаты; при ~90% недельной — checkpoint и пауза до сброса.
 
 ## Обновление 2026-10-25 (координатор 3)
@@ -129,3 +129,10 @@ S1–S7 закрыты (см. выше и WORK_STATUS_AND_PLAN.md). Работа
 - TMR-1 тесты тренажёра (2026-10-29): 7 FAIL = устаревшие baseline (SHA/structure PASS), дефектов нет; baseline обновлены узко (onlyStaleCrcProblems: только native CRC 2244300000/4151414716). visualizer 55/55. После Verify Вадима — SHA/CRC baseline снова обновить.
 - TMR-1 Verify (2026-10-29, Вадим): SAL f81b1a5e… (только Crc 4151414716→2244300000), diagram: округление 43 координат + diagram Crc. check:structure PASS (native CRC PASS, 14/346/2800/105). Тесты тренажёра — re-baseline у ведущего VIS.
 - TMR-1 закрыт (2026-10-29): тесты тренажёра на f81b1a5e — строгий structure PASS, check:software exit 0, visualizer 55/55 (vis-exam-canonical 4/4 отдельно; общий прогон упирается в лимит 40 мин под нагрузкой — возможно поднять).
+- PUSH-2 (2026-10-29): Вадим отправил TMR-1 squash 6171019 (поверх d035c07) в origin/Safety-Develop_2_Cloud; проверено ls-remote.
+- NIV-LED/VIS-LED (2026-10-29): PLC act_LED_Control Q-LED-1…4 — 4522523 (Build — Вадим); тренажёр R/G/B LED — c2b3012 (39/39; полный visualizer не прогнан).
+- NIV-SAL Q-C3-1 перенос (2026-10-29): SAL f81b1a5e→8712802a (+8 FB armed-latch Network6, 354 FB), diagram 5c5be224, GVL1 996b75a6. check:software: catalog 156/156 (+1 todo), self 53/53, structure PASS кроме устаревшего native CRC (calc 1391782965 vs 2244300000) — ждёт Verify Вадима; затем re-baseline тренажёра (CANON_SAL_SHA) и полный visualizer. TRACE_MATRIX без записи Q-C3-1. Открыт вопрос in_Door_Monitor в SAL (А оставить / Б убрать).
+- Q-C3-1 Verify (2026-10-29, Вадим): IDE сообщил «GVL CRC mismatch» — редактор Q-C3-1 не делал native save SGVL (старый Crc 4293410281). Вадим пересохранил GVL в IDE: Crc→2434790029 + отступы 4 FbPortUsage. SAL 1d046f43 (только Crc 2244300000→1391782965 + пробелы), diagram 23583f2c (геометрия, 485 connectors, Id те же). check:structure PASS (native CRC PASS, 14/354/2860/105). Урок: при правке SGVL редактор обязан native save (native-save.ps1) или явно передать GVL-save Вадиму.
+- Q-C3-1 тренажёр (2026-10-30): re-baseline на SAL 1d046f43 (CANON_SAL_SHA, catalog 157/156/0/1). Найден реальный пробел: экзамен не видел раздел N → определения N перенесены в test/catalog/lib/n.js (150 строк побайтно), catalog.js подключает L.n.N (экзамен 112 ID). tsproj (Build ПЛК Вадима) — 02c0f35 по решению А. Тренажёр 85/86, единственный FAIL — git-clean тест на незакоммиченный перенос (снимается этим коммитом).
+- PUBLISH-3 подготовлен (2026-10-30): локально Safety-Develop_2_Cloud = 07b6a57 (squash Agent без 76 файлов >5 МБ, поверх 6171019); Client_Release = 750acf6 (только MEN001_Dyno из Agent, поверх 2941991). Отправка — координатор после разрешения Вадима (D-PUSH-COORD); в отдельный репозиторий клиента Client_Release Вадим отправляет сам.
+- Демо-копия MEN001_Dyno_v2_demo удалена (2026-10-30, решение Вадима А); порт 8642 свободен.

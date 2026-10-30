@@ -23,7 +23,7 @@ import path from "node:path";
 import { startServer, filesOf, canonText, runExam, catalogTap, parseTap, sha, CANON_SAL, VIS, SCRATCH, CANON_SAL_SHA } from "./_lib.mjs";
 
 const G = "in_Reset_PB", B = "in_Relase_Door_PB", P9 = 1000, CYR = /\p{Script=Cyrillic}/u;
-const CANON_SHA = CANON_SAL_SHA;   // baseline after TMR-1 Verify 1912ad8 (was 53e9a6d8...8fbb, then 3511b31b...1743)
+const CANON_SHA = CANON_SAL_SHA;   // baseline Q-C3-1 Verify a505e73 (was 53e9a6d8, 3511b31b, f81b1a5e)
 
 function api(c) {
   const cmd = async b => { const r = await c("POST", "/api/manual/cmd", b); assert.equal(r.status, 200, r.text); return r.json; };

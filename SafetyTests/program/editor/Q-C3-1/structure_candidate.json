@@ -1,0 +1,71 @@
+{
+ "target": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\NIV-SAL\\native",
+ "sal": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\candidates\\NIV-SAL\\native\\TwinSafeGroup1.sal",
+ "salSha256": "8712802a1699f5ac5e8eb06758f7e22bfefb4ddb40cfdceace3520c80aa66070",
+ "sgvlSha256": "996b75a692c0bae6532331e4ddff722af574c6a7fe606294b73a77c6c54a7f4c",
+ "checks": [
+  {
+   "name": "native preflight (singleton usages/wrappers, no inter-network wiredLink)",
+   "status": "PASS",
+   "detail": "crossNetworkWires=0"
+  },
+  {
+   "name": "typed binding audit",
+   "status": "PASS",
+   "detail": {
+    "status": "PASS",
+    "errors": [],
+    "globalReferences": 221,
+    "canonicalWires": 485
+   }
+  },
+  {
+   "name": "native input rule (safe-only in-ports, AND >=2 active inputs)",
+   "status": "PASS",
+   "detail": []
+  },
+  {
+   "name": "FB count <= 512",
+   "status": "PASS",
+   "detail": 354
+  },
+  {
+   "name": "native CRC + native validation",
+   "status": "FAIL",
+   "detail": {
+    "status": "FAIL",
+    "crcValid": false,
+    "calculated": 1391782965,
+    "recorded": "2244300000",
+    "validationErrors": []
+   }
+  }
+ ],
+ "status": "FAIL",
+ "counts": {
+  "networks": 14,
+  "blocks": 354,
+  "ports": 2860,
+  "variables": 105,
+  "wires": 485,
+  "crossNetworkWires": 0
+ },
+ "recordedCrc": "2244300000",
+ "inputRule": {
+  "aliasOrigin": "C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\fixtures\\alias-safety-map.json",
+  "errors": []
+ },
+ "native": {
+  "crcValid": false,
+  "calculatedCrc": 1391782965,
+  "recordedCrc": "2244300000",
+  "networks": 14,
+  "blocks": 354,
+  "symbols": 105,
+  "inPorts": 2341,
+  "outPorts": 519,
+  "validationErrors": [],
+  "validationWarnings": 99,
+  "salUnchanged": true
+ }
+}

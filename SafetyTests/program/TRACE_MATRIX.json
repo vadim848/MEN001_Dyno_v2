@@ -1441,6 +1441,37 @@
         "D-ARCH-POL, D-ARCH-POL-RENAME"
       ],
       "evidence": []
+    },
+    {
+      "id": "Q-C3-1",
+      "status": "IN_PROGRESS",
+      "plannedStage": "NIV-GAPS",
+      "coverageAtStart": "Нет (Нив, пробел №1; решение Вадима Q-C3-1 = Б, 2026-10-29)",
+      "closureCriteria": "«C3/BMS включаются только по новой команде (фронт Set), данной в R&D/Run; удерживаемая с прошлого состояния команда не включает; выключение и сбросы без изменений»",
+      "criteria": [
+        "program/analyst/Q-C3-1_CRITERIA.md (CR-1..CR-8)",
+        "SCENARIO_DECISIONS.md NIV-GAPS"
+      ],
+      "tests": [
+        "test/catalog/lib/n.js C3-01..C3-19 (n-c3bms.test.js): 19/19 PASS на canonical 1d046f43"
+      ],
+      "mutations": {
+        "planned": 0,
+        "killed": 0,
+        "survived": [],
+        "note": "D-COMPACT: мутационный прогон не выполнялся — closedMeans не выполнен, поэтому не CLOSED"
+      },
+      "decisions": [
+        "Q-C3-1",
+        "Q-C3-T1/T2 (не добавлять)",
+        "Q-C3-L1 (принятое ограничение)"
+      ],
+      "evidence": [
+        "cf65b08 перенос (SAL 8712802a, +8 FB Network6)",
+        "a505e73 Verify Вадима: SAL 1d046f43, native CRC PASS",
+        "program/reviewer/Q-C3-1_REVIEW.md ACCEPT-WITH-NOTES",
+        "025ec6c тренажёр видит раздел N"
+      ]
     }
   ],
   "gates": {

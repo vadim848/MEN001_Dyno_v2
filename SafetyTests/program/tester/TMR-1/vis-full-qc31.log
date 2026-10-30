@@ -1,0 +1,1160 @@
+TAP version 13
+# Subtest: VIS-2 buttons (manual mode API)
+    # Subtest: pair in_ES_NC_1+in_ES_NC_2: both lines change in the same scan; paused -> next scan
+    ok 1 - pair in_ES_NC_1+in_ES_NC_2: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 564.2302
+      type: 'test'
+      ...
+    # Subtest: pair in_InterLock_NC_1+in_InterLock_NC_2: both lines change in the same scan; paused -> next scan
+    ok 2 - pair in_InterLock_NC_1+in_InterLock_NC_2: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 387.3594
+      type: 'test'
+      ...
+    # Subtest: pair in_STO_DR1_FBK+in_STO_DR2_FBK: both lines change in the same scan; paused -> next scan
+    ok 3 - pair in_STO_DR1_FBK+in_STO_DR2_FBK: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 159.567
+      type: 'test'
+      ...
+    # Subtest: pair in_Reset_PB+in_Relase_Door_PB: both lines change in the same scan; paused -> next scan
+    ok 4 - pair in_Reset_PB+in_Relase_Door_PB: both lines change in the same scan; paused -> next scan
+      ---
+      duration_ms: 138.0234
+      type: 'test'
+      ...
+    # Subtest: momentary Reset: held across advance N, released on release
+    ok 5 - momentary Reset: held across advance N, released on release
+      ---
+      duration_ms: 1696.5405
+      type: 'test'
+      ...
+    # Subtest: invalid name in a multi-signal request -> nothing applied
+    ok 6 - invalid name in a multi-signal request -> nothing applied
+      ---
+      duration_ms: 16.5131
+      type: 'test'
+      ...
+    # Subtest: b_EStop_Ok not writable (inputs / hold)
+    ok 7 - b_EStop_Ok not writable (inputs / hold)
+      ---
+      duration_ms: 4.6741
+      type: 'test'
+      ...
+    1..7
+ok 1 - VIS-2 buttons (manual mode API)
+  ---
+  duration_ms: 9889.2997
+  type: 'test'
+  ...
+# Subtest: VIS-2 static: buttons and the pair "split" mark on the page (English per VIS-3-Q2)
+ok 2 - VIS-2 static: buttons and the pair "split" mark on the page (English per VIS-3-Q2)
+  ---
+  duration_ms: 1.4988
+  type: 'test'
+  ...
+# Subtest: VIS-1/5 canonical exam equals check:catalog/check:structure; report standalone
+    # Subtest: structure part == check:structure (PASS, same check list)
+    ok 1 - structure part == check:structure (PASS, same check list)
+      ---
+      duration_ms: 1.5958
+      type: 'test'
+      ...
+    # Subtest: catalog part: per-ID status == TAP; no section M / HDR; same ID set
+    not ok 2 - catalog part: per-ID status == TAP; no section M / HDR; same ID set
+      ---
+      duration_ms: 2.7267
+      type: 'test'
+      location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-exam-canonical.test.js:36:13'
+      failureType: 'testCodeFailure'
+      error: |-
+        scenario ID set == TAP non-M non-HDR set
+        + actual - expected
+        ... Skipped lines
+        
+          [
+            'B-01',
+            'B-02',
+            'B-03',
+            'C-01',
+        ...
+            'C-10',
+        -   'C3-01',
+        -   'C3-02',
+        -   'C3-03',
+        -   'C3-04',
+        -   'C3-05',
+        -   'C3-06',
+        -   'C3-07',
+        -   'C3-08',
+        -   'C3-09',
+        -   'C3-10',
+        -   'C3-11',
+        -   'C3-12',
+        -   'C3-13',
+        -   'C3-14',
+        -   'C3-15',
+        -   'C3-16',
+        -   'C3-17',
+        -   'C3-18',
+        -   'C3-19',
+            'D-01',
+            'D-02',
+            'D-03',
+            'D-04',
+            'D-05',
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+        0: 'B-01'
+        1: 'B-02'
+        2: 'B-03'
+        3: 'C-01'
+        4: 'C-02'
+        5: 'C-03'
+        6: 'C-04'
+        7: 'C-05'
+        8: 'C-06'
+        9: 'C-07'
+        10: 'C-08'
+        11: 'C-09'
+        12: 'C-10'
+        13: 'C3-01'
+        14: 'C3-02'
+        15: 'C3-03'
+        16: 'C3-04'
+        17: 'C3-05'
+        18: 'C3-06'
+        19: 'C3-07'
+        20: 'C3-08'
+        21: 'C3-09'
+        22: 'C3-10'
+        23: 'C3-11'
+        24: 'C3-12'
+        25: 'C3-13'
+        26: 'C3-14'
+        27: 'C3-15'
+        28: 'C3-16'
+        29: 'C3-17'
+        30: 'C3-18'
+        31: 'C3-19'
+        32: 'D-01'
+        33: 'D-02'
+        34: 'D-03'
+        35: 'D-04'
+        36: 'D-05'
+        37: 'D-06'
+        38: 'D-07'
+        39: 'D-08'
+        40: 'D-09'
+        41: 'E-01'
+        42: 'E-02'
+        43: 'E-03'
+        44: 'E-04'
+        45: 'E-05'
+        46: 'E-06'
+        47: 'E-07'
+        48: 'E-08'
+        49: 'E-09'
+        50: 'E-10'
+        51: 'E-11a'
+        52: 'E-11b'
+        53: 'E-11c'
+        54: 'E-12a'
+        55: 'E-12b'
+        56: 'G-01'
+        57: 'G-02'
+        58: 'G-03'
+        59: 'G-04'
+        60: 'G-05'
+        61: 'G-06'
+        62: 'G-07'
+        63: 'H-01'
+        64: 'H-02'
+        65: 'H-03'
+        66: 'H-04'
+        67: 'H-05'
+        68: 'H-06'
+        69: 'H-07'
+        70: 'K-01'
+        71: 'K-02'
+        72: 'K-03'
+        73: 'K-04'
+        74: 'K-05'
+        75: 'K-06'
+        76: 'K-07'
+        77: 'K-08'
+        78: 'K-09'
+        79: 'K-10'
+        80: 'K-11'
+        81: 'P-01'
+        82: 'P-02'
+        83: 'P-03'
+        84: 'P-04'
+        85: 'P-05'
+        86: 'P-06'
+        87: 'P-07'
+        88: 'P-08'
+        89: 'P-09'
+        90: 'P-10'
+        91: 'P-11'
+        92: 'P-12'
+        93: 'U-01'
+        94: 'U-02'
+        95: 'U-03'
+        96: 'U-04'
+        97: 'U-05'
+        98: 'U-06'
+        99: 'U-07'
+        100: 'U-08'
+        101: 'U-09'
+        102: 'W-01'
+        103: 'W-02'
+        104: 'W-03'
+        105: 'W-04'
+        106: 'W-05'
+        107: 'W-06'
+        108: 'W-07'
+        109: 'W-08'
+        110: 'W-09'
+        111: 'W-10'
+      actual:
+        0: 'B-01'
+        1: 'B-02'
+        2: 'B-03'
+        3: 'C-01'
+        4: 'C-02'
+        5: 'C-03'
+        6: 'C-04'
+        7: 'C-05'
+        8: 'C-06'
+        9: 'C-07'
+        10: 'C-08'
+        11: 'C-09'
+        12: 'C-10'
+        13: 'D-01'
+        14: 'D-02'
+        15: 'D-03'
+        16: 'D-04'
+        17: 'D-05'
+        18: 'D-06'
+        19: 'D-07'
+        20: 'D-08'
+        21: 'D-09'
+        22: 'E-01'
+        23: 'E-02'
+        24: 'E-03'
+        25: 'E-04'
+        26: 'E-05'
+        27: 'E-06'
+        28: 'E-07'
+        29: 'E-08'
+        30: 'E-09'
+        31: 'E-10'
+        32: 'E-11a'
+        33: 'E-11b'
+        34: 'E-11c'
+        35: 'E-12a'
+        36: 'E-12b'
+        37: 'G-01'
+        38: 'G-02'
+        39: 'G-03'
+        40: 'G-04'
+        41: 'G-05'
+        42: 'G-06'
+        43: 'G-07'
+        44: 'H-01'
+        45: 'H-02'
+        46: 'H-03'
+        47: 'H-04'
+        48: 'H-05'
+        49: 'H-06'
+        50: 'H-07'
+        51: 'K-01'
+        52: 'K-02'
+        53: 'K-03'
+        54: 'K-04'
+        55: 'K-05'
+        56: 'K-06'
+        57: 'K-07'
+        58: 'K-08'
+        59: 'K-09'
+        60: 'K-10'
+        61: 'K-11'
+        62: 'P-01'
+        63: 'P-02'
+        64: 'P-03'
+        65: 'P-04'
+        66: 'P-05'
+        67: 'P-06'
+        68: 'P-07'
+        69: 'P-08'
+        70: 'P-09'
+        71: 'P-10'
+        72: 'P-11'
+        73: 'P-12'
+        74: 'U-01'
+        75: 'U-02'
+        76: 'U-03'
+        77: 'U-04'
+        78: 'U-05'
+        79: 'U-06'
+        80: 'U-07'
+        81: 'U-08'
+        82: 'U-09'
+        83: 'W-01'
+        84: 'W-02'
+        85: 'W-03'
+        86: 'W-04'
+        87: 'W-05'
+        88: 'W-06'
+        89: 'W-07'
+        90: 'W-08'
+        91: 'W-09'
+        92: 'W-10'
+      operator: 'deepStrictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-exam-canonical.test.js:41:14)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Test.start (node:internal/test_runner/test:944:17)
+        TestContext.test (node:internal/test_runner/test:373:20)
+        TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-exam-canonical.test.js:36:13)
+        process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: report.html: standalone, SHA256 SAL+SGVL, date, catalog version, totals, mapping table
+    ok 3 - report.html: standalone, SHA256 SAL+SGVL, date, catalog version, totals, mapping table
+      ---
+      duration_ms: 10.0252
+      type: 'test'
+      ...
+    1..3
+not ok 3 - VIS-1/5 canonical exam equals check:catalog/check:structure; report standalone
+  ---
+  duration_ms: 2039287.5162
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-exam-canonical.test.js:17:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: VIS-3/5 mutated copies
+    # Subtest: S1 structural (graphical inter-network wiredLink): structure FAIL, catalog still run, parts separate
+    ok 1 - S1 structural (graphical inter-network wiredLink): structure FAIL, catalog still run, parts separate
+      ---
+      duration_ms: 7233.4076
+      type: 'test'
+      ...
+    # Subtest: M1 behavioural (BLUE 0.5 s -> 0.8 s): K-11 FAIL with divergence + diagram; report
+    ok 2 - M1 behavioural (BLUE 0.5 s -> 0.8 s): K-11 FAIL with divergence + diagram; report
+      ---
+      duration_ms: 1026747.8696
+      type: 'test'
+      ...
+    1..2
+ok 4 - VIS-3/5 mutated copies
+  ---
+  duration_ms: 1034111.7847
+  type: 'test'
+  ...
+# M1 structure=FAIL; FAIL=K-11
+# Subtest: VIS-3 filter readiness (manual mode API)
+    # Subtest: 1 Safe: green 100 ms -> ready at release+P9 (1000) +-1; SAL flag same; never diverged
+    ok 1 - 1 Safe: green 100 ms -> ready at release+P9 (1000) +-1; SAL flag same; never diverged
+      ---
+      duration_ms: 24351.3974
+      type: 'test'
+      ...
+    # Subtest: 1b blue alone also restarts the countdown (p.9: BOTH buttons released), mid-countdown press
+    ok 2 - 1b blue alone also restarts the countdown (p.9: BOTH buttons released), mid-countdown press
+      ---
+      duration_ms: 22571.1083
+      type: 'test'
+      ...
+    # Subtest: 2 BOTH Safe->R&D and R&D->Run: same timing; compared only in SAFE/RND; no divergence
+    ok 3 - 2 BOTH Safe->R&D and R&D->Run: same timing; compared only in SAFE/RND; no divergence
+      ---
+      duration_ms: 31935.358
+      type: 'test'
+      ...
+    # Subtest: 3 K-08 early press at release+P9-500 via raw input: accepted by API, rejected by SAL, countdown restarts
+    ok 4 - 3 K-08 early press at release+P9-500 via raw input: accepted by API, rejected by SAL, countdown restarts
+      ---
+      duration_ms: 33219.8069
+      type: 'test'
+      ...
+    # Subtest: 3b VIS-3-Q3: green / blue / Both pressed during the countdown are accepted (reach the SAL input) and every release restarts from zero
+    ok 5 - 3b VIS-3-Q3: green / blue / Both pressed during the countdown are accepted (reach the SAL input) and every release restarts from zero
+      ---
+      duration_ms: 28250.3458
+      type: 'test'
+      ...
+    # Subtest: 4b countdown length P9 ms model time while running at speed > 1 (VIS-3-Q3 'not 3 s')
+    ok 6 - 4b countdown length P9 ms model time while running at speed > 1 (VIS-3-Q3 'not 3 s')
+      ---
+      duration_ms: 108500.8877
+      type: 'test'
+      ...
+    # Subtest: 4 countdown is model time: frozen while paused, independent of speed
+    ok 7 - 4 countdown is model time: frozen while paused, independent of speed
+      ---
+      duration_ms: 47334.854
+      type: 'test'
+      ...
+    # Subtest: 5 EMG: not compared, never diverged; Restart to SAFE: no divergence beyond 1 scan
+    ok 8 - 5 EMG: not compared, never diverged; Restart to SAFE: no divergence beyond 1 scan
+      ---
+      duration_ms: 25681.8326
+      type: 'test'
+      ...
+    # Subtest: 5b group start (boot EMG -> Restart -> SAFE): countdown scan by scan, no divergence beyond 1 scan
+    ok 9 - 5b group start (boot EMG -> Restart -> SAFE): countdown scan by scan, no divergence beyond 1 scan
+      ---
+      duration_ms: 11563.307
+      type: 'test'
+      ...
+    # Subtest: 6 mutant A (RELEASE preset -> 1.5 s): SAL later than p.9 (1 s): diverged true in SAFE, lastDivergedT sticky until next press
+    ok 10 - 6 mutant A (RELEASE preset -> 1.5 s): SAL later than p.9 (1 s): diverged true in SAFE, lastDivergedT sticky until next press
+      ---
+      duration_ms: 21307.5482
+      type: 'test'
+      ...
+    # Subtest: 7 mutant B (RELEASE block renamed): SAL flag NOT CHECKED, never diverged, countdown still shown
+    ok 11 - 7 mutant B (RELEASE block renamed): SAL flag NOT CHECKED, never diverged, countdown still shown
+      ---
+      duration_ms: 18164.2458
+      type: 'test'
+      ...
+    # Subtest: 8 mapping: in_Reset_PB / in_Relase_Door_PB unmapped -> filter unavailable, not checked; mapped -> available
+    ok 12 - 8 mapping: in_Reset_PB / in_Relase_Door_PB unmapped -> filter unavailable, not checked; mapped -> available
+      ---
+      duration_ms: 46073.7484
+      type: 'test'
+      ...
+    # Subtest: 9 canonical SAL untouched by mutants
+    ok 13 - 9 canonical SAL untouched by mutants
+      ---
+      duration_ms: 5.4381
+      type: 'test'
+      ...
+    1..13
+ok 5 - VIS-3 filter readiness (manual mode API)
+  ---
+  duration_ms: 419097.8705
+  type: 'test'
+  ...
+# filter SAL: canonical sha256 1d046f4319253bf905b84f70d850d8bb05f7099f0bf580f33209cbf29cba525d sgvl canonical
+# x2: 3 observations, 0 in [P9,P9+1000) after release
+# x2: window check by observations NOT possible under load
+# x10: 3 observations, 0 in [P9,P9+1000) after release
+# x10: window check by observations NOT possible under load
+# run segments reached release+7623 (load): edge-after-speed check skipped; invariants above asserted
+# EMG->SAFE: compared scans 1300, max consecutive mismatch 0
+# boot: mismatching compared scans 1, max consecutive 1
+# base RELEASE timing=1 s (requirement TMR-1-Q1: 1 s)
+# Subtest: VIS-3-Q2 English: page/app/server messages without Cyrillic; NOT CHECKED token; filter UI present
+ok 6 - VIS-3-Q2 English: page/app/server messages without Cyrillic; NOT CHECKED token; filter UI present
+  ---
+  duration_ms: 2193.7981
+  type: 'test'
+  ...
+# VIS-3-Q3 'buttons never blocked' checked statically (heuristic) + via the API (subtest 3b); DOM behaviour in a browser NOT VERIFIED
+# POST /api/manual/cmd: manual session not started
+# POST /api/manual/start: unknown target: no-such-target
+# GET /api/exam/no-such: no such method
+# GET /api/no-such: no such method
+# POST /api/target: both .sal and .sgvl files are required
+# POST /api/manual/cmd: speed 0.1..10
+# POST /api/manual/cmd: ms: 1...120000
+# POST /api/manual/cmd: unknown command: bogus
+# POST /api/manual/inputs: unknown input: NO_SUCH
+# POST /api/manual/inputs: input "in_Safety_Run" is a stand constant
+# POST /api/manual/hold: cannot hold: b_EStop_Ok
+# PUT /api/mapping: signal "!in_Reset_PB" is not in the loaded program (for in_Reset_PB)
+# Subtest: VIS-3 display-only (a): canonical exam completes and == stand TAP while a manual session is running
+not ok 7 - VIS-3 display-only (a): canonical exam completes and == stand TAP while a manual session is running
+  ---
+  duration_ms: 1673384.7612
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:353:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    per-ID status == stand TAP with a running manual session
+    + actual - expected
+    
+    + [
+    +   'C3-01: exam undefined tap PASS',
+    +   'C3-02: exam undefined tap PASS',
+    +   'C3-03: exam undefined tap PASS',
+    +   'C3-04: exam undefined tap PASS',
+    +   'C3-05: exam undefined tap PASS',
+    +   'C3-06: exam undefined tap PASS',
+    +   'C3-07: exam undefined tap PASS',
+    +   'C3-08: exam undefined tap PASS',
+    +   'C3-09: exam undefined tap PASS',
+    +   'C3-10: exam undefined tap PASS',
+    +   'C3-11: exam undefined tap PASS',
+    +   'C3-12: exam undefined tap PASS',
+    +   'C3-13: exam undefined tap PASS',
+    +   'C3-14: exam undefined tap PASS',
+    +   'C3-15: exam undefined tap PASS',
+    +   'C3-16: exam undefined tap PASS',
+    +   'C3-17: exam undefined tap PASS',
+    +   'C3-18: exam undefined tap PASS',
+    +   'C3-19: exam undefined tap PASS'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'C3-01: exam undefined tap PASS'
+    1: 'C3-02: exam undefined tap PASS'
+    2: 'C3-03: exam undefined tap PASS'
+    3: 'C3-04: exam undefined tap PASS'
+    4: 'C3-05: exam undefined tap PASS'
+    5: 'C3-06: exam undefined tap PASS'
+    6: 'C3-07: exam undefined tap PASS'
+    7: 'C3-08: exam undefined tap PASS'
+    8: 'C3-09: exam undefined tap PASS'
+    9: 'C3-10: exam undefined tap PASS'
+    10: 'C3-11: exam undefined tap PASS'
+    11: 'C3-12: exam undefined tap PASS'
+    12: 'C3-13: exam undefined tap PASS'
+    13: 'C3-14: exam undefined tap PASS'
+    14: 'C3-15: exam undefined tap PASS'
+    15: 'C3-16: exam undefined tap PASS'
+    16: 'C3-17: exam undefined tap PASS'
+    17: 'C3-18: exam undefined tap PASS'
+    18: 'C3-19: exam undefined tap PASS'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:364:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: VIS-3 display-only (b): canonical exam per-ID statuses == stand TAP after manual activity; report chrome English
+not ok 8 - VIS-3 display-only (b): canonical exam per-ID statuses == stand TAP after manual activity; report chrome English
+  ---
+  duration_ms: 1274137.4565
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-filter.test.js:369:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    same ID set as the stand TAP
+    + actual - expected
+    ... Skipped lines
+    
+      [
+        'B-01',
+        'B-02',
+        'B-03',
+        'C-01',
+    ...
+        'C-10',
+    -   'C3-01',
+    -   'C3-02',
+    -   'C3-03',
+    -   'C3-04',
+    -   'C3-05',
+    -   'C3-06',
+    -   'C3-07',
+    -   'C3-08',
+    -   'C3-09',
+    -   'C3-10',
+    -   'C3-11',
+    -   'C3-12',
+    -   'C3-13',
+    -   'C3-14',
+    -   'C3-15',
+    -   'C3-16',
+    -   'C3-17',
+    -   'C3-18',
+    -   'C3-19',
+        'D-01',
+        'D-02',
+        'D-03',
+        'D-04',
+        'D-05',
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'B-01'
+    1: 'B-02'
+    2: 'B-03'
+    3: 'C-01'
+    4: 'C-02'
+    5: 'C-03'
+    6: 'C-04'
+    7: 'C-05'
+    8: 'C-06'
+    9: 'C-07'
+    10: 'C-08'
+    11: 'C-09'
+    12: 'C-10'
+    13: 'C3-01'
+    14: 'C3-02'
+    15: 'C3-03'
+    16: 'C3-04'
+    17: 'C3-05'
+    18: 'C3-06'
+    19: 'C3-07'
+    20: 'C3-08'
+    21: 'C3-09'
+    22: 'C3-10'
+    23: 'C3-11'
+    24: 'C3-12'
+    25: 'C3-13'
+    26: 'C3-14'
+    27: 'C3-15'
+    28: 'C3-16'
+    29: 'C3-17'
+    30: 'C3-18'
+    31: 'C3-19'
+    32: 'D-01'
+    33: 'D-02'
+    34: 'D-03'
+    35: 'D-04'
+    36: 'D-05'
+    37: 'D-06'
+    38: 'D-07'
+    39: 'D-08'
+    40: 'D-09'
+    41: 'E-01'
+    42: 'E-02'
+    43: 'E-03'
+    44: 'E-04'
+    45: 'E-05'
+    46: 'E-06'
+    47: 'E-07'
+    48: 'E-08'
+    49: 'E-09'
+    50: 'E-10'
+    51: 'E-11a'
+    52: 'E-11b'
+    53: 'E-11c'
+    54: 'E-12a'
+    55: 'E-12b'
+    56: 'G-01'
+    57: 'G-02'
+    58: 'G-03'
+    59: 'G-04'
+    60: 'G-05'
+    61: 'G-06'
+    62: 'G-07'
+    63: 'H-01'
+    64: 'H-02'
+    65: 'H-03'
+    66: 'H-04'
+    67: 'H-05'
+    68: 'H-06'
+    69: 'H-07'
+    70: 'K-01'
+    71: 'K-02'
+    72: 'K-03'
+    73: 'K-04'
+    74: 'K-05'
+    75: 'K-06'
+    76: 'K-07'
+    77: 'K-08'
+    78: 'K-09'
+    79: 'K-10'
+    80: 'K-11'
+    81: 'P-01'
+    82: 'P-02'
+    83: 'P-03'
+    84: 'P-04'
+    85: 'P-05'
+    86: 'P-06'
+    87: 'P-07'
+    88: 'P-08'
+    89: 'P-09'
+    90: 'P-10'
+    91: 'P-11'
+    92: 'P-12'
+    93: 'U-01'
+    94: 'U-02'
+    95: 'U-03'
+    96: 'U-04'
+    97: 'U-05'
+    98: 'U-06'
+    99: 'U-07'
+    100: 'U-08'
+    101: 'U-09'
+    102: 'W-01'
+    103: 'W-02'
+    104: 'W-03'
+    105: 'W-04'
+    106: 'W-05'
+    107: 'W-06'
+    108: 'W-07'
+    109: 'W-08'
+    110: 'W-09'
+    111: 'W-10'
+  actual:
+    0: 'B-01'
+    1: 'B-02'
+    2: 'B-03'
+    3: 'C-01'
+    4: 'C-02'
+    5: 'C-03'
+    6: 'C-04'
+    7: 'C-05'
+    8: 'C-06'
+    9: 'C-07'
+    10: 'C-08'
+    11: 'C-09'
+    12: 'C-10'
+    13: 'D-01'
+    14: 'D-02'
+    15: 'D-03'
+    16: 'D-04'
+    17: 'D-05'
+    18: 'D-06'
+    19: 'D-07'
+    20: 'D-08'
+    21: 'D-09'
+    22: 'E-01'
+    23: 'E-02'
+    24: 'E-03'
+    25: 'E-04'
+    26: 'E-05'
+    27: 'E-06'
+    28: 'E-07'
+    29: 'E-08'
+    30: 'E-09'
+    31: 'E-10'
+    32: 'E-11a'
+    33: 'E-11b'
+    34: 'E-11c'
+    35: 'E-12a'
+    36: 'E-12b'
+    37: 'G-01'
+    38: 'G-02'
+    39: 'G-03'
+    40: 'G-04'
+    41: 'G-05'
+    42: 'G-06'
+    43: 'G-07'
+    44: 'H-01'
+    45: 'H-02'
+    46: 'H-03'
+    47: 'H-04'
+    48: 'H-05'
+    49: 'H-06'
+    50: 'H-07'
+    51: 'K-01'
+    52: 'K-02'
+    53: 'K-03'
+    54: 'K-04'
+    55: 'K-05'
+    56: 'K-06'
+    57: 'K-07'
+    58: 'K-08'
+    59: 'K-09'
+    60: 'K-10'
+    61: 'K-11'
+    62: 'P-01'
+    63: 'P-02'
+    64: 'P-03'
+    65: 'P-04'
+    66: 'P-05'
+    67: 'P-06'
+    68: 'P-07'
+    69: 'P-08'
+    70: 'P-09'
+    71: 'P-10'
+    72: 'P-11'
+    73: 'P-12'
+    74: 'U-01'
+    75: 'U-02'
+    76: 'U-03'
+    77: 'U-04'
+    78: 'U-05'
+    79: 'U-06'
+    80: 'U-07'
+    81: 'U-08'
+    82: 'U-09'
+    83: 'W-01'
+    84: 'W-02'
+    85: 'W-03'
+    86: 'W-04'
+    87: 'W-05'
+    88: 'W-06'
+    89: 'W-07'
+    90: 'W-08'
+    91: 'W-09'
+    92: 'W-10'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-filter.test.js:381:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: VIS-LED bindings = tsproj Standard Out/In Var N -> SAL aliasDeviceIoUsage sdsId N
+ok 9 - VIS-LED bindings = tsproj Standard Out/In Var N -> SAL aliasDeviceIoUsage sdsId N
+  ---
+  duration_ms: 790.286
+  type: 'test'
+  ...
+# Subtest: VIS-LED mode classification per truth table
+    # Subtest: LED-R1 Ok&Status
+    ok 1 - LED-R1 Ok&Status
+      ---
+      duration_ms: 1.3768
+      type: 'test'
+      ...
+    # Subtest: LED-R2 !Ok&Status blink (T4 slow)
+    ok 2 - LED-R2 !Ok&Status blink (T4 slow)
+      ---
+      duration_ms: 0.7036
+      type: 'test'
+      ...
+    # Subtest: LED-R3 !Ok&!Status
+    ok 3 - LED-R3 !Ok&!Status
+      ---
+      duration_ms: 0.409
+      type: 'test'
+      ...
+    # Subtest: LED-R4 Ok&!Status on (Q-LED-4)
+    ok 4 - LED-R4 Ok&!Status on (Q-LED-4)
+      ---
+      duration_ms: 0.4151
+      type: 'test'
+      ...
+    # Subtest: LED-G1/B5 power-up Safe
+    ok 5 - LED-G1/B5 power-up Safe
+      ---
+      duration_ms: 0.4507
+      type: 'test'
+      ...
+    # Subtest: LED-G2/T3 Safe after R&D->Safe, TS (Q-LED-1)
+    ok 6 - LED-G2/T3 Safe after R&D->Safe, TS (Q-LED-1)
+      ---
+      duration_ms: 0.2806
+      type: 'test'
+      ...
+    # Subtest: LED-G3/B4 Safe->R&D transition
+    ok 7 - LED-G3/B4 Safe->R&D transition
+      ---
+      duration_ms: 0.5231
+      type: 'test'
+      ...
+    # Subtest: LED-B4 Safe, no step1, lid open
+    ok 8 - LED-B4 Safe, no step1, lid open
+      ---
+      duration_ms: 0.5404
+      type: 'test'
+      ...
+    # Subtest: LED-G6/B8 R&D idle lid closed
+    ok 9 - LED-G6/B8 R&D idle lid closed
+      ---
+      duration_ms: 0.7963
+      type: 'test'
+      ...
+    # Subtest: LED-B9 R&D lid open
+    ok 10 - LED-B9 R&D lid open
+      ---
+      duration_ms: 0.3701
+      type: 'test'
+      ...
+    # Subtest: LED-B6 Safe lid open
+    ok 11 - LED-B6 Safe lid open
+      ---
+      duration_ms: 0.3223
+      type: 'test'
+      ...
+    # Subtest: LED-B1 Run
+    ok 12 - LED-B1 Run
+      ---
+      duration_ms: 0.3002
+      type: 'test'
+      ...
+    # Subtest: LED-B2 Cfg
+    ok 13 - LED-B2 Cfg
+      ---
+      duration_ms: 0.2188
+      type: 'test'
+      ...
+    # Subtest: LED-B3 Emg
+    ok 14 - LED-B3 Emg
+      ---
+      duration_ms: 0.2454
+      type: 'test'
+      ...
+    # Subtest: LED-B11 no STS bit
+    ok 15 - LED-B11 no STS bit
+      ---
+      duration_ms: 0.2637
+      type: 'test'
+      ...
+    # Subtest: LED-T1 step2 fast
+    ok 16 - LED-T1 step2 fast
+      ---
+      duration_ms: 0.2302
+      type: 'test'
+      ...
+    # Subtest: LED-F1 fault Safe idle (red per R1)
+    ok 17 - LED-F1 fault Safe idle (red per R1)
+      ---
+      duration_ms: 0.3256
+      type: 'test'
+      ...
+    # Subtest: LED-F1 fault, red per R2
+    ok 18 - LED-F1 fault, red per R2
+      ---
+      duration_ms: 0.2992
+      type: 'test'
+      ...
+    # Subtest: LED-F2 fault+Emg
+    ok 19 - LED-F2 fault+Emg
+      ---
+      duration_ms: 0.2272
+      type: 'test'
+      ...
+    # Subtest: LED-F3 fault, no STS
+    ok 20 - LED-F3 fault, no STS
+      ---
+      duration_ms: 0.2243
+      type: 'test'
+      ...
+    # Subtest: Q-LED-5: SolenoedMonitor SAL source (if any) does not light blue in R&D with lid closed
+    ok 21 - Q-LED-5: SolenoedMonitor SAL source (if any) does not light blue in R&D with lid closed
+      ---
+      duration_ms: 0.371
+      type: 'test'
+      ...
+    1..21
+ok 10 - VIS-LED mode classification per truth table
+  ---
+  duration_ms: 12.784
+  type: 'test'
+  ...
+# SolenoedMonitor SAL variable: null
+# Subtest: VIS-LED lamp values == replica; blink phases per LED-T*/LED-F4
+    # Subtest: on/off equals replica on every scan
+    ok 1 - on/off equals replica on every scan
+      ---
+      duration_ms: 15.2216
+      type: 'test'
+      ...
+    # Subtest: LED-G1/B5 phase 1500 ms (+-1); green==blue (shared bPulse)
+    ok 2 - LED-G1/B5 phase 1500 ms (+-1); green==blue (shared bPulse)
+      ---
+      duration_ms: 2.8455
+      type: 'test'
+      ...
+    # Subtest: LED-F1/F4: fault green != blue every scan, phase 200 ms (+-1), red per R1
+    ok 3 - LED-F1/F4: fault green != blue every scan, phase 200 ms (+-1), red per R1
+      ---
+      duration_ms: 1.1376
+      type: 'test'
+      ...
+    # Subtest: LED-G3/B4 after fault cleared (F5): blue off, green phase 500 ms (+-1)
+    ok 4 - LED-G3/B4 after fault cleared (F5): blue off, green phase 500 ms (+-1)
+      ---
+      duration_ms: 0.5839
+      type: 'test'
+      ...
+    # Subtest: LED-R4 red on steady
+    ok 5 - LED-R4 red on steady
+      ---
+      duration_ms: 0.2953
+      type: 'test'
+      ...
+    1..5
+ok 11 - VIS-LED lamp values == replica; blink phases per LED-T*/LED-F4
+  ---
+  duration_ms: 882.4414
+  type: 'test'
+  ...
+# Subtest: VIS-LED display only: SAL run identical with and without panel scans
+ok 12 - VIS-LED display only: SAL run identical with and without panel scans
+  ---
+  duration_ms: 49789.318
+  type: 'test'
+  ...
+# Subtest: VIS-LED manual session (server, canonical): state().led present, captions, no unmapped LED input
+ok 13 - VIS-LED manual session (server, canonical): state().led present, captions, no unmapped LED input
+  ---
+  duration_ms: 8652.2864
+  type: 'test'
+  ...
+# Subtest: VIS-6 manual mode
+    # Subtest: step = +1 scan (1 ms), advance N = +N ms, pause kept
+    ok 1 - step = +1 scan (1 ms), advance N = +N ms, pause kept
+      ---
+      duration_ms: 185.9073
+      type: 'test'
+      ...
+    # Subtest: input set on pause is queued; applied from the next scan only
+    ok 2 - input set on pause is queued; applied from the next scan only
+      ---
+      duration_ms: 17202.1321
+      type: 'test'
+      ...
+    # Subtest: single blue 0.5 s: Unlock at press+500 (+-50 catalog), TON preset 500 expires at +500 +-1 scan
+    ok 3 - single blue 0.5 s: Unlock at press+500 (+-50 catalog), TON preset 500 expires at +500 +-1 scan
+      ---
+      duration_ms: 3603.1421
+      type: 'test'
+      ...
+    # Subtest: speed limits 0.1..10 enforced; real-time run advances ~ wall*speed
+    ok 4 - speed limits 0.1..10 enforced; real-time run advances ~ wall*speed
+      ---
+      duration_ms: 31201.6253
+      type: 'test'
+      ...
+    # Subtest: constant inputs cannot be driven
+    ok 5 - constant inputs cannot be driven
+      ---
+      duration_ms: 2.3865
+      type: 'test'
+      ...
+    # Subtest: server bound to 127.0.0.1 only
+    ok 6 - server bound to 127.0.0.1 only
+      ---
+      duration_ms: 2052.6672
+      type: 'test'
+      ...
+    1..6
+ok 14 - VIS-6 manual mode
+  ---
+  duration_ms: 60269.2706
+  type: 'test'
+  ...
+# Unlock at press+501 ms
+# x10: advanced 7370 ms virtual in 29438 ms wall (ratio 0.25), lag=true
+# Subtest: VIS-4b pattern-resolved / output signals renamed; kind check; Host/Origin
+    # Subtest: CMD_SAFE_TO_RND -> X_CMD_S2R
+    ok 1 - CMD_SAFE_TO_RND -> X_CMD_S2R
+      ---
+      duration_ms: 553990.0771
+      type: 'test'
+      ...
+    # Subtest: in_PLC_Heartbeat -> X_HB
+    ok 2 - in_PLC_Heartbeat -> X_HB
+      ---
+      duration_ms: 157771.5542
+      type: 'test'
+      ...
+    # Subtest: linkSafetyFault -> X_SF
+    ok 3 - linkSafetyFault -> X_SF
+      ---
+      duration_ms: 113697.719
+      type: 'test'
+      ...
+    # Subtest: out_LV_C1 -> X_C1
+    ok 4 - out_LV_C1 -> X_C1
+      ---
+      duration_ms: 49913.3692
+      type: 'test'
+      ...
+    # Subtest: kind mismatch (input <-> output) rejected
+    ok 5 - kind mismatch (input <-> output) rejected
+      ---
+      duration_ms: 675.263
+      type: 'test'
+      ...
+    # Subtest: foreign Host / Origin -> 403; local accepted
+    ok 6 - foreign Host / Origin -> 403; local accepted
+      ---
+      duration_ms: 86.1858
+      type: 'test'
+      ...
+    1..6
+ok 15 - VIS-4b pattern-resolved / output signals renamed; kind check; Host/Origin
+  ---
+  duration_ms: 1197240.9467
+  type: 'test'
+  ...
+# Subtest: VIS-4 renamed signals and mapping
+    # Subtest: R1 in_C3_Manual_Set -> X_C3_Set: unmapped scenarios NOT CHECKED, rest == canonical; mapped == canonical
+    ok 1 - R1 in_C3_Manual_Set -> X_C3_Set: unmapped scenarios NOT CHECKED, rest == canonical; mapped == canonical
+      ---
+      duration_ms: 567714.6938
+      type: 'test'
+      ...
+    # Subtest: R2 in_Reset_PB -> X_Green: never FAIL while unmapped; mapped == canonical
+    ok 2 - R2 in_Reset_PB -> X_Green: never FAIL while unmapped; mapped == canonical
+      ---
+      duration_ms: 148827.6101
+      type: 'test'
+      ...
+    # Subtest: mapping rejects polarity / non-1:1 / unknown entries
+    ok 3 - mapping rejects polarity / non-1:1 / unknown entries
+      ---
+      duration_ms: 154.1599
+      type: 'test'
+      ...
+    # Subtest: R3 inverted polarity (X_Blue_NC, contact type flipped) mapped by name => honest FAIL, not NOT CHECKED
+    ok 4 - R3 inverted polarity (X_Blue_NC, contact type flipped) mapped by name => honest FAIL, not NOT CHECKED
+      ---
+      duration_ms: 37617.0422
+      type: 'test'
+      ...
+    1..4
+ok 16 - VIS-4 renamed signals and mapping
+  ---
+  duration_ms: 1042250.4376
+  type: 'test'
+  ...
+# Subtest: VIS-2 canonical SAL and stand paths unchanged (git)
+not ok 17 - VIS-2 canonical SAL and stand paths unchanged (git)
+  ---
+  duration_ms: 74.4532
+  type: 'test'
+  location: 'C:\\Users\\user\\source\\repos\\MEN001_Dyno_v2\\SafetyTests\\visualizer\\test\\vis-regress.test.js:14:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    stand/canonical paths have working-tree changes:
+     M MEN001_Dyno/MEN001_Dyno.tsproj
+    
+    + actual - expected
+    
+    + 'M MEN001_Dyno/MEN001_Dyno.tsproj'
+    - ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ''
+  actual: 'M MEN001_Dyno/MEN001_Dyno.tsproj'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/source/repos/MEN001_Dyno_v2/SafetyTests/visualizer/test/vis-regress.test.js:18:42)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: VIS-2 npm run check:software result == baseline
+ok 18 - VIS-2 npm run check:software result == baseline
+  ---
+  duration_ms: 2037325.6783
+  type: 'test'
+  ...
+# SUMMARY catalog=PASS structure=PASS self=PASS
+# catalog: PASS {"tests":157,"pass":156,"fail":0,"skipped":0,"todo":1}
+# stand self-checks (6 files): PASS {"tests":53,"pass":53,"fail":0,"skipped":0}
+# Subtest: VIS-7 static page text and binding
+ok 19 - VIS-7 static page text and binding
+  ---
+  duration_ms: 232.8531
+  type: 'test'
+  ...
+1..19
+# tests 86
+# suites 0
+# pass 81
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3368949.3695

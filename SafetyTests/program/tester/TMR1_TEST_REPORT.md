@@ -93,3 +93,25 @@ exit 0 + structure=PASS (a stale CRC fails again). vis-filter #9 uses the new SH
 - Full visualizer suite: 52/55 tests pass; 3 FAIL = vis-exam-canonical timed out at its 40 min limit under load (parent timeout ->
   3 subtests "could not be started", no assertion failed). Rerun alone: 4/4 PASS in 22 min (vis-exam-canonical-verified.log).
   All other files PASS, incl. VIS-2 SAL/git + check:software == baseline (vis-full-verified.log). Net: 55/55 assertions PASS.
+
+## QC3-1 re-baseline (2026-10-29, canonical commit a505e73)
+SHAs verified (sha256sum): SAL 1d046f4319253bf905b84f70d850d8bb05f7099f0bf580f33209cbf29cba525d, diagram 23583f2c...b799, GVL1 d784734f...c7ff.
+Baselines updated (visualizer/test only): `_lib.mjs` CANON_SAL_SHA = 1d046f43...; vis-regress catalog counts 138/137/0/1 -> 157/156/0/1;
+comments in vis-exam-canonical / vis-filter. Structure stays strict PASS (no CRC allowance). No block/port count baselines exist in visualizer tests.
+- `npm run check:software`: exit 0; catalog PASS {157,156,0 fail,1 todo}; structure PASS (14/354/2860/105, wires 485, native CRC PASS);
+  self PASS 53/53 (program/tester/TMR-1/check-software-qc31.log).
+- Full visualizer suite: 86 tests, 81 pass, 5 FAIL (program/tester/TMR-1/vis-full-qc31.log). No timeouts.
+  FAIL (not baselines, not weakened):
+  1. vis-exam-canonical "catalog part" (+ parent), display-only (a), display-only (b): exam lacks all 19 section N rows
+     (C3-01..C3-19: "exam undefined tap PASS"). Cause: `visualizer/catalog.js:16` imports a hard-coded list
+     `["k","c","e","u","d","h","w","p","g"]` of `test/catalog/lib/*.js`, and never `*.test.js` (line 2); section N
+     (`test/catalog/n-c3bms.test.js`, cf65b08) defines its 19 scenarios inside the .test.js with no lib/n.js. The exam therefore
+     does not run all catalog scenarios (VIS-Q2). Defect for editor/architect: either catalog.js picks up section N or section N moves to lib/.
+  2. VIS-2 "canonical SAL and stand paths unchanged (git)": working tree has ` M MEN001_Dyno/MEN001_Dyno.tsproj` (uncommitted,
+     2 lines: <BuildConfig> moved within the Dev variant, Plc Instance TmcHash line changed; looks like an IDE save). Not made by the tester.
+     Lead decision: commit or revert; the test is correct as is.
+- Fix for FAIL 1 (tester part, coordinator-approved catalog change): section N definitions moved verbatim to `test/catalog/lib/n.js`
+  (`export const N = ['C3-01'..'C3-19']`); `n-c3bms.test.js` now only `register(N)` (as k-buttons/lib/k.js). Only the 2 import lines
+  changed (paths: '../../helpers/catalog-program.js' without `register`; drainEnergy from './e.js'); lines 11-161 byte-identical (diff).
+  `npm run check:catalog` on canonical 1d046f43: PASS 157 / 156 / 0 fail / 1 todo (program/tester/TMR-1/catalog-n-move.log).
+  Editor: add `n` to the lib list in visualizer/catalog.js (L.n / N). Full trainer suite not rerun yet (waits for the editor change).
